@@ -11,19 +11,28 @@
  */
 package org.eclipse.emf.ecp.view.spi.compoundcontrol.swt;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.inject.Inject;
 
-import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRendererUtil;
+import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRendererUtil;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -33,22 +42,23 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
-import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -63,7 +73,7 @@ import org.eclipse.swt.widgets.Layout;
  */
 public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundControl> {
 
-	private static final String SEPARATOR = "/"; //$NON-NLS-1$
+	private static final String SEPARATOR = " / "; //$NON-NLS-1$
 
 	private SWTGridDescription rendererGridDescription;
 
@@ -75,6 +85,10 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 	private final VTViewTemplateProvider viewTemplateProvider;
 
+	private boolean firstControlValidationIconUsed;
+
+	private final EMFFormsDatabindingEMF databindingService;
+
 	/**
 	 * Default constructor.
 	 *
@@ -84,7 +98,8 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @param labelProvider the {@link EMFFormsLabelProvider label provider}
 	 * @param rendererFactory the {@link EMFFormsRendererFactory renderer factory}
 	 * @param viewTemplateProvider {@link VTViewTemplateProvider}
-	 * @since 1.16
+	 * @param databindingService {@link EMFFormsDatabindingEMF}
+	 * @since 1.17
 	 */
 	@Inject
 	public CompoundControlSWTRenderer(
@@ -93,11 +108,13 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		ReportService reportService,
 		EMFFormsLabelProvider labelProvider,
 		EMFFormsRendererFactory rendererFactory,
-		VTViewTemplateProvider viewTemplateProvider) {
+		VTViewTemplateProvider viewTemplateProvider,
+		EMFFormsDatabindingEMF databindingService) {
 		super(vElement, viewContext, reportService);
 		this.labelProvider = labelProvider;
 		this.rendererFactory = rendererFactory;
 		this.viewTemplateProvider = viewTemplateProvider;
+		this.databindingService = databindingService;
 	}
 
 	/**
@@ -121,6 +138,14 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	}
 
 	/**
+	 * @return the {@link EMFFormsDatabindingEMF}.
+	 * @since 1.17
+	 */
+	protected EMFFormsDatabindingEMF getDatabindingService() {
+		return databindingService;
+	}
+
+	/**
 	 * Returns the {@link DataBindingContext}.
 	 *
 	 * @return the databining context
@@ -138,6 +163,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @since 1.16
 	 */
 	protected LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>> getElementRendererMap() {
+		initChildRendererMap();
 		return elementRendererMap;
 	}
 
@@ -157,22 +183,28 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
-			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+			final int columns = SimpleControlSWTRendererUtil
+				.showLabel(getVElement(), getReportService(), getClass().getName()) ? 3 : 2;
 
-			final SWTGridCell label = rendererGridDescription.getGrid().get(0);
-			label.setHorizontalGrab(false);
-			label.setVerticalGrab(false);
-			label.setVerticalFill(false);
-			final Optional<Integer> labelWidth = getLabelWidth();
-			if (labelWidth.isPresent()) {
-				label.setPreferredSize(
-					labelWidth.get(),
-					label.getPreferredSize() == null ? SWT.DEFAULT : label.getPreferredSize().y);
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
+			rendererGridDescription.setRows(1);
+			rendererGridDescription.setColumns(columns);
+
+			final List<SWTGridCell> grid = new ArrayList<SWTGridCell>();
+
+			if (columns == 3) {
+				final SWTGridCell labelCell = SimpleControlSWTRendererUtil
+					.createLabelCell(grid.size(), this, getLabelWidth());
+				grid.add(labelCell);
 			}
 
-			final SWTGridCell controls = rendererGridDescription.getGrid().get(1);
-			controls.setVerticalGrab(false);
-			controls.setVerticalFill(false);
+			final SWTGridCell validationCell = SimpleControlSWTRendererUtil.createValidationCell(grid.size(), this);
+			grid.add(validationCell);
+
+			final SWTGridCell controlCel = SimpleControlSWTRendererUtil.createControlCell(grid.size(), this);
+			grid.add(controlCel);
+
+			rendererGridDescription.setGrid(grid);
 		}
 		return rendererGridDescription;
 	}
@@ -180,10 +212,16 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		switch (cell.getColumn()) {
+		int controlIndex = cell.getColumn();
+		if (getVElement().getLabelAlignment() == LabelAlignment.NONE) {
+			controlIndex++;
+		}
+		switch (controlIndex) {
 		case 0:
 			return createLabel(parent);
 		case 1:
+			return createValidationIcon(parent);
+		case 2:
 			return createControls(parent);
 		default:
 			throw new IllegalArgumentException(
@@ -200,51 +238,93 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @since 1.8
 	 */
 	protected Control createLabel(Composite parent) {
-		final EList<VControl> controls = getVElement().getControls();
+		final Label label = new Label(parent, getLabelStyleBits());
+		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
+		SWTDataElementIdHelper
+			.setElementIdDataWithSubId(label, getVElement(), "control_label", getViewModelContext()); //$NON-NLS-1$
+		label.setBackground(parent.getBackground());
 
-		final Composite labelComposite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2 * controls.size() -
-			1).equalWidth(false).applyTo(labelComposite);
+		final IObservableValue textObservable = WidgetProperties.text().observe(label);
+		final Map<IObservableValue, Map.Entry<VControl, EStructuralFeature>> displayNameObservables = getLabelDisplayNameObservables();
 
-		final AlignmentType labelAlignment = getLabelAlignment();
+		for (final IObservableValue displayNameObservable : displayNameObservables.keySet()) {
+			getDataBindingContext().bindValue(
+				textObservable,
+				displayNameObservable,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+				new CompoundControlDisplayNameUpdateValueStrategy(displayNameObservables));
+		}
 
-		for (int i = 0; i < controls.size(); i++) {
-			if (i != 0) {
-				final Label separatorLabel = new Label(labelComposite, SWT.NONE);
-				GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL, SWT.CENTER).applyTo(separatorLabel);
-				separatorLabel.setText(SEPARATOR);
-			}
-
-			boolean grab = false;
-			int stylebits = SWT.NONE;
-			if (labelAlignment == AlignmentType.LEFT && i == controls.size() - 1) {
-				/* if left, the last label should grow */
-				grab = true;
-			} else if (labelAlignment == AlignmentType.RIGHT && i == 0) {
-				/* if right, first column should grow and right alignment */
-				grab = true;
-				stylebits = SWT.RIGHT;
-			}
-
-			final Label label = new Label(labelComposite, stylebits);
-			GridDataFactory.fillDefaults().grab(grab, false).align(SWT.FILL, SWT.CENTER).applyTo(label);
-			final VControl control = controls.get(i);
-			try {
-				@SuppressWarnings("deprecation")
-				final IObservableValue targetValue = org.eclipse.jface.databinding.swt.SWTObservables
-					.observeText(label);
-				final IObservableValue modelValue = getLabelProvider().getDisplayName(control.getDomainModelReference(),
-					getViewModelContext().getDomainModel());
-				final Binding bindValue = getDataBindingContext().bindValue(targetValue, modelValue);
-				bindValue.updateModelToTarget();
-			} catch (final NoLabelFoundException ex) {
-				getReportService().report(new AbstractReport(ex));
-			}
+		final IObservableValue tooltipObservable = WidgetProperties.tooltipText().observe(label);
+		final List<IObservableValue> labelDescriptionObservables = getLabelDescriptionObservables();
+		for (final IObservableValue descriptionObservable : labelDescriptionObservables) {
+			getDataBindingContext().bindValue(
+				tooltipObservable,
+				descriptionObservable,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+				new EMFUpdateValueStrategy() {
+					@Override
+					public Object convert(Object value) {
+						final StringBuilder stringBuilder = new StringBuilder();
+						for (final IObservableValue obs : labelDescriptionObservables) {
+							if (stringBuilder.length() > 0) {
+								stringBuilder.append("\n"); //$NON-NLS-1$
+							}
+							stringBuilder.append(obs.getValue());
+						}
+						return stringBuilder.toString();
+					}
+				});
 
 		}
 
-		labelComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
-		return labelComposite;
+		return label;
+	}
+
+	private Map<IObservableValue, Map.Entry<VControl, EStructuralFeature>> getLabelDisplayNameObservables() {
+		final LinkedHashMap<IObservableValue, Entry<VControl, EStructuralFeature>> displayNames = new LinkedHashMap<IObservableValue, Map.Entry<VControl, EStructuralFeature>>();
+
+		for (final VControl control : getVElement().getControls()) {
+			try {
+				final IObservableValue displayName = labelProvider
+					.getDisplayName(control.getDomainModelReference(), getViewModelContext().getDomainModel());
+
+				final EStructuralFeature feature = getDatabindingService()
+					.getValueProperty(control.getDomainModelReference(), getViewModelContext().getDomainModel())
+					.getStructuralFeature();
+
+				displayNames.put(displayName,
+					new AbstractMap.SimpleEntry<VControl, EStructuralFeature>(control, feature));
+			} catch (final NoLabelFoundException ex) {
+				getReportService().report(new AbstractReport(ex, IStatus.WARNING));
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new AbstractReport(ex, IStatus.WARNING));
+			}
+		}
+
+		return displayNames;
+	}
+
+	private List<IObservableValue> getLabelDescriptionObservables() {
+		final List<IObservableValue> labelDescriptionObservables = new ArrayList<IObservableValue>();
+		for (final VControl control : getVElement().getControls()) {
+			try {
+				labelDescriptionObservables.add(labelProvider.getDescription(control.getDomainModelReference(),
+					getViewModelContext().getDomainModel()));
+			} catch (final NoLabelFoundException ex) {
+				getReportService().report(new AbstractReport(ex, IStatus.WARNING));
+			}
+		}
+		return labelDescriptionObservables;
+	}
+
+	/**
+	 * @return the style bits for the control's label
+	 * @since 1.17
+	 */
+	protected int getLabelStyleBits() {
+		return AbstractControlSWTRendererUtil
+			.getLabelStyleBits(getViewTemplateProvider(), getVElement(), getViewModelContext());
 	}
 
 	/**
@@ -264,19 +344,60 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	}
 
 	/**
-	 * @return the style bits for the control's label
-	 * @since 1.16
+	 * Return the validation cell of the fist child. If no children or strange first cell, return a dummy validation
+	 * icon.
+	 *
+	 * @param parent the parent to render on
+	 * @return the validation control
+	 *
+	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
+	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 * @since 1.17
 	 */
-	protected AlignmentType getLabelAlignment() {
-		final VTControlLabelAlignmentStyleProperty styleProperty = RendererUtil.getStyleProperty(
-			getViewTemplateProvider(),
-			getVElement(),
-			getViewModelContext(),
-			VTControlLabelAlignmentStyleProperty.class);
-		if (styleProperty == null) {
-			return AlignmentType.LEFT;
+	protected Control createValidationIcon(Composite parent)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		if (getVElement().getControls().isEmpty()) {
+			return createDummyValidationIcon(parent);
 		}
-		return styleProperty.getType();
+		final AbstractSWTRenderer<VElement> renderer = getElementRendererMap()
+			.get(getVElement().getControls().get(0));
+		if (renderer == null) {
+			return createDummyValidationIcon(parent);
+		}
+		final SWTGridDescription gridDescription = renderer
+			.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		if (gridDescription.getColumns() < 2) {
+			return createDummyValidationIcon(parent);
+		}
+		/* use child renderer cell */
+		setFirstControlValidationIconUsed(true);
+		final SWTGridCell validationCell = gridDescription.getGrid().get(0);
+		return validationCell.getRenderer().render(validationCell, parent);
+	}
+
+	/**
+	 * Whether the first cell of the first child control was used to renderer our validation icon.
+	 *
+	 * @param used <code>true</code> if used, <code>false</code> otherwise
+	 * @since 1.17
+	 */
+	protected void setFirstControlValidationIconUsed(boolean used) {
+		firstControlValidationIconUsed = used;
+	}
+
+	/**
+	 * Creates the validation icon of the first cell of the first child may not be used as the validation icon.
+	 *
+	 * @param parent the parent
+	 * @return the validation icon
+	 * @since 1.17
+	 */
+	protected Control createDummyValidationIcon(Composite parent) {
+		final Label validationLabel = new Label(parent, SWT.NONE);
+		SWTDataElementIdHelper
+			.setElementIdDataWithSubId(validationLabel, getVElement(), "control_validation", getViewModelContext()); //$NON-NLS-1$
+		validationLabel.setBackground(parent.getBackground());
+		return validationLabel;
 	}
 
 	/**
@@ -287,11 +408,11 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @since 1.8
 	 */
 	protected Control createControls(Composite parent) {
-		return createControls(parent, 0);
+		return createControls(parent, firstControlValidationIconUsed ? 1 : 0);
 	}
 
 	/**
-	 * Creates the controls composite. May skip the first cells of the child renderers.
+	 * Creates the controls composite. May skip the first cell(s).
 	 *
 	 * @param parent the parent composite
 	 * @param cellsToSkip number of cells to skip
@@ -299,8 +420,6 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @since 1.16
 	 */
 	protected Control createControls(Composite parent, int cellsToSkip) {
-		initChildRendererMap();
-
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 
@@ -352,7 +471,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @since 1.16
 	 */
 	protected void initChildRendererMap() {
-		if (getElementRendererMap() != null) {
+		if (elementRendererMap != null) {
 			return;
 		}
 		setElementRendererMap(new LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>>());
@@ -421,5 +540,54 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 			getDataBindingContext().dispose();
 		}
 		super.dispose();
+	}
+
+	/**
+	 * Model to target for display names which concats all display names.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private final class CompoundControlDisplayNameUpdateValueStrategy extends EMFUpdateValueStrategy {
+		private final Map<IObservableValue, Entry<VControl, EStructuralFeature>> displayNameObservables;
+
+		/**
+		 * @param displayNameObservables
+		 */
+		private CompoundControlDisplayNameUpdateValueStrategy(
+			Map<IObservableValue, Entry<VControl, EStructuralFeature>> displayNameObservables) {
+			this.displayNameObservables = displayNameObservables;
+		}
+
+		@Override
+		public Object convert(Object value) {
+			final StringBuilder stringBuilder = new StringBuilder();
+
+			for (final Entry<IObservableValue, Map.Entry<VControl, EStructuralFeature>> obs : displayNameObservables
+				.entrySet()) {
+				if (stringBuilder.length() > 0) {
+					stringBuilder.append(SEPARATOR);
+				}
+				stringBuilder.append(
+					getDisplayName(obs.getKey(), obs.getValue().getKey(), obs.getValue().getValue()));
+
+			}
+			return stringBuilder.toString();
+		}
+
+		private Object getDisplayName(
+			final IObservableValue obs,
+			VControl control,
+			EStructuralFeature structuralFeature) {
+
+			final Object value = obs.getValue();
+			String extra = ""; //$NON-NLS-1$
+			final VTMandatoryStyleProperty mandatoryStyle = AbstractControlSWTRendererUtil
+				.getMandatoryStyle(getViewTemplateProvider(), control, getViewModelContext());
+			if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
+				extra = mandatoryStyle.getMandatoryMarker();
+			}
+			return value + extra;
+		}
 	}
 }

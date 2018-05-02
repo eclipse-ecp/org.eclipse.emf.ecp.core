@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.compoundcontrol.swt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -28,7 +29,9 @@ import java.util.Set;
 
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -46,7 +49,11 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactor
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelwidthFactory;
+import org.eclipse.emf.ecp.view.template.style.wrap.model.VTLabelWrapStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.wrap.model.VTWrapFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
@@ -58,7 +65,6 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -74,6 +80,9 @@ public class CompoundControlSWTRenderer_ITest {
 	private static final String LABEL1 = "label1"; //$NON-NLS-1$
 	private static final String LABEL2 = "label2"; //$NON-NLS-1$
 
+	private static final String TOOLTIP1 = "tooltip1"; //$NON-NLS-1$
+	private static final String TOOLTIP2 = "tooltip2"; //$NON-NLS-1$
+
 	private static final String C_CONTROL = "CControl"; //$NON-NLS-1$
 	private static final String C_VALIDATION = "CValidation"; //$NON-NLS-1$
 
@@ -85,6 +94,7 @@ public class CompoundControlSWTRenderer_ITest {
 	private VTViewTemplateProvider viewTemplateProvider;
 	private Shell shell;
 	private DefaultRealm realm;
+	private EMFFormsDatabindingEMF emfFormsDatabindingEMF;
 
 	@Before
 	public void before() {
@@ -96,6 +106,7 @@ public class CompoundControlSWTRenderer_ITest {
 		emfFormsLabelProvider = mock(EMFFormsLabelProvider.class);
 		emfFormsRendererFactory = mock(EMFFormsRendererFactory.class);
 		viewTemplateProvider = Mockito.mock(VTViewTemplateProvider.class);
+		emfFormsDatabindingEMF = Mockito.mock(EMFFormsDatabindingEMF.class);
 	}
 
 	@After
@@ -106,7 +117,7 @@ public class CompoundControlSWTRenderer_ITest {
 
 	private CompoundControlSWTRenderer createRenderer() {
 		return new CompoundControlSWTRenderer(compoundControl, viewModelContext, reportService, emfFormsLabelProvider,
-			emfFormsRendererFactory, viewTemplateProvider);
+			emfFormsRendererFactory, viewTemplateProvider, emfFormsDatabindingEMF);
 	}
 
 	@Test
@@ -123,35 +134,48 @@ public class CompoundControlSWTRenderer_ITest {
 
 	@Test
 	public void testGetGridDescription() {
+		when(compoundControl.getLabelAlignment()).thenReturn(LabelAlignment.DEFAULT);
+
 		final CompoundControlSWTRenderer renderer = createRenderer();
 		final SWTGridDescription gridDescription = renderer.getGridDescription(mock(SWTGridDescription.class));
-		assertEquals(2, gridDescription.getColumns());
+		assertEquals(3, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
-		assertEquals(2, gridDescription.getGrid().size());
+		assertEquals(3, gridDescription.getGrid().size());
 
 		final SWTGridCell label = gridDescription.getGrid().get(0);
 		assertEquals(0, label.getColumn());
 		assertEquals(1, label.getHorizontalSpan());
 		assertEquals(0, label.getRow());
 		assertSame(renderer, label.getRenderer());
-		assertTrue(label.isHorizontalFill());
+		assertFalse(label.isHorizontalFill());
 		assertFalse(label.isHorizontalGrab());
 		assertFalse(label.isVerticalFill());
 		assertFalse(label.isVerticalGrab());
 
-		final SWTGridCell controls = gridDescription.getGrid().get(1);
-		assertEquals(1, controls.getColumn());
+		final SWTGridCell validation = gridDescription.getGrid().get(1);
+		assertEquals(1, validation.getColumn());
+		assertEquals(1, validation.getHorizontalSpan());
+		assertEquals(0, validation.getRow());
+		assertSame(renderer, validation.getRenderer());
+		assertFalse(validation.isHorizontalFill());
+		assertFalse(validation.isHorizontalGrab());
+		assertFalse(validation.isVerticalFill());
+		assertFalse(validation.isVerticalGrab());
+
+		final SWTGridCell controls = gridDescription.getGrid().get(2);
+		assertEquals(2, controls.getColumn());
 		assertEquals(1, controls.getHorizontalSpan());
 		assertEquals(0, controls.getRow());
 		assertSame(renderer, controls.getRenderer());
 		assertTrue(controls.isHorizontalFill());
 		assertTrue(controls.isHorizontalGrab());
-		assertFalse(controls.isVerticalFill());
+		assertTrue(controls.isVerticalFill());
 		assertFalse(controls.isVerticalGrab());
 	}
 
 	@Test
 	public void testGetGridDescriptionWithWidth() {
+		when(compoundControl.getLabelAlignment()).thenReturn(LabelAlignment.DEFAULT);
 
 		final VTLabelWidthStyleProperty property = VTLabelwidthFactory.eINSTANCE.createLabelWidthStyleProperty();
 		property.setWidth(11);
@@ -160,21 +184,147 @@ public class CompoundControlSWTRenderer_ITest {
 
 		final CompoundControlSWTRenderer renderer = createRenderer();
 		final SWTGridDescription gridDescription = renderer.getGridDescription(mock(SWTGridDescription.class));
-		assertEquals(2, gridDescription.getColumns());
+		assertEquals(3, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
-		assertEquals(2, gridDescription.getGrid().size());
+		assertEquals(3, gridDescription.getGrid().size());
 
 		final SWTGridCell label = gridDescription.getGrid().get(0);
 		assertEquals(0, label.getColumn());
 		assertEquals(1, label.getHorizontalSpan());
 		assertEquals(0, label.getRow());
 		assertSame(renderer, label.getRenderer());
-		assertTrue(label.isHorizontalFill());
+		assertFalse(label.isHorizontalFill());
 		assertFalse(label.isHorizontalGrab());
 		assertFalse(label.isVerticalFill());
 		assertFalse(label.isVerticalGrab());
 		assertEquals(11, label.getPreferredSize().x);
 		assertEquals(SWT.DEFAULT, label.getPreferredSize().y);
+
+		final SWTGridCell validation = gridDescription.getGrid().get(1);
+		assertEquals(1, validation.getColumn());
+		assertEquals(1, validation.getHorizontalSpan());
+		assertEquals(0, validation.getRow());
+		assertSame(renderer, validation.getRenderer());
+		assertFalse(validation.isHorizontalFill());
+		assertFalse(validation.isHorizontalGrab());
+		assertFalse(validation.isVerticalFill());
+		assertFalse(validation.isVerticalGrab());
+
+		final SWTGridCell controls = gridDescription.getGrid().get(2);
+		assertEquals(2, controls.getColumn());
+		assertEquals(1, controls.getHorizontalSpan());
+		assertEquals(0, controls.getRow());
+		assertSame(renderer, controls.getRenderer());
+		assertTrue(controls.isHorizontalFill());
+		assertTrue(controls.isHorizontalGrab());
+		assertTrue(controls.isVerticalFill());
+		assertFalse(controls.isVerticalGrab());
+	}
+
+	@Test
+	public void testGetGridDescriptionControlLabelAlignmentLeft() {
+		when(compoundControl.getLabelAlignment()).thenReturn(LabelAlignment.LEFT);
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+		final SWTGridDescription gridDescription = renderer.getGridDescription(mock(SWTGridDescription.class));
+		assertEquals(3, gridDescription.getColumns());
+		assertEquals(1, gridDescription.getRows());
+		assertEquals(3, gridDescription.getGrid().size());
+
+		final SWTGridCell label = gridDescription.getGrid().get(0);
+		assertEquals(0, label.getColumn());
+		assertEquals(1, label.getHorizontalSpan());
+		assertEquals(0, label.getRow());
+		assertSame(renderer, label.getRenderer());
+		assertFalse(label.isHorizontalFill());
+		assertFalse(label.isHorizontalGrab());
+		assertFalse(label.isVerticalFill());
+		assertFalse(label.isVerticalGrab());
+
+		final SWTGridCell validation = gridDescription.getGrid().get(1);
+		assertEquals(1, validation.getColumn());
+		assertEquals(1, validation.getHorizontalSpan());
+		assertEquals(0, validation.getRow());
+		assertSame(renderer, validation.getRenderer());
+		assertFalse(validation.isHorizontalFill());
+		assertFalse(validation.isHorizontalGrab());
+		assertFalse(validation.isVerticalFill());
+		assertFalse(validation.isVerticalGrab());
+
+		final SWTGridCell controls = gridDescription.getGrid().get(2);
+		assertEquals(2, controls.getColumn());
+		assertEquals(1, controls.getHorizontalSpan());
+		assertEquals(0, controls.getRow());
+		assertSame(renderer, controls.getRenderer());
+		assertTrue(controls.isHorizontalFill());
+		assertTrue(controls.isHorizontalGrab());
+		assertTrue(controls.isVerticalFill());
+		assertFalse(controls.isVerticalGrab());
+	}
+
+	@Test
+	public void testGetGridDescriptionControlLabelAlignmentTop() {
+		when(compoundControl.getLabelAlignment()).thenReturn(LabelAlignment.TOP);
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+		final SWTGridDescription gridDescription = renderer.getGridDescription(mock(SWTGridDescription.class));
+		assertEquals(3, gridDescription.getColumns());
+		assertEquals(1, gridDescription.getRows());
+		assertEquals(3, gridDescription.getGrid().size());
+
+		final SWTGridCell label = gridDescription.getGrid().get(0);
+		assertEquals(0, label.getColumn());
+		assertEquals(1, label.getHorizontalSpan());
+		assertEquals(0, label.getRow());
+		assertSame(renderer, label.getRenderer());
+		assertFalse(label.isHorizontalFill());
+		assertFalse(label.isHorizontalGrab());
+		assertFalse(label.isVerticalFill());
+		assertFalse(label.isVerticalGrab());
+
+		final SWTGridCell validation = gridDescription.getGrid().get(1);
+		assertEquals(1, validation.getColumn());
+		assertEquals(1, validation.getHorizontalSpan());
+		assertEquals(0, validation.getRow());
+		assertSame(renderer, validation.getRenderer());
+		assertFalse(validation.isHorizontalFill());
+		assertFalse(validation.isHorizontalGrab());
+		assertFalse(validation.isVerticalFill());
+		assertFalse(validation.isVerticalGrab());
+
+		final SWTGridCell controls = gridDescription.getGrid().get(2);
+		assertEquals(2, controls.getColumn());
+		assertEquals(1, controls.getHorizontalSpan());
+		assertEquals(0, controls.getRow());
+		assertSame(renderer, controls.getRenderer());
+		assertTrue(controls.isHorizontalFill());
+		assertTrue(controls.isHorizontalGrab());
+		assertTrue(controls.isVerticalFill());
+		assertFalse(controls.isVerticalGrab());
+
+		/* assert that top was set to default because not supported */
+		verify(compoundControl, times(1)).setLabelAlignment(LabelAlignment.DEFAULT);
+	}
+
+	@Test
+	public void testGetGridDescriptionControlLabelAlignmentNone() {
+		when(compoundControl.getLabelAlignment()).thenReturn(LabelAlignment.NONE);
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+		final SWTGridDescription gridDescription = renderer.getGridDescription(mock(SWTGridDescription.class));
+		assertEquals(2, gridDescription.getColumns());
+		assertEquals(1, gridDescription.getRows());
+		assertEquals(2, gridDescription.getGrid().size());
+
+		final SWTGridCell validation = gridDescription.getGrid().get(0);
+		assertEquals(0, validation.getColumn());
+		assertEquals(1, validation.getHorizontalSpan());
+		assertEquals(0, validation.getRow());
+		assertSame(renderer, validation.getRenderer());
+		assertFalse(validation.isHorizontalFill());
+		assertFalse(validation.isHorizontalGrab());
+		assertFalse(validation.isVerticalFill());
+		assertFalse(validation.isVerticalGrab());
 
 		final SWTGridCell controls = gridDescription.getGrid().get(1);
 		assertEquals(1, controls.getColumn());
@@ -183,12 +333,12 @@ public class CompoundControlSWTRenderer_ITest {
 		assertSame(renderer, controls.getRenderer());
 		assertTrue(controls.isHorizontalFill());
 		assertTrue(controls.isHorizontalGrab());
-		assertFalse(controls.isVerticalFill());
+		assertTrue(controls.isVerticalFill());
 		assertFalse(controls.isVerticalGrab());
 	}
 
 	@Test
-	public void testCreateLabel() throws NoLabelFoundException {
+	public void testCreateLabel() throws NoLabelFoundException, DatabindingFailedException {
 		/* setup */
 		final VControl control1 = mock(VControl.class);
 		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
@@ -208,6 +358,22 @@ public class CompoundControlSWTRenderer_ITest {
 
 		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
 			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP1, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP2, String.class));
+
+		final IEMFValueProperty valueProperty1 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr1, domainModel)).thenReturn(valueProperty1);
+		final EStructuralFeature structuralFeature1 = mock(EStructuralFeature.class);
+		when(valueProperty1.getStructuralFeature()).thenReturn(structuralFeature1);
+
+		final IEMFValueProperty valueProperty2 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr2, domainModel)).thenReturn(valueProperty2);
+		final EStructuralFeature structuralFeature2 = mock(EStructuralFeature.class);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
 
 		final CompoundControlSWTRenderer renderer = createRenderer();
 
@@ -215,19 +381,14 @@ public class CompoundControlSWTRenderer_ITest {
 		final Control label = renderer.createLabel(shell);
 
 		/* assert */
-		assertTrue(Composite.class.isInstance(label));
-		final Composite labelComposite = Composite.class.cast(label);
-		assertEquals(3, labelComposite.getChildren().length);
-		for (final Control control : labelComposite.getChildren()) {
-			assertTrue(Label.class.isInstance(control));
-		}
-		assertEquals(LABEL1, Label.class.cast(labelComposite.getChildren()[0]).getText());
-		assertEquals("/", Label.class.cast(labelComposite.getChildren()[1]).getText()); //$NON-NLS-1$
-		assertEquals(LABEL2, Label.class.cast(labelComposite.getChildren()[2]).getText());
+		assertTrue(Label.class.isInstance(label));
+		final Label labelComposite = Label.class.cast(label);
+		assertEquals(LABEL1 + " / " + LABEL2, labelComposite.getText()); //$NON-NLS-1$
+		assertEquals(TOOLTIP1 + "\n" + TOOLTIP2, labelComposite.getToolTipText()); //$NON-NLS-1$
 	}
 
 	@Test
-	public void testCreateLabelAlignmentDefault() throws NoLabelFoundException {
+	public void testCreateLabelAlignmentDefault() throws NoLabelFoundException, DatabindingFailedException {
 		/* setup */
 		final VControl control1 = mock(VControl.class);
 		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
@@ -247,6 +408,22 @@ public class CompoundControlSWTRenderer_ITest {
 
 		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
 			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP1, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP2, String.class));
+
+		final IEMFValueProperty valueProperty1 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr1, domainModel)).thenReturn(valueProperty1);
+		final EStructuralFeature structuralFeature1 = mock(EStructuralFeature.class);
+		when(valueProperty1.getStructuralFeature()).thenReturn(structuralFeature1);
+
+		final IEMFValueProperty valueProperty2 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr2, domainModel)).thenReturn(valueProperty2);
+		final EStructuralFeature structuralFeature2 = mock(EStructuralFeature.class);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
 
 		final CompoundControlSWTRenderer renderer = createRenderer();
 
@@ -254,17 +431,12 @@ public class CompoundControlSWTRenderer_ITest {
 		final Control label = renderer.createLabel(shell);
 
 		/* assert */
-		final Composite labelComposite = Composite.class.cast(label);
-		assertFalse(GridData.class.cast(labelComposite.getChildren()[0].getLayoutData()).grabExcessHorizontalSpace);
-		assertFalse(GridData.class.cast(labelComposite.getChildren()[1].getLayoutData()).grabExcessHorizontalSpace);
-		assertTrue(GridData.class.cast(labelComposite.getChildren()[2].getLayoutData()).grabExcessHorizontalSpace);
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[0]).getAlignment());
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[1]).getAlignment());
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[2]).getAlignment());
+		final Label swtLabel = Label.class.cast(label);
+		assertEquals(SWT.LEFT, swtLabel.getAlignment());
 	}
 
 	@Test
-	public void testCreateLabelAlignmentLeft() throws NoLabelFoundException {
+	public void testCreateLabelAlignmentLeft() throws NoLabelFoundException, DatabindingFailedException {
 		/* setup */
 		final VControl control1 = mock(VControl.class);
 		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
@@ -284,6 +456,21 @@ public class CompoundControlSWTRenderer_ITest {
 
 		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
 			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP1, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP2, String.class));
+
+		final IEMFValueProperty valueProperty1 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr1, domainModel)).thenReturn(valueProperty1);
+		final EStructuralFeature structuralFeature1 = mock(EStructuralFeature.class);
+		when(valueProperty1.getStructuralFeature()).thenReturn(structuralFeature1);
+
+		final IEMFValueProperty valueProperty2 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr2, domainModel)).thenReturn(valueProperty2);
+		final EStructuralFeature structuralFeature2 = mock(EStructuralFeature.class);
 
 		final CompoundControlSWTRenderer renderer = createRenderer();
 
@@ -292,22 +479,18 @@ public class CompoundControlSWTRenderer_ITest {
 		property.setType(AlignmentType.LEFT);
 		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(property);
 		Mockito.when(viewTemplateProvider.getStyleProperties(compoundControl, viewModelContext)).thenReturn(properties);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
 
 		/* act */
 		final Control label = renderer.createLabel(shell);
 
 		/* assert */
-		final Composite labelComposite = Composite.class.cast(label);
-		assertFalse(GridData.class.cast(labelComposite.getChildren()[0].getLayoutData()).grabExcessHorizontalSpace);
-		assertFalse(GridData.class.cast(labelComposite.getChildren()[1].getLayoutData()).grabExcessHorizontalSpace);
-		assertTrue(GridData.class.cast(labelComposite.getChildren()[2].getLayoutData()).grabExcessHorizontalSpace);
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[0]).getAlignment());
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[1]).getAlignment());
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[2]).getAlignment());
+		final Label swtLabel = Label.class.cast(label);
+		assertEquals(SWT.LEFT, swtLabel.getAlignment());
 	}
 
 	@Test
-	public void testCreateLabelAlignmentRight() throws NoLabelFoundException {
+	public void testCreateLabelAlignmentRight() throws NoLabelFoundException, DatabindingFailedException {
 		/* setup */
 		final VControl control1 = mock(VControl.class);
 		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
@@ -327,6 +510,22 @@ public class CompoundControlSWTRenderer_ITest {
 
 		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
 			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP1, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP2, String.class));
+
+		final IEMFValueProperty valueProperty1 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr1, domainModel)).thenReturn(valueProperty1);
+		final EStructuralFeature structuralFeature1 = mock(EStructuralFeature.class);
+		when(valueProperty1.getStructuralFeature()).thenReturn(structuralFeature1);
+
+		final IEMFValueProperty valueProperty2 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr2, domainModel)).thenReturn(valueProperty2);
+		final EStructuralFeature structuralFeature2 = mock(EStructuralFeature.class);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
 
 		final CompoundControlSWTRenderer renderer = createRenderer();
 
@@ -340,13 +539,272 @@ public class CompoundControlSWTRenderer_ITest {
 		final Control label = renderer.createLabel(shell);
 
 		/* assert */
-		final Composite labelComposite = Composite.class.cast(label);
-		assertTrue(GridData.class.cast(labelComposite.getChildren()[0].getLayoutData()).grabExcessHorizontalSpace);
-		assertFalse(GridData.class.cast(labelComposite.getChildren()[1].getLayoutData()).grabExcessHorizontalSpace);
-		assertFalse(GridData.class.cast(labelComposite.getChildren()[2].getLayoutData()).grabExcessHorizontalSpace);
-		assertEquals(SWT.RIGHT, Label.class.cast(labelComposite.getChildren()[0]).getAlignment());
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[1]).getAlignment());
-		assertEquals(SWT.LEFT, Label.class.cast(labelComposite.getChildren()[2]).getAlignment());
+		final Label swtLabel = Label.class.cast(label);
+		assertEquals(SWT.RIGHT, swtLabel.getAlignment());
+	}
+
+	// TODO
+	@Test
+	public void testCreateLabelWrapDefault() throws NoLabelFoundException, DatabindingFailedException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		when(emfFormsLabelProvider.getDisplayName(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL1, String.class));
+
+		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP1, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP2, String.class));
+
+		final IEMFValueProperty valueProperty1 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr1, domainModel)).thenReturn(valueProperty1);
+		final EStructuralFeature structuralFeature1 = mock(EStructuralFeature.class);
+		when(valueProperty1.getStructuralFeature()).thenReturn(structuralFeature1);
+
+		final IEMFValueProperty valueProperty2 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr2, domainModel)).thenReturn(valueProperty2);
+		final EStructuralFeature structuralFeature2 = mock(EStructuralFeature.class);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+
+		/* act */
+		final Control label = renderer.createLabel(shell);
+
+		/* assert */
+		final Label swtLabel = Label.class.cast(label);
+		assertEquals(0, swtLabel.getStyle() & SWT.WRAP);
+	}
+
+	@Test
+	public void testCreateLabelWrapDisabled() throws NoLabelFoundException, DatabindingFailedException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		when(emfFormsLabelProvider.getDisplayName(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL1, String.class));
+
+		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP1, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP2, String.class));
+
+		final IEMFValueProperty valueProperty1 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr1, domainModel)).thenReturn(valueProperty1);
+		final EStructuralFeature structuralFeature1 = mock(EStructuralFeature.class);
+		when(valueProperty1.getStructuralFeature()).thenReturn(structuralFeature1);
+
+		final IEMFValueProperty valueProperty2 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr2, domainModel)).thenReturn(valueProperty2);
+		final EStructuralFeature structuralFeature2 = mock(EStructuralFeature.class);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+
+		final VTLabelWrapStyleProperty property = VTWrapFactory.eINSTANCE.createLabelWrapStyleProperty();
+		property.setWrapLabel(false);
+		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(property);
+		Mockito.when(viewTemplateProvider.getStyleProperties(compoundControl, viewModelContext)).thenReturn(properties);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
+
+		/* act */
+		final Control label = renderer.createLabel(shell);
+
+		/* assert */
+		final Label swtLabel = Label.class.cast(label);
+		assertEquals(0, swtLabel.getStyle() & SWT.WRAP);
+	}
+
+	@Test
+	public void testCreateLabelWrapEnabled() throws NoLabelFoundException, DatabindingFailedException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		when(emfFormsLabelProvider.getDisplayName(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL1, String.class));
+
+		when(emfFormsLabelProvider.getDisplayName(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(LABEL2, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr1, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP1, String.class));
+
+		when(emfFormsLabelProvider.getDescription(dmr2, domainModel))
+			.thenReturn(Observables.constantObservableValue(TOOLTIP2, String.class));
+
+		final IEMFValueProperty valueProperty1 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr1, domainModel)).thenReturn(valueProperty1);
+		final EStructuralFeature structuralFeature1 = mock(EStructuralFeature.class);
+		when(valueProperty1.getStructuralFeature()).thenReturn(structuralFeature1);
+
+		final IEMFValueProperty valueProperty2 = mock(IEMFValueProperty.class);
+		when(emfFormsDatabindingEMF.getValueProperty(dmr2, domainModel)).thenReturn(valueProperty2);
+		final EStructuralFeature structuralFeature2 = mock(EStructuralFeature.class);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
+
+		final CompoundControlSWTRenderer renderer = createRenderer();
+
+		final VTLabelWrapStyleProperty property = VTWrapFactory.eINSTANCE.createLabelWrapStyleProperty();
+		property.setWrapLabel(true);
+		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(property);
+		Mockito.when(viewTemplateProvider.getStyleProperties(compoundControl, viewModelContext)).thenReturn(properties);
+		when(valueProperty2.getStructuralFeature()).thenReturn(structuralFeature2);
+
+		/* act */
+		final Control label = renderer.createLabel(shell);
+
+		/* assert */
+		final Label swtLabel = Label.class.cast(label);
+		assertNotEquals(0, swtLabel.getStyle() & SWT.WRAP);
+	}
+
+	@Test
+	public void testCreateValidationIconNoChildren()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup */
+		when(compoundControl.getControls()).thenReturn(ECollections.<VControl> emptyEList());
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+
+		/* act */
+		final Control label = renderer.createValidationIcon(shell);
+
+		/* assert */
+		verify(renderer, times(1)).createDummyValidationIcon(shell);
+		assertTrue(Label.class.isInstance(label));
+	}
+
+	@Test
+	public void testCreateValidationIconFirstCellHasNoRenderer()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+
+		/* act */
+		final Control label = renderer.createValidationIcon(shell);
+
+		/* assert */
+		verify(renderer, times(1)).createDummyValidationIcon(shell);
+		assertTrue(Label.class.isInstance(label));
+	}
+
+	@Test
+	public void testCreateValidationIconFirstCellRenderer1Column()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		final DummyRenderer dummyRenderer1 = createDummyRendererNoValidation(control1);
+		when(emfFormsRendererFactory.getRendererInstance(control1, viewModelContext)).thenReturn(dummyRenderer1);
+
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+
+		/* act */
+		final Control label = renderer.createValidationIcon(shell);
+
+		/* assert */
+		verify(renderer, times(1)).createDummyValidationIcon(shell);
+		assertTrue(Label.class.isInstance(label));
+	}
+
+	@Test
+	public void testCreateValidationIconFirstCellRenderer2Columns()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		/* setup */
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		final DummyRenderer dummyRenderer1 = spy(createDummyRenderer(control1));
+		when(emfFormsRendererFactory.getRendererInstance(control1, viewModelContext)).thenReturn(dummyRenderer1);
+
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+
+		/* act */
+		final Control label = renderer.createValidationIcon(shell);
+
+		/* assert */
+		verify(renderer, times(0)).createDummyValidationIcon(shell);
+		verify(dummyRenderer1, times(1)).createLabel(C_VALIDATION, shell);
+		assertTrue(Label.class.isInstance(label));
 	}
 
 	@Test
@@ -559,8 +1017,20 @@ public class CompoundControlSWTRenderer_ITest {
 
 	@Test
 	public void testRenderControlColumn1() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(compoundControl.getControls()).thenReturn(ECollections.<VControl> emptyEList());
 		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
 		when(swtGridCell.getColumn()).thenReturn(1);
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+		doReturn(new Label(shell, SWT.NONE)).when(renderer).createLabel(shell);
+		renderer.renderControl(swtGridCell, shell);
+		verify(renderer, times(1)).createValidationIcon(shell);
+	}
+
+	@Test
+	public void testRenderControlColumn2() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(compoundControl.getControls()).thenReturn(ECollections.<VControl> emptyEList());
+		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
+		when(swtGridCell.getColumn()).thenReturn(2);
 		final CompoundControlSWTRenderer renderer = spy(createRenderer());
 		doReturn(new Label(shell, SWT.NONE)).when(renderer).createControls(shell);
 		renderer.renderControl(swtGridCell, shell);
@@ -569,10 +1039,36 @@ public class CompoundControlSWTRenderer_ITest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testRenderControlColumnOther() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(compoundControl.getControls()).thenReturn(ECollections.<VControl> emptyEList());
 		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
-		when(swtGridCell.getColumn()).thenReturn(2);
+		when(swtGridCell.getColumn()).thenReturn(3);
 		final CompoundControlSWTRenderer renderer = spy(createRenderer());
 		renderer.renderControl(swtGridCell, shell);
+	}
+
+	@Test
+	public void testRenderControlColumn0ControlLabelAlignmentNone()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(compoundControl.getLabelAlignment()).thenReturn(LabelAlignment.NONE);
+		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
+		when(swtGridCell.getColumn()).thenReturn(0);
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+		doReturn(new Label(shell, SWT.NONE)).when(renderer).createValidationIcon(shell);
+		renderer.renderControl(swtGridCell, shell);
+		verify(renderer, times(1)).createValidationIcon(shell);
+	}
+
+	@Test
+	public void testRenderControlColumn1ControlLabelAlignmentNone()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(compoundControl.getLabelAlignment()).thenReturn(LabelAlignment.NONE);
+		when(compoundControl.getControls()).thenReturn(ECollections.<VControl> emptyEList());
+		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
+		when(swtGridCell.getColumn()).thenReturn(1);
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+		doReturn(new Label(shell, SWT.NONE)).when(renderer).createControls(shell);
+		renderer.renderControl(swtGridCell, shell);
+		verify(renderer, times(1)).createControls(shell);
 	}
 
 	@Test
@@ -619,7 +1115,7 @@ public class CompoundControlSWTRenderer_ITest {
 
 		/* act */
 		renderer.init();
-		final Control controls = renderer.render(new SWTGridCell(0, 1, renderer), shell);
+		final Control controls = renderer.render(new SWTGridCell(0, 2, renderer), shell);
 		renderer.finalizeRendering(shell);
 
 		/* assert */
@@ -641,23 +1137,33 @@ public class CompoundControlSWTRenderer_ITest {
 	}
 
 	private DummyRenderer createDummyRenderer(final VControl control) {
-		final DummyRenderer dummyRenderer = new DummyRenderer(control, viewModelContext, reportService);
+		final DummyRenderer dummyRenderer = new DummyRenderer(control, viewModelContext, reportService, true);
 		dummyRenderer.init();
 		return dummyRenderer;
 	}
 
-	private static final class DummyRenderer extends AbstractSWTRenderer<VElement> {
+	private DummyRenderer createDummyRendererNoValidation(final VControl control) {
+		final DummyRenderer dummyRenderer = new DummyRenderer(control, viewModelContext, reportService, false);
+		dummyRenderer.init();
+		return dummyRenderer;
+	}
+
+	public static class DummyRenderer extends AbstractSWTRenderer<VElement> {
 
 		private SWTGridDescription rendererGridDescription;
+		private final boolean showValidation;
 
-		DummyRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		DummyRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+			boolean showValidation) {
 			super(vElement, viewContext, reportService);
+			this.showValidation = showValidation;
 		}
 
 		@Override
 		public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 			if (rendererGridDescription == null) {
-				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, showValidation ? 2 : 1,
+					this);
 				for (int i = 0; i < rendererGridDescription.getGrid().size() - 1; i++) {
 					final SWTGridCell swtGridCell = rendererGridDescription.getGrid().get(i);
 					swtGridCell.setHorizontalGrab(false);
@@ -669,7 +1175,11 @@ public class CompoundControlSWTRenderer_ITest {
 		@Override
 		protected Control renderControl(SWTGridCell gridCell, Composite parent)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-			switch (gridCell.getColumn()) {
+			int column = gridCell.getColumn();
+			if (!showValidation) {
+				column++;
+			}
+			switch (column) {
 			case 0:
 				return createLabel(C_VALIDATION, parent);
 			case 1:
@@ -679,7 +1189,7 @@ public class CompoundControlSWTRenderer_ITest {
 			}
 		}
 
-		private Control createLabel(String string, Composite parent) {
+		protected Control createLabel(String string, Composite parent) {
 			final Label label = new Label(parent, SWT.NONE);
 			label.setText(string);
 			return label;
