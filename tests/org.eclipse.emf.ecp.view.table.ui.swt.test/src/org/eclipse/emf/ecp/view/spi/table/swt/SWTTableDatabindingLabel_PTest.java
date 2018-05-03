@@ -9,16 +9,19 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.table.ui.swt.test;
+package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -36,7 +39,6 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -45,9 +47,14 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactory;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.wrap.model.VTLabelWrapStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.wrap.model.VTWrapFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -57,6 +64,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -67,6 +75,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 /**
  * JUnit tests for {@link TableControlSWTRenderer} testing the data binding of the table.
@@ -89,6 +98,8 @@ public class SWTTableDatabindingLabel_PTest {
 	private EClass domainModel;
 	private VTableControl vTableControl;
 	private EMFFormsLabelProvider labelProvider;
+	private VTViewTemplateProvider vtViewTemplateProvider;
+	private ViewModelContextImpl viewContext;
 
 	/**
 	 * Set up executed before every test.
@@ -127,10 +138,10 @@ public class SWTTableDatabindingLabel_PTest {
 			observableValue);
 
 		final ReportService reportservice = mock(ReportService.class);
-		final VTViewTemplateProvider vtViewTemplateProvider = mock(VTViewTemplateProvider.class);
+		vtViewTemplateProvider = mock(VTViewTemplateProvider.class);
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 		final EMFFormsEditSupport emfFormsEditSupport = mock(EMFFormsEditSupport.class);
-		final ViewModelContext viewContext = new ViewModelContextImpl(vTableControl, domainModel);
+		viewContext = new ViewModelContextImpl(vTableControl, domainModel);
 
 		renderer = new TableControlSWTRenderer(vTableControl, viewContext, reportservice, databindingService,
 			labelProvider, vtViewTemplateProvider, imageRegistryService, emfFormsEditSupport);
@@ -283,6 +294,30 @@ public class SWTTableDatabindingLabel_PTest {
 		((EClass) mockedObservableList.get(0)).setAbstract(true);
 
 		assertDatabinding(mockedObservableList, table);
+	}
+
+	@Test
+	public void testCreateLabelStyleBits() {
+		/* setup */
+		final VTControlLabelAlignmentStyleProperty alignProperty = VTAlignmentFactory.eINSTANCE
+			.createControlLabelAlignmentStyleProperty();
+		alignProperty.setType(AlignmentType.RIGHT);
+
+		final VTLabelWrapStyleProperty labelWrapStyleProperty = VTWrapFactory.eINSTANCE.createLabelWrapStyleProperty();
+		labelWrapStyleProperty.setWrapLabel(true);
+
+		final Set<VTStyleProperty> properties = new LinkedHashSet<VTStyleProperty>();
+		properties.add(alignProperty);
+		properties.add(labelWrapStyleProperty);
+		Mockito.when(vtViewTemplateProvider.getStyleProperties(vTableControl, viewContext)).thenReturn(properties);
+
+		/* act */
+		final Control render = renderer.createLabel(shell);
+
+		/* assert */
+		assertTrue(Label.class.isInstance(render));
+		assertNotEquals(0, render.getStyle() & SWT.WRAP);
+		assertEquals(SWT.RIGHT, Label.class.cast(render).getAlignment());
 	}
 
 	private void assertDatabinding(final WritableList mockedObservableList, final Table table) {

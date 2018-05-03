@@ -61,6 +61,7 @@ import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRendererUtil;
 import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -313,7 +314,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final IObservableValue labelText = getLabelText(dmrToCheck, false);
 		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
 
-		final Label titleLabel = new Label(parent, SWT.NONE);
+		final Label titleLabel = new Label(parent, AbstractControlSWTRendererUtil
+			.getLabelStyleBits(getVTViewTemplateProvider(), getVElement(), getViewModelContext()));
 		titleLabel.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 		titleLabel.setBackground(parent.getBackground());
 

@@ -12,6 +12,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
+import org.eclipse.emf.ecp.view.spi.table.swt.SWTTableDatabindingLabel_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTable_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
