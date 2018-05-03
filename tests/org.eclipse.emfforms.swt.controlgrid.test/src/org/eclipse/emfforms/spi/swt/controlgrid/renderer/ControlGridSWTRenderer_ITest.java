@@ -14,6 +14,7 @@ package org.eclipse.emfforms.spi.swt.controlgrid.renderer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.when;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -319,6 +321,111 @@ public class ControlGridSWTRenderer_ITest {
 	}
 
 	@Test
+	public void testCreateGridDescriptionForEmptyCellsEmpty() {
+		/* setup */
+		final ControlGridSWTRenderer renderer = createRenderer();
+
+		/* act */
+		final SWTGridDescription empty = renderer
+			.createGridDescriptionForEmptyCells(Collections.<SWTGridDescription> emptyList());
+
+		/* assert */
+		assertEquals(1, empty.getRows());
+		assertEquals(1, empty.getColumns());
+		assertEquals(1, empty.getGrid().size());
+		assertFalse(empty.getGrid().get(0).isHorizontalFill());
+		assertFalse(empty.getGrid().get(0).isHorizontalGrab());
+		assertNull(empty.getGrid().get(0).getPreferredSize());
+	}
+
+	@Test
+	public void testCreateGridDescriptionForEmptyCellsDifferent() {
+		/* setup */
+		final ControlGridSWTRenderer renderer = createRenderer();
+
+		/* act */
+		final SWTGridDescription empty = renderer
+			.createGridDescriptionForEmptyCells(
+				Arrays.asList(
+					GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, null),
+					GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, null)));
+
+		/* assert */
+		assertEquals(1, empty.getRows());
+		assertEquals(1, empty.getColumns());
+		assertEquals(1, empty.getGrid().size());
+		assertFalse(empty.getGrid().get(0).isHorizontalFill());
+		assertFalse(empty.getGrid().get(0).isHorizontalGrab());
+		assertNull(empty.getGrid().get(0).getPreferredSize());
+	}
+
+	@Test
+	public void testCreateGridDescriptionForEmptyCellsSame() {
+		/* setup */
+		final ControlGridSWTRenderer renderer = createRenderer();
+
+		final SWTGridDescription simpleGrid1 = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, null);
+		final SWTGridDescription simpleGrid2 = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, null);
+
+		simpleGrid1.getGrid().get(0).setHorizontalGrab(false);
+		simpleGrid1.getGrid().get(0).setHorizontalFill(false);
+		simpleGrid1.getGrid().get(0).setPreferredSize(50, SWT.DEFAULT);
+		simpleGrid2.getGrid().get(0).setHorizontalGrab(false);
+		simpleGrid2.getGrid().get(0).setHorizontalFill(false);
+		simpleGrid2.getGrid().get(0).setPreferredSize(50, SWT.DEFAULT);
+
+		simpleGrid1.getGrid().get(1).setHorizontalGrab(false);
+		simpleGrid1.getGrid().get(1).setHorizontalFill(false);
+		simpleGrid1.getGrid().get(1).setPreferredSize(16, 17);
+		simpleGrid2.getGrid().get(1).setHorizontalGrab(false);
+		simpleGrid2.getGrid().get(1).setHorizontalFill(false);
+		simpleGrid2.getGrid().get(1).setPreferredSize(16, 17);
+
+		simpleGrid1.getGrid().get(2).setHorizontalGrab(true);
+		simpleGrid1.getGrid().get(2).setHorizontalFill(true);
+		simpleGrid1.getGrid().get(2).setPreferredSize(null);
+		simpleGrid2.getGrid().get(2).setHorizontalGrab(false);
+		simpleGrid2.getGrid().get(2).setHorizontalFill(false);
+		simpleGrid2.getGrid().get(2).setPreferredSize(1968, SWT.DEFAULT);
+
+		/* act */
+		final SWTGridDescription empty = renderer
+			.createGridDescriptionForEmptyCells(
+				Arrays.asList(
+					simpleGrid1,
+					simpleGrid2));
+
+		/* assert */
+		assertEquals(1, empty.getRows());
+		assertEquals(3, empty.getColumns());
+		assertEquals(3, empty.getGrid().size());
+
+		assertFalse(empty.getGrid().get(0).isHorizontalFill());
+		assertFalse(empty.getGrid().get(0).isHorizontalGrab());
+		assertEquals(50, empty.getGrid().get(0).getPreferredSize().x);
+		assertEquals(SWT.DEFAULT, empty.getGrid().get(0).getPreferredSize().y);
+
+		assertFalse(empty.getGrid().get(1).isHorizontalFill());
+		assertFalse(empty.getGrid().get(1).isHorizontalGrab());
+		assertEquals(16, empty.getGrid().get(1).getPreferredSize().x);
+		assertEquals(17, empty.getGrid().get(1).getPreferredSize().y);
+
+		assertFalse(empty.getGrid().get(2).isHorizontalFill());
+		assertFalse(empty.getGrid().get(2).isHorizontalGrab());
+		assertEquals(1968, empty.getGrid().get(2).getPreferredSize().x);
+		assertEquals(SWT.DEFAULT, empty.getGrid().get(2).getPreferredSize().y);
+	}
+
+	@Test
+	public void testComputePreferredWidthBasedOnPixelGridSize() {
+		final ControlGridSWTRenderer renderer = createRenderer();
+		assertEquals(50, renderer.computePreferredWidthBasedOnPixelGridSize(50, 50));
+		assertEquals(100, renderer.computePreferredWidthBasedOnPixelGridSize(51, 50));
+		assertEquals(100, renderer.computePreferredWidthBasedOnPixelGridSize(99, 50));
+		assertEquals(100, renderer.computePreferredWidthBasedOnPixelGridSize(100, 50));
+	}
+
+	@Test
 	public void testRenderEmptyRow() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
 		when(swtGridCell.getColumn()).thenReturn(0);
@@ -362,8 +469,13 @@ public class ControlGridSWTRenderer_ITest {
 		final Composite composite = Composite.class.cast(control);
 		assertEquals(2, composite.getChildren().length);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[0]));
-		final Label emptyCell = Label.class.cast(composite.getChildren()[0]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[0]));
+		final Composite wrapperComposite = Composite.class.cast(composite.getChildren()[0]);
+		assertEquals(1, wrapperComposite.getChildren().length);
+		assertGridData(wrapperComposite, 1, true);
+
+		assertTrue(Label.class.isInstance(wrapperComposite.getChildren()[0]));
+		final Label emptyCell = Label.class.cast(wrapperComposite.getChildren()[0]);
 		assertLabelIsEmpty(emptyCell);
 		assertGridData(emptyCell, 1, false);
 
@@ -654,10 +766,10 @@ public class ControlGridSWTRenderer_ITest {
 		assertTrue(Composite.class.isInstance(render));
 		final Composite composite = Composite.class.cast(render);
 		// 1. row 3*4 (controls)
-		// 2. row 2*4 (controls) + 2 (empty cell)
+		// 2. row 2*4 (controls) + 4 (empty cell)
 		// 3. row 1 (empty row)
 		// 4. row 2*4 (controls)
-		assertEquals(3 * 4 + 2 * 4 + 2 + 1 + 2 * 4, composite.getChildren().length);
+		assertEquals(3 * 4 + 2 * 4 + 4 + 1 + 2 * 4, composite.getChildren().length);
 		// renderers require 3 columns (+1 for spacing) -> 4 required
 		// rows require 3, 2 and 1 columns -> 6 required
 		// -> total = 4*6
@@ -674,7 +786,7 @@ public class ControlGridSWTRenderer_ITest {
 
 		final Composite control113 = Composite.class.cast(composite.getChildren()[2]);
 		assertLabelText(control113, 2);
-		assertGridData(control113, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
+		assertGridData(control113, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) divided by 3 (# controls)
 
 		final Label control11s = Label.class.cast(composite.getChildren()[3]);
 		assertLabelIsEmpty(control11s);
@@ -691,7 +803,7 @@ public class ControlGridSWTRenderer_ITest {
 
 		final Composite control123 = Composite.class.cast(composite.getChildren()[6]);
 		assertLabelText(control123, 2);
-		assertGridData(control123, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
+		assertGridData(control123, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) divided by 3 (# controls)
 
 		final Label control12s = Label.class.cast(composite.getChildren()[7]);
 		assertLabelIsEmpty(control12s);
@@ -708,7 +820,7 @@ public class ControlGridSWTRenderer_ITest {
 
 		final Composite control133 = Composite.class.cast(composite.getChildren()[10]);
 		assertLabelText(control133, 2);
-		assertGridData(control133, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
+		assertGridData(control133, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) divided by 3 (# controls)
 
 		final Label control13s = Label.class.cast(composite.getChildren()[11]);
 		assertLabelIsEmpty(control13s);
@@ -725,79 +837,86 @@ public class ControlGridSWTRenderer_ITest {
 
 		final Composite control213 = Composite.class.cast(composite.getChildren()[14]);
 		assertLabelText(control213, 2);
-		assertGridData(control213, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
+		assertGridData(control213, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) divided by 3 (# controls)
 
 		final Label control21s = Label.class.cast(composite.getChildren()[15]);
 		assertLabelIsEmpty(control21s);
 		assertGridData(control21s, 1, false);
 
 		/* Row2 Empty cell */
-		final Label empty22 = Label.class.cast(composite.getChildren()[16]);
-		assertLabelIsEmpty(empty22);
-		assertGridData(empty22, (4 * 6 - 3 * 3) / 3 + 2, false); // columns - 3*3 (1-spanning) devided by 3 (# controls)
-																	// + 2 (since we only render 1 cell)
+		final Composite empty221 = Composite.class.cast(composite.getChildren()[16]);
+		assertLabelIsEmpty(empty221);
+		assertGridData(empty221, 1, false);
 
-		final Label empty22s = Label.class.cast(composite.getChildren()[17]);
+		final Composite empty222 = Composite.class.cast(composite.getChildren()[17]);
+		assertLabelIsEmpty(empty222);
+		assertGridData(empty222, 1, false);
+
+		final Composite empty223 = Composite.class.cast(composite.getChildren()[18]);
+		assertLabelIsEmpty(empty223);
+		assertGridData(empty223, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) divided by 3 (# controls)
+
+		final Label empty22s = Label.class.cast(composite.getChildren()[19]);
 		assertLabelIsEmpty(empty22s);
 		assertGridData(empty22s, 1, false);
 
 		/* Row2 Control3 */
-		final Composite control231 = Composite.class.cast(composite.getChildren()[18]);
+		final Composite control231 = Composite.class.cast(composite.getChildren()[20]);
 		assertLabelText(control231, 0);
 		assertGridData(control231, 1, false);
 
-		final Composite control232 = Composite.class.cast(composite.getChildren()[19]);
+		final Composite control232 = Composite.class.cast(composite.getChildren()[21]);
 		assertLabelText(control232, 1);
 		assertGridData(control232, 1, false);
 
-		final Composite control233 = Composite.class.cast(composite.getChildren()[20]);
+		final Composite control233 = Composite.class.cast(composite.getChildren()[22]);
 		assertLabelText(control233, 2);
-		assertGridData(control233, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
+		assertGridData(control233, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) divided by 3 (# controls)
 
-		final Label control23s = Label.class.cast(composite.getChildren()[21]);
+		final Label control23s = Label.class.cast(composite.getChildren()[23]);
 		assertLabelIsEmpty(control23s);
 		assertGridData(control23s, 1, false);
 
 		/* Row3 */
-		final Label emptyRow3 = Label.class.cast(composite.getChildren()[22]);
+		final Label emptyRow3 = Label.class.cast(composite.getChildren()[24]);
 		assertLabelIsEmpty(emptyRow3);
 		assertGridData(emptyRow3, 4 * 6, false);// full width
 
 		/* Row4 Control1 */
-		final Composite control411 = Composite.class.cast(composite.getChildren()[23]);
+		final Composite control411 = Composite.class.cast(composite.getChildren()[25]);
 		assertLabelText(control411, 0);
 		assertGridData(control411, 1, false);
 
-		final Composite control412 = Composite.class.cast(composite.getChildren()[24]);
+		final Composite control412 = Composite.class.cast(composite.getChildren()[26]);
 		assertLabelText(control412, 1);
 		assertGridData(control412, 1, false);
 
-		final Composite control413 = Composite.class.cast(composite.getChildren()[25]);
+		final Composite control413 = Composite.class.cast(composite.getChildren()[27]);
 		assertLabelText(control413, 2);
-		assertGridData(control413, (4 * 6 - 2 * 3) / 2, true); // columns - 2*3 (1-spanning) devided by 2 (# controls)
+		assertGridData(control413, (4 * 6 - 2 * 3) / 2, true); // columns - 2*3 (1-spanning) divided by 2 (# controls)
 
-		final Label control41s = Label.class.cast(composite.getChildren()[26]);
+		final Label control41s = Label.class.cast(composite.getChildren()[28]);
 		assertLabelIsEmpty(control41s);
 		assertGridData(control41s, 1, false);
 
 		/* Row4 Control2 */
-		final Composite control421 = Composite.class.cast(composite.getChildren()[27]);
+		final Composite control421 = Composite.class.cast(composite.getChildren()[29]);
 		assertLabelText(control421, 0);
 		assertGridData(control421, 1, false);
 
-		final Composite control422 = Composite.class.cast(composite.getChildren()[28]);
+		final Composite control422 = Composite.class.cast(composite.getChildren()[30]);
 		assertLabelText(control422, 1);
 		assertGridData(control422, 1, false);
 
-		final Composite control423 = Composite.class.cast(composite.getChildren()[29]);
+		final Composite control423 = Composite.class.cast(composite.getChildren()[31]);
 		assertLabelText(control423, 2);
-		assertGridData(control423, (4 * 6 - 2 * 3) / 2, true); // columns - 2*3 (1-spanning) devided by 2 (# controls)
+		assertGridData(control423, (4 * 6 - 2 * 3) / 2, true); // columns - 2*3 (1-spanning) divided by 2 (# controls)
 
-		final Label control42s = Label.class.cast(composite.getChildren()[30]);
+		final Label control42s = Label.class.cast(composite.getChildren()[32]);
 		assertLabelIsEmpty(control42s);
 		assertGridData(control42s, 1, false);
 
-		/* last child should have index 30 */
+		/* last child should have index 32 */
 	}
 
 	// END COMPLEX CODE
@@ -868,7 +987,12 @@ public class ControlGridSWTRenderer_ITest {
 	private static void assertLabelText(Composite composite, int text) {
 		assertEquals(1, composite.getChildren().length);
 		assertLabelText(Label.class.cast(composite.getChildren()[0]), text);
+	}
 
+	private static void assertLabelIsEmpty(Composite composite) {
+		assertEquals(1, composite.getChildren().length);
+		final Label label = (Label) composite.getChildren()[0];
+		assertTrue((label.getText() == null || label.getText().isEmpty()) && label.getImage() == null);
 	}
 
 	private static void assertGridData(Control control, int hSpan, boolean horizontalGrab) {
