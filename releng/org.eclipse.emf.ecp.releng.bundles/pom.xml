@@ -202,7 +202,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.util.swt.rap</module>	
 		<module>../../bundles/org.eclipse.emf.ecp.rap</module>	
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.rap</module>		
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.rap</module>	
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.nebula.grid.rap</module>	
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui.rap</module>
 		
 		
