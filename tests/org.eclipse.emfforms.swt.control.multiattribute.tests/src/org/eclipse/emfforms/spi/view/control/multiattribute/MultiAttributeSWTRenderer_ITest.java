@@ -240,7 +240,8 @@ public class MultiAttributeSWTRenderer_ITest {
 		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		/* setup domain */
 		final Game game = BowlingFactory.eINSTANCE.createGame();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 50; i++) {
+			game.getFrames().add(i);
 			game.getFrames().add(i);
 		}
 		createEditingDomain(game);

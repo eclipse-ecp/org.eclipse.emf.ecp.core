@@ -713,9 +713,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex + 1));
 				tableViewer.refresh();
 				tableViewer.getTable().setSelection(currentIndex + 1);
-				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
-				if (selected != null) {
-					tableViewer.reveal(selected);
+				final TableItem[] selection = tableViewer.getTable().getSelection();
+				if (selection.length > 0) {
+					tableViewer.getTable().showItem(selection[0]);
 				}
 			}
 		}
@@ -754,9 +754,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex - 1));
 				tableViewer.refresh();
 				tableViewer.getTable().setSelection(currentIndex - 1);
-				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
-				if (selected != null) {
-					tableViewer.reveal(selected);
+				final TableItem[] selection = tableViewer.getTable().getSelection();
+				if (selection.length > 0) {
+					tableViewer.getTable().showItem(selection[0]);
 				}
 			}
 		}
