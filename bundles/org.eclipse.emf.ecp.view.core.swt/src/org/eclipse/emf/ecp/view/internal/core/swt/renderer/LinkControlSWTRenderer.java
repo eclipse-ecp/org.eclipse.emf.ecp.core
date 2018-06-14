@@ -243,8 +243,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected void createAddReferenceButton(Composite parent, String elementDisplayName) {
 		addReferenceBtn = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(addReferenceBtn);
-		addReferenceBtn
-			.setImage(getAddReferenceButtonImage());
+		addReferenceBtn.setImage(getAddReferenceButtonImage());
 		addReferenceBtn.setToolTipText(getLocalizedString(MessageKeys.LinkControl_AddReference) + elementDisplayName);
 		addReferenceBtn.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("unused")
@@ -264,6 +263,15 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	/**
+	 * Returns the add reference image for button.
+	 *
+	 * @return the add reference image for button
+	 */
+	protected Image getAddReferenceButtonImage() {
+		return getImage(getIconBundle(), "icons/reference.png"); //$NON-NLS-1$
+	}
+
+	/**
 	 * Called by {@link #createButtons(Composite)} to create the create new reference button.
 	 *
 	 * @param parent the parent composite
@@ -272,8 +280,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected void createNewReferenceButton(Composite parent, String elementDisplayName) {
 		newReferenceBtn = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(newReferenceBtn);
-		newReferenceBtn
-			.setImage(getNewReferenceButtonImage());
+		newReferenceBtn.setImage(getNewReferenceButtonImage());
 		newReferenceBtn
 			.setToolTipText(getLocalizedString(MessageKeys.LinkControl_NewReference) + elementDisplayName);
 		newReferenceBtn.addSelectionListener(new SelectionAdapter() {
@@ -294,6 +301,15 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	/**
+	 * Returns the new reference image for button.
+	 *
+	 * @return the new reference image for button
+	 */
+	protected Image getNewReferenceButtonImage() {
+		return getImage(getIconBundle(), "icons/set_reference.png"); // //$NON-NLS-1$
+	}
+
+	/**
 	 * Whether a new reference should be opened in a new context. True to open in new context, false otherwise.
 	 * 
 	 * @return true to open in new context, false otherwise
@@ -311,13 +327,40 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected void createDeleteReferenceButton(Composite parent, String elementDisplayName) {
 		deleteReferenceButton = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(deleteReferenceButton);
-		deleteReferenceButton
-			.setImage(imageRegistryService.getImage(getIconBundle(), "icons/unset_reference.png")); //$NON-NLS-1$
+		deleteReferenceButton.setImage(getDeleteReferenceButtonImage());
 		deleteReferenceButton.setToolTipText(getLocalizedString(MessageKeys.LinkControl_DeleteReference));
 		deleteReferenceButton.addSelectionListener(new DeleteSelectionAdapter());
 	}
 
-	private Bundle getIconBundle() {
+	/**
+	 * Returns the image for delete reference button.
+	 *
+	 * @return the image for delete reference button
+	 */
+	protected Image getDeleteReferenceButtonImage() {
+		return getImage(getIconBundle(), "icons/unset_reference.png");//$NON-NLS-1$
+	}
+
+	/**
+	 * Returns an image to be displayed given the bundle and path in the bundle where icon file can be found.
+	 * <p>
+	 * The image found is not meant to be disposed by user.
+	 * </p>
+	 *
+	 * @param bundle the bundle where the image file is located
+	 * @param iconPath the path of the icon file in the bundle
+	 * @return the image to be displayed.
+	 */
+	protected Image getImage(Bundle bundle, String iconPath) {
+		return imageRegistryService!=null ? imageRegistryService.getImage(bundle, iconPath) : null;
+	}
+
+	/**
+	 * Returns the bundle where the icon file is located.
+	 *
+	 * @return the bundle where the icon file is located
+	 */
+	protected Bundle getIconBundle() {
 		return FrameworkUtil.getBundle(LinkControlSWTRenderer.class);
 	}
 
@@ -352,14 +395,6 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		}
 		final Image image = org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper.getImage(imageDescription);
 		return image;
-	}
-
-	private Image getNewReferenceButtonImage() {
-		return imageRegistryService.getImage(getIconBundle(), "icons/set_reference.png"); //$NON-NLS-1$
-	}
-
-	private Image getAddReferenceButtonImage() {
-		return imageRegistryService.getImage(getIconBundle(), "icons/reference.png"); //$NON-NLS-1$
 	}
 
 	private void createHyperlink() throws DatabindingFailedException {
