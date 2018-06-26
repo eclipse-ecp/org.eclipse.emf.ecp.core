@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.swt.core.data.EMFFormsSWTControlDataService;
 import org.eclipse.emfforms.spi.swt.core.data.EMFFormsSWTDataService;
 import org.eclipse.swt.widgets.Widget;
 import org.osgi.framework.Bundle;
@@ -34,7 +35,7 @@ import org.osgi.framework.ServiceReference;
 public final class SWTDataElementIdHelper {
 
 	/**
-	 * Key constant for the element id.
+	 * Default key constant for the element id.
 	 */
 	public static final String ELEMENT_ID_KEY = "org.eclipse.emfforms.elementId"; //$NON-NLS-1$
 
@@ -66,7 +67,31 @@ public final class SWTDataElementIdHelper {
 	 */
 	public static void setElementIdDataWithSubId(final Widget widget, VElement element, String subId,
 		ViewModelContext context) {
-		widget.setData(ELEMENT_ID_KEY, MessageFormat.format(ID_PATTERN, getId(element, context), subId));
+		widget.setData(ELEMENT_ID_KEY, getData(element, widget, getId(element, context), subId));
+	}
+
+	private static String getData(VElement element, Widget widget, final String id, String subId) {
+		final Bundle bundle = FrameworkUtil.getBundle(SWTDataElementIdHelper.class);
+		if (bundle == null) {
+			return MessageFormat.format(ID_PATTERN, id, subId);
+		}
+		final BundleContext bundleContext = bundle.getBundleContext();
+		if (bundleContext == null) {
+			return MessageFormat.format(ID_PATTERN, id, subId);
+		}
+		final ServiceReference<EMFFormsSWTControlDataService> serviceReference = bundleContext
+			.getServiceReference(EMFFormsSWTControlDataService.class);
+		if (serviceReference == null) {
+			return MessageFormat.format(ID_PATTERN, id, subId);
+		}
+		final EMFFormsSWTControlDataService service = bundleContext.getService(serviceReference);
+		if (service == null) {
+			return MessageFormat.format(ID_PATTERN, id, subId);
+		}
+		final String data = service.getData(element, widget, id, subId);
+		bundleContext.ungetService(serviceReference);
+		return data;
+
 	}
 
 	private static String getId(VElement element, ViewModelContext context) {

@@ -23,7 +23,9 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFFormsRendererFactory_Test.class })
+@SuiteClasses({
+	EMFFormsRendererFactory_Test.class
+})
 public class AllTests {
 
 }
