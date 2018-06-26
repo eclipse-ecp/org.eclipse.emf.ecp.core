@@ -244,6 +244,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private Button createRemoveRowButton(final Composite buttonComposite, IObservableList list) {
 		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 		final Button removeButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(removeButton, getVElement(), "remove", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_DELETE);
 		removeButton.setImage(image);
 		removeButton.setEnabled(!getVElement().isReadonly());
@@ -256,6 +257,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private Button createAddRowButton(final Composite buttonComposite, IObservableList list) {
 		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 		final Button addButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(addButton, getVElement(), "add", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_ADD);
 		addButton.setImage(image);
 		if (attribute.getUpperBound() != -1 && list.size() >= attribute.getUpperBound()) {
@@ -478,10 +480,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Image down = getImage(ICONS_ARROW_DOWN_PNG);
 
 		upButton = new Button(composite, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(upButton, getVElement(), "up", getViewModelContext()); //$NON-NLS-1$
 		upButton.setImage(up);
 		upButton.setEnabled(!getVElement().isReadonly());
 
 		downButton = new Button(composite, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(downButton, getVElement(), "down", getViewModelContext()); //$NON-NLS-1$
 		downButton.setImage(down);
 		downButton.setEnabled(!getVElement().isReadonly());
 	}

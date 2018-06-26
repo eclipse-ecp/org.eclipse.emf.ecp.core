@@ -466,6 +466,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createMoveUpButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnMoveUp = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnMoveUp, getVElement(), "up", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnMoveUp);
 		btnMoveUp.setImage(getImage(ICON_MOVE_UP));
 		btnMoveUp.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -497,6 +498,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createMoveDownButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnMoveDown = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnMoveDown, getVElement(), "down", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnMoveDown);
 		btnMoveDown.setImage(getImage(ICON_MOVE_DOWN));
 		btnMoveDown.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -528,6 +530,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createAddExistingButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnAddExisting = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnAddExisting, getVElement(), "link", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(getImage(ICON_ADD_EXISTING));
 		btnAddExisting.setToolTipText(NLS.bind(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -559,6 +562,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createAddNewButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnAddNew = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnAddNew, getVElement(), "add", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
 		btnAddNew.setImage(getImage(ICON_ADD_NEW));
 		btnAddNew.setToolTipText(NLS.bind(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -590,6 +594,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createDeleteButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnDelete = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnDelete, getVElement(), "delete", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
 		btnDelete.setImage(getImage(ICON_DELETE));
 		btnDelete.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,

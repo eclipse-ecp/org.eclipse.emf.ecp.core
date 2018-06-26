@@ -89,6 +89,7 @@ import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -240,6 +241,24 @@ public class SWTTable_PTest {
 			fail("Fails with empty single reference in domain object");
 		}
 
+	}
+
+	@Test
+	public void testTableSWTData() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
+		handle.getTableControl().setMoveUpDownDisabled(false);
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
+		assertEquals("UUID#control", render.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#table_moveUp", SWTTestUtil.findControl(render, 0, Button.class)
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#table_moveDown", SWTTestUtil.findControl(render, 1, Button.class)
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#table_add", SWTTestUtil.findControl(render, 2, Button.class)
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#table_remove", SWTTestUtil.findControl(render, 3, Button.class)
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
 	@Test

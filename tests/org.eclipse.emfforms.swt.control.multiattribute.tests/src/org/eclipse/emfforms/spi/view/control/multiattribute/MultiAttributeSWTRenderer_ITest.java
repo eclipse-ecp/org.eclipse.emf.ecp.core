@@ -49,6 +49,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -103,6 +104,8 @@ public class MultiAttributeSWTRenderer_ITest {
 			String.class);
 		Mockito.doReturn(description).when(emfFormsLabelProvider)
 			.getDescription(Matchers.any(VDomainModelReference.class), Matchers.any(EObject.class));
+
+		Mockito.doReturn("UUID").when(vElement).getUuid(); //$NON-NLS-1$
 	}
 
 	@After
@@ -381,6 +384,42 @@ public class MultiAttributeSWTRenderer_ITest {
 
 		/* assert */
 		assertFalse(upButton.getEnabled());
+	}
+
+	@Test
+	public void buttonData()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup domain */
+		final Game game = BowlingFactory.eINSTANCE.createGame();
+		createEditingDomain(game);
+
+		/* setup classes */
+		@SuppressWarnings("rawtypes")
+		final IObservableList observeList = EMFObservables.observeList(
+			realm,
+			game,
+			BowlingPackage.eINSTANCE.getGame_Frames());
+		Mockito.doReturn(observeList).when(emfFormsDatabinding)
+			.getObservableList(Matchers.any(VDomainModelReference.class), Matchers.any(EObject.class));
+
+		final MultiAttributeSWTRenderer renderer = createRenderer();
+
+		/* setup rendering */
+		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
+		final SWTGridCell lastGridCell = gridDescription.getGrid().get(gridDescription.getGrid().size() - 1);
+
+		/* render */
+		final Control control = renderer.render(lastGridCell, shell);
+
+		/* assert */
+		assertEquals("UUID#up", SWTTestUtil.findControl(control, 0, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#down", SWTTestUtil.findControl(control, 1, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#add", SWTTestUtil.findControl(control, 2, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#remove", SWTTestUtil.findControl(control, 3, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
 }

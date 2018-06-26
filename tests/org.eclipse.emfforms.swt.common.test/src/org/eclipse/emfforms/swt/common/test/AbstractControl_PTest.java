@@ -61,8 +61,11 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 public abstract class AbstractControl_PTest<C extends VControl> {
-	
+
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
+
+	protected static final String UUID = "org.eclipse.emfforms.swt.common.test.AbstractControl_PTest.UUID";
+
 	private EMFFormsDatabinding databindingService;
 	private VTViewTemplateProvider templateProvider;
 	private AbstractControlSWTRenderer<C> renderer;
@@ -105,6 +108,8 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 
 		Mockito.when(getvControl().getDomainModelReference()).thenReturn(
 			domainModelReference);
+
+		Mockito.doReturn(UUID).when(getvControl()).getUuid();
 	}
 
 	protected void mockDatabindingIsUnsettable() throws DatabindingFailedException {

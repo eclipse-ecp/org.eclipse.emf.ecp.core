@@ -49,6 +49,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
@@ -169,6 +170,8 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 			& SWT.RIGHT);
 
 		assertEquals("org_eclipse_emf_ecp_control_numerical", Text.class.cast(textRender).getData(CUSTOM_VARIANT));
+		assertEquals(UUID + "#control", Text.class.cast(textRender).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals(UUID + "#control", Composite.class.cast(render).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
 	@Override

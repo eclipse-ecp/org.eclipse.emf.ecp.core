@@ -49,12 +49,14 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
@@ -185,6 +187,15 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		assertTrue(DateTime.class.isInstance(dateTime.getChildren()[1]));
 		assertEquals(timeWidgetVisible, dateTime.getChildren()[1].isVisible());
 		assertTrue(Button.class.isInstance(dateTime.getChildren()[2]));
+
+		assertEquals(UUID + "#unset",
+			SWTTestUtil.findControl(render, 0, Button.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals(UUID + "#set",
+			SWTTestUtil.findControl(render, 1, Button.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals(UUID + "#date",
+			SWTTestUtil.findControl(render, 0, DateTime.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals(UUID + "#time",
+			SWTTestUtil.findControl(render, 1, DateTime.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
 	private Label getUnsetLabel(Control render) {

@@ -56,6 +56,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -120,6 +121,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
 		final Text text = new Text(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
+		SWTDataElementIdHelper.setElementIdDataForVControl(text, getVElement(), getViewModelContext());
 		text.setMessage(getTextMessage());
 
 		try {

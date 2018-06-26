@@ -38,6 +38,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
@@ -104,6 +105,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 		assertEquals(SWT.CHECK, Button.class.cast(render).getStyle()
 			& SWT.CHECK);
 		assertEquals("org_eclipse_emf_ecp_control_boolean", Button.class.cast(render).getData(CUSTOM_VARIANT));
+		assertEquals(UUID + "#control", Button.class.cast(render).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
 	@Override

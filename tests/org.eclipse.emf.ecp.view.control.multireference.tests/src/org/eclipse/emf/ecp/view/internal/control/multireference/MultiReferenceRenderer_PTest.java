@@ -112,6 +112,7 @@ public class MultiReferenceRenderer_PTest {
 	private MultiReferenceSWTRenderer compactVerticallyRenderer;
 	private Shell shell;
 	private EMFFormsLabelProvider labelProvider;
+	private boolean showMoveButtons;
 
 	/**
 	 * Get {@link Realm} for the tests.
@@ -159,6 +160,8 @@ public class MultiReferenceRenderer_PTest {
 		when(setting.getEObject()).thenReturn(eObject);
 		when(setting.getEStructuralFeature()).thenReturn(eStructuralFeature);
 
+		Mockito.doReturn("UUID").when(vControl).getUuid(); //$NON-NLS-1$
+
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 		final VTViewTemplateProvider templateProvider = mock(VTViewTemplateProvider.class);
 		final EMFFormsLocalizationService l10n = mock(EMFFormsLocalizationService.class);
@@ -176,7 +179,17 @@ public class MultiReferenceRenderer_PTest {
 		when(viewContext.getService(EMFFormsLocalizationService.class)).thenReturn(l10n);
 
 		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService, databindingService,
-			labelProvider, templateProvider, imageRegistryService, l10n);
+			labelProvider, templateProvider, imageRegistryService, l10n) {
+			@Override
+			protected boolean showMoveDownButton() {
+				return showMoveButtons;
+			}
+
+			@Override
+			protected boolean showMoveUpButton() {
+				return showMoveButtons;
+			}
+		};
 		renderer.init();
 		renderer.getGridDescription(new SWTGridDescription());
 
@@ -480,6 +493,22 @@ public class MultiReferenceRenderer_PTest {
 		final Table table = createLeaguePlayersTable();
 		final Button linkButton = SWTTestUtil.findControl(table.getParent().getParent(), 1, Button.class);
 		assertThat(linkButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
+	}
+
+	@Test
+	public void testButtonData() {
+		showMoveButtons = true;
+		final Table table = createLeaguePlayersTable();
+		assertEquals("UUID#up", SWTTestUtil.findControl(table.getParent().getParent(), 0, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#down", SWTTestUtil.findControl(table.getParent().getParent(), 1, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#link", SWTTestUtil.findControl(table.getParent().getParent(), 2, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#add", SWTTestUtil.findControl(table.getParent().getParent(), 3, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#delete", SWTTestUtil.findControl(table.getParent().getParent(), 4, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
 	/**
