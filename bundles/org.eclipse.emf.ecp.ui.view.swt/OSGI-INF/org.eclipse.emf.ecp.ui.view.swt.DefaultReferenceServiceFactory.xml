@@ -5,7 +5,7 @@
       <provide interface="org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory"/>
    </service>
    <reference bind="addAttachmentStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy$Provider" name="AttachmentStrategyProvider" policy="dynamic" unbind="removeAttachmentStrategyProvider"/>
-   <reference bind="addEClassSelectionStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy$Provider" name="EClassSelectionStrategyProvider" policy="dynamic" unbind="removeEClassSelectionStrategyProvider"/>
+   <reference bind="addCreateNewModelElementStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy$Provider" name="CreateNewModelElementStrategyProvider" policy="dynamic" unbind="removeCreateNewModelElementStrategyProvider"/>
    <reference bind="addEObjectSelectionStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy$Provider" name="EObjectSelectionStrategyProvider" policy="dynamic" unbind="removeEObjectSelectionStrategyProvider"/>
    <reference bind="addOpenInNewContextStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy$Provider" name="OpenInNewContextStrategyProvider" policy="dynamic" unbind="removeOpenInNewContextStrategyProvider"/>
    <reference bind="addReferenceStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy$Provider" name="ReferenceStrategyProvider" policy="dynamic" unbind="removeReferenceStrategyProvider"/>

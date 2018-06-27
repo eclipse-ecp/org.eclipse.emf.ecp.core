@@ -141,7 +141,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 		for (final EEnumLiteral literal : eLiterals) {
 
 			final String isInputtable = EcoreUtil.getAnnotation(literal,
-				VViewPackage.eNS_URI,
+				VViewPackage.NS_URI_170,
 				"isInputtable"); //$NON-NLS-1$
 
 			if (isInputtable == null || Boolean.getBoolean(isInputtable)) {

@@ -6,145 +6,113 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _YJbUcHXJEeK2tZkPdpUavQ
-Runtime-Version: 1.5.4.201410231434
-Save-Time: 12/5/14 4:56 PM
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 5/23/18 1:59 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" | double-click
-get-editor Game | get-control Any -after [get-link "<a>Player Jonas</a>"] -index 14  | get-property "getChildren().length" | equals 0 | verify-true
-get-editor Game | get-button "Add Entry" | click
-get-editor Game | get-control Any -after [get-link "<a>Player Jonas</a>"] -index 14  | get-property "getChildren().length" | equals 1 | verify-true
-get-editor Game | get-button "Add Entry" | click
-get-editor Game | get-control Any -after [get-link "<a>Player Jonas</a>"] -index 14  | get-property "getChildren().length" | equals 2 | verify-true
-with [get-editor Game] {
-    get-editbox -after [get-label Frames] | get-property text | equals 0 | verify-true
-    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 0 | verify-true
-}
-with [get-editor Game] {
-    get-button "Add Entry" | click
-    get-editbox -after [get-label Frames] | set-text 1
-    get-editbox -after [get-label Frames] -index 1 | set-text 2
-    get-editbox -after [get-label Frames] -index 2 | set-text 3
-}
-get-editor Game | close
-with [get-view "Model Explorer" | get-tree] {
-    select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" | double-click
-    select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" | double-click
-    select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup" | double-click
-}
-get-editor Game | click
-with [get-editor Game -type "Model Element Editor"] {
-    get-control Any -after [get-link "<a>Player Jonas</a>"] -index 14  | get-property "getChildren().length" | equals 3 | verify-true
-    get-editbox -after [get-label Frames] | get-property text | equals 1 | verify-true
-    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 2 | verify-true
-    get-editbox -after [get-label Frames] -index 2 | get-property text | equals 3 | verify-true
-}
-get-editor Game | get-button -after [get-label Frames] -index 8 | click
-with [get-editor Game] {
-    get-editbox -after [get-label Frames] | get-property text | equals 1 | verify-true
-    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 3 | verify-true
-    get-editbox -after [get-label Frames] -index 2 | get-property text | equals 2 | verify-true
-}
-with [get-editor Game] {
-    get-button -after [get-label Frames] -index 5 | click
-    get-button -after [get-label Frames] -index 8 | click
-}
-with [get-editor Game] {
-    get-editbox -after [get-label Frames] | get-property text | equals 3 | verify-true
-    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 2 | verify-true
-    get-editbox -after [get-label Frames] -index 2 | get-property text | equals 1 | verify-true
-}
-get-editor Matchup | click
-with [get-editor Game] {
-    click
-    get-button "Add Entry" | click
-    get-editbox -after [get-label Frames] -index 3 | set-text 99999999999999999999
-    get-editbox -after [get-label Frames] -index 2 | click-text 2
-}
-/*
-with [get-editor Game | get-editbox -after [get-label Frames] -index 3] {
-    get-property "decorators.visible" -index 0 | equals true | verify-true
-    get-property "decorators.description" -index 0 | equals "Please enter a value between [-2,147,483,648] and [2,147,483,647] and with a similar format." | verify-true
-}
-*/
-get-editor Game | close
-get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" | double-click
-get-editor Game | get-editbox -after [get-label Frames] -index 3 | get-property text | equals 0 | verify-true
-with [get-editor Game] {
-    get-button -after [get-label Frames] -index 4 | click
-    get-button -after [get-label Frames] -index 1 | click
-}
-with [get-editor Game] {
-    get-control Any -after [get-link "<a>Player Jonas</a>"] -index 14  | get-property "getChildren().length" | equals 2 | verify-true
-    get-editbox -after [get-label Frames] | get-property text | equals 1 | verify-true
-    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 0 | verify-true
-}
-with [get-editor Game] {
-    get-button -after [get-label Frames] -index 4 | click
-    get-button -after [get-label Frames] -index 1 | click
-}
-get-editor Game | get-control Any -after [get-link "<a>Player Jonas</a>"] -index 14  | get-property "getChildren().length" | equals 0 | verify-true
-get-editor Game | close
-get-editor Matchup | close
-with [get-view "Model Explorer" | get-tree] {
-    select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
-    select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" | double-click
-}
-get-editor "Player Jonas" | close
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" 
+    | double-click
+get-editor Game | get-table | get-property itemCount | equals 0 | verify-true
 with [get-editor Game] {
     with [get-button "Add Entry"] {
         click
         click
+    }
+    with [get-table] {
+        select 0 | activate-cell-edit -type MouseClickSelection
+        with [get-editbox] {
+            set-text 01
+            set-text 1
+        }
+        select [get-item -path 0 -index 1] | apply-cell-edit -deactivate
+        select 0 | activate-cell-edit -type MouseClickSelection
+        get-editbox | set-text 2
+        apply-cell-edit -deactivate
+        select 2 | activate-cell-edit -type MouseClickSelection
+        apply-cell-edit -deactivate
+    }
+}
+with [get-editor Game | get-table] {
+    get-item -path 1 | get-property index | equals 0 | verify-true
+    get-item -path 2 | get-property index | equals 1 | verify-true
+}
+get-editor Game | get-button -after [get-link "<a>Player Jonas</a>"] -index 3 | click
+with [get-editor Game | get-table] {
+    get-item -path 2 | get-property index | equals 0 | verify-true
+    get-item -path 1 | get-property index | equals 1 | verify-true
+}
+with [get-editor Game] {
+    get-button "Add Entry" | click
+    with [get-table] {
+        select 0 | activate-cell-edit -type MouseClickSelection
+        with [get-editbox] {
+            set-text 03
+            set-text 3
+        }
+        apply-cell-edit -deactivate
+    }
+    with [get-button -after [get-link "<a>Player Jonas</a>"] -index 3] {
         click
         click
     }
-    get-editbox -after [get-label Frames] | set-text 1
-    get-editbox -after [get-label Frames] -index 1 | set-text 2
-    get-editbox -after [get-label Frames] -index 2 | set-text 3
-    get-editbox -after [get-label Frames] -index 3 | set-text A
 }
-get-window "Invalid Number" | get-label "The Number you have entered is invalid. The value will be unset." 
-    | get-property caption | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+with [get-editor Game | get-table] {
+    get-item -path 3 | get-property index | equals 0 | verify-true
+    get-item -path 1 | get-property index | equals 2 | verify-true
+}
+with [get-editor Game] {
+    with [get-table] {
+        select 1 | activate-cell-edit -type MouseClickSelection
+        cancel-cell-edit
+        cancel-cell-edit
+        deactivate-cell-edit
+    }
+    get-button -after [get-link "<a>Player Jonas</a>"] -index 6 | click
+    with [get-table] {
+        select 3 | activate-cell-edit -type MouseClickSelection
+        apply-cell-edit -deactivate
+    }
+    get-button -after [get-link "<a>Player Jonas</a>"] -index 6 | click
+}
+with [get-editor Game | get-table] {
+    get-property itemCount | equals 1 | verify-true
+    get-item -path 2 | get-property index | equals 0 | verify-true
+}
+with [get-editor Game] {
+    get-button "Add Entry" | click
+    with [get-table] {
+        select 0 | activate-cell-edit -type MouseClickSelection
+        get-editbox | set-text AAA
+        apply-cell-edit
+    }
+}
 get-window "Invalid Number" | get-button OK | click
-get-editor Game | get-editbox -after [get-label Frames] -index 3 | get-property text | equals 0 | verify-true
-get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Commit | click
+with [get-editor Game | get-table] {
+    deactivate-cell-edit
+    select 0 | activate-cell-edit -type MouseClickSelection
+    get-editbox | set-text 9999999
+    apply-cell-edit -deactivate
+    select 9999999 | activate-cell-edit -type MouseClickSelection
+    get-editbox | set-text AAADDD
+    apply-cell-edit
+}
+get-window "Invalid Number" | get-button OK | click
+get-editor Game | get-table | deactivate-cell-edit
+get-view "Model Explorer" | get-tree | select "TestProject [trunk, Version 0]" | get-menu -path Commit | click
 get-window Commit | get-button OK | click
-
-with [get-view "Model Explorer" | get-tree] {
-    select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" | double-click
-    select "TestProject \\[trunk, Version 0\\]" | get-menu Update | click
-}
+get-view "Model Explorer" | get-tree 
+    | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro/Matchup/Game" | double-click
+get-editor Game -index 1 | get-table | get-property itemCount | equals 0 | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut [trunk, Version 0]" | get-menu -path Update 
+    | click
 get-window Update | get-button OK | click
-with [get-window "Merge Wizard"] {
-    get-button "Keep All Their Changes" | click
-    get-button Finish | click
-}
-with [get-editor Game] {
-    get-editbox -after [get-label Frames] | get-property text | equals 1 | verify-true
-    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 2 | verify-true
-    get-editbox -after [get-label Frames] -index 2 | get-property text | equals 3 | verify-true
-    get-editbox -after [get-label Frames] -index 3 | get-property text | equals 0 | verify-true
-}
-
-with [get-editor Game] {
-    get-button -after [get-label Frames] -index 4 | click
-    get-button -after [get-label Frames] -index 8 | click
-    get-editbox -after [get-label Frames] | set-text 2
-    get-editbox -after [get-label Frames] -index 1 | set-text 10
-    get-editbox -after [get-label Frames] -index 2 | set-text 33
-}
-get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 1\\]" 
-    | get-menu "Revert All Operations" | click
-get-window Confirmation | get-button Yes | click
-get-window Revert | get-button OK | click
-with [get-editor Game] {
-    get-editbox -after [get-label Frames] | get-property text | equals 1 | verify-true
-    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 2 | verify-true
-    get-editbox -after [get-label Frames] -index 2 | get-property text | equals 3 | verify-true
-    get-editbox -after [get-label Frames] -index 3 | get-property text | equals 0 | verify-true
+with [get-editor Game -index 1 | get-table] {
+    get-property itemCount | equals 2 | verify-true
+    get-item -path 9999999 | get-property caption | equals 9999999 | verify-true
+    get-item -path 2 | get-property caption | equals 2 | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

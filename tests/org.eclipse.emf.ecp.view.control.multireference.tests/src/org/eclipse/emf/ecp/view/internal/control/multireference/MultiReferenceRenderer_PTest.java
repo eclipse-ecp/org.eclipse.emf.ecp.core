@@ -13,9 +13,12 @@
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
@@ -48,6 +51,7 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.view.model.common.AbstractGridCell.Alignment;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -403,6 +407,23 @@ public class MultiReferenceRenderer_PTest {
 		assertTrue(Button.class.isInstance(buttonsComposite.getChildren()[0]));
 	}
 
+	@Test
+	public void testRenderModeCompactGridDescription() {
+		final SWTGridDescription gridDescription = compactVerticallyRenderer.getGridDescription(null);
+
+		assertThat(gridDescription.getColumns(), is(equalTo(2)));
+
+		final SWTGridCell validationCell = gridDescription.getGrid().get(0);
+		assertThat(validationCell.getPreferredSize(), notNullValue());
+		assertThat(validationCell.isHorizontalGrab(), is(false));
+		assertThat(validationCell.getVerticalAlignment(), is(Alignment.BEGINNING));
+
+		final SWTGridCell mainCell = gridDescription.getGrid().get(1);
+		assertThat(mainCell.getPreferredSize(), nullValue());
+		assertThat(mainCell.isHorizontalGrab(), is(true));
+		assertThat(mainCell.isVerticalGrab(), is(true));
+	}
+
 	/**
 	 * Tests the tool-tip on the "Link" button.
 	 *
@@ -574,7 +595,7 @@ public class MultiReferenceRenderer_PTest {
 
 	/**
 	 * Test that the control is disabled when it's set to read only
-	 * 
+	 *
 	 * @throws DatabindingFailedException
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption

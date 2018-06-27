@@ -25,8 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface VTStyleSelector extends EObject
-{
+public interface VTStyleSelector extends EObject {
 
 	/**
 	 * Return this constant if the selector is not applicable.

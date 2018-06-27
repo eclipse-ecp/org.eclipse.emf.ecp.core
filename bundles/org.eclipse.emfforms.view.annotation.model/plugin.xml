@@ -22,5 +22,11 @@
             class="org.eclipse.emf.emfforms.spi.view.annotation.model.VAnnotationPackage"
             genModel="model/annotation.genmodel"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/annotation.history">
+      </migrator>
+   </extension>
 
 </plugin>

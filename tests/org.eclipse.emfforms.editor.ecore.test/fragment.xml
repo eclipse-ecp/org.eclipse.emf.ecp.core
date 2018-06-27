@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="org.eclipse.emf.ecp.view.validation.validationProvider">
+      <validationProvider
+            class="org.eclipse.emfforms.spi.editor.EcoreEditorPerformance_PTest$Validation">
+      </validationProvider>
+   </extension>
+
+   <extension
+         name=""
+         point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+      <file
+            filePath="viewmodels/EPackageForPerfTest.view">
+         <filter
+               key="perftest"
+               value="true">
+         </filter>
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+   </extension>
+   <extension
+         name="Performance Test Editor - Do not use"
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Performance Test Editor - do not use"
+            default="false"
+            extensions="ecore"
+            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
+            class="org.eclipse.emfforms.spi.editor.EcoreEditorPerformance_PTest$Editor"
+            id="org.eclipse.emfforms.editor.ecore.test.Editor">
+      </editor>
+   </extension>
+</fragment>

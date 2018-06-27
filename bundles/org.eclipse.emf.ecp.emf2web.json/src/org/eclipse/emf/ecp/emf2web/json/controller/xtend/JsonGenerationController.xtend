@@ -36,7 +36,9 @@ class JsonGenerationController implements GenerationController {
 		val formsGenerator = new FormsJsonGenerator(helper)
 
 		for (view : views) {
-			helper.setEcorePath(view.ecorePath)
+			for (ecorePath : view.ecorePaths) {
+				helper.addEcorePath(ecorePath);
+			}
 			val eClass = view.rootEClass
 			val schemaIdentifier = eClass.name
 

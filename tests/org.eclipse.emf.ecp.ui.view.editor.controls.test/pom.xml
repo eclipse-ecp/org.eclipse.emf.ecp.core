@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.16.0-SNAPSHOT</version>
+		<version>1.17.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emf.ecp.ui.view.editor.controls.test</artifactId>
-	<version>1.16.0-SNAPSHOT</version>
+	<version>1.17.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
@@ -22,10 +22,40 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<includes>
+						<include>**/*_PTest.java</include>
+						<include>**/*_ITest.java</include>
+						<!-- Execute SWT-Related tests with tycho surefire -->
+						<include>**/LeafConditionControlRenderer_Test.java</include>
+						<include>**/ExpectedValueControlRenderer_Test.java</include>
+					</includes>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
 		        	<failIfNoTests>false</failIfNoTests>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${mav-surefire-version}</version>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<configuration>
+							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+							<excludes>
+								<!-- Executed with tycho surefire -->
+								<exclude>**/LeafConditionControlRenderer_Test.java</exclude>
+								<exclude>**/ExpectedValueControlRenderer_Test.java</exclude>
+							</excludes>
+							<testFailureIgnore>true</testFailureIgnore>
+				        </configuration>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>

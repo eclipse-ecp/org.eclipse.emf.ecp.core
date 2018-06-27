@@ -265,7 +265,10 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 			return;
 		}
 
-		view.setEcorePath(ecore.getURI().toPlatformString(true));
+		final String uriString = ecore.getURI().toPlatformString(true);
+		if (!view.getEcorePaths().contains(uriString)) {
+			view.getEcorePaths().add(uriString);
+		}
 
 	}
 

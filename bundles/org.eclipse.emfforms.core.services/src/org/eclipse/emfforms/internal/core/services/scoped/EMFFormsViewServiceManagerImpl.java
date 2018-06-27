@@ -97,7 +97,7 @@ public class EMFFormsViewServiceManagerImpl implements EMFFormsViewServiceManage
 		Map<Class<?>, EMFFormsViewServiceFactory<?>> classFactoryMap, EMFFormsViewContext emfFormsViewContext) {
 		final EMFFormsViewServiceFactory<?> serviceProvider = classFactoryMap.get(type);
 		if (serviceProvider != null) {
-			return (Optional<T>) Optional.of(serviceProvider.createService(emfFormsViewContext));
+			return (Optional<T>) Optional.ofNullable(serviceProvider.createService(emfFormsViewContext));
 		}
 		return Optional.empty();
 	}

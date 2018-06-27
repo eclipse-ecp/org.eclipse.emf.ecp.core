@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Christian W. Damus - bug 533522
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -322,7 +322,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private final AtomicBoolean validationRunning = new AtomicBoolean(false);
 	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new ConcurrentHashMap<UniqueSetting, VDiagnostic>();
 	private ComposedAdapterFactory adapterFactory;
-	private final Timer timer = new Timer();
 
 	/**
 	 * {@inheritDoc}
@@ -512,10 +511,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 		EObject toValidate;
 		while ((toValidate = validationQueue.poll()) != null) {
-			final ValidationTimerTask timerTask = new ValidationTimerTask(toValidate);
-			timer.schedule(timerTask, 1000);
 			validateAndCollectSettings(toValidate);
-			timerTask.cancel();
 		}
 		update();
 		notifyListeners();
@@ -650,17 +646,28 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private void validateAndCollectSettings(EObject eObject) {
-		final Diagnostic diagnostic = validationService.validate(eObject);
-		if (diagnostic == null) { // happens if the eObject is being filtered
-			return;
-		}
-		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, feature);
-			if (!currentUpdates.containsKey(uniqueSetting)) {
-				currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
+		final long start = System.nanoTime();
+
+		try {
+			final Diagnostic diagnostic = validationService.validate(eObject);
+			if (diagnostic == null) { // happens if the eObject is being filtered
+				return;
+			}
+			for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
+				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, feature);
+				if (!currentUpdates.containsKey(uniqueSetting)) {
+					currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
+				}
+			}
+			analyzeDiagnostic(diagnostic);
+		} finally {
+			if (System.nanoTime() - start > 1000L * 1000L * 1000L) {
+				Activator.getDefault().getReportService()
+					.report(new AbstractReport(MessageFormat.format(
+						"Validation took longer than expected for EObject {0}", eObject, //$NON-NLS-1$
+						IStatus.INFO)));
 			}
 		}
-		analyzeDiagnostic(diagnostic);
 	}
 
 	private void analyzeDiagnostic(Diagnostic diagnostic) {

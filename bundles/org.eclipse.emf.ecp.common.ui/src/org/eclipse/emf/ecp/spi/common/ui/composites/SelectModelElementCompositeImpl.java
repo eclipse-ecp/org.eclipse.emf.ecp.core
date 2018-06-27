@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -100,6 +101,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 		}
 		lv.setLabelProvider(getLabelProvider());
 		lv.setContentProvider(ArrayContentProvider.getInstance());
+		lv.setComparator(new ViewerComparator());
 		lv.setInput(getInput());
 		return lv;
 	}

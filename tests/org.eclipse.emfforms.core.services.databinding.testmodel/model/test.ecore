@@ -30,4 +30,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//A"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DExtended" eSuperTypes="#//D">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="a" eType="#//A"/>
+  </eClassifiers>
 </ecore:EPackage>

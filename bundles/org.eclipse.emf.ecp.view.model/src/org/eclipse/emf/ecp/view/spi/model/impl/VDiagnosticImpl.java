@@ -54,6 +54,44 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 // TODO performance
 public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
+	 * @generated NOT
+	 */
+	private final class DiagnosticAdapter extends AdapterImpl {
+		@SuppressWarnings("unchecked")
+		@Override
+		public void notifyChanged(Notification msg) {
+			super.notifyChanged(msg);
+			if (msg.getFeature() != VViewPackage.eINSTANCE.getDiagnostic_Diagnostics()) {
+				return;
+			}
+			switch (msg.getEventType()) {
+			case Notification.ADD:
+				addNewDiagnostic((Diagnostic) msg.getNewValue());
+				break;
+			case Notification.ADD_MANY:
+				if (msg.getNewValue() != null) {
+					for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getNewValue()) {
+						addNewDiagnostic(diagnostic);
+					}
+				}
+				break;
+			case Notification.REMOVE:
+				removeOldDiagnostic((Diagnostic) msg.getOldValue());
+				break;
+			case Notification.REMOVE_MANY:
+				if (msg.getOldValue() != null) {
+					for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getOldValue()) {
+						removeOldDiagnostic(diagnostic);
+					}
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	/**
 	 * The cached value of the '{@link #getDiagnostics() <em>Diagnostics</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -69,50 +107,11 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	protected VDiagnosticImpl() {
 		super();
-		eAdapters().add(new AdapterImpl() {
-
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see
-			 * 		org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-			 */
-			@SuppressWarnings("unchecked")
-			@Override
-			public void notifyChanged(Notification msg) {
-				super.notifyChanged(msg);
-				if (msg.getFeature() != VViewPackage.eINSTANCE.getDiagnostic_Diagnostics()) {
-					return;
-				}
-				switch (msg.getEventType()) {
-				case Notification.ADD:
-					addNewDiagnostic((Diagnostic) msg.getNewValue());
-					break;
-				case Notification.ADD_MANY:
-					if (msg.getNewValue() != null) {
-						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getNewValue()) {
-							addNewDiagnostic(diagnostic);
-						}
-					}
-					break;
-				case Notification.REMOVE:
-					removeOldDiagnostic((Diagnostic) msg.getOldValue());
-					break;
-				case Notification.REMOVE_MANY:
-					if (msg.getOldValue() != null) {
-						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getOldValue()) {
-							removeOldDiagnostic(diagnostic);
-						}
-					}
-					break;
-				}
-			}
-
-		});
+		eAdapters().add(new DiagnosticAdapter());
 	}
 
 	private void removeOldDiagnostic(Diagnostic diagnostic) {

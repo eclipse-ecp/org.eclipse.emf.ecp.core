@@ -1,12 +1,56 @@
---- Q7 testcase ---
+--- RCPTT testcase ---
 Format-Version: 1.0
-Q7-vendor: www.xored.com/q7
 Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_YQj0cT-VEeK-yuKsz0Lang
 Element-Name: MultiEnum
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _YAH8kHXLEeK2tZkPdpUavQ
-Save-Time: 2/13/13 11:55 AM
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 5/23/18 5:14 PM
+Tags: skipExecution
 Testcase-Type: ecl
 
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-table -after [get-label "Number Of Victories"] | get-property itemCount | equals 0 
+    | verify-true
+get-editor "Player Jonas" | get-button "Add Entry" -after [get-label "Number Of Victories"] | click
+get-editor "Player Jonas" | get-table -after [get-label "Number Of Victories"] | get-item -path Pro 
+    | get-property caption | equals Pro | verify-true
+with [get-editor "Player Jonas" | get-table -after [get-label "Number Of Victories"]] {
+    select Pro | activate-cell-edit -type MouseClickSelection
+    get-combo | select Amateur
+    apply-cell-edit -deactivate
+}
+get-editor "Player Jonas" | get-table -after [get-label "Number Of Victories"] | get-item -path Amateur 
+    | get-property index | equals 0 | verify-true
+get-editor "Player Jonas" | get-button "Add Entry" -after [get-label "Number Of Victories"] | click
+with [get-editor "Player Jonas" | get-table -after [get-label "Number Of Victories"]] {
+    get-property itemCount | equals 2 | verify-true
+    get-item -path Pro | get-property index | equals 1 | verify-true
+}
+with [get-editor "Player Jonas"] {
+    with [get-table -after [get-label "Number Of Victories"]] {
+        select Pro | activate-cell-edit -type MouseClickSelection
+        apply-cell-edit -deactivate
+    }
+    get-button -after [get-label "Number Of Victories"] | click
+}
+with [get-editor "Player Jonas" | get-table -after [get-label "Number Of Victories"]] {
+    get-item -path Pro | get-property index | equals 0 | verify-true
+    get-item -path Amateur | get-property index | equals 1 | verify-true
+}
+with [get-editor "Player Jonas"] {
+    get-button -after [get-label "Number Of Victories"] -index 3 | click
+    get-button "Add Entry" -after [get-label "Number Of Victories"] | click
+}
+with [get-editor "Player Jonas" | get-table -after [get-label "Number Of Victories"]] {
+    get-property itemCount | equals 2 | verify-true
+    get-item -path Pro | get-property index | equals 1 | verify-true
+    get-item -path Amateur | get-property index | equals 0 | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

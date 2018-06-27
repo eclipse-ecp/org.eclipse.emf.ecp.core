@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihvnUC3mEeSwhO5Nwx0hPg,_MO6C8EobEeiHp8RnhxiMOg
+Element-Name: ViewModelBulkMigration
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _YFwVIEobEeiHp8RnhxiMOg
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 4/27/18 4:31 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "barView/Bar.view" | double-click
+get-window "Perform migration to the latest view model version?" | get-button Yes | click
+get-window "Migrate view models from workspace" | get-button Yes | click
+get-window "Migrate view models from workspace" | get-table | select "Foo.view \\[fooView\\/Foo.view\\]"
+with [get-window "Migrate view models from workspace" | get-table] {
+    get-property itemCount | equals 1 | verify-true
+    get-item -path "Foo.view \\[fooView\\/Foo.view\\]" | get-property caption | equals "Foo.view [fooView/Foo.view]" 
+        | verify-true
+}
+get-window "Migrate view models from workspace" | get-button OK | click
+
+// Check that the ecore path was migrated
+with [get-editor "Bar.view" | get-table] {
+    get-property itemCount | equals 1 | verify-true
+    get-item -path "\\/bar\\/bar.ecore" | get-property caption | equals "/bar/bar.ecore" | verify-true
+}
+
+// No dialog(s) should pop up because Foo.view should be migrated
+get-view "Project Explorer" | get-tree | select "fooView/Foo.view" | double-click
+get-editor "Foo.view" | get-table | get-property itemCount | equals 1 | verify-true
+get-editor "Foo.view" | get-table | get-item -path "\\/foo\\/foo.ecore" | get-property caption 
+    | equals "/foo/foo.ecore" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

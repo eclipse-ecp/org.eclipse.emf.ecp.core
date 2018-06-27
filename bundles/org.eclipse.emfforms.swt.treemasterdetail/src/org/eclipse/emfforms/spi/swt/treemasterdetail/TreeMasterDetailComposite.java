@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 533568
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
@@ -184,6 +185,14 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		limbo.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		limbo.setBackgroundMode(SWT.INHERIT_FORCE);
 		renderControl(customization);
+
+		parent.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				TreeMasterDetailComposite.this.dispose();
+			}
+		});
 	}
 
 	private Control renderControl(TreeMasterDetailSWTCustomization buildBehaviour) {

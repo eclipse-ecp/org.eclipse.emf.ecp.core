@@ -285,12 +285,21 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				try {
 					final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
 					final EReference eReference = (EReference) getModelValue().getValueType();
-					getReferenceService().addNewModelElements(eObject, eReference);
+					getReferenceService().addNewModelElements(eObject, eReference, openNewReferenceInContext());
 				} catch (final DatabindingFailedException ex) {
 					getReportService().report(new DatabindingFailedReport(ex));
 				}
 			}
 		});
+	}
+
+	/**
+	 * Whether a new reference should be opened in a new context. True to open in new context, false otherwise.
+	 * 
+	 * @return true to open in new context, false otherwise
+	 */
+	protected boolean openNewReferenceInContext() {
+		return true;
 	}
 
 	/**

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergeFactory;
+import org.eclipse.emf.ecp.view.internal.context.ArrayOnceViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
@@ -102,7 +103,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 */
 	public DiffMergeModelContextImpl(VElement view, EObject domainObject,
 		EObject origin1, EObject origin2, ViewModelService... modelServices) {
-		super(view, domainObject, modelServices);
+		super(view, domainObject, new ArrayOnceViewModelServiceProvider(modelServices));
 		left = origin1;
 		right = origin2;
 

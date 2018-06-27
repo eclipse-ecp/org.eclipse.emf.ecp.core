@@ -39,22 +39,22 @@ import org.osgi.framework.ServiceReference;
 @Deprecated
 public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
+	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
+	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
+	private static final VTViewTemplateProvider VTVIEW_TEMPLATEPROVIDER;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(ECPLegacyControlSWTRenderer.class)
 			.getBundleContext();
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
 		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		VTVIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRende
 	 */
 	public ECPLegacyControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VTVIEW_TEMPLATEPROVIDER);
 	}
 
 	private SWTControl control;

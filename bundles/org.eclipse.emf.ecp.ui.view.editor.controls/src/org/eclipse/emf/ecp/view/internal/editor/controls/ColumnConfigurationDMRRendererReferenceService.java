@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emfforms.common.Optional;
 
 /**
  * Special {@link ReferenceService} allowing stream lined DMR selection for the width configuration.
@@ -61,9 +62,16 @@ public class ColumnConfigurationDMRRendererReferenceService implements Reference
 		return 0;
 	}
 
+	@Deprecated
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
 		/* no-op */
+	}
+
+	@Override
+	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
+		/* no-op */
+		return Optional.empty();
 	}
 
 	@SuppressWarnings("restriction")

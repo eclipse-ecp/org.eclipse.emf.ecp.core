@@ -448,7 +448,7 @@ public class GridPasteKeyListener implements KeyListener {
 
 		final EEnum eEnum = (EEnum) feature.getEType();
 		for (final EEnumLiteral literal : eEnum.getELiterals()) {
-			final String isInputtable = EcoreUtil.getAnnotation(literal, VViewPackage.eNS_URI,
+			final String isInputtable = EcoreUtil.getAnnotation(literal, VViewPackage.NS_URI_170,
 				IS_INPUTTABLE);
 
 			if (literal.getLiteral().equals(cellValue) && isInputtable != null) {

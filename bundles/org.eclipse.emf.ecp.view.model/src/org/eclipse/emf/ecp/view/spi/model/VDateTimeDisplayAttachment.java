@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.spi.model;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Date Time Display Attachment</b></em>'.
- * 
+ *
  * @since 1.8
  *        <!-- end-user-doc -->
  *
@@ -40,7 +40,7 @@ public interface VDateTimeDisplayAttachment extends VAttachment {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Display Type</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 	 * @see #setDisplayType(DateTimeDisplayType)
@@ -55,7 +55,7 @@ public interface VDateTimeDisplayAttachment extends VAttachment {
 	 * <em>Display Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Display Type</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 	 * @see #getDisplayType()

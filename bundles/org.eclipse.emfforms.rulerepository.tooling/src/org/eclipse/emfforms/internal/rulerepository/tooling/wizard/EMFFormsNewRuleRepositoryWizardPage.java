@@ -145,27 +145,27 @@ public class EMFFormsNewRuleRepositoryWizardPage extends WizardPage {
 	}
 
 	/**
-	 * Ensures that both text fields are set.
+	 * Validates the container and file.
 	 */
 
 	private void dialogChanged() {
-		final IResource container = ResourcesPlugin.getWorkspace().getRoot()
-			.findMember(new Path(getContainerName()));
-		final String fileName = getFileName();
-
 		if (getContainerName().length() == 0) {
 			updateStatus(Messages.EMFFormsRuleRepositoryWizardPage_errorNoContainer);
 			return;
 		}
-		if (container == null
-			|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
-			updateStatus(Messages.EMFFormsRuleRepositoryWizardPage_errorContainerNotExists);
+
+		final IResource container = ResourcesPlugin.getWorkspace().getRoot()
+			.findMember(new Path(getContainerName()));
+
+		final String message = getContainerErrorMessage(container);
+
+		if (message != null) {
+			updateStatus(message);
 			return;
 		}
-		if (!container.isAccessible()) {
-			updateStatus(Messages.EMFFormsRuleRepositoryWizardPage_errorProjectReadOnly);
-			return;
-		}
+
+		final String fileName = getFileName();
+
 		if (fileName.length() == 0) {
 			updateStatus(Messages.EMFFormsRuleRepositoryWizardPage_errorNoFilename);
 			return;
@@ -189,6 +189,27 @@ public class EMFFormsNewRuleRepositoryWizardPage extends WizardPage {
 			}
 		}
 		updateStatus(null);
+	}
+
+	/**
+	 * Return the error message for a selected {@link IResource} if
+	 * 1. The container does not exists
+	 * 2. If the container is project or folder
+	 * 3. If the container is read-only
+	 * Otherwise (no error) Null is returned.
+	 *
+	 * @param container The {@link IResource} to check
+	 * @return the error message or null if the {@link IResource} is valid
+	 */
+	public static String getContainerErrorMessage(IResource container) {
+		if (container == null
+			|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
+			return Messages.EMFFormsRuleRepositoryWizardPage_errorContainerNotExists;
+		}
+		if (!container.isAccessible()) {
+			return Messages.EMFFormsRuleRepositoryWizardPage_errorProjectReadOnly;
+		}
+		return null;
 	}
 
 	private void updateStatus(String message) {

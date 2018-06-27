@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -84,15 +85,10 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 
 	private static final String DISPLAY_NAME = "_UI_%1$s_%2$s_feature"; //$NON-NLS-1$
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.emf2web.util.ReferenceHelper#getLabel(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
-	 */
 	@Override
 	public String getLabel(VDomainModelReference reference) {
-		final String path = getEcorePath();
-		if (path == null) {
+		final Set<String> paths = getEcorePaths();
+		if (paths == null || paths.isEmpty()) {
 			try {
 				final BundleContext bundleContext = Activator.getDefault().getBundleContext();
 				final ServiceReference<EMFFormsLabelProvider> serviceReference = bundleContext
@@ -108,51 +104,53 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 				return ""; //$NON-NLS-1$
 			}
 		}
-		// try to find edit bundle
-		final String firstPath = path.split("/")[1]; //$NON-NLS-1$
-		final String editPath = firstPath + ".edit/plugin.properties"; //$NON-NLS-1$
-		final IResource member = ResourcesPlugin.getWorkspace().getRoot().findMember(editPath);
-		if (member != null && member.exists()) {
-			final File file = member.getLocation().toFile();
-			final Properties p = new Properties();
-			FileInputStream fis = null;
-			try {
-				fis = new FileInputStream(file);
-				p.load(fis);
-			} catch (final FileNotFoundException ex) {
-				Activator.getDefault().getReportService().report(new AbstractReport(ex));
-			} catch (final IOException ex) {
-				Activator.getDefault().getReportService().report(new AbstractReport(ex));
-			} finally {
-				if (fis != null) {
-					try {
-						fis.close();
-					} catch (final IOException ex) {
-						Activator.getDefault().getReportService().report(new AbstractReport(ex));
+		for (final String path : paths) {
+			// try to find edit bundle
+			final String firstPath = path.split("/")[1]; //$NON-NLS-1$
+			final String editPath = firstPath + ".edit/plugin.properties"; //$NON-NLS-1$
+			final IResource member = ResourcesPlugin.getWorkspace().getRoot().findMember(editPath);
+			if (member != null && member.exists()) {
+				final File file = member.getLocation().toFile();
+				final Properties p = new Properties();
+				FileInputStream fis = null;
+				try {
+					fis = new FileInputStream(file);
+					p.load(fis);
+				} catch (final FileNotFoundException ex) {
+					Activator.getDefault().getReportService().report(new AbstractReport(ex));
+				} catch (final IOException ex) {
+					Activator.getDefault().getReportService().report(new AbstractReport(ex));
+				} finally {
+					if (fis != null) {
+						try {
+							fis.close();
+						} catch (final IOException ex) {
+							Activator.getDefault().getReportService().report(new AbstractReport(ex));
+						}
 					}
 				}
-			}
 
-			final EStructuralFeature feature = getEStructuralFeature(reference);
-			if (feature == null) {
-				return null;
+				final EStructuralFeature feature = getEStructuralFeature(reference);
+				if (feature == null) {
+					continue;
+				}
+				final EClass eClass = feature.getEContainingClass();
+				final String key = String.format(DISPLAY_NAME, eClass.getName(), feature.getName());
+				final String result = p.getProperty(key);
+				if (result == null) {
+					return feature.getName();
+				}
+				return result;
 			}
-			final EClass eClass = feature.getEContainingClass();
-			final String key = String.format(DISPLAY_NAME, eClass.getName(), feature.getName());
-			final String result = p.getProperty(key);
-			if (result == null) {
-				return feature.getName();
-			}
-			return result;
 		}
 		final EStructuralFeature feature = getEStructuralFeature(reference);
 		return feature.getName();
 	}
 
 	/**
-	 * Return the ecore path of the current view model.
+	 * Returns the ecore paths of the current view model.
 	 *
-	 * @return The path to the ecore of the current view
+	 * @return The paths to the ecores of the current view
 	 */
-	protected abstract String getEcorePath();
+	protected abstract Set<String> getEcorePaths();
 }

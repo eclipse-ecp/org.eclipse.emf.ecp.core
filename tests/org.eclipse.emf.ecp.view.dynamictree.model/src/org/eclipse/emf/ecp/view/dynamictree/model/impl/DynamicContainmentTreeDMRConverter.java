@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 533522
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
@@ -78,7 +79,10 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	 */
 	protected final void deactivate(BundleContext bundleContext) {
 		unsetEMFFormsDatabinding();
-		bundleContext.ungetService(databindingServiceReference);
+		if (databindingServiceReference != null) {
+			bundleContext.ungetService(databindingServiceReference);
+			databindingServiceReference = null;
+		}
 	}
 
 	/**

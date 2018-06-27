@@ -15,13 +15,17 @@ import java.util.Locale;
 
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 
 /**
  * A {@link org.eclipse.emf.ecp.view.spi.context.ViewModelService ViewModelService} which provides the default locale.
  *
  * @author Eugen Neufeld
+ * @deprecated Please use the {@link EMFFormsLocaleProvider
+ *             EMFFormsLocaleProvider}
  *
  */
+@Deprecated
 public class DefaultLocaleViewService implements ViewLocaleService {
 
 	/**

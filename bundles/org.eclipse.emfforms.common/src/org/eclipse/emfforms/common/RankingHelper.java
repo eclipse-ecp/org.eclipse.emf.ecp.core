@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,8 +8,11 @@
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 533522
  ******************************************************************************/
 package org.eclipse.emfforms.common;
+
+import static java.lang.Double.doubleToLongBits;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -102,7 +105,9 @@ public class RankingHelper<T> {
 
 			final double rank = rankTester.getRank(element);
 
-			if (ignoreRankValue != null && ignoreRankValue.equals(rank)) {
+			// Don't use Double.equals(Double) because that requires creating a boxed Double
+			// every time (as seen in a profiler), and we do this operation a lot in large models
+			if (ignoreRankValue != null && doubleToLongBits(ignoreRankValue.doubleValue()) == doubleToLongBits(rank)) {
 				continue;
 			} else if (rank >= highestRank) {
 				if (rank > highestRank) {

@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -24,7 +23,6 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
-import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -34,10 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
-import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
-import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactory;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -461,20 +456,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @since 1.16
 	 */
 	protected int getLabelStyleBits() {
-		final VTControlLabelAlignmentStyleProperty styleProperty = RendererUtil.getStyleProperty(
-			getVTViewTemplateProvider(),
-			getVElement(),
-			getViewModelContext(),
-			VTControlLabelAlignmentStyleProperty.class);
-		if (styleProperty == null) {
-			return SWT.NONE;
-		}
-		switch (styleProperty.getType()) {
-		case RIGHT:
-			return SWT.RIGHT;
-		default:
-			return SWT.NONE;
-		}
+		return AbstractControlSWTRendererUtil
+			.getLabelStyleBits(getVTViewTemplateProvider(), getVElement(), getViewModelContext());
 	}
 
 	/**
@@ -490,21 +473,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	private VTMandatoryStyleProperty getMandatoryStyle() {
-		if (vtViewTemplateProvider == null) {
-			return getDefaultStyle();
-		}
-		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
-			.getStyleProperties(getVElement(), getViewModelContext());
-		for (final VTStyleProperty styleProperty : styleProperties) {
-			if (VTMandatoryStyleProperty.class.isInstance(styleProperty)) {
-				return (VTMandatoryStyleProperty) styleProperty;
-			}
-		}
-		return getDefaultStyle();
-	}
-
-	private VTMandatoryStyleProperty getDefaultStyle() {
-		return VTMandatoryFactory.eINSTANCE.createMandatoryStyleProperty();
+		return AbstractControlSWTRendererUtil
+			.getMandatoryStyle(vtViewTemplateProvider, getVElement(), getViewModelContext());
 	}
 
 	/**

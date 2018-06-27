@@ -47,7 +47,7 @@ import org.junit.Test;
 
 /**
  * Specific concurrency tests for the {@link ThreadSafeBazaar}. Other
- * tests are covered by the {@link Bazaar_ITest} suite.
+ * tests are covered by the {@link Bazaar_Test} suite.
  *
  * @author Christian W. Damus
  */

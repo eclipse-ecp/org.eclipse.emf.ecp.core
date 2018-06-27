@@ -5,18 +5,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-tests-parent</artifactId>
-	<version>1.16.0-SNAPSHOT</version>
+	<version>1.17.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.16.0-SNAPSHOT</version>
+		<version>1.17.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	
 	
 	<properties>
-		<test-vmargs></test-vmargs>
+		<baseTestArgLine></baseTestArgLine>
 	</properties>
 	
 	<profiles>
@@ -28,7 +28,7 @@
 				</os>
 			</activation>
 			<properties>
-				<test-vmargs>-XstartOnFirstThread</test-vmargs>
+				<baseTestArgLine>-XstartOnFirstThread</baseTestArgLine>
 			</properties>
 		</profile>
 		<profile>
@@ -77,6 +77,7 @@
 	<modules>
 		<!-- Bundles/Features -->
 		<module>../../bundles/org.eclipse.emf.ecp.test.common</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.table.test.common</module>
 		<module>../../tests/org.eclipse.emfforms.swt.common.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
         	<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
@@ -109,8 +110,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
-		
-		
+		<module>../../tests/org.eclipse.emf.ecp.view.model.preview.common.test</module>		
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.nebula.grid.test</module>
@@ -137,6 +137,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.treemasterdetail.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.common.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.common.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.common.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.control.multireference.tests</module>
 		
 		<module>../../tests/org.eclipse.emfforms.editor.ecore.test</module>
@@ -159,6 +160,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.util.test</module>
 		
 		<!-- Core Services -->
+		<module>../../tests/org.eclipse.emfforms.core.services.datatemplate.test</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.featurepath.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.index.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.keyattribute.tests</module>
@@ -169,6 +171,7 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.index.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.keyattribute.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.mapping.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.mappingprovider.table.test</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.keyattribute.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.tests</module>
@@ -200,10 +203,13 @@
 
         <module>../../tests/org.eclipse.emfforms.swt.treemasterdetail.test</module>
         
+        <module>../../tests/org.eclipse.emfforms.swt.control.multiattribute.tests</module>
         <module>../../tests/org.eclipse.emfforms.rulerepository.tooling.test</module>
 
         <!-- EMF2Web -->
 		<module>../../tests/org.eclipse.emf.ecp.emf2web.json.test</module>
+		
+		<module>../../tests/org.eclipse.emfforms.datatemplate.tooling.tests</module>
 		
 	</modules>
 	
@@ -232,11 +238,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.17</version>
+				<version>${mav-checkstyle-version}</version>
 				<configuration>
-				<configLocation>../org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyleTest.xml</configLocation>
-				<excludes>**/xtend/**/*</excludes>
-				<failsOnError>false</failsOnError>
+					<configLocation>../org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyleTest.xml</configLocation>
+					<excludes>**/xtend/**/*</excludes>
+					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>
 					<execution>
@@ -246,6 +252,13 @@
 						<phase>verify</phase>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyle-version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			
 			<!-- tycho surefire include/exclude pattern -->
@@ -254,12 +267,13 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<argLine>${test-vmargs}</argLine>
+					<argLine>${jacocoArgs} ${baseTestArgLine}</argLine>
 					<includes>
 						<include>**/*_PTest.java</include>
 						<include>**/*_ITest.java</include>
 					</includes>
 					<testFailureIgnore>true</testFailureIgnore>
+					<failIfNoTests>false</failIfNoTests>
 				</configuration>
 			</plugin>
 			
@@ -275,15 +289,19 @@
 						<configuration>
 							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
 							<includes>
-				            	<include>**/*_Test.java</include>
+								<include>**/*_Test.java</include>
 							</includes>
 							<testFailureIgnore>true</testFailureIgnore>
-				        </configuration>
+							<failIfNoTests>false</failIfNoTests>
+							<!-- Sets the VM argument line used when unit tests are run. -->
+							<argLine>${jacocoArgs} ${baseTestArgLine}</argLine>
+						</configuration>
 						<goals>
 							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
+				<configuration></configuration>
 			</plugin>
 		</plugins>
 	</build>

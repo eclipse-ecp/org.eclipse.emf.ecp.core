@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.rulerepository.tooling.test;
 
 import org.eclipse.emfforms.internal.rulerepository.tooling.merge.MergeWithViewHandler_Test;
+import org.eclipse.emfforms.internal.rulerepository.tooling.wizard.EMFFormsNewRuleRepositoryWizardPage_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ MergeWithViewHandler_Test.class })
+@SuiteClasses({ MergeWithViewHandler_Test.class, EMFFormsNewRuleRepositoryWizardPage_Test.class })
 public class AllTests {
 
 }

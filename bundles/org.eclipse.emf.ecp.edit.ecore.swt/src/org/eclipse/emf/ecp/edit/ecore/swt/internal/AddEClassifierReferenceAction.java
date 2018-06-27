@@ -70,7 +70,8 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 		if (selectedClassifier == null) {
 			return;
 		}
-		referenceService.addNewModelElements(selectedClassifier, (EReference) getSetting().getEStructuralFeature());
+		referenceService.addNewModelElements(selectedClassifier, (EReference) getSetting().getEStructuralFeature(),
+			true);
 	}
 
 	private EClassifier getExistingEClassifiers() {

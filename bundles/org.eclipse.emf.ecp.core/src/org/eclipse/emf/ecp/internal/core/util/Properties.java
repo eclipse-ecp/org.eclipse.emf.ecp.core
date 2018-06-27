@@ -171,7 +171,7 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 
 		@Override
 		public String toString() {
-			return key + " --> " + value;
+			return key + " --> " + value; //$NON-NLS-1$
 		}
 	}
 

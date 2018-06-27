@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * EclipseSource Munich - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.keyattribute.test.example;
 
@@ -14,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Container#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Container#getChildren <em>Children</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getContainer()
@@ -27,10 +36,11 @@ public interface Container extends EObject {
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear, there really should be more of
-	 * a description here...
+	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getContainer_Children()
 	 * @model containment="true"

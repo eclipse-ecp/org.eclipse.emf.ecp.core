@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.sdk.feature"
       label="EMF Forms SDK"
-      version="1.16.0.qualifier"
+      version="1.17.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.16.0.qualifier">
+      license-feature-version="1.17.0.qualifier">
 
    <description>
       %description
@@ -62,11 +62,11 @@
    <includes
          id="org.eclipse.emf.ecp.workspace.feature"
          version="0.0.0"/>
-   
+
    <includes
          id="org.eclipse.emf.ecp.emf2web.feature"
          version="0.0.0"/>
-         
+
    <includes
          id="org.eclipse.emf.ecp.emf2web.feature.source"
          version="0.0.0"/>
@@ -125,6 +125,10 @@
 
    <includes
          id="org.eclipse.emf.ecp.view.viewproxy.feature.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emfforms.swt.control.multiattribute.feature.source"
          version="0.0.0"/>
 
    <plugin

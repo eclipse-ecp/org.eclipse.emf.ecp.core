@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.model.test;
 
+import org.eclipse.emf.ecp.view.spi.table.model.util.TableColumnGenerator_Test;
 import org.eclipse.emf.ecp.view.spi.table.model.util.TableDMRValidation_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -23,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ TableDMRValidation_Test.class })
+@SuiteClasses({ TableDMRValidation_Test.class, TableColumnGenerator_Test.class })
 public class AllTests {
 	// JUnit 4 Test suite
 }

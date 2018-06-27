@@ -19,9 +19,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emfforms.bazaar.Vendor;
 
 /**
- * A {@link org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService DefaultReferenceService}
- * <em>customization strategy</em> for accumulating {@link EClass}es for instantiation to create a new
- * object in a reference.
+ * A <em>customization strategy</em> for accumulating {@link EClass}es for instantiation to create a new
+ * object in a reference. Used by the {@link DefaultCreateNewModelElementStrategyProvider}.
  *
  * @since 1.16
  *

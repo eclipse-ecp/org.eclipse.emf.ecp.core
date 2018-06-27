@@ -14,34 +14,24 @@ package org.eclipse.emf.ecp.ui.view.swt;
 
 import static java.util.Collections.singleton;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
-import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
-import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy;
-import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
-import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -64,7 +54,8 @@ import org.eclipse.swt.widgets.Display;
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy AttachmentStrategy}</li>
- * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy EClassSelectionStrategy}</li>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy
+ * CreateNewModelElementStrategy}</li>
  * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy EObjectSelectionStrategy}</li>
  * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy OpenInNewContextStrategy}</li>
  * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy ReferenceStrategy}</li>
@@ -85,17 +76,15 @@ import org.eclipse.swt.widgets.Display;
 @SuppressWarnings("restriction")
 public class DefaultReferenceService implements ReferenceService {
 
-	private ViewModelContext context;
-
 	private EObjectSelectionStrategy eobjectSelectionStrategy = EObjectSelectionStrategy.NULL;
-	private EClassSelectionStrategy eclassSelectionStrategy = EClassSelectionStrategy.NULL;
+	private CreateNewModelElementStrategy createNewModelElementStrategy = CreateNewModelElementStrategy.DEFAULT;
 	private AttachmentStrategy attachmentStrategy = AttachmentStrategy.DEFAULT;
 	private ReferenceStrategy referenceStrategy = ReferenceStrategy.DEFAULT;
 	private OpenInNewContextStrategy openInNewContextStrategy = OpenInNewContextStrategy.DEFAULT;
 
 	@Override
 	public void instantiate(ViewModelContext context) {
-		this.context = context;
+		// Nothing to do
 	}
 
 	@Override
@@ -108,20 +97,30 @@ public class DefaultReferenceService implements ReferenceService {
 		return 2;
 	}
 
+	@Deprecated
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
-		final EObject newMEInstance = getNewModelElementInstance(eObject, eReference);
+		addNewModelElements(eObject, eReference, true);
+	}
 
-		if (newMEInstance == null) {
-			return;
-		}
-
+	/**
+	 * @since 1.17
+	 */
+	@Override
+	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
 		if (eReference.isContainer()) {
-			// TODO language
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
 				"Operation not permitted for container references!");//$NON-NLS-1$
-			return;
+			return Optional.empty();
 		}
+
+		final Optional<EObject> newMEInstanceOptional = createNewModelElementStrategy.createNewModelElement(eObject,
+			eReference);
+
+		if (!newMEInstanceOptional.isPresent()) {
+			return Optional.empty();
+		}
+		final EObject newMEInstance = newMEInstanceOptional.get();
 
 		if (!eReference.isContainment()) {
 			attachmentStrategy.addElementToModel(eObject, eReference, newMEInstance);
@@ -129,32 +128,11 @@ public class DefaultReferenceService implements ReferenceService {
 
 		referenceStrategy.addElementsToReference(eObject, eReference, singleton(newMEInstance));
 
-		openInNewContext(newMEInstance);
-	}
-
-	private EObject getNewModelElementInstance(EObject owner, EReference reference) {
-		final Collection<EClass> classes = eclassSelectionStrategy.collectEClasses(owner, reference,
-			EMFUtils.getSubClasses(reference.getEReferenceType()));
-		if (classes.isEmpty()) {
-			final String errorMessage = String.format("No concrete classes for the type %1$s were found!", //$NON-NLS-1$
-				reference.getEReferenceType().getName());
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
-				errorMessage);
-			context.getService(ReportService.class).report(new AbstractReport(errorMessage));
-			return null;
+		if (openInNewContext) {
+			openInNewContext(newMEInstance);
 		}
-		if (classes.size() == 1) {
-			return EcoreUtil.create(classes.iterator().next());
-		}
-		return getModelElementInstanceFromList(classes);
-	}
 
-	private EObject getModelElementInstanceFromList(Collection<EClass> classes) {
-		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-			new HashSet<EPackage>(),
-			new HashSet<EPackage>(), classes);
-
-		return SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
+		return newMEInstanceOptional;
 	}
 
 	@Override
@@ -205,19 +183,16 @@ public class DefaultReferenceService implements ReferenceService {
 	}
 
 	/**
-	 * Set a strategy for selection of eligible {@link EClass}es for creation
-	 * of new objects in references.
+	 * Add a strategy for the creation of a new model element.
 	 *
-	 * @param strategy a strategy to set
-	 *
-	 * @since 1.16
+	 * @param strategy The strategy to set
 	 */
-	void setEClassSelectionStrategy(EClassSelectionStrategy strategy) {
+	void setCreateNewModelElementStrategy(CreateNewModelElementStrategy strategy) {
 		if (strategy == null) {
-			strategy = EClassSelectionStrategy.NULL;
+			strategy = CreateNewModelElementStrategy.DEFAULT;
 		}
 
-		eclassSelectionStrategy = strategy;
+		createNewModelElementStrategy = strategy;
 	}
 
 	/**

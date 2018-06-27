@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * EclipseSource Munich - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.keyattribute.test.example;
 
@@ -9,6 +18,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
+ *
  * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage
  * @generated
  */
@@ -17,6 +27,7 @@ public interface ExampleFactory extends EFactory {
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	ExampleFactory eINSTANCE = org.eclipse.emf.ecp.view.keyattribute.test.example.impl.ExampleFactoryImpl.init();
@@ -25,6 +36,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns a new object of class '<em>Root</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return a new object of class '<em>Root</em>'.
 	 * @generated
 	 */
@@ -34,6 +46,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns a new object of class '<em>Intermediate</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return a new object of class '<em>Intermediate</em>'.
 	 * @generated
 	 */
@@ -43,6 +56,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns a new object of class '<em>Container</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return a new object of class '<em>Container</em>'.
 	 * @generated
 	 */
@@ -52,6 +66,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns a new object of class '<em>Child</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return a new object of class '<em>Child</em>'.
 	 * @generated
 	 */
@@ -61,6 +76,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns a new object of class '<em>Intermediate Target</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return a new object of class '<em>Intermediate Target</em>'.
 	 * @generated
 	 */
@@ -70,6 +86,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns a new object of class '<em>Target</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return a new object of class '<em>Target</em>'.
 	 * @generated
 	 */
@@ -79,6 +96,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns a new object of class '<em>Key Container</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return a new object of class '<em>Key Container</em>'.
 	 * @generated
 	 */
@@ -88,6 +106,7 @@ public interface ExampleFactory extends EFactory {
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

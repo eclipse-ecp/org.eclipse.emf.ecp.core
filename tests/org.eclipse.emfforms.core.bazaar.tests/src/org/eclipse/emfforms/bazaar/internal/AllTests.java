@@ -23,8 +23,8 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ Bazaar_ITest.class,
-	BazaarBuilderTest.class,
+@SuiteClasses({ Bazaar_Test.class,
+	BazaarBuilder_Test.class,
 	ThreadSafeBazaar_ITest.class,
 	Bazaar_PTest.class
 })

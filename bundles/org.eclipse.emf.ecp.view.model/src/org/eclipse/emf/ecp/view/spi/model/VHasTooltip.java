@@ -16,19 +16,21 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Has Tooltip</b></em>'.
- * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip <em>Tooltip</em>}</li>
- * </ul>
+ * @since 1.13
+ *
+ *        <!-- end-user-doc -->
+ *
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip <em>Tooltip</em>}</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getHasTooltip()
  * @model interface="true" abstract="true"
  * @generated
- * @since 1.13
  */
 public interface VHasTooltip extends EObject {
 	/**

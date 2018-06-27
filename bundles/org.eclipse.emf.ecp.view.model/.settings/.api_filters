@@ -102,6 +102,25 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/VView.java" type="org.eclipse.emf.ecp.view.spi.model.VView">
+        <filter comment="SPI change 1.17.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VView"/>
+                <message_argument value="getEcorePath()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VView"/>
+                <message_argument value="setEcorePath(String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="1211105284">
+            <message_arguments>
+                <message_argument value="getEcorePaths()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewFactory.java" type="org.eclipse.emf.ecp.view.spi.model.VViewFactory">
         <filter comment="spi 170" id="403804204">
             <message_arguments>
@@ -629,6 +648,25 @@
                 <message_argument value="http://org/eclipse/emf/ecp/view/model"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change 1.17.0" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="eNS_URI"/>
+                <message_argument value="http://org/eclipse/emf/ecp/view/model/170"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW__ECORE_PATH"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="getView_EcorePath()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewPackage.java" type="org.eclipse.emf.ecp.view.spi.model.VViewPackage$Literals">
         <filter comment="SPI" id="403767336">
@@ -745,10 +783,22 @@
                 <message_argument value="VIEW__ECORE_PATH"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="VIEW__ECORE_PATHS"/>
+            </message_arguments>
+        </filter>
         <filter comment="spi 170" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
                 <message_argument value="VIEW__LOADING_PROPERTIES"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="VIEW__ECORE_PATH"/>
             </message_arguments>
         </filter>
     </resource>
@@ -771,6 +821,63 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl"/>
                 <message_argument value="resolve(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/impl/VViewImpl.java" type="org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl">
+        <filter comment="SPI change 1.17.0" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl"/>
+                <message_argument value="ecorePaths"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl"/>
+                <message_argument value="ECORE_PATH_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl"/>
+                <message_argument value="ecorePath"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl"/>
+                <message_argument value="getEcorePath()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl"/>
+                <message_argument value="setEcorePath(String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="576725006">
+            <message_arguments>
+                <message_argument value="VView"/>
+                <message_argument value="VViewImpl"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.17.0" id="1143996420">
+            <message_arguments>
+                <message_argument value="ecorePaths"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/impl/VViewPackageImpl.java" type="org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl">
+        <filter comment="SPI change 1.17.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl"/>
+                <message_argument value="getView_EcorePath()"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="VViewPackage"/>
+                <message_argument value="VViewPackageImpl"/>
             </message_arguments>
         </filter>
     </resource>

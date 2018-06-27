@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _foqG8GzgEeWQGtcwdcx-qw
 Runtime-Version: 2.2.0.201706152316
-Save-Time: 2/26/18 3:52 PM
+Save-Time: 5/24/18 9:34 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -255,13 +255,12 @@ with [get-view "EMF Forms Preview" | get-label -after [get-label "View Editor Pr
     get-property backgroundColor | equals "#FFFFFF" | verify-true
     try {
 		// local color (ubuntu/gnome)
-		get-property foregroundColor | equals "#4C454C" | verify-true
+		get-property foregroundColor | equals "#4C4C4C" | verify-true
 	} -catch {
 		// jenkins color
 		get-property foregroundColor | equals "#000000" | verify-true
 	}
     get-property "getFont().getFontData().FontData[0].getStyle()" | equals 0 | verify-true
-    get-property "getFont().getFontData().FontData[0].getHeight()" | equals 10 | verify-true
     get-property "getStyle()" | contains "SEPARATOR" | verify-true
     get-property "getStyle()" | contains "SHADOW_OUT" | verify-true
     get-property "getStyle()" | contains "NO_FOCUS" | verify-true

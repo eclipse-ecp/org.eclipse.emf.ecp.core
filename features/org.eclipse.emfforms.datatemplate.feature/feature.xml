@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emfforms.datatemplate.feature"
+      label="EMF Forms Data Templates"
+      version="1.17.0.qualifier"
+      provider-name="Eclipse Modeling Project"
+      plugin="org.eclipse.emfforms.datatemplate.model"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.17.0.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="org.eclipse.emfforms.core.services.datatemplate"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.datatemplate.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.datatemplate.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

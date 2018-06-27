@@ -3,6 +3,7 @@
 <plugin>
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+
       <file
             filePath="viewmodel/view.viewmodel">
       </file>
@@ -22,6 +23,9 @@
       </file>
       <file
             filePath="viewmodel/TableDomainModelReference.view">
+      </file>
+      <file
+            filePath="viewmodel/ReadOnlyColumnConfiguration.view">
       </file>
    </extension>
 

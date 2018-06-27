@@ -39,7 +39,7 @@ public final class TableColumnGenerator {
 	 * @param vTableControl the table control to use
 	 */
 	public static void generateColumns(EClass clazz, VTableControl vTableControl) {
-		final EList<EAttribute> attributes = clazz.getEAttributes();
+		final EList<EAttribute> attributes = clazz.getEAllAttributes();
 		for (final EAttribute a : attributes) {
 			addColumn(a, vTableControl);
 		}

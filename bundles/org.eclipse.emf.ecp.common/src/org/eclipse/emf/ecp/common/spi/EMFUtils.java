@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.EcorePackage;
 
 /**
  * Util class for basic EMF.
@@ -47,7 +48,8 @@ public final class EMFUtils {
 			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					final EClass eClass = (EClass) eClassifier;
-					if (superClass.isSuperTypeOf(eClass) && !eClass.isAbstract() && !eClass.isInterface()) {
+					if (!eClass.isAbstract() && !eClass.isInterface()
+						&& (EcorePackage.eINSTANCE.getEObject() == superClass || superClass.isSuperTypeOf(eClass))) {
 						classes.add(eClass);
 					}
 				}

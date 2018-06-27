@@ -1,0 +1,63 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ,_2bS8sTNtEeSiS7b7ptZeHw,_DD4ysDmlEeiV5MMKft7xVA
+Element-Name: TemplateAnnotationSelector
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _PcpI0DmJEeiUsKIXZxWPjg
+Runtime-Version: 2.3.0.201804052311
+Save-Time: 4/6/18 4:22 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "new_file.template"] {
+    get-tree | select "View Template" | get-menu -path Style | click
+    get-button "Create and link new Selector" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select "annotation/AnnotationSelector"
+    get-button Finish | click
+}
+with [get-window AnnotationSelector] {
+    with [get-editbox -after [get-label "Key*"]] {
+        set-text Foo
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    get-editbox -after [get-label Value] | set-text Bar
+    get-button OK | click
+}
+with [get-editor "new_file.template"] {
+    get-link "<a>Annotation Selector [\"Foo\", \"Bar\"]</a>" | get-property caption 
+        | equals "<a>Annotation Selector [\"Foo\", \"Bar\"]</a>" | verify-true
+    with [get-tree] {
+        get-item -path "View Template/Style/Annotation Selector \\[\"Foo\", \"Bar\"\\]" | get-property caption 
+            | equals "Annotation Selector [\"Foo\", \"Bar\"]" | verify-true
+        get-item -path "View Template/Style/Annotation Selector \\[\"Foo\", \"Bar\"\\]" | get-property index | equals 0 
+            | verify-true
+        get-item -path "View Template/Style/Annotation Selector \\[\"Foo\", \"Bar\"\\]" | get-property childCount 
+            | equals 0 | verify-true
+    }
+}
+with [get-editor "new_file.template"] {
+    with [get-tree] {
+        select "View Template" | get-menu -path Style | click
+        select [get-item -path "View Template" | get-item -path Style -index 1] | get-menu -path "Annotation Selector" 
+            | click
+    }
+    get-editbox -after [get-label "Key*"] | set-text Bar
+    get-editbox -after [get-label Value] | set-text Foo
+    get-editbox -after [get-label "Key*"] | click-text 4
+}
+with [get-editor "new_file.template" | get-tree] {
+    get-item -path "View Template" | get-item -path Style -index 1 | get-item 
+        -path "Annotation Selector \\[\"Bar\", \"Foo\"\\]" | get-property caption 
+        | equals "Annotation Selector [\"Bar\", \"Foo\"]" | verify-true
+    get-item -path "View Template" | get-item -path Style -index 1 | get-item 
+        -path "Annotation Selector \\[\"Bar\", \"Foo\"\\]" | get-property childCount | equals 0 | verify-true
+}
+get-eclipse-window | key-type "M1+s"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

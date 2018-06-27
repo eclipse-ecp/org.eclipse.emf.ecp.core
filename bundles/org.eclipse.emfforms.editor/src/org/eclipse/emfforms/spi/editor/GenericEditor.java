@@ -138,6 +138,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	private boolean reloading;
 
+	private boolean closing;
+
 	/**
 	 * @return the {@link DiagnosticCache}. may be <code>null</code>
 	 * @since 1.10
@@ -195,11 +197,18 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 						return;
 					}
 					reloading = true;
-					resourceSet.getResources().removeAll(removedResources);
+					removeResources(removedResources);
 					for (final Resource changed : changedResources) {
-						changed.unload();
+						// We need to get the resource by its URI from the resource set because otherwise proxies will
+						// not be able to resolve after the reload. This is the case because the given resources are not
+						// part of this editor's resource set.
+						final Resource toReload = resourceSet.getResource(changed.getURI(), false);
+						if (toReload == null) {
+							continue;
+						}
+						toReload.unload();
 						try {
-							changed.load(null);
+							toReload.load(null);
 						} catch (final IOException ex) {
 						}
 					}
@@ -721,6 +730,43 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	}
 
 	/**
+	 * Returns whether this editor is currently in the process of shutting down.
+	 *
+	 * @return <code>true</code> if the editor is currently closing, <code>false</code> otherwise
+	 * @since 1.17
+	 */
+	protected boolean isClosing() {
+		return closing;
+	}
+
+	/**
+	 * Set whether this editor is currently in the process of shutting down.
+	 * Set this flag in case you will close the editor.
+	 *
+	 * @param closing Whether the editor is currently closing (shutting down)
+	 * @since 1.17
+	 */
+	protected void setClosing(boolean closing) {
+		this.closing = closing;
+	}
+
+	/**
+	 * Removes the given {@linkplain Resource Resources} from this editor's {@linkplain ResourceSet}. Thereby the
+	 * resources are matched by URI.
+	 * 
+	 * @param resources The {@linkplain Resource Resources} to remove from this editor's {@linkplain ResourceSet}.
+	 * @since 1.17
+	 */
+	protected void removeResources(final Collection<Resource> resources) {
+		for (final Resource removed : resources) {
+			final Resource toRemove = resourceSet.getResource(removed.getURI(), false);
+			if (toRemove != null) {
+				resourceSet.getResources().remove(toRemove);
+			}
+		}
+	}
+
+	/**
 	 * Listens to part events.
 	 *
 	 */
@@ -743,7 +789,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 		@Override
 		public void partActivated(IWorkbenchPart part) {
-			if (part == GenericEditor.this && isDirty() && filesChangedWithConflict && discardChanges()) {
+			if (!isClosing() && part == GenericEditor.this && isDirty() && filesChangedWithConflict
+				&& discardChanges()) {
 				reloading = true;
 				for (final Resource r : resourceSet.getResources()) {
 					r.unload();

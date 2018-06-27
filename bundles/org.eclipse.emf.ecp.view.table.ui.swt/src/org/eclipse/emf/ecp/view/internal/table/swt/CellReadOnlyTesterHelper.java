@@ -64,7 +64,7 @@ public final class CellReadOnlyTesterHelper {
 				final ECPCellReadOnlyTester tester = (ECPCellReadOnlyTester) e.createExecutableExtension("class"); //$NON-NLS-1$
 				testers.add(tester);
 			} catch (final CoreException e1) {
-				Activator.log(e1);
+				Activator.getInstance().log(e1);
 			}
 		}
 	}

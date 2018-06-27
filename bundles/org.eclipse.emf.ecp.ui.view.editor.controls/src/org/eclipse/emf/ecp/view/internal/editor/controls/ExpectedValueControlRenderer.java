@@ -55,10 +55,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListDialog;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * A control for defining an value in a leaf condition.
@@ -69,41 +67,33 @@ import org.osgi.framework.ServiceReference;
 // APITODO no api yet
 public abstract class ExpectedValueControlRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
-	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
-	private static final VTViewTemplateProvider VIEW_TEMPLATE_PROVIDER;
-
-	static {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(ExpectedValueControlRenderer.class)
-			.getBundleContext();
-		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
-			.getServiceReference(EMFFormsDatabinding.class);
-		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
-		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
-			.getServiceReference(EMFFormsLabelProvider.class);
-		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
-		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
-			.getServiceReference(VTViewTemplateProvider.class);
-		VIEW_TEMPLATE_PROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
-	}
-
 	/**
 	 * Default constructor.
 	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
+	 * @param databindingService The {@link EMFFormsDatabinding}
+	 * @param labelProvider The {@link EMFFormsLabelProvider}
+	 * @param viewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
 	public ExpectedValueControlRenderer(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService) {
-		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER,
-			VIEW_TEMPLATE_PROVIDER);
+		ReportService reportService, EMFFormsDatabinding databindingService, EMFFormsLabelProvider labelProvider,
+		VTViewTemplateProvider viewTemplateProvider) {
+		super(vElement, viewContext, reportService, databindingService, labelProvider, viewTemplateProvider);
 	}
 
 	private Label text;
+	private Shell shell;
 
 	private String getTextVariantID() {
 		return "org_eclipse_emf_ecp_view_editor_controls_ruleattribute"; //$NON-NLS-1$
+	}
+
+	@Override
+	public void finalizeRendering(Composite parent) {
+		super.finalizeRendering(parent);
+		shell = parent.getShell();
 	}
 
 	/**
@@ -178,6 +168,11 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	protected Object getSelectedObject(EAttribute attribute) {
 		Object object = null;
 		// final EAttribute attribute = (EAttribute) structuralFeature;
+		if (attribute == null) {
+			showError(shell, "Missing Attribute", //$NON-NLS-1$
+				"Please select an attribute before attempting to select its value."); //$NON-NLS-1$
+			return object;
+		}
 		Class<?> attribuetClazz = attribute.getEAttributeType().getInstanceClass();
 
 		if (attribuetClazz == null) {
@@ -185,7 +180,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 				attribuetClazz = Enum.class;
 				final EList<EEnumLiteral> eLiterals = EEnumImpl.class.cast(attribute.getEType()).getELiterals();
 				final Object[] enumValues = eLiterals.toArray();
-				final ListDialog ld = new ListDialog(text.getShell());
+				final ListDialog ld = new ListDialog(shell);
 				ld.setLabelProvider(new LabelProvider());
 				ld.setContentProvider(ArrayContentProvider.getInstance());
 				ld.setInput(enumValues);
@@ -201,23 +196,11 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 			}
 		} else {
 			if (attribuetClazz.isPrimitive()) {
-				if (int.class.isAssignableFrom(attribuetClazz)) {
-					attribuetClazz = Integer.class;
-				} else if (long.class.isAssignableFrom(attribuetClazz)) {
-					attribuetClazz = Long.class;
-				} else if (float.class.isAssignableFrom(attribuetClazz)) {
-					attribuetClazz = Float.class;
-				} else if (double.class.isAssignableFrom(attribuetClazz)) {
-					attribuetClazz = Double.class;
-				} else if (boolean.class.isAssignableFrom(attribuetClazz)) {
-					attribuetClazz = Boolean.class;
-				} else if (char.class.isAssignableFrom(attribuetClazz)) {
-					attribuetClazz = Character.class;
-				}
+				attribuetClazz = getAttributeClass(attribuetClazz);
 			}
 			if (Enum.class.isAssignableFrom(attribuetClazz)) {
 				final Object[] enumValues = attribuetClazz.getEnumConstants();
-				final ListDialog ld = new ListDialog(text.getShell());
+				final ListDialog ld = new ListDialog(shell);
 				ld.setLabelProvider(new LabelProvider());
 				ld.setContentProvider(ArrayContentProvider.getInstance());
 				ld.setInput(enumValues);
@@ -231,47 +214,88 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 			} else if (String.class.isAssignableFrom(attribuetClazz)
 				|| Number.class.isAssignableFrom(attribuetClazz)
 				|| Boolean.class.isAssignableFrom(attribuetClazz)) {
-				try {
-					final Constructor<?> constructor = attribuetClazz.getConstructor(String.class);
-					final InputDialog id = new InputDialog(
-						text.getShell(),
-						"Insert the value", //$NON-NLS-1$
-						"The value must be parseable by the " //$NON-NLS-1$
-							+ attribuetClazz.getSimpleName()
-							+ " class. For a double value please use the #.# format. For boolean values 'true' or 'false'.", //$NON-NLS-1$
-						null, null);
-					final int inputResult = id.open();
-					if (Window.OK == inputResult) {
-						object = constructor.newInstance(id.getValue());
-					}
-					if (Boolean.class.isAssignableFrom(attribuetClazz) && !Boolean.class.cast(object)
-						&& !"false".equalsIgnoreCase(id.getValue())) { //$NON-NLS-1$
-						MessageDialog.openError(text.getShell(), "Invalid boolean value", //$NON-NLS-1$
-							"You have entered an invalid value. False has been chosen instead."); //$NON-NLS-1$
-					}
-				} catch (final IllegalArgumentException ex) {
-					openInvalidValueMessage();
-				} catch (final SecurityException ex) {
-					openInvalidValueMessage();
-				} catch (final NoSuchMethodException ex) {
-					openInvalidValueMessage();
-				} catch (final InstantiationException ex) {
-					openInvalidValueMessage();
-				} catch (final IllegalAccessException ex) {
-					openInvalidValueMessage();
-				} catch (final InvocationTargetException ex) {
-					openInvalidValueMessage();
-				}
+				object = promptForValue(shell, object, attribuetClazz);
 			} else {
-				MessageDialog.openError(text.getShell(), "Not primitive Attribute selected", //$NON-NLS-1$
+				showError(shell, "Not primitive Attribute selected", //$NON-NLS-1$
 					"The selected attribute has a not primitive type. We can't provide you support for it!"); //$NON-NLS-1$
 			}
 		}
 		return object;
 	}
 
+	/**
+	 * Shows an error message to the user.
+	 *
+	 * @param shell The Shell to show the error on
+	 * @param title The title of the error message
+	 * @param description The error description
+	 */
+	protected void showError(Shell shell, String title, String description) {
+		MessageDialog.openError(shell, title, description);
+	}
+
+	/**
+	 * Prompts the user to input a value. Return the original object if the input is cancelled.
+	 *
+	 * @param shell The Shell on which an input dialog will be opened
+	 * @param object The current value
+	 * @param attributeClazz The Class for which we want a value
+	 * @return the prompted value, or the input object if the prompt was cancelled
+	 */
+	Object promptForValue(Shell shell, Object object, Class<?> attributeClazz) {
+		try {
+			final Constructor<?> constructor = attributeClazz.getConstructor(String.class);
+			final InputDialog id = new InputDialog(
+				shell,
+				"Insert the value", //$NON-NLS-1$
+				"The value must be parseable by the " //$NON-NLS-1$
+					+ attributeClazz.getSimpleName()
+					+ " class. For a double value please use the #.# format. For boolean values 'true' or 'false'.", //$NON-NLS-1$
+				null, null);
+			final int inputResult = id.open();
+			if (Window.OK == inputResult) {
+				object = constructor.newInstance(id.getValue());
+			}
+			if (Boolean.class.isAssignableFrom(attributeClazz) && !Boolean.class.cast(object)
+				&& !"false".equalsIgnoreCase(id.getValue())) { //$NON-NLS-1$
+				showError(shell, "Invalid boolean value", //$NON-NLS-1$
+					"You have entered an invalid value. False has been chosen instead."); //$NON-NLS-1$
+			}
+		} catch (final IllegalArgumentException ex) {
+			openInvalidValueMessage();
+		} catch (final SecurityException ex) {
+			openInvalidValueMessage();
+		} catch (final NoSuchMethodException ex) {
+			openInvalidValueMessage();
+		} catch (final InstantiationException ex) {
+			openInvalidValueMessage();
+		} catch (final IllegalAccessException ex) {
+			openInvalidValueMessage();
+		} catch (final InvocationTargetException ex) {
+			openInvalidValueMessage();
+		}
+		return object;
+	}
+
+	private Class<?> getAttributeClass(Class<?> attributeClazz) {
+		if (int.class.isAssignableFrom(attributeClazz)) {
+			attributeClazz = Integer.class;
+		} else if (long.class.isAssignableFrom(attributeClazz)) {
+			attributeClazz = Long.class;
+		} else if (float.class.isAssignableFrom(attributeClazz)) {
+			attributeClazz = Float.class;
+		} else if (double.class.isAssignableFrom(attributeClazz)) {
+			attributeClazz = Double.class;
+		} else if (boolean.class.isAssignableFrom(attributeClazz)) {
+			attributeClazz = Boolean.class;
+		} else if (char.class.isAssignableFrom(attributeClazz)) {
+			attributeClazz = Character.class;
+		}
+		return attributeClazz;
+	}
+
 	private void openInvalidValueMessage() {
-		MessageDialog.openError(text.getShell(), "Invalid value", //$NON-NLS-1$
+		MessageDialog.openError(shell, "Invalid value", //$NON-NLS-1$
 			"You have entered an invalid value. The previsous value will be kept."); //$NON-NLS-1$
 	}
 
@@ -321,7 +345,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 			if (String.class.isInstance(converted)) {
 				IObservableValue observableValue;
 				try {
-					observableValue = EMFFORMS_DATABINDING
+					observableValue = getEMFFormsDatabinding()
 						.getObservableValue(getVElement().getDomainModelReference(),
 							getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {

@@ -1,4 +1,23 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Lucas Koehler - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.emfstore.fx.internal.projects;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.util.e4.fx.ModelElementOpenerFX;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,14 +31,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.Callback;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.util.e4.fx.ModelElementOpenerFX;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 
 public class ProjectsView {
 

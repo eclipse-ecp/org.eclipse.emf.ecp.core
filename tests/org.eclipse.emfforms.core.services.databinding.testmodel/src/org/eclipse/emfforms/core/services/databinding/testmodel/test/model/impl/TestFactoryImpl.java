@@ -22,6 +22,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.DExtended;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
@@ -29,7 +30,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
@@ -37,16 +38,17 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static TestFactory init() {
 		try {
-			TestFactory theTestFactory = (TestFactory) EPackage.Registry.INSTANCE.getEFactory(TestPackage.eNS_URI);
+			final TestFactory theTestFactory = (TestFactory) EPackage.Registry.INSTANCE
+				.getEFactory(TestPackage.eNS_URI);
 			if (theTestFactory != null) {
 				return theTestFactory;
 			}
-		} catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new TestFactoryImpl();
@@ -56,7 +58,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TestFactoryImpl() {
@@ -66,7 +68,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -84,6 +86,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return (EObject) createEClassToEStringMap();
 		case TestPackage.ECLASS_TO_AMAP:
 			return (EObject) createEClassToAMap();
+		case TestPackage.DEXTENDED:
+			return createDExtended();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -92,77 +96,89 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public A createA() {
-		AImpl a = new AImpl();
+		final AImpl a = new AImpl();
 		return a;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public B createB() {
-		BImpl b = new BImpl();
+		final BImpl b = new BImpl();
 		return b;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public C createC() {
-		CImpl c = new CImpl();
+		final CImpl c = new CImpl();
 		return c;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public D createD() {
-		DImpl d = new DImpl();
+		final DImpl d = new DImpl();
 		return d;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Map.Entry<EClass, String> createEClassToEStringMap() {
-		EClassToEStringMapImpl eClassToEStringMap = new EClassToEStringMapImpl();
+		final EClassToEStringMapImpl eClassToEStringMap = new EClassToEStringMapImpl();
 		return eClassToEStringMap;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Map.Entry<EClass, A> createEClassToAMap() {
-		EClassToAMapImpl eClassToAMap = new EClassToAMapImpl();
+		final EClassToAMapImpl eClassToAMap = new EClassToAMapImpl();
 		return eClassToAMap;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 */
+	@Override
+	public DExtended createDExtended() {
+		final DExtendedImpl dExtended = new DExtendedImpl();
+		return dExtended;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -173,7 +189,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

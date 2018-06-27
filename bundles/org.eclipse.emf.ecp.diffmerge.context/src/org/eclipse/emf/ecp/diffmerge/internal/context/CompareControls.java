@@ -86,50 +86,56 @@ public final class CompareControls {
 		final Object leftValue = leftEObject.eGet(leftStructuralFeature, true);
 		final Object rightValue = rightEObject.eGet(rightStructuralFeature, true);
 
+		return areValuesEqual(leftValue, leftStructuralFeature, rightValue, rightStructuralFeature);
+	}
+
+	/**
+	 * Compares two {@link EStructuralFeature EStructuralFeatures} and their values.
+	 * If both are null, they are equal. For a single reference, the referenced EObjects are compare (equals). For a
+	 * "many" references, a list entries are compared.
+	 *
+	 * @param leftValue the value of the left {@link EStructuralFeature}
+	 * @param leftStructuralFeature the left EStructuralFeature
+	 * @param rightValue the value of the right EStructuralFeature
+	 * @param rightStructuralFeature the right EStructuralFeature
+	 * @return whether the values are equal
+	 */
+	@SuppressWarnings("unchecked")
+	public static boolean areValuesEqual(final Object leftValue, final EStructuralFeature leftStructuralFeature,
+		final Object rightValue,
+		final EStructuralFeature rightStructuralFeature) {
 		if (leftValue == null && rightValue == null) {
 			return true;
 		}
-		if (leftValue == null && rightValue != null) {
-			return false;
-		}
-		if (leftValue != null && rightValue == null) {
+		if (leftValue == null || rightValue == null) {
 			return false;
 		}
 		if (leftValue.equals(rightValue)) {
 			return true;
 		}
 
-		// TODO handle EReference (single and many)
-		if (EcorePackage.eINSTANCE.getEReference().isInstance(leftStructuralFeature) && !leftStructuralFeature.isMany()
-			|| EcorePackage.eINSTANCE.getEReference().isInstance(rightStructuralFeature)
-				&& !rightStructuralFeature.isMany()) {
+		if (isSingleReferences(leftStructuralFeature)
+			&& isSingleReferences(rightStructuralFeature)) {
 			return EcoreUtil.equals(EObject.class.cast(leftValue), EObject.class.cast(rightValue));
 		}
-		if (leftStructuralFeature.isMany() && rightStructuralFeature.isMany()) {
-			return handleLists(leftStructuralFeature, rightStructuralFeature, leftValue, rightValue);
+		if (isMultiReference(leftStructuralFeature) && isMultiReference(rightStructuralFeature)) {
+			return EcoreUtil.equals((List<EObject>) leftValue, (List<EObject>) rightValue);
 		}
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
-	private static boolean handleLists(final EStructuralFeature leftStructuralFeature,
-		final EStructuralFeature rightStructuralFeature, final Object leftValue, final Object rightValue) {
-
-		if (EcorePackage.eINSTANCE.getEReference().isInstance(leftStructuralFeature)
-			&& EcorePackage.eINSTANCE.getEReference().isInstance(rightStructuralFeature)) {
-			return EcoreUtil.equals((List<EObject>) leftValue, (List<EObject>) rightValue);
-		}
-		final List<?> leftList = (List<?>) leftValue;
-		final List<?> rightList = (List<?>) rightValue;
-		if (leftList.size() != rightList.size()) {
-			return false;
-		}
-		for (int i = 0; i < leftList.size(); i++) {
-			if (leftList.get(i) != rightList.get(i)) {
-				return false;
-			}
-		}
-		return true;
-
+	/**
+	 * @param leftStructuralFeature
+	 * @return
+	 */
+	private static boolean isMultiReference(EStructuralFeature leftStructuralFeature) {
+		return EcorePackage.eINSTANCE.getEReference().isInstance(leftStructuralFeature)
+			&& leftStructuralFeature.isMany();
 	}
+
+	private static boolean isSingleReferences(final EStructuralFeature leftStructuralFeature) {
+		return EcorePackage.eINSTANCE.getEReference().isInstance(leftStructuralFeature)
+			&& !leftStructuralFeature.isMany();
+	}
+
 }

@@ -123,7 +123,7 @@ public class DetailDialog extends Dialog {
 					selection, view);
 			}
 		} catch (final ECPRendererException ex) {
-			Activator.log(ex);
+			Activator.getInstance().log(ex);
 		}
 
 		scrolledComposite.setContent(content);

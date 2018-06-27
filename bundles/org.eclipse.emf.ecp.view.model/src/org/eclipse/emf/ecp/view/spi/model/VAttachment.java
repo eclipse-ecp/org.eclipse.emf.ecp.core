@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Attachment</b></em>'.
- * 
+ *
  * @since 1.2
  *        <!-- end-user-doc -->
  *

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IContributor;
@@ -71,6 +73,13 @@ import org.xml.sax.helpers.DefaultHandler;
 public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewModelMigrator {
 
 	private static final String ECORE_NS_URI = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+
+	private static final Comparator<String> RELEASE_COMPERATOR = new Comparator<String>() {
+		@Override
+		public int compare(String left, String right) {
+			return Integer.valueOf(left).compareTo(Integer.valueOf(right));
+		}
+	};
 
 	/**
 	 *
@@ -299,10 +308,11 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 	private void fillReleases(final Release sourceRelease, final List<Release> targetReleases,
 		final Map<String, List<Change>> sourceReleaseNameToChangesMap,
 		final Map<String, List<Change>> targetReleaseNameToChangesMap) {
-		final List<String> sourceReleaseNames = new ArrayList<String>(sourceReleaseNameToChangesMap.keySet());
-		final List<String> targetReleaseNames = new ArrayList<String>(targetReleaseNameToChangesMap.keySet());
-		Collections.sort(sourceReleaseNames);
-		Collections.sort(targetReleaseNames);
+
+		final Set<String> sourceReleaseNames = new TreeSet<String>(RELEASE_COMPERATOR);
+		sourceReleaseNames.addAll(sourceReleaseNameToChangesMap.keySet());
+		final Set<String> targetReleaseNames = new TreeSet<String>(RELEASE_COMPERATOR);
+		targetReleaseNames.addAll(targetReleaseNameToChangesMap.keySet());
 
 		for (final String release : sourceReleaseNames) {
 			final List<Change> list = sourceReleaseNameToChangesMap.get(release);

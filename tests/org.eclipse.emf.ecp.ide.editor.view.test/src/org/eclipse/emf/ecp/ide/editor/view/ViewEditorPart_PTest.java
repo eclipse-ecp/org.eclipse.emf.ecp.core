@@ -16,10 +16,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.lang.reflect.Field;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -41,24 +43,30 @@ public class ViewEditorPart_PTest {
 
 	@Test
 	public void openView_NoRootEClass() {
+		final String expectedErrorMessage = Messages.ViewEditorPart_invalidVView_noRootEClass;
+
 		final ErrorEditorPart error = openError("View-Without-RootEClass.view");
-		assertErrorMessageContains(error, "The Root EClass of the VView is not set.");
+		assertErrorMessage(error, expectedErrorMessage);
 	}
 
 	@Test
 	public void openView_PackageNotRegistered() {
+		final String expectedErrorMessage = MessageFormat.format(
+			Messages.ViewEditorPart_invalidVView_rootEClassPackageNotResolved,
+			new Object[] { "User", "http://this/is/not/registered" });
+
 		final ErrorEditorPart error = openError("View-PackageNotExisting.view");
-		assertErrorMessageContains(error, "Root EClass \"User\" of the VView could not be resolved");
-		assertErrorMessageContains(error,
-			"register the Ecore providing the EPackage with namespace URI \"http://this/is/not/registered\"");
+		assertErrorMessage(error, expectedErrorMessage);
 	}
 
 	@Test
 	public void openView_PackageRegisteredButDoesNotContainRootEClass() {
+		final String expectedErrorMessage = MessageFormat.format(Messages.ViewEditorPart_ViewCannotBeDisplayed,
+			MessageFormat.format(Messages.ViewEditorPart_invalidVView_rootEClassNotInPackage,
+				new Object[] { "NonExistingClass", "task", "http://eclipse/org/emf/ecp/makeithappen/model/task" }));
+
 		final ErrorEditorPart error = openError("View-RootEClassNotExisting.view");
-		assertErrorMessageContains(error, "Root EClass \"NonExistingClass\" of the VView could not be resolved");
-		assertErrorMessageContains(error,
-			"The registered EPackage \"task\" with namespace URI \"http://eclipse/org/emf/ecp/makeithappen/model/task\" does not contain the Root EClass");
+		assertErrorMessage(error, expectedErrorMessage);
 	}
 
 	@After
@@ -126,7 +134,7 @@ public class ViewEditorPart_PTest {
 		return open(resourcePath, ErrorEditorPart.class);
 	}
 
-	void assertErrorMessageContains(ErrorEditorPart editor, String substring) {
+	void assertErrorMessage(ErrorEditorPart editor, String substring) {
 		Field statusField = null;
 		final Field[] declaredFields = editor.getClass().getDeclaredFields();
 		for (final Field field : declaredFields) {

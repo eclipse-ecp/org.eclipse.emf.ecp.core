@@ -74,6 +74,16 @@ public interface TestFactory extends EFactory {
 	D createD();
 
 	/**
+	 * Returns a new object of class '<em>DExtended</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>DExtended</em>'.
+	 * @generated
+	 */
+	DExtended createDExtended();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-examples-parent</artifactId>
-		<version>1.16.0-SNAPSHOT</version>
+		<version>1.17.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.examples/</relativePath>
 	</parent>
 
@@ -14,7 +14,7 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<groupId>org.eclipse.emf.ecp</groupId>
-	<version>1.16.0-SNAPSHOT</version>
+	<version>1.17.0-SNAPSHOT</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -33,10 +33,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.application.sample.e3</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -54,10 +55,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.application.sample.e4</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -76,10 +78,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.application.sample.fx</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -98,10 +101,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.application.sample.rap</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -119,10 +123,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -140,10 +145,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.model</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -161,10 +167,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.model.edit</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -182,10 +189,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.model.viewmodel</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -203,10 +211,11 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.view.email.renderer</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -224,17 +233,47 @@
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.view.group.renderer</directory>
 									<excludes>
-          								<exclude>bin/</exclude>
-          								<exclude>target/</exclude>
-          								<exclude>**/pom.xml</exclude>
-        							</excludes>
-        							<!-- Setting filtering to true will cause maven to look at the jar file and replace stuff. The result is an invalid jar -->
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
+									<!-- Setting filtering to true will cause maven to look at the jar 
+										file and replace stuff. The result is an invalid jar -->
 									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<basedir>${project.basedir}/examples</basedir>
+					<includes>
+						<include>**/.project</include>
+					</includes>
+					<regexFlags>
+						<regexFlag>MULTILINE</regexFlag>
+					</regexFlags>
+					<replacements>
+						<replacement>
+							<token>\n\t+&lt;buildCommand&gt;\s*&lt;name&gt;net.sf.eclipsecs.core.CheckstyleBuilder&lt;/name&gt;\s*&lt;arguments&gt;\s*&lt;/arguments&gt;\s*&lt;/buildCommand&gt;</token>
+							<value/>
+						</replacement>
+					</replacements>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

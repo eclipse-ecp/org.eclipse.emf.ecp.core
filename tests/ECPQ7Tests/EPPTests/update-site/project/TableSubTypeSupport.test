@@ -1,0 +1,243 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ZOi4wZ77EeOm87IlbkWrfQ,_ihvnUC3mEeSwhO5Nwx0hPg
+Element-Name: TableSubTypeSupport
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _uDtLYDnOEeiT54i24ck9dw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 4/6/18 9:30 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | get-menu -path "New/Project..." | click
+get-window "New Project" | get-tree | select "EMF Forms/View Model Project" | double-click
+with [get-window "New View Model Project"] {
+    get-editbox -after [get-label "Project name:"] | set-text TableSubTypes
+    get-button "Next >" | click
+    get-button "Browse Package Registry" | click
+    with [get-window "Package Selection"] {
+        get-table | select "http:\\/\\/www.eclipse.org\\/emf\\/2002\\/Ecore"
+        get-button OK | click
+    }
+    get-button "Next >" | click
+    get-button "Fill view model with default layout" | uncheck
+    get-tree | select "EClass -> EClassifier [org.eclipse.emf.ecore.EClass]"
+    get-button Finish | click
+}
+get-editor "EClass.view" | close
+get-view "Project Explorer" | get-tree | select "TableSubTypes/viewmodels/EClass.view" 
+    | select "TableSubTypes/viewmodels/EClass.view" | get-menu -path "Open With/View Model Editor" | click
+with [get-editor "EClass.view"] {
+    with [get-tree] {
+        select EClass | get-menu -path TableControl | click
+        select "EClass/TableControl"
+    }
+    get-button "Create and link new Domain Model Reference" | click
+}
+with [get-window "Configure TableDomainModelReference"] {
+    get-button "Create and link new Domain Model Reference" | click
+    with [get-window "New Reference Element"] {
+        get-tree | select "model/FeaturePathDomainModelReference"
+        get-button "Next >" | click
+        get-button "Link Domain Model EFeature" | click
+        with [get-window "Select a EStructuralFeature"] {
+            get-tree | select "eStructuralFeatures : EStructuralFeature"
+            get-button OK | click
+        }
+        get-button Finish | click
+    }
+    get-button Finish | click
+}
+get-editor "EClass.view" | get-tree | select "EClass/TableControl" | get-menu -path "Generate Columns for Subclass" 
+    | click
+with [get-window "Select EClass"] {
+    get-table | select "EAttribute -> EStructuralFeature \\[org.eclipse.emf.ecore.EAttribute\\]"
+    get-button OK | click
+}
+get-editor "EClass.view" | get-table | get-property itemCount | equals 15 | verify-true
+get-editor "EClass.view" | get-tree | select "EClass/TableControl" | get-menu -path "Generate Columns for Subclass" 
+    | click
+with [get-window "Select EClass"] {
+    get-table | select "EReference -> EStructuralFeature \\[org.eclipse.emf.ecore.EReference\\]"
+    get-button OK | click
+}
+get-editor "EClass.view" | get-table | get-property itemCount | equals 18 | verify-true
+get-view "EMF Forms Preview" | get-button "Clear Sample Data" | click
+get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
+get-view "EMF Forms Preview" | get-table | get-property "getColumnCount()" | equals 19 | verify-true
+get-view "EMF Forms Preview" | get-button "Add an instance of EStructuralFeature" | click
+with [get-window "New Reference Element" | get-tree] {
+    get-property itemCount | equals 2 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals EAttribute | verify-true
+    get-property "getItems().TreeItem[1].getText()" | equals EReference | verify-true
+}
+with [get-window "New Reference Element"] {
+    get-tree | select EAttribute
+    get-button Finish | click
+}
+with [get-view "EMF Forms Preview"] {
+    with [get-table] {
+        select true -column Ordered | activate-cell-edit -column 1 -type MouseClickSelection
+        with [get-editbox] {
+            set-text foo
+            key-type "TRAVERSE_TAB_NEXT"
+        }
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 2 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 3 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 4 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 5 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 6 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 7 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 8 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 9 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 10 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 11 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 12 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 13 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 14 -type Traversal
+        get-editbox | key-type "TRAVERSE_TAB_NEXT"
+        apply-cell-edit -deactivate
+        select foo -column Name | activate-cell-edit -column 15 -type Traversal
+        with [get-editbox] {
+            key-type "TRAVERSE_TAB_NEXT"
+            key-type Enter
+        }
+        apply-cell-edit -deactivate
+    }
+    get-button "Add an instance of EStructuralFeature" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select EReference
+    get-button Finish | click
+}
+with [get-view "EMF Forms Preview" | get-table] {
+    select [get-item -path true -column Ordered -index 1] | activate-cell-edit -column 1 -type MouseClickSelection
+    with [get-editbox] {
+        set-text bar
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 2 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 3 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 4 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 5 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 6 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 7 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 8 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 9 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 10 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 11 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 12 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 13 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 14 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 16 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 17 -type Traversal
+    get-editbox | key-type "TRAVERSE_TAB_NEXT"
+    apply-cell-edit -deactivate
+    select bar -column Name | activate-cell-edit -column 18 -type Traversal
+    with [get-editbox] {
+        key-type "TRAVERSE_TAB_NEXT"
+        key-type Enter
+    }
+    apply-cell-edit -deactivate
+}
+with [get-view "EMF Forms Preview" | get-table] {
+    get-item -path foo -column Name | get-property "values['Containment']" | equals "" | verify-true
+    get-item -path foo -column Name | get-property "values['Validation Status']" | equals "" | verify-true
+    get-item -path foo -column Name | get-property "values['Lower Bound']" | equals 0 | verify-true
+    get-item -path foo -column Name | get-property "values['Default Value Literal']" | equals "" | verify-true
+    get-item -path foo -column Name | get-property "values['Ordered']" | equals true | verify-true
+    get-item -path foo -column Name | get-property "values['Required']" | equals false | verify-true
+    get-item -path foo -column Name | get-property "values['Volatile']" | equals false | verify-true
+    get-item -path foo -column Name | get-property "values['Changeable']" | equals true | verify-true
+    get-item -path foo -column Name | get-property "values['Name']" | equals foo | verify-true
+    get-item -path foo -column Name | get-property "values['Unsettable']" | equals false | verify-true
+    get-item -path foo -column Name | get-property "values['Container']" | equals "" | verify-true
+    get-item -path foo -column Name | get-property "values['Upper Bound']" | equals 1 | verify-true
+    get-item -path foo -column Name | get-property "values['Transient']" | equals false | verify-true
+    get-item -path foo -column Name | get-property "values['Derived']" | equals false | verify-true
+    get-item -path foo -column Name | get-property "values['Unique']" | equals true | verify-true
+    get-item -path foo -column Name | get-property "values['Default Value']" | equals "" | verify-true
+    get-item -path foo -column Name | get-property "values['ID']" | equals false | verify-true
+    get-item -path foo -column Name | get-property "values['Many']" | equals false | verify-true
+    get-item -path foo -column Name | get-property "values['Resolve Proxies']" | equals "" | verify-true
+    get-item -path bar -column Name | get-property "values['Containment']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Validation Status']" | equals "" | verify-true
+    get-item -path bar -column Name | get-property "values['Lower Bound']" | equals 0 | verify-true
+    get-item -path bar -column Name | get-property "values['Default Value Literal']" | equals "" | verify-true
+    get-item -path bar -column Name | get-property "values['Ordered']" | equals true | verify-true
+    get-item -path bar -column Name | get-property "values['Required']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Volatile']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Changeable']" | equals true | verify-true
+    get-item -path bar -column Name | get-property "values['Name']" | equals bar | verify-true
+    get-item -path bar -column Name | get-property "values['Unsettable']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Container']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Upper Bound']" | equals 1 | verify-true
+    get-item -path bar -column Name | get-property "values['Transient']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Derived']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Unique']" | equals true | verify-true
+    get-item -path bar -column Name | get-property "values['Default Value']" | equals "" | verify-true
+    get-item -path bar -column Name | get-property "values['ID']" | equals "" | verify-true
+    get-item -path bar -column Name | get-property "values['Many']" | equals false | verify-true
+    get-item -path bar -column Name | get-property "values['Resolve Proxies']" | equals true | verify-true
+}
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

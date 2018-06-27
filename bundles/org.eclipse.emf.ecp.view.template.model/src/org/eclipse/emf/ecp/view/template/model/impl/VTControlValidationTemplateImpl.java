@@ -24,23 +24,24 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getOkColorHEX
- * <em>Ok Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getOkColorHEX <em>Ok Color
+ * HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getOkForegroundColorHEX
  * <em>Ok Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getOkImageURL
- * <em>Ok Image URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getOkOverlayURL
- * <em>Ok Overlay URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getInfoColorHEX
- * <em>Info Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getOkImageURL <em>Ok Image
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getOkOverlayURL <em>Ok
+ * Overlay URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getInfoColorHEX <em>Info
+ * Color HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getInfoForegroundColorHEX
  * <em>Info Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getInfoImageURL
- * <em>Info Image URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getInfoOverlayURL
- * <em>Info Overlay URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getInfoImageURL <em>Info
+ * Image URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getInfoOverlayURL <em>Info
+ * Overlay URL</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getWarningColorHEX
  * <em>Warning Color HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getWarningForegroundColorHEX
@@ -49,30 +50,28 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <em>Warning Image URL</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getWarningOverlayURL
  * <em>Warning Overlay URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getErrorColorHEX
- * <em>Error Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getErrorColorHEX <em>Error
+ * Color HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getErrorForegroundColorHEX
  * <em>Error Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getErrorImageURL
- * <em>Error Image URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getErrorOverlayURL
- * <em>Error Overlay URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getCancelColorHEX
- * <em>Cancel Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getErrorImageURL <em>Error
+ * Image URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getErrorOverlayURL <em>Error
+ * Overlay URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getCancelColorHEX <em>Cancel
+ * Color HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getCancelForegroundColorHEX
  * <em>Cancel Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getCancelImageURL
- * <em>Cancel Image URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getCancelImageURL <em>Cancel
+ * Image URL</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl#getCancelOverlayURL
  * <em>Cancel Overlay URL</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Container implements
-	VTControlValidationTemplate
-{
+	VTControlValidationTemplate {
 	/**
 	 * The default value of the '{@link #getOkColorHEX() <em>Ok Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -521,8 +520,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 *
 	 * @generated
 	 */
-	protected VTControlValidationTemplateImpl()
-	{
+	protected VTControlValidationTemplateImpl() {
 		super();
 	}
 
@@ -533,8 +531,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE;
 	}
 
@@ -545,8 +542,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getOkColorHEX()
-	{
+	public String getOkColorHEX() {
 		return okColorHEX;
 	}
 
@@ -557,8 +553,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setOkColorHEX(String newOkColorHEX)
-	{
+	public void setOkColorHEX(String newOkColorHEX) {
 		final String oldOkColorHEX = okColorHEX;
 		okColorHEX = newOkColorHEX;
 		if (eNotificationRequired()) {
@@ -613,8 +608,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setOkImageURL(String newOkImageURL)
-	{
+	public void setOkImageURL(String newOkImageURL) {
 		final String oldOkImageURL = okImageURL;
 		okImageURL = newOkImageURL;
 		if (eNotificationRequired()) {
@@ -630,8 +624,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getOkOverlayURL()
-	{
+	public String getOkOverlayURL() {
 		return okOverlayURL;
 	}
 
@@ -642,8 +635,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setOkOverlayURL(String newOkOverlayURL)
-	{
+	public void setOkOverlayURL(String newOkOverlayURL) {
 		final String oldOkOverlayURL = okOverlayURL;
 		okOverlayURL = newOkOverlayURL;
 		if (eNotificationRequired()) {
@@ -659,8 +651,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getInfoColorHEX()
-	{
+	public String getInfoColorHEX() {
 		return infoColorHEX;
 	}
 
@@ -671,8 +662,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setInfoColorHEX(String newInfoColorHEX)
-	{
+	public void setInfoColorHEX(String newInfoColorHEX) {
 		final String oldInfoColorHEX = infoColorHEX;
 		infoColorHEX = newInfoColorHEX;
 		if (eNotificationRequired()) {
@@ -727,8 +717,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setInfoImageURL(String newInfoImageURL)
-	{
+	public void setInfoImageURL(String newInfoImageURL) {
 		final String oldInfoImageURL = infoImageURL;
 		infoImageURL = newInfoImageURL;
 		if (eNotificationRequired()) {
@@ -744,8 +733,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getInfoOverlayURL()
-	{
+	public String getInfoOverlayURL() {
 		return infoOverlayURL;
 	}
 
@@ -756,8 +744,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setInfoOverlayURL(String newInfoOverlayURL)
-	{
+	public void setInfoOverlayURL(String newInfoOverlayURL) {
 		final String oldInfoOverlayURL = infoOverlayURL;
 		infoOverlayURL = newInfoOverlayURL;
 		if (eNotificationRequired()) {
@@ -773,8 +760,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getWarningColorHEX()
-	{
+	public String getWarningColorHEX() {
 		return warningColorHEX;
 	}
 
@@ -785,8 +771,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setWarningColorHEX(String newWarningColorHEX)
-	{
+	public void setWarningColorHEX(String newWarningColorHEX) {
 		final String oldWarningColorHEX = warningColorHEX;
 		warningColorHEX = newWarningColorHEX;
 		if (eNotificationRequired()) {
@@ -841,8 +826,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setWarningImageURL(String newWarningImageURL)
-	{
+	public void setWarningImageURL(String newWarningImageURL) {
 		final String oldWarningImageURL = warningImageURL;
 		warningImageURL = newWarningImageURL;
 		if (eNotificationRequired()) {
@@ -858,8 +842,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getWarningOverlayURL()
-	{
+	public String getWarningOverlayURL() {
 		return warningOverlayURL;
 	}
 
@@ -870,8 +853,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setWarningOverlayURL(String newWarningOverlayURL)
-	{
+	public void setWarningOverlayURL(String newWarningOverlayURL) {
 		final String oldWarningOverlayURL = warningOverlayURL;
 		warningOverlayURL = newWarningOverlayURL;
 		if (eNotificationRequired()) {
@@ -888,8 +870,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getErrorColorHEX()
-	{
+	public String getErrorColorHEX() {
 		return errorColorHEX;
 	}
 
@@ -900,8 +881,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setErrorColorHEX(String newErrorColorHEX)
-	{
+	public void setErrorColorHEX(String newErrorColorHEX) {
 		final String oldErrorColorHEX = errorColorHEX;
 		errorColorHEX = newErrorColorHEX;
 		if (eNotificationRequired()) {
@@ -956,8 +936,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setErrorImageURL(String newErrorImageURL)
-	{
+	public void setErrorImageURL(String newErrorImageURL) {
 		final String oldErrorImageURL = errorImageURL;
 		errorImageURL = newErrorImageURL;
 		if (eNotificationRequired()) {
@@ -973,8 +952,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getErrorOverlayURL()
-	{
+	public String getErrorOverlayURL() {
 		return errorOverlayURL;
 	}
 
@@ -985,8 +963,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setErrorOverlayURL(String newErrorOverlayURL)
-	{
+	public void setErrorOverlayURL(String newErrorOverlayURL) {
 		final String oldErrorOverlayURL = errorOverlayURL;
 		errorOverlayURL = newErrorOverlayURL;
 		if (eNotificationRequired()) {
@@ -1002,8 +979,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getCancelColorHEX()
-	{
+	public String getCancelColorHEX() {
 		return cancelColorHEX;
 	}
 
@@ -1014,8 +990,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setCancelColorHEX(String newCancelColorHEX)
-	{
+	public void setCancelColorHEX(String newCancelColorHEX) {
 		final String oldCancelColorHEX = cancelColorHEX;
 		cancelColorHEX = newCancelColorHEX;
 		if (eNotificationRequired()) {
@@ -1070,8 +1045,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setCancelImageURL(String newCancelImageURL)
-	{
+	public void setCancelImageURL(String newCancelImageURL) {
 		final String oldCancelImageURL = cancelImageURL;
 		cancelImageURL = newCancelImageURL;
 		if (eNotificationRequired()) {
@@ -1087,8 +1061,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String getCancelOverlayURL()
-	{
+	public String getCancelOverlayURL() {
 		return cancelOverlayURL;
 	}
 
@@ -1099,8 +1072,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void setCancelOverlayURL(String newCancelOverlayURL)
-	{
+	public void setCancelOverlayURL(String newCancelOverlayURL) {
 		final String oldCancelOverlayURL = cancelOverlayURL;
 		cancelOverlayURL = newCancelOverlayURL;
 		if (eNotificationRequired()) {
@@ -1117,10 +1089,8 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX:
 			return getOkColorHEX();
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_FOREGROUND_COLOR_HEX:
@@ -1172,10 +1142,8 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX:
 			setOkColorHEX((String) newValue);
 			return;
@@ -1247,10 +1215,8 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX:
 			setOkColorHEX(OK_COLOR_HEX_EDEFAULT);
 			return;
@@ -1322,10 +1288,8 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX:
 			return OK_COLOR_HEX_EDEFAULT == null ? okColorHEX != null : !OK_COLOR_HEX_EDEFAULT.equals(okColorHEX);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_FOREGROUND_COLOR_HEX:
@@ -1334,8 +1298,8 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL:
 			return OK_IMAGE_URL_EDEFAULT == null ? okImageURL != null : !OK_IMAGE_URL_EDEFAULT.equals(okImageURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL:
-			return OK_OVERLAY_URL_EDEFAULT == null ? okOverlayURL != null : !OK_OVERLAY_URL_EDEFAULT
-				.equals(okOverlayURL);
+			return OK_OVERLAY_URL_EDEFAULT == null ? okOverlayURL != null
+				: !OK_OVERLAY_URL_EDEFAULT.equals(okOverlayURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX:
 			return INFO_COLOR_HEX_EDEFAULT == null ? infoColorHEX != null
 				: !INFO_COLOR_HEX_EDEFAULT.equals(infoColorHEX);
@@ -1343,11 +1307,11 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 			return INFO_FOREGROUND_COLOR_HEX_EDEFAULT == null ? infoForegroundColorHEX != null
 				: !INFO_FOREGROUND_COLOR_HEX_EDEFAULT.equals(infoForegroundColorHEX);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL:
-			return INFO_IMAGE_URL_EDEFAULT == null ? infoImageURL != null : !INFO_IMAGE_URL_EDEFAULT
-				.equals(infoImageURL);
+			return INFO_IMAGE_URL_EDEFAULT == null ? infoImageURL != null
+				: !INFO_IMAGE_URL_EDEFAULT.equals(infoImageURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL:
-			return INFO_OVERLAY_URL_EDEFAULT == null ? infoOverlayURL != null : !INFO_OVERLAY_URL_EDEFAULT
-				.equals(infoOverlayURL);
+			return INFO_OVERLAY_URL_EDEFAULT == null ? infoOverlayURL != null
+				: !INFO_OVERLAY_URL_EDEFAULT.equals(infoOverlayURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX:
 			return WARNING_COLOR_HEX_EDEFAULT == null ? warningColorHEX != null
 				: !WARNING_COLOR_HEX_EDEFAULT.equals(warningColorHEX);
@@ -1355,11 +1319,11 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 			return WARNING_FOREGROUND_COLOR_HEX_EDEFAULT == null ? warningForegroundColorHEX != null
 				: !WARNING_FOREGROUND_COLOR_HEX_EDEFAULT.equals(warningForegroundColorHEX);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL:
-			return WARNING_IMAGE_URL_EDEFAULT == null ? warningImageURL != null : !WARNING_IMAGE_URL_EDEFAULT
-				.equals(warningImageURL);
+			return WARNING_IMAGE_URL_EDEFAULT == null ? warningImageURL != null
+				: !WARNING_IMAGE_URL_EDEFAULT.equals(warningImageURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL:
-			return WARNING_OVERLAY_URL_EDEFAULT == null ? warningOverlayURL != null : !WARNING_OVERLAY_URL_EDEFAULT
-				.equals(warningOverlayURL);
+			return WARNING_OVERLAY_URL_EDEFAULT == null ? warningOverlayURL != null
+				: !WARNING_OVERLAY_URL_EDEFAULT.equals(warningOverlayURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX:
 			return ERROR_COLOR_HEX_EDEFAULT == null ? errorColorHEX != null
 				: !ERROR_COLOR_HEX_EDEFAULT.equals(errorColorHEX);
@@ -1367,11 +1331,11 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 			return ERROR_FOREGROUND_COLOR_HEX_EDEFAULT == null ? errorForegroundColorHEX != null
 				: !ERROR_FOREGROUND_COLOR_HEX_EDEFAULT.equals(errorForegroundColorHEX);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL:
-			return ERROR_IMAGE_URL_EDEFAULT == null ? errorImageURL != null : !ERROR_IMAGE_URL_EDEFAULT
-				.equals(errorImageURL);
+			return ERROR_IMAGE_URL_EDEFAULT == null ? errorImageURL != null
+				: !ERROR_IMAGE_URL_EDEFAULT.equals(errorImageURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL:
-			return ERROR_OVERLAY_URL_EDEFAULT == null ? errorOverlayURL != null : !ERROR_OVERLAY_URL_EDEFAULT
-				.equals(errorOverlayURL);
+			return ERROR_OVERLAY_URL_EDEFAULT == null ? errorOverlayURL != null
+				: !ERROR_OVERLAY_URL_EDEFAULT.equals(errorOverlayURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX:
 			return CANCEL_COLOR_HEX_EDEFAULT == null ? cancelColorHEX != null
 				: !CANCEL_COLOR_HEX_EDEFAULT.equals(cancelColorHEX);
@@ -1379,11 +1343,11 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 			return CANCEL_FOREGROUND_COLOR_HEX_EDEFAULT == null ? cancelForegroundColorHEX != null
 				: !CANCEL_FOREGROUND_COLOR_HEX_EDEFAULT.equals(cancelForegroundColorHEX);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL:
-			return CANCEL_IMAGE_URL_EDEFAULT == null ? cancelImageURL != null : !CANCEL_IMAGE_URL_EDEFAULT
-				.equals(cancelImageURL);
+			return CANCEL_IMAGE_URL_EDEFAULT == null ? cancelImageURL != null
+				: !CANCEL_IMAGE_URL_EDEFAULT.equals(cancelImageURL);
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL:
-			return CANCEL_OVERLAY_URL_EDEFAULT == null ? cancelOverlayURL != null : !CANCEL_OVERLAY_URL_EDEFAULT
-				.equals(cancelOverlayURL);
+			return CANCEL_OVERLAY_URL_EDEFAULT == null ? cancelOverlayURL != null
+				: !CANCEL_OVERLAY_URL_EDEFAULT.equals(cancelOverlayURL);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1395,8 +1359,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 533522
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.treemasterdetail.decorator.validation.ecp;
 
@@ -19,7 +20,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache.ValidationListener;
+import org.eclipse.jface.resource.DeviceResourceManager;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -39,6 +42,8 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 	private final DiagnosticCache cache;
 	private final TreeViewer viewer;
 
+	private final ResourceManager images;
+
 	/**
 	 * Default constructor.
 	 *
@@ -49,6 +54,8 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 	public ECPValidationServiceLabelDecorator(TreeViewer viewer, Notifier input, DiagnosticCache cache) {
 		this.viewer = viewer;
 		this.cache = cache;
+		images = new DeviceResourceManager(viewer.getControl().getDisplay());
+
 		cache.registerValidationListener(new ValidationListener() {
 
 			@Override
@@ -87,7 +94,7 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 		final Point size = new Point(bounds.width, bounds.height);
 		final DecorationOverlayIcon icon = new DecorationOverlayIcon(image,
 			new ImageDescriptor[] { validationOverlayDescriptor }, size);
-		return icon.createImage();
+		return (Image) images.get(icon);
 	}
 
 	/**
@@ -133,6 +140,7 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 	@Override
 	public void dispose() {
 		cache.dispose();
+		images.dispose();
 	}
 
 }

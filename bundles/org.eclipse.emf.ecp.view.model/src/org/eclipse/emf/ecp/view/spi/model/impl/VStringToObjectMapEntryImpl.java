@@ -42,7 +42,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	 * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -75,7 +75,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -85,7 +85,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VStringToObjectMapEntryImpl() {
@@ -95,7 +95,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -106,7 +106,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public String getTypedKey() {
@@ -116,21 +116,22 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void setTypedKey(String newKey) {
-		String oldKey = key;
+		final String oldKey = key;
 		key = newKey;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.STRING_TO_OBJECT_MAP_ENTRY__KEY, oldKey,
 				key));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Object getTypedValue() {
@@ -140,21 +141,22 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void setTypedValue(Object newValue) {
-		Object oldValue = value;
+		final Object oldValue = value;
 		value = newValue;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.STRING_TO_OBJECT_MAP_ENTRY__VALUE,
 				oldValue, value));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -171,7 +173,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -190,7 +192,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -209,7 +211,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -226,15 +228,16 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (key: "); //$NON-NLS-1$
 		result.append(key);
 		result.append(", value: "); //$NON-NLS-1$
@@ -246,7 +249,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected int hash = -1;
@@ -254,14 +257,14 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public int getHash() {
 		if (hash == -1) {
-			Object theKey = getKey();
-			hash = (theKey == null ? 0 : theKey.hashCode());
+			final Object theKey = getKey();
+			hash = theKey == null ? 0 : theKey.hashCode();
 		}
 		return hash;
 	}
@@ -269,7 +272,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -280,7 +283,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -291,7 +294,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -302,7 +305,7 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -313,12 +316,12 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object setValue(Object value) {
-		Object oldValue = getValue();
+		final Object oldValue = getValue();
 		setTypedValue(value);
 		return oldValue;
 	}
@@ -326,12 +329,12 @@ public class VStringToObjectMapEntryImpl extends EObjectImpl implements BasicEMa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	public EMap<String, Object> getEMap() {
-		EObject container = eContainer();
+		final EObject container = eContainer();
 		return container == null ? null : (EMap<String, Object>) container.eGet(eContainmentFeature());
 	}
 

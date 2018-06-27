@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>VDiagnostic</b></em>'.
- * 
+ *
  * @since 1.2
  * @noimplement This interface is not intended to be implemented by clients.
  *              <!-- end-user-doc -->
@@ -47,7 +47,7 @@ public interface VDiagnostic extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Diagnostics</em>' attribute list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDiagnostic_Diagnostics()
 	 * @model transient="true"

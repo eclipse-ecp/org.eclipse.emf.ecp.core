@@ -20,49 +20,49 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkColorHEX <em>Ok Color HEX</em>}
- * </li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX
- * <em>Ok Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkImageURL <em>Ok Image URL</em>}
- * </li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL
- * <em>Ok Overlay URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX
- * <em>Info Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX
- * <em>Info Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoImageURL
- * <em>Info Image URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL
- * <em>Info Overlay URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningColorHEX
- * <em>Warning Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkColorHEX <em>Ok Color
+ * HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX <em>Ok
+ * Foreground Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkImageURL <em>Ok Image
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL <em>Ok Overlay
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX <em>Info Color
+ * HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX <em>Info
+ * Foreground Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoImageURL <em>Info Image
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL <em>Info Overlay
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningColorHEX <em>Warning Color
+ * HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX
  * <em>Warning Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL
- * <em>Warning Image URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL
- * <em>Warning Overlay URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX
- * <em>Error Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX
- * <em>Error Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL
- * <em>Error Image URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL
- * <em>Error Overlay URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX
- * <em>Cancel Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX
- * <em>Cancel Foreground Color HEX</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelImageURL
- * <em>Cancel Image URL</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL
- * <em>Cancel Overlay URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL <em>Warning Image
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL <em>Warning
+ * Overlay URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX <em>Error Color
+ * HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX <em>Error
+ * Foreground Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL <em>Error Image
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL <em>Error Overlay
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX <em>Cancel Color
+ * HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX <em>Cancel
+ * Foreground Color HEX</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelImageURL <em>Cancel Image
+ * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL <em>Cancel Overlay
+ * URL</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate()
  * @model
@@ -108,7 +108,6 @@ public interface VTControlValidationTemplate extends EObject {
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Ok Foreground Color HEX</em>' attribute.
 	 * @see #setOkForegroundColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_OkForegroundColorHEX()
@@ -118,14 +117,13 @@ public interface VTControlValidationTemplate extends EObject {
 	String getOkForegroundColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX
-	 * <em>Ok Foreground Color HEX</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX <em>Ok
+	 * Foreground Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Ok Foreground Color HEX</em>' attribute.
 	 * @see #getOkForegroundColorHEX()
 	 * @generated
@@ -179,8 +177,7 @@ public interface VTControlValidationTemplate extends EObject {
 	String getOkOverlayURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL
 	 * <em>Ok Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -209,8 +206,7 @@ public interface VTControlValidationTemplate extends EObject {
 	String getInfoColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX
 	 * <em>Info Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -231,7 +227,6 @@ public interface VTControlValidationTemplate extends EObject {
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Info Foreground Color HEX</em>' attribute.
 	 * @see #setInfoForegroundColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_InfoForegroundColorHEX()
@@ -241,14 +236,13 @@ public interface VTControlValidationTemplate extends EObject {
 	String getInfoForegroundColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX
-	 * <em>Info Foreground Color HEX</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX <em>Info
+	 * Foreground Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Info Foreground Color HEX</em>' attribute.
 	 * @see #getInfoForegroundColorHEX()
 	 * @generated
@@ -273,8 +267,7 @@ public interface VTControlValidationTemplate extends EObject {
 	String getInfoImageURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoImageURL
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoImageURL
 	 * <em>Info Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -303,9 +296,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getInfoOverlayURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL
-	 * <em>Info Overlay URL</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL <em>Info Overlay
+	 * URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -333,9 +326,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getWarningColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningColorHEX
-	 * <em>Warning Color HEX</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningColorHEX <em>Warning Color
+	 * HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -355,7 +348,6 @@ public interface VTControlValidationTemplate extends EObject {
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Warning Foreground Color HEX</em>' attribute.
 	 * @see #setWarningForegroundColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_WarningForegroundColorHEX()
@@ -365,14 +357,13 @@ public interface VTControlValidationTemplate extends EObject {
 	String getWarningForegroundColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX
 	 * <em>Warning Foreground Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Warning Foreground Color HEX</em>' attribute.
 	 * @see #getWarningForegroundColorHEX()
 	 * @generated
@@ -397,9 +388,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getWarningImageURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL
-	 * <em>Warning Image URL</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL <em>Warning Image
+	 * URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -427,9 +418,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getWarningOverlayURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL
-	 * <em>Warning Overlay URL</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL <em>Warning
+	 * Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -457,9 +448,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getErrorColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX
-	 * <em>Error Color HEX</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX <em>Error Color
+	 * HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -479,7 +470,6 @@ public interface VTControlValidationTemplate extends EObject {
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Error Foreground Color HEX</em>' attribute.
 	 * @see #setErrorForegroundColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_ErrorForegroundColorHEX()
@@ -489,14 +479,13 @@ public interface VTControlValidationTemplate extends EObject {
 	String getErrorForegroundColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX
-	 * <em>Error Foreground Color HEX</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX <em>Error
+	 * Foreground Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Error Foreground Color HEX</em>' attribute.
 	 * @see #getErrorForegroundColorHEX()
 	 * @generated
@@ -521,9 +510,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getErrorImageURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL
-	 * <em>Error Image URL</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL <em>Error Image
+	 * URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -551,9 +540,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getErrorOverlayURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL
-	 * <em>Error Overlay URL</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL <em>Error Overlay
+	 * URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -581,9 +570,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getCancelColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX
-	 * <em>Cancel Color HEX</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX <em>Cancel Color
+	 * HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -603,7 +592,6 @@ public interface VTControlValidationTemplate extends EObject {
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Cancel Foreground Color HEX</em>' attribute.
 	 * @see #setCancelForegroundColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_CancelForegroundColorHEX()
@@ -613,14 +601,13 @@ public interface VTControlValidationTemplate extends EObject {
 	String getCancelForegroundColorHEX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX
 	 * <em>Cancel Foreground Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Cancel Foreground Color HEX</em>' attribute.
 	 * @see #getCancelForegroundColorHEX()
 	 * @generated
@@ -645,9 +632,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getCancelImageURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelImageURL
-	 * <em>Cancel Image URL</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelImageURL <em>Cancel Image
+	 * URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -675,9 +662,9 @@ public interface VTControlValidationTemplate extends EObject {
 	String getCancelOverlayURL();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL
-	 * <em>Cancel Overlay URL</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL <em>Cancel
+	 * Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *

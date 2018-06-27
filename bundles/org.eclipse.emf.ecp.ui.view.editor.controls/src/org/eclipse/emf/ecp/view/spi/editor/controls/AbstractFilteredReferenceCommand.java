@@ -79,12 +79,9 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 
 	@Override
 	protected void doExecute() {
-		// if (rootClass == null) {
-		// return;
-		// }
 		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		final ECPViewEditorTreeSelectionDialog dialog = new ECPViewEditorTreeSelectionDialog(shell, labelProvider,
-			getContentProvider(rootClass));
+			new EReferenceTreeContenProvider());
 		validator.setECPViewEditorTreeSelectionDialog(dialog);
 		dialog.setAllowMultiple(false);
 		dialog.setValidator(validator);
@@ -121,96 +118,98 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 	 */
 	protected abstract void setSelectedValues(T selectedFeature, List<EReference> bottomUpPath);
 
-	private ITreeContentProvider getContentProvider(EClass rootClass) {
-		return new ITreeContentProvider() {
+	/**
+	 * Content provider for a tree showing all {@link EReference}s within a {@link EClass} or {@link EPackage}.
+	 *
+	 * @author Jonas Helming
+	 *
+	 */
+	private final class EReferenceTreeContenProvider implements ITreeContentProvider {
+		@Override
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			// Do nothing (no input change expected/supported)
 
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-				// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void dispose() {
+			// Do Nothing, no listeners instanciated
+		}
+
+		@Override
+		public boolean hasChildren(Object element) {
+
+			if (EPackage.class.isInstance(element)) {
+				return true;
+			}
+			if (EClass.class.isInstance(element)) {
+				final EClass eClass = (EClass) element;
+				final boolean hasReferences = !eClass.getEAllReferences().isEmpty();
+				final boolean hasAttributes = !eClass.getEAllAttributes().isEmpty();
+				return hasReferences || hasAttributes;
 
 			}
+			if (EReference.class.isInstance(element)) {
+				final EReference eReference = (EReference) element;
 
-			@Override
-			public void dispose() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public boolean hasChildren(Object element) {
-
-				if (EPackage.class.isInstance(element)) {
-					return true;
-				}
-				if (EClass.class.isInstance(element)) {
-					final EClass eClass = (EClass) element;
-					final boolean hasReferences = !eClass.getEAllReferences().isEmpty();
-					final boolean hasAttributes = !eClass.getEAllAttributes().isEmpty();
-					return hasReferences || hasAttributes;
-
-				}
-				if (EReference.class.isInstance(element)) {
-					final EReference eReference = (EReference) element;
-
-					return eReference.isMany() && !allowMultiReferences ? false : hasChildren(eReference
+				return eReference.isMany() && !allowMultiReferences ? false
+					: hasChildren(eReference
 						.getEReferenceType());
-				}
-				return false;
 			}
+			return false;
+		}
 
-			@Override
-			public Object getParent(Object element) {
-				// TODO Auto-generated method stub
-				return null;
+		@Override
+		public Object getParent(Object element) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Object[] getElements(Object inputElement) {
+			return getChildren(inputElement);
+		}
+
+		@Override
+		public Object[] getChildren(Object parentElement) {
+			if (EClass.class.isInstance(parentElement)) {
+				final EClass eClass = (EClass) parentElement;
+				final Set<Object> result = getElementsForEClass(eClass);
+				return result.toArray();
 			}
-
-			@Override
-			public Object[] getElements(Object inputElement) {
-				return getChildren(inputElement);
+			if (EReference.class.isInstance(parentElement)) {
+				final EReference eReference = (EReference) parentElement;
+				final Set<Object> result = getElementsForEClass(eReference.getEReferenceType());
+				return result.toArray();
 			}
-
-			@Override
-			public Object[] getChildren(Object parentElement) {
-				if (EClass.class.isInstance(parentElement)) {
-					final EClass eClass = (EClass) parentElement;
-					final Set<Object> result = getElementsForEClass(eClass);
-					return result.toArray();
-				}
-				if (EReference.class.isInstance(parentElement)) {
-					final EReference eReference = (EReference) parentElement;
-					final Set<Object> result = getElementsForEClass(eReference.getEReferenceType());
-					return result.toArray();
-				}
-				if (EPackage.Registry.class.isInstance(parentElement)) {
-					return EPackage.Registry.class.cast(parentElement).values().toArray();
-				}
-				if (EPackage.class.isInstance(parentElement)) {
-					final Set<Object> children = new LinkedHashSet<Object>();
-					children.addAll(EPackage.class.cast(parentElement).getESubpackages());
-					children.addAll(EPackage.class.cast(parentElement).getEClassifiers());
-					return children.toArray();
-				}
-				return null;
+			if (EPackage.Registry.class.isInstance(parentElement)) {
+				return EPackage.Registry.class.cast(parentElement).values().toArray();
 			}
+			if (EPackage.class.isInstance(parentElement)) {
+				final Set<Object> children = new LinkedHashSet<Object>();
+				children.addAll(EPackage.class.cast(parentElement).getESubpackages());
+				children.addAll(EPackage.class.cast(parentElement).getEClassifiers());
+				return children.toArray();
+			}
+			return null;
+		}
 
-			private Set<Object> getElementsForEClass(EClass eClass) {
-				final Set<Object> result = new LinkedHashSet<Object>();
-				if (eClass.isAbstract() || eClass.isInterface()) {
-					// find eClasses which are not abstract
-					for (final EClassifier eClassifier : eClass.getEPackage().getEClassifiers()) {
-						if (eClass != eClassifier && EClass.class.isInstance(eClassifier)
-							&& eClass.isSuperTypeOf((EClass) eClassifier)) {
-							result.add(eClassifier);
-						}
+		private Set<Object> getElementsForEClass(EClass eClass) {
+			final Set<Object> result = new LinkedHashSet<Object>();
+			if (eClass.isAbstract() || eClass.isInterface()) {
+				// find eClasses which are not abstract
+				for (final EClassifier eClassifier : eClass.getEPackage().getEClassifiers()) {
+					if (eClass != eClassifier && EClass.class.isInstance(eClassifier)
+						&& eClass.isSuperTypeOf((EClass) eClassifier)) {
+						result.add(eClassifier);
 					}
 				}
-				else {
-					result.addAll(eClass.getEAllReferences());
-					result.addAll(eClass.getEAllAttributes());
-				}
-				return result;
+			} else {
+				result.addAll(eClass.getEAllReferences());
+				result.addAll(eClass.getEAllAttributes());
 			}
-		};
+			return result;
+		}
 	}
 
 }

@@ -3,79 +3,82 @@ target "ECP RCP"
 with source configurePhase	
 
 location "http://download.eclipse.org/technology/swtbot/releases/latest/" {
-	org.eclipse.swtbot.forms.feature.group
-	org.eclipse.swtbot.eclipse.feature.group
-	org.eclipse.swtbot.eclipse.gef.feature.group
-	org.eclipse.swtbot.feature.group
-	org.eclipse.swtbot.eclipse.test.junit.feature.group
+	org.eclipse.swtbot.eclipse.feature.group lazy
+	org.eclipse.swtbot.eclipse.gef.feature.group lazy
+	org.eclipse.swtbot.eclipse.test.junit.feature.group lazy
+	org.eclipse.swtbot.forms.feature.group lazy
+	org.eclipse.swtbot.feature.group lazy
 }
 
-location "http://download.eclipse.org/eclipse/updates/4.6" {
-	org.eclipse.equinox.sdk.feature.group
-	org.eclipse.platform.ide
+location "http://download.eclipse.org/eclipse/updates/4.7" {
+	org.eclipse.equinox.sdk.feature.group lazy
+	org.eclipse.platform.ide lazy
 }
 
 location "http://download.eclipse.org/eclipse/updates/4.5" {
-	org.eclipse.core.databinding
-	org.eclipse.core.databinding.beans
-	org.eclipse.core.databinding.observable
-	org.eclipse.core.databinding.property
+	org.eclipse.core.databinding [1.5.0.v20150422-0725,1.5.0.v20150422-0725]
+	org.eclipse.core.databinding.beans [1.3.0.v20150422-0725,1.3.0.v20150422-0725]
+	org.eclipse.core.databinding.observable [1.5.0.v20150422-0725,1.5.0.v20150422-0725]
+	org.eclipse.core.databinding.property [1.5.0.v20150422-0725,1.5.0.v20150422-0725]
 }
 
-location "http://download.eclipse.org/emfstore/releases_18" {
-	org.eclipse.emf.emfstore.client.transaction.feature.feature.group
-	org.eclipse.emf.emfstore.client.feature.feature.group
-	org.eclipse.emf.emfstore.common.feature.feature.group
-	org.eclipse.emf.emfstore.server.feature.feature.group
-	org.eclipse.emf.emfstore.example.feature.feature.group
-	org.eclipse.emf.emfstore.client.ui.feature.feature.group
-	org.eclipse.emf.emfstore.ecore.feature.feature.group
-}
-
-location "http://download.eclipse.org/releases/neon" {
-	org.eclipse.jdt.feature.group
-	org.eclipse.emf.sdk.feature.group
-	org.eclipse.gef.sdk.feature.group
-	org.eclipse.graphiti.feature.feature.group
-	org.eclipse.graphiti.export.feature.feature.group
-	org.eclipse.emf.validation.sdk.feature.group
-	org.eclipse.emf.transaction.sdk.feature.group
-	org.eclipse.net4j.sdk.feature.group
-	org.eclipse.emf.cdo.sdk.feature.group
-	org.eclipse.pde.feature.group
-	org.eclipse.ocl.all.sdk.feature.group
-	org.eclipse.xtend.sdk.feature.group
+location "http://download.eclipse.org/emfstore/releases_19" {
+	org.eclipse.emf.emfstore.client.feature.feature.group lazy
+	org.eclipse.emf.emfstore.client.transaction.feature.feature.group lazy
+	org.eclipse.emf.emfstore.client.ui.feature.feature.group lazy
+	org.eclipse.emf.emfstore.common.feature.feature.group lazy
+	org.eclipse.emf.emfstore.example.feature.feature.group lazy
+	org.eclipse.emf.emfstore.server.feature.feature.group lazy
 }
 
 location "http://build.eclipse.org/rt/rap/base-platforms/3.1/extra-dependencies/" {
-	org.mockito.mockito-core-hamcrest-modified
+	org.mockito.mockito-core-hamcrest-modified [1.9.5,1.9.5]
 }
 
 location "http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/" {
-	javax.validation
-	org.apache.poi.source
-	org.apache.poi
-	org.apache.log4j.source
-	org.objenesis
-	org.objenesis.source
-	org.h2
-	javax.validation.source
-	org.apache.log4j
-	org.h2.source
-	com.google.gson.source
-	com.google.gson
-	com.google.guava
-	com.google.guava.source
-	org.hamcrest.core
-	org.hamcrest.library
-	org.hamcrest.library.source
+	com.google.gson [2.2.4.v201311231704,2.2.4.v201311231704]
+	com.google.gson.source [2.2.4.v201311231704,2.2.4.v201311231704]
+	com.google.guava [15.0.0.v201403281430,15.0.0.v201403281430]
+	com.google.guava.source [15.0.0.v201403281430,15.0.0.v201403281430] 
+	javax.validation [1.0.0.GA_v201205091237,1.0.0.GA_v201205091237]
+	javax.validation.source [1.0.0.GA_v201205091237,1.0.0.GA_v201205091237]
+	org.apache.log4j [1.2.15.v201012070815,1.2.15.v201012070815]
+	org.apache.log4j.source [1.2.15.v201012070815,1.2.15.v201012070815]
+	org.h2 [1.3.168.v201212121212,1.3.168.v201212121212]
+	org.h2.source [1.3.168.v201212121212,1.3.168.v201212121212]
+	org.hamcrest.core [1.3.0.v201303031735,1.3.0.v201303031735]
+	org.hamcrest.library [1.3.0.v201505072020,1.3.0.v201505072020]
+	org.hamcrest.library.source [1.3.0.v201505072020,1.3.0.v201505072020]
+	org.objenesis [1.0.0.v201505121915,1.0.0.v201505121915]
+	org.objenesis.source [1.0.0.v201505121915,1.0.0.v201505121915]
 }
 
 location "http://download.eclipse.org/edapt/releases/13x" {
-	org.eclipse.emf.edapt.runtime.feature.feature.group
-	org.eclipse.emf.edapt.runtime.feature.source.feature.group
+	org.eclipse.emf.edapt.runtime.feature.feature.group lazy
+	org.eclipse.emf.edapt.runtime.feature.source.feature.group lazy
 }
 
 location "http://download.eclipse.org/nebula/releases/1.0.0" {
-	org.eclipse.nebula.widgets.grid.feature.feature.group
+	org.eclipse.nebula.widgets.grid.feature.feature.group lazy
 }
+
+location "http://download.eclipse.org/releases/oxygen" {
+	org.eclipse.emf.cdo.sdk.feature.group lazy
+	org.eclipse.emf.sdk.feature.group lazy
+	org.eclipse.emf.transaction.sdk.feature.group lazy
+	org.eclipse.emf.validation.sdk.feature.group lazy
+	org.eclipse.gef.sdk.feature.group lazy
+	org.eclipse.graphiti.export.feature.feature.group lazy
+	org.eclipse.graphiti.feature.feature.group lazy
+	org.eclipse.jdt.feature.group lazy
+	org.eclipse.net4j.sdk.feature.group lazy
+	org.eclipse.ocl.all.sdk.feature.group lazy
+	org.eclipse.pde.feature.group lazy
+	org.eclipse.xpand.sdk.feature.group lazy
+	org.eclipse.xtend.sdk.feature.group lazy
+	org.eclipse.xtext.sdk.feature.group lazy
+}
+
+
+
+

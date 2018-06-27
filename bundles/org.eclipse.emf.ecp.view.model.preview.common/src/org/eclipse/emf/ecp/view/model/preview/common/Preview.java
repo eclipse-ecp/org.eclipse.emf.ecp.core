@@ -28,9 +28,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
-import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
@@ -128,6 +126,9 @@ public class Preview {
 
 	private void internalRender(VView view) {
 		try {
+			if (view == null) {
+				return;
+			}
 			clear();
 			final EClass myPreviewEClass = view.getRootEClass();
 			if (dummyData == null || dummyData.eClass() != myPreviewEClass) {
@@ -147,7 +148,6 @@ public class Preview {
 				resource.getContents().add(dummyData);
 			}
 
-			final ReferenceService previewRefServ = new DefaultReferenceService();
 			final VView copy = EcoreUtil.copy(view);
 			copy.eAdapters().add(new LocalizationAdapter() {
 				@Override
@@ -157,7 +157,7 @@ public class Preview {
 			});
 			clearViewDiagnostics(copy);
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				copy, dummyData, previewRefServ, new EMFDeleteServiceImpl());
+				copy, dummyData, new EMFDeleteServiceImpl());
 			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
 			composite.layout();
@@ -173,6 +173,7 @@ public class Preview {
 	}
 
 	// FIXME move to e3 PreviewView
+	@SuppressWarnings("restriction")
 	private void displayError(Exception e) {
 		clear();
 		Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));

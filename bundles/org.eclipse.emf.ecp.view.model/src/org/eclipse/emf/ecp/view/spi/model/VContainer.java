@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.EList;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Container</b></em>'.
- * 
+ *
  * @since 1.2
  *        <!-- end-user-doc -->
  *
@@ -41,7 +41,7 @@ public interface VContainer extends VElement {
 	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getContainer_Children()
 	 * @model containment="true"

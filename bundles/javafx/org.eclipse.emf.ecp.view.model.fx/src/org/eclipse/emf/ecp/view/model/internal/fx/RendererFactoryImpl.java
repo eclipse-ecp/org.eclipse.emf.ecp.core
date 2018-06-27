@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Lucas Koehler - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.internal.fx;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,7 +21,6 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -45,7 +55,8 @@ public final class RendererFactoryImpl implements RendererFactory {
 				.getConfigurationElements()) {
 				try {
 					final Class<RendererFX<VElement>> rendererClass = loadClass(configurationElement
-						.getContributor().getName(), configurationElement
+						.getContributor().getName(),
+						configurationElement
 							.getAttribute("renderer"));
 
 					// Get tester(s) for the current renderer.

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;EclipseSource Munich - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.ecp.view.table.ui.nebula.grid.test/src" editorDirectory="/org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.editor/src"
+    modelPluginID="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model" forceOverwrite="true"
+    modelName="Audit" editPluginClass="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.provider.AuditEditPlugin"
+    editorPluginClass="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.presentation.AuditEditorPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.tests.AuditAllTests"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    editPluginID="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.edit"
+    editorPluginID="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.editor"
+    language="" operationReflection="true" importOrganizing="true" cleanup="true">
+  <foreignModel>audit.ecore</foreignModel>
+  <genPackages prefix="Audit" basePackage="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model"
+      disposableProviderFactory="true" ecorePackage="audit.ecore#/" publicationLocation="">
+    <genClasses ecoreClass="audit.ecore#//Organization">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//Organization/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference audit.ecore#//Organization/members"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference audit.ecore#//Organization/groups"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="audit.ecore#//Member">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//Member/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//Member/joinDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//Member/isActive"/>
+    </genClasses>
+    <genClasses ecoreClass="audit.ecore#//Bot">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//Bot/executionIntervalSeconds"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="audit.ecore#//Human"/>
+    <genClasses ecoreClass="audit.ecore#//GuestUser"/>
+    <genClasses ecoreClass="audit.ecore#//RegisteredUser">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//RegisteredUser/login"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//RegisteredUser/password"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//RegisteredUser/delegates"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="audit.ecore#//PrivilegedUser"/>
+    <genClasses ecoreClass="audit.ecore#//AdminUser">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//AdminUser/createdBy"/>
+    </genClasses>
+    <genClasses ecoreClass="audit.ecore#//PrivilegedBot"/>
+    <genClasses ecoreClass="audit.ecore#//MemberGroup">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute audit.ecore#//MemberGroup/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//MemberGroup/members"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference audit.ecore#//MemberGroup/admins"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference audit.ecore#//MemberGroup/bots"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

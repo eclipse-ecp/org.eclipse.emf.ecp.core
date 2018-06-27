@@ -36,12 +36,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cancelImageURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cancelOverlayURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Style">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="selector" lowerBound="1"
-        eType="#//StyleSelector" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Style" eSuperTypes="#//StyleSelectorContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
         eType="#//StyleProperty" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StyleProperty" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="StyleSelector" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StyleSelectorContainer" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selector" lowerBound="1"
+        eType="#//StyleSelector" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MultiStyleSelectorContainer" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selectors" lowerBound="2"
+        upperBound="-1" eType="#//StyleSelector" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

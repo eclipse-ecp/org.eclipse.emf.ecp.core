@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.16.0-SNAPSHOT</version>
+		<version>1.17.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emfforms.swt.control.text.autocomplete.tests</artifactId>
-	<version>1.16.0-SNAPSHOT</version>
+	<version>1.17.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 	
 	<build>
@@ -27,7 +27,7 @@
 						<include>**/*_ITest.java</include>
 						<!-- Execute SWT-Related tests with tycho surefire -->
 						<include>**/AutocompleteTextControlSWTRenderer_Test.java</include>
-						<include>**/AutocompleteTextControlSWTRendererService_Test</include>
+						<include>**/AutocompleteTextControlSWTRendererService_Test.java</include>
 					</includes>
 					<testFailureIgnore>true</testFailureIgnore>
 					<useUIHarness>false</useUIHarness>

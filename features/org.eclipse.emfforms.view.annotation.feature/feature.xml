@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emfforms.view.annotation.feature"
       label="EMF Forms Annotation View Model Feature"
-      version="1.16.0.qualifier"
+      version="1.17.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.view.annotation.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.16.0.qualifier">
+      license-feature-version="1.17.0.qualifier">
 
    <description>
       %description
@@ -29,6 +29,20 @@
 
    <plugin
          id="org.eclipse.emfforms.view.annotation.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.template.annotation.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.template.annotation.model.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"

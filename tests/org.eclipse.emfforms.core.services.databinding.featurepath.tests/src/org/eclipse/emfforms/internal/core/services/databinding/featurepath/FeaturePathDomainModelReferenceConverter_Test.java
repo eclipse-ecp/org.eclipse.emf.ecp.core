@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -391,5 +391,15 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetSettingWrongReferenceType() throws DatabindingFailedException {
 		converter.getSetting(mock(VDomainModelReference.class), validEObject);
+	}
+
+	@Test(expected = DatabindingFailedException.class)
+	public void testGetSettingInvalidFeatureInPath() throws DatabindingFailedException {
+		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		reference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getDExtended_A());
+		reference.setDomainModelEFeature(TestPackage.eINSTANCE.getA_B());
+		final D d = TestFactory.eINSTANCE.createD();
+		converter.getSetting(reference, d);
 	}
 }

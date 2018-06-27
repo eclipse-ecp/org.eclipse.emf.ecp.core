@@ -9,6 +9,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  * Christian W. Damus - bug 529542
+ * Lucas Koehler - refactored common bazaar functionality out
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
@@ -16,28 +17,22 @@ import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIP
 import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 
 import java.util.Collection;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy;
-import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategyUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emfforms.bazaar.Bazaar;
-import org.eclipse.emfforms.bazaar.BazaarContext;
-import org.eclipse.emfforms.bazaar.Create;
-import org.eclipse.emfforms.bazaar.StaticBid;
-import org.eclipse.emfforms.bazaar.Vendor;
+import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.bazaar.BazaarUtil;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
@@ -60,13 +55,15 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 
 	private ComponentContext context;
 
-	private final Bazaar<EObjectSelectionStrategy> eobjectSelectionStrategyBazaar = createBazaar(
+	private final Bazaar<EObjectSelectionStrategy> eobjectSelectionStrategyBazaar = BazaarUtil.createBazaar(
 		EObjectSelectionStrategy.NULL);
-	private final Bazaar<EClassSelectionStrategy> eclassSelectionStrategyBazaar = createBazaar(
-		EClassSelectionStrategy.NULL);
-	private final Bazaar<AttachmentStrategy> attachmentStrategyBazaar = createBazaar(AttachmentStrategy.DEFAULT);
-	private final Bazaar<ReferenceStrategy> referenceStrategyBazaar = createBazaar(ReferenceStrategy.DEFAULT);
-	private final Bazaar<OpenInNewContextStrategy> openInNewContextStrategyBazaar = createBazaar(
+	private final Bazaar<CreateNewModelElementStrategy> createNewModelElementStrategyBazaar = BazaarUtil.createBazaar(
+		CreateNewModelElementStrategy.DEFAULT);
+	private final Bazaar<AttachmentStrategy> attachmentStrategyBazaar = BazaarUtil
+		.createBazaar(AttachmentStrategy.DEFAULT);
+	private final Bazaar<ReferenceStrategy> referenceStrategyBazaar = BazaarUtil
+		.createBazaar(ReferenceStrategy.DEFAULT);
+	private final Bazaar<OpenInNewContextStrategy> openInNewContextStrategyBazaar = BazaarUtil.createBazaar(
 		OpenInNewContextStrategy.DEFAULT);
 
 	/**
@@ -74,32 +71,6 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 */
 	public DefaultReferenceServiceFactory() {
 		super();
-	}
-
-	private static <T> Bazaar<T> createBazaar(T defaultStrategy) {
-		final Bazaar.Builder<T> builder = builder(defaultStrategy);
-		return builder.build();
-	}
-
-	private static <T> Bazaar.Builder<T> builder(final T defaultStrategy) {
-		/**
-		 * A vendor of the default, that tries to lose every bid.
-		 */
-		@StaticBid(bid = Double.NEGATIVE_INFINITY)
-		class DefaultVendor implements Vendor<T> {
-			/**
-			 * Return the default strategy.
-			 *
-			 * @return the default strategy
-			 */
-			@Create
-			public T createDefault() {
-				return defaultStrategy;
-			}
-		}
-
-		final Bazaar.Builder<T> result = Bazaar.Builder.empty();
-		return result.threadSafe().add(new DefaultVendor());
 	}
 
 	@Override
@@ -142,6 +113,25 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	}
 
 	/**
+	 * Add a create new model element strategy provider.
+	 *
+	 * @param provider the provider to add
+	 */
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
+	void addCreateNewModelElementStrategyProvider(CreateNewModelElementStrategy.Provider provider) {
+		createNewModelElementStrategyBazaar.addVendor(provider);
+	}
+
+	/**
+	 * Remove a create new model element strategy provider.
+	 *
+	 * @param provider the provider to remove
+	 */
+	void removeCreateNewModelElementStrategyProvider(CreateNewModelElementStrategy.Provider provider) {
+		createNewModelElementStrategyBazaar.removeVendor(provider);
+	}
+
+	/**
 	 * Add an open strategy provider.
 	 *
 	 * @param provider the provider to add
@@ -158,25 +148,6 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	 */
 	void removeOpenInNewContextStrategyProvider(OpenInNewContextStrategy.Provider provider) {
 		openInNewContextStrategyBazaar.removeVendor(provider);
-	}
-
-	/**
-	 * Add an {@code EClass} selection strategy provider.
-	 *
-	 * @param provider the provider to add
-	 */
-	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
-	void addEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
-		eclassSelectionStrategyBazaar.addVendor(provider);
-	}
-
-	/**
-	 * Remove an {@code EClass} selection strategy provider.
-	 *
-	 * @param provider the provider to remove
-	 */
-	void removeEClassSelectionStrategyProvider(EClassSelectionStrategy.Provider provider) {
-		eclassSelectionStrategyBazaar.removeVendor(provider);
 	}
 
 	/**
@@ -246,7 +217,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 
 			// Inject customizations
 			drs.setAttachmentStrategy(createDynamicAttachmentStrategy());
-			drs.setEClassSelectionStrategy(createDynamicEClassSelectionStrategy());
+			drs.setCreateNewModelElementStrategy(createDynamicCreateNewModelElementStrategy());
 			drs.setEObjectSelectionStrategy(createDynamicEObjectSelectionStrategy());
 			drs.setOpenStrategy(createDynamicOpenInNewContextStrategy());
 			drs.setReferenceStrategy(createDynamicReferenceStrategy());
@@ -258,50 +229,32 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 		throw new IllegalStateException("The provided context is not a ViewModelContext."); //$NON-NLS-1$
 	}
 
-	private BazaarContext getBazaarContext(EObject owner, EReference reference) {
-		return baseContext(owner, reference).build();
-	}
-
-	private BazaarContext.Builder baseContext(EObject owner, EReference reference) {
-		return BazaarContext.Builder.with(adapt(context.getProperties()))
-			.put(EObject.class, owner)
-			.put(EReference.class, reference);
-	}
-
-	/**
-	 * Adapt a {@code dictionary} as a map.
-	 *
-	 * @param dictionary a dictionary
-	 * @return the {@code dictionary}, as a map
-	 */
-	static Map<String, ?> adapt(Dictionary<String, ?> dictionary) {
-		// The OSGi implementation of the read-only properties for all sorts of
-		// things is a map
-		if (dictionary instanceof Map<?, ?>) {
-			@SuppressWarnings("unchecked")
-			final Map<String, ?> result = (Map<String, ?>) dictionary;
-			return result;
-		}
-
-		final Map<String, Object> result = new HashMap<String, Object>();
-		for (final Enumeration<String> keys = dictionary.keys(); keys.hasMoreElements();) {
-			final String next = keys.nextElement();
-			result.put(next, dictionary.get(next));
-		}
-		return result;
-	}
-
 	private AttachmentStrategy createDynamicAttachmentStrategy() {
 		return new AttachmentStrategy() {
 
 			@Override
 			public boolean addElementToModel(EObject owner, EReference reference, EObject object) {
 				final AttachmentStrategy delegate = attachmentStrategyBazaar.createProduct(
-					getBazaarContext(owner, reference));
+					ReferenceStrategyUtil.createBazaarContext(context, owner, reference));
 				if (delegate == null) {
 					return false;
 				}
 				return delegate.addElementToModel(owner, reference, object);
+			}
+		};
+	}
+
+	private CreateNewModelElementStrategy createDynamicCreateNewModelElementStrategy() {
+		return new CreateNewModelElementStrategy() {
+
+			@Override
+			public Optional<EObject> createNewModelElement(EObject owner, EReference reference) {
+				final CreateNewModelElementStrategy delegate = createNewModelElementStrategyBazaar
+					.createProduct(ReferenceStrategyUtil.createBazaarContext(context, owner, reference));
+				if (delegate == null) {
+					return Optional.empty();
+				}
+				return delegate.createNewModelElement(owner, reference);
 			}
 		};
 	}
@@ -312,31 +265,11 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 			@Override
 			public boolean addElementsToReference(EObject owner, EReference reference, Set<? extends EObject> objects) {
 				final ReferenceStrategy delegate = referenceStrategyBazaar.createProduct(
-					getBazaarContext(owner, reference));
+					ReferenceStrategyUtil.createBazaarContext(context, owner, reference));
 				if (delegate == null) {
 					return false;
 				}
 				return delegate.addElementsToReference(owner, reference, objects);
-			}
-		};
-	}
-
-	private EClassSelectionStrategy createDynamicEClassSelectionStrategy() {
-		return new EClassSelectionStrategy() {
-
-			@Override
-			public Collection<EClass> collectEClasses(EObject owner, EReference reference,
-				Collection<EClass> eclasses) {
-
-				Collection<EClass> result = eclasses;
-
-				final List<EClassSelectionStrategy> delegates = eclassSelectionStrategyBazaar.createProducts(
-					getBazaarContext(owner, reference));
-				for (final EClassSelectionStrategy next : delegates) {
-					result = next.collectEClasses(owner, reference, result);
-				}
-
-				return result;
 			}
 		};
 	}
@@ -351,7 +284,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 				Collection<EObject> result = existingObjects;
 
 				final List<EObjectSelectionStrategy> delegates = eobjectSelectionStrategyBazaar.createProducts(
-					getBazaarContext(owner, reference));
+					ReferenceStrategyUtil.createBazaarContext(context, owner, reference));
 				for (final EObjectSelectionStrategy next : delegates) {
 					result = next.collectExistingObjects(owner, reference, result);
 				}
@@ -367,7 +300,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 			@Override
 			public boolean openInNewContext(EObject owner, EReference reference, EObject object) {
 				final OpenInNewContextStrategy delegate = openInNewContextStrategyBazaar.createProduct(
-					getBazaarContext(owner, reference));
+					ReferenceStrategyUtil.createBazaarContext(context, owner, reference));
 				if (delegate == null) {
 					return false;
 				}

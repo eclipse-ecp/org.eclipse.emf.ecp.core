@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * EclipseSource Munich - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.keyattribute.test.example.impl;
 
@@ -21,8 +30,9 @@ import org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.ChildImpl#getIntermediateTarget <em>Intermediate Target</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.ChildImpl#getKey <em>Key</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.ChildImpl#getIntermediateTarget <em>Intermediate
+ * Target</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.ChildImpl#getKey <em>Key</em>}</li>
  * </ul>
  *
  * @generated
@@ -32,6 +42,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	 * The cached value of the '{@link #getIntermediateTarget() <em>Intermediate Target</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getIntermediateTarget()
 	 * @generated
 	 * @ordered
@@ -42,6 +53,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	 * The cached value of the '{@link #getKey() <em>Key</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getKey()
 	 * @generated
 	 * @ordered
@@ -51,6 +63,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected ChildImpl() {
@@ -60,6 +73,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,6 +84,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -80,14 +95,21 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetIntermediateTarget(IntermediateTarget newIntermediateTarget, NotificationChain msgs) {
-		IntermediateTarget oldIntermediateTarget = intermediateTarget;
+	public NotificationChain basicSetIntermediateTarget(IntermediateTarget newIntermediateTarget,
+		NotificationChain msgs) {
+		final IntermediateTarget oldIntermediateTarget = intermediateTarget;
 		intermediateTarget = newIntermediateTarget;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExamplePackage.CHILD__INTERMEDIATE_TARGET, oldIntermediateTarget, newIntermediateTarget);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				ExamplePackage.CHILD__INTERMEDIATE_TARGET, oldIntermediateTarget, newIntermediateTarget);
+			if (msgs == null) {
+				msgs = notification;
+			} else {
+				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -95,26 +117,35 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setIntermediateTarget(IntermediateTarget newIntermediateTarget) {
 		if (newIntermediateTarget != intermediateTarget) {
 			NotificationChain msgs = null;
-			if (intermediateTarget != null)
-				msgs = ((InternalEObject)intermediateTarget).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__INTERMEDIATE_TARGET, null, msgs);
-			if (newIntermediateTarget != null)
-				msgs = ((InternalEObject)newIntermediateTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__INTERMEDIATE_TARGET, null, msgs);
+			if (intermediateTarget != null) {
+				msgs = ((InternalEObject) intermediateTarget).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__INTERMEDIATE_TARGET, null, msgs);
+			}
+			if (newIntermediateTarget != null) {
+				msgs = ((InternalEObject) newIntermediateTarget).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__INTERMEDIATE_TARGET, null, msgs);
+			}
 			msgs = basicSetIntermediateTarget(newIntermediateTarget, msgs);
-			if (msgs != null) msgs.dispatch();
+			if (msgs != null) {
+				msgs.dispatch();
+			}
+		} else if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.CHILD__INTERMEDIATE_TARGET,
+				newIntermediateTarget, newIntermediateTarget));
 		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.CHILD__INTERMEDIATE_TARGET, newIntermediateTarget, newIntermediateTarget));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -125,14 +156,21 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetKey(KeyContainer newKey, NotificationChain msgs) {
-		KeyContainer oldKey = key;
+		final KeyContainer oldKey = key;
 		key = newKey;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExamplePackage.CHILD__KEY, oldKey, newKey);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				ExamplePackage.CHILD__KEY,
+				oldKey, newKey);
+			if (msgs == null) {
+				msgs = notification;
+			} else {
+				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -140,35 +178,43 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setKey(KeyContainer newKey) {
 		if (newKey != key) {
 			NotificationChain msgs = null;
-			if (key != null)
-				msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__KEY, null, msgs);
-			if (newKey != null)
-				msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__KEY, null, msgs);
+			if (key != null) {
+				msgs = ((InternalEObject) key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__KEY,
+					null, msgs);
+			}
+			if (newKey != null) {
+				msgs = ((InternalEObject) newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExamplePackage.CHILD__KEY,
+					null, msgs);
+			}
 			msgs = basicSetKey(newKey, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null) {
+				msgs.dispatch();
+			}
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.CHILD__KEY, newKey, newKey));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
-				return basicSetIntermediateTarget(null, msgs);
-			case ExamplePackage.CHILD__KEY:
-				return basicSetKey(null, msgs);
+		case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
+			return basicSetIntermediateTarget(null, msgs);
+		case ExamplePackage.CHILD__KEY:
+			return basicSetKey(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -176,15 +222,16 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
-				return getIntermediateTarget();
-			case ExamplePackage.CHILD__KEY:
-				return getKey();
+		case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
+			return getIntermediateTarget();
+		case ExamplePackage.CHILD__KEY:
+			return getKey();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -192,17 +239,18 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
-				setIntermediateTarget((IntermediateTarget)newValue);
-				return;
-			case ExamplePackage.CHILD__KEY:
-				setKey((KeyContainer)newValue);
-				return;
+		case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
+			setIntermediateTarget((IntermediateTarget) newValue);
+			return;
+		case ExamplePackage.CHILD__KEY:
+			setKey((KeyContainer) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -210,17 +258,18 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
-				setIntermediateTarget((IntermediateTarget)null);
-				return;
-			case ExamplePackage.CHILD__KEY:
-				setKey((KeyContainer)null);
-				return;
+		case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
+			setIntermediateTarget((IntermediateTarget) null);
+			return;
+		case ExamplePackage.CHILD__KEY:
+			setKey((KeyContainer) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -228,15 +277,16 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
-				return intermediateTarget != null;
-			case ExamplePackage.CHILD__KEY:
-				return key != null;
+		case ExamplePackage.CHILD__INTERMEDIATE_TARGET:
+			return intermediateTarget != null;
+		case ExamplePackage.CHILD__KEY:
+			return key != null;
 		}
 		return super.eIsSet(featureID);
 	}

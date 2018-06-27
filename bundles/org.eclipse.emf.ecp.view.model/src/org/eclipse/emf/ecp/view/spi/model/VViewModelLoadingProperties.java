@@ -45,11 +45,11 @@ public interface VViewModelLoadingProperties extends VViewModelProperties {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Inheritable Properties</em>' map.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getViewModelLoadingProperties_InheritableProperties()
-	 * @model mapType="org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry<org.eclipse.emf.ecore.EString,
-	 *        org.eclipse.emf.ecore.EJavaObject>"
+	 * @model mapType="org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry&lt;org.eclipse.emf.ecore.EString,
+	 *        org.eclipse.emf.ecore.EJavaObject&gt;"
 	 * @generated
 	 */
 	EMap<String, Object> getInheritableProperties();
@@ -64,11 +64,11 @@ public interface VViewModelLoadingProperties extends VViewModelProperties {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Non Inheritable Properties</em>' map.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getViewModelLoadingProperties_NonInheritableProperties()
-	 * @model mapType="org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry<org.eclipse.emf.ecore.EString,
-	 *        org.eclipse.emf.ecore.EJavaObject>"
+	 * @model mapType="org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry&lt;org.eclipse.emf.ecore.EString,
+	 *        org.eclipse.emf.ecore.EJavaObject&gt;"
 	 * @generated
 	 */
 	EMap<String, Object> getNonInheritableProperties();

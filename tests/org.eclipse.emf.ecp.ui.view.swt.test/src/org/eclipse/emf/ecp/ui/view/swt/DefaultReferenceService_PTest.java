@@ -29,7 +29,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -46,7 +45,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -61,7 +59,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy;
-import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceServiceCustomizationVendor;
@@ -191,39 +188,19 @@ public class DefaultReferenceService_PTest {
 	@Test
 	public void addNewModelElements() {
 		final EClass foo = (EClass) testPackage.getEClassifier("Foo");
-		final EStructuralFeature state = foo.getEStructuralFeature("state");
 
-		// A canary
-		final EClassSelectionStrategy canary = mock(EClassSelectionStrategy.class);
-		when(canary.collectEClasses(any(EObject.class), any(EReference.class), anyCollectionOf(EClass.class)))
-			.then(new Answer<Collection<EClass>>() {
-				@SuppressWarnings("unchecked")
-				@Override
-				public Collection<EClass> answer(InvocationOnMock invocation) throws Throwable {
-					return (Collection<EClass>) invocation.getArguments()[2];
-				}
-			});
-		register(vendor(canary));
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__EOPERATIONS, true);
+		// test that an operation was added to foo
+		assertThat(foo.getEOperations().size(), is(1));
 
-		fixture.addNewModelElements(state, EcorePackage.Literals.ETYPED_ELEMENT__ETYPE);
-		assertThat(state.getEType(), instanceOf(EEnum.class));
-		final EEnum type = (EEnum) state.getEType();
-
-		// Check the canary
-		verify(canary).collectEClasses(eq(state), eq(EcorePackage.Literals.ETYPED_ELEMENT__ETYPE),
-			anyCollectionOf(EClass.class));
-
-		// It was created in the types package, not the package containing "foo"
-		assertThat(type.getEPackage(), is(typesPackage));
-
-		// The reference service "opened" this new object
-		verify(openStrategy).openInNewContext(typesPackage, EcorePackage.Literals.EPACKAGE__ECLASSIFIERS, type);
+		verify(openStrategy).openInNewContext(foo, EcorePackage.Literals.ECLASS__EOPERATIONS,
+			foo.getEOperations().get(0));
 	}
 
 	@Test
 	public void attachDefaultCase_inOwner() {
 		final EClass foo = (EClass) testPackage.getEClassifier("Foo");
-		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__EOPERATIONS);
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__EOPERATIONS, true);
 		assertThat(foo.getEOperations(), CoreMatchers.<EOperation> hasItem(anything()));
 		final EOperation op = foo.getEOperations().get(0);
 
@@ -236,7 +213,7 @@ public class DefaultReferenceService_PTest {
 	@Test
 	public void attachDefaultCase_inAncestorOfOwner() {
 		final EClass foo = (EClass) testPackage.getEClassifier("Foo");
-		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES);
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES, true);
 		assertThat(foo.getESuperTypes(), CoreMatchers.<EClass> hasItem(anything()));
 		final EClass supertype = foo.getESuperTypes().get(0);
 
@@ -255,7 +232,7 @@ public class DefaultReferenceService_PTest {
 		testPackage.getEClassifiers().remove(foo);
 		resource.getContents().add(foo);
 
-		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES);
+		fixture.addNewModelElements(foo, EcorePackage.Literals.ECLASS__ESUPER_TYPES, true);
 		assertThat(foo.getESuperTypes(), CoreMatchers.<EClass> hasItem(anything()));
 		final EClass supertype = foo.getESuperTypes().get(0);
 
@@ -373,7 +350,7 @@ public class DefaultReferenceService_PTest {
 	 * @param initialShells the shells that are/were open before starting the thread that
 	 *            runs the resulting runnable
 	 * @param doIt a flag that will turn off when the test no longer needs to look for the dialog
-	 * 
+	 *
 	 * @return the dialog selection runnable
 	 */
 	Runnable selectFirstElementInDialog(final Display display, final Set<Shell> initialShells,
@@ -480,7 +457,6 @@ public class DefaultReferenceService_PTest {
 		registrations = Arrays.asList(
 			register(new Attachment()),
 			register(new Reference()),
-			register(new EClassSelection()),
 			register(new EObjectSelection()),
 			register(new OpenInNewContext()));
 	}
@@ -572,24 +548,6 @@ public class DefaultReferenceService_PTest {
 	}
 
 	/**
-	 * Obtain a strategy that allows instantiation only of the given class, if any.
-	 *
-	 * @param eClass the only class permitted to be instantiated
-	 * @return the strategy
-	 */
-	EClassSelectionStrategy onlyCreate(final EClass eClass) {
-		return new EClassSelectionStrategy() {
-
-			@Override
-			public Collection<EClass> collectEClasses(EObject owner, EReference reference,
-				Collection<EClass> eclasses) {
-				eclasses.retainAll(Collections.singleton(eClass));
-				return eclasses;
-			}
-		};
-	}
-
-	/**
 	 * Obtain a strategy that allows selection only of objects contained within the given {@code ancestor}.
 	 *
 	 * @param ancestor an object in which to find the eligible existing objects to reference
@@ -633,18 +591,6 @@ public class DefaultReferenceService_PTest {
 		};
 	}
 
-	ReferenceServiceCustomizationVendor<EClassSelectionStrategy> vendor(final EClassSelectionStrategy strategy) {
-		class StaticProvider extends ReferenceServiceCustomizationVendor<EClassSelectionStrategy>
-			implements EClassSelectionStrategy.Provider {
-			@Create
-			public EClassSelectionStrategy create() {
-				return strategy;
-			}
-		}
-
-		return new StaticProvider();
-	}
-
 	ReferenceServiceCustomizationVendor<EObjectSelectionStrategy> vendor(final EObjectSelectionStrategy strategy) {
 		class StaticProvider extends ReferenceServiceCustomizationVendor<EObjectSelectionStrategy>
 			implements EObjectSelectionStrategy.Provider {
@@ -686,31 +632,6 @@ public class DefaultReferenceService_PTest {
 		@Create
 		public ReferenceStrategy create() {
 			return setTypedElementRequired();
-		}
-	}
-
-	private class EClassSelection extends ReferenceServiceCustomizationVendor<EClassSelectionStrategy>
-		implements EClassSelectionStrategy.Provider {
-
-		@Override
-		protected boolean handles(EObject owner, EReference reference) {
-			return reference == EcorePackage.Literals.ECLASS__ESUPER_TYPES
-				|| reference == EcorePackage.Literals.ETYPED_ELEMENT__ETYPE && owner instanceof EAttribute;
-		}
-
-		@Create
-		public EClassSelectionStrategy create(EObject owner, EReference reference) {
-			EClassSelectionStrategy result = null;
-
-			if (reference == EcorePackage.Literals.ECLASS__ESUPER_TYPES) {
-				result = onlyCreate(EcorePackage.Literals.ECLASS);
-			} else if (reference == EcorePackage.Literals.ETYPED_ELEMENT__ETYPE
-				&& owner instanceof EAttribute) {
-
-				result = onlyCreate(EcorePackage.Literals.EENUM);
-			}
-
-			return result;
 		}
 	}
 

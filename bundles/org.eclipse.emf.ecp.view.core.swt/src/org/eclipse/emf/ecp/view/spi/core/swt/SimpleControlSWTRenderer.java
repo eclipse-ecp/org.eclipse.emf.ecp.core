@@ -11,14 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -42,7 +40,6 @@ import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyl
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -59,7 +56,6 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -228,8 +224,6 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 	private static final String ICONS_SET_FEATURE = "icons/set_feature.png"; //$NON-NLS-1$
 
-	private static final Point VALIDATION_PREFERRED_SIZE = new Point(16, 17);
-
 	/**
 	 * Default constructor.
 	 *
@@ -261,7 +255,8 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
-			final int columns = showLabel() ? 3 : 2;
+			final int columns = SimpleControlSWTRendererUtil
+				.showLabel(getVElement(), getReportService(), getClass().getName()) ? 3 : 2;
 
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
 			rendererGridDescription.setRows(1);
@@ -285,22 +280,6 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		return rendererGridDescription;
 	}
 
-	private boolean showLabel() {
-		switch (getVElement().getLabelAlignment()) {
-		case DEFAULT:
-		case LEFT:
-			return true;
-		case NONE:
-			return false;
-		default:
-			getReportService().report(new AbstractReport(MessageFormat.format(
-				"Label alignment {0} is not supported by renderer {1}. Label alignment set to default.", //$NON-NLS-1$
-				getVElement().getLabelAlignment().getLiteral(), getClass().getName()), IStatus.INFO));
-			getVElement().setLabelAlignment(LabelAlignment.DEFAULT);
-			return true;
-		}
-	}
-
 	/**
 	 * Creates the label cell if necessary.
 	 *
@@ -309,19 +288,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @since 1.9
 	 */
 	protected SWTGridCell createLabelCell(int column) {
-		final SWTGridCell labelCell = new SWTGridCell(0, column, this);
-		labelCell.setHorizontalGrab(false);
-		labelCell.setVerticalGrab(false);
-		labelCell.setHorizontalFill(false);
-		labelCell.setHorizontalAlignment(SWTGridCell.Alignment.BEGINNING);
-		labelCell.setVerticalFill(false);
-		labelCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
-		labelCell.setRenderer(this);
-		final Optional<Integer> labelWidth = getLabelWidth();
-		if (labelWidth.isPresent()) {
-			labelCell.setPreferredSize(labelWidth.get(), SWT.DEFAULT);
-		}
-		return labelCell;
+		return SimpleControlSWTRendererUtil.createLabelCell(column, this, getLabelWidth());
 	}
 
 	/**
@@ -348,16 +315,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @since 1.9
 	 */
 	protected SWTGridCell createValidationCell(int column) {
-		final SWTGridCell validationCell = new SWTGridCell(0, column, this);
-		validationCell.setHorizontalGrab(false);
-		validationCell.setVerticalGrab(false);
-		validationCell.setHorizontalFill(false);
-		validationCell.setHorizontalAlignment(SWTGridCell.Alignment.CENTER);
-		validationCell.setVerticalFill(false);
-		validationCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
-		validationCell.setRenderer(this);
-		validationCell.setPreferredSize(VALIDATION_PREFERRED_SIZE);
-		return validationCell;
+		return SimpleControlSWTRendererUtil.createValidationCell(column, this);
 	}
 
 	/**
@@ -368,14 +326,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @since 1.9
 	 */
 	protected SWTGridCell createControlCell(int column) {
-		final SWTGridCell controlCell = new SWTGridCell(0, column, this);
-		controlCell.setHorizontalGrab(true);
-		controlCell.setVerticalGrab(false);
-		controlCell.setHorizontalFill(true);
-		controlCell.setVerticalFill(true);
-		controlCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
-		controlCell.setRenderer(this);
-		return controlCell;
+		return SimpleControlSWTRendererUtil.createControlCell(column, this);
 	}
 
 	/**

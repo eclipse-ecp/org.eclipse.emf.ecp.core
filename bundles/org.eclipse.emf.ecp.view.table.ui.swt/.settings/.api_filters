@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.table.ui.swt" version="2">
     <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Changes in 1.17" id="923795461">
+            <message_arguments>
+                <message_argument value="1.17.0"/>
+                <message_argument value="1.16.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
@@ -51,6 +57,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer">
+        <filter comment="SPI Changes in 1.17" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="VALIDATION_PREFERRED_SIZE"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.8.0" id="338722907">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>

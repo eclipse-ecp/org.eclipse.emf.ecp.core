@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.ide.util" version="2">
+    <resource path="src/org/eclipse/emf/ecp/ide/spi/util/EcoreHelper.java" type="org.eclipse.emf.ecp.ide.spi.util.EcoreHelper">
+        <filter comment="SPI change 1.17.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ide.spi.util.EcoreHelper"/>
+                <message_argument value="getOtherRelatedWorkspacePaths(String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/ide/spi/util/ViewModelHelper.java" type="org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper">
+        <filter comment="SPI change 1.17.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper"/>
+                <message_argument value="loadView(IFile, Collection&lt;String&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="loadView(IFile, Collection&lt;String&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

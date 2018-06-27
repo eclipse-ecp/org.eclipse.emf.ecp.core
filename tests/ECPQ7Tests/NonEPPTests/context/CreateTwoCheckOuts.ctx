@@ -6,7 +6,7 @@ Element-Type: context
 Element-Version: 2.0
 Id: __UtTgD-XEeK-yuKsz0Lang
 Runtime-Version: 2.2.0.201706152316
-Save-Time: 7/7/17 12:47 PM
+Save-Time: 5/23/18 12:39 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -60,21 +60,21 @@ get-editor Game | close
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
     get-button "Add Entry" | click
-    with [get-editbox -after [get-label "EMails*"]] {
-        set-text jonas
-        key-type "M1+M3+q" "@"
-        set-text "jonas@helming.de"
+    with [get-table] {
+        select "" | activate-cell-edit -type MouseClickSelection
+        get-editbox | set-text "jonas@helming.de"
+        apply-cell-edit -deactivate
     }
 }
+
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian" | double-click
 with [get-editor "Player Maximilian"] {
     get-button "Add Entry" | click
-    with [get-editbox -after [get-label "EMails*"]] {
-        set-text maximilina
-        key-type "M1+M3+q" "@"
-        set-text "maximilina@koegel.de"
+    with [get-table] {
+        select "" | activate-cell-edit -type MouseClickSelection
+        get-editbox | set-text "maximilina@koegel.de"
+        apply-cell-edit -deactivate
     }
-    get-editbox -after [get-label Name] | click-text 1
     close
 }
 get-editor "Player Jonas" | close

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="audit"
+    nsURI="http://eclipse/org/emf/ecp/view/table/ui/nebula/grid/test/model"
+    nsPrefix="org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model">
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="Organization">
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="name"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EReference"
+        name="members"
+        upperBound="-1"
+        eType="#//Member"
+        containment="true"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EReference"
+        name="groups"
+        upperBound="-1"
+        eType="#//MemberGroup"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="Member"
+      abstract="true"
+      interface="true">
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="name"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="joinDate"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="isActive"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="Bot"
+      eSuperTypes="#//Member">
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="executionIntervalSeconds"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="Human"
+      abstract="true"
+      eSuperTypes="#//Member"/>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="GuestUser"
+      eSuperTypes="#//Human"/>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="RegisteredUser"
+      eSuperTypes="#//Human">
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="login"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="password"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EReference"
+        name="delegates"
+        upperBound="-1"
+        eType="#//RegisteredUser"/>
+  </eClassifiers>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="PrivilegedUser"
+      abstract="true"
+      interface="true"/>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="AdminUser"
+      eSuperTypes="#//RegisteredUser #//PrivilegedUser">
+    <eStructuralFeatures
+        xsi:type="ecore:EReference"
+        name="createdBy"
+        eType="#//PrivilegedUser"/>
+  </eClassifiers>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="PrivilegedBot"
+      eSuperTypes="#//Bot #//PrivilegedUser"/>
+  <eClassifiers
+      xsi:type="ecore:EClass"
+      name="MemberGroup">
+    <eStructuralFeatures
+        xsi:type="ecore:EAttribute"
+        name="name"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EReference"
+        name="members"
+        upperBound="-1"
+        eType="#//Human"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EReference"
+        name="admins"
+        upperBound="-1"
+        eType="#//AdminUser"/>
+    <eStructuralFeatures
+        xsi:type="ecore:EReference"
+        name="bots"
+        upperBound="-1"
+        eType="#//Bot"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

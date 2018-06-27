@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.spi.model;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Composite Collection</b></em>'.
- * 
+ *
  * @since 1.4
  *        <!-- end-user-doc -->
  *

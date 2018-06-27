@@ -15,14 +15,11 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
+import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.internal.editor.toolbaractions.LoadEcoreAction;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
@@ -61,35 +58,15 @@ public class RuleRepositoryEditor extends GenericEditor {
 			if (!VView.class.isInstance(resource.getContents().get(0))) {
 				continue;
 			}
-			final String ecorePath = getEcorePath(resource);
-			if (ecorePath == null) {
-				return;
+			for (final String ecorePath : ViewModelHelper.getEcorePaths(resource)) {
+				if (ecorePath == null) {
+					return;
+				}
+				EcoreHelper.registerEcore(ecorePath);
 			}
-			EcoreHelper.registerEcore(ecorePath);
 		}
 		// resolve all proxies
 		EcoreUtil.resolveAll(resourceSet);
-	}
-
-	private String getEcorePath(Resource resource) {
-		if (resource == null || resource.getContents().isEmpty()) {
-			return null;
-		}
-		final EObject eObject = resource.getContents().get(0);
-		if (VView.class.isInstance(eObject)) {
-			return VView.class.cast(eObject).getEcorePath();
-		}
-		if (AnyType.class.isInstance(eObject)) {
-			/* view model has older ns uri */
-			final FeatureMap anyAttribute = AnyType.class.cast(eObject).getAnyAttribute();
-			for (int i = 0; i < anyAttribute.size(); i++) {
-				final EStructuralFeature feature = anyAttribute.getEStructuralFeature(i);
-				if ("ecorePath".equals(feature.getName())) { //$NON-NLS-1$
-					return (String) anyAttribute.getValue(i);
-				}
-			}
-		}
-		return null;
 	}
 
 	@Override
@@ -103,11 +80,6 @@ public class RuleRepositoryEditor extends GenericEditor {
 		return super.loadResource(editorInput);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.editor.GenericEditor#dispose()
-	 */
 	@Override
 	public void dispose() {
 		for (final Resource resource : getResourceSet().getResources()) {
@@ -117,11 +89,12 @@ public class RuleRepositoryEditor extends GenericEditor {
 			if (!VView.class.isInstance(resource.getContents().get(0))) {
 				continue;
 			}
-			final String ecorePath = getEcorePath(resource);
-			if (ecorePath == null) {
-				return;
+			for (final String ecorePath : ViewModelHelper.getEcorePaths(resource)) {
+				if (ecorePath == null) {
+					return;
+				}
+				EcoreHelper.unregisterEcore(ecorePath);
 			}
-			EcoreHelper.unregisterEcore(ecorePath);
 		}
 		super.dispose();
 	}

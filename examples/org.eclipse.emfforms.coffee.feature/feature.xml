@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emfforms.coffee.feature"
+      label="Coffee Example Feature"
+      version="1.17.0.qualifier"
+      provider-name="%providerName"
+      plugin="org.eclipse.emfforms.coffee.model"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.17.0.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.emfforms.coffee.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.coffee.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.coffee.model.viewmodel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

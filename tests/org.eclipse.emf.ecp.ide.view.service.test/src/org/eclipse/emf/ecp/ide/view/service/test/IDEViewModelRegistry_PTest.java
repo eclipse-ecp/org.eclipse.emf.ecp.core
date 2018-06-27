@@ -94,7 +94,7 @@ public class IDEViewModelRegistry_PTest {
 	@Before
 	public void setUp() throws Exception {
 		view = VViewFactory.eINSTANCE.createView();
-		view.setEcorePath("/TestIDEViewRegistryProjectResources/task.ecore");
+		view.getEcorePaths().add("/TestIDEViewRegistryProjectResources/task.ecore");
 	}
 
 	/**
@@ -270,7 +270,9 @@ public class IDEViewModelRegistry_PTest {
 				// not tested
 			}
 		};
-		registry.register(view.getEcorePath(), view);
+		for (final String ecorePath : view.getEcorePaths()) {
+			registry.register(ecorePath, view);
+		}
 		registry.registerViewModelEditor(view, callback);
 
 		// act
@@ -289,7 +291,10 @@ public class IDEViewModelRegistry_PTest {
 		// assert
 		assertTrue("signalEcoreOutOfSync has not been called", latch.await(1, TimeUnit.SECONDS));
 		registry.unregisterViewModelEditor(view, callback);
-		registry.unregister(view.getEcorePath(), view);
+
+		for (final String ecorePath : view.getEcorePaths()) {
+			registry.unregister(ecorePath, view);
+		}
 	}
 
 	@SuppressWarnings("unchecked")

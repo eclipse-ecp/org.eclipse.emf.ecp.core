@@ -44,19 +44,15 @@ public final class VDiagnosticHelper {
 		if (vDiagnostic1 == null && vDiagnostic2 == null) {
 			return true;
 		}
-		if (vDiagnostic1 == null && vDiagnostic2 != null) {
+		if (vDiagnostic1 == null) {
 			return false;
 		}
-		if (vDiagnostic2 == null && vDiagnostic1 != null) {
+		if (vDiagnostic2 == null) {
 			return false;
 		}
-		if (vDiagnostic1.getHighestSeverity() != vDiagnostic2.getHighestSeverity()) {
-			return false;
-		}
-		if (!vDiagnostic1.getMessage().equals(vDiagnostic2.getMessage())) {
-			return false;
-		}
-		if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
+
+		final boolean arePropertiesEqual = arePropertiesEqual(vDiagnostic1, vDiagnostic2);
+		if (!arePropertiesEqual) {
 			return false;
 		}
 
@@ -68,6 +64,19 @@ public final class VDiagnosticHelper {
 			}
 		}
 
+		return true;
+	}
+
+	private static boolean arePropertiesEqual(VDiagnostic vDiagnostic1, VDiagnostic vDiagnostic2) {
+		if (vDiagnostic1.getHighestSeverity() != vDiagnostic2.getHighestSeverity()) {
+			return false;
+		}
+		if (!vDiagnostic1.getMessage().equals(vDiagnostic2.getMessage())) {
+			return false;
+		}
+		if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
+			return false;
+		}
 		return true;
 	}
 

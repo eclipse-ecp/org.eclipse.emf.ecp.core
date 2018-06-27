@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -140,6 +141,23 @@ public class EMFFormsDMRExpanderDefaultHeuristic_Test {
 
 		domainExpander.prepareDomainObject(reference, a);
 
+	}
+
+	/**
+	 * Tests that an invalid reference path does not cause an Exception
+	 * 
+	 * @throws EMFFormsExpandingFailedException
+	 */
+	@Test
+	public void testPrepareDomainObject_InvalidReferencePath() throws EMFFormsExpandingFailedException {
+		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		reference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getDExtended_A());
+		reference.setDomainModelEFeature(TestPackage.eINSTANCE.getA_B());
+		final D d = TestFactory.eINSTANCE.createD();
+		domainExpander.prepareDomainObject(reference, d);
+		// Nothing to assert, the test simply checks that an invalid EReference in the reference path does not lead to
+		// an Exception
 	}
 
 	/**

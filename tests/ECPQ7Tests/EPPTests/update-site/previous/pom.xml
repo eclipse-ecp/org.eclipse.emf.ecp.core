@@ -12,7 +12,7 @@
   <packaging>rcpttTest</packaging>
 
   <properties>
-    <eclipse-name>neon</eclipse-name>
+    <eclipse-name>oxygen</eclipse-name>
 	<eclipse-sr>3</eclipse-sr>
   </properties>
   <build>

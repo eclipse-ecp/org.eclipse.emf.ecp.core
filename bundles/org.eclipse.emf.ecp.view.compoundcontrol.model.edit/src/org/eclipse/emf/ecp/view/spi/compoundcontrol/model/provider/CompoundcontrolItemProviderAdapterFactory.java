@@ -20,13 +20,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolFactory;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.util.CompoundcontrolAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
 import org.eclipse.emf.edit.command.CommandParameter;
@@ -320,45 +318,29 @@ public class CompoundcontrolItemProviderAdapterFactory extends
 			}
 
 			/**
-			 * <!-- begin-user-doc -->
-			 * View case.
+			 * <!-- begin-user-doc --> <!-- end-user-doc -->
 			 *
-			 * @param object object
-			 * @return object
-			 *         <!-- end-user-doc -->
-			 *
-			 * @generated NOT
+			 * @generated
 			 */
 			@Override
 			public Object caseView(VView object) {
 				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
-					createCompoundControlWithDummyDMR()));
+					VCompoundcontrolFactory.eINSTANCE.createCompoundControl()));
 
 				return null;
 			}
 
 			/**
-			 * <!-- begin-user-doc -->
-			 * Container case.
-			 * 
-			 * @param object object
-			 * @return object
-			 *         <!-- end-user-doc -->
+			 * <!-- begin-user-doc --> <!-- end-user-doc -->
 			 *
-			 * @generated NOT
+			 * @generated
 			 */
 			@Override
 			public Object caseContainer(VContainer object) {
 				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
-					createCompoundControlWithDummyDMR()));
+					VCompoundcontrolFactory.eINSTANCE.createCompoundControl()));
 
 				return null;
-			}
-
-			private VCompoundControl createCompoundControlWithDummyDMR() {
-				final VCompoundControl compoundControl = VCompoundcontrolFactory.eINSTANCE.createCompoundControl();
-				compoundControl.setDomainModelReference(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
-				return compoundControl;
 			}
 
 			/**

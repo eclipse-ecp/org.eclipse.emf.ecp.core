@@ -36,6 +36,8 @@ public final class Messages extends NLS {
 	public static String MultiAttributeSWTRenderer_addNewTooltip;
 	public static String MultiAttributeSWTRenderer_deleteTooltip;
 
+	public static String MultiAttributeSWTRenderer_AddButtonTooltip;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

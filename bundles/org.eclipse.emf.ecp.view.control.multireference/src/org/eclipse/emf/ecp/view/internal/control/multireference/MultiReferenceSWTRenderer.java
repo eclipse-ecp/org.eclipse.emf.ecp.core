@@ -196,7 +196,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		if (rendererGridDescription == null) {
 			// create special grid for compact mode
 			if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
-				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createCompactGrid(false, true, this);
 			} else {
 				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 			}
@@ -298,16 +298,21 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			// Default
 			return renderMultiReferenceControl(cell, parent);
 		}
-		// Compact
+		// Compact: render icon
 		if (cell.getColumn() == 0 && rendererGridDescription.getColumns() > 1) {
 			validationIcon = createValidationIcon(parent);
 			return validationIcon;
 		}
+		// Compact: render table and buttons next to each other
 		final Composite composite = new Composite(parent, SWT.NONE);
+		composite.setBackgroundMode(SWT.INHERIT_FORCE);
+
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
-		renderMultiReferenceControl(cell, composite);
+		final Control multiRefComposite = renderMultiReferenceControl(cell, composite);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(multiRefComposite);
 		try {
-			createButtonComposite(composite);
+			final Composite buttonComposite = createButtonComposite(composite);
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).applyTo(buttonComposite);
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new RenderingFailedReport(ex));
 			return createErrorLabel(composite, ex);
@@ -385,7 +390,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
 			.hint(1, getTableHeightHint())
 			.applyTo(controlComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
+		GridLayoutFactory.fillDefaults().applyTo(controlComposite);
 		return controlComposite;
 	}
 
@@ -639,9 +644,10 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * necessary.
 	 *
 	 * @param parent The parent of the created {@link Composite}
+	 * @return the created Composite
 	 * @throws DatabindingFailedException thrown if the databinding could not be executed successfully
 	 */
-	protected void createButtonComposite(Composite parent) throws DatabindingFailedException {
+	protected Composite createButtonComposite(Composite parent) throws DatabindingFailedException {
 		final Composite buttonComposite = new Composite(parent, SWT.NONE);
 
 		final IObservableValue observableValue = getEMFFormsDatabinding()
@@ -674,8 +680,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 
 		GridLayoutFactory.fillDefaults().numColumns(nrButtons).equalWidth(true).applyTo(buttonComposite);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.END, SWT.FILL)
-			.applyTo(buttonComposite);
+		return buttonComposite;
 	}
 
 	/**
@@ -700,7 +705,9 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		validationIcon = createValidationIcon(titleComposite);
 		GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationIcon);
 
-		createButtonComposite(titleComposite);
+		final Composite buttonComposite = createButtonComposite(titleComposite);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.END, SWT.FILL)
+			.applyTo(buttonComposite);
 	}
 
 	/**
@@ -884,7 +891,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected void handleAddNew(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
-		referenceService.addNewModelElements(eObject, (EReference) structuralFeature);
+		referenceService.addNewModelElements(eObject, (EReference) structuralFeature, true);
 	}
 
 	/**

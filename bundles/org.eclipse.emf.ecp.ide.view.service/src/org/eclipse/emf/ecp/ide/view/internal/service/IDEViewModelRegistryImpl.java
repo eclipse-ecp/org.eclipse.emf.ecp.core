@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.ide.view.internal.service;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,8 +49,12 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 	@Override
 	public void register(String ecorePath, VView viewModel) {
 
-		final Set<String> otherRelatedWorkspaceURIs = EcoreHelper
-			.getOtherRelatedWorkspacePaths(viewModel.getEcorePath());
+		final Set<String> otherRelatedWorkspaceURIs = new LinkedHashSet<String>();
+		for (final String viewModelEcorePath : viewModel.getEcorePaths()) {
+			otherRelatedWorkspaceURIs.addAll(EcoreHelper
+				.getOtherRelatedWorkspacePaths(viewModelEcorePath));
+		}
+
 		final Set<String> otherRelatedWorkspacePaths = new LinkedHashSet<String>();
 		for (final String uri : otherRelatedWorkspaceURIs) {
 			final URI platformURI = URI.createURI(uri);
@@ -84,8 +89,8 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 					}
 					for (final VView view : ecoreViewMapping.get(ecorePath)) {
 						final Set<String> ecorePathsToCheck = new LinkedHashSet<String>();
-						if (view.getEcorePath() != null) {
-							ecorePathsToCheck.add(view.getEcorePath());
+						if (view.getEcorePaths() != null) {
+							ecorePathsToCheck.addAll(view.getEcorePaths());
 						}
 						if (viewToRelatedEcorePaths.containsKey(ecorePath)) {
 							ecorePathsToCheck.addAll(viewToRelatedEcorePaths.get(ecorePath));
@@ -138,8 +143,8 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 	@Override
 	public void unregisterViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor) {
 		viewModelViewModelEditorMapping.remove(viewModel);
-		final String ecorePath = viewModel.getEcorePath();
-		if (ecorePath != null) {
+		final List<String> ecorePaths = viewModel.getEcorePaths();
+		for (final String ecorePath : ecorePaths) {
 			EcoreHelper.unregisterEcore(ecorePath);
 		}
 	}

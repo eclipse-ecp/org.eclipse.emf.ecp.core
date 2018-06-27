@@ -63,12 +63,12 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 	protected void doActivate() throws Exception {
 		super.doActivate();
 		if (folder == null) {
-			throw new IllegalStateException("Folder is null");
+			throw new IllegalStateException("Folder is null"); //$NON-NLS-1$
 		}
 
 		if (folder.exists()) {
 			if (!folder.isDirectory()) {
-				throw new IllegalStateException("Not a folder: " + folder);
+				throw new IllegalStateException("Not a folder: " + folder); //$NON-NLS-1$
 			}
 		} else {
 			folder.mkdirs();
@@ -79,7 +79,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 
 	protected void load() {
 		// TODO Trace properly
-		System.out.println("Loading " + getClass().getSimpleName() + " from " + folder.getAbsolutePath());
+		System.out.println("Loading " + getClass().getSimpleName() + " from " + folder.getAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		final Set<ELEMENT> elements = new HashSet<ELEMENT>();
 		for (final File file : folder.listFiles()) {
@@ -155,7 +155,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 
 	public void storeElement(ELEMENT element) {
 		final File file = getFile(element);
-		final File temp = new File(file.getParentFile(), file.getName() + ".tmp");
+		final File temp = new File(file.getParentFile(), file.getName() + ".tmp"); //$NON-NLS-1$
 		if (temp.isFile()) {
 			temp.delete();
 		}

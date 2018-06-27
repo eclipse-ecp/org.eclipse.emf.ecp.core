@@ -16,6 +16,7 @@ import org.eclipse.emfforms.common.Property;
 import org.eclipse.emfforms.common.Property.ChangeListener;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerColumnBuilder;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.EditingSupport;
@@ -36,6 +37,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * Nebula Grid viewer configuration helper class.
@@ -67,6 +69,12 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 		configureHideShow(tableViewer, viewerColumn);
 		configureFiltering(tableViewer, viewerColumn);
 
+	}
+
+	@Override
+	protected void configureDatabinding(Widget column) {
+		super.configureDatabinding(column);
+		bindValue(column, new GridColumnTooltipTextProperty(), getConfig().getColumnTooltip());
 	}
 
 	@Override
@@ -226,4 +234,32 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 		return filterComposite;
 	}
 
+	/**
+	 * Internal class to bind the GridColumn's TooltipText using JFace Databinding.
+	 *
+	 * @author Eugen Neufeld
+	 *
+	 */
+	class GridColumnTooltipTextProperty extends WidgetValueProperty {
+
+		@Override
+		public String toString() {
+			return "GridColumn.toolTipText <String>"; //$NON-NLS-1$
+		}
+
+		@Override
+		public Object getValueType() {
+			return String.class;
+		}
+
+		@Override
+		protected Object doGetValue(Object source) {
+			return ((GridColumn) source).getHeaderTooltip();
+		}
+
+		@Override
+		protected void doSetValue(Object source, Object value) {
+			((GridColumn) source).setHeaderTooltip((String) value);
+		}
+	}
 }

@@ -14,7 +14,8 @@ package org.eclipse.emf.ecp.view.template.tooling.wizards;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -305,13 +306,24 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 		if (view == null) {
 			return command;
 		}
-		final String ecorePath = VView.class.cast(view).getEcorePath();
-		if (template.getReferencedEcores().contains(ecorePath)) {
-			return command;
+
+		final List<Command> ecorePathCommands = new ArrayList<Command>();
+		ecorePathCommands.add(command);
+
+		for (final String ecorePaths : VView.class.cast(view).getEcorePaths()) {
+			if (template.getReferencedEcores().contains(ecorePaths)) {
+				continue;
+			}
+			ecorePathCommands.add(
+				AddCommand.create(domain, template,
+					VTTemplatePackage.eINSTANCE.getViewTemplate_ReferencedEcores(), ecorePaths));
 		}
-		final Command ecorePathCommand = AddCommand.create(domain, template,
-			VTTemplatePackage.eINSTANCE.getViewTemplate_ReferencedEcores(), ecorePath);
-		return new CompoundCommand(Arrays.asList(command, ecorePathCommand));
+
+		if (ecorePathCommands.size() > 1) {
+			return new CompoundCommand(ecorePathCommands);
+		}
+		return command;
+
 	}
 
 	private boolean performFinishNewPage() {

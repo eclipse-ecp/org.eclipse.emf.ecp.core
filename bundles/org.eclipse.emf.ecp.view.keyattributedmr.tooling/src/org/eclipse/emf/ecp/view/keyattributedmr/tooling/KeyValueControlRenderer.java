@@ -20,12 +20,15 @@ import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainMod
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Label;
 
@@ -40,9 +43,14 @@ public class KeyValueControlRenderer extends ExpectedValueControlRenderer {
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
+	 * @param databindingService The {@link EMFFormsDatabinding}
+	 * @param labelProvider The {@link EMFFormsLabelProvider}
+	 * @param viewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
-	public KeyValueControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
-		super(vElement, viewContext, reportService);
+	public KeyValueControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding databindingService, EMFFormsLabelProvider labelProvider,
+		VTViewTemplateProvider viewTemplateProvider) {
+		super(vElement, viewContext, reportService, databindingService, labelProvider, viewTemplateProvider);
 	}
 
 	@Override

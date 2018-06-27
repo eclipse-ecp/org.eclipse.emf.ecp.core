@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
 
 /**
@@ -41,7 +42,7 @@ import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
  *
  * @deprecated As of 1.16, the responsibilities of this class are subsumed into the
  *             {@link EcoreReferenceStrategyProvider} and related classes.
- * 
+ *
  * @see EcoreAttachmentStrategyProvider
  * @see EcoreEObjectSelectionStrategyProvider
  * @see EcoreOpenInNewContextStrategyProvider
@@ -229,11 +230,16 @@ public class EcoreReferenceService extends DefaultReferenceService {
 
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
+		addNewModelElements(eObject, eReference, true);
+	}
+
+	@Override
+	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
 		if (eReference == EcorePackage.eINSTANCE.getEReference_EOpposite()) {
 			handleEOpposite(eObject, eReference);
-			return;
+			return Optional.empty();
 		}
-		super.addNewModelElements(eObject, eReference);
+		return super.addNewModelElements(eObject, eReference, openInNewContext);
 	}
 
 	private void handleEOpposite(EObject eObject, EReference eReference) {

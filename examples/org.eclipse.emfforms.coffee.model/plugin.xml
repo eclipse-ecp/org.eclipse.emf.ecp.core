@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Coffee -->
+      <package
+            uri="http://www.eclipse.org/emfforms/example/coffeemodel"
+            class="org.eclipse.emfforms.coffee.model.coffee.CoffeePackage"
+            genModel="model/Coffee.genmodel"/>
+   </extension>
+
+</plugin>

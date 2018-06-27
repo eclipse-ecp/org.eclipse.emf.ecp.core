@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,14 +8,13 @@
  *
  * Contributors:
  * Stefan Dirix - initial API and implementation
+ * Christian W. Damus - bug 533522
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationTimerTask;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -292,35 +290,6 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertFalse("Validation report present", called.get(0));
-	}
-
-	@Test
-	public void testValidationTimerTaskNullReferenceAfterCancel()
-		throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		setupContent();
-		final ValidationTimerTask timerTask = new ValidationTimerTask(
-			content);
-
-		final Class<? extends ValidationTimerTask> taskClass = timerTask.getClass();
-		final Field validatedEObjectField = taskClass.getDeclaredField("validatedEObject");
-		validatedEObjectField.setAccessible(true);
-		assertEquals(content, validatedEObjectField.get(timerTask));
-		timerTask.cancel();
-		assertEquals(null, validatedEObjectField.get(timerTask));
-	}
-
-	@Test
-	public void testValidationTimerTaskNullReferenceAfterRun()
-		throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		setupContent();
-		final ValidationTimerTask timerTask = new ValidationTimerTask(content);
-
-		final Class<? extends ValidationTimerTask> taskClass = timerTask.getClass();
-		final Field validatedEObjectField = taskClass.getDeclaredField("validatedEObject");
-		validatedEObjectField.setAccessible(true);
-		assertEquals(content, validatedEObjectField.get(timerTask));
-		timerTask.run();
-		assertEquals(null, validatedEObjectField.get(timerTask));
 	}
 
 	@Test

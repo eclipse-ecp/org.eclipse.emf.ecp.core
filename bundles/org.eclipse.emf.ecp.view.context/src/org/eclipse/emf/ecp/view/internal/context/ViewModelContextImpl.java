@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,11 +8,12 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 527740
+ * Christian W. Damus - bugs 527740, 533522
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -20,8 +21,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -99,8 +104,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The view model change listener. Needs to be thread safe. */
 	private final List<ModelChangeListener> viewModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
 
-	/** The domain model change listener. Needs to be thread safe. */
-	private final List<ModelChangeListener> domainModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
+	/** The domain model change listeners. Needs to be thread safe. */
+	private final GroupedListenerList<ModelChangeListener> domainModelChangeListener =
+		// needed to make sure that all data operations are done before any validation etc provided by services happens
+		new GroupedListenerList<ModelChangeListener>(VDomainModelReference.class);
 
 	/** The root domain model change listeners. Needs to be thread safe. */
 	private final List<RootDomainModelChangeListener> rootDomainModelChangeListeners = new CopyOnWriteArrayList<RootDomainModelChangeListener>();
@@ -256,7 +263,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		} else {
 			viewServiceProvider = modelServiceProvider;
 		}
-		viewServices.addAll(viewServiceProvider.getViewModelServices(view, domainObject));
 		this.parentVElement = parentVElement;
 		instantiate();
 	}
@@ -313,6 +319,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		viewModelContentAdapter = new ViewModelContentAdapter();
 
 		view.eAdapters().add(viewModelContentAdapter);
+
+		// Generate local view services from our provider
+		viewServices.addAll(viewServiceProvider.getViewModelServices(view, domainObject));
 
 		for (final ViewModelService viewService : viewServices) {
 			viewService.instantiate(this);
@@ -516,27 +525,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			throw new IllegalArgumentException(MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
 		}
 		if (parentContext == null) {
-			// TODO performance
-			// needed to make sure, all data operations are done before any validation etc provided by services happens
-			if (VDomainModelReference.class.isInstance(modelChangeListener)) {
-				domainModelChangeListener.add(0, modelChangeListener);
-			} else {
-				// TODO hack for https://bugs.eclipse.org/bugs/show_bug.cgi?id=460158
-				int positionToInsert = -1;
-				for (int i = 0; i < domainModelChangeListener.size(); i++) {
-					final ModelChangeListener listener = domainModelChangeListener.get(i);
-					if (modelChangeListener.getClass().isInstance(listener)) {
-						positionToInsert = i;
-						break;
-					}
-				}
-
-				if (positionToInsert == -1) {
-					domainModelChangeListener.add(modelChangeListener);
-				} else {
-					domainModelChangeListener.add(positionToInsert, modelChangeListener);
-				}
-			}
+			domainModelChangeListener.add(modelChangeListener);
 		} else {
 			parentContext.registerDomainChangeListener(modelChangeListener);
 		}
@@ -547,6 +536,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
 		// }
+		if (modelChangeListener == null) {
+			// ConcurrentSkipListSet doesn't allow nulls but balks on attempts to remove them, too
+			return;
+		}
 		if (parentContext == null) {
 			domainModelChangeListener.remove(modelChangeListener);
 		} else {
@@ -596,17 +589,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return (T) service;
 			}
 		}
-
-		if (serviceMap.containsKey(serviceType)) {
-			return (T) serviceMap.get(serviceType);
-		} else if (servicesManager != null) {
-			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType, this);
-			if (lazyService.isPresent()) {
-				final T t = lazyService.get();
-				serviceMap.put(serviceType, t);
-				return t;
-			}
+		// First check local services
+		final T localService = getLocalService(serviceType);
+		if (localService != null) {
+			return localService;
 		}
+		// If context is the root, check global services to be instanciated
 		if (servicesManager != null && parentContext == null) {
 			final Optional<T> lazyService = servicesManager.createGlobalLazyService(serviceType, this);
 			if (lazyService.isPresent()) {
@@ -615,10 +603,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return t;
 			}
 		}
+		// Check the parent context
 		if (parentContext != null && parentContext.hasService(serviceType)) {
 			return parentContext.getService(serviceType);
 		}
-
+		// Check OSGi services
 		if (bundleContext != null) {
 			final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceType);
 			if (serviceReference != null) {
@@ -626,6 +615,24 @@ public class ViewModelContextImpl implements ViewModelContext {
 				final T service = bundleContext.getService(serviceReference);
 				serviceMap.put(serviceType, service);
 				return service;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @return a instance of a local service or a local service service, which can be created or null if neither exists.
+	 */
+	@SuppressWarnings("unchecked")
+	private <T> T getLocalService(Class<T> serviceType) {
+		if (serviceMap.containsKey(serviceType)) {
+			return (T) serviceMap.get(serviceType);
+		} else if (servicesManager != null) {
+			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType, this);
+			if (lazyService.isPresent()) {
+				final T t = lazyService.get();
+				serviceMap.put(serviceType, t);
+				return t;
 			}
 		}
 		return null;
@@ -1011,5 +1018,102 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Override
 	public void unregisterRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener) {
 		rootDomainModelChangeListeners.remove(rootDomainModelChangeListener);
+	}
+
+	/**
+	 * A collection of listeners grouped by class. Work-around for the absence of priority
+	 * support (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=460158">bug 460158</a>).
+	 *
+	 * @author Christian W. Damus
+	 *
+	 * @see <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=460158">bug 460158</a>
+	 */
+	private static final class GroupedListenerList<T> implements Iterable<T> {
+		private final Set<T> listeners = new ConcurrentSkipListSet<T>(comparator());
+
+		private final AtomicInteger nextGroup = new AtomicInteger();
+		private final ConcurrentMap<Class<?>, Integer> groups = new ConcurrentHashMap<Class<?>, Integer>();
+
+		private final Class<?> importantGroup;
+
+		/**
+		 * Initializes with an important group that must be first in the iteration order.
+		 */
+		GroupedListenerList(Class<?> importantGroup) {
+			super();
+
+			this.importantGroup = importantGroup;
+			seedImportantGroup();
+		}
+
+		/**
+		 * Sort elements by group first and then arbitrarily within each group.
+		 *
+		 * @return a grouping comparator
+		 */
+		private Comparator<T> comparator() {
+			return new Comparator<T>() {
+				@Override
+				public int compare(T o1, T o2) {
+					if (o1 == o2) {
+						return 0;
+					}
+
+					final int group1 = getGroup(o1);
+					final int group2 = getGroup(o2);
+					int result = group1 - group2;
+
+					if (result == 0) {
+						// Same group. Arbitrary ordering by address
+						result = System.identityHashCode(o1) - System.identityHashCode(o2);
+					}
+
+					return result;
+				}
+			};
+		}
+
+		private void seedImportantGroup() {
+			if (importantGroup != null) {
+				// Seed the map with a lowest-order group
+				groups.put(importantGroup, nextGroup.getAndIncrement());
+			}
+		}
+
+		private int getGroup(T listener) {
+			final Class<?> groupKey = importantGroup != null && importantGroup.isInstance(listener)
+				? importantGroup
+				: listener.getClass();
+
+			Integer result = groups.get(groupKey);
+			if (result == null) {
+				result = nextGroup.getAndIncrement();
+				final Integer collision = groups.putIfAbsent(groupKey, result);
+				if (collision != null) {
+					result = collision;
+				}
+			}
+
+			return result;
+		}
+
+		void add(T listener) {
+			listeners.add(listener);
+		}
+
+		void remove(T listener) {
+			listeners.remove(listener);
+		}
+
+		void clear() {
+			listeners.clear();
+			groups.clear();
+			seedImportantGroup();
+		}
+
+		@Override
+		public Iterator<T> iterator() {
+			return listeners.iterator();
+		}
 	}
 }

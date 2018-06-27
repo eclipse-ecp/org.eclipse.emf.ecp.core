@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
@@ -83,11 +84,18 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 	 * {@inheritDoc}
 	 *
 	 * @since 1.5
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
+		addNewModelElements(eObject, eReference, true);
+	}
+
+	@Override
+	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
 		if (eReference == null) {
-			return;
+			return Optional.empty();
 		}
 		EObject newModelElement = null;
 		final Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
@@ -106,19 +114,23 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 		}
 
 		if (newModelElement == null) {
-			return;
+			return Optional.empty();
 
 		}
 
 		if (eReference.isContainer()) {
 			// TODO language
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error",//$NON-NLS-1$
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
 				"Operation not permitted for container references!");//$NON-NLS-1$
-			return;
+			return Optional.empty();
 		}
 		ECPControlHelper.addModelElementInReference(eObject, newModelElement, eReference,
 			ecpProject.getEditingDomain());
-		openInNewContext(newModelElement);
+		if (openInNewContext) {
+			openInNewContext(newModelElement);
+		}
+
+		return Optional.of(newModelElement);
 	}
 
 	/**

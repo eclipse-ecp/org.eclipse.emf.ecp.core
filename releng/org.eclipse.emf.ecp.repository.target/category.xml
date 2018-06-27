@@ -120,6 +120,9 @@
    <feature id="org.eclipse.emf.ecp.makeithappen.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature id="org.eclipse.emfforms.coffee.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <feature id="org.eclipse.emf.ecp.view.mappingdmr.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
@@ -207,6 +210,15 @@
    <feature id="org.eclipse.emf.ecp.ide.migration.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.edapt"/>
    </feature>
+   <feature id="org.eclipse.emfforms.datatemplate.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature id="org.eclipse.emfforms.datatemplate.ide.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.ide"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.i18n.feature" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.i18n"/>
+   </feature>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">
       <description>
          Contains the ECP SDKs. Please install only one of these.
@@ -234,4 +246,6 @@
    </category-def>
    <category-def name="org.eclipse.emf.ecp.jsonforms" label="EMF Forms to JSON Forms"/>
    <category-def name="org.eclipse.emf.ecp.edapt" label="Edapt Migration Support"/>
+   <category-def name="org.eclipse.emf.ecp.ide" label="EMF Forms IDE Features"/>
+   <category-def name="org.eclipse.emf.ecp.i18n" label="EMF Forms Internationalization"/>
 </site>

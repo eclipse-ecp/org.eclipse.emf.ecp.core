@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 533522
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore;
 
@@ -30,18 +31,28 @@ public class EcoreDiagnosticCache extends DiagnosticCache {
 	@Override
 	protected void updateCache(EObject element, DiagnosticCache cache) {
 		super.updateCache(element, cache);
-		final EObject parent = element.eContainer();
-		if (parent != null) {
-			updateCache(parent, cache);
+
+		// In the initial walk over the contents, we will already have processed
+		// the containment chain
+		if (!isInitializing()) {
+			final EObject parent = element.eContainer();
+			if (parent != null) {
+				updateCache(parent, cache);
+			}
 		}
 	}
 
 	@Override
 	protected void updateCacheWithoutRefresh(EObject element, DiagnosticCache cache) {
 		super.updateCacheWithoutRefresh(element, cache);
-		final EObject parent = element.eContainer();
-		if (parent != null) {
-			updateCacheWithoutRefresh(parent, cache);
+
+		// In the initial walk over the contents, we will already have processed
+		// the containment chain
+		if (!isInitializing()) {
+			final EObject parent = element.eContainer();
+			if (parent != null) {
+				updateCacheWithoutRefresh(parent, cache);
+			}
 		}
 	}
 

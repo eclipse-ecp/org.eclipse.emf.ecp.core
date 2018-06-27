@@ -25,6 +25,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ ECPSWTViewRenderer_PTest.class,
 	DefaultReferenceService_PTest.class,
+	DefaultCreateNewModelElementStrategyProvider_PTest.class
 })
 public class AllTests {
 

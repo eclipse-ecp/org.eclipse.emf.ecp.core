@@ -156,6 +156,11 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 					"The path is not fully resolved. The reference being resolved is not a single reference [%1$s]. The DMR is %2$s. Last resolved EObject is %3$s.", //$NON-NLS-1$
 					eReference, domainModelReference, currentObject));
 			}
+			if (currentObject.eClass().getFeatureID(eReference) == -1) {
+				throw new DatabindingFailedException(String.format(
+					"Given EClass has no such feature. The DMR is %1$s. Last resolved EObject is %2$s. Reference being resolved is %3$s.", //$NON-NLS-1$
+					domainModelReference, currentObject, eReference));
+			}
 			final EObject nextObject = (EObject) currentObject.eGet(eReference);
 			if (nextObject == null) {
 				throw new DatabindingFailedException(String.format(

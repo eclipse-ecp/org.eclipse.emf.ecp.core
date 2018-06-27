@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
@@ -188,7 +189,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		if (rendererGridDescription == null) {
 			// create special grid for compact mode
 			if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
-				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createCompactGrid(false, true, this);
 			} else {
 				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 			}
@@ -261,6 +262,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		if (attribute.getUpperBound() != -1 && list.size() >= attribute.getUpperBound()) {
 			addButton.setEnabled(false);
 		}
+		addButton.setToolTipText(Messages.MultiAttributeSWTRenderer_AddButtonTooltip);
 		return addButton;
 	}
 
@@ -276,13 +278,16 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			// Default
 			return renderMultiAttributeControl(cell, parent);
 		}
-		// Compact
+		// Compact: render validation icon
 		if (cell.getColumn() == 0 && rendererGridDescription.getColumns() > 1) {
 			validationIcon = createValidationIcon(parent);
 			GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationIcon);
 			return validationIcon;
 		}
+		// Compact: render list and buttons next to each other
 		final Composite composite = new Composite(parent, SWT.NONE);
+		composite.setBackground(parent.getBackground());
+
 		try {
 			final IObservableList list = getEMFFormsDatabinding().getObservableList(
 				getVElement().getDomainModelReference(),
@@ -473,7 +478,14 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		downButton.setEnabled(false);
 	}
 
-	private void createUpDownButtons(Composite composite, IObservableList list) {
+	/**
+	 * Create the up and down buttons.
+	 *
+	 * @param composite The {@link Composite} to create the buttons on
+	 * @param list The {@link IObservableList} of the current {@link MultiAttributeSWTRenderer}
+	 * @since 1.17
+	 */
+	protected void createUpDownButtons(Composite composite, IObservableList list) {
 		final Image up = getImage(ICONS_ARROW_UP_PNG);
 		final Image down = getImage(ICONS_ARROW_DOWN_PNG);
 
@@ -712,6 +724,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex + 1));
 				tableViewer.refresh();
+				tableViewer.getTable().setSelection(currentIndex + 1);
 				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
 				if (selected != null) {
 					tableViewer.reveal(selected);
@@ -752,6 +765,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex - 1));
 				tableViewer.refresh();
+				tableViewer.getTable().setSelection(currentIndex - 1);
 				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
 				if (selected != null) {
 					tableViewer.reveal(selected);
@@ -790,6 +804,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			if (!selection.isEmpty()) {
 				editingDomain.getCommandStack().execute(RemoveCommand.create(editingDomain, eObject, attribute,
 					selection.toList()));
+				postRemove(selection);
 			}
 		}
 	}
@@ -821,10 +836,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 
 				final Object defaultValue = getValueForNewRow(attribute);
+				if (defaultValue == null) {
+					return;
+				}
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
 				editingDomain.getCommandStack()
 					.execute(AddCommand.create(editingDomain, eObject, attribute, defaultValue));
-				tableViewer.refresh();
 			} catch (final IllegalStateException ex) {
 				/* logged by getValueForNewRow* already */
 			}
@@ -910,9 +927,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final TableViewerRow viewerRow = (TableViewerRow) cell.getViewerRow();
 			final TableItem item = (TableItem) viewerRow.getItem();
 			final int index = item.getParent().indexOf(item);
+			final EAttribute fakeAttribute = EcoreUtil.copy(EAttribute.class.cast(valueProperty.getElementType()));
+			fakeAttribute.setUpperBound(1);
+			fakeAttribute.setLowerBound(0);
 			final IObservableValue model = new org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue(
 				valueProperty, index,
-				EAttribute.class.cast(valueProperty.getElementType()).getEAttributeType().getInstanceClass());
+				fakeAttribute);
 
 			final Binding binding = createBinding(target, model);
 
@@ -1035,6 +1055,16 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		upButtonSelectionAdapter.setObservableList(list);
 		downButtonSelectionAdapter.setObservableList(list);
 		observableSupport.setObservableList(list);
+	}
+
+	/**
+	 * This is called after the selected elements were deleted so that the user can handle this removal.
+	 *
+	 * @param selection The {@link IStructuredSelection} of the TableViewer before deletion.
+	 * @since 1.17
+	 */
+	protected void postRemove(IStructuredSelection selection) {
+		// do nothing
 	}
 
 	/**

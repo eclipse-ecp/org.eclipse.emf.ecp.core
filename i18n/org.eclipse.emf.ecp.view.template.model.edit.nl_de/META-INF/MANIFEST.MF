@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-Name: org.eclipse.emf.ecp.view.template.model.edit German NLS Support
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.model.edit.nl_de ;singleton:=true
+Bundle-Version: 1.17.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Fragment-Host: org.eclipse.emf.ecp.view.template.model.edit;bundle-version="[1.17.0,1.18.0)"
+Bundle-ManifestVersion: 2

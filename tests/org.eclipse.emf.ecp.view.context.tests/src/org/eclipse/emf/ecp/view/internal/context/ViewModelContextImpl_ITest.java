@@ -30,6 +30,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -898,5 +899,53 @@ public class ViewModelContextImpl_ITest {
 
 		assertSame(childContext1, childContextToRemove1);
 		assertSame(childContext2, childContextToRemove2);
+	}
+
+	/**
+	 * Test that service-override providers are invoked again on re-initialization of the
+	 * context following domain-model change.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public void testChangeDomainModelWithServiceProvider() {
+		final EObject model = EcoreFactory.eINSTANCE.createEObject();
+		final VElement view = VViewFactory.eINSTANCE.createView();
+
+		final ViewModelService canary = mock(MyService.class);
+		final ViewModelServiceProvider provider = mock(ViewModelServiceProvider.class);
+		when(provider.getViewModelServices(any(VElement.class), any(EObject.class)))
+			.then(new Answer<Collection<ViewModelService>>() {
+				@Override
+				public Collection<ViewModelService> answer(InvocationOnMock invocation) throws Throwable {
+					return Collections.singleton(canary);
+				}
+			});
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			view, model, provider);
+
+		try {
+			assertThat("Service not provided", context.hasService(MyService.class), is(true));
+			verify(provider).getViewModelServices(view, model);
+
+			// Now, change the domain model
+			final EObject newModel = EcoreFactory.eINSTANCE.createEObject();
+			context.changeDomainModel(newModel);
+
+			assertThat("Service not restored", context.hasService(MyService.class), is(true));
+			verify(provider).getViewModelServices(view, newModel);
+		} finally {
+			context.dispose();
+		}
+	}
+
+	//
+	// Nested types
+	//
+
+	/**
+	 * Dummy view-model service interface for testing.
+	 */
+	public interface MyService extends ViewModelService {
+		// Empty (just for testing via mocks)
 	}
 }

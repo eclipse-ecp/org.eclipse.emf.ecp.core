@@ -425,13 +425,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
+	 * 
+	 * @since 1.16
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
-	public EAttribute getView_EcorePath() {
+	public EAttribute getView_EcorePaths() {
 		return (EAttribute) viewEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -553,10 +554,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -566,10 +566,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -821,7 +820,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		viewEClass = createEClass(VIEW);
 		createEReference(viewEClass, VIEW__ROOT_ECLASS);
 		createEReference(viewEClass, VIEW__CHILDREN);
-		createEAttribute(viewEClass, VIEW__ECORE_PATH);
+		createEAttribute(viewEClass, VIEW__ECORE_PATHS);
 		createEReference(viewEClass, VIEW__LOADING_PROPERTIES);
 
 		containedElementEClass = createEClass(CONTAINED_ELEMENT);
@@ -953,7 +952,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEReference(getView_Children(), getContainedElement(), null, "children", null, 0, -1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getView_EcorePath(), ecorePackage.getEString(), "ecorePath", null, 1, 1, VView.class, //$NON-NLS-1$
+		initEAttribute(getView_EcorePaths(), ecorePackage.getEString(), "ecorePaths", null, 0, -1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getView_LoadingProperties(), getViewModelProperties(), null, "loadingProperties", null, 1, //$NON-NLS-1$
 			1, VView.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,

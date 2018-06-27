@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.group.model="http://org/eclipse/emf/ecp/view/group/model" xmlns:org.eclipse.emf.ecp.view.horizontal.model="http://org/eclipse/emf/ecp/view/horizontal/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmlns:org.eclipse.emf.ecp.view.vertical.model="http://org/eclipse/emf/ecp/view/vertical/model" xmi:id="_4iBP4EDKEeifDej7n0aGUQ" name="ControlUnit">
+  <rootEClass href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_-_7ugEDKEeifDej7n0aGUQ" name="Processor">
+    <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_BTCZkEDLEeifDej7n0aGUQ">
+      <children xsi:type="org.eclipse.emf.ecp.view.vertical.model:VerticalLayout" xmi:id="_O-wisEDLEeifDej7n0aGUQ">
+        <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DW8yEEDLEeifDej7n0aGUQ" name="Control vendor">
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_DW8yEUDLEeifDej7n0aGUQ">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Processor/vendor"/>
+            <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/processor"/>
+          </domainModelReference>
+        </children>
+        <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DXBqkEDLEeifDej7n0aGUQ" name="Control clockSpeed">
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_DXBqkUDLEeifDej7n0aGUQ">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Processor/clockSpeed"/>
+            <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/processor"/>
+          </domainModelReference>
+        </children>
+        <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DXEG0EDLEeifDej7n0aGUQ" name="Control numberOfCores">
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_DXEG0UDLEeifDej7n0aGUQ">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Processor/numberOfCores"/>
+            <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/processor"/>
+          </domainModelReference>
+        </children>
+      </children>
+      <children xsi:type="org.eclipse.emf.ecp.view.vertical.model:VerticalLayout" xmi:id="_AlXbQEDLEeifDej7n0aGUQ">
+        <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DXHxMEDLEeifDej7n0aGUQ" name="Control socketconnectorType">
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_DXHxMUDLEeifDej7n0aGUQ">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Processor/socketconnectorType"/>
+            <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/processor"/>
+          </domainModelReference>
+        </children>
+        <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DXOe4EDLEeifDej7n0aGUQ" name="Control manufactoringProcess">
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_DXOe4UDLEeifDej7n0aGUQ">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Processor/manufactoringProcess"/>
+            <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/processor"/>
+          </domainModelReference>
+        </children>
+        <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DXMCoEDLEeifDej7n0aGUQ" name="Control thermalDesignPower">
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_DXMCoUDLEeifDej7n0aGUQ">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Processor/thermalDesignPower"/>
+            <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/processor"/>
+          </domainModelReference>
+        </children>
+      </children>
+    </children>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_qiwOYEfKEeiITNwhimMT5w" name="Display">
+    <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_0s6VQEfKEeiITNwhimMT5w">
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_rvl08EfKEeiITNwhimMT5w" name="Control width">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_wQoXMEfKEeiITNwhimMT5w">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Display/width"/>
+          <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/display"/>
+        </domainModelReference>
+      </children>
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_wqhd4EfKEeiITNwhimMT5w" name="Control height">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_yTUAoEfKEeiITNwhimMT5w">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Display/height"/>
+          <domainModelEReferencePath href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/display"/>
+        </domainModelReference>
+      </children>
+    </children>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_9cWmcEDLEeifDej7n0aGUQ">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_BM7VEEDMEeifDej7n0aGUQ">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_BuvosEDMEeifDej7n0aGUQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//RAM/clockSpeed"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_BuvosUDMEeifDej7n0aGUQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//RAM/size"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_BuvoskDMEeifDej7n0aGUQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//RAM/type"/>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_BM7VEUDMEeifDej7n0aGUQ">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/ram"/>
+      </domainModelReference>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_2oWbsEDOEeifDej7n0aGUQ">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_2oWbsUDOEeifDej7n0aGUQ">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_2oWbskDOEeifDej7n0aGUQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Activity/name"/>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_2oWbs0DOEeifDej7n0aGUQ">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Component/activities"/>
+      </domainModelReference>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_U2WxwEDXEeifDej7n0aGUQ" name="User Description">
+    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_U2XY0EDXEeifDej7n0aGUQ" name="Control userDescription" labelAlignment="None">
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_U2XY0UDXEeifDej7n0aGUQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//ControlUnit/userDescription"/>
+      </domainModelReference>
+    </children>
+  </children>
+  <ecorePaths>/org.eclipse.emfforms.coffee.model/model/Coffee.ecore</ecorePaths>
+</org.eclipse.emf.ecp.view.model:View>

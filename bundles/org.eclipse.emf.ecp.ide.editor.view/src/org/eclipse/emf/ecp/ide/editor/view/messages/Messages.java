@@ -37,6 +37,7 @@ public class Messages extends NLS {
 	public static String ViewEditorPart_No;
 	public static String ViewEditorPart_ViewCannotBeDisplayed;
 	public static String ViewEditorPart_Warning;
+	public static String ViewEditorPart_WorkspaceMigrationError;
 	public static String ViewEditorPart_Yes;
 	public static String MigrationDialog_Title;
 	public static String MigrationDialog_Description;

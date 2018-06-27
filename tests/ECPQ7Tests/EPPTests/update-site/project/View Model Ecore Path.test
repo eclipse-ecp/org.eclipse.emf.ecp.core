@@ -1,0 +1,103 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihvnUC3mEeSwhO5Nwx0hPg,_ih4KMC3mEeSwhO5Nwx0hPg,_s1O00DnIEeiT54i24ck9dw
+Element-Name: View Model Ecore Path
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _U576UDm9EeiT54i24ck9dw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 5/23/18 6:44 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "ecorePathsModel/view/Root.view" 
+    | select "ecorePathsModel/view/Root.view" | get-menu -path "Open With/View Model Editor" | click
+get-editor "Root.view" | get-tree | select "Root/TableControl"
+
+get-editor "Root.view" | get-button Add | click
+with [get-window "New Reference Element"] {
+    get-tree | select "model/FeaturePathDomainModelReference"
+    get-button "Next >" | click
+    get-button "Link Domain Model EFeature" | click
+    get-window "Select a EStructuralFeature" | get-tree | select "name : EString"
+}
+get-window "New Reference Element" | get-window "Select a EStructuralFeature" | get-tree | get-property itemCount 
+    | equals 1 | verify-true
+with [get-window "New Reference Element"] {
+    get-window "Select a EStructuralFeature" | get-button OK | click
+    get-button Finish | click
+}
+
+with [get-editor "Root.view"] {
+    get-tree | select Root
+    get-button -after [get-label Root] | click
+}
+
+get-window "Select Ecore" | get-tree | select ecorePathsModel
+get-window "Select Ecore" | get-label "Please select an Ecore file." | get-property caption 
+    | equals "Please select an Ecore file." | verify-true
+get-window "Select Ecore" | get-tree | select "ecorePathsModel/model/Sub1.ecore"
+get-window "Select Ecore" | get-label "" | get-property caption | equals "" | verify-true
+get-window "Select Ecore" | get-button OK | click
+with [get-editor "Root.view"] {
+    get-tree | select Root
+    get-button -after [get-label Root] | click
+}
+get-window "Select Ecore" | get-tree | select "ecorePathsModel/model/Sub2.ecore" | double-click
+
+get-editor "Root.view" | get-tree | select "Root/TableControl" | get-menu -path "Generate Columns for Subclass" | click
+get-window "Select EClass" | get-control Any -index 1 
+    | get-property "getChildren().Control[2].getChildren().Control[0].getItemCount()" | equals 3 | verify-true
+with [get-window "Select EClass"] {
+    get-table | select "SubChild1 -> Child"
+    get-button OK | click
+}
+with [get-editor "Root.view" | get-table] {
+    get-property itemCount | equals 2 | verify-true
+    get-property "getItems().TableItem[0].getText()" | equals name | verify-true
+    get-property "getItems().TableItem[1].getText()" | equals foo | verify-true
+}
+
+with [get-editor "Root.view"] {
+    get-table | select foo
+    get-button Remove | click
+    get-tree | select Root
+    with [get-table] {
+        select "\\/ecorePathsModel\\/model\\/Sub1.ecore" | activate-cell-edit -type MouseClickSelection
+        apply-cell-edit -deactivate
+    }
+    get-button -after [get-label Root] -index 1 | click
+    get-tree | select "Root/TableControl" | get-menu -path "Generate Columns for Subclass" | click
+}
+get-window "Select EClass" | get-control Any -index 1 
+    | get-property "getChildren().Control[2].getChildren().Control[0].getItems().length" | equals 2 | verify-true
+with [get-window "Select EClass"] {
+    get-table | select "SubChild2 -> Child"
+    get-button OK | click
+}
+with [get-editor "Root.view" | get-table] {
+    get-property itemCount | equals 2 | verify-true
+    get-property "getItems().TableItem[0].getText()" | equals name | verify-true
+    get-property "getItems().TableItem[1].getText()" | equals bar | verify-true
+}
+with [get-editor "Root.view"] {
+    get-table | select bar
+    get-button Remove | click
+    get-tree | select Root
+    with [get-table] {
+        select "\\/ecorePathsModel\\/model\\/Sub2.ecore" | activate-cell-edit -type MouseClickSelection
+        apply-cell-edit -deactivate
+    }
+    get-button -after [get-label Root] -index 1 | click
+    get-tree | select "Root/TableControl" | get-menu -path "Generate Columns for Subclass" | click
+}
+get-window "Select EClass" | get-control Any -index 1 
+    | get-property "getChildren().Control[2].getChildren().Control[0].getItems().length" | equals 1 | verify-true
+get-window "Select EClass" | get-button Cancel | click
+
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

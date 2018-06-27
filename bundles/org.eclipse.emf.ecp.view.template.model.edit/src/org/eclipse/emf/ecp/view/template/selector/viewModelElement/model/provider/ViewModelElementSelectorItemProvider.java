@@ -67,8 +67,7 @@ public class ViewModelElementSelectorItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addSelectSubclassesPropertyDescriptor(object);
@@ -88,13 +87,11 @@ public class ViewModelElementSelectorItemProvider
 	 */
 	protected void addClassTypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ViewModelElementSelector_classType_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_classType_feature", "_UI_ViewModelElementSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_classType_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ViewModelElementSelector_type"), //$NON-NLS-1$
 				VTViewModelElementPackage.Literals.VIEW_MODEL_ELEMENT_SELECTOR__CLASS_TYPE,
 				true,
 				false,
@@ -111,16 +108,13 @@ public class ViewModelElementSelectorItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addAttributePropertyDescriptor(Object object)
-	{
+	protected void addAttributePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ViewModelElementSelector_attribute_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_attribute_feature", "_UI_ViewModelElementSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_attribute_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ViewModelElementSelector_type"), //$NON-NLS-1$
 				VTViewModelElementPackage.Literals.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE,
 				true,
 				false,
@@ -137,16 +131,13 @@ public class ViewModelElementSelectorItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addAttributeValuePropertyDescriptor(Object object)
-	{
+	protected void addAttributeValuePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ViewModelElementSelector_attributeValue_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_attributeValue_feature", "_UI_ViewModelElementSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_attributeValue_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ViewModelElementSelector_type"), //$NON-NLS-1$
 				VTViewModelElementPackage.Literals.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE_VALUE,
 				true,
 				false,
@@ -165,13 +156,11 @@ public class ViewModelElementSelectorItemProvider
 	 */
 	protected void addSelectSubclassesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ViewModelElementSelector_selectSubclasses_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_selectSubclasses_feature", "_UI_ViewModelElementSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_ViewModelElementSelector_selectSubclasses_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ViewModelElementSelector_type"), //$NON-NLS-1$
 				VTViewModelElementPackage.Literals.VIEW_MODEL_ELEMENT_SELECTOR__SELECT_SUBCLASSES,
 				true,
 				false,
@@ -218,8 +207,7 @@ public class ViewModelElementSelectorItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTViewModelElementSelector.class))
-		{
+		switch (notification.getFeatureID(VTViewModelElementSelector.class)) {
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__SELECT_SUBCLASSES:
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__CLASS_TYPE:
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE_VALUE:

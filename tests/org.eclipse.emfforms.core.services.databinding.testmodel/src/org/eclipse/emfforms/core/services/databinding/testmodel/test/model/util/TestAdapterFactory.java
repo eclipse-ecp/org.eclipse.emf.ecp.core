@@ -22,6 +22,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.DExtended;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
 /**
@@ -29,7 +30,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage
  * @generated
  */
@@ -38,7 +39,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static TestPackage modelPackage;
@@ -47,7 +48,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TestAdapterFactory() {
@@ -62,7 +63,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -81,7 +82,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected TestSwitch<Adapter> modelSwitch = new TestSwitch<Adapter>() {
@@ -116,6 +117,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseDExtended(DExtended object) {
+			return createDExtendedAdapter();
+		}
+
+		@Override
 		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
@@ -125,7 +131,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
@@ -136,13 +142,13 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A <em>A</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A <em>A</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A
 	 * @generated
@@ -152,13 +158,13 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B <em>B</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B <em>B</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B
 	 * @generated
@@ -168,13 +174,13 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C <em>C</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C <em>C</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C
 	 * @generated
@@ -184,13 +190,13 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D <em>D</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D <em>D</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D
 	 * @generated
@@ -205,7 +211,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see java.util.Map.Entry
 	 * @generated
@@ -220,7 +226,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @see java.util.Map.Entry
 	 * @generated
@@ -230,11 +236,27 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.DExtended <em>DExtended</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.DExtended
+	 * @generated
+	 */
+	public Adapter createDExtendedAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for the default case.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the new adapter.
 	 * @generated
 	 */

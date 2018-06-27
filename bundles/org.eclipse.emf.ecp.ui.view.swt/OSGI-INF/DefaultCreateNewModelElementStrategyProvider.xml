@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" name="DefaultCreateNewModelElementStrategyProvider">
+   <property name="service.ranking" type="Integer" value="1"/>
+   <service>
+      <provide interface="org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy$Provider"/>
+      <provide interface="org.eclipse.emf.ecp.ui.view.swt.reference.DefaultCreateNewModelElementStrategyProvider"/>
+   </service>
+   <reference bind="addEClassSelectionStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy$Provider" name="EClassSelectionStrategyProvider" policy="dynamic" unbind="removeEClassSelectionStrategyProvider"/>
+   <reference bind="setReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService"/>
+   <implementation class="org.eclipse.emf.ecp.ui.view.swt.reference.DefaultCreateNewModelElementStrategyProvider"/>
+</scr:component>

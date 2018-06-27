@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.16.0-SNAPSHOT</version>
+		<version>1.17.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-examples-parent</artifactId>
-	<version>1.16.0-SNAPSHOT</version>
+	<version>1.17.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -27,7 +27,12 @@
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.e3</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.e4</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap</module>
-		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee</module>		
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee</module>
+		<!--  coffee example -->
+		<module>../../examples/org.eclipse.emfforms.coffee.feature</module>
+		<module>../../examples/org.eclipse.emfforms.coffee.model</module>
+		<module>../../examples/org.eclipse.emfforms.coffee.model.edit</module>		
+		<module>../../examples/org.eclipse.emfforms.coffee.model.viewmodel</module>
 	</modules>
 
 	<build>

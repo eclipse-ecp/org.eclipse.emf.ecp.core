@@ -53,7 +53,6 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 	private DefaultRealm realm;
 
 	@Before
-	@SuppressWarnings("unchecked")
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
@@ -74,7 +73,6 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.NONE);
@@ -88,7 +86,6 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.LEFT);
@@ -164,7 +161,6 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings("unchecked")
 	private Button setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(getDatabindingService());
@@ -193,7 +189,6 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void testEffectivelyReadOnlyDeactivatesControl()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, true, Boolean.class);
