@@ -47,8 +47,6 @@ import org.eclipse.emfforms.bazaar.Vendor;
  * @author jonas
  *
  */
-// Suppress due to https://bugs.eclipse.org/bugs/show_bug.cgi?id=530023
-@SuppressWarnings("restriction")
 public class BazaarImpl<T> implements Bazaar<T> {
 
 	private final Set<Vendor<? extends T>> vendors = new LinkedHashSet<Vendor<? extends T>>();
