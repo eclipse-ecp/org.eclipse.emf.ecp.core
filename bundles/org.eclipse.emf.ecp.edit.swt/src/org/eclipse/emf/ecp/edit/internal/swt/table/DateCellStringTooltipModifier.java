@@ -20,8 +20,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /** String modifier for date cell tooltips. */
 public class DateCellStringTooltipModifier implements ECPStringModifier {
@@ -30,7 +33,12 @@ public class DateCellStringTooltipModifier implements ECPStringModifier {
 
 	/** Default constructor. */
 	public DateCellStringTooltipModifier() {
-		final Locale locale = Activator.getDefault().getLocaleProvider().getLocale();
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsLocaleProvider> serviceReference = bundleContext
+			.getServiceReference(EMFFormsLocaleProvider.class);
+		final EMFFormsLocaleProvider localeProvider = bundleContext.getService(serviceReference);
+		final Locale locale = localeProvider.getLocale();
+		bundleContext.ungetService(serviceReference);
 		dateInstance = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 	}
 

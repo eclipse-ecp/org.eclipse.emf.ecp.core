@@ -21,10 +21,6 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
-import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -58,14 +54,17 @@ public class Activator extends Plugin {
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		super.stop(context);
-		plugin = null;
 		for (final ImageDescriptorToImage descriptorToImage : imageRegistry.values()) {
 			descriptorToImage.getImage().dispose();
 		}
 		for (final ImageDescriptorToImage descriptorToImage : imageRegistryByAction.values()) {
 			descriptorToImage.getImage().dispose();
 		}
+		if (viewTemplateReference != null) {
+			context.ungetService(viewTemplateReference);
+		}
+		super.stop(context);
+		plugin = null;
 	}
 
 	// END SUPRESS CATCH EXCEPTION
@@ -211,7 +210,7 @@ public class Activator extends Plugin {
 		controlFactoryReference = null;
 	}
 
-	private VTViewTemplateProvider viewTemplate;
+	private ServiceReference<VTViewTemplateProvider> viewTemplateReference;
 
 	/**
 	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
@@ -219,77 +218,14 @@ public class Activator extends Plugin {
 	 * @return the {@link ECPControlFactory}
 	 */
 	public VTViewTemplateProvider getVTViewTemplateProvider() {
-		if (viewTemplate == null) {
-			final ServiceReference<VTViewTemplateProvider> viewTemplateReference = plugin.getBundle()
-				.getBundleContext()
+		if (viewTemplateReference == null) {
+			viewTemplateReference = plugin.getBundle().getBundleContext()
 				.getServiceReference(VTViewTemplateProvider.class);
-			if (viewTemplateReference != null) {
-				viewTemplate = plugin.getBundle().getBundleContext().getService(viewTemplateReference);
-			}
 		}
-		return viewTemplate;
+		if (viewTemplateReference != null) {
+			return plugin.getBundle().getBundleContext().getService(viewTemplateReference);
+		}
+		return null;
 	}
 
-	/**
-	 * Returns the {@link EMFFormsEditSupport} service.
-	 *
-	 * @return The {@link EMFFormsEditSupport}
-	 */
-	public EMFFormsEditSupport getEMFFormsEditSupport() {
-		final ServiceReference<EMFFormsEditSupport> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsEditSupport.class);
-
-		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
-
-	/**
-	 * Returns the {@link EMFFormsLabelProvider} service.
-	 *
-	 * @return The {@link EMFFormsLabelProvider}
-	 */
-	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
-		final ServiceReference<EMFFormsLabelProvider> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsLabelProvider.class);
-
-		final EMFFormsLabelProvider service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
-
-	/**
-	 * Returns the {@link ReportService}.
-	 *
-	 * @return The {@link ReportService}
-	 */
-	public ReportService getReportService() {
-		final ServiceReference<ReportService> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(ReportService.class);
-
-		final ReportService service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
-
-	/**
-	 * Returns the {@link EMFFormsLocaleProvider}.
-	 *
-	 * @return The {@link EMFFormsLocaleProvider}
-	 */
-	public EMFFormsLocaleProvider getLocaleProvider() {
-		final ServiceReference<EMFFormsLocaleProvider> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsLocaleProvider.class);
-		final EMFFormsLocaleProvider service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
 }

@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms Key Attribute DMR Tooling
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.keyattributedmr.tooling;singleton:=true
 Bundle-Version: 1.17.0.qualifier
-Bundle-Activator: org.eclipse.emf.ecp.view.keyattributedmr.tooling.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.keyattributedmr.tooling;version="1.17.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.ui.view.editor.controls;bundle-version="[1.17.0,1.18.0]",

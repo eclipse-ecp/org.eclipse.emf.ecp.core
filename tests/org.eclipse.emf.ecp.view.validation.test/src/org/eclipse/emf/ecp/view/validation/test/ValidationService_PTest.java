@@ -54,6 +54,7 @@ import org.osgi.framework.ServiceReference;
  * @author Stefan Dirix
  *
  */
+@SuppressWarnings("restriction")
 public class ValidationService_PTest {
 
 	private DefaultRealm defaultRealm;
@@ -66,12 +67,22 @@ public class ValidationService_PTest {
 
 	private CrossReferenceContainer otherContainer;
 
+	private BundleContext bundleContext;
+
+	private ServiceReference<ReportService> reportServiceReference;
+
+	private ReportService reportService;
+
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 		defaultRealm = new DefaultRealm();
+
+		bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+		reportServiceReference = bundleContext.getServiceReference(ReportService.class);
+		reportService = bundleContext.getService(reportServiceReference);
 	}
 
 	/**
@@ -80,6 +91,7 @@ public class ValidationService_PTest {
 	@After
 	public void tearDown() throws Exception {
 		defaultRealm.dispose();
+		bundleContext.ungetService(reportServiceReference);
 	}
 
 	private void setupContent() {
@@ -204,7 +216,6 @@ public class ValidationService_PTest {
 	public void testValidationTimeoutReport2000() {
 		setupContent();
 		container.getContents().add(content);
-		final ReportService reportService = getReportService();
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
@@ -235,7 +246,6 @@ public class ValidationService_PTest {
 	public void testValidationTimeoutReport1000() {
 		setupContent();
 		container.getContents().add(content);
-		final ReportService reportService = getReportService();
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
@@ -268,7 +278,6 @@ public class ValidationService_PTest {
 	public void testValidationTimeoutReportNoDelay() {
 		setupContent();
 		container.getContents().add(content);
-		final ReportService reportService = getReportService();
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
@@ -324,7 +333,6 @@ public class ValidationService_PTest {
 		/* cutting of should not produce NPEs as this is legit */
 	}
 
-	@SuppressWarnings("restriction")
 	@Test
 	public void testBug529403controlAdded() {
 		/* setup domain */
@@ -370,14 +378,6 @@ public class ValidationService_PTest {
 		view.getChildren().add(vControl);
 
 		/* assert no NPE */
-	}
-
-	private ReportService getReportService() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
-		final ReportService service = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return service;
 	}
 
 }

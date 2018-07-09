@@ -297,7 +297,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			try {
 				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
 			} catch (final EMFFormsExpandingFailedException ex) {
-				Activator.getInstance().getReportService().report(new AbstractReport(ex));
+				getServiceWithoutLog(ReportService.class).report(new AbstractReport(ex));
 			}
 		}
 	}
@@ -337,13 +337,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		if (bundle != null) {
 			final BundleContext bundleContext = bundle.getBundleContext();
-			final ServiceReference<EMFFormsLegacyServicesManager> serviceReferenceLegacy = bundleContext
+			serviceReferenceLegacy = bundleContext
 				.getServiceReference(EMFFormsLegacyServicesManager.class);
 			if (serviceReferenceLegacy != null) {
 				final EMFFormsLegacyServicesManager legacyServicesFactory = bundleContext
 					.getService(serviceReferenceLegacy);
 				legacyServicesFactory.instantiate();
-				bundleContext.ungetService(serviceReferenceLegacy);
 			}
 
 			servicesManager = getService(EMFFormsViewServiceManager.class);
@@ -483,6 +482,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		isDisposing = false;
 		isDisposed = true;
+		if (serviceReferenceLegacy != null) {
+			bundleContext.ungetService(serviceReferenceLegacy);
+		}
 
 	}
 
@@ -639,12 +641,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	private void report(AbstractReport report) {
-		final Activator activator = Activator.getInstance();
-		if (activator != null) {
-			final ReportService reportService = activator.getReportService();
-			if (reportService != null) {
-				reportService.report(report);
-			}
+		final ReportService reportService = getServiceWithoutLog(ReportService.class);
+		if (reportService != null) {
+			reportService.report(report);
 		}
 	}
 
@@ -758,6 +757,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private final Set<Object> users = new LinkedHashSet<Object>();
 
 	private EMFFormsViewServiceManager servicesManager;
+	private ServiceReference<EMFFormsLegacyServicesManager> serviceReferenceLegacy;
 
 	/**
 	 * Inner method for registering context users (not {@link ViewModelService}).

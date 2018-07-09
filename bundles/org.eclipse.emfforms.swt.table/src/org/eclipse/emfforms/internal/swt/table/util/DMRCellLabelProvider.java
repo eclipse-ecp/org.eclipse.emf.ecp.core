@@ -14,6 +14,7 @@ package org.eclipse.emfforms.internal.swt.table.util;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.common.ServiceObjectTracker;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -21,7 +22,6 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * A {@link CellLabelProvider} which points to a value specified by a {@link VDomainModelReference}.
@@ -34,6 +34,7 @@ public class DMRCellLabelProvider extends CellLabelProvider {
 	private final VDomainModelReference dmr;
 	private final EMFFormsDatabinding databindingService;
 
+	private ServiceObjectTracker<EMFFormsDatabinding> databindingTracker;
 	// TODO observable list needed?
 
 	/**
@@ -43,7 +44,7 @@ public class DMRCellLabelProvider extends CellLabelProvider {
 	 */
 	public DMRCellLabelProvider(
 		VDomainModelReference dmr) {
-		this(dmr, getService(EMFFormsDatabinding.class));
+		this(dmr, null);
 	}
 
 	/**
@@ -58,7 +59,11 @@ public class DMRCellLabelProvider extends CellLabelProvider {
 		EMFFormsDatabinding databindingService) {
 		super();
 		this.dmr = dmr;
-		this.databindingService = databindingService;
+		if (databindingService == null) {
+			this.databindingService = getService();
+		} else {
+			this.databindingService = databindingService;
+		}
 	}
 
 	@Override
@@ -95,12 +100,18 @@ public class DMRCellLabelProvider extends CellLabelProvider {
 		}
 	}
 
-	private static <T> T getService(Class<T> clazz) {
+	private EMFFormsDatabinding getService() {
 		final Bundle bundle = FrameworkUtil.getBundle(DMRCellLabelProvider.class);
 		final BundleContext bundleContext = bundle.getBundleContext();
-		final ServiceReference<T> serviceReference = bundleContext.getServiceReference(clazz);
-		final T service = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return service;
+		databindingTracker = new ServiceObjectTracker<EMFFormsDatabinding>(bundleContext, EMFFormsDatabinding.class);
+
+		return databindingTracker.getService();
 	}
+
+	@Override
+	public void dispose() {
+		databindingTracker.dispose();
+		super.dispose();
+	}
+
 }

@@ -84,7 +84,7 @@ public class DMRSelectorControlSWTRenderer extends EditableEReferenceLabelContro
 
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = getEMFFormsDatabinding()
 				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			showLinkValueFailedMessageDialog(shell, ex);

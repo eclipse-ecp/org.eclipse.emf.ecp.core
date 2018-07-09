@@ -37,6 +37,12 @@ public class Activator extends Plugin {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
+		if (imageRegistryServiceReference != null) {
+			bundleContext.ungetService(imageRegistryServiceReference);
+		}
+		if (emfformsLabelProviderserviceReference != null) {
+			bundleContext.ungetService(emfformsLabelProviderserviceReference);
+		}
 		instance = null;
 		super.stop(bundleContext);
 	}
@@ -68,6 +74,7 @@ public class Activator extends Plugin {
 	}
 
 	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+	private ServiceReference<EMFFormsLabelProvider> emfformsLabelProviderserviceReference;
 
 	private ImageRegistryService getImageRegistryService() {
 		if (imageRegistryServiceReference == null) {
@@ -83,13 +90,11 @@ public class Activator extends Plugin {
 	 * @return The {@link EMFFormsLabelProvider}
 	 */
 	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
-		final ServiceReference<EMFFormsLabelProvider> serviceReference = instance.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsLabelProvider.class);
+		if (emfformsLabelProviderserviceReference == null) {
+			emfformsLabelProviderserviceReference = getBundle().getBundleContext()
+				.getServiceReference(EMFFormsLabelProvider.class);
+		}
 
-		final EMFFormsLabelProvider service = instance.getBundle().getBundleContext()
-			.getService(serviceReference);
-		instance.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
+		return getBundle().getBundleContext().getService(emfformsLabelProviderserviceReference);
 	}
 }

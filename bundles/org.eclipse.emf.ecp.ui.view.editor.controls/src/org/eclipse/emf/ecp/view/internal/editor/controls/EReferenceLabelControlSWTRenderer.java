@@ -107,7 +107,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						getReportService().report(new DatabindingFailedReport(ex));
 						return null;
 					}
 				}
@@ -127,7 +127,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						getReportService().report(new DatabindingFailedReport(ex));
 						return null;
 					}
 				}
@@ -147,7 +147,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						getReportService().report(new DatabindingFailedReport(ex));
 						return null;
 					}
 				}

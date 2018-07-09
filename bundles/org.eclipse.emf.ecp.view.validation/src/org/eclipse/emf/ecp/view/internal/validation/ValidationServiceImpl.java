@@ -60,15 +60,14 @@ import org.eclipse.emfforms.common.internal.validation.DiagnosticHelper;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
 import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -100,7 +99,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					try {
 						handleControlNotification(notification, control, domainModelReference);
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						reportService.report(new DatabindingFailedReport(ex));
 						return;
 					}
 
@@ -164,10 +163,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					@SuppressWarnings("rawtypes")
 					IObservableValue observableValue;
 					try {
-						observableValue = Activator.getDefault().getEMFFormsDatabinding()
+						observableValue = context.getService(EMFFormsDatabinding.class)
 							.getObservableValue(domainModelReference, context.getDomainModel());
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						reportService.report(new DatabindingFailedReport(ex));
 						return;
 					}
 					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
@@ -322,6 +321,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private final AtomicBoolean validationRunning = new AtomicBoolean(false);
 	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new ConcurrentHashMap<UniqueSetting, VDiagnostic>();
 	private ComposedAdapterFactory adapterFactory;
+	private ReportService reportService;
 
 	/**
 	 * {@inheritDoc}
@@ -331,6 +331,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
+		reportService = context.getService(ReportService.class);
 		mappingProviderManager = context.getService(EMFFormsMappingProviderManager.class);
 		controlMapper = context.getService(EMFFormsSettingToControlMapper.class);
 		final VElement renderable = context.getViewModel();
@@ -662,10 +663,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			analyzeDiagnostic(diagnostic);
 		} finally {
 			if (System.nanoTime() - start > 1000L * 1000L * 1000L) {
-				Activator.getDefault().getReportService()
-					.report(new AbstractReport(MessageFormat.format(
-						"Validation took longer than expected for EObject {0}", eObject, //$NON-NLS-1$
-						IStatus.INFO)));
+				reportService.report(new AbstractReport(MessageFormat.format(
+					"Validation took longer than expected for EObject {0}", eObject, //$NON-NLS-1$
+					IStatus.INFO)));
 			}
 		}
 	}
@@ -679,12 +679,11 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				return;
 			}
 			if (!internalEObject.eClass().getEAllStructuralFeatures().contains(eStructuralFeature)) {
-				Activator.getDefault().getReportService()
-					.report(new AbstractReport(
-						MessageFormat.format(
-							"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
-							diagnostic),
-						IStatus.INFO));
+				reportService.report(new AbstractReport(
+					MessageFormat.format(
+						"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
+						diagnostic),
+					IStatus.INFO));
 				return;
 			}
 			final Setting setting = internalEObject.eSetting(eStructuralFeature);
@@ -850,17 +849,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 *         {@code null} otherwise
 	 */
 	protected ViewSubstitutionLabelProviderFactory getSubstitutionLabelProviderFactory() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ViewSubstitutionLabelProviderFactory> serviceReference = bundleContext
-			.getServiceReference(ViewSubstitutionLabelProviderFactory.class);
-
-		if (serviceReference == null) {
-			return null;
-		}
-
-		final ViewSubstitutionLabelProviderFactory labelProviderFactory = bundleContext
-			.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return labelProviderFactory;
+		return context.getService(ViewSubstitutionLabelProviderFactory.class);
 	}
 }

@@ -18,7 +18,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -40,9 +39,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Renderer for {@link VSectionedArea}.
@@ -99,13 +95,15 @@ public class SectionedAreaSWTRenderer extends
 		SWTGridDescription controlGridDescription = null;
 
 		try {
-			rootRenderer = AbstractSectionSWTRenderer.class.cast(getEMFFormsRendererFactory()
-				.getRendererInstance(child, getViewModelContext()));
+			rootRenderer = AbstractSectionSWTRenderer.class
+				.cast(getViewModelContext().getService(EMFFormsRendererFactory.class)
+					.getRendererInstance(child, getViewModelContext()));
 		} catch (final EMFFormsNoRendererException ex) {
 			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
-		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getEMFFormsRendererFactory()
+		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getViewModelContext()
+			.getService(EMFFormsRendererFactory.class)
 			.getAdditionalRendererInstances(child, getViewModelContext());
 		SWTGridDescription gridDescription = rootRenderer
 			.getGridDescription(GridDescriptionFactory.INSTANCE
@@ -153,7 +151,7 @@ public class SectionedAreaSWTRenderer extends
 				childGridCell.getRenderer().finalizeRendering(columnComposite);
 			}
 		} catch (final NoPropertyDescriptorFoundExeption ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
 		parent.layout(true);
@@ -205,15 +203,6 @@ public class SectionedAreaSWTRenderer extends
 			GridData.class.cast(layoutData).widthHint = 250;
 		}
 		control.setLayoutData(layoutData);
-	}
-
-	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
-			.getServiceReference(EMFFormsRendererFactory.class);
-		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return rendererFactory;
 	}
 
 	/**

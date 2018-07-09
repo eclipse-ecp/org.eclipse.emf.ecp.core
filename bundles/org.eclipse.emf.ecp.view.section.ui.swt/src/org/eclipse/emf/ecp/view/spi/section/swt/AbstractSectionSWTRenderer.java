@@ -19,7 +19,6 @@ import java.util.Set;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -32,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -45,9 +45,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Common super class for all section renderer.
@@ -116,13 +113,11 @@ public abstract class AbstractSectionSWTRenderer extends
 				return columnComposite;
 			}
 			try {
-				Activator
-					.getDefault()
-					.getEMFFormsDatabinding()
+				getViewModelContext().getService(EMFFormsDatabinding.class)
 					.getValueProperty(VControl.class.cast(child).getDomainModelReference(),
 						getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				getReportService().report(new RenderingFailedReport(ex));
 				return columnComposite;
 			}
 		}
@@ -186,7 +181,7 @@ public abstract class AbstractSectionSWTRenderer extends
 				childGridCell.getRenderer().finalizeRendering(columnComposite);
 			}
 		} catch (final NoPropertyDescriptorFoundExeption ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
 
@@ -226,12 +221,7 @@ public abstract class AbstractSectionSWTRenderer extends
 	 * @since 1.6
 	 */
 	protected EMFFormsRendererFactory getEMFFormsRendererFactory() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
-			.getServiceReference(EMFFormsRendererFactory.class);
-		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return rendererFactory;
+		return getViewModelContext().getService(EMFFormsRendererFactory.class);
 	}
 
 	/**

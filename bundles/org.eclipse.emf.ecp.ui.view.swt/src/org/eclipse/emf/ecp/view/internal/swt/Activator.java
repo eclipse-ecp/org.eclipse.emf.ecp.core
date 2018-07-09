@@ -21,7 +21,6 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -41,6 +40,12 @@ public class Activator extends Plugin {
 	private ServiceRegistration<ReportServiceConsumer> registerDebugConsumerService;
 
 	private ServiceRegistration<ReportServiceConsumer> registerInvalidGridConsumerService;
+
+	private ServiceReference<ReportService> reportServiceReference;
+
+	private ServiceReference<EMFFormsEditSupport> editSupportServiceReference;
+
+	private ServiceReference<LayoutProvider> layoutServiceReference;
 
 	/**
 	 * The constructor.
@@ -71,11 +76,20 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		if (editSupportServiceReference != null) {
+			context.ungetService(editSupportServiceReference);
+		}
+		if (reportServiceReference != null) {
+			context.ungetService(reportServiceReference);
+		}
 		if (registerDebugConsumerService != null) {
 			registerDebugConsumerService.unregister();
 		}
 		if (registerInvalidGridConsumerService != null) {
 			registerInvalidGridConsumerService.unregister();
+		}
+		if (layoutServiceReference != null) {
+			context.ungetService(layoutServiceReference);
 		}
 		super.stop(context);
 	}
@@ -108,8 +122,8 @@ public class Activator extends Plugin {
 	 */
 	public ReportService getReportService() {
 		final BundleContext bundleContext = getBundle().getBundleContext();
-		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
-		return bundleContext.getService(serviceReference);
+		reportServiceReference = bundleContext.getServiceReference(ReportService.class);
+		return bundleContext.getService(reportServiceReference);
 	}
 
 	/**
@@ -118,28 +132,10 @@ public class Activator extends Plugin {
 	 * @return The {@link EMFFormsEditSupport}
 	 */
 	public EMFFormsEditSupport getEMFFormsEditSupport() {
-		final ServiceReference<EMFFormsEditSupport> serviceReference = plugin.getBundle().getBundleContext()
+		editSupportServiceReference = plugin.getBundle().getBundleContext()
 			.getServiceReference(EMFFormsEditSupport.class);
 
-		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext().getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-		return service;
-	}
-
-	/**
-	 * Returns the {@link EMFFormsRendererFactory} service.
-	 *
-	 * @return The {@link EMFFormsRendererFactory}
-	 */
-	public EMFFormsRendererFactory getEMFFormsRendererFactory() {
-		final ServiceReference<EMFFormsRendererFactory> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsRendererFactory.class);
-
-		final EMFFormsRendererFactory service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
+		return plugin.getBundle().getBundleContext().getService(editSupportServiceReference);
 	}
 
 	/**
@@ -148,16 +144,10 @@ public class Activator extends Plugin {
 	 * @return The {@link LayoutProvider}
 	 */
 	public LayoutProvider getLayoutProvider() {
-		final ServiceReference<LayoutProvider> serviceReference = plugin.getBundle().getBundleContext()
+		layoutServiceReference = plugin.getBundle().getBundleContext()
 			.getServiceReference(LayoutProvider.class);
-		if (serviceReference == null) {
-			return null;
-		}
-		final LayoutProvider service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
+		return plugin.getBundle().getBundleContext()
+			.getService(layoutServiceReference);
 	}
 
 }

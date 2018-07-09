@@ -80,8 +80,7 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 	 * @throws DatabindingFailedException if the
 	 */
 	private EObject getEObject() throws DatabindingFailedException {
-		IObservableValue observableValue;
-		observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		return (EObject) ((IObserving) observableValue).getObserved();
 	}
@@ -129,7 +128,7 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 				modelReference.getDomainModelEReferencePath().clear();
 				modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new AbstractReport(ex));
+				getReportService().report(new AbstractReport(ex));
 			}
 		}
 
@@ -137,7 +136,7 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 
 	/**
 	 * Allows to retrieve the root eclass necessary to select the {@link VFeaturePathDomainModelReference}.
-	 * 
+	 *
 	 * @param notifier The {@link Notifier} triggering the selection
 	 * @return The {@link EClass} that should be used as root
 	 */

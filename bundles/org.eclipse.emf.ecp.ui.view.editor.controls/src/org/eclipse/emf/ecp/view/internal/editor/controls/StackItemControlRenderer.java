@@ -68,7 +68,7 @@ public class StackItemControlRenderer extends ExpectedValueControlRenderer {
 		try {
 			stackItem = (VStackItem) getObservedEObject();
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			getReportService().report(new DatabindingFailedReport(ex));
 			return;
 		}
 		final VStackLayout eContainer = (VStackLayout) stackItem.eContainer();

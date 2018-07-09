@@ -59,7 +59,7 @@ public class KeyValueControlRenderer extends ExpectedValueControlRenderer {
 		try {
 			condition = (VKeyAttributeDomainModelReference) getObservedEObject();
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			getReportService().report(new DatabindingFailedReport(ex));
 			return;
 		}
 

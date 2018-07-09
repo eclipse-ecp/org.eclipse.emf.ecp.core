@@ -28,7 +28,6 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -51,6 +50,7 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 
 	private ServiceReference<ReportService> reportServiceReference;
+	private ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference;
 
 	/**
 	 * The constructor.
@@ -192,14 +192,20 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
 		for (final ImageDescriptorToImage descriptorToImage : imageRegistry.values()) {
 			descriptorToImage.getImage().dispose();
 		}
 		for (final ImageDescriptorToImage descriptorToImage : imageRegistryByAction.values()) {
 			descriptorToImage.getImage().dispose();
 		}
+		if (emfFormsDatabindingServiceReference != null) {
+			context.ungetService(emfFormsDatabindingServiceReference);
+		}
+		if (reportServiceReference != null) {
+			context.ungetService(reportServiceReference);
+		}
+		plugin = null;
+		super.stop(context);
 	}
 
 	/**
@@ -230,29 +236,10 @@ public class Activator extends AbstractUIPlugin {
 	 * @return The {@link EMFFormsDatabinding}
 	 */
 	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
-
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
-
-	/**
-	 * Returns the {@link EMFFormsLabelProvider} service.
-	 *
-	 * @return The {@link EMFFormsLabelProvider}
-	 */
-	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
-		final ServiceReference<EMFFormsLabelProvider> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsLabelProvider.class);
-
-		final EMFFormsLabelProvider service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
+		if (emfFormsDatabindingServiceReference == null) {
+			emfFormsDatabindingServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(EMFFormsDatabinding.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(emfFormsDatabindingServiceReference);
 	}
 }

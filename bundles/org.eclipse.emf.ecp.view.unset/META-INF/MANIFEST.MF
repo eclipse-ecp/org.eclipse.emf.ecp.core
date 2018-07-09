@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: View Model Unset Service
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.unset;singleton:=true
 Bundle-Version: 1.17.0.qualifier
-Bundle-Activator: org.eclipse.emf.ecp.view.internal.unset.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.internal.unset;version="1.17.0";x-friends:="org.eclipse.emf.ecp.view.unset.test"
 Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.17.0,1.18.0]",

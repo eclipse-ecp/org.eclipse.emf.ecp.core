@@ -146,7 +146,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						getReportService().report(new DatabindingFailedReport(ex));
 						return null;
 					}
 				}
@@ -279,7 +279,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 */
 	@Override
 	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		eObject = (EObject) ((IObserving) observableValue).getObserved();
 		structuralFeature = (EStructuralFeature) observableValue.getValueType();

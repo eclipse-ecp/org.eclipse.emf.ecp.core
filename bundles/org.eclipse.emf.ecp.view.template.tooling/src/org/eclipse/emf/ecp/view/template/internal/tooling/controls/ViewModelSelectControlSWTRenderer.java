@@ -26,7 +26,6 @@ import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemP
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -112,7 +111,7 @@ public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelCo
 
 		final IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = getEMFFormsDatabinding()
 				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			showLinkValueFailedMessageDialog(shell, ex);

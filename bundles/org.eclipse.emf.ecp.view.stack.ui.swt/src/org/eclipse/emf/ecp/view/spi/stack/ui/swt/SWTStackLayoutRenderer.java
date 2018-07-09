@@ -45,9 +45,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * The SWT {@link VStackLayout} renderer.
@@ -117,7 +114,7 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> im
 		for (final VStackItem item : getVElement().getStackItems()) {
 			AbstractSWTRenderer<VElement> renderer;
 			try {
-				renderer = getEMFFormsRendererFactory().getRendererInstance(item,
+				renderer = getViewModelContext().getService(EMFFormsRendererFactory.class).getRendererInstance(item,
 					getViewModelContext());
 			} catch (final EMFFormsNoRendererException ex) {
 				getReportService().report(new StatusReport(
@@ -232,15 +229,6 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> im
 		stackLayout = null;
 		stackComposite = null;
 		super.dispose();
-	}
-
-	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
-			.getServiceReference(EMFFormsRendererFactory.class);
-		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return rendererFactory;
 	}
 
 	/**

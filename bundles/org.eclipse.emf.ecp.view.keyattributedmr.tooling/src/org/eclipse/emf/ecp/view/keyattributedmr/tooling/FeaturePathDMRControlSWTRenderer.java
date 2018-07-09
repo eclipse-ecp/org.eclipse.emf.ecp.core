@@ -54,7 +54,8 @@ public class FeaturePathDMRControlSWTRenderer extends
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 */
-	public FeaturePathDMRControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+	public FeaturePathDMRControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
 		super(vElement, viewContext, reportService);
 		// TODO Auto-generated constructor stub
 	}
@@ -63,7 +64,7 @@ public class FeaturePathDMRControlSWTRenderer extends
 	protected void linkValue(Shell shell) {
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = getEMFFormsDatabinding()
 				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			showLinkValueFailedMessageDialog(shell, ex);

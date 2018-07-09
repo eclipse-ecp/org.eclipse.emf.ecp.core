@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emfforms.common.ServiceObjectTracker;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * This is the Activator for the ECP Core plugin.
@@ -37,6 +37,11 @@ public final class Activator extends Plugin {
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.core"; //$NON-NLS-1$
 
 	private static Activator instance;
+
+	private static ServiceObjectTracker<ECPRepositoryManager> repositorManagerTracker;
+	private static ServiceObjectTracker<ECPProjectManager> projectManagerTracker;
+	private static ServiceObjectTracker<ECPProviderRegistry> providerRegistryTracker;
+	private static ServiceObjectTracker<ECPObserverBus> observerBusTracker;
 
 	/**
 	 * Default constructor.
@@ -53,8 +58,10 @@ public final class Activator extends Plugin {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-
-		instance = null;
+		repositorManagerTracker.dispose();
+		projectManagerTracker.dispose();
+		providerRegistryTracker.dispose();
+		observerBusTracker.dispose();
 		super.stop(bundleContext);
 	}
 
@@ -123,20 +130,11 @@ public final class Activator extends Plugin {
 	 * @return the {@link ECPProjectManager}
 	 */
 	public static synchronized ECPProjectManager getECPProjectManager() {
-		ECPProjectManager ecpProjectManager = null;
-		final ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
-			.getServiceReference(ECPProjectManager.class);
-		if (serviceRef == null) {
-			throw new IllegalStateException(
-				"ECPProjectManager service could not be retrieved. Please check your product configuration!"); //$NON-NLS-1$
+		if (projectManagerTracker == null) {
+			final BundleContext bundleContext = instance.getBundle().getBundleContext();
+			projectManagerTracker = new ServiceObjectTracker<ECPProjectManager>(bundleContext, ECPProjectManager.class);
 		}
-		ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
-		// because we are using a service factory for the RAP implementation we must unget
-		// the service so that the service factory is called again on each call. otherwise
-		// the service factor will keep returning the same cached instance as the reference
-		// count of the service will remain greater than zero
-		instance.getBundle().getBundleContext().ungetService(serviceRef);
-		return ecpProjectManager;
+		return projectManagerTracker.getService();
 	}
 
 	/**
@@ -145,16 +143,12 @@ public final class Activator extends Plugin {
 	 * @return the {@link ECPRepositoryManager}
 	 */
 	public static synchronized ECPRepositoryManager getECPRepositoryManager() {
-		ECPRepositoryManager ecpRepositoryManager = null;
-		final ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
-			.getServiceReference(ECPRepositoryManager.class);
-		ecpRepositoryManager = instance.getBundle().getBundleContext().getService(serviceRef);
-		// because we are using a service factory for the RAP implementation we must unget
-		// the service so that the service factory is called again on each call. otherwise
-		// the service factor will keep returning the same cached instance as the reference
-		// count of the service will remian greater that zero
-		instance.getBundle().getBundleContext().ungetService(serviceRef);
-		return ecpRepositoryManager;
+		if (repositorManagerTracker == null) {
+			final BundleContext bundleContext = instance.getBundle().getBundleContext();
+			repositorManagerTracker = new ServiceObjectTracker<ECPRepositoryManager>(bundleContext,
+				ECPRepositoryManager.class);
+		}
+		return repositorManagerTracker.getService();
 	}
 
 	/**
@@ -163,16 +157,12 @@ public final class Activator extends Plugin {
 	 * @return the {@link ECPProviderRegistry}
 	 */
 	public static synchronized ECPProviderRegistry getECPProviderRegistry() {
-		ECPProviderRegistry ecpProviderRegistry = null;
-		final ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
-			.getServiceReference(ECPProviderRegistry.class);
-		ecpProviderRegistry = instance.getBundle().getBundleContext().getService(serviceRef);
-		// because we are using a service factory for the RAP implementation we must unget
-		// the service so that the service factory is called again on each call. otherwise
-		// the service factor will keep returning the same cached instance as the reference
-		// count of the service will remain greater than zero
-		instance.getBundle().getBundleContext().ungetService(serviceRef);
-		return ecpProviderRegistry;
+		if (providerRegistryTracker == null) {
+			final BundleContext bundleContext = instance.getBundle().getBundleContext();
+			providerRegistryTracker = new ServiceObjectTracker<ECPProviderRegistry>(bundleContext,
+				ECPProviderRegistry.class);
+		}
+		return providerRegistryTracker.getService();
 	}
 
 	/**
@@ -181,16 +171,10 @@ public final class Activator extends Plugin {
 	 * @return the {@link ECPObserverBus}
 	 */
 	public static synchronized ECPObserverBus getECPObserverBus() {
-		ECPObserverBus ecpObserverBus = null;
-		final ServiceReference<ECPObserverBus> serviceRef = instance.getBundle().getBundleContext()
-			.getServiceReference(ECPObserverBus.class);
-		ecpObserverBus = instance.getBundle().getBundleContext().getService(serviceRef);
-		// because we are using a service factory for the RAP implementation we must unget
-		// the service so that the service factory is called again on each call. otherwise
-		// the service factor will keep returning the same cached instance as the reference
-		// count of the service will remain greater than zero
-		instance.getBundle().getBundleContext().ungetService(serviceRef);
-		return ecpObserverBus;
+		if (observerBusTracker == null) {
+			final BundleContext bundleContext = instance.getBundle().getBundleContext();
+			observerBusTracker = new ServiceObjectTracker<ECPObserverBus>(bundleContext, ECPObserverBus.class);
+		}
+		return observerBusTracker.getService();
 	}
-
 }

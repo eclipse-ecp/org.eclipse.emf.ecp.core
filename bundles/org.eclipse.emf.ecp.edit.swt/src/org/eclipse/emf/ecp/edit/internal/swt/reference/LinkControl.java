@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -31,6 +30,9 @@ import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -147,8 +149,10 @@ public class LinkControl extends SingleControl {
 		buttons[1] = createButtonForAction(new AddReferenceAction(getEditingDomain(getFirstSetting()), setting,
 			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
 		buttons[2] = createButtonForAction(new NewReferenceAction(getEditingDomain(getFirstSetting()), setting,
-			Activator.getDefault().getEMFFormsEditSupport(), Activator.getDefault().getEMFFormsLabelProvider(),
-			getService(ReferenceService.class), Activator.getDefault().getReportService(), getDomainModelReference(),
+			getViewModelContext().getService(EMFFormsEditSupport.class),
+			getViewModelContext().getService(EMFFormsLabelProvider.class),
+			getService(ReferenceService.class), getViewModelContext().getService(ReportService.class),
+			getDomainModelReference(),
 			getViewModelContext().getDomainModel()), composite);
 		return buttons;
 	}

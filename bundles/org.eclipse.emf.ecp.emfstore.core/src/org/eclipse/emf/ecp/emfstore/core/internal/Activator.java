@@ -17,9 +17,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
-import org.osgi.framework.Bundle;
+import org.eclipse.emfforms.common.ServiceObjectTracker;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -31,6 +30,8 @@ public class Activator extends Plugin {
 
 	/** The shared instance. **/
 	private static Activator plugin;
+
+	private static ServiceObjectTracker<ESWorkspaceProviderProvider> tracker;
 
 	/**
 	 * The constructor.
@@ -48,6 +49,9 @@ public class Activator extends Plugin {
 	/** {@inheritDoc} **/
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		if (tracker != null) {
+			tracker.dispose();
+		}
 		plugin = null;
 		super.stop(context);
 	}
@@ -107,19 +111,10 @@ public class Activator extends Plugin {
 	 * @return the {@link ESWorkspaceProviderImpl}
 	 */
 	public static ESWorkspaceProviderImpl getESWorkspaceProviderInstance() {
-		// TODO Auto-generated method stub
-		ESWorkspaceProviderProvider esWorkspaceProviderProvider = null;
-
-		final Bundle bndl = plugin.getBundle();
-		final BundleContext cxt = bndl.getBundleContext();
-		final ServiceReference<ESWorkspaceProviderProvider> serviceRef = cxt
-			.getServiceReference(ESWorkspaceProviderProvider.class);
-		esWorkspaceProviderProvider = plugin.getBundle().getBundleContext().getService(serviceRef);
-		// because we are using a service factory for the RAP implementation we must unget
-		// the service so that the service factory is called again on each call. otherwise
-		// the service factor will keep returning the same cached instance as the reference
-		// count of the service will remain greater than zero
-		plugin.getBundle().getBundleContext().ungetService(serviceRef);
-		return esWorkspaceProviderProvider.getESWorkspaceProviderInstance();
+		if (tracker == null) {
+			tracker = new ServiceObjectTracker<ESWorkspaceProviderProvider>(plugin.getBundle().getBundleContext(),
+				ESWorkspaceProviderProvider.class);
+		}
+		return tracker.getService().getESWorkspaceProviderInstance();
 	}
 }

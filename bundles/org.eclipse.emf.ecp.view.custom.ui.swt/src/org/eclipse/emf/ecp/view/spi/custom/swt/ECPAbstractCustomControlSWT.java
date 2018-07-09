@@ -63,6 +63,8 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
@@ -341,9 +343,7 @@ public abstract class ECPAbstractCustomControlSWT {
 		labelRender: if (hasLeftLabelAlignment()) {
 			IValueProperty valueProperty;
 			try {
-				valueProperty = Activator
-					.getDefault()
-					.getEMFFormsDatabinding()
+				valueProperty = getViewModelContext().getService(EMFFormsDatabinding.class)
 					.getValueProperty(getCustomControl().getDomainModelReference(),
 						getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
@@ -359,9 +359,7 @@ public abstract class ECPAbstractCustomControlSWT {
 			try {
 				viewModelDBC.bindValue(
 					WidgetProperties.text().observe(label),
-					Activator
-						.getDefault()
-						.getEMFFormsLabelProvider()
+					getViewModelContext().getService(EMFFormsLabelProvider.class)
 						.getDisplayName(getCustomControl().getDomainModelReference(),
 							getViewModelContext().getDomainModel()),
 					null, new UpdateValueStrategy() {
@@ -384,9 +382,7 @@ public abstract class ECPAbstractCustomControlSWT {
 					});
 				viewModelDBC.bindValue(
 					WidgetProperties.tooltipText().observe(label),
-					Activator
-						.getDefault()
-						.getEMFFormsLabelProvider()
+					getViewModelContext().getService(EMFFormsLabelProvider.class)
 						.getDescription(getCustomControl().getDomainModelReference(),
 							getViewModelContext().getDomainModel()));
 			} catch (final NoLabelFoundException e) {
@@ -423,7 +419,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	protected final void createViewerBinding(VDomainModelReference customControlFeature, StructuredViewer viewer,
 		IValueProperty[] labelProperties) {
 		try {
-			final IObservableList list = Activator.getDefault().getEMFFormsDatabinding()
+			final IObservableList list = getViewModelContext().getService(EMFFormsDatabinding.class)
 				.getObservableList(customControlFeature, getViewModelContext().getDomainModel());
 			ViewerSupport.bind(viewer, list, labelProperties);
 		} catch (final DatabindingFailedException ex) {
@@ -465,7 +461,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	private Setting getFirstSetting(VDomainModelReference modelFeature) {
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = getViewModelContext().getService(EMFFormsDatabinding.class)
 				.getObservableValue(modelFeature, getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
@@ -501,7 +497,7 @@ public abstract class ECPAbstractCustomControlSWT {
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			valueProperty = getViewModelContext().getService(EMFFormsDatabinding.class)
 				.getValueProperty(domainModelReference, getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
@@ -836,7 +832,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * </p>
 	 *
 	 * @return
-	 *         {@code true} if the custom control can handle the
+	 * 		{@code true} if the custom control can handle the
 	 *         {@link org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService EMFFormsControlProcessorService}
 	 *         itself, {@code false} otherwise.
 	 * @since 1.8

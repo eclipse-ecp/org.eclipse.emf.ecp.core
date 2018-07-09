@@ -34,21 +34,36 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferenceFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 @RunWith(DatabindingClassRunner.class)
 public class DomainModelReferenceSelector_PTest {
 
 	private VTDomainModelReferenceSelector domainModelReferenceSelector;
+	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
+	private EMFFormsDatabinding databinding;
 
 	@Before
 	public void setup() {
 		domainModelReferenceSelector = VTDomainmodelreferenceFactory.eINSTANCE
 			.createDomainModelReferenceSelector();
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabinding.class);
+		databinding = bundleContext.getService(databindingServiceReference);
+	}
 
+	@After
+	public void tearDown() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		bundleContext.ungetService(databindingServiceReference);
 	}
 
 	@Test
@@ -106,6 +121,7 @@ public class DomainModelReferenceSelector_PTest {
 
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(EcoreFactory.eINSTANCE.createEClass());
+		when(viewModelContext.getService(EMFFormsDatabinding.class)).thenReturn(databinding);
 
 		final double specificity = domainModelReferenceSelector.isApplicable(
 			vControl, viewModelContext);
@@ -164,6 +180,7 @@ public class DomainModelReferenceSelector_PTest {
 
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(eClass);
+		when(viewModelContext.getService(EMFFormsDatabinding.class)).thenReturn(databinding);
 
 		final double specificity = domainModelReferenceSelector.isApplicable(
 			vControl, viewModelContext);

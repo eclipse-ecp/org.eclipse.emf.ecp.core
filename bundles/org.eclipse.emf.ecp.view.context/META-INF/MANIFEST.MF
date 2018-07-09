@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: View Model Context
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.context;singleton:=true
 Bundle-Version: 1.17.0.qualifier
-Bundle-Activator: org.eclipse.emf.ecp.view.internal.context.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.internal.context;version="1.17.0";x-internal:=true,
   org.eclipse.emf.ecp.view.spi.context;version="1.17.0"

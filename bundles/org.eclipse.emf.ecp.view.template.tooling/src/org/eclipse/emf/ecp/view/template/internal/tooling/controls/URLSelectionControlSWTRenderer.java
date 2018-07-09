@@ -196,10 +196,10 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 	private void setValue(String selectedURL) {
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = getEMFFormsDatabinding()
 				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			getReportService().report(new DatabindingFailedReport(ex));
 			return;
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();

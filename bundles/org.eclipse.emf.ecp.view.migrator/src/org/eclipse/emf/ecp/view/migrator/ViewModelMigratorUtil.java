@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
+import org.eclipse.emfforms.common.ServiceObjectTracker;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.Bundle;
@@ -53,7 +54,8 @@ public final class ViewModelMigratorUtil {
 					final int priority = Integer.parseInt(configurationElement.getAttribute(MIGRATOR_PRIORITY));
 					if (priority > topPriority) {
 						final Class<ViewModelMigrator> migratorClass = loadClass(configurationElement
-							.getContributor().getName(), configurationElement
+							.getContributor().getName(),
+							configurationElement
 								.getAttribute(MIGRATOR_CLASS));
 						topClass = migratorClass;
 						topPriority = priority;
@@ -105,7 +107,13 @@ public final class ViewModelMigratorUtil {
 	 * @since 1.8
 	 */
 	public static ViewModelWorkspaceMigrator getViewModelWorkspaceMigrator() {
-		return getService(ViewModelWorkspaceMigrator.class);
+		if (viewModelWorkspaceMigratorObjectTracker == null) {
+			final Bundle bundle = FrameworkUtil.getBundle(ViewModelMigratorUtil.class);
+			final BundleContext bundleContext = bundle.getBundleContext();
+			viewModelWorkspaceMigratorObjectTracker = new ServiceObjectTracker<ViewModelWorkspaceMigrator>(
+				bundleContext, ViewModelWorkspaceMigrator.class);
+		}
+		return viewModelWorkspaceMigratorObjectTracker.getService();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -119,22 +127,22 @@ public final class ViewModelMigratorUtil {
 	}
 
 	private static void log(Throwable throwable) {
-		final ReportService reportService = getService(ReportService.class);
-		if (reportService == null) {
-			return;
-		}
-		reportService.report(new AbstractReport(throwable));
-	}
-
-	private static <T> T getService(Class<T> serviceClass) {
 		final Bundle bundle = FrameworkUtil.getBundle(ViewModelMigratorUtil.class);
 		final BundleContext bundleContext = bundle.getBundleContext();
-		final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceClass);
+		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
 		if (serviceReference == null) {
-			return null;
+			return;
 		}
-		final T service = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return service;
+		final ReportService reportService = bundleContext.getService(serviceReference);
+		try {
+			if (reportService == null) {
+				return;
+			}
+			reportService.report(new AbstractReport(throwable));
+		} finally {
+			bundleContext.ungetService(serviceReference);
+		}
 	}
+
+	private static ServiceObjectTracker<ViewModelWorkspaceMigrator> viewModelWorkspaceMigratorObjectTracker;
 }

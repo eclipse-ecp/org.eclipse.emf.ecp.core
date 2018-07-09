@@ -34,6 +34,7 @@ public class Activator extends Plugin {
 
 	private static Activator plugin;
 	private ServiceReference<ReportService> reportServiceReference;
+	private ServiceReference<EMFFormsDatabinding> emfformsDatabindingServiceReference;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	/**
@@ -55,6 +56,12 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 		plugin = null;
+		if (reportServiceReference != null) {
+			plugin.getBundle().getBundleContext().ungetService(reportServiceReference);
+		}
+		if (emfformsDatabindingServiceReference != null) {
+			plugin.getBundle().getBundleContext().ungetService(emfformsDatabindingServiceReference);
+		}
 		super.stop(bundleContext);
 	}
 
@@ -96,13 +103,10 @@ public class Activator extends Plugin {
 	 * @return The {@link EMFFormsDatabinding}
 	 */
 	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
-
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
+		if (emfformsDatabindingServiceReference == null) {
+			emfformsDatabindingServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(EMFFormsDatabinding.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(emfformsDatabindingServiceReference);
 	}
 }

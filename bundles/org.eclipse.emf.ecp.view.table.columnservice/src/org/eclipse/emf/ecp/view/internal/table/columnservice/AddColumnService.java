@@ -23,8 +23,10 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
@@ -75,14 +77,14 @@ public class AddColumnService implements ViewModelService {
 			final IValueProperty valueProperty;
 			try {
 				if (tableDMR.getDomainModelReference() != null) {
-					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					valueProperty = context.getService(EMFFormsDatabinding.class)
 						.getValueProperty(tableDMR.getDomainModelReference(), context.getDomainModel());
 				} else {
-					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					valueProperty = context.getService(EMFFormsDatabinding.class)
 						.getValueProperty(tableDMR, context.getDomainModel());
 				}
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				context.getService(ReportService.class).report(new DatabindingFailedReport(ex));
 				return;
 			}
 
