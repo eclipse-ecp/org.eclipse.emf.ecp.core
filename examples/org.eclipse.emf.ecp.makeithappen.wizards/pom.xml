@@ -44,6 +44,28 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>copy-e3-feature</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>./examples/org.eclipse.emf.ecp.makeithappen.e3.feature</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../org.eclipse.emf.ecp.makeithappen.e3.feature</directory>
+									<excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
 						<id>copy-e4</id>
 						<phase>validate</phase>
 						<goals>
@@ -54,6 +76,28 @@
 							<resources>
 								<resource>
 									<directory>../org.eclipse.emf.ecp.makeithappen.application.sample.e4</directory>
+									<excludes>
+										<exclude>bin/</exclude>
+										<exclude>target/</exclude>
+										<exclude>**/.checkstyle</exclude>
+										<exclude>**/pom.xml</exclude>
+									</excludes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-e4-feature</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>./examples/org.eclipse.emf.ecp.makeithappen.e4.feature</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../org.eclipse.emf.ecp.makeithappen.e4.feature</directory>
 									<excludes>
 										<exclude>bin/</exclude>
 										<exclude>target/</exclude>

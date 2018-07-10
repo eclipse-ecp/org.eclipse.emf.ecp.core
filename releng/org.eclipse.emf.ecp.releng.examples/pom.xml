@@ -18,6 +18,8 @@
 		
 		<!-- MakeItHappen Demo -->
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.feature</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.e3.feature</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.e4.feature</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model.edit</module>
@@ -62,6 +64,13 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<feature id="org.eclipse.emf.ecp.makeithappen.e3"/>
+						<feature id="org.eclipse.emf.ecp.makeithappen.e4"/>
+					</excludes>
+					<labelSuffix>&#xA0;incl. Sources</labelSuffix>
+				</configuration>
 			</plugin>
 			
 			<plugin>
