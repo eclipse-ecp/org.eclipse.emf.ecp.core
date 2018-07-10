@@ -7,7 +7,7 @@
       plugin="org.eclipse.emf.ecp.view.model"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.17.0.qualifier">
+      license-feature-version="1.18.0.qualifier">
 
    <description>
       %description
@@ -236,13 +236,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.migrator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.workspace.migrator"
          download-size="0"
          install-size="0"
          version="0.0.0"
