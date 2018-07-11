@@ -219,14 +219,15 @@ public class ValidationService_PTest {
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
-		reportService.addConsumer(new ReportServiceConsumer() {
+		final ReportServiceConsumer reportServiceConsumer = new ReportServiceConsumer() {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
 				assertTrue(reportEntity.getMessage().startsWith("Validation took longer than expected for"));
 				called.set(0, true);
 			}
-		});
+		};
+		reportService.addConsumer(reportServiceConsumer);
 		validationService.addValidationProvider(new ValidationProvider() {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
@@ -240,6 +241,7 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertTrue("Validation report missing", called.get(0));
+		reportService.removeConsumer(reportServiceConsumer);
 	}
 
 	@Test
@@ -249,7 +251,7 @@ public class ValidationService_PTest {
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
-		reportService.addConsumer(new ReportServiceConsumer() {
+		final ReportServiceConsumer reportServiceConsumer = new ReportServiceConsumer() {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
@@ -258,7 +260,8 @@ public class ValidationService_PTest {
 				called.set(0, true);
 
 			}
-		});
+		};
+		reportService.addConsumer(reportServiceConsumer);
 		validationService.addValidationProvider(new ValidationProvider() {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
@@ -272,6 +275,7 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertTrue("Validation report missing", called.get(0));
+		reportService.removeConsumer(reportServiceConsumer);
 	}
 
 	@Test
@@ -281,7 +285,7 @@ public class ValidationService_PTest {
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
-		reportService.addConsumer(new ReportServiceConsumer() {
+		final ReportServiceConsumer reportServiceConsumer = new ReportServiceConsumer() {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
@@ -289,7 +293,8 @@ public class ValidationService_PTest {
 				called.set(0, true);
 
 			}
-		});
+		};
+		reportService.addConsumer(reportServiceConsumer);
 		validationService.addValidationProvider(new ValidationProvider() {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
@@ -299,6 +304,8 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertFalse("Validation report present", called.get(0));
+
+		reportService.removeConsumer(reportServiceConsumer);
 	}
 
 	@Test
@@ -369,7 +376,7 @@ public class ValidationService_PTest {
 						.getAllSettingsFor(vControl.getDomainModelReference(), parent);
 					return (T) mock;
 				}
-				return super.getService(serviceType);
+				return super.getServiceWithoutLog(serviceType);
 			}
 		};
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, parent);
