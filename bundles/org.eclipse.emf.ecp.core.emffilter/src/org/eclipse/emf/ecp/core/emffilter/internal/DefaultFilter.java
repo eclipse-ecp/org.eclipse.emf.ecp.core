@@ -323,6 +323,10 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/emf/2002/GenModel"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/2005/Ecore2XML"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/2002/XSD2Ecore"); //$NON-NLS-1$
+
+		packages.add("http:///org/eclipse/emf/ecore/util/DateConversionDelegateAnnotation"); //$NON-NLS-1$
+		packages.add("http:///org/eclipse/emf/ecore/util/EcoreAnnotation"); //$NON-NLS-1$
+		packages.add("http:///org/eclipse/emf/ecore/util/ExtendedMetaData"); //$NON-NLS-1$
 	}
 
 	/**
