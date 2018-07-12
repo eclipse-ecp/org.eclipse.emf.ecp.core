@@ -158,6 +158,7 @@
 		<!-- Migration -->
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.util.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.migrator.test</module>
 		
 		<!-- Core Services -->
 		<module>../../tests/org.eclipse.emfforms.core.services.datatemplate.test</module>

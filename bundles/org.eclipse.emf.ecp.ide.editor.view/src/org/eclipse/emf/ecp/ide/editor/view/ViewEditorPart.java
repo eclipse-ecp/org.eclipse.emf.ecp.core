@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -45,6 +46,9 @@ import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
+import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigrationException;
+import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigratorUtil;
+import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelWorkspaceMigrator;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
@@ -306,11 +310,18 @@ public class ViewEditorPart extends EditorPart implements
 				final List<URI> toMigrate = new ArrayList<URI>();
 				if (migrateWorkspace) {
 					for (final URI uri : getWorkspaceURIsToMigrate(resourceURI)) {
-						final Resource workspaceResource = editingDomain.getResourceSet().getResource(uri, true);
 						try {
+							final Resource workspaceResource = editingDomain.getResourceSet().getResource(uri, true);
 							registerEcore(workspaceResource);
 							toMigrate.add(uri);
-						} catch (final IOException ex) {
+						}
+						// BEGIN SUPRESS CATCH EXCEPTION
+						catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
+							/*
+							 * catch any exception because loading the workspace resource may also lead to exception
+							 * like NoClassDefFound, IAE, etc. We want to continue in any case, in order to migrate as
+							 * much as possible
+							 */
 							Activator.getDefault().getLog()
 								.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, MessageFormat.format(
 									Messages.ViewEditorPart_WorkspaceMigrationError,
@@ -359,6 +370,63 @@ public class ViewEditorPart extends EditorPart implements
 				}
 
 			}
+
+			migrateTemplateModels(shell);
+		}
+	}
+
+	/**
+	 * If there is a template migrator, prompt the user if (s)he wants to search the workspace for template models that
+	 * need migration. Afterwards, let the user chose which models to migrate and execute the migration.
+	 *
+	 * @param shell The {@link Shell} to create the dialogs for prompting the user on.
+	 */
+	private void migrateTemplateModels(final Shell shell) {
+		final TemplateModelWorkspaceMigrator templateMigrator = TemplateModelMigratorUtil
+			.getTemplateModelWorkspaceMigrator();
+		if (templateMigrator == null) {
+			return;
+		}
+		// Prompt user to migrate template models in the workspace
+		final boolean migrateTemplates = MessageDialog.openQuestion(shell,
+			Messages.ViewEditorPart_TemplateMigrationTitle,
+			Messages.ViewEditorPart_TemplateMigrationDescription);
+		if (migrateTemplates) {
+			final List<URI> templateModelsToMigrate = getTemplateModelWorkspaceURIsToMigrate();
+
+			final IRunnableWithProgress runnable = new IRunnableWithProgress() {
+				@Override
+				public void run(IProgressMonitor monitor)
+					throws InvocationTargetException {
+					try {
+						for (final URI uri : templateModelsToMigrate) {
+							templateMigrator.performMigration(uri);
+						}
+					} catch (final TemplateModelMigrationException ex) {
+						throw new InvocationTargetException(ex);
+					}
+				}
+			};
+
+			try {
+				new ProgressMonitorDialog(shell).run(true, false, runnable);
+			} catch (final InvocationTargetException e) {
+				MessageDialog.openError(
+					Display.getDefault().getActiveShell(), Messages.ViewEditorPart_TemplateMigrationErrorTitle,
+					Messages.ViewEditorPart_TemplateMigrationErrorMessage);
+				Activator
+					.getDefault().getLog().log(
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+							Messages.ViewEditorPart_TemplateMigrationErrorTitle, e));
+			} catch (final InterruptedException e) {
+				MessageDialog.openError(
+					Display.getDefault().getActiveShell(), Messages.ViewEditorPart_TemplateMigrationErrorTitle,
+					Messages.ViewEditorPart_TemplateMigrationErrorMessage);
+				Activator.getDefault().getLog().log(
+					new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+						Messages.ViewEditorPart_TemplateMigrationErrorTitle, e));
+			}
+
 		}
 	}
 
@@ -389,6 +457,37 @@ public class ViewEditorPart extends EditorPart implements
 				final ListSelectionDialog migrationDialog = MigrationDialogHelper
 					.getViewModelListMigrationDialog(shell,
 						urIsToMigrate);
+
+				if (migrationDialog.open() == Window.OK) {
+					final Object[] selectedURIs = migrationDialog.getResult();
+					if (selectedURIs != null) {
+						for (final Object selectedUri : selectedURIs) {
+							uris.add((URI) selectedUri);
+						}
+					}
+				}
+			}
+		} catch (final CoreException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		}
+		return uris;
+	}
+
+	private List<URI> getTemplateModelWorkspaceURIsToMigrate() {
+		final List<URI> uris = new LinkedList<URI>();
+
+		final TemplateModelWorkspaceMigrator workspaceMigrator = TemplateModelMigratorUtil
+			.getTemplateModelWorkspaceMigrator();
+		if (workspaceMigrator == null) {
+			return uris;
+		}
+		try {
+			final List<URI> urIsToMigrate = workspaceMigrator.getURIsToMigrate();
+
+			if (urIsToMigrate.size() > 0) {
+				final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+				final ListSelectionDialog migrationDialog = MigrationDialogHelper
+					.getTemplateModelListMigrationDialog(shell, urIsToMigrate);
 
 				if (migrationDialog.open() == Window.OK) {
 					final Object[] selectedURIs = migrationDialog.getResult();

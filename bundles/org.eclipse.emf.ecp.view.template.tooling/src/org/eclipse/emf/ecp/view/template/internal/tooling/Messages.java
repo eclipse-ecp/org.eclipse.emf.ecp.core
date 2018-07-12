@@ -66,7 +66,16 @@ public final class Messages extends NLS {
 	public static String EMFFormsTemplateWizardPage_title;
 	public static String HexColorSelectionControlSWTRenderer_SelectColorBtn;
 	public static String HexColorSelectionControlSWTRenderer_UnsetColorBtn;
+	public static String MigrationDialogHelper_TemplatesDescription;
+	public static String MigrationDialogHelper_TemplatesTitle;
 	public static String TemplateModelEditorPart_initError;
+	public static String TemplateModelEditorPart_MigrationDescription;
+	public static String TemplateModelEditorPart_MigrationQuestion;
+	public static String TemplateModelEditorPart_TemplateMigrationDescription;
+	public static String TemplateModelEditorPart_TemplateMigrationErrorMessage;
+	public static String TemplateModelEditorPart_TemplateMigrationErrorTitle;
+	public static String TemplateModelEditorPart_TemplateMigrationTitle;
+	public static String TemplateModelEditorPart_viewEcoreNsUriUpdate;
 	public static String URLSelectionControlSWTRenderer_SelectExternalFileBtn;
 	public static String URLSelectionControlSWTRenderer_SelectWorkspaceFileBtn;
 	public static String URLSelectionControlSWTRenderer_UnsetText;

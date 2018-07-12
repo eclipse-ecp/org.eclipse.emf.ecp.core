@@ -11,16 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.workspace.migrator;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecp.ide.spi.util.WorkspaceUtil;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.migrator.ViewModelWorkspaceMigrator;
@@ -59,24 +55,6 @@ public final class ViewModelWorkspaceMigratorService implements ViewModelWorkspa
 	}
 
 	private static List<URI> getViewModelURIsInWorkspace() throws CoreException {
-		final ArrayList<URI> uris = new ArrayList<URI>();
-		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		workspace.getRoot().accept(new IResourceVisitor() {
-			@Override
-			public boolean visit(IResource resource) throws CoreException {
-				if (resource.getFileExtension() != null && resource.getFileExtension().equals("view")) { //$NON-NLS-1$
-					try {
-						uris.add(URI.createURI(resource.getLocationURI().toURL().toExternalForm()));
-					} catch (final MalformedURLException ex) {
-						return false;
-					}
-				}
-				if (resource.getType() == IResource.FILE) {
-					return false;
-				}
-				return true;
-			}
-		});
-		return uris;
+		return WorkspaceUtil.getURIsInWorkspace("view"); //$NON-NLS-1$
 	}
 }
