@@ -186,6 +186,11 @@
                name="org.eclipse.emf.ecp.makeithappen.model.edit"
                description="Make It Happen model edit">
          </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.e3.feature/"
+               description="Make It Happen e3 feature"
+               name="org.eclipse.emf.ecp.makeithappen.e3.feature">
+         </projectDescriptor>
       </example>
       <example
             wizardID="org.eclipse.emf.ecp.makeithappen.wizards.e4.ExampleApplicationWizard"
@@ -210,6 +215,11 @@
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
                name="org.eclipse.emf.ecp.makeithappen.model.edit"
                description="Make It Happen model edit">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.e4.feature/"
+               description="Make It Happen e4 feature"
+               name="org.eclipse.emf.ecp.makeithappen.e4.feature">
          </projectDescriptor>
       </example>
       <example
