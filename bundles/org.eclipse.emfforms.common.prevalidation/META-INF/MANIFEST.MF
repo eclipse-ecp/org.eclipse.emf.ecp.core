@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Pre-Set Validation
 Bundle-SymbolicName: org.eclipse.emfforms.common.prevalidation
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.common.prevalidation;version="1.17.1"
+Export-Package: org.eclipse.emfforms.internal.common.prevalidation;version="1.17.2"
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)",
   org.eclipse.emfforms.common;bundle-version="[1.17.0,1.18.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECore GenModel Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.ecore.editor.test
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.ecore.editor.test;version="1.2.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="4.0.0",

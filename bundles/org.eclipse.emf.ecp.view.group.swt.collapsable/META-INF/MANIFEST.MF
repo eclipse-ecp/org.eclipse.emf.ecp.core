@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Collapsable Group
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.group.swt.collapsable
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.group.swt.internal.collapsable;version="1.17.1";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.group.swt.internal.collapsable;version="1.17.2";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.model.common;bundle-version="[1.17.0,1.18.0)",
   org.eclipse.emf.ecp.view.model;bundle-version="[1.17.0,1.18.0)",
   org.eclipse.emf.ecp.view.context;bundle-version="[1.17.0,1.18.0)",

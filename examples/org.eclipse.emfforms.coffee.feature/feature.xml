@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emfforms.coffee.feature"
       label="Coffee Example Feature"
-      version="1.17.1.qualifier"
+      version="1.17.2.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emfforms.coffee.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.17.1.qualifier">
+      license-feature-version="1.17.2.qualifier">
 
    <description>
       %description

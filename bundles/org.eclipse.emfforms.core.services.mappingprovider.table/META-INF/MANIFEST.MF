@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Mapping Provider Table Control
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.mappingprovider.table
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.core.services.mappingprovider.table;version="1.7.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.common;bundle-version="[1.17.0,1.18.0)",

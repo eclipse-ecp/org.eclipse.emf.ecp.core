@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dependency Injection SWT Renderer
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt.di;singleton:=true
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.ui.view.swt.di.renderer;version="1.17.1";x-internal:=true,
-  org.eclipse.emf.ecp.ui.view.swt.di.util;version="1.17.1";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.ui.view.swt.di.renderer;version="1.17.2";x-internal:=true,
+ org.eclipse.emf.ecp.ui.view.swt.di.util;version="1.17.2";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.model.common.di;bundle-version="[1.17.0,1.18.0)",
   org.eclipse.emf.ecp.view.model;bundle-version="[1.17.0,1.18.0)",
   org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.17.0,1.18.0)",

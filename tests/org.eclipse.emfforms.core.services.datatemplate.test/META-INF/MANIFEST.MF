@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms DataTemplate Service Tests
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.datatemplate.test;singleton:=true
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emfforms.core.services.datatemplate;bundle-version="[1.17.0,1.18.0)"
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emfforms.core.services.datatemplate.test;version="1.17.1";x-internal:=true,
-  org.eclipse.emfforms.core.services.datatemplate.test.model.audit;version="1.17.1";x-internal:=true,
-  org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl;version="1.17.1";x-internal:=true,
-  org.eclipse.emfforms.core.services.datatemplate.test.model.audit.util;version="1.17.1";x-internal:=true,
-  org.eclipse.emfforms.internal.core.services.datatemplate;version="1.17.1";x-internal:=true
+Export-Package: org.eclipse.emfforms.core.services.datatemplate.test;version="1.17.2";x-internal:=true,
+ org.eclipse.emfforms.core.services.datatemplate.test.model.audit;version="1.17.2";x-internal:=true,
+ org.eclipse.emfforms.core.services.datatemplate.test.model.audit.impl;version="1.17.2";x-internal:=true,
+ org.eclipse.emfforms.core.services.datatemplate.test.model.audit.util;version="1.17.2";x-internal:=true,
+ org.eclipse.emfforms.internal.core.services.datatemplate;version="1.17.2";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
   org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
   org.objenesis;bundle-version="[1.0.0,2.0.0)",

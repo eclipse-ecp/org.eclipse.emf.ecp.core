@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt;singleton:=true
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.swt.Activator
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: org.eclipse.emf.ecp.ui.view.swt;version="1.17.1",
-  org.eclipse.emf.ecp.ui.view.swt.reference;version="1.17.1",
-  org.eclipse.emf.ecp.view.internal.swt;version="1.17.1";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt.test,org.eclipse.emf.ecp.view.context.test",
-  org.eclipse.emf.ecp.view.spi.swt;version="1.17.1",
-  org.eclipse.emf.ecp.view.spi.swt.layout;version="1.17.1",
-  org.eclipse.emf.ecp.view.spi.swt.reporting;version="1.17.1"
+Export-Package: org.eclipse.emf.ecp.ui.view.swt;version="1.17.2",
+ org.eclipse.emf.ecp.ui.view.swt.reference;version="1.17.2",
+ org.eclipse.emf.ecp.view.internal.swt;version="1.17.2";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt.test,org.eclipse.emf.ecp.view.context.test",
+ org.eclipse.emf.ecp.view.spi.swt;version="1.17.2",
+ org.eclipse.emf.ecp.view.spi.swt.layout;version="1.17.2",
+ org.eclipse.emf.ecp.view.spi.swt.reporting;version="1.17.2"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
   org.eclipse.emf.ecp.ui.view;bundle-version="[1.17.0,1.18.0)";visibility:=reexport,
   org.eclipse.emf.ecp.view.model;bundle-version="[1.17.0,1.18.0)";visibility:=reexport,

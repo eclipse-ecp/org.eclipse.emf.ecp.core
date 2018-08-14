@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.ui.nebula.grid.test;singleton:=true
-Bundle-Version: 1.17.1.qualifier
+Bundle-Version: 1.17.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Fragment-Host: org.eclipse.emf.ecp.view.table.ui.nebula.grid;bundle-version="[1.17.0,1.18.0)"
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.ecp.view.internal.table.nebula.grid;version="1.17.1";x-internal:=true,
-  org.eclipse.emf.ecp.view.spi.table.nebula.grid;version="1.17.1",
-  org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit;version="1.17.1";x-internal:=true,
-  org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.impl;version="1.17.1";x-internal:=true,
-  org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.util;version="1.17.1";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.internal.table.nebula.grid;version="1.17.2";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.table.nebula.grid;version="1.17.2",
+ org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit;version="1.17.2";x-internal:=true,
+ org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.impl;version="1.17.2";x-internal:=true,
+ org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.util;version="1.17.2";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
   org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
   org.eclipse.emf.ecp.test.common;bundle-version="[1.17.0,1.18.0)",
