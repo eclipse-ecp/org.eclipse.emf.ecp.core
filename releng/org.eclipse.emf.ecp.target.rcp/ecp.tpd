@@ -64,7 +64,6 @@ location "http://download.eclipse.org/nebula/releases/1.0.0" {
 
 location "http://download.eclipse.org/releases/oxygen" {
 	org.eclipse.emf.cdo.sdk.feature.group lazy
-	org.eclipse.emf.sdk.feature.group lazy
 	org.eclipse.emf.transaction.sdk.feature.group lazy
 	org.eclipse.emf.validation.sdk.feature.group lazy
 	org.eclipse.gef.sdk.feature.group lazy
@@ -77,6 +76,10 @@ location "http://download.eclipse.org/releases/oxygen" {
 	org.eclipse.xpand.sdk.feature.group lazy
 	org.eclipse.xtend.sdk.feature.group lazy
 	org.eclipse.xtext.sdk.feature.group lazy
+}
+
+location "http://download.eclipse.org/modeling/emf/emf/builds/milestone/S201808230519" {
+	org.eclipse.emf.sdk.feature.group lazy
 }
 
 

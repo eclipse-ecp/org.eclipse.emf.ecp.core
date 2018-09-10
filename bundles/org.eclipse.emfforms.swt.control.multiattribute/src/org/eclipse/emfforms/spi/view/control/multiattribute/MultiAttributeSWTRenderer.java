@@ -13,6 +13,8 @@
 package org.eclipse.emfforms.spi.view.control.multiattribute;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,6 +62,7 @@ import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.databinding.viewers.IViewerUpdater;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -75,8 +78,8 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
@@ -494,9 +497,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return InternalEObject.class.cast(clazz.getEPackage().getEFactoryInstance().create(clazz));
 	}
 
-	private void createContent(Composite composite, IObservableList list) {
+	private void createContent(Composite composite, final IObservableList list) {
 		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
-		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		tableViewer = new NonUniqueTableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_multiattribute"); //$NON-NLS-1$
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
@@ -516,11 +519,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
-		final ObservableListContentProvider cp = new ObservableListContentProvider();
+		final IViewerUpdater viewerUpdater = attribute.isUnique() ? null : new NonUniqueViewerUpdater();
+		final ObservableListContentProvider cp = new ObservableListContentProvider(viewerUpdater);
 
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 
-		final TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
+		final TableViewerColumn column = new TableViewerColumn(tableViewer,
+			SWT.NONE);
 		column.getColumn().setResizable(false);
 		column.getColumn().setMoveable(false);
 
@@ -556,9 +561,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		composite.setLayout(layout);
 		layout.setColumnData(column.getColumn(), new ColumnWeightData(1, false));
 
-		final VDomainModelReference dmr = getVElement().getDomainModelReference();
-		observableSupport = new ECPListEditingSupport(tableViewer, cellEditor, getVElement(), dmr,
-			list);
+		final VDomainModelReference dmr = getVElement()
+			.getDomainModelReference();
+		observableSupport = new ECPListEditingSupport(tableViewer, cellEditor, getVElement(), dmr, list);
 		column.setEditingSupport(observableSupport);
 
 	}
@@ -711,12 +716,17 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 
 			final int currentIndex = tableViewer.getTable().getSelectionIndex();
-			if (currentIndex + 1 < tableViewer.getTable().getItems().length) {
+			if (currentIndex >= 0 && currentIndex + 1 < tableViewer.getTable().getItems().length) {
 				final EditingDomain editingDomain = getEditingDomain(eObject);
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex + 1));
-				tableViewer.refresh();
-				tableViewer.getTable().setSelection(currentIndex + 1);
+
+				tableViewer.setSelection(new StructuredSelection(list.get(currentIndex + 1)));
+				if (!attribute.isUnique()) {
+					// make sure the correct element is selected
+					tableViewer.getTable().setSelection(currentIndex + 1);
+				}
+				// scroll into view if necessary
 				final TableItem[] selection = tableViewer.getTable().getSelection();
 				if (selection.length > 0) {
 					tableViewer.getTable().showItem(selection[0]);
@@ -751,13 +761,18 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 
 			final int currentIndex = tableViewer.getTable().getSelectionIndex();
-			if (currentIndex != 0) {
+			if (currentIndex >= 1) {
 				final EditingDomain editingDomain = getEditingDomain(eObject);
 
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex - 1));
-				tableViewer.refresh();
-				tableViewer.getTable().setSelection(currentIndex - 1);
+
+				tableViewer.setSelection(new StructuredSelection(list.get(currentIndex - 1)));
+				if (!attribute.isUnique()) {
+					// make sure the correct element is selected
+					tableViewer.getTable().setSelection(currentIndex - 1);
+				}
+				// scroll into view if necessary
 				final TableItem[] selection = tableViewer.getTable().getSelection();
 				if (selection.length > 0) {
 					tableViewer.getTable().showItem(selection[0]);
@@ -792,10 +807,45 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 
 			final EditingDomain editingDomain = getEditingDomain(eObject);
-			final IStructuredSelection selection = tableViewer.getStructuredSelection();
-			if (!selection.isEmpty()) {
+			final int[] selectionIndices = tableViewer.getTable().getSelectionIndices();
+
+			if (selectionIndices.length != 0) {
+
+				final Object nextSelectedElement;
+				if (selectionIndices[0] > 0) {
+					nextSelectedElement = list.get(selectionIndices[0] - 1);
+				} else if (list.size() == selectionIndices.length) {
+					nextSelectedElement = null;
+				} else {
+					// if elements remain after removal, choose the first which was not removed
+					final List<Integer> rem = new ArrayList<Integer>(list.size());
+					for (int i = 0; i < list.size(); i++) {
+						rem.add(i);
+					}
+					for (int i = 0; i < selectionIndices.length; i++) {
+						rem.remove(selectionIndices[i]);
+					}
+					nextSelectedElement = list.get(rem.get(0));
+				}
+
 				editingDomain.getCommandStack().execute(RemoveCommand.create(editingDomain, eObject, attribute,
-					selection.toList()));
+					selectionIndices));
+
+				if (nextSelectedElement != null) {
+					tableViewer.setSelection(new StructuredSelection(nextSelectedElement));
+					if (!attribute.isUnique()) {
+						// fix table selection in case element is not unique
+						tableViewer.getTable()
+							.setSelection(Math.min(selectionIndices[0], tableViewer.getTable().getItemCount() - 1));
+					}
+					// scroll into view if necessary
+					final TableItem[] selection = tableViewer.getTable().getSelection();
+					if (selection.length > 0) {
+						tableViewer.getTable().showItem(selection[0]);
+					}
+				} else {
+					tableViewer.setSelection(new StructuredSelection());
+				}
 			}
 		}
 	}
@@ -828,9 +878,21 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 				final Object defaultValue = getValueForNewRow(attribute);
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
+				final int selectionIndex = tableViewer.getTable().getSelectionIndex();
 				editingDomain.getCommandStack()
-					.execute(AddCommand.create(editingDomain, eObject, attribute, defaultValue));
-				tableViewer.refresh();
+					.execute(AddCommand.create(editingDomain, eObject, attribute, defaultValue, selectionIndex + 1));
+
+				tableViewer.setSelection(new StructuredSelection(list.get(selectionIndex + 1)));
+				if (!attribute.isUnique()) {
+					// make sure the desired element is selected
+					tableViewer.getTable().setSelection(selectionIndex + 1);
+				}
+
+				// scroll into view if necessary
+				final TableItem[] selection = tableViewer.getTable().getSelection();
+				if (selection.length > 0) {
+					tableViewer.getTable().showItem(selection[0]);
+				}
 			} catch (final IllegalStateException ex) {
 				/* logged by getValueForNewRow* already */
 			}
@@ -921,7 +983,6 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				EAttribute.class.cast(valueProperty.getElementType()).getEAttributeType().getInstanceClass());
 
 			final Binding binding = createBinding(target, model);
-
 			editingState = new EditingState(binding, target, model);
 
 			getViewer().getColumnViewerEditor().addEditorActivationListener(activationListener);
@@ -1018,6 +1079,46 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		public void setObservableList(IObservableList list) {
 			valueProperty = list;
 		}
+
+	}
+
+	/**
+	 * The default viewer updater and table viewer operate under the assumption that all entries are unique. When they
+	 * are not unique the tableViewer view component will update wrongly, for example set the wrong selection or show
+	 * wrong labels.
+	 *
+	 * This is a simple replacement which forces to update the tableviewer as a whole.
+	 */
+	class NonUniqueViewerUpdater implements IViewerUpdater {
+		@Override
+		public void insert(Object element, int position) {
+			tableViewer.refresh();
+		}
+
+		@Override
+		public void remove(Object element, int position) {
+			tableViewer.refresh();
+		}
+
+		@Override
+		public void replace(Object oldElement, Object newElement, int position) {
+			tableViewer.refresh();
+		}
+
+		@Override
+		public void add(Object[] elements) {
+			tableViewer.refresh();
+		}
+
+		@Override
+		public void remove(Object[] elements) {
+			tableViewer.refresh();
+		}
+
+		@Override
+		public void move(Object element, int oldPosition, int newPosition) {
+			tableViewer.refresh();
+		}
 	}
 
 	/**
@@ -1035,6 +1136,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			getViewModelContext().getDomainModel());
 		// addRelayoutListenerIfNeeded(list, composite);
 		getTableViewer().setInput(list);
+		final IViewerUpdater viewerUpdater = EAttribute.class.cast(list.getElementType()).isUnique() ? null
+			: new NonUniqueViewerUpdater();
+		final ObservableListContentProvider cp = new ObservableListContentProvider(viewerUpdater);
+		tableViewer.setContentProvider(cp);
 
 		addButtonSelectionAdapter.setObservableList(list);
 		removeButtonSelectionAdapter.setObservableList(list);
@@ -1057,4 +1162,32 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return errorLabel;
 	}
 
+	/**
+	 * Normal tableviewer with slight modifications for non-unique types. If input is a unique type, there is no
+	 * difference to a normal tableviewer.
+	 */
+	class NonUniqueTableViewer extends TableViewer {
+
+		/**
+		 * Constructor.
+		 *
+		 * @param parent the {@link Composite}.
+		 * @param style the swt styles.
+		 */
+		NonUniqueTableViewer(Composite parent, int style) {
+			super(parent, style);
+		}
+
+		@Override
+		protected void preservingSelection(Runnable updateCode) {
+			if (IObservableList.class.isInstance(getInput())
+				&& !EAttribute.class.cast(IObservableList.class.cast(getInput()).getElementType()).isUnique()) {
+				// just run the update without preserving the selection in case of non-unique types
+				// the tableviewer doesn't consider such types and therefore changes the selection in undesired ways.
+				updateCode.run();
+				return;
+			}
+			super.preservingSelection(updateCode);
+		}
+	}
 }
