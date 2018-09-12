@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -48,6 +49,27 @@ public final class SWTViewTestHelper {
 	// private static SWTRendererFactory factory = new SWTRendererFactoryImpl();
 	private static EMFFormsRendererFactory factory;
 
+	/**
+	 * Helper interface to return the renderer along with the rendered control.
+	 */
+	public interface RendererResult {
+
+		/**
+		 * Get the renderer which was used to render the control.
+		 *
+		 * @return the renderer
+		 */
+		AbstractSWTRenderer<VElement> getRenderer();
+
+		/**
+		 * Get the control which was rendered (if any).
+		 *
+		 * @return the control
+		 */
+		Optional<Control> getControl();
+
+	}
+
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTViewTestHelper.class).getBundleContext();
 		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
@@ -71,35 +93,6 @@ public final class SWTViewTestHelper {
 	}
 
 	/**
-	 * Renders the given {@link VElement} on the given {@link Shell} and uses the given {@link EObject} as an input.
-	 *
-	 * @param renderable the {@link VElement} to be rendered
-	 * @param input The input {@link EObject} (domain model instance)
-	 * @param shell The {@link Shell} to render on
-	 * @return the rendered {@link Control}
-	 * @throws NoRendererFoundException If a required sub renderer is not found
-	 * @throws NoPropertyDescriptorFoundExeption If no PropertyDescriptor was found for the domain model instance
-	 * @throws EMFFormsNoRendererException If the renderer for the given {@link VElement} is not found
-	 */
-	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
-		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
-		final AbstractSWTRenderer<VElement> renderer = factory
-			.getRendererInstance(renderable, viewContext);
-		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
-			.createEmptyGridDescription());
-		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1), shell);
-		renderer.finalizeRendering(shell);
-		// TODO return resultRows
-		if (control == null) {
-			return null;
-		}
-
-		return control;
-
-	}
-
-	/**
 	 * Renders the given {@link VElement} on the given {@link Shell}. The method will create a dummy domain model object
 	 * as an input.
 	 *
@@ -113,6 +106,62 @@ public final class SWTViewTestHelper {
 	public static Control render(VElement renderable, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		return render(renderable, VViewFactory.eINSTANCE.createView(), shell);
+	}
+
+	/**
+	 * Renders the given {@link VElement} on the given {@link Shell} and uses the given {@link EObject} as an input.
+	 *
+	 * @param renderable the {@link VElement} to be rendered
+	 * @param input The input {@link EObject} (domain model instance)
+	 * @param shell The {@link Shell} to render on
+	 * @return the rendered {@link Control}
+	 * @throws NoRendererFoundException If a required sub renderer is not found
+	 * @throws NoPropertyDescriptorFoundExeption If no PropertyDescriptor was found for the domain model instance
+	 * @throws EMFFormsNoRendererException If the renderer for the given {@link VElement} is not found
+	 */
+	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+
+		final RendererResult result = renderControl(renderable, input, shell);
+		if (result.getControl().isPresent()) {
+			return result.getControl().get();
+		}
+		return null;
+	}
+
+	/**
+	 * Renders the given {@link VElement} on the given {@link Shell} and uses the given {@link EObject} as an input.
+	 *
+	 * @param renderable the {@link VElement} to be rendered
+	 * @param input The input {@link EObject} (domain model instance)
+	 * @param shell The {@link Shell} to render on
+	 * @return a {@link RendererResult}
+	 * @throws NoRendererFoundException If a required sub renderer is not found
+	 * @throws NoPropertyDescriptorFoundExeption If no PropertyDescriptor was found for the domain model instance
+	 * @throws EMFFormsNoRendererException If the renderer for the given {@link VElement} is not found
+	 */
+	public static RendererResult renderControl(VElement renderable, EObject input, Shell shell)
+		throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
+		final AbstractSWTRenderer<VElement> renderer = factory
+			.getRendererInstance(renderable, viewContext);
+		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
+		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1), shell);
+		renderer.finalizeRendering(shell);
+
+		return new RendererResult() {
+			@Override
+			public AbstractSWTRenderer<VElement> getRenderer() {
+				return renderer;
+			}
+
+			@Override
+			public Optional<Control> getControl() {
+				return Optional.ofNullable(control);
+			}
+		};
 	}
 
 	/**

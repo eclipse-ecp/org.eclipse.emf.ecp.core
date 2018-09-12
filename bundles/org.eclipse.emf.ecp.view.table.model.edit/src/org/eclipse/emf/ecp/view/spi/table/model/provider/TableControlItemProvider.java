@@ -67,6 +67,7 @@ public class TableControlItemProvider
 			addDetailEditingPropertyDescriptor(object);
 			addDetailViewPropertyDescriptor(object);
 			addEnableDetailEditingDialogPropertyDescriptor(object);
+			addDuplicateDisabledPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -100,7 +101,6 @@ public class TableControlItemProvider
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.13
 	 */
 	protected void addMoveUpDownDisabledPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
@@ -188,6 +188,32 @@ public class TableControlItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Duplicate Disabled feature.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 *
+	 */
+	protected void addDuplicateDisabledPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TableControl_duplicateDisabled_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_TableControl_duplicateDisabled_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TableControl_type"), //$NON-NLS-1$
+				VTablePackage.Literals.TABLE_CONTROL__DUPLICATE_DISABLED,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -266,6 +292,7 @@ public class TableControlItemProvider
 		case VTablePackage.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED:
 		case VTablePackage.TABLE_CONTROL__DETAIL_EDITING:
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
+		case VTablePackage.TABLE_CONTROL__DUPLICATE_DISABLED:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:

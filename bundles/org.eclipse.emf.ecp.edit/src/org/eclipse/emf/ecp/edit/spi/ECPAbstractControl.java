@@ -24,7 +24,6 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecp.internal.edit.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
@@ -38,8 +37,10 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
@@ -200,10 +201,10 @@ public abstract class ECPAbstractControl {
 			@SuppressWarnings("rawtypes")
 			IObservableValue observableValue;
 			try {
-				observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				observableValue = getViewModelContext().getService(EMFFormsDatabinding.class)
 					.getObservableValue(control.getDomainModelReference(), getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				getViewModelContext().getService(ReportService.class).report(new DatabindingFailedReport(ex));
 				throw new IllegalStateException("The databinding failed due to an incorrect VDomainModelReference: " //$NON-NLS-1$
 					+ ex.getMessage());
 			}
@@ -228,7 +229,7 @@ public abstract class ECPAbstractControl {
 			@SuppressWarnings("rawtypes")
 			IValueProperty valueProperty;
 			try {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				valueProperty = getViewModelContext().getService(EMFFormsDatabinding.class)
 					.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				throw new IllegalArgumentException(

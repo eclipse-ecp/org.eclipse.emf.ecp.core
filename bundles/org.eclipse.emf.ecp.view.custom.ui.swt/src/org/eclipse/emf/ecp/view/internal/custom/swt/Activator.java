@@ -16,8 +16,6 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -57,6 +55,9 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		if (reportServiceReference != null) {
+			context.ungetService(reportServiceReference);
+		}
 		super.stop(context);
 	}
 
@@ -133,35 +134,4 @@ public class Activator extends Plugin {
 		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
-	/**
-	 * Returns the {@link EMFFormsDatabinding} service.
-	 *
-	 * @return The {@link EMFFormsDatabinding}
-	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
-
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
-
-	/**
-	 * Returns the {@link EMFFormsLabelProvider} service.
-	 *
-	 * @return The {@link EMFFormsLabelProvider}
-	 */
-	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
-		final ServiceReference<EMFFormsLabelProvider> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsLabelProvider.class);
-
-		final EMFFormsLabelProvider service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
 }

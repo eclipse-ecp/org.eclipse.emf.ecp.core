@@ -41,11 +41,18 @@ public interface VTViewTemplateProvider {
 	 * Modifications on this copy will not influence any future calls on the {@link VTViewTemplateProvider}
 	 *
 	 * @return a copy of the {@link VTViewTemplate}
+	 * @deprecated Use {@link #getStyleProperties(VElement, ViewModelContext)} instead of using the
+	 *             {@link VTViewTemplate} directly
 	 */
+	@Deprecated
 	VTViewTemplate getViewTemplate();
 
 	/**
 	 * @return whether the {@link VTViewTemplateProvider} provides a {@link VTControlValidationTemplate}
+	 * @deprecated The usage of {@link VTControlValidationTemplate VTControlValidationTemplates} is deprecated. Use
+	 *             {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty
+	 *             VTValidationStyleProperties} instead.
 	 */
+	@Deprecated
 	boolean hasControlValidationTemplate();
 }

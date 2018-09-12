@@ -86,30 +86,25 @@ public class ShortcutHandler extends AbstractHandler {
 
 	@SuppressWarnings("unchecked")
 	private void performDelete(final StructuredSelection sSelection, final EditingDomain editingDomain) {
-		final Optional<DeleteShortCutHandler> deleteHandler = getDeleteHandler();
-		if (deleteHandler.isPresent()) {
-			deleteHandler.get().handleDeleteShortcut(sSelection.toList());
-			return;
+		final Bundle bundle = FrameworkUtil.getBundle(ShortcutHandler.class);
+		final BundleContext bundleContext = bundle.getBundleContext();
+		final ServiceReference<DeleteShortCutHandler> serviceReference = bundleContext
+			.getServiceReference(DeleteShortCutHandler.class);
+		if (serviceReference != null) {
+			final DeleteShortCutHandler service = bundleContext.getService(serviceReference);
+			final Optional<DeleteShortCutHandler> deleteHandler = Optional.ofNullable(service);
+
+			if (deleteHandler.isPresent()) {
+				deleteHandler.get().handleDeleteShortcut(sSelection.toList());
+				bundleContext.ungetService(serviceReference);
+				return;
+			}
 		}
 		final Command command = DeleteCommand.create(editingDomain, sSelection.toList());
 		if (!command.canExecute()) {
 			return;
 		}
 		editingDomain.getCommandStack().execute(command);
-	}
-
-	private Optional<DeleteShortCutHandler> getDeleteHandler() {
-		final Bundle bundle = FrameworkUtil.getBundle(ShortcutHandler.class);
-		final BundleContext bundleContext = bundle.getBundleContext();
-		final ServiceReference<DeleteShortCutHandler> serviceReference = bundleContext
-			.getServiceReference(DeleteShortCutHandler.class);
-		if (serviceReference == null) {
-			return Optional.empty();
-		}
-		final DeleteShortCutHandler service = bundleContext.getService(serviceReference);
-		final Optional<DeleteShortCutHandler> result = Optional.ofNullable(service);
-		bundleContext.ungetService(serviceReference);
-		return result;
 	}
 
 	/**

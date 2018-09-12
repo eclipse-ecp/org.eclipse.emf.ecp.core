@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tab.model.TabType;
 import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage;
@@ -386,7 +387,7 @@ public class VTTabStylePropertyImpl extends MinimalEObjectImpl.Container impleme
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
 	 *
@@ -549,10 +550,7 @@ public class VTTabStylePropertyImpl extends MinimalEObjectImpl.Container impleme
 
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (!VTTabStyleProperty.class.isInstance(styleProperty)) {
-			return false;
-		}
-		return getType() == VTTabStyleProperty.class.cast(styleProperty).getType();
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTTabStylePropertyImpl

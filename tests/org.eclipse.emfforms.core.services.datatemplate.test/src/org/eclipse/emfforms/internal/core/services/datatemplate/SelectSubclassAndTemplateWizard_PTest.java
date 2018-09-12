@@ -124,10 +124,13 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		final Template template1 = createTemplate("AdminTemplate1", AuditPackage.eINSTANCE.getAdminUser()); //$NON-NLS-1$
 		final Template template2 = createTemplate("RegisteredUserTemplate1", //$NON-NLS-1$
 			AuditPackage.eINSTANCE.getRegisteredUser());
+		final Template template3 = createTemplate("RegisteredUserTemplate2", //$NON-NLS-1$
+			AuditPackage.eINSTANCE.getRegisteredUser());
 
 		final LinkedHashSet<Template> templates = new LinkedHashSet<Template>();
 		templates.add(template1);
 		templates.add(template2);
+		templates.add(template3);
 
 		// Create and open wizard
 		final SelectSubclassAndTemplateWizard wizard = new SelectSubclassAndTemplateWizard("Wizard", subClasses, //$NON-NLS-1$
@@ -177,6 +180,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		// Next button must not be enabled on final page
 		assertFalse(nextButton.isEnabled());
 
+		// the two templates for the registered user
 		assertEquals(2, templateTable.getItemCount());
 		selectTableItem(templateTable, 0);
 		SWTTestUtil.waitForUIThread();
@@ -189,7 +193,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertEquals(Window.OK, wizardDialog.getReturnCode());
 		final Optional<Template> templateOptional = wizard.getSelectedTemplate();
 		assertTrue(templateOptional.isPresent());
-		assertEquals(template1, templateOptional.get());
+		assertEquals(template2, templateOptional.get());
 	}
 
 	/**
@@ -205,10 +209,13 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		final Template template1 = createTemplate("AdminTemplate1", AuditPackage.eINSTANCE.getAdminUser()); //$NON-NLS-1$
 		final Template template2 = createTemplate("RegisteredUserTemplate1", //$NON-NLS-1$
 			AuditPackage.eINSTANCE.getRegisteredUser());
+		final Template template3 = createTemplate("RegisteredUserTemplate2", //$NON-NLS-1$
+			AuditPackage.eINSTANCE.getRegisteredUser());
 
 		final LinkedHashSet<Template> templates = new LinkedHashSet<Template>();
 		templates.add(template1);
 		templates.add(template2);
+		templates.add(template3);
 
 		// Create and open wizard
 		final SelectSubclassAndTemplateWizard wizard = new SelectSubclassAndTemplateWizard("Wizard", subClasses, //$NON-NLS-1$
@@ -255,7 +262,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertEquals(Window.OK, wizardDialog.getReturnCode());
 		final Optional<Template> templateOptional = wizard.getSelectedTemplate();
 		assertTrue(templateOptional.isPresent());
-		assertEquals(template1, templateOptional.get());
+		assertEquals(template2, templateOptional.get());
 	}
 
 	/**
@@ -433,10 +440,13 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		final Template template1 = createTemplate("AdminTemplate1", AuditPackage.eINSTANCE.getAdminUser()); //$NON-NLS-1$
 		final Template template2 = createTemplate("RegisteredUserTemplate1", //$NON-NLS-1$
 			AuditPackage.eINSTANCE.getRegisteredUser());
+		final Template template3 = createTemplate("RegisteredUserTemplate2", //$NON-NLS-1$
+			AuditPackage.eINSTANCE.getRegisteredUser());
 
 		final LinkedHashSet<Template> templates = new LinkedHashSet<Template>();
 		templates.add(template1);
 		templates.add(template2);
+		templates.add(template3);
 
 		// Create and open wizard
 		final SelectSubclassAndTemplateWizard wizard = new SelectSubclassAndTemplateWizard("Wizard", subClasses, //$NON-NLS-1$

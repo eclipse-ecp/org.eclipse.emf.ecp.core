@@ -16,14 +16,18 @@ import javax.inject.Inject;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRendererUtil;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -42,11 +46,13 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
-	 * @since 1.6
+	 * @param viewTemplateProvider the {@link VTViewTemplateProvider}
+	 * @since 1.18
 	 */
 	@Inject
-	public SectionLeafSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
-		super(vElement, viewContext, reportService);
+	public SectionLeafSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService,
+		VTViewTemplateProvider viewTemplateProvider) {
+		super(vElement, viewContext, reportService, viewTemplateProvider);
 	}
 
 	private SWTGridDescription rendererGridDescription;
@@ -59,6 +65,10 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE
 				.createSimpleGrid(1, columns, this);
+			final Optional<Integer> labelWidth = getLabelWidth();
+			if (labelWidth.isPresent()) {
+				rendererGridDescription.getGrid().get(0).setPreferredSize(labelWidth.get(), SWT.DEFAULT);
+			}
 		}
 		return rendererGridDescription;
 	}
@@ -70,10 +80,11 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 			.extendedMargins(computeLeftMargin(), 0, 0, 0)
 			.applyTo(composite);
 
-		final Label label = new Label(composite, SWT.NONE);
+		final Label label = new Label(composite, getLabelStyleBits());
 		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
 			: getVElement().getName();
 		label.setText(text);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(label);
 
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
 		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
@@ -84,6 +95,18 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 
 		return composite;
+	}
+
+	/**
+	 * Returns the style bits that are set on the label in the first column.
+	 *
+	 * @return the style bits
+	 *
+	 * @since 1.18
+	 */
+	protected int getLabelStyleBits() {
+		return AbstractControlSWTRendererUtil.getLabelStyleBits(getViewTemplateProvider(), getVElement(),
+			getViewModelContext());
 	}
 
 	/**

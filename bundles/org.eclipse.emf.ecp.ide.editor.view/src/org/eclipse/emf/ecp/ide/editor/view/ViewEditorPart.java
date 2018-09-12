@@ -58,6 +58,7 @@ import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.migrator.ViewModelWorkspaceMigrator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
@@ -325,7 +326,7 @@ public class ViewEditorPart extends EditorPart implements
 							Activator.getDefault().getLog()
 								.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, MessageFormat.format(
 									Messages.ViewEditorPart_WorkspaceMigrationError,
-									resourceURI.toString()), ex));
+									uri.toString()), ex));
 						}
 					}
 				}
@@ -611,10 +612,11 @@ public class ViewEditorPart extends EditorPart implements
 		}
 
 		try {
-
-			render = ECPSWTViewRenderer.INSTANCE.render(parent, ViewModelContextFactory.INSTANCE
+			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE
 				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService(),
-					new EMFDeleteServiceImpl()));
+					new EMFDeleteServiceImpl());
+			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE);
+			render = ECPSWTViewRenderer.INSTANCE.render(parent, viewModelContext);
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(
 				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));

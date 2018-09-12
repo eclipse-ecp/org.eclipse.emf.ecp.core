@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.emf.ecp</groupId>
+	<artifactId>q7-non-epp-nebula-tests</artifactId>
+	<packaging>rcpttTest</packaging>
+
+	<parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>q7tests</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<profiles>
+		<profile>
+			<id>release-build</id>
+			<properties>
+				<currentBuild>${project.basedir}/../../../releng</currentBuild>
+			</properties>
+		</profile>
+		<profile>
+			<id>full-build</id>
+			<properties>
+				<currentBuild>${project.basedir}/../../../releng</currentBuild>
+			</properties>
+		</profile>
+	</profiles>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.rcptt</groupId>
+				<artifactId>rcptt-maven-plugin</artifactId>
+				<version>${rcptt-maven-version}</version>
+				<extensions>true</extensions>
+				<configuration>
+						<runner>
+							<version>${rcptt-runner-version}</version>
+						</runner>
+					<aut>
+						<explicit>${currentBuild}/org.eclipse.emf.ecp.products/target/products/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
+
+						<args>
+							<arg>-nl</arg>
+							<arg>en</arg>
+							<arg>-changeableClass</arg>
+							
+						</args>
+						<vmArgs>
+	                        <vmArg>${failsafeArgline}</vmArg>
+	                    </vmArgs>
+					</aut>
+					<testOptions>
+					    <!-- Timeout for all tests, in seconds -->
+					    <execTimeout>10800</execTimeout>
+					    <!-- Timeout for a single test case, in seconds -->
+					    <testexectimeout>600</testexectimeout>
+
+					    <!-- When set to true, in case of test failure
+						 AUT will be restarted. This significantly
+						 slows down execution, but may be useful 
+						 for some test suites -->
+					    <!--
+					    <restartAUTOnFailure>true</restartAUTOnFailure>
+					    -->
+					  </testOptions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+		
+</project>

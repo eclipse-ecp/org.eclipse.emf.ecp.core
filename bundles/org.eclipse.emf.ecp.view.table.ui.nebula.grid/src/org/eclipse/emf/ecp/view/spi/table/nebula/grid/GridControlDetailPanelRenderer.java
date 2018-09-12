@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,17 +17,14 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -49,6 +46,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
@@ -95,10 +93,11 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	}
 
 	private ECPSWTView ecpView;
-	private VView view;
 	private Composite detailPanel;
 	private Composite border;
 	private ScrolledComposite scrolledComposite;
+	private VView currentDetailView;
+	private boolean currentDetailViewOriginalReadonly;
 
 	/**
 	 * {@inheritDoc}
@@ -109,21 +108,81 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	protected Composite createControlComposite(Composite composite) {
 
 		/* border */
-		border = new Composite(composite, SWT.BORDER);
-		final GridLayout gridLayout = GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).create();
-		border.setLayout(gridLayout);
-		final int totalHeight = getTableHeightHint() + getDetailPanelHeightHint() + gridLayout.verticalSpacing;
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, totalHeight).applyTo(border);
+		border = createBorderComposite(composite);
 
-		/* table composite */
-		final Composite tableComposite = new Composite(border, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-			.applyTo(tableComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(border);
+		final SashForm sashForm = createSash(border);
+
+		/*
+		 * Wrap the table composite in another composite because setting weights on the sash form overrides the layout
+		 * data of its direct children. This must not happen on the table composite because the Table Control SWT
+		 * Renderer needs the table composite's layout data to be GridData.
+		 */
+		final Composite tableCompositeWrapper = new Composite(sashForm, SWT.NONE);
+		GridLayoutFactory.fillDefaults().applyTo(tableCompositeWrapper);
+		final Composite tableComposite = createTableComposite(tableCompositeWrapper);
 
 		/* scrolled composite */
-		scrolledComposite = new ScrolledComposite(border, SWT.V_SCROLL);
-		scrolledComposite.setBackground(composite.getBackground());
+		scrolledComposite = createScrolledDetail(sashForm);
+
+		// As a default the table gets 1/3 of the space and the detail panel 2/3.
+		sashForm.setWeights(new int[] { 1, 2 });
+
+		return tableComposite;
+	}
+
+	/**
+	 * Creates a composite with a border to surround the grid and detail panel.
+	 *
+	 * @param parent The parent Composite
+	 * @return The border Composite
+	 */
+	protected Composite createBorderComposite(Composite parent) {
+		final Composite composite = new Composite(parent, SWT.BORDER);
+		final GridLayout gridLayout = GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).create();
+		composite.setLayout(gridLayout);
+		final int totalHeight = getTableHeightHint() + getDetailPanelHeightHint() + gridLayout.verticalSpacing;
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, totalHeight)
+			.applyTo(composite);
+		return composite;
+	}
+
+	/**
+	 * Creates the SashForm for the grid and the detail panel.
+	 *
+	 * @param parent the parent
+	 * @return the SashForm
+	 */
+	protected SashForm createSash(Composite parent) {
+		final SashForm sash = new SashForm(parent, SWT.VERTICAL);
+		sash.setBackground(parent.getBackground());
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(sash);
+		sash.setSashWidth(5);
+		return sash;
+	}
+
+	/**
+	 * Creates the Composite that will contain the grid.
+	 *
+	 * @param parent The parent Composite to create the grid composite on
+	 * @return The grid Composite
+	 */
+	protected Composite createTableComposite(Composite parent) {
+		final Composite tableComposite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
+			.applyTo(tableComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tableComposite);
+		return tableComposite;
+	}
+
+	/**
+	 * Creates a scrolled Composite that contains the detail panel.
+	 *
+	 * @param parent The parent Composite to create the scrolled composite on
+	 * @return The ScrolledComposite containing the detail panel
+	 */
+	protected ScrolledComposite createScrolledDetail(Composite parent) {
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.BORDER);
+		scrolledComposite.setBackground(parent.getBackground());
 		scrolledComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(scrolledComposite);
 		scrolledComposite.setExpandVertical(true);
@@ -137,12 +196,11 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		detailPanel.layout();
 		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		scrolledComposite.setMinHeight(point.y);
-
-		return tableComposite;
+		return scrolledComposite;
 	}
 
 	/**
-	 * Returns the prefereed height for the detail panel. This will be passed to the layoutdata.
+	 * Returns the preferred height for the detail panel. This will be passed to the layout data.
 	 *
 	 * @return the height in px
 	 */
@@ -157,8 +215,8 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @return the detail panel
 	 */
 	protected Composite createDetailPanel(ScrolledComposite composite) {
-		final Composite detail = new Composite(scrolledComposite, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(detail);
+		final Composite detail = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).margins(5, 5).applyTo(detail);
 		return detail;
 	}
 
@@ -169,29 +227,39 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @return the view
 	 */
 	protected VView getView(EObject selectedEObject) {
-		if (view == null) {
-			VView detailView = getVElement().getDetailView();
-			if (detailView == null) {
-				final VElement viewModel = getViewModelContext().getViewModel();
-				final VViewModelProperties properties = ViewModelPropertiesHelper
-					.getInhertitedPropertiesOrEmpty(viewModel);
-				detailView = ViewProviderHelper.getView(selectedEObject, properties);
-			}
-			view = detailView;
+		VView detailView = getVElement().getDetailView();
+		if (detailView == null) {
+
+			final VElement viewModel = getViewModelContext().getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper
+				.getInhertitedPropertiesOrEmpty(viewModel);
+			detailView = ViewProviderHelper.getView(selectedEObject, properties);
 		}
-		final VView copy = EcoreUtil.copy(view);
-		for (final Adapter adapter : view.eAdapters()) {
-			if (LocalizationAdapter.class.isInstance(adapter)) {
-				copy.eAdapters().add(new LocalizationAdapter() {
-					@Override
-					public String localize(String key) {
-						return LocalizationAdapter.class.cast(adapter).localize(key);
-					}
-				});
-				break;
-			}
+
+		currentDetailViewOriginalReadonly = detailView.isReadonly();
+		return detailView;
+	}
+
+	@Override
+	protected void applyEnable() {
+		super.applyEnable();
+		if (currentDetailView != null) {
+			// Set the detail view to read only if this grid is disabled or read only. Use the detail view's original
+			// read only state if this grid is enabled and not read only.
+			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+				|| currentDetailViewOriginalReadonly);
 		}
-		return copy;
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		super.applyReadOnly();
+		if (currentDetailView != null) {
+			// Set the detail view to read only if this grid is disabled or read only. Use the detail view's original
+			// read only state if this grid is enabled and not read only.
+			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+				|| currentDetailViewOriginalReadonly);
+		}
 	}
 
 	/**
@@ -237,8 +305,8 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @since 1.9
 	 */
 	protected void renderSelectedObject(final Composite composite, final EObject eObject) {
-		final VView detailView = getView(eObject);
-		if (detailView == null) {
+		currentDetailView = getView(eObject);
+		if (currentDetailView == null) {
 
 			final Label label = new Label(composite, SWT.NONE);
 			label.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_RED));
@@ -246,8 +314,12 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 
 		} else {
 			final ViewModelContext childContext = getViewModelContext().getChildContext(eObject, getVElement(),
-				detailView);
-
+				currentDetailView);
+			currentDetailView = (VView) childContext.getViewModel();
+			// Set the detail view to read only if this grid is read only or disabled
+			currentDetailView.setReadonly(
+				!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+					|| currentDetailViewOriginalReadonly);
 			try {
 				ecpView = ECPSWTViewRenderer.INSTANCE.render(composite, childContext);
 			} catch (final ECPRendererException ex) {
@@ -282,14 +354,8 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#deleteRows(java.util.List,
-	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
-	 * @since 1.6
-	 */
 	@Override
+	@Deprecated
 	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
 		super.deleteRows(deletionList, eObject, structuralFeature);

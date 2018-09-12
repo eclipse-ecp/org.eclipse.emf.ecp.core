@@ -100,23 +100,22 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 		return getString(bundle, getLocale(), key);
 	}
 
-	private String getLocale() {
+	private Locale getLocale() {
 		if (localeProvider == null) {
 			return null;
 		}
-		final Locale result = localeProvider.getLocale();
-		return result.getLanguage();
+		return localeProvider.getLocale();
 	}
 
-	private String getString(Bundle bundle, String localeLanguage, String key) {
-		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
+	private String getString(Bundle bundle, Locale locale, String key) {
+		final ResourceBundle resourceBundle = getResourceBundle(bundle, locale);
 		if (resourceBundle == null) {
 			reportService
 				.report(new AbstractReport(
 					String
 						.format(
-							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", //$NON-NLS-1$
-							localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString())));
+							"No ResourceBundle found for Locale '%1$s' in Bundle %2$s with Version %3$s.", //$NON-NLS-1$
+							locale, bundle.getSymbolicName(), bundle.getVersion().toString())));
 			return key;
 		}
 		if (!resourceBundle.containsKey(key)) {
@@ -124,11 +123,18 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 				.report(new AbstractReport(
 					String
 						.format(
-							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", //$NON-NLS-1$
-							localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key)));
+							"The ResourceBundle for Locale '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", //$NON-NLS-1$
+							locale, bundle.getSymbolicName(), bundle.getVersion().toString(), key)));
 			return key;
 		}
 		return resourceBundle.getString(key);
+	}
+
+	private ResourceBundle getResourceBundle(Bundle bundle, Locale locale) {
+		if (locale == null) {
+			return bundleLocalization.getLocalization(bundle, null);
+		}
+		return bundleLocalization.getLocalization(bundle, locale.toString());
 	}
 
 	/**
@@ -152,15 +158,15 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 		return hasKey(FrameworkUtil.getBundle(clazz), key);
 	}
 
-	private boolean hasKey(Bundle bundle, String localeLanguage, String key) {
-		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
+	private boolean hasKey(Bundle bundle, Locale locale, String key) {
+		final ResourceBundle resourceBundle = getResourceBundle(bundle, locale);
 		if (resourceBundle == null) {
 			reportService
 				.report(new AbstractReport(
 					String
 						.format(
-							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", //$NON-NLS-1$
-							localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString())));
+							"No ResourceBundle found for Locale '%1$s' in Bundle %2$s with Version %3$s.", //$NON-NLS-1$
+							locale, bundle.getSymbolicName(), bundle.getVersion().toString())));
 			return false;
 		}
 		return resourceBundle.containsKey(key);

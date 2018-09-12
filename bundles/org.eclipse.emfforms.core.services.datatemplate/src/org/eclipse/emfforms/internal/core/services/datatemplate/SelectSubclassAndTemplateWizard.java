@@ -174,7 +174,9 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 	}
 
 	/**
-	 * Get all available templates for the given {@link EClass}.
+	 * Get all available templates for the given {@link EClass}. Thereby, only templates whose instance exactly match
+	 * the given EClass are returned. This does <strong>not</strong> include templates for sub classes of the given
+	 * EClass.
 	 *
 	 * @param eClass The {@link EClass}
 	 * @return The available templates
@@ -184,13 +186,13 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		if (eClass != null) {
 			for (final Template template : allTemplates) {
 				try {
-					if (eClass.isSuperTypeOf(template.getInstance().eClass())) {
+					if (eClass == template.getInstance().eClass()) {
 						availableTemplates.add(template);
 					}
 				}
 				// CHECKSTYLE.OFF: IllegalCatch
 				catch (final RuntimeException e) {
-					// ignore as somebody broke the eclass method
+					// ignore as somebody broke the eclass
 				}
 				// CHECKSTYLE.ON: IllegalCatch
 			}

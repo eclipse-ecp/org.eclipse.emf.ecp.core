@@ -103,6 +103,7 @@ public class CheckedSelectModelClassCompositeImpl extends AbstractEClassTreeSele
 
 		if (initialSelection != null) {
 			getViewer().setCheckedElements(initialSelection);
+			setChecked();
 		}
 		return composite;
 	}

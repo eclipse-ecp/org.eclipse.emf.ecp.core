@@ -26,6 +26,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.ui.ECPDeleteServiceImpl;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
@@ -82,20 +85,27 @@ public class ECPE4Editor {
 	 *
 	 * @param modelElement the {@link EObject} to be opened
 	 * @param part the corresponding {@link MPart}
+	 * @param ecpProject The {@link ECPProject} (optional parameter)
 	 */
 	@Inject
-	public void setInput(@Optional @Named(INPUT) EObject modelElement, MPart part) {
+	public void setInput(@Optional @Named(INPUT) EObject modelElement, MPart part, @Optional ECPProject ecpProject) {
 		if (modelElement == null) {
 			return;
 		}
 		this.part = part;
 		this.modelElement = modelElement;
 		ECPSWTView render = null;
+		DeleteService deleteService;
+		if (ecpProject != null) {
+			deleteService = new ECPDeleteServiceImpl();
+		} else {
+			deleteService = new EMFDeleteServiceImpl();
+		}
 		try {
 			// render = ECPSWTViewRenderer.INSTANCE.render(parent, modelElement);
 			final VView view = ViewProviderHelper.getView(modelElement, null);
 			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, modelElement,
-				new ECPReferenceServiceImpl(), new ECPDeleteServiceImpl());
+				new ECPReferenceServiceImpl(), deleteService);
 
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, vmc);
 

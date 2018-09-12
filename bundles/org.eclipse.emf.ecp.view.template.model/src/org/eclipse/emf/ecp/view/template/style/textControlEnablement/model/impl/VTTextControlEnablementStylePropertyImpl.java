@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementPackage;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
@@ -195,15 +196,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (!VTTextControlEnablementStyleProperty.class.isInstance(styleProperty)) {
-			return false;
-		}
-		final VTTextControlEnablementStyleProperty property = VTTextControlEnablementStyleProperty.class
-			.cast(styleProperty);
-		if (isRenderDisableAsEditable() != property.isRenderDisableAsEditable()) {
-			return false;
-		}
-		return true;
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTTextControlEnablementStylePropertyImpl

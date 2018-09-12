@@ -59,7 +59,7 @@ public class ControlUnitImpl extends ComponentImpl implements ControlUnit {
 	protected Processor processor;
 
 	/**
-	 * The cached value of the '{@link #getDimension() <em>Dimension</em>}' reference.
+	 * The cached value of the '{@link #getDimension() <em>Dimension</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -202,16 +202,6 @@ public class ControlUnitImpl extends ComponentImpl implements ControlUnit {
 	 */
 	@Override
 	public Dimension getDimension() {
-		if (dimension != null && dimension.eIsProxy()) {
-			final InternalEObject oldDimension = (InternalEObject) dimension;
-			dimension = (Dimension) eResolveProxy(oldDimension);
-			if (dimension != oldDimension) {
-				if (eNotificationRequired()) {
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CoffeePackage.CONTROL_UNIT__DIMENSION,
-						oldDimension, dimension));
-				}
-			}
-		}
 		return dimension;
 	}
 
@@ -221,8 +211,19 @@ public class ControlUnitImpl extends ComponentImpl implements ControlUnit {
 	 *
 	 * @generated
 	 */
-	public Dimension basicGetDimension() {
-		return dimension;
+	public NotificationChain basicSetDimension(Dimension newDimension, NotificationChain msgs) {
+		final Dimension oldDimension = dimension;
+		dimension = newDimension;
+		if (eNotificationRequired()) {
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				CoffeePackage.CONTROL_UNIT__DIMENSION, oldDimension, newDimension);
+			if (msgs == null) {
+				msgs = notification;
+			} else {
+				msgs.add(notification);
+			}
+		}
+		return msgs;
 	}
 
 	/**
@@ -233,11 +234,23 @@ public class ControlUnitImpl extends ComponentImpl implements ControlUnit {
 	 */
 	@Override
 	public void setDimension(Dimension newDimension) {
-		final Dimension oldDimension = dimension;
-		dimension = newDimension;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, CoffeePackage.CONTROL_UNIT__DIMENSION, oldDimension,
-				dimension));
+		if (newDimension != dimension) {
+			NotificationChain msgs = null;
+			if (dimension != null) {
+				msgs = ((InternalEObject) dimension).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - CoffeePackage.CONTROL_UNIT__DIMENSION, null, msgs);
+			}
+			if (newDimension != null) {
+				msgs = ((InternalEObject) newDimension).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - CoffeePackage.CONTROL_UNIT__DIMENSION, null, msgs);
+			}
+			msgs = basicSetDimension(newDimension, msgs);
+			if (msgs != null) {
+				msgs.dispatch();
+			}
+		} else if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, CoffeePackage.CONTROL_UNIT__DIMENSION, newDimension,
+				newDimension));
 		}
 	}
 
@@ -353,6 +366,8 @@ public class ControlUnitImpl extends ComponentImpl implements ControlUnit {
 		switch (featureID) {
 		case CoffeePackage.CONTROL_UNIT__PROCESSOR:
 			return basicSetProcessor(null, msgs);
+		case CoffeePackage.CONTROL_UNIT__DIMENSION:
+			return basicSetDimension(null, msgs);
 		case CoffeePackage.CONTROL_UNIT__RAM:
 			return ((InternalEList<?>) getRam()).basicRemove(otherEnd, msgs);
 		case CoffeePackage.CONTROL_UNIT__DISPLAY:
@@ -373,10 +388,7 @@ public class ControlUnitImpl extends ComponentImpl implements ControlUnit {
 		case CoffeePackage.CONTROL_UNIT__PROCESSOR:
 			return getProcessor();
 		case CoffeePackage.CONTROL_UNIT__DIMENSION:
-			if (resolve) {
-				return getDimension();
-			}
-			return basicGetDimension();
+			return getDimension();
 		case CoffeePackage.CONTROL_UNIT__RAM:
 			return getRam();
 		case CoffeePackage.CONTROL_UNIT__DISPLAY:
@@ -481,7 +493,7 @@ public class ControlUnitImpl extends ComponentImpl implements ControlUnit {
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (userDescription: "); //$NON-NLS-1$
 		result.append(userDescription);
 		result.append(')');

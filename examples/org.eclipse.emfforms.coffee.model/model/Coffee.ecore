@@ -17,7 +17,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="processor" lowerBound="1"
         eType="#//Processor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dimension" lowerBound="1"
-        eType="#//Dimension"/>
+        eType="#//Dimension" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ram" lowerBound="1" upperBound="-1"
         eType="#//RAM" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="display" eType="#//Display"

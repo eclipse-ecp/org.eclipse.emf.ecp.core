@@ -574,20 +574,26 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 			@Override
 			public void removeSelectionChangedListener(ISelectionChangedListener listener) {
-				throw new UnsupportedOperationException();
+				if (rootView == null) {
+					return;
+				}
+				rootView.getSelectionProvider().removeSelectionChangedListener(listener);
 			}
 
 			@Override
 			public ISelection getSelection() {
 				if (rootView == null) {
-					return new StructuredSelection();
+					return StructuredSelection.EMPTY;
 				}
 				return rootView.getSelectionProvider().getSelection();
 			}
 
 			@Override
 			public void addSelectionChangedListener(ISelectionChangedListener listener) {
-				throw new UnsupportedOperationException();
+				if (rootView == null) {
+					return;
+				}
+				rootView.getSelectionProvider().addSelectionChangedListener(listener);
 			}
 		};
 
@@ -753,7 +759,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	/**
 	 * Removes the given {@linkplain Resource Resources} from this editor's {@linkplain ResourceSet}. Thereby the
 	 * resources are matched by URI.
-	 * 
+	 *
 	 * @param resources The {@linkplain Resource Resources} to remove from this editor's {@linkplain ResourceSet}.
 	 * @since 1.17
 	 */

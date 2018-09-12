@@ -16,15 +16,23 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
-import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
+import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -32,16 +40,19 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategory} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class CategoryItemProvider
 	extends AbstractCategorizationItemProvider {
+	/** Do not access directly! Use {@link #getChildrenDescriptorCollector()}. */
+	private ChildrenDescriptorCollector childrenDescriptorCollector;
+
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public CategoryItemProvider(AdapterFactory adapterFactory) {
@@ -52,7 +63,7 @@ public class CategoryItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,7 +81,7 @@ public class CategoryItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -85,7 +96,7 @@ public class CategoryItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -100,7 +111,7 @@ public class CategoryItemProvider
 	 * This returns Category.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -129,7 +140,7 @@ public class CategoryItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -145,6 +156,19 @@ public class CategoryItemProvider
 	}
 
 	/**
+	 * Returns the cached {@link ChildrenDescriptorCollector}.
+	 *
+	 * @return The {@link ChildrenDescriptorCollector}.
+	 * @since 1.17
+	 */
+	protected ChildrenDescriptorCollector getChildrenDescriptorCollector() {
+		if (childrenDescriptorCollector == null) {
+			childrenDescriptorCollector = new ChildrenDescriptorCollector();
+		}
+		return childrenDescriptorCollector;
+	}
+
+	/**
 	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
@@ -156,16 +180,42 @@ public class CategoryItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-			VCategorizationFactory.eINSTANCE.createCategorizationElement()));
+		collectContainerChildDecriptors(newChildDescriptors, object);
+	}
 
-		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-			VViewFactory.eINSTANCE.createControl()));
+	/**
+	 * Adds child descriptors for the {@link VContainer}'s children reference. This is necessary as long as
+	 * {@link VCategory} does not extend {@link VCategory}.
+	 *
+	 * @param newChildDescriptors The collection of child descriptors that the collected descriptors will be added to.
+	 * @param object The object for which the child descriptors are collected
+	 * @since 1.17
+	 */
+	protected void collectContainerChildDecriptors(Collection<Object> newChildDescriptors, Object object) {
+		// Get children descriptors for a vertical layout
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(object);
+		final VVerticalLayout verticalLayout = VVerticalFactory.eINSTANCE.createVerticalLayout();
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(editingDomain));
+		final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
+		if (resource != null) {
+			resource.getContents().add(verticalLayout);
+		}
+		final Collection<?> verticalDescriptors = getChildrenDescriptorCollector()
+			.getDescriptors(verticalLayout);
 
-		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-			VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
+		// TODO needed?
+		resourceSet.eAdapters().clear();
 
-		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-			VVerticalFactory.eINSTANCE.createVerticalLayout()));
+		// Iterate over the gathered descriptors and transform relevant ones to fit for the VCategory
+		for (final Object descriptor : verticalDescriptors) {
+			final CommandParameter parameter = (CommandParameter) descriptor;
+			// We only need the descriptors for the VContainer's children reference
+			if (parameter.getEStructuralFeature() == VViewPackage.Literals.CONTAINER__CHILDREN) {
+				newChildDescriptors
+					.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
+						parameter.getValue()));
+			}
+		}
 	}
 }

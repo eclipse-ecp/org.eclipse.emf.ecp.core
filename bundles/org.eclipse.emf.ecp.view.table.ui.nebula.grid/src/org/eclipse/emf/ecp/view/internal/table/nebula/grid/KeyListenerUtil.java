@@ -46,7 +46,8 @@ public final class KeyListenerUtil {
 	 */
 	@SuppressWarnings("restriction")
 	public static void clearSelection(Grid grid, VControl vControl, EMFFormsDatabindingEMF dataBinding) {
-		if (grid.getCellSelection().length == 0 || !vControl.isEnabled() || vControl.isReadonly()) {
+		if (grid.getCellSelection().length == 0 || !vControl.isEffectivelyEnabled()
+			|| vControl.isEffectivelyReadonly()) {
 			return;
 		}
 

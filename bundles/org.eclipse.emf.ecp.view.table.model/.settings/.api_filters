@@ -51,10 +51,22 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTableControl.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTableControl">
+        <filter comment="SPI change 1.18" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"/>
+                <message_argument value="isDuplicateDisabled()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"/>
                 <message_argument value="isMoveUpDownDisabled()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.18" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"/>
+                <message_argument value="setDuplicateDisabled(boolean)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change" id="403804204">
@@ -146,6 +158,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_CONTROL_FEATURE_COUNT"/>
                 <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.18" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL_FEATURE_COUNT"/>
+                <message_argument value="16"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -425,6 +444,12 @@
                 <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change 1.18" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DUPLICATE_DISABLED"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.9.0" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -521,6 +546,12 @@
                 <message_argument value="getSingleColumnConfiguration_ColumnDomainReference()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change 1.18" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getTableControl_DuplicateDisabled()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -607,6 +638,12 @@
                 <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change 1.18" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="TABLE_CONTROL__DUPLICATE_DISABLED"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
@@ -667,6 +704,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration"/>
                 <message_argument value="setColumnDomainReference(VDomainModelReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/impl/VTableControlImpl.java" type="org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl">
+        <filter comment="SPI change 1.18" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl"/>
+                <message_argument value="DUPLICATE_DISABLED_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.18" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl"/>
+                <message_argument value="duplicateDisabled"/>
             </message_arguments>
         </filter>
     </resource>

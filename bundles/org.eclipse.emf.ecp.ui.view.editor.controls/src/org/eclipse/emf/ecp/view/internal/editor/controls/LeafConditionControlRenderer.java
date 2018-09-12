@@ -81,7 +81,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		try {
 			condition = (LeafCondition) getObservedEObject();
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			getReportService().report(new DatabindingFailedReport(ex));
 			return;
 		}
 

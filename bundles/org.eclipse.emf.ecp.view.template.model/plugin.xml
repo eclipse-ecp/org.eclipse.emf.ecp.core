@@ -153,4 +153,20 @@
             genModel="model/wrapStyle.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated referenceStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/reference/model"
+            class="org.eclipse.emf.ecp.view.template.style.reference.model.VTReferencePackage"
+            genModel="model/referenceStyle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated keyBinding -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/keybinding/model"
+            class="org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingPackage"
+            genModel="model/keyBinding.genmodel"/>
+   </extension>
+
 </plugin>

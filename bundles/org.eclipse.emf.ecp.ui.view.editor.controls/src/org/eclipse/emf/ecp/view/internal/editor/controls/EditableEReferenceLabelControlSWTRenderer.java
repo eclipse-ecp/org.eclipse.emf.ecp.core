@@ -68,7 +68,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 
 		GridLayoutFactory.fillDefaults().numColumns(3).spacing(0, 0).equalWidth(false).applyTo(composite);
 
-		final EMFFormsLabelProvider labelProvider = Activator.getDefault().getEMFFormsLabelProvider();
+		final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
 		final Button selectClass = new Button(composite, SWT.PUSH);
 		try {
 			final IObservableValue labelText = labelProvider.getDisplayName(getVElement().getDomainModelReference(),
@@ -131,7 +131,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		final Button unset = new Button(composite, SWT.PUSH);
 		unset.setText("Unset"); //$NON-NLS-1$
 		unset.setToolTipText("Unset"); //$NON-NLS-1$
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();

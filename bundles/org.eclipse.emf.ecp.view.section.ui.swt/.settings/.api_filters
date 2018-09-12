@@ -45,10 +45,22 @@
                 <message_argument value="SectionLeafSWTRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.18" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionLeafSWTRenderer"/>
+                <message_argument value="SectionLeafSWTRenderer(VSection, ViewModelContext, ReportService)"/>
+            </message_arguments>
+        </filter>
         <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionLeafSWTRenderer"/>
                 <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.18" id="576778288">
+            <message_arguments>
+                <message_argument value="AbstractSectionSWTRenderer"/>
+                <message_argument value="SectionLeafSWTRenderer"/>
             </message_arguments>
         </filter>
     </resource>
@@ -59,10 +71,22 @@
                 <message_argument value="SectionNodeSWTRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.18" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionNodeSWTRenderer"/>
+                <message_argument value="SectionNodeSWTRenderer(VSection, ViewModelContext, ReportService)"/>
+            </message_arguments>
+        </filter>
         <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionNodeSWTRenderer"/>
                 <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.18" id="576778288">
+            <message_arguments>
+                <message_argument value="AbstractSectionSWTRenderer"/>
+                <message_argument value="SectionNodeSWTRenderer"/>
             </message_arguments>
         </filter>
     </resource>

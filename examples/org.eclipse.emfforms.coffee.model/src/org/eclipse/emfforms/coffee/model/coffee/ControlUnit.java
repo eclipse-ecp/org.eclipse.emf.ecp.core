@@ -64,7 +64,7 @@ public interface ControlUnit extends Component {
 	void setProcessor(Processor value);
 
 	/**
-	 * Returns the value of the '<em><b>Dimension</b></em>' reference.
+	 * Returns the value of the '<em><b>Dimension</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Dimension</em>' reference isn't clear,
@@ -72,21 +72,21 @@ public interface ControlUnit extends Component {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 *
-	 * @return the value of the '<em>Dimension</em>' reference.
+	 * @return the value of the '<em>Dimension</em>' containment reference.
 	 * @see #setDimension(Dimension)
 	 * @see org.eclipse.emfforms.coffee.model.coffee.CoffeePackage#getControlUnit_Dimension()
-	 * @model required="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
 	Dimension getDimension();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emfforms.coffee.model.coffee.ControlUnit#getDimension
-	 * <em>Dimension</em>}' reference.
+	 * <em>Dimension</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @param value the new value of the '<em>Dimension</em>' reference.
+	 * @param value the new value of the '<em>Dimension</em>' containment reference.
 	 * @see #getDimension()
 	 * @generated
 	 */

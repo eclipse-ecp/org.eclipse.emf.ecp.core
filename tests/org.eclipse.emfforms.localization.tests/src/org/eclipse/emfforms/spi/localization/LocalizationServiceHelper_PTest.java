@@ -31,6 +31,17 @@ import org.osgi.framework.ServiceRegistration;
 public class LocalizationServiceHelper_PTest {
 
 	private static final String TEST_KEY = "testKey"; //$NON-NLS-1$
+	private static final String TEST_VALUE = "Test Value"; //$NON-NLS-1$
+	private static final String TEST_VALUE_LANGUAGE = "Test Value Language"; //$NON-NLS-1$
+	private static final String TEST_VALUE_LANGUAGE_COUNTRY = "Test Value Country"; //$NON-NLS-1$
+	private static final String TEST_VALUE_LANGUAGE_COUNTRY_VARIANT = "Test Value Variant"; //$NON-NLS-1$
+	private static final String TEST_VALUE_FOO = "Test Value Foo"; //$NON-NLS-1$
+	private static final String TEST_VALUE_BAR = "Test Value Bar"; //$NON-NLS-1$
+	private static final String LOCALE_LANGUAGE = "test"; //$NON-NLS-1$
+	private static final String LOCALE_COUNTRY = "country"; //$NON-NLS-1$
+	private static final String LOCALE_VARIANT = "variant"; //$NON-NLS-1$
+	private static final String LOCALE_FOO = "foo"; //$NON-NLS-1$
+	private static final String LOCALE_BAR = "bar"; //$NON-NLS-1$
 
 	/**
 	 * Test method for
@@ -40,7 +51,7 @@ public class LocalizationServiceHelper_PTest {
 	@Test
 	public void testGetStringWithoutLocaleProvider() {
 		final String string = LocalizationServiceHelper.getString(getClass(), TEST_KEY);
-		assertEquals("Test Value", string); //$NON-NLS-1$
+		assertEquals(TEST_VALUE, string);
 	}
 
 	/**
@@ -61,18 +72,81 @@ public class LocalizationServiceHelper_PTest {
 	 * .
 	 */
 	@Test
-	public void testGetStringWithLocaleProvider() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final Locale locale = new Locale("test"); //$NON-NLS-1$
-		final EMFFormsLocaleProvider localeProvider = Mockito.mock(EMFFormsLocaleProvider.class);
-		Mockito.when(localeProvider.getLocale()).thenReturn(locale);
-		final ServiceRegistration<EMFFormsLocaleProvider> registerService = bundleContext.registerService(
-			EMFFormsLocaleProvider.class, localeProvider, null);
+	public void testGetStringWithLocaleProvider_Language() {
+		final Locale locale = new Locale(LOCALE_LANGUAGE);
+		final ServiceRegistration<EMFFormsLocaleProvider> registerService = setupLocale(locale);
 
 		final String string = LocalizationServiceHelper.getString(getClass(), TEST_KEY);
 
-		assertEquals("The Translated Test Value", string); //$NON-NLS-1$
+		assertEquals(TEST_VALUE_LANGUAGE, string);
 		registerService.unregister();
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.spi.localization.LocalizationServiceHelper#getString(java.lang.Class, java.lang.String)}
+	 * .
+	 */
+	@Test
+	public void testGetStringWithLocaleProvider_Country() {
+		final Locale locale = new Locale(LOCALE_LANGUAGE, LOCALE_COUNTRY);
+		final ServiceRegistration<EMFFormsLocaleProvider> registerService = setupLocale(locale);
+
+		final String string = LocalizationServiceHelper.getString(getClass(), TEST_KEY);
+		assertEquals(TEST_VALUE_LANGUAGE_COUNTRY, string);
+		registerService.unregister();
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.spi.localization.LocalizationServiceHelper#getString(java.lang.Class, java.lang.String)}
+	 * .
+	 */
+	@Test
+	public void testGetStringWithLocaleProvider_Variant() {
+		final Locale locale = new Locale(LOCALE_LANGUAGE, LOCALE_COUNTRY, LOCALE_VARIANT);
+		final ServiceRegistration<EMFFormsLocaleProvider> registerService = setupLocale(locale);
+
+		final String string = LocalizationServiceHelper.getString(getClass(), TEST_KEY);
+		assertEquals(TEST_VALUE_LANGUAGE_COUNTRY_VARIANT, string);
+		registerService.unregister();
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.spi.localization.LocalizationServiceHelper#getString(java.lang.Class, java.lang.String)}
+	 * .
+	 */
+	@Test
+	public void testGetStringWithLocaleProvider_FallbackCountry() {
+		final Locale locale = new Locale(LOCALE_BAR, LOCALE_BAR, LOCALE_BAR);
+		final ServiceRegistration<EMFFormsLocaleProvider> registerService = setupLocale(locale);
+
+		final String string = LocalizationServiceHelper.getString(getClass(), TEST_KEY);
+		assertEquals(TEST_VALUE_BAR, string);
+		registerService.unregister();
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.spi.localization.LocalizationServiceHelper#getString(java.lang.Class, java.lang.String)}
+	 * .
+	 */
+	@Test
+	public void testGetStringWithLocaleProvider_FallbackLanguage() {
+		final Locale locale = new Locale(LOCALE_FOO, LOCALE_BAR);
+		final ServiceRegistration<EMFFormsLocaleProvider> registerService = setupLocale(locale);
+
+		final String string = LocalizationServiceHelper.getString(getClass(), TEST_KEY);
+		assertEquals(TEST_VALUE_FOO, string);
+		registerService.unregister();
+	}
+
+	private ServiceRegistration<EMFFormsLocaleProvider> setupLocale(Locale locale) {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final EMFFormsLocaleProvider localeProvider = Mockito.mock(EMFFormsLocaleProvider.class);
+		Mockito.when(localeProvider.getLocale()).thenReturn(locale);
+		return bundleContext.registerService(EMFFormsLocaleProvider.class, localeProvider, null);
 	}
 
 }

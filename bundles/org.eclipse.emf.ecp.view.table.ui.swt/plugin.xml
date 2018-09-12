@@ -9,6 +9,17 @@
             id="org.eclipse.emf.ecp.view.table.ui.swt.enumCellEditor"
             tester="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditorTester">
       </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceCellEditor"
+            id="org.eclipse.emf.ecp.view.table.ui.swt.multireferenceCellEditor"
+            tester="org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceCellEditorTester">
+      </cellEditor>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.tooltipModifier">
+      <modifier
+            class="org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceTooltipModifier">
+      </modifier>
    </extension>
 
 </plugin>

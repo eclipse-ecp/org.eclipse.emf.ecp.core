@@ -80,6 +80,7 @@ public final class TableTestUtil {
 	public static VTableControl createTableControl() {
 		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
 		tc.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
+		tc.setUuid("UUID"); //$NON-NLS-1$
 		return tc;
 	}
 }

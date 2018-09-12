@@ -29,8 +29,10 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -39,6 +41,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -58,11 +61,13 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
-	 * @since 1.6
+	 * @param viewTemplateProvider the {@link VTViewTemplateProvider}
+	 * @since 1.18
 	 */
 	@Inject
-	public SectionNodeSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
-		super(vElement, viewContext, reportService);
+	public SectionNodeSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService,
+		VTViewTemplateProvider viewTemplateProvider) {
+		super(vElement, viewContext, reportService, viewTemplateProvider);
 	}
 
 	private Set<AbstractSectionSWTRenderer> childRenderers;
@@ -133,8 +138,15 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		int row = 0;
 
 		/* label */
+		final Optional<Integer> labelWidth = getLabelWidth();
+		Point prefSize;
+		if (labelWidth.isPresent()) {
+			prefSize = new Point(labelWidth.get(), SWT.DEFAULT);
+		} else {
+			prefSize = new Point(SWT.DEFAULT, SWT.DEFAULT);
+		}
 		int curSelfColumn = 0;
-		gridCells.add(createGridCell(row, curSelfColumn++, this));
+		gridCells.add(createGridCell(row, curSelfColumn++, this, prefSize));
 		/* empty columns */
 		final int emptyColumns = columns - selfColumns;
 		for (int i = 0; i < emptyColumns; i++) {
@@ -160,7 +172,8 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 							createGridCell(
 								currentRow,
 								swtGridCell.getColumn(),
-								swtGridCell.getRenderer()));
+								swtGridCell.getRenderer(),
+								swtGridCell.getPreferredSize()));
 					} else {
 						/* create empty column */
 						gridCells.add(createGridCell(currentRow, emptyCellColumnIndicator--, renderer));
@@ -228,6 +241,13 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	}
 
+	private SWTGridCell createGridCell(int row, int column,
+		AbstractSWTRenderer<? extends VElement> renderer, Point prefSize) {
+		final SWTGridCell gridCell = createGridCell(row, column, renderer);
+		gridCell.setPreferredSize(prefSize);
+		return gridCell;
+	}
+
 	@Override
 	protected Control createFirstColumn(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -283,7 +303,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	@Override
 	protected void applyEnable() {
-		getExpandableComposite().setEnabled(getVElement().isEnabled());
+		getExpandableComposite().setEnabled(getVElement().isEffectivelyEnabled());
 	}
 
 	@Override

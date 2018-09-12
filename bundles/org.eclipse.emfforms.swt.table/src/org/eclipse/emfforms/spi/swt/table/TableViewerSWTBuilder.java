@@ -20,10 +20,12 @@ import java.util.Set;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.common.Feature;
 import org.eclipse.emfforms.internal.swt.table.DefaultTableControlSWTCustomization;
+import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
+import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -45,6 +47,7 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	/** The input object. */
 	private final Object input;
 	/** The table control customization. */
+	@SuppressWarnings("rawtypes")
 	private final DefaultTableControlSWTCustomization customization;
 	/** The title. */
 	private final IObservableValue title;
@@ -60,6 +63,7 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	 * @param title the title
 	 * @param tooltip the tooltip
 	 */
+	@SuppressWarnings("rawtypes")
 	protected TableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input, IObservableValue title,
 		IObservableValue tooltip) {
 		this.composite = composite;
@@ -200,30 +204,31 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	 * Use this method to customize the way the button bar is filled.
 	 * </p>
 	 * <p>
-	 * The {@link DefaultButtonBarBuilder default implementation} will add an add and a remove button.
+	 * The default behavior will not add any buttons.
 	 * </p>
 	 *
-	 * @param builder the {@link ButtonBarBuilder}
+	 * @param actionBar the {@link ActionBar}
 	 * @return self
 	 */
-	public TableViewerSWTBuilder customizeButtons(ButtonBarBuilder builder) {
-		customization.setButtonBarBuilder(builder);
+	@SuppressWarnings("unchecked")
+	public TableViewerSWTBuilder customizeActionBar(ActionBar<? extends Viewer> actionBar) {
+		customization.setActionBar(actionBar);
 		return this;
 	}
 
 	/**
 	 * <p>
-	 * Use this method to customize the way new elements are created.
+	 * Use this method to customize the key bindings for the table viewer.
 	 * </p>
 	 * <p>
-	 * This may only be used in conjunction with the {@link DefaultButtonBarBuilder}
+	 * The default behavior will not register any bindings.
 	 * </p>
 	 *
-	 * @param creator the creator
+	 * @param actionConfiguration the {@link ActionConfiguration}
 	 * @return self
 	 */
-	public TableViewerSWTBuilder customizeElementCreation(NewElementCreator<Object, Button> creator) {
-		customization.setNewElementCreator(creator);
+	public TableViewerSWTBuilder customizeActionConfiguration(ActionConfiguration actionConfiguration) {
+		customization.setActionConfiguration(actionConfiguration);
 		return this;
 	}
 
@@ -282,9 +287,9 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	 *
 	 * @return the {@link TableViewerComposite}
 	 */
-	public AbstractTableViewerComposite build() {
+	public AbstractTableViewerComposite<? extends AbstractTableViewer> build() {
 
-		final AbstractTableViewerComposite viewerComposite = //
+		final AbstractTableViewerComposite<? extends AbstractTableViewer> viewerComposite = //
 			new TableViewerComposite(composite, swtStyleBits, input, customization, title, tooltip);
 
 		viewerComposite.setData(TableConfiguration.ID, customization.getTableConfiguration());

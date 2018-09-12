@@ -19,6 +19,10 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emfforms.common.Feature;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.internal.swt.table.action.KeyBindingManager;
+import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
+import org.eclipse.emfforms.spi.swt.table.action.ActionBarProvider;
+import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.viewers.AbstractTableViewer;
@@ -27,6 +31,9 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
@@ -46,6 +53,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	private final EMFDataBindingContext emfDatabindingContext;
 	private Optional<List<Control>> validationControls;
 	private final Set<Feature> enabledFeatures;
+	private final Optional<ActionBar<V>> actionBar;
 
 	/**
 	 * Default constructor.
@@ -68,6 +76,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 
 		emfDatabindingContext = new EMFDataBindingContext();
 		enabledFeatures = determineEnabledFeatures(customization);
+		actionBar = customization.getActionBar();
 
 		renderControl(this, customization, inputObject, emfDatabindingContext, title, tooltip);
 	}
@@ -95,6 +104,16 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	 */
 	public Set<Feature> getEnabledFeatures() {
 		return enabledFeatures;
+	}
+
+	/**
+	 * If present, returns the {@link ActionBar} configuring actions and corresponding control for this composite's
+	 * viewer.
+	 *
+	 * @return The {@link ActionBar}, if any
+	 */
+	public Optional<ActionBar<V>> getActionBar() {
+		return actionBar;
 	}
 
 	/**
@@ -144,9 +163,17 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 
 		final V tableViewer = createTableViewer(customization, viewerComposite);
 
+		// If an action configuration was configured, bind key bindings to the viewer
+		final Optional<ActionConfiguration> actionConfiguration = customization.getActionConfiguration();
+		if (actionConfiguration.isPresent()) {
+			final KeyBindingManager keyBindingManager = new KeyBindingManager();
+			keyBindingManager.applyActionConfiguration(actionConfiguration.get());
+			keyBindingManager.bindToViewer(tableViewer);
+		}
+
 		final Optional<Composite> buttonComposite = customization.getButtonComposite();
 		if (buttonComposite.isPresent()) {
-			initButtonComposite(buttonComposite.get(), customization, tableViewer);
+			initActionBar(buttonComposite.get(), customization, tableViewer);
 		}
 
 		enableTooltipSupport(tableViewer);
@@ -165,6 +192,14 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		configureViewerFilters(tableViewer);
 
 		tableViewer.setInput(inputObject);
+
+		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				viewerSelectionChanged(event);
+			}
+		});
 
 		final AbstractColumnLayout layout = createLayout(viewerComposite);
 		final Widget[] columns = getColumns();
@@ -251,6 +286,21 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	}
 
 	/**
+	 * This method gets called when the selection on the {@link TableViewer} (see {@link #getTableViewer()}) has
+	 * changed.
+	 * <p>
+	 * If you override this method make sure to call super.
+	 * </p>
+	 *
+	 * @param event the {@link SelectionChangedEvent}
+	 */
+	protected void viewerSelectionChanged(SelectionChangedEvent event) {
+		if (actionBar.isPresent()) {
+			actionBar.get().updateActionBar();
+		}
+	}
+
+	/**
 	 * Creates a new {@link ColumnViewerEditorActivationStrategy} for the given table viewer.
 	 *
 	 * @param tableViewer the target table viewer.
@@ -275,10 +325,12 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 	}
 
-	private static void initButtonComposite(Composite composite, ButtonBarBuilder customization,
-		AbstractTableViewer viewer) {
-		customization.fillButtonComposite(composite, viewer);
-
+	private static <T extends AbstractTableViewer> void initActionBar(
+		Composite composite, ActionBarProvider<T> actionBarProvider, T tableViewer) {
+		final Optional<ActionBar<T>> actionBar = actionBarProvider.getActionBar();
+		if (actionBar.isPresent()) {
+			actionBar.get().fillComposite(composite, tableViewer);
+		}
 	}
 
 	private static void initTitleLabel(Label label, IObservableValue title, IObservableValue tooltip,

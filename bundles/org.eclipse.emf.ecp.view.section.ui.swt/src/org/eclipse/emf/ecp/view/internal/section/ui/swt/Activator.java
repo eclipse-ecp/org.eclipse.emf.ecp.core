@@ -12,10 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.section.ui.swt;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -63,31 +60,4 @@ public class Activator extends Plugin {
 		return plugin;
 	}
 
-	/**
-	 * Returns the {@link ReportService}.
-	 *
-	 * @return the {@link ReportService}
-	 */
-	public ReportService getReportService() {
-		final BundleContext bundleContext = getBundle().getBundleContext();
-		final ServiceReference<ReportService> serviceReference =
-			bundleContext.getServiceReference(ReportService.class);
-		return bundleContext.getService(serviceReference);
-	}
-
-	/**
-	 * Returns the {@link EMFFormsDatabinding} service.
-	 *
-	 * @return The {@link EMFFormsDatabinding}
-	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
-
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
-	}
 }

@@ -12,8 +12,8 @@
   <packaging>rcpttTest</packaging>
 
 	<properties>
-    <eclipse-name>photon</eclipse-name>
-	<eclipse-sr>M6</eclipse-sr>
+    <eclipse-name>2018-09</eclipse-name>
+	<eclipse-sr>M3</eclipse-sr>
   </properties>
   <build>
   	<plugins>

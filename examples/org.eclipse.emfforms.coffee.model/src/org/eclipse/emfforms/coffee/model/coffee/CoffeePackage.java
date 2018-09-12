@@ -258,7 +258,7 @@ public interface CoffeePackage extends EPackage {
 	int CONTROL_UNIT__PROCESSOR = COMPONENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Dimension</b></em>' reference.
+	 * The feature id for the '<em><b>Dimension</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -948,12 +948,12 @@ public interface CoffeePackage extends EPackage {
 	EReference getControlUnit_Processor();
 
 	/**
-	 * Returns the meta object for the reference
+	 * Returns the meta object for the containment reference
 	 * '{@link org.eclipse.emfforms.coffee.model.coffee.ControlUnit#getDimension <em>Dimension</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @return the meta object for the reference '<em>Dimension</em>'.
+	 * @return the meta object for the containment reference '<em>Dimension</em>'.
 	 * @see org.eclipse.emfforms.coffee.model.coffee.ControlUnit#getDimension()
 	 * @see #getControlUnit()
 	 * @generated
@@ -1430,7 +1430,7 @@ public interface CoffeePackage extends EPackage {
 		EReference CONTROL_UNIT__PROCESSOR = eINSTANCE.getControlUnit_Processor();
 
 		/**
-		 * The meta object literal for the '<em><b>Dimension</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Dimension</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *

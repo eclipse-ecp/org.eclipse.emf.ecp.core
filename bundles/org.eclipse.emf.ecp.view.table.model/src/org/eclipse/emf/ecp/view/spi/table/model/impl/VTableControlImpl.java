@@ -47,6 +47,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailView <em>Detail View</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isEnableDetailEditingDialog <em>Enable
  * Detail Editing Dialog</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isDuplicateDisabled <em>Duplicate
+ * Disabled</em>}</li>
  * </ul>
  *
  * @generated
@@ -163,6 +165,34 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * @ordered
 	 */
 	protected boolean enableDetailEditingDialog = ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isDuplicateDisabled() <em>Duplicate Disabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #isDuplicateDisabled()
+	 * @generated
+	 * @ordered
+	 *
+	 */
+	protected static final boolean DUPLICATE_DISABLED_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isDuplicateDisabled() <em>Duplicate Disabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #isDuplicateDisabled()
+	 * @generated
+	 * @ordered
+	 *
+	 */
+	protected boolean duplicateDisabled = DUPLICATE_DISABLED_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -380,6 +410,33 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * @generated
 	 */
 	@Override
+	public boolean isDuplicateDisabled() {
+		return duplicateDisabled;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setDuplicateDisabled(boolean newDuplicateDisabled) {
+		final boolean oldDuplicateDisabled = duplicateDisabled;
+		duplicateDisabled = newDuplicateDisabled;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__DUPLICATE_DISABLED,
+				oldDuplicateDisabled, duplicateDisabled));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
@@ -411,6 +468,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 			return getDetailView();
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			return isEnableDetailEditingDialog();
+		case VTablePackage.TABLE_CONTROL__DUPLICATE_DISABLED:
+			return isDuplicateDisabled();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -444,6 +503,9 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			setEnableDetailEditingDialog((Boolean) newValue);
 			return;
+		case VTablePackage.TABLE_CONTROL__DUPLICATE_DISABLED:
+			setDuplicateDisabled((Boolean) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -475,6 +537,9 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			setEnableDetailEditingDialog(ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT);
 			return;
+		case VTablePackage.TABLE_CONTROL__DUPLICATE_DISABLED:
+			setDuplicateDisabled(DUPLICATE_DISABLED_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -500,6 +565,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 			return detailView != null;
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			return enableDetailEditingDialog != ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT;
+		case VTablePackage.TABLE_CONTROL__DUPLICATE_DISABLED:
+			return duplicateDisabled != DUPLICATE_DISABLED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -525,6 +592,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		result.append(detailEditing);
 		result.append(", enableDetailEditingDialog: "); //$NON-NLS-1$
 		result.append(enableDetailEditingDialog);
+		result.append(", duplicateDisabled: "); //$NON-NLS-1$
+		result.append(duplicateDisabled);
 		result.append(')');
 		return result.toString();
 	}

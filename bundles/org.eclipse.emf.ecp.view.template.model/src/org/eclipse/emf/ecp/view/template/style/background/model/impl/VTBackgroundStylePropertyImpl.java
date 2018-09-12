@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundPackage;
 import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
@@ -195,12 +196,12 @@ public class VTBackgroundStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (styleProperty == null) {
+		final boolean filteredEqual = EMFUtils.filteredEquals(this, styleProperty,
+			VTBackgroundPackage.Literals.BACKGROUND_STYLE_PROPERTY__COLOR);
+		if (!filteredEqual) {
 			return false;
 		}
-		if (eClass() != styleProperty.eClass()) {
-			return false;
-		}
+
 		final VTBackgroundStyleProperty backgroundStyleProperty = VTBackgroundStyleProperty.class.cast(styleProperty);
 		if (getColor() == null && backgroundStyleProperty.getColor() == null) {
 			return true;

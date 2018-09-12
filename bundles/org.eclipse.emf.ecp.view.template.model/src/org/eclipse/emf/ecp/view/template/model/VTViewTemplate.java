@@ -42,7 +42,10 @@ public interface VTViewTemplate extends EObject {
 	 * If the meaning of the '<em>Control Validation Configuration</em>' containment reference isn't clear, there really
 	 * should be more of a description here...
 	 * </p>
-	 * <!-- end-user-doc -->
+	 * 
+	 * @deprecated Use the {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty
+	 *             VTValidationProperty} instead.
+	 *             <!-- end-user-doc -->
 	 *
 	 * @return the value of the '<em>Control Validation Configuration</em>' containment reference.
 	 * @see #setControlValidationConfiguration(VTControlValidationTemplate)
@@ -50,6 +53,7 @@ public interface VTViewTemplate extends EObject {
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
+	@Deprecated
 	VTControlValidationTemplate getControlValidationConfiguration();
 
 	/**
@@ -57,12 +61,16 @@ public interface VTViewTemplate extends EObject {
 	 * '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration <em>Control
 	 * Validation Configuration</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @deprecated Use the {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty
+	 *             VTValidationProperty} instead.
+	 *             <!-- end-user-doc -->
 	 *
 	 * @param value the new value of the '<em>Control Validation Configuration</em>' containment reference.
 	 * @see #getControlValidationConfiguration()
 	 * @generated
 	 */
+	@Deprecated
 	void setControlValidationConfiguration(VTControlValidationTemplate value);
 
 	/**

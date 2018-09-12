@@ -11,12 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.treemasterdetail.internal.validation;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
@@ -72,24 +74,66 @@ public class TreeMasterDetailValidationInitiator implements
 				if (!mapping.get(treeContextEntry).contains(notification.getNotifier())) {
 					return;
 				}
-				final Set<Object> children = getAllChildren(notification.getNotifier(),
-					adapterFactoryContentProvider);
-				if (mapping.get(treeContextEntry).containsAll(children)) {
+				final Set<Object> children = getAllChildren(notification.getNotifier(), adapterFactoryContentProvider);
+				final Set<Object> childrenTreeContextEntry = new HashSet<Object>(mapping.get(treeContextEntry));
+
+				if (childrenTreeContextEntry.containsAll(children)) {
+					if (isChildObjectRemoved(children, childrenTreeContextEntry,
+						notification.getRawNotification().getEventType())) {
+
+						// Calculate the removed child objects by calculating the diff between the objects referenced in
+						// the mapping and the notifier and its actual children.
+						childrenTreeContextEntry.removeAll(children);
+						childrenTreeContextEntry.remove(notification.getNotifier());
+
+						// For every removed child object, remove this listener and the TMD Validation Initiator as
+						// context users from the child object's context. This allows that the child context is disposed
+						// once its other listeners are removed, too.
+						for (final Object child : childrenTreeContextEntry) {
+							final ViewModelContext childContext = getExistingOrNewChildContext(treeContextEntry, child);
+							childContext.removeContextUser(this);
+							childContext.removeContextUser(TreeMasterDetailValidationInitiator.this);
+							mapping.get(treeContextEntry).remove(child);
+						}
+					}
 					return;
 				}
-				children.removeAll(mapping.get(treeContextEntry));
+
+				// Register this listener to every child context of any newly added child object.
+				children.removeAll(childrenTreeContextEntry);
 				for (final Object child : children) {
 					mapping.get(treeContextEntry).add(child);
-					final VElement viewModel = context.getViewModel();
-					final VViewModelProperties properties = ViewModelPropertiesHelper
-						.getInhertitedPropertiesOrEmpty(viewModel);
-					properties.addNonInheritableProperty(DETAIL_KEY, true);
-					final EObject addedObject = (EObject) manipulateSelection(child);
-					final ViewModelContext childContext = treeContextEntry.context.getChildContext(addedObject,
-						treeContextEntry.control, ViewProviderHelper.getView(addedObject, properties));
+					final ViewModelContext childContext = getExistingOrNewChildContext(treeContextEntry, child);
 					childContext.addContextUser(this);
 				}
 			}
+		}
+
+		/**
+		 * Checks whether a child object has been removed by looking at the notification type and comparing the actual
+		 * children object to the children object known to the TreeMasterDetailValidationInitiator.
+		 *
+		 * @param children The actual children objects of the notifier
+		 * @param childrenFromTreeContextEntry The children objects of the notifier known to the
+		 *            TreeMasterDetailValidationInitiator
+		 * @param notificationType The type of notification
+		 * @return Whether a child object of the notifier was removed
+		 */
+		private boolean isChildObjectRemoved(Set<Object> children, Set<Object> childrenFromTreeContextEntry,
+			int notificationType) {
+			return (Notification.REMOVE == notificationType || Notification.REMOVE_MANY == notificationType)
+				&& !children.containsAll(childrenFromTreeContextEntry);
+		}
+
+		private ViewModelContext getExistingOrNewChildContext(TreeContextMapping treeContextEntry, Object childObject) {
+			final VElement viewModel = context.getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper
+				.getInhertitedPropertiesOrEmpty(viewModel);
+			properties.addNonInheritableProperty(DETAIL_KEY, true);
+			final EObject eObject = (EObject) manipulateSelection(childObject);
+
+			return treeContextEntry.context.getChildContext(eObject,
+				treeContextEntry.control, ViewProviderHelper.getView(eObject, properties));
 		}
 	}
 

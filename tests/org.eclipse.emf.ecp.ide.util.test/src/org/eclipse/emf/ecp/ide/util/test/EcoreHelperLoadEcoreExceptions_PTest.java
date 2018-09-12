@@ -23,6 +23,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.jface.resource.JFaceResources;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -38,18 +39,14 @@ public class EcoreHelperLoadEcoreExceptions_PTest {
 	private static String doesNotExistEcorePath = "/TestEcoreHelperProjectResources/DoesNotExist.ecore";
 	private static String syntaxErrorEcorePath = "/TestEcoreHelperProjectResources/A_syntaxError.ecore";
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
 	public static void setUp() throws Exception {
-		// BEGIN SUPRESS CATCH EXCEPTION
 		try {
 			JFaceResources.getImageRegistry();
 		} catch (final RuntimeException e) {
 			// expected fail, some strange initialization error is happing
 		}
-		// END SUPRESS CATCH EXCEPTION
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister
@@ -61,6 +58,13 @@ public class EcoreHelperLoadEcoreExceptions_PTest {
 	private static void installResourcesProject() throws Exception {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
+	}
+	// END SUPRESS CATCH EXCEPTION
+
+	@After
+	public void tearDown() throws Exception {
+		EcoreHelper.unregisterEcore(doesNotExistEcorePath);
+		EcoreHelper.unregisterEcore(syntaxErrorEcorePath);
 	}
 
 	@Test

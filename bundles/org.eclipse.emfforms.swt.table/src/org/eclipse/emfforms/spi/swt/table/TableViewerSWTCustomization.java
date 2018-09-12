@@ -15,6 +15,8 @@ package org.eclipse.emfforms.spi.swt.table;
 import java.util.List;
 
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.swt.table.action.ActionBarProvider;
+import org.eclipse.emfforms.spi.swt.table.action.ActionConfigurationProvider;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -28,7 +30,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
  * @param <T> the TableViewer implementation to use
  */
 public interface TableViewerSWTCustomization<T extends AbstractTableViewer>
-	extends TableViewerCompositeBuilder, TableViewerCreator<T>, ButtonBarBuilder,
+	extends TableViewerCompositeBuilder, TableViewerCreator<T>, ActionBarProvider<T>, ActionConfigurationProvider,
 	DNDProvider {
 
 	/**

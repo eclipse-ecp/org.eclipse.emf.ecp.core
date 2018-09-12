@@ -33,8 +33,10 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 
 /**
@@ -105,9 +107,9 @@ public class StackItemViewService implements ViewModelService {
 	private Setting addToRegistry(VStackLayout stack, VDomainModelReference dmr) {
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding().getObservableValue(dmr, domain);
+			observableValue = context.getService(EMFFormsDatabinding.class).getObservableValue(dmr, domain);
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			context.getService(ReportService.class).report(new DatabindingFailedReport(ex));
 			// TODO JF how to handle?
 			return null;
 		}

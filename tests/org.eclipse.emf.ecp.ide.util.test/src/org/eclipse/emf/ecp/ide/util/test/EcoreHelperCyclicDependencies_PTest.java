@@ -35,9 +35,7 @@ public class EcoreHelperCyclicDependencies_PTest {
 	private static String eEcorePath = "/TestEcoreHelperProjectResources/E.ecore";
 	private static String fEcorePath = "/TestEcoreHelperProjectResources/F.ecore";
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
@@ -57,6 +55,7 @@ public class EcoreHelperCyclicDependencies_PTest {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
+	// END SUPRESS CATCH EXCEPTION
 
 	@Test
 	public void testRegisterUnregister() throws IOException {

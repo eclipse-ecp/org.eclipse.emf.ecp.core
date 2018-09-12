@@ -22,9 +22,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.WritableList;
@@ -50,13 +52,21 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridTableViewerComposite;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.AddRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.DuplicateRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.RemoveRowAction;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.AuditFactory;
 import org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.AuditPackage;
 import org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.Member;
 import org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.Organization;
 import org.eclipse.emf.ecp.view.table.ui.nebula.grid.test.model.audit.RegisteredUser;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBinding;
+import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBindings;
+import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingFactory;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -74,7 +84,6 @@ import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -639,14 +648,55 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		final Composite gridComposite = Composite.class.cast(tableViewerComposite.getChildren()[0]);
 		final Composite buttonComposite = (Composite) Composite.class.cast(gridComposite.getChildren()[0])
 			.getChildren()[2];
-		assertEquals(4, buttonComposite.getChildren().length);
 
-		final Button addButton = (Button) buttonComposite.getChildren()[2];
-		final Button removeButton = (Button) buttonComposite.getChildren()[3];
-		assertFalse(addButton.isVisible());
-		assertFalse(removeButton.isVisible());
+		// there should be no buttons in case the table is read-only
+		assertEquals(0, buttonComposite.getChildren().length);
 
-		// final Grid grid = getGrid(tableViewerComposite);
-		// GridItem item = grid.getItem(new Point(0,0));
+		final GridControlSWTRenderer swtRenderer = GridControlSWTRenderer.class.cast(getRenderer());
+
+		final Optional<Control> addRowButton = swtRenderer.getControlForAction(AddRowAction.ACTION_ID);
+		final Optional<Control> removeRowButton = swtRenderer.getControlForAction(RemoveRowAction.ACTION_ID);
+		final Optional<Control> duplicateRowButton = swtRenderer.getControlForAction(DuplicateRowAction.ACTION_ID);
+
+		assertFalse(addRowButton.isPresent());
+		assertFalse(removeRowButton.isPresent());
+		assertFalse(duplicateRowButton.isPresent());
+	}
+
+	public void testActionKeyBindings()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		mockDataset();
+
+		final Set<VTStyleProperty> properties = new LinkedHashSet<VTStyleProperty>();
+		final VTKeyBindings keyBindings = VTKeybindingFactory.eINSTANCE.createKeyBindings();
+		addKeyBinding(keyBindings, AddRowAction.ACTION_ID, "M1+e");
+		properties.add(keyBindings);
+
+		final VTViewTemplateProvider viewTemplateProvider = mock(VTViewTemplateProvider.class);
+		when(viewTemplateProvider.getStyleProperties(getvControl(), getContext()))
+			.thenReturn(properties);
+
+		setTemplateProvider(viewTemplateProvider);
+
+		getShell().open();
+		final Control rendered = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertControl(rendered);
+		final GridTableViewerComposite tableViewerComposite = (GridTableViewerComposite) rendered;
+		final Composite gridComposite = Composite.class.cast(tableViewerComposite.getChildren()[0]);
+		final Composite buttonComposite = (Composite) Composite.class.cast(gridComposite.getChildren()[0])
+			.getChildren()[2];
+
+		final GridControlSWTRenderer swtRenderer = GridControlSWTRenderer.class.cast(getRenderer());
+
+	}
+
+	private void addKeyBinding(VTKeyBindings bindings, String actionId, String sequence) {
+		final VTKeyBinding binding = VTKeybindingFactory.eINSTANCE.createKeyBinding();
+		binding.setId(actionId);
+		binding.setKeySequence(sequence);
+
+		bindings.getBindings().add(binding);
 	}
 }

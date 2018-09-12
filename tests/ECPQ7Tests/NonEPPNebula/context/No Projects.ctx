@@ -1,0 +1,27 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: No Projects
+Element-Type: context
+Element-Version: 2.0
+Id: _oV0I8G_bEeiK5qU9HlvsEg
+Runtime-Version: 2.3.0.201805162310
+Save-Time: 6/14/18 4:02 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+invoke-static -pluginId org.eclipse.emf.ecp.view.model.provider.xmi -className org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager -methodName dispose
+get-view "Model Repositories" | click
+with [get-view "Model Explorer"] {
+	click
+	with [get-tree] {
+		collapse-all
+		get-items | foreach {
+			select-item | get-menu Delete | click
+			get-window Delete | get-button OK | click
+		}
+	}
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

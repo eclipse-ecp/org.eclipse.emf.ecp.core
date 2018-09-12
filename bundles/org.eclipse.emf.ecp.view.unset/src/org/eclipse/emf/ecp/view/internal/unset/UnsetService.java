@@ -32,8 +32,10 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
@@ -61,6 +63,8 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 	 * contained by a hidden parent, are collected here.
 	 */
 	private final Set<VControl> hiddenControlsDuringInit;
+	private ReportService reportService;
+	private EMFFormsDatabinding emfFormsDatabinding;
 
 	/**
 	 * Default constructor for the unset service.
@@ -79,6 +83,8 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
+		reportService = context.getService(ReportService.class);
+		emfFormsDatabinding = context.getService(EMFFormsDatabinding.class);
 		this.context.registerEMFFormsContextListener(this);
 	}
 
@@ -114,17 +120,17 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 
 	private void addControlToMap(VControl control) {
 		if (control.getDomainModelReference() == null) {
-			Activator.getDefault().getReportService().report(
+			reportService.report(
 				new AbstractReport(String.format("The provided control [%1$s] has no defined DMR.", control), //$NON-NLS-1$
 					IStatus.INFO));
 			return;
 		}
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = emfFormsDatabinding
 				.getObservableValue(control.getDomainModelReference(), context.getDomainModel());
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			reportService.report(new DatabindingFailedReport(ex));
 			return;
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -156,10 +162,10 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 	private void removeControlFromMapAndUnsetIfNeeded(VControl control) {
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = emfFormsDatabinding
 				.getObservableValue(control.getDomainModelReference(), context.getDomainModel());
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			reportService.report(new DatabindingFailedReport(ex));
 			return;
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();

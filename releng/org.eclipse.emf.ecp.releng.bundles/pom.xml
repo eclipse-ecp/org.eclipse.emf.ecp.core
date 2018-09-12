@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.17.0-SNAPSHOT</version>
+		<version>1.18.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.17.0-SNAPSHOT</version>
+	<version>1.18.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -280,6 +280,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.table</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.table.panel</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.index</module>

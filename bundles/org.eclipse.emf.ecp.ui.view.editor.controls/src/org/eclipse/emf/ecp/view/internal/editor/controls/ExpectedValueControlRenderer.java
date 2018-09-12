@@ -313,7 +313,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 * @throws DatabindingFailedException if the databinding fails
 	 */
 	protected EObject getObservedEObject() throws DatabindingFailedException {
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EObject result = (EObject) ((IObserving) observableValue).getObserved();
 		observableValue.dispose();

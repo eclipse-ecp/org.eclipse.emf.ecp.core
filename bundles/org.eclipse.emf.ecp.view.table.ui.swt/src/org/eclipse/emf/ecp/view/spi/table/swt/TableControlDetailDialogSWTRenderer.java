@@ -135,7 +135,10 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 			}
 			view = detailView;
 		}
-		return EcoreUtil.copy(view);
+		final VView copy = EcoreUtil.copy(view);
+		copy.setReadonly(
+			!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly() || copy.isReadonly());
+		return copy;
 	}
 
 	/**

@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _CcjB8C3lEeSwhO5Nwx0hPg
-Runtime-Version: 2.1.0.201606221726
-Save-Time: 9/5/16 12:49 PM
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 8/24/18 3:32 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -45,4 +45,125 @@ with [get-editor "Task2.view"] {
     get-tree | select "Task/Control assignee"
     get-editbox -after [get-label Name] | get-text | equals "Control assignee" | verify-true
 }
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" | double-click
+get-editor "task.ecore" | get-tree 
+    | select "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/task.ecore" | get-menu 
+    -path "Load Resource..." | click
+with [get-window "Load Resource"] {
+    get-button "Browse Registered Packages..." | click
+    with [get-window "Package Selection"] {
+        get-table | get-item -path "http:\\/\\/org\\/eclipse\\/example\\/bowling" | click
+        get-button OK | click
+    }
+    get-button OK | click
+}
+with [get-editor "task.ecore" | get-tree] {
+    get-item -path "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/task.ecore/task" | click
+    select "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/task.ecore/task" | get-menu 
+        -path "New Child/EClass" | click
+    get-item -path "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/task.ecore/task/" | click
+    get-item -path "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/task.ecore/task/" | click
+    select "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/task.ecore/task/" | double-click
+}
+with [get-view Properties | get-tree] {
+    select Name | activate-cell-edit -column 1
+    with [get-editbox] {
+        set-text TaskPlayer
+        key-type Enter
+    }
+    apply-cell-edit
+    select "ESuper Types" | activate-cell-edit -column 1
+    get-button "..." | click
+}
+with [get-window "ESuper Types -- TaskPlayer"] {
+    get-table | select Player | double-click
+    get-button OK | click
+}
+with [get-view Properties | get-tree] {
+    apply-cell-edit
+    key-type "M1+s"
+}
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" | get-menu 
+    -path "EMF Forms/Create View Model" | click
+get-window -class ViewModelWizardDialog | get-tree | get-item -path "TaskPlayer -> Player" | get-property caption 
+    | equals "TaskPlayer -> Player" | verify-true
+get-window -class ViewModelWizardDialog | get-button Cancel | click
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" | get-menu 
+    -path "EMF Forms/Create View Model Project" | click
+get-window "New View Model Project" | get-button "Next >" | click
+get-window "New View Model Project" | get-tree | get-item -path "TaskPlayer -> Player" | get-property caption 
+    | equals "TaskPlayer -> Player" | verify-true
+get-window "New View Model Project" | get-button Cancel | click
+
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" | get-menu 
+    -path "New/Other..." | click
+with [get-window New] {
+    get-tree | select "Eclipse Modeling Framework/Ecore Model" | double-click
+    get-button "Next >" | click
+    get-button Finish | click
+}
+get-editor "My.ecore" | get-tree | get-item 
+    -path "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/My.ecore/" | click
+with [get-view Properties | get-tree] {
+    select Name | activate-cell-edit -column 1
+    get-cell 0 1 | mouse up -count 1
+    get-editbox | set-text a
+    select "Ns Prefix" | apply-cell-edit
+    select "Ns Prefix" | activate-cell-edit -column 1
+    activate-cell-edit -column 1
+    double-click
+    apply-cell-edit -deactivate
+    select "Ns Prefix" | activate-cell-edit -column 1
+    get-editbox | set-text a
+    select "Ns URI" | apply-cell-edit
+    select "Ns URI" | activate-cell-edit -column 1
+    get-editbox | click-text
+    select "Ns URI" | activate-cell-edit -column 1
+    get-editbox | set-text a
+    apply-cell-edit
+}
+get-editor "My.ecore" | get-tree 
+    | select "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/My.ecore/a" | get-menu 
+    -path "New Child/EClass" | click
+with [get-view Properties | get-tree] {
+    get-item -path Name | click
+    select Name | activate-cell-edit -column 1
+    get-cell 5 1 | mouse up -count 1
+    get-editbox | set-text A
+    apply-cell-edit
+}
+get-editor "My.ecore" | get-tree 
+    | select "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/My.ecore" | get-menu 
+    -path "Load Resource..." | click
+with [get-window "Load Resource"] {
+    get-button "Browse Workspace..." | click
+    get-window "File Selection" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" 
+        | double-click
+    get-button OK | click
+}
+get-editor "My.ecore" | get-tree | get-item 
+    -path "platform:\\/resource\\/org.eclipse.emf.ecp.makeithappen.model\\/model\\/My.ecore/a/A" | click
+with [get-view Properties | get-tree] {
+    select "ESuper Types" | activate-cell-edit -column 1
+    get-button "..." | click
+}
+with [get-window "ESuper Types -- A"] {
+    get-table | select User | double-click
+    get-button OK | click
+}
+with [get-view Properties | get-tree] {
+    apply-cell-edit
+    key-type "M1+s"
+}
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/My.ecore" | get-menu 
+    -path "EMF Forms/Create View Model" | click
+get-window -class ViewModelWizardDialog | get-tree | get-item -path "A -> User" | get-property caption 
+    | equals "A -> User" | verify-true
+get-window -class ViewModelWizardDialog | get-button Cancel | click
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/My.ecore" | get-menu 
+    -path "EMF Forms/Create View Model Project" | click
+get-window "New View Model Project" | get-button "Next >" | click
+get-window "New View Model Project" | get-tree | get-item -path "A -> User" | get-property caption | equals "A -> User" 
+    | verify-true
+get-window "New View Model Project" | get-button Cancel | click
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

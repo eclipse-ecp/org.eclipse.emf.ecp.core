@@ -13,9 +13,9 @@ package org.eclipse.emf.ecp.view.template.style.validation.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty;
@@ -1435,16 +1435,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (VTValidationStyleProperty.class.equals(styleProperty.getClass())) {
-			return false;
-		}
-		final VTValidationStyleProperty validationStyleProperty = VTValidationStyleProperty.class.cast(styleProperty);
-		for (final EStructuralFeature esf : eClass().getEStructuralFeatures()) {
-			if (!this.eGet(esf).equals(validationStyleProperty.eGet(esf))) {
-				return false;
-			}
-		}
-		return true;
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTValidationStylePropertyImpl

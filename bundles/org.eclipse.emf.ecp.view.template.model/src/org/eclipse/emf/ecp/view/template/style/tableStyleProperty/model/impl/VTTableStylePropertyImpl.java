@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
@@ -49,7 +50,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The default value of the '{@link #getMinimumHeight() <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMinimumHeight()
 	 * @generated
 	 * @ordered
@@ -60,7 +61,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The cached value of the '{@link #getMinimumHeight() <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMinimumHeight()
 	 * @generated
 	 * @ordered
@@ -71,7 +72,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * This is true if the Minimum Height attribute has been set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -81,7 +82,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The default value of the '{@link #getMaximumHeight() <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMaximumHeight()
 	 * @generated
 	 * @ordered
@@ -92,7 +93,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The cached value of the '{@link #getMaximumHeight() <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMaximumHeight()
 	 * @generated
 	 * @ordered
@@ -103,7 +104,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * This is true if the Maximum Height attribute has been set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -114,7 +115,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isShowValidationSummaryTooltip()
 	 * @generated
 	 * @ordered
@@ -126,7 +127,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isShowValidationSummaryTooltip()
 	 * @generated
 	 * @ordered
@@ -137,7 +138,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The default value of the '{@link #isEnableSorting() <em>Enable Sorting</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isEnableSorting()
 	 * @generated
 	 * @ordered
@@ -148,7 +149,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The cached value of the '{@link #isEnableSorting() <em>Enable Sorting</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isEnableSorting()
 	 * @generated
 	 * @ordered
@@ -183,7 +184,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * This is true if the Visible Lines attribute has been set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -193,7 +194,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The default value of the '{@link #getRenderMode() <em>Render Mode</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getRenderMode()
 	 * @generated
 	 * @ordered
@@ -204,7 +205,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The cached value of the '{@link #getRenderMode() <em>Render Mode</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getRenderMode()
 	 * @generated
 	 * @ordered
@@ -214,7 +215,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTTableStylePropertyImpl() {
@@ -224,7 +225,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -235,7 +236,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -246,7 +247,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -265,7 +266,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -284,7 +285,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -295,7 +296,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -306,7 +307,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -325,7 +326,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -344,7 +345,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -355,7 +356,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -366,7 +367,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -383,7 +384,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -394,7 +395,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -410,7 +411,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -421,7 +422,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -440,7 +441,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -459,7 +460,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -470,7 +471,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -481,7 +482,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -497,7 +498,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -522,7 +523,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -553,7 +554,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -584,7 +585,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -609,7 +610,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -649,29 +650,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (!VTTableStyleProperty.class.isInstance(styleProperty)) {
-			return false;
-		}
-		final VTTableStyleProperty other = VTTableStyleProperty.class.cast(styleProperty);
-		if (isSetMaximumHeight() && !other.isSetMaximumHeight()) {
-			return false;
-		}
-		if (!isSetMaximumHeight() && other.isSetMaximumHeight()) {
-			return false;
-		}
-		if (isSetMinimumHeight() && !other.isSetMinimumHeight()) {
-			return false;
-		}
-		if (!isSetMinimumHeight() && other.isSetMinimumHeight()) {
-			return false;
-		}
-		if (getMaximumHeight() != other.getMaximumHeight()) {
-			return false;
-		}
-		if (getMinimumHeight() != other.getMinimumHeight()) {
-			return false;
-		}
-		return true;
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTTableStylePropertyImpl

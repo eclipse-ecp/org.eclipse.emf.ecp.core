@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.template.model:ViewTemplate xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.template.model="http://org/eclipse/emf/ecp/view/template/model" xmlns:org.eclipse.emf.ecp.view.template.selector.viewmodelelement.model="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model" xmlns:org.eclipse.emf.ecp.view.template.style.table.model="http://www.eclipse.org/emf/ecp/view/template/style/table/model">
+<org.eclipse.emf.ecp.view.template.model:ViewTemplate xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.template.model="http://org/eclipse/emf/ecp/view/template/model" xmlns:org.eclipse.emf.ecp.view.template.selector.viewmodelelement.model="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model" xmlns:org.eclipse.emf.ecp.view.template.style.keybinding.model="http://www.eclipse.org/emf/ecp/view/template/style/keybinding/model" xmlns:org.eclipse.emf.ecp.view.template.style.table.model="http://www.eclipse.org/emf/ecp/view/template/style/table/model">
   <styles>
     <selector xsi:type="org.eclipse.emf.ecp.view.template.selector.viewmodelelement.model:ViewModelElementSelector">
       <classType href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl"/>
     </selector>
     <properties xsi:type="org.eclipse.emf.ecp.view.template.style.table.model:TableStyleProperty" visibleLines="4"/>
+    <properties xsi:type="org.eclipse.emf.ecp.view.template.style.keybinding.model:KeyBindings">
+      <bindings id="org.eclipse.emfforms.action.tablecontrol.add_row" keySequence="M1+M3+n"/>
+      <bindings id="org.eclipse.emfforms.action.tablecontrol.remove_row" keySequence="M1+M3+r"/>
+    </properties>
   </styles>
 </org.eclipse.emf.ecp.view.template.model:ViewTemplate>

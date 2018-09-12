@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType;
@@ -42,7 +43,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getButtonAlignment() <em>Button Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getButtonAlignment()
 	 * @generated
 	 * @ordered
@@ -53,7 +54,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getButtonAlignment() <em>Button Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getButtonAlignment()
 	 * @generated
 	 * @ordered
@@ -64,7 +65,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getButtonPlacement() <em>Button Placement</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getButtonPlacement()
 	 * @generated
 	 * @ordered
@@ -75,7 +76,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getButtonPlacement() <em>Button Placement</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getButtonPlacement()
 	 * @generated
 	 * @ordered
@@ -85,7 +86,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTUnsettableStylePropertyImpl() {
@@ -95,7 +96,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -106,7 +107,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,7 +118,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -133,7 +134,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -144,7 +145,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -160,7 +161,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -177,7 +178,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -196,7 +197,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -215,7 +216,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -232,7 +233,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -257,11 +258,7 @@ public class VTUnsettableStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (!(eClass() == styleProperty.eClass())) {
-			return false;
-		}
-		final VTUnsettableStyleProperty unsettableStyleProperty = VTUnsettableStyleProperty.class.cast(styleProperty);
-		return getButtonAlignment() == unsettableStyleProperty.getButtonAlignment();
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTUnsettableStylePropertyImpl

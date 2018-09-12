@@ -177,7 +177,6 @@ public class SettingToControlMapper_ITest {
 		assertEquals(2, mapper.getControlsFor(childSettingReferences).size());
 
 		// Verification that add control and add child context work is done by other test cases.
-
 		mapper.childContextDisposed(childContext);
 
 		// Verify that the mapping for the child setting is empty
@@ -200,6 +199,25 @@ public class SettingToControlMapper_ITest {
 		final Set<VElement> controlsForParentSetting = mapper.getControlsFor(parentSetting);
 		assertEquals(1, controlsForParentSetting.size());
 		assertTrue(controlsForParentSetting.contains(control));
+	}
+
+	@Test
+	public void childContextDisposed_NoSetting() {
+		// Add parent control to later verify that it is not illegally removed during child context disposal
+		mapper.vControlAdded(control);
+
+		// Setup and add child context with one control and one setting
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl childControl = VViewFactory.eINSTANCE.createControl();
+		childControl.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		childView.getChildren().add(childControl);
+		final EClass childDomainObject = EcoreFactory.eINSTANCE.createEClass();
+		childDomainObject.setName("child"); //$NON-NLS-1$
+		final FakeViewContext childContext = new FakeViewContext(childDomainObject, childView);
+		context.addChildContext(control, childContext);
+
+		mapper.vControlRemoved(childControl);
+		mapper.childContextDisposed(childContext);
 
 	}
 

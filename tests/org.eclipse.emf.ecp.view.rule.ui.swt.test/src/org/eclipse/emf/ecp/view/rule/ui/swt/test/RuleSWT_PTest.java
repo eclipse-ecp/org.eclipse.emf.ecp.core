@@ -33,6 +33,7 @@ import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,12 +68,19 @@ public class RuleSWT_PTest {
 		shell.setVisible(true);
 	}
 
+	private Control getTextControl() {
+		final Composite viewComposite = (Composite) renderedControl;
+		final Composite textComposite = (Composite) viewComposite.getChildren()[2];
+		return textComposite.getChildren()[0];
+	}
+
 	@Test
 	public void testEnableRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		EMFFormsNoRendererException {
 		addEnableRule();
 		render();
-		assertTrue(isControlEnabled());
+		assertTrue(renderedControl.isEnabled());
+		assertTrue(getTextControl().isEnabled());
 	}
 
 	@Test
@@ -80,7 +88,8 @@ public class RuleSWT_PTest {
 		EMFFormsNoRendererException {
 		addDisableRule();
 		render();
-		assertTrue(isControlEnabled());
+		assertTrue(renderedControl.isEnabled());
+		assertTrue(getTextControl().isEnabled());
 	}
 
 	@Test
@@ -106,7 +115,8 @@ public class RuleSWT_PTest {
 		final RuleHandle ruleHandle = addDisableRule();
 		RuleTestHelper.addTrueLeafCondition(ruleHandle.getRule());
 		render();
-		assertFalse(isControlEnabled());
+		assertTrue(renderedControl.isEnabled());
+		assertFalse(getTextControl().isEnabled());
 	}
 
 	@Test
@@ -116,7 +126,8 @@ public class RuleSWT_PTest {
 		final RuleHandle ruleHandle = addDisableRule();
 		RuleTestHelper.addFalseLeafCondition(ruleHandle.getRule());
 		render();
-		assertTrue(isControlEnabled());
+		assertTrue(renderedControl.isEnabled());
+		assertTrue(getTextControl().isEnabled());
 	}
 
 	@Test
@@ -126,7 +137,8 @@ public class RuleSWT_PTest {
 		final RuleHandle ruleHandle = addEnableRule();
 		RuleTestHelper.addFalseLeafCondition(ruleHandle.getRule());
 		render();
-		assertFalse(isControlEnabled());
+		assertTrue(renderedControl.isEnabled());
+		assertFalse(getTextControl().isEnabled());
 	}
 
 	@Test
@@ -136,7 +148,8 @@ public class RuleSWT_PTest {
 		final RuleHandle ruleHandle = addEnableRule();
 		RuleTestHelper.addTrueLeafCondition(ruleHandle.getRule());
 		render();
-		assertTrue(isControlEnabled());
+		assertTrue(renderedControl.isEnabled());
+		assertTrue(getTextControl().isEnabled());
 	}
 
 	@Test
@@ -194,7 +207,7 @@ public class RuleSWT_PTest {
 	 * @return
 	 */
 	private boolean isControlVisible() {
-		final org.eclipse.swt.widgets.Control control = getControlWhichIsEnabled(renderedControl);
+		final org.eclipse.swt.widgets.Control control = renderedControl;
 		return control.isVisible();
 	}
 
@@ -224,23 +237,6 @@ public class RuleSWT_PTest {
 		EMFFormsNoRendererException {
 		renderedControl = SWTViewTestHelper.render(view, input, shell);
 
-	}
-
-	/**
-	 * @return
-	 */
-	private boolean isControlEnabled() {
-		final org.eclipse.swt.widgets.Control control = getControlWhichIsEnabled(renderedControl);
-		return control.isEnabled();
-	}
-
-	/**
-	 * @param control
-	 */
-	private org.eclipse.swt.widgets.Control getControlWhichIsEnabled(org.eclipse.swt.widgets.Control control) {
-		assertTrue(control instanceof Composite);
-
-		return control;
 	}
 
 	/**

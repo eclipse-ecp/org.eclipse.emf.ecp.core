@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
@@ -221,9 +222,14 @@ public class DefaultCreateNewModelElementStrategyProvider
 			if (classes.size() == 1) {
 				final EClass only = classes.iterator().next();
 				EObject result = availableChildren.get(only);
+				// if the eclass is not dynamic emf
 				if (result == null) {
-					// Create one in the release 1.16 way
-					result = EcoreUtil.create(only);
+					if (only.getInstanceClass() != null) {
+						// Create one in the release 1.16 way
+						result = EcoreUtil.create(only);
+					} else {
+						result = new DynamicEObjectImpl(only);
+					}
 				}
 				return Optional.of(result);
 			}

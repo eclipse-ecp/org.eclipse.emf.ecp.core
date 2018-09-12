@@ -25,4 +25,5 @@ public interface MessageKeys {
 	String TableControl_DeleteAreYouSure = "TableControl_DeleteAreYouSure"; //$NON-NLS-1$
 	String TableControl_MoveUp = "TableControl_MoveUp"; //$NON-NLS-1$
 	String TableControl_MoveDown = "TableControl_MoveDown"; //$NON-NLS-1$
+	String TableControl_Duplicate = "TableControl_Duplicate"; //$NON-NLS-1$
 }

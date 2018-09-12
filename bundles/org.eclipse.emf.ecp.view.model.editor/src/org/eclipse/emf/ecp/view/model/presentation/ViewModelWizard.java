@@ -39,8 +39,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator;
@@ -295,6 +297,10 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			ePackage = EPackage.class.cast(selectedContainer);
 		} else if (IFile.class.isInstance(selectedContainer)) {
 			final ResourceSetImpl resourceSet = new ResourceSetImpl();
+			// needed to be able to resolve resource paths to plugin paths and thus load referenced ecores
+			resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
+			resourceSet.getLoadOptions().put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
+
 			final String path = ((IFile) selectedContainer).getFullPath().toString();
 			final URI uri = URI.createPlatformResourceURI(path, true);
 

@@ -18,12 +18,11 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -55,6 +54,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPViewerAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
@@ -76,6 +76,14 @@ import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.AddRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.DuplicateRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.MoveRowDownAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.MoveRowUpAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.RemoveRowAction;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.TableActionIconButton;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.TableRendererActionBar;
+import org.eclipse.emf.ecp.view.spi.table.swt.action.TableRendererViewerActionContext;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -83,6 +91,8 @@ import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundFact
 import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBinding;
+import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBindings;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
@@ -112,7 +122,6 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
-import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.CellLabelProviderFactory;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfigurationBuilder;
@@ -127,6 +136,11 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
+import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
+import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
+import org.eclipse.emfforms.spi.swt.table.action.ActionConfigurationBuilder;
+import org.eclipse.emfforms.spi.swt.table.action.TableActionBar;
+import org.eclipse.emfforms.spi.swt.table.action.ViewerActionContext;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -151,7 +165,6 @@ import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -170,8 +183,6 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -210,11 +221,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected static final Point VALIDATION_PREFERRED_SIZE = new Point(16, 17);
 
-	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
-	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
-	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
-	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
-
 	private final Map<Integer, ECPCellEditorComparator> columnIndexToComparatorMap = new LinkedHashMap<Integer, ECPCellEditorComparator>();
 
 	private final ImageRegistryService imageRegistryService;
@@ -227,20 +233,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private Label validationIcon;
 	private boolean showValidationSummaryTooltip;
-	private Button addButton;
-	private Button removeButton;
-	private Button moveUpButton;
-	private Button moveDownButton;
 
 	private Optional<Integer> minimumHeight;
 	private Optional<Integer> maximumHeight;
 	private Optional<Integer> visibleLines;
-	private TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder;
-	private AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite;
+	private AbstractTableViewerComposite<? extends AbstractTableViewer> tableViewerComposite;
 	private int regularColumnsStartIndex;
 	private boolean isDisposing;
 	private IObservableList list;
-	private boolean isFeatureOrdered;
 	private final RunnableManager runnableManager = new RunnableManager(Display.getDefault());
 
 	private TableViewerSWTCustomization<?> customization;
@@ -364,6 +364,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			list = getEMFFormsDatabinding().getObservableList(dmrToCheck,
 				getViewModelContext().getDomainModel());
 
+			final TableRendererViewerActionContext actionContext = createViewerActionContext();
+			final ActionConfiguration actionConfiguration = configureActions(actionContext);
+			final TableActionBar<? extends AbstractTableViewer> actionBar = createActionBar(actionContext,
+				actionConfiguration);
+
 			/* get the label text/tooltip */
 			final IObservableValue labelText = getLabelText(dmrToCheck, false);
 			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
@@ -377,10 +382,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			/* render */
 			final TableViewerCompositeBuilder compositeBuilder = createTableViewerCompositeBuilder();
-			tableControlSWTRendererButtonBarBuilder = new TableControlSWTRendererButtonBarBuilder();
 
 			final TableViewerSWTBuilder tableViewerSWTBuilder = createTableViewerSWTBuilder(parent, list, labelText,
-				labelTooltipText, compositeBuilder, cp, comparator, tableControlSWTRendererButtonBarBuilder);
+				labelTooltipText, compositeBuilder, cp, comparator, actionBar);
+			tableViewerSWTBuilder.customizeActionConfiguration(actionConfiguration);
 
 			tableViewerSWTBuilder
 				.configureTable(TableConfigurationBuilder.usingDefaults()
@@ -430,6 +435,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			addResizeListener(tableViewerComposite.getTableViewer().getControl(), regularColumnsStartIndex);
 
 			customization = tableViewerSWTBuilder.getCustomization();
+
 			return tableViewerComposite;
 
 		} catch (final DatabindingFailedException ex) {
@@ -438,6 +444,171 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 		}
+	}
+
+	/**
+	 * Create the {@link ViewerActionContext} for the table viewer.
+	 *
+	 * @return the {@link TableRendererViewerActionContext}
+	 * @throws DatabindingFailedException
+	 * @since 1.18
+	 */
+	protected TableRendererViewerActionContext createViewerActionContext() {
+		return new TableRendererViewerActionContext() {
+
+			@Override
+			public VTableControl getVElement() {
+				return TableControlSWTRenderer.this.getVElement();
+			}
+
+			@Override
+			public Setting getSetting() {
+				try {
+					return getEMFFormsDatabinding().getSetting(
+						getDMRToMultiReference(), getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					return null; // this should never happen
+				}
+			}
+
+			@Override
+			public EditingDomain getEditingDomain() {
+				return TableControlSWTRenderer.this.getEditingDomain(getViewModelContext().getDomainModel());
+			}
+
+			@Override
+			public AbstractTableViewer getViewer() {
+				return TableControlSWTRenderer.this.getTableViewer();
+			}
+		};
+	}
+
+	/**
+	 * Configure the actions applicable to this table viewer.
+	 *
+	 * @param actionContext the action context
+	 * @return an {@link ActionConfigurationImpl} built using the {@link ActionConfigurationBuilder}
+	 *
+	 * @since 1.18
+	 */
+	protected ActionConfiguration configureActions(TableRendererViewerActionContext actionContext) {
+		final ActionConfigurationBuilder actionConfigBuilder = //
+			ActionConfigurationBuilder.usingDefaults();
+
+		/**
+		 * Note: EMF Forms distinguishes between read-only and enabled.
+		 * Read-only is a declarative state defined by the view model and cannot
+		 * be overwritten during runtime whereas the enabled state can.
+		 * Therefore, if the view element is marked as read-only we must not configure any buttons.
+		 *
+		 * @see @{link TableRenderAction#isTableDisabled()}
+		 */
+		if (getVElement().isEffectivelyReadonly()) {
+			return actionConfigBuilder.build();
+		}
+
+		final Setting setting = actionContext.getSetting();
+		final EClass eClass = ((EReference) setting.getEStructuralFeature()).getEReferenceType();
+
+		if (!getVElement().isMoveUpDownDisabled()) {
+			final MoveRowUpAction moveRowUpAction = new MoveRowUpAction(actionContext);
+			final MoveRowDownAction moveRowDownAction = new MoveRowDownAction(actionContext);
+
+			actionConfigBuilder
+				.addAction(moveRowUpAction)
+				.addControlFor(moveRowUpAction, new TableActionIconButton(
+					formatTooltipText(eClass, MessageKeys.TableControl_MoveUp), getImage("icons/move_up.png"))) //$NON-NLS-1$
+				.addKeySequenceFor(moveRowUpAction,
+					getKeyBindingsForAction(MoveRowUpAction.ACTION_ID))
+				//
+				.addAction(moveRowDownAction)
+				.addControlFor(moveRowDownAction, new TableActionIconButton(
+					formatTooltipText(eClass, MessageKeys.TableControl_MoveDown), getImage("icons/move_down.png"))) //$NON-NLS-1$
+				.addKeySequenceFor(moveRowDownAction,
+					getKeyBindingsForAction(MoveRowDownAction.ACTION_ID));
+		}
+
+		if (!getVElement().isAddRemoveDisabled()) {
+			final AddRowAction addRowAction = new AddRowAction(actionContext) {
+				@Override
+				public void addRowLegacy(
+					final EClass eClass, final EStructuralFeature eStructuralFeature, final EObject eObject) {
+					addRow(eClass, eObject, eStructuralFeature);
+				}
+			};
+			final RemoveRowAction removeRowAction = new RemoveRowAction(actionContext) {
+				@Override
+				public void removeRowLegacy(List<EObject> deletionList, EObject eObject,
+					EStructuralFeature eStructuralFeature) {
+					deleteRowUserConfirmDialog(deletionList, eObject, eStructuralFeature, getAddButton(),
+						getRemoveButton());
+				}
+			};
+
+			actionConfigBuilder
+				.addAction(addRowAction)
+				.addControlFor(addRowAction, new TableActionIconButton(
+					formatTooltipText(eClass, MessageKeys.TableControl_AddInstanceOf), getImage("icons/add.png"))) //$NON-NLS-1$
+				.addKeySequenceFor(addRowAction,
+					getKeyBindingsForAction(AddRowAction.ACTION_ID));
+			actionConfigBuilder
+				.addAction(removeRowAction)
+				.addControlFor(removeRowAction, new TableActionIconButton(
+					formatTooltipText(eClass, MessageKeys.TableControl_RemoveSelected), getImage("icons/delete.png"))) //$NON-NLS-1$
+				.addKeySequenceFor(removeRowAction,
+					getKeyBindingsForAction(RemoveRowAction.ACTION_ID));
+		}
+
+		if (!getVElement().isDuplicateDisabled()) {
+			final DuplicateRowAction duplicateRow = new DuplicateRowAction(actionContext);
+
+			actionConfigBuilder
+				.addAction(duplicateRow)
+				.addControlFor(duplicateRow, new TableActionIconButton(
+					formatTooltipText(eClass, MessageKeys.TableControl_Duplicate), getImage("icons/duplicate.png"))) //$NON-NLS-1$
+				.addKeySequenceFor(duplicateRow,
+					getKeyBindingsForAction(DuplicateRowAction.ACTION_ID));
+		}
+
+		return actionConfigBuilder.build();
+	}
+
+	/**
+	 * Helper to extract the configured key bindings form the view template model.
+	 *
+	 * @param actionId the ID of the action to extract the key bindings for
+	 * @param defaultKeybindings the default key bindings to use in case there are no bindings configured
+	 * @return an array of key bindings
+	 *
+	 * @since 1.18
+	 */
+	protected String[] getKeyBindingsForAction(String actionId, String... defaultKeybindings) {
+		final VTKeyBindings bindings = getStyleProperty(VTKeyBindings.class);
+		if (bindings == null) {
+			return defaultKeybindings;
+		}
+		final Set<String> ret = new LinkedHashSet<String>();
+		for (final VTKeyBinding binding : bindings.getBindings()) {
+			if (actionId.equals(binding.getId()) && binding.getKeySequence() != null
+				&& !binding.getKeySequence().isEmpty()) {
+				ret.add(binding.getKeySequence());
+			}
+		}
+		return ret.toArray(new String[] {});
+	}
+
+	/**
+	 * Creates an action bar.
+	 *
+	 * @param actionContext the {@link ViewerActionContext} to use
+	 * @param actionConfiguration the {@link ActionConfiguration} to use
+	 * @return a action bar builder
+	 *
+	 * @since 1.18
+	 */
+	protected TableActionBar<? extends AbstractTableViewer> createActionBar(
+		TableRendererViewerActionContext actionContext, ActionConfiguration actionConfiguration) {
+		return new TableRendererActionBar(actionContext, actionConfiguration, getViewModelContext());
 	}
 
 	/**
@@ -465,20 +636,20 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param cp the content provider
 	 * @param comparator the {@link ViewerComparator}; has no effect if move up/down
 	 *            functionality is enabled
-	 * @param tableControlSWTRendererButtonBarBuilder2 the {@link ButtonBarBuilder}
+	 * @param actionBar the {@link ActionBar}
 	 * @return the {@link TableViewerSWTBuilder}
-	 * @since 1.15
+	 * @since 1.18
 	 *
 	 */
 	// CHECKSTYLE.OFF: ParameterNumber
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
 		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
-		TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder2) {
+		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
 		return TableViewerFactory.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)
 			.customizeCompositeStructure(compositeBuilder)
-			.customizeButtons(tableControlSWTRendererButtonBarBuilder)
+			.customizeActionBar(actionBar)
 			.customizeTableViewerCreation(getTableViewerCreator())
 			.customizeContentProvider(cp)
 			.customizeComparator(comparator)
@@ -690,7 +861,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	}
 
-	private void setupValidation(final AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite) {
+	private void setupValidation(
+		final AbstractTableViewerComposite<? extends AbstractTableViewer> tableViewerComposite) {
 		if (tableViewerComposite.getValidationControls().isPresent()) {
 			final List<Control> validationControls = tableViewerComposite.getValidationControls().get();
 			if (validationControls.size() == 1 && Label.class.isInstance(validationControls.get(0))) {
@@ -703,7 +875,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
-		final AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite) {
+		final AbstractTableViewerComposite<? extends AbstractTableViewer> tableViewerComposite) {
 
 		final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
 		if (!tableStyleProperty.isEnableSorting()) {
@@ -913,18 +1085,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		this.tableViewer = tableViewer;
 	}
 
-	// FIXME needed?
-	// /**
-	// * Applies the layout data to the given composite.
-	// *
-	// * @param composite the composite to which the layout data is applied
-	// *
-	// */
-	// private void setLayoutData(Composite composite) {
-	// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-	// .applyTo(composite);
-	// }
-
 	/**
 	 * This method gets called when the selection on the {@link TableViewer} (see {@link #getTableViewer()}) has
 	 * changed.
@@ -935,31 +1095,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param event the {@link SelectionChangedEvent}
 	 */
 	protected void viewerSelectionChanged(SelectionChangedEvent event) {
-		if (event.getSelection().isEmpty()) {
-			if (getRemoveButton() != null) {
-				getRemoveButton().setEnabled(false);
-			}
-			if (isFeatureOrdered) {
-				if (moveDownButton != null) {
-					moveDownButton.setEnabled(false);
-				}
-				if (moveUpButton != null) {
-					moveUpButton.setEnabled(false);
-				}
-			}
-		} else {
-			if (getRemoveButton() != null) {
-				getRemoveButton().setEnabled(true);
-			}
-			if (isFeatureOrdered) {
-				if (moveDownButton != null) {
-					moveDownButton.setEnabled(true);
-				}
-				if (moveUpButton != null) {
-					moveUpButton.setEnabled(true);
-				}
-			}
-		}
+		// The default implementation does not need to do anything
 	}
 
 	private void createFixedValidationStatusColumn(TableViewerSWTBuilder tableViewerSWTBuilder) {
@@ -1164,86 +1300,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return InternalEObject.class.cast(clazz.getEPackage().getEFactoryInstance().create(clazz));
 	}
 
-	private Button createRemoveRowButton(EClass clazz, final Composite buttonComposite, final EObject eObject,
-		final EStructuralFeature structuralFeature) {
-		removeButton = new Button(buttonComposite, SWT.None);
-		final Image image = getImage(ICON_DELETE);
-		removeButton.setImage(image);
-		removeButton.setEnabled(false);
-		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		removeButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_RemoveSelected),
-			instanceName));
-
-		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
-		if (containments.size() <= structuralFeature.getLowerBound()) {
-			removeButton.setEnabled(false);
-		}
-		SWTDataElementIdHelper.setElementIdDataWithSubId(removeButton, getVElement(), "table_remove", //$NON-NLS-1$
-			getViewModelContext());
-		return removeButton;
-	}
-
-	private Button createAddRowButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
-		final EStructuralFeature structuralFeature) {
-		addButton = new Button(buttonComposite, SWT.None);
-		final Image image = getImage(ICON_ADD);
-		addButton.setImage(image);
-		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		addButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_AddInstanceOf),
-			instanceName));
-
-		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
-		if (structuralFeature.getUpperBound() != -1 && containments.size() >= structuralFeature.getUpperBound()) {
-			addButton.setEnabled(false);
-		}
-		SWTDataElementIdHelper.setElementIdDataWithSubId(addButton, getVElement(), "table_add", getViewModelContext()); //$NON-NLS-1$
-		return addButton;
-	}
-
-	private Button createMoveUpButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
-		final EStructuralFeature structuralFeature) {
-		moveUpButton = new Button(buttonComposite, SWT.None);
-		final Image image = getImage(ICON_MOVE_UP);
-		moveUpButton.setImage(image);
-		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		moveUpButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_MoveUp),
-			instanceName));
-
-		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
-		if (!structuralFeature.isOrdered() || containments.size() <= 1) {
-			moveUpButton.setEnabled(false);
-		}
-		isFeatureOrdered = structuralFeature.isOrdered();
-		SWTDataElementIdHelper.setElementIdDataWithSubId(moveUpButton, getVElement(), "table_moveUp", //$NON-NLS-1$
-			getViewModelContext());
-		return moveUpButton;
-	}
-
-	private Button createMoveDownButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
-		final EStructuralFeature structuralFeature) {
-		moveDownButton = new Button(buttonComposite, SWT.None);
-		final Image image = getImage(ICON_MOVE_DOWN);
-		moveDownButton.setImage(image);
-		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		moveDownButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_MoveDown),
-			instanceName));
-
-		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
-		if (!structuralFeature.isOrdered() || containments.size() <= 1) {
-			moveDownButton.setEnabled(false);
-		}
-		SWTDataElementIdHelper.setElementIdDataWithSubId(moveDownButton, getVElement(), "table_moveDown", //$NON-NLS-1$
-			getViewModelContext());
-		return moveDownButton;
-	}
-
 	/**
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
 	 *
+	 * @deprecated this method will be moved to {@link RemoveRowAction} in the future
 	 * @param deletionList the list of selected EObjects to delete
 	 * @param eObject The containment reference {@link EObject}
 	 * @param structuralFeature The containment reference {@link EStructuralFeature}
@@ -1251,6 +1311,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param removeButton the remove button
 	 * @since 1.6
 	 */
+	@Deprecated
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature, final Button addButton, final Button removeButton) {
 		final MessageDialog dialog = new MessageDialog(addButton.getShell(),
@@ -1288,11 +1349,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * This is called by {@link #deleteRowUserConfirmDialog(List)} after the user confirmed to delete the selected
 	 * elements.
 	 *
+	 * @deprecated this method will be moved to {@link RemoveRowAction} in the future
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 * @param eObject The containment reference {@link EObject}
 	 * @param structuralFeature The containment reference {@link EStructuralFeature}
 	 * @since 1.6
 	 */
+	@Deprecated
 	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
 
@@ -1333,11 +1396,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * element to create is defined by the provided class.
 	 * You can override this method but you have to call super nonetheless.
 	 *
+	 * @deprecated this method will be move to {@link AddRowAction} in the future
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 * @param eObject The containment reference {@link EObject}
 	 * @param structuralFeature The containment reference {@link EStructuralFeature}
 	 * @since 1.6
 	 */
+	@Deprecated
 	protected void addRow(EClass clazz, EObject eObject, EStructuralFeature structuralFeature) {
 		Optional<EObject> eObjectToAdd = null;
 
@@ -1366,6 +1431,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, eObject, structuralFeature, instance));
 		tableViewer.setSelection(new StructuredSelection(eObjectToAdd.get()), true);
+
 	}
 
 	@Override
@@ -1376,21 +1442,47 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * Returns the add button created by the framework.
 	 *
+	 * @deprecated use {@link #getControlForAction(String)} instead
 	 * @return the addButton
 	 * @since 1.6
 	 */
+	@Deprecated
 	protected Button getAddButton() {
-		return addButton;
+		final Optional<Control> control = getControlForAction(AddRowAction.ACTION_ID);
+		if (control.isPresent()) {
+			return (Button) control.get();
+		}
+		return null; // happens when add/remove has been disabled in the view model
 	}
 
 	/**
 	 * Returns the remove button created by the framework.
 	 *
+	 * @deprecated use {@link #getControlForAction(String)} instead
 	 * @return the removeButton
 	 * @since 1.6
 	 */
+	@Deprecated
 	protected Button getRemoveButton() {
-		return removeButton;
+		final Optional<Control> control = getControlForAction(RemoveRowAction.ACTION_ID);
+		if (control.isPresent()) {
+			return (Button) control.get();
+		}
+		return null; // happens when add/remove has been disabled in the view model
+	}
+
+	/**
+	 * Returns the control created to trigger a certain action.
+	 *
+	 * @param actionId the action ID of the action that is bound to the control
+	 * @return an optional for the control of the given action ID
+	 * @since 1.18
+	 */
+	public Optional<Control> getControlForAction(String actionId) {
+		if (tableViewerComposite.getActionBar().isPresent()) {
+			return tableViewerComposite.getActionBar().get().getControlById(actionId);
+		}
+		return Optional.empty();
 	}
 
 	/**
@@ -1430,43 +1522,20 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
-	 */
 	@Override
 	protected void applyEnable() {
-		if (getAddButton() != null) {
-			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
-		}
-		if (getRemoveButton() != null) {
-			getRemoveButton()
-				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
+		if (tableViewerComposite != null && tableViewerComposite.getActionBar().isPresent()) {
+			tableViewerComposite.getActionBar().get().updateActionBar();
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyReadOnly()
-	 */
 	@Override
 	protected void applyReadOnly() {
-		if (getAddButton() != null) {
-			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
-		}
-		if (getRemoveButton() != null) {
-			getRemoveButton()
-				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
+		if (tableViewerComposite != null && tableViewerComposite.getActionBar().isPresent()) {
+			tableViewerComposite.getActionBar().get().updateActionBar();
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
-	 */
 	@Override
 	protected void dispose() {
 		isDisposing = true;
@@ -1483,7 +1552,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			columnIndexToComparatorMap.clear();
 		}
-		tableControlSWTRendererButtonBarBuilder = null;
 		tableViewerComposite.dispose();
 		tableViewerComposite = null;
 		tableViewer.getControl().dispose();
@@ -1554,17 +1622,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
-		// TODO rebind tooltip and text?
 
 		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
 		oldList.dispose();
 
+		final EObject domainModel = getViewModelContext().getDomainModel();
 		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
-			getViewModelContext().getDomainModel());
-		// addRelayoutListenerIfNeeded(list, composite);
+			domainModel);
 		getTableViewer().setInput(list);
 
-		tableControlSWTRendererButtonBarBuilder.updateValues();
+		if (tableViewerComposite.getActionBar().isPresent()) {
+			tableViewerComposite.getActionBar().get().updateActionBar();
+		}
 	}
 
 	/**
@@ -1591,7 +1660,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (!isObjectEditable) {
 			return false;
 		}
-		final boolean editable = getVElement().isEnabled()
+		final boolean editable = getVElement().isEffectivelyEnabled()
 			&& !getVElement().isEffectivelyReadonly();
 		return editable;
 	}
@@ -1928,6 +1997,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private void init(AbstractTableViewer tableViewer) {
 			cellEditor = createCellEditor(tempInstance, eStructuralFeature,
 				(Composite) tableViewer.getControl());
+			if (cellEditor instanceof ECPViewerAwareCellEditor) {
+				((ECPViewerAwareCellEditor) cellEditor).setTableViewer(tableViewer);
+				((ECPViewerAwareCellEditor) cellEditor).setTableFeature((EReference) list.getElementType());
+			}
 			tableViewer.getControl().addDisposeListener(new DisposeListener() {
 
 				@Override
@@ -2013,177 +2086,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				actSupport,
 				ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
 					| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
-		}
-	}
-
-	/**
-	 * {@link ButtonBarBuilder} for the table control swt renderer. It will call the existing template methods which
-	 * allows subclasses to change the buttons.
-	 *
-	 */
-	protected final class TableControlSWTRendererButtonBarBuilder implements ButtonBarBuilder {
-		private EStructuralFeature structuralFeature;
-		private EClass clazz;
-		private EObject eObject;
-
-		private TableControlSWTRendererButtonBarBuilder() throws DatabindingFailedException {
-			setValues();
-		}
-
-		/**
-		 * Reloads the model values.
-		 *
-		 * @throws DatabindingFailedException if the databinding could not be executed successfully
-		 */
-		public void updateValues() throws DatabindingFailedException {
-			setValues();
-		}
-
-		private void setValues() throws DatabindingFailedException {
-			final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
-				getViewModelContext().getDomainModel());
-			eObject = setting.getEObject();
-			structuralFeature = setting.getEStructuralFeature();
-			clazz = ((EReference) structuralFeature).getEReferenceType();
-		}
-
-		@Override
-		public void fillButtonComposite(Composite buttonComposite, AbstractTableViewer viewer) {
-			int numButtons = addButtonsToButtonBar(buttonComposite);
-			if (!getVElement().isMoveUpDownDisabled() && structuralFeature.isOrdered()
-				&& structuralFeature.getUpperBound() != 1) {
-				moveUpButton = createMoveUpButton(
-					clazz, buttonComposite, eObject, structuralFeature);
-				moveDownButton = createMoveDownButton(
-					clazz, buttonComposite, eObject, structuralFeature);
-
-				numButtons = numButtons + 2;
-
-				initMoveUpDownButtons(moveUpButton, moveDownButton, viewer);
-			}
-			if (!getVElement().isAddRemoveDisabled()) {
-				addButton = createAddRowButton(
-					clazz, buttonComposite, eObject, structuralFeature);
-				removeButton = createRemoveRowButton(
-					clazz, buttonComposite, eObject, structuralFeature);
-
-				numButtons = numButtons + 2;
-
-				initAddRemoveButtons(addButton, removeButton, viewer);
-			}
-			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false)
-				.applyTo(buttonComposite);
-		}
-
-		private void initAddRemoveButtons(final Button addButton, final Button removeButton,
-			final AbstractTableViewer viewer) {
-			addButton.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					addRow(clazz, eObject, structuralFeature);
-
-					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
-					if (structuralFeature.getUpperBound() != -1
-						&& containments.size() >= structuralFeature.getUpperBound()) {
-						addButton.setEnabled(false);
-					}
-					if (containments.size() > structuralFeature.getLowerBound()) {
-						addButton.setEnabled(true);
-					}
-				}
-			});
-			removeButton.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-
-					if (selection == null || selection.getFirstElement() == null) {
-						return;
-					}
-
-					final List<EObject> deletionList = new ArrayList<EObject>();
-					final Iterator<?> iterator = selection.iterator();
-
-					while (iterator.hasNext()) {
-						deletionList.add((EObject) iterator.next());
-					}
-
-					deleteRowUserConfirmDialog(deletionList, eObject,
-						structuralFeature, addButton, removeButton);
-				}
-			});
-		}
-
-		private void initMoveUpDownButtons(final Button moveUpButton, final Button moveDownButton,
-			final AbstractTableViewer viewer) {
-			moveUpButton.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
-					final EditingDomain editingDomain = getEditingDomain(eObject);
-
-					@SuppressWarnings({ "rawtypes", "unchecked" })
-					final List<?> moveUpList = new ArrayList(
-						IStructuredSelection.class.cast(tableViewer.getSelection()).toList());
-					sortSelectionBasedOnIndex(moveUpList, containments);
-
-					for (final Object moveUpObject : moveUpList) {
-						final int currentIndex = containments.indexOf(moveUpObject);
-						if (currentIndex <= 0) {
-							return;
-						}
-						editingDomain.getCommandStack()
-							.execute(
-								new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex,
-									currentIndex - 1));
-					}
-				}
-			});
-			moveDownButton.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
-					final EditingDomain editingDomain = getEditingDomain(eObject);
-
-					@SuppressWarnings({ "rawtypes", "unchecked" })
-					final List<?> moveDownList = new ArrayList(
-						IStructuredSelection.class.cast(tableViewer.getSelection()).toList());
-					sortSelectionBasedOnIndex(moveDownList, containments);
-					// need to reverse to avoid the moves interfering each other
-					Collections.reverse(moveDownList);
-
-					final int maxIndex = containments.size() - 1;
-
-					for (final Object moveDownObject : moveDownList) {
-						final int currentIndex = containments.indexOf(moveDownObject);
-						if (currentIndex < 0 || currentIndex == maxIndex) {
-							return;
-						}
-						editingDomain.getCommandStack()
-							.execute(
-								new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex,
-									currentIndex + 1));
-					}
-				}
-			});
-		}
-
-		private void sortSelectionBasedOnIndex(List<?> selection, final List<?> list) {
-			Collections.sort(
-				selection,
-				new Comparator<Object>() {
-					@Override
-					public int compare(Object o1, Object o2) {
-						final int i1 = list.indexOf(o1);
-						final int i2 = list.indexOf(o2);
-						return i1 - i2;
-					}
-				});
-		}
-
-		@Override
-		public Object createNewElement(Button button) {
-			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -2679,4 +2581,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return ECPTooltipModifierHelper.modifyString(message, null);
 		}
 	}
+
+	private String formatTooltipText(EClass eClass, String messageKey) {
+		// final EClass clazz = ((EReference) setting.getEStructuralFeature()).getEReferenceType();
+		final String instanceName = eClass.getInstanceClass() == null ? "" : eClass.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		return String.format(LocalizationServiceHelper.getString(
+			TableControlSWTRenderer.class, messageKey),
+			instanceName);
+	}
+
 }

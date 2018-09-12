@@ -81,6 +81,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridItem;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -374,9 +375,11 @@ public class GridTable_PTest {
 			fail("No control was rendered");
 		}
 		final Composite controlComposite = (Composite) ((Composite) control).getChildren()[1];
-		final Composite tableComposite = (Composite) controlComposite.getChildren()[0];
+		final SashForm sash = (SashForm) controlComposite.getChildren()[0];
+		final Composite tableWrapperComposite = (Composite) sash.getChildren()[0];
+		final Composite tableComposite = (Composite) tableWrapperComposite.getChildren()[0];
 		final Grid table = (Grid) tableComposite.getChildren()[0];
-		final ScrolledComposite scrolledComposite = (ScrolledComposite) controlComposite.getChildren()[1];
+		final ScrolledComposite scrolledComposite = (ScrolledComposite) sash.getChildren()[1];
 		final Composite parentForECPView = (Composite) scrolledComposite.getChildren()[0];
 		assertEquals(2, table.getItemCount());
 		final GridTableViewer tableViewer = getTableViewerFromRenderer(tableRenderer);

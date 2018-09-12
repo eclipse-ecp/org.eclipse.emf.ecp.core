@@ -18,13 +18,14 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
  * The tester for the
@@ -51,10 +52,10 @@ public class TemplateImagePathControlTester implements ECPRendererTester {
 		}
 		IValueProperty valueProperty;
 		try {
-			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			valueProperty = viewModelContext.getService(EMFFormsDatabinding.class)
 				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			viewModelContext.getService(ReportService.class).report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();

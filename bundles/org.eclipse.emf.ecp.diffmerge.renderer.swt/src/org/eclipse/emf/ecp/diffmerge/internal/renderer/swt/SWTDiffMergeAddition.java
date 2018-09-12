@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
@@ -152,10 +153,10 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 		String label;
 		try {
-			label = (String) Activator.getInstance().getEMFFormsLabelProvider()
+			label = (String) getViewModelContext().getService(EMFFormsLabelProvider.class)
 				.getDisplayName(vControl.getDomainModelReference(), diffModelContext.getDomainModel()).getValue();
 		} catch (final NoLabelFoundException ex) {
-			Activator.getInstance().getReportService().report(new AbstractReport(ex));
+			getViewModelContext().getService(ReportService.class).report(new AbstractReport(ex));
 			label = ex.getMessage();
 		}
 

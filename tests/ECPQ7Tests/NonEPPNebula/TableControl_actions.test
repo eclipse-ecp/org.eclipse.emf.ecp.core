@@ -1,0 +1,149 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _oV_IEG_bEeiK5qU9HlvsEg,_oV0I8G_bEeiK5qU9HlvsEg
+Element-Name: TableControl_actions
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _xE_fkG_bEeiK5qU9HlvsEg
+Runtime-Version: 2.3.0.201805162310
+Save-Time: 7/2/18 4:20 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | get-menu -path "Create new project" | click
+with [get-window "Create Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text Test
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select Test | get-menu -path "New Model Element" | click
+with [get-window "Add new model element"] {
+    get-tree | select "coffee/ControlUnit"
+    get-button Finish | click
+}
+
+// assert the initial state of the "Ram" table
+with [get-editor "Control Unit"] {
+	get-nebula-grid -after [get-label Ram] | get-property itemCount | equals 0 | verify-true
+    with [get-button "Add an instance of RAM"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals true | verify-true
+    }
+    with [get-button "Remove the selected RAM"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals false | verify-true
+    }
+    with [get-button "Duplicate the selected RAM"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals false | verify-true
+    }
+}
+
+// assert the initial state of the "Activies" table
+with [get-editor "Control Unit"] {
+    get-nebula-grid -after [get-label Activities] | get-property itemCount | equals 0 | verify-true
+    with [get-button "Add an instance of Activity"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals true | verify-true
+    }
+    with [get-button "Remove the selected Activity"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals false | verify-true
+    }
+    with [get-button "Duplicate the selected Activity"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals false | verify-true
+    }
+}
+
+// test Ram table
+get-editor "Control Unit" | get-button "Add an instance of RAM" | click
+get-editor "Control Unit" | get-nebula-grid | get-property itemCount | equals 1 | verify-true
+
+// lower bound is 1, so we cannot remove this row again
+with [get-editor "Control Unit" | get-button "Remove the selected RAM"] {
+    get-property "isVisible()" | equals true | verify-true
+    get-property "isEnabled()" | equals false | verify-true
+}
+
+// let's set a clock speed and size for the first Ram unit
+with [get-editor "Control Unit" | get-nebula-grid] {
+    select [get-item -path "" | get-item-cell -column "Clock Speed"]
+    type-text 4
+    select "" | activate-cell-edit -column 1
+    with [get-editbox] {
+        set-text 433
+        key-type Enter
+    }
+    apply-cell-edit -deactivate
+    select [get-item -path "" | get-item-cell -column Size]
+    type-text 1
+    select "" | activate-cell-edit -column 2
+    with [get-editbox] {
+        set-text 16
+        key-type Enter
+    }
+    apply-cell-edit -deactivate
+}
+
+// now we should be able to duplicate the current record
+with [get-editor "Control Unit" | get-button "Duplicate the selected RAM"] {
+    get-property "isVisible()" | equals true | verify-true
+    get-property "isEnabled()" | equals true | verify-true
+}
+
+// assert that we now have two rows, and is is possible to remove one
+get-editor "Control Unit" | get-button "Duplicate the selected RAM" | click
+with [get-editor "Control Unit"] {
+    get-nebula-grid | get-property itemCount | equals 2 | verify-true
+    with [get-button "Remove the selected RAM"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals true | verify-true
+    }
+}
+
+// make sure that the duplicated row contains all the information we entered in row 1
+with [get-editor "Control Unit" | get-nebula-grid] {
+    get-item -path "" -index 1 | get-property "columns[1]" | equals 433 | verify-true
+    get-item -path "" -index 1 | get-property "columns[2]" | equals 16 | verify-true
+    get-item -path "" -index 1 | get-property "columns[3]" | equals "SO-DIMM" | verify-true
+}
+
+// delete the 2nd row again
+get-editor "Control Unit" | get-button "Remove the selected RAM" | click
+get-window "Delete?" | get-button Yes | click
+
+// now we should be back to where we started, verify the buttons are as we expect them to be
+with [get-editor "Control Unit"] {
+    with [get-button "Add an instance of RAM"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals true | verify-true
+    }
+    with [get-button "Remove the selected RAM"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals false | verify-true
+    }
+    with [get-button "Duplicate the selected RAM"] {
+        get-property "isVisible()" | equals true | verify-true
+        get-property "isEnabled()" | equals false | verify-true
+    }
+}
+
+// test add/remove using shortcuts defined in coffee.template
+with [get-editor "Control Unit" | get-nebula-grid -after [get-label Activities]] {
+    key-type "M1+M3+n"
+}
+get-editor "Control Unit" | get-nebula-grid -after [get-label Activities] | get-property itemCount | equals 1 
+   | verify-true
+with [get-editor "Control Unit" | get-nebula-grid -after [get-label Activities]] {
+    key-type "M1+M3+r"
+}
+with [get-window "Delete?"] {
+    get-button Yes | click
+}
+get-editor "Control Unit" | get-nebula-grid -after [get-label Activities] | get-property itemCount | equals 0
+   | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

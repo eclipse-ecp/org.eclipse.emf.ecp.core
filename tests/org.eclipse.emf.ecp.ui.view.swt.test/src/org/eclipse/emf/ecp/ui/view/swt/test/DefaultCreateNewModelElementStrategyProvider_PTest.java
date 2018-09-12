@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy.Provider;
@@ -96,6 +97,32 @@ public class DefaultCreateNewModelElementStrategyProvider_PTest {
 		final Optional<EObject> createNewModelElement = createProduct.createNewModelElement(null,
 			EcorePackage.eINSTANCE.getEClass_EAllAttributes());
 		assertTrue(createNewModelElement.isPresent());
+	}
+
+	@Test
+	public void testDynamicEMF() {
+		final CreateNewModelElementStrategy createProduct = bazaar
+			.createProduct(context);
+		final EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		ePackage.setName("test");
+		ePackage.setNsPrefix("test");
+		ePackage.setNsURI("test");
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.setName("MyClass");
+		final EReference eReference = EcoreFactory.eINSTANCE.createEReference();
+		eReference.setName("test");
+		eReference.setEType(eClass);
+		eReference.setUpperBound(-1);
+		ePackage.getEClassifiers().add(eClass);
+
+		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
+
+		final Optional<EObject> createNewModelElement = createProduct.createNewModelElement(null,
+			eReference);
+		assertTrue(createNewModelElement.isPresent());
+		assertTrue(createNewModelElement.get() instanceof DynamicEObjectImpl);
+
+		EPackage.Registry.INSTANCE.remove(ePackage.getNsURI());
 	}
 
 	@Test

@@ -76,10 +76,7 @@ public class ChildrenDescriptorExtension_PTest {
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
 	private static final int LEAFCONDITION_CHILD_COUNT = 1;
-	// TODO: Should be not - NUMBER_OF_EXTERNAL_COMPOSITES
-	// TODO: upper hierarchy is missing, can't find children +2 because of hardcoded layouts
-	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT
-		- NUMBER_OF_EXTERNAL_COMPOSITES + 2 + 1;
+	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
 
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT;
 	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 4;

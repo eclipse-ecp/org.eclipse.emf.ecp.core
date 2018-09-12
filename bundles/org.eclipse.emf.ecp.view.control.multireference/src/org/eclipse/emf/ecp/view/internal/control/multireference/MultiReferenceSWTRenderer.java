@@ -46,6 +46,8 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceFactory;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
@@ -58,6 +60,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -220,7 +223,36 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @return true if the 'AddNew' button is shown, false otherwise
 	 */
 	protected boolean showAddNewButton() {
-		return true;
+		EReference eReference = null;
+		try {
+			eReference = (EReference) getModelValue().getValueType();
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new AbstractReport(ex));
+		}
+
+		if (eReference != null) {
+			if (eReference.isContainment()) {
+				return true;
+			}
+
+			VTReferenceStyleProperty referenceStyle = RendererUtil.getStyleProperty(
+				getVTViewTemplateProvider(), getVElement(), getViewModelContext(), VTReferenceStyleProperty.class);
+			if (referenceStyle == null) {
+				referenceStyle = getDefaultReferenceStyle();
+			}
+			return referenceStyle.isShowCreateAndLinkButtonForCrossReferences();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Creates and returns a default version of a {@link VTReferenceStyleProperty}.
+	 *
+	 * @return The default {@link VTReferenceStyleProperty}
+	 */
+	protected VTReferenceStyleProperty getDefaultReferenceStyle() {
+		return VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
 	}
 
 	/**
@@ -471,6 +503,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createMoveUpButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnMoveUp = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnMoveUp, getVElement(), "up", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnMoveUp);
 		btnMoveUp.setImage(getImage(ICON_MOVE_UP));
 		btnMoveUp.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -502,6 +535,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createMoveDownButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnMoveDown = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnMoveDown, getVElement(), "down", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnMoveDown);
 		btnMoveDown.setImage(getImage(ICON_MOVE_DOWN));
 		btnMoveDown.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -533,6 +567,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createAddExistingButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnAddExisting = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnAddExisting, getVElement(), "link", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(getImage(ICON_ADD_EXISTING));
 		btnAddExisting.setToolTipText(NLS.bind(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -564,6 +599,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createAddNewButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnAddNew = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnAddNew, getVElement(), "add", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
 		btnAddNew.setImage(getImage(ICON_ADD_NEW));
 		btnAddNew.setToolTipText(NLS.bind(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -595,6 +631,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Button createDeleteButton(Composite parent, final EStructuralFeature structuralFeature) {
 		final Button btnDelete = new Button(parent, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(btnDelete, getVElement(), "delete", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
 		btnDelete.setImage(getImage(ICON_DELETE));
 		btnDelete.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
@@ -619,7 +656,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * Updates the 'addExisting', 'addNew', 'delete', 'moveUp' and 'moveDown' buttons according to the bound input.
 	 */
 	protected void updateButtonEnabling() {
-		final boolean isReadOnly = getVElement().isReadonly();
+		final boolean isReadOnly = getVElement().isEffectivelyReadonly();
 		final int listSize = tableViewerInputList != null ? tableViewerInputList.size() : 0;
 
 		if (showMoveUpButton()) {

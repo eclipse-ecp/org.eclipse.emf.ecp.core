@@ -5,16 +5,11 @@
    <extension
          name=""
          point="org.eclipse.ui.newWizards">
-      <category
-            name="EMF Forms"
-            parentCategory="org.eclipse.ui.Examples"
-            id="org.eclipse.emf.ecp.makeithappen.wizards.EMFForms">
-      </category>
       <wizard
             name="Make it happen: example model"
             canFinishEarly="true"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             project="true"
             id="org.eclipse.emf.ecp.makeithappen.wizards.ExampleModelWizard">
@@ -23,7 +18,7 @@
             name="Make it happen: custom control renderer"
             canFinishEarly="true"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             project="true"
             id="org.eclipse.emf.ecp.makeithappen.wizards.CustomControlRendererWizard">
@@ -32,7 +27,7 @@
             name="Make it happen: custom group renderer"
             canFinishEarly="true"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             project="true"
             id="org.eclipse.emf.ecp.makeithappen.wizards.CustomGroupRendererWizard">
@@ -41,7 +36,7 @@
             name="Make it happen: view model"
             canFinishEarly="true"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             project="true"
             id="org.eclipse.emf.ecp.makeithappen.wizards.ViewModelWizard">
@@ -50,7 +45,7 @@
             name="Make it happen: sample e3 application"
             canFinishEarly="true"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             project="true"
             id="org.eclipse.emf.ecp.makeithappen.wizards.e3.ExampleApplicationWizard">
@@ -59,7 +54,7 @@
             name="Make it happen: sample e4 application"
             canFinishEarly="true"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             project="true"
             id="org.eclipse.emf.ecp.makeithappen.wizards.e4.ExampleApplicationWizard">
@@ -67,14 +62,14 @@
       <wizard
             name="Make it happen: sample RAP application"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             id="org.eclipse.emf.ecp.makeithappen.wizards.rap.ExampleApplicationWizard">
       </wizard>
       <wizard
             name="Make it happen: sample J2EE RAP application"
             icon="icons/emf_forms_icon.png"
-            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
             id="org.eclipse.emf.ecp.makeithappen.wizards.rap.j2ee.ExampleApplicationWizard">
       </wizard>
@@ -186,6 +181,11 @@
                name="org.eclipse.emf.ecp.makeithappen.model.edit"
                description="Make It Happen model edit">
          </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.e3.feature/"
+               description="Make It Happen e3 feature"
+               name="org.eclipse.emf.ecp.makeithappen.e3.feature">
+         </projectDescriptor>
       </example>
       <example
             wizardID="org.eclipse.emf.ecp.makeithappen.wizards.e4.ExampleApplicationWizard"
@@ -210,6 +210,11 @@
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
                name="org.eclipse.emf.ecp.makeithappen.model.edit"
                description="Make It Happen model edit">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.e4.feature/"
+               description="Make It Happen e4 feature"
+               name="org.eclipse.emf.ecp.makeithappen.e4.feature">
          </projectDescriptor>
       </example>
       <example

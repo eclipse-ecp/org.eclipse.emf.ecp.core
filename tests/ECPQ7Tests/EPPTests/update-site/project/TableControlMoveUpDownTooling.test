@@ -7,18 +7,17 @@ Element-Version: 3.0
 External-Reference: 
 Id: _2IkQMNnHEee0McrTbR2zPw
 Runtime-Version: 2.2.0.201706152316
-Save-Time: 12/5/17 5:22 PM
+Save-Time: 7/26/18 12:49 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-with [get-view "Project Explorer" | get-tree] {
-    select "org.eclipse.emf.ecp.makeithappen.model.viewmodel" | double-click
-    select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels" | double-click
-    select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/UserGroup.view" | double-click
-}
+get-view "Project Explorer" | get-tree 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/UserGroup.view" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/UserGroup.view" | get-menu 
+    -path "Open With/View Model Editor" | click
 with [get-editor "UserGroup.view"] {
     with [get-tree] {
         select View | get-menu -path TableControl | click
@@ -136,26 +135,16 @@ with [get-view "EMF Forms Preview" | get-table] {
    get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
 }
 
-//move first item UP: nothing should happen
+//assert first item UP is disabled
 with [get-view "EMF Forms Preview"] {
     get-table | select asd -column "First Name"
-    get-button "Move up the selected" | click
-}
-with [get-view "EMF Forms Preview" | get-table] {
-   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
-   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
-   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+    get-button "Move up the selected" | get-property enablement | equals false | verify-true
 }
 
-//move last item DOWN: nothing should happen
+//assert last item DOWN is disabled
 with [get-view "EMF Forms Preview"] {
     get-table | select yxc -column "First Name"
-    get-button "Move down the selected" | click
-}
-with [get-view "EMF Forms Preview" | get-table] {
-   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
-   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
-   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+    get-button "Move down the selected" | get-property enablement | equals false | verify-true
 }
 
 //move second item DOWN

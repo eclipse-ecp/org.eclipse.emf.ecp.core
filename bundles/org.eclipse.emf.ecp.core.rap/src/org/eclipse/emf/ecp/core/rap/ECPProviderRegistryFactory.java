@@ -22,7 +22,7 @@ import org.eclipse.rap.rwt.service.UISessionListener;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceFactory;
+import org.osgi.framework.PrototypeServiceFactory;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
@@ -33,7 +33,7 @@ import org.osgi.framework.ServiceRegistration;
  *
  */
 public class ECPProviderRegistryFactory implements
-	ServiceFactory<ECPProviderRegistry>, UISessionListener {
+	PrototypeServiceFactory<ECPProviderRegistry>, UISessionListener {
 
 	/**
 	 * The session provider used to retrieve the current session.

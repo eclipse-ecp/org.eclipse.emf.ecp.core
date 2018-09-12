@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.jface.resource.JFaceResources;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -38,9 +39,7 @@ public class EcoreHelperOneDependency_PTest {
 	private static String aEcorePath = "/TestEcoreHelperProjectResources/A.ecore";
 	private static String xEcorePath = "/TestEcoreHelperProjectResources/X.ecore";
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
@@ -59,6 +58,14 @@ public class EcoreHelperOneDependency_PTest {
 	private static void installResourcesProject() throws Exception {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
+	}
+	// END SUPRESS CATCH EXCEPTION
+
+	@After
+	public void tearDown() throws Exception {
+		EcoreHelper.unregisterEcore(bEcorePath);
+		EcoreHelper.unregisterEcore(aEcorePath);
+		EcoreHelper.unregisterEcore(xEcorePath);
 	}
 
 	@Test

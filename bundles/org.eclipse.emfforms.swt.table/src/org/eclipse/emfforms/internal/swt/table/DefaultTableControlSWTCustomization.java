@@ -16,16 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
 import org.eclipse.emfforms.spi.swt.table.DNDProvider;
-import org.eclipse.emfforms.spi.swt.table.DefaultButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.DefaultTableViewerCompositeBuilder;
-import org.eclipse.emfforms.spi.swt.table.NewElementCreator;
 import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
+import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
+import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -35,7 +34,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -43,26 +41,30 @@ import org.eclipse.swt.widgets.Label;
 /**
  * The default implementation of the {@link TableViewerSWTCustomization}.
  *
+ * @param <T> the concrete table viewer implementation to use
+ *
  * @author Alexandra Buzila
  * @author Johannes Faltermeier
  *
  */
-public class DefaultTableControlSWTCustomization implements TableViewerSWTCustomization {
+public class DefaultTableControlSWTCustomization<T extends AbstractTableViewer>
+	implements TableViewerSWTCustomization<T> {
 
 	private TableConfiguration tableConfiguration;
 	private final List<ColumnConfiguration> configuredColumns = new ArrayList<ColumnConfiguration>();
 
 	private TableViewerCompositeBuilder tableViewerCompositeBuilder = new DefaultTableViewerCompositeBuilder();
 
-	private TableViewerCreator<? extends AbstractTableViewer> tableViewerCreator = new TableViewerCreator<TableViewer>() {
+	private TableViewerCreator<T> tableViewerCreator = new TableViewerCreator<T>() {
 
 		@Override
-		public TableViewer createTableViewer(Composite parent) {
+		@SuppressWarnings("unchecked")
+		public T createTableViewer(Composite parent) {
 			final TableViewer tableViewer = new TableViewer(parent,
 				SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 			tableViewer.getTable().setHeaderVisible(true);
 			tableViewer.getTable().setLinesVisible(true);
-			return tableViewer;
+			return (T) tableViewer;
 		}
 	};
 
@@ -72,7 +74,9 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 
 	private IContentProvider contentProvider = new ObservableListContentProvider();
 
-	private ButtonBarBuilder buttonBarBuilder = new DefaultButtonBarBuilder();
+	private ActionBar<T> actionBar;
+
+	private ActionConfiguration actionConfiguration;
 
 	@Override
 	public void createCompositeLayout(Composite parent) {
@@ -100,7 +104,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	@Override
-	public AbstractTableViewer createTableViewer(Composite parent) {
+	public T createTableViewer(Composite parent) {
 		return tableViewerCreator.createTableViewer(parent);
 	}
 
@@ -112,16 +116,6 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	@Override
 	public IContentProvider createContentProvider() {
 		return contentProvider;
-	}
-
-	@Override
-	public void fillButtonComposite(Composite buttonComposite, AbstractTableViewer viewer) {
-		buttonBarBuilder.fillButtonComposite(buttonComposite, viewer);
-	}
-
-	@Override
-	public Object createNewElement(Button button) {
-		return buttonBarBuilder.createNewElement(button);
 	}
 
 	@Override
@@ -148,7 +142,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	 *
 	 * @param creator the {@link TableViewerCreator}
 	 */
-	public void setTableViewerCreator(TableViewerCreator<? extends AbstractTableViewer> creator) {
+	public void setTableViewerCreator(TableViewerCreator<T> creator) {
 		tableViewerCreator = creator;
 	}
 
@@ -168,16 +162,25 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	 */
 	public void setContentProvider(IContentProvider provider) {
 		contentProvider = provider;
-
 	}
 
 	/**
-	 * Allows the exchange the default {@link ButtonBarBuilder}.
+	 * Allows the customize the {@link ActionBar}.
 	 *
-	 * @param builder the {@link ButtonBarBuilder}
+	 * @param actionBar the {@link ActionBar}
 	 */
-	public void setButtonBarBuilder(ButtonBarBuilder builder) {
-		buttonBarBuilder = builder;
+	public void setActionBar(ActionBar<T> actionBar) {
+		this.actionBar = actionBar;
+	}
+
+	/**
+	 * Get the action bar instance (if it exists).
+	 *
+	 * @return the actionBar
+	 */
+	@Override
+	public Optional<ActionBar<T>> getActionBar() {
+		return Optional.ofNullable(actionBar);
 	}
 
 	/**
@@ -200,17 +203,19 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 		configuredColumns.add(columnConfiguration);
 	}
 
+	@Override
+	public Optional<ActionConfiguration> getActionConfiguration() {
+		return Optional.ofNullable(actionConfiguration);
+	}
+
 	/**
-	 * Allows the exchange the default {@link NewElementCreator}. This may only be used if the
-	 * {@link #setButtonBarBuilder(ButtonBarBuilder) button bar builder} was not exchanged.
+	 * Allows to customize the {@link ActionConfiguration}.
 	 *
-	 * @param creator the {@link NewElementCreator}
+	 * @param actionConfiguration The {@link ActionConfiguration}
+	 * @see #getActionConfiguration()
 	 */
-	public void setNewElementCreator(NewElementCreator<Object, Button> creator) {
-		if (!DefaultButtonBarBuilder.class.isInstance(buttonBarBuilder)) {
-			throw new IllegalArgumentException("Can only be used with the DefaultButtonBarBuilder"); //$NON-NLS-1$
-		}
-		DefaultButtonBarBuilder.class.cast(buttonBarBuilder).setCreator(creator);
+	public void setActionConfiguration(ActionConfiguration actionConfiguration) {
+		this.actionConfiguration = actionConfiguration;
 	}
 
 	/**

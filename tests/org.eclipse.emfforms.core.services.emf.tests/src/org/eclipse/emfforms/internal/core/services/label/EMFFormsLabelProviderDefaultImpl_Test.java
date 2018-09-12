@@ -20,8 +20,10 @@ import static org.mockito.Mockito.when;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EObjectObservableValue;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -81,6 +83,26 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 	@After
 	public void tearDown() {
 		defaultRealm.dispose();
+	}
+
+	/**
+	 * Test method for
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(EStructuralFeature)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
+	 */
+	@Test
+	public void testGetDisplayNameOneParamDynamicEMF() throws DatabindingFailedException {
+		final String expectedResult = "Expected"; //$NON-NLS-1$
+		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		when(structuralFeature.getEContainingClass()).thenReturn(eClass);
+		when(structuralFeature.getName()).thenReturn(expectedResult.toLowerCase());
+		final String result = labelProvider.getDisplayName(structuralFeature);
+
+		assertEquals(expectedResult, result);
 	}
 
 	/**
@@ -197,6 +219,32 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetDisplayNameTwoParamsBothNull() {
 		labelProvider.getDisplayName(null, null);
+	}
+
+	/**
+	 * Test method for
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(EStructuralFeature)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
+	 */
+	@Test
+	public void testGetDescriptionOneParamDynamicEMF() throws DatabindingFailedException {
+		final String expectedResult = "Expected"; //$NON-NLS-1$
+		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
+
+		when(structuralFeature.getEContainingClass()).thenReturn(eClass);
+		when(structuralFeature.getName()).thenReturn(expectedResult.toLowerCase());
+		when(valueProperty.getValueType()).thenReturn(structuralFeature);
+		when(databindingService.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
+
+		final IObservableValue result = labelProvider.getDescription(domainModelReference);
+
+		verify(databindingService).getValueProperty(domainModelReference, null);
+		assertEquals(expectedResult, result.getValue());
 	}
 
 	/**

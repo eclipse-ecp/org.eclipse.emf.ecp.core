@@ -138,7 +138,8 @@ public class GridPasteKeyListener implements KeyListener {
 	 */
 	public void pasteSelection(Grid grid, String contents) {
 
-		if (grid.getCellSelection().length == 0 || !getControl().isEnabled() || getControl().isReadonly()) {
+		if (grid.getCellSelection().length == 0 || !getControl().isEffectivelyEnabled()
+			|| getControl().isEffectivelyReadonly()) {
 			return;
 		}
 

@@ -38,9 +38,7 @@ public class EcoreHelperNoDependencies_PTest {
 	private final Registry packageRegistry = EPackage.Registry.INSTANCE;
 	private static String aEcorePath = "/TestEcoreHelperProjectResources/A.ecore";
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
@@ -60,6 +58,7 @@ public class EcoreHelperNoDependencies_PTest {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
+	// END SUPRESS CATCH EXCEPTION
 
 	/**
 	 * @throws java.lang.Exception

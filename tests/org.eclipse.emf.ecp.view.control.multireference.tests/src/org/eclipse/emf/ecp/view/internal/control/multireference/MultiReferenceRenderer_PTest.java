@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.databinding.observable.IObserving;
@@ -55,12 +56,15 @@ import org.eclipse.emf.ecp.view.model.common.AbstractGridCell.Alignment;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceFactory;
+import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
@@ -70,6 +74,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
@@ -116,6 +121,8 @@ public class MultiReferenceRenderer_PTest {
 	private MultiReferenceSWTRenderer compactVerticallyRenderer;
 	private Shell shell;
 	private EMFFormsLabelProvider labelProvider;
+	private boolean showMoveButtons;
+	private VTViewTemplateProvider templateProvider;
 
 	/**
 	 * Get {@link Realm} for the tests.
@@ -163,8 +170,10 @@ public class MultiReferenceRenderer_PTest {
 		when(setting.getEObject()).thenReturn(eObject);
 		when(setting.getEStructuralFeature()).thenReturn(eStructuralFeature);
 
+		Mockito.doReturn("UUID").when(vControl).getUuid(); //$NON-NLS-1$
+
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
-		final VTViewTemplateProvider templateProvider = mock(VTViewTemplateProvider.class);
+		templateProvider = mock(VTViewTemplateProvider.class);
 		final EMFFormsLocalizationService l10n = mock(EMFFormsLocalizationService.class);
 		when(l10n.getString(any(Bundle.class), matches("_UI_\\w+_type"))).then(new Answer<String>() { //$NON-NLS-1$
 			@Override
@@ -180,7 +189,17 @@ public class MultiReferenceRenderer_PTest {
 		when(viewContext.getService(EMFFormsLocalizationService.class)).thenReturn(l10n);
 
 		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService, databindingService,
-			labelProvider, templateProvider, imageRegistryService, l10n);
+			labelProvider, templateProvider, imageRegistryService, l10n) {
+			@Override
+			protected boolean showMoveDownButton() {
+				return showMoveButtons;
+			}
+
+			@Override
+			protected boolean showMoveUpButton() {
+				return showMoveButtons;
+			}
+		};
 		renderer.init();
 		renderer.getGridDescription(new SWTGridDescription());
 
@@ -503,6 +522,22 @@ public class MultiReferenceRenderer_PTest {
 		assertThat(linkButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
 	}
 
+	@Test
+	public void testButtonData() {
+		showMoveButtons = true;
+		final Table table = createLeaguePlayersTable();
+		assertEquals("UUID#up", SWTTestUtil.findControl(table.getParent().getParent(), 0, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#down", SWTTestUtil.findControl(table.getParent().getParent(), 1, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#link", SWTTestUtil.findControl(table.getParent().getParent(), 2, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#add", SWTTestUtil.findControl(table.getParent().getParent(), 3, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("UUID#delete", SWTTestUtil.findControl(table.getParent().getParent(), 4, Button.class) //$NON-NLS-1$
+			.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+	}
+
 	/**
 	 * Tests the tool-tip on the "Link" button.
 	 *
@@ -593,6 +628,37 @@ public class MultiReferenceRenderer_PTest {
 		return result;
 	}
 
+	protected Composite createFanVisitedTournaments() {
+		final EditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
+		final Resource bowling = domain.getResourceSet().createResource(URI.createURI("foo.ecore")); //$NON-NLS-1$
+		final Fan fan = BowlingFactory.eINSTANCE.createFan();
+		bowling.getContents().add(fan);
+
+		@SuppressWarnings("unchecked")
+		final IObservableList<?> observableList = EMFEditProperties
+			.list(domain, BowlingPackage.Literals.FAN__VISITED_TOURNAMENTS).observe(fan);
+
+		try {
+			// Re-stub the domain model as our league
+			when(renderer.getViewModelContext().getDomainModel()).thenReturn(fan);
+			when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+				observableList);
+			final TestObservableValue observableValue = mock(TestObservableValue.class);
+			when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+				.thenReturn(observableValue);
+			when(observableValue.getObserved()).thenReturn(fan);
+			when(observableValue.getValueType()).thenReturn(BowlingPackage.Literals.FAN__VISITED_TOURNAMENTS);
+			return (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+			// BEGIN COMPLEX CODE
+		} catch (final Exception e) {
+			// END COMPLEX CODE
+			e.printStackTrace();
+			fail("Failed to render multi-reference table: " + e.getMessage()); //$NON-NLS-1$
+			return null; // Cannot happen but is necessary for Java to be happy
+		}
+	}
+
 	/**
 	 * Test that the control is disabled when it's set to read only
 	 *
@@ -639,6 +705,80 @@ public class MultiReferenceRenderer_PTest {
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		renderer.finalizeRendering(shell);
 		assertFalse(composite.isEnabled());
+	}
+
+	/**
+	 * By default, the 'create and link new' button should be shown for cross references (legacy behavior).
+	 */
+	@Test
+	public void createAndLinkButton_crossRefNoReferenceStyle() {
+		final Composite rendered = createFanVisitedTournaments();
+		final Button linkButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Tournament")); //$NON-NLS-1$
+		final Button createButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(createButton.getToolTipText(), is("Create and link new Tournament")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 2, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
+	}
+
+	@Test
+	public void createAndLinkButton_crossRefReferenceStyleTrue() {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowCreateAndLinkButtonForCrossReferences(true);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Composite rendered = createFanVisitedTournaments();
+		final Button linkButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Tournament")); //$NON-NLS-1$
+		final Button createButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(createButton.getToolTipText(), is("Create and link new Tournament")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 2, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
+	}
+
+	@Test
+	public void createAndLinkButton_crossRefReferenceStyleFalse() {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowCreateAndLinkButtonForCrossReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Composite rendered = createFanVisitedTournaments();
+		final Button linkButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Tournament")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
+
+		try {
+			SWTTestUtil.findControl(rendered, 2, Button.class);
+			fail(
+				"There must not be a third button for a non-containment reference with disabled 'create and link' button."); //$NON-NLS-1$
+		} catch (final NoSuchElementException ex) {
+			// This is what we expect => Test is successful
+			// Cannot use expected in @Test annotation because the test must not succeed if the link or the delete
+			// button are not found.
+		}
+	}
+
+	/**
+	 * For a containment ref the 'create and link' must still be shown even if the reference style property is set to
+	 * false.
+	 */
+	@Test
+	public void createAndLinkButton_containmentRefReferenceStyleFalse() {
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowCreateAndLinkButtonForCrossReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Composite rendered = createLeaguePlayersTable().getParent().getParent();
+		final Button linkButton = SWTTestUtil.findControl(rendered, 0, Button.class);
+		assertThat(linkButton.getToolTipText(), is("Link Player")); //$NON-NLS-1$
+		final Button createButton = SWTTestUtil.findControl(rendered, 1, Button.class);
+		assertThat(createButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(rendered, 2, Button.class);
+		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
 	}
 
 	/**

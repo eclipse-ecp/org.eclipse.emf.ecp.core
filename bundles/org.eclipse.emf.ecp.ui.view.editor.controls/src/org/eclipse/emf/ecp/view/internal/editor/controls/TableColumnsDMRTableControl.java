@@ -70,6 +70,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -127,6 +129,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	private EStructuralFeature structuralFeature;
 	private EObject eObject;
 	private TableViewer viewer;
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
@@ -139,7 +142,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 		tableControl = (VTableControl) getViewModelContext().getDomainModel();
 
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		eObject = (EObject) ((IObserving) observableValue).getObserved();
@@ -148,6 +151,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(composite);
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(titleComposite);
@@ -187,7 +191,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		viewer.getTable().setLinesVisible(true);
 		final TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
 		final TableColumn tableColumn = column.getColumn();
-		final EMFFormsLabelProvider emfFormsLabelProvider = Activator.getDefault().getEMFFormsLabelProvider();// TODO
+		final EMFFormsLabelProvider emfFormsLabelProvider = getEMFFormsLabelProvider();// TODO
 		try {
 			final IObservableValue labelText = emfFormsLabelProvider.getDisplayName(
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
@@ -208,7 +212,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		viewer.setContentProvider(new ObservableListContentProvider());
 		addDragAndDropSupport(viewer, getEditingDomain(eObject));
 
-		final IObservableList list = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableList list = getEMFFormsDatabinding()
 			.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		viewer.setInput(list);
 
@@ -342,15 +346,13 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			IObservableValue observableValue;
 			IObservableList list;
 			try {
-				observableValue = Activator
-					.getDefault()
-					.getEMFFormsDatabinding()
+				observableValue = getEMFFormsDatabinding()
 					.getObservableValue(getVElement().getDomainModelReference(),
 						getViewModelContext().getDomainModel());
-				list = Activator.getDefault().getEMFFormsDatabinding()
+				list = getEMFFormsDatabinding()
 					.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				getReportService().report(new DatabindingFailedReport(ex));
 				viewer.setInput(Observables.emptyObservableList());
 				return;
 			}
@@ -419,22 +421,20 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
 				.cast(eObject);
 			if (tableDomainModelReference == null) {
-				Activator.getDefault().getReportService()
+				getReportService()
 					.report(new AbstractReport("Cannot add column. Table DMR is null.")); //$NON-NLS-1$
 				return;
 			}
 
 			IValueProperty valueProperty;
 			try {
-				valueProperty = Activator
-					.getDefault()
-					.getEMFFormsDatabinding()
+				valueProperty = getEMFFormsDatabinding()
 					.getValueProperty(
 						tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
 							: tableDomainModelReference.getDomainModelReference(),
 						getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				getReportService().report(new DatabindingFailedReport(ex));
 				return;
 			}
 			final EClass eclass = EReference.class.cast(valueProperty.getValueType()).getEReferenceType();
@@ -498,6 +498,16 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			editingDomain.getCommandStack().execute(
 				SetCommand.create(editingDomain, eObject, structuralFeature, list));
 		}
+	}
+
+	@Override
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, this);
+			rendererGridDescription.getGrid().get(0).setHorizontalGrab(false);
+			rendererGridDescription.getGrid().get(1).setHorizontalGrab(false);
+		}
+		return rendererGridDescription;
 	}
 
 	/**

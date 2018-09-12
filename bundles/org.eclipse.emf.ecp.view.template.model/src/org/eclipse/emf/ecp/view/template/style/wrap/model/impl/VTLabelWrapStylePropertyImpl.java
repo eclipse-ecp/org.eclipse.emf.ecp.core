@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.wrap.model.VTLabelWrapStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.wrap.model.VTWrapPackage;
@@ -187,13 +188,7 @@ public class VTLabelWrapStylePropertyImpl extends MinimalEObjectImpl.Container i
 
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (styleProperty == null) {
-			return false;
-		}
-		if (eClass() != styleProperty.eClass()) {
-			return false;
-		}
-		return isWrapLabel() == VTLabelWrapStyleProperty.class.cast(styleProperty).isWrapLabel();
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTLabelWrapStylePropertyImpl

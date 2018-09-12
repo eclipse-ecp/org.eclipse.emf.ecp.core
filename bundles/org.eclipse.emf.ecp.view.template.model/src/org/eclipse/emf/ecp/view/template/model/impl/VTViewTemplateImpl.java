@@ -104,9 +104,12 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
+	 * @deprecated
 	 *
 	 * @generated
 	 */
+	@Deprecated
 	@Override
 	public VTControlValidationTemplate getControlValidationConfiguration() {
 		return controlValidationConfiguration;
@@ -138,9 +141,12 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
+	 * @deprecated
 	 *
 	 * @generated
 	 */
+	@Deprecated
 	@Override
 	public void setControlValidationConfiguration(VTControlValidationTemplate newControlValidationConfiguration) {
 		if (newControlValidationConfiguration != controlValidationConfiguration) {

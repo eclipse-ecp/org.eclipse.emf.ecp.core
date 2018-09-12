@@ -19,7 +19,7 @@ import java.util.Set;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -30,8 +30,12 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -45,9 +49,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Common super class for all section renderer.
@@ -59,16 +60,28 @@ public abstract class AbstractSectionSWTRenderer extends
 	AbstractSWTRenderer<VSection> {
 
 	private final EMFDataBindingContext dbc;
+	private final VTViewTemplateProvider viewTemplateProvider;
 
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
-	 * @since 1.6
+	 * @param viewTemplateProvider the {@link VTViewTemplateProvider}
+	 * @since 1.18
 	 */
-	public AbstractSectionSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
+	public AbstractSectionSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService,
+		VTViewTemplateProvider viewTemplateProvider) {
 		super(vElement, viewContext, reportService);
+		this.viewTemplateProvider = viewTemplateProvider;
 		dbc = new EMFDataBindingContext();
+	}
+
+	/**
+	 * @return the viewTemplateProvider the {@link VTViewTemplateProvider}
+	 * @since 1.18
+	 */
+	protected VTViewTemplateProvider getViewTemplateProvider() {
+		return viewTemplateProvider;
 	}
 
 	@Override
@@ -116,13 +129,11 @@ public abstract class AbstractSectionSWTRenderer extends
 				return columnComposite;
 			}
 			try {
-				Activator
-					.getDefault()
-					.getEMFFormsDatabinding()
+				getViewModelContext().getService(EMFFormsDatabinding.class)
 					.getValueProperty(VControl.class.cast(child).getDomainModelReference(),
 						getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				getReportService().report(new RenderingFailedReport(ex));
 				return columnComposite;
 			}
 		}
@@ -186,7 +197,7 @@ public abstract class AbstractSectionSWTRenderer extends
 				childGridCell.getRenderer().finalizeRendering(columnComposite);
 			}
 		} catch (final NoPropertyDescriptorFoundExeption ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
 
@@ -226,12 +237,7 @@ public abstract class AbstractSectionSWTRenderer extends
 	 * @since 1.6
 	 */
 	protected EMFFormsRendererFactory getEMFFormsRendererFactory() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
-			.getServiceReference(EMFFormsRendererFactory.class);
-		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return rendererFactory;
+		return getViewModelContext().getService(EMFFormsRendererFactory.class);
 	}
 
 	/**
@@ -294,5 +300,23 @@ public abstract class AbstractSectionSWTRenderer extends
 			current = current.eContainer();
 		}
 		return (numberOfParents + 1) * 16;
+	}
+
+	/**
+	 * The label width.
+	 *
+	 * @return the width
+	 * @since 1.18
+	 */
+	protected Optional<Integer> getLabelWidth() {
+		final VTLabelWidthStyleProperty styleProperty = RendererUtil.getStyleProperty(
+			getViewTemplateProvider(),
+			getVElement(),
+			getViewModelContext(),
+			VTLabelWidthStyleProperty.class);
+		if (styleProperty == null || !styleProperty.isSetWidth()) {
+			return Optional.empty();
+		}
+		return Optional.of(styleProperty.getWidth());
 	}
 }

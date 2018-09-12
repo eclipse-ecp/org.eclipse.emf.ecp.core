@@ -69,6 +69,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSelectionManipulatorHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -823,9 +824,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					 */
 					deleteService = new EMFDeleteServiceImpl();
 				}
-				for (final Object obj : selection.toList()) {
-					deleteService.deleteElement(obj);
-				}
+				deleteService.deleteElements(selection.toList());
 				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
 		};
@@ -854,7 +853,59 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 */
 	private class TreeMasterViewSelectionListener implements ISelectionChangedListener {
 
+		/**
+		 * Adapter which listens to changes and delegates the notification to other EObjects.
+		 *
+		 * @author Eugen Neufeld
+		 *
+		 */
+		private final class MultiEditAdapter extends AdapterImpl {
+			private final EObject dummy;
+			private final Set<EObject> selectedEObjects;
+
+			private MultiEditAdapter(EObject dummy, Set<EObject> selectedEObjects) {
+				this.dummy = dummy;
+				this.selectedEObjects = selectedEObjects;
+			}
+
+			@Override
+			public void notifyChanged(Notification notification) {
+				final EditingDomain editingDomain = AdapterFactoryEditingDomain
+					.getEditingDomainFor(getViewModelContext().getDomainModel());
+				if (dummy.eClass().getEAllAttributes().contains(notification.getFeature())) {
+					final CompoundCommand cc = new CompoundCommand();
+					for (final EObject selected : selectedEObjects) {
+						Command command = null;
+						switch (notification.getEventType()) {
+						case Notification.SET:
+							command = SetCommand.create(editingDomain, selected,
+								notification.getFeature(), notification.getNewValue());
+							break;
+						case Notification.UNSET:
+							command = SetCommand.create(editingDomain, selected,
+								notification.getFeature(), SetCommand.UNSET_VALUE);
+							break;
+						case Notification.ADD:
+						case Notification.ADD_MANY:
+							command = AddCommand.create(editingDomain, selected,
+								notification.getFeature(), notification.getNewValue());
+							break;
+						case Notification.REMOVE:
+						case Notification.REMOVE_MANY:
+							command = DeleteCommand.create(editingDomain, notification.getOldValue());
+							break;
+						default:
+							continue;
+						}
+						cc.append(command);
+					}
+					editingDomain.getCommandStack().execute(cc);
+				}
+			}
+		}
+
 		private Composite childComposite;
+		private boolean currentDetailViewOriginalReadonly;
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
@@ -890,21 +941,24 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					if (view == null || view.getChildren().isEmpty()) {
 						view = ViewProviderHelper.getView((EObject) selected, properties);
 					}
+					currentDetailViewOriginalReadonly = view.isReadonly();
 
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
 					ViewModelContext childContext;
-					if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE) {
+					// we have a multi selection, the multi edit is enabled and the multi selection is valid
+					if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE
+						&& selection.size() > 1
+						&& selected != getSelection(new StructuredSelection(selection.getFirstElement()))) {
 						childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, (EObject) selected,
 							new TreeMasterDetailReferenceService(referenceService));
 					} else {
 						childContext = getViewModelContext().getChildContext((EObject) selected,
 							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
 					}
-					childContext.getViewModel().setReadonly(
-						childContext.getViewModel().isEffectivelyReadonly() || getVElement().isEffectivelyReadonly());
-					childContext.getViewModel().setEnabled(
-						childContext.getViewModel().isEffectivelyEnabled() && getVElement().isEffectivelyEnabled());
+					childContext.getViewModel()
+						.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+							|| currentDetailViewOriginalReadonly);
 					// visible does not make any sense
 
 					manipulateViewContext(childContext);
@@ -951,35 +1005,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				}
 				if (allOfSameType) {
 					treeSelected = dummy;
-					dummy.eAdapters().add(new AdapterImpl() {
-
-						@Override
-						public void notifyChanged(Notification notification) {
-							final EditingDomain editingDomain = AdapterFactoryEditingDomain
-								.getEditingDomainFor(getViewModelContext().getDomainModel());
-							if (dummy.eClass().getEAllAttributes().contains(notification.getFeature())) {
-								final CompoundCommand cc = new CompoundCommand();
-								for (final EObject selected : selectedEObjects) {
-									Command command = null;
-									switch (notification.getEventType()) {
-									case Notification.SET:
-										command = SetCommand.create(editingDomain, selected,
-											notification.getFeature(), notification.getNewValue());
-										break;
-									case Notification.UNSET:
-										command = SetCommand.create(editingDomain, selected,
-											notification.getFeature(), SetCommand.UNSET_VALUE);
-										break;
-									default:
-										continue;
-									}
-									cc.append(command);
-								}
-								editingDomain.getCommandStack().execute(cc);
-							}
-						}
-
-					});
+					dummy.eAdapters().add(new MultiEditAdapter(dummy, selectedEObjects));
 				}
 			}
 			return treeSelected;
@@ -1083,6 +1109,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	@Override
 	protected void applyEnable() {
+		// Re-select the current selection to enforce re-rendering the detail.
 		treeViewer.setSelection(new StructuredSelection(treeViewer.getStructuredSelection().getFirstElement()));
 	}
 
@@ -1138,6 +1165,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				toUpdate.add(parent);
 				parent = provider.getParent(parent);
 			}
+		}
+		if (toUpdate.isEmpty() && !(oldDia.getDiagnostics().isEmpty() && newDia.getDiagnostics().isEmpty())) {
+			treeViewer.refresh();
+			return;
 		}
 		treeViewer.update(toUpdate.toArray(), null);
 	}

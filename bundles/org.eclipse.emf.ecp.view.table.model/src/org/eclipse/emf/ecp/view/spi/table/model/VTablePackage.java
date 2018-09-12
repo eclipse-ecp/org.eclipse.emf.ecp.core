@@ -201,7 +201,6 @@ public interface VTablePackage extends EPackage {
 	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -248,6 +247,18 @@ public interface VTablePackage extends EPackage {
 	int TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG = VViewPackage.CONTROL_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Duplicate Disabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__DUPLICATE_DISABLED = VViewPackage.CONTROL_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Control</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -255,7 +266,7 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 6;
+	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration <em>Column
@@ -647,7 +658,6 @@ public interface VTablePackage extends EPackage {
 	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Move Up Down Disabled</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isMoveUpDownDisabled()
 	 * @see #getTableControl()
@@ -708,6 +718,22 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTableControl_EnableDetailEditingDialog();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isDuplicateDisabled <em>Duplicate Disabled</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Duplicate Disabled</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isDuplicateDisabled()
+	 * @see #getTableControl()
+	 * @generated
+	 *
+	 */
+	EAttribute getTableControl_DuplicateDisabled();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
@@ -930,10 +956,9 @@ public interface VTablePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Move Up Down Disabled</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.13
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute TABLE_CONTROL__MOVE_UP_DOWN_DISABLED = eINSTANCE.getTableControl_MoveUpDownDisabled();
@@ -973,6 +998,18 @@ public interface VTablePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG = eINSTANCE.getTableControl_EnableDetailEditingDialog();
+
+		/**
+		 * The meta object literal for the '<em><b>Duplicate Disabled</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.18
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 *
+		 */
+		EAttribute TABLE_CONTROL__DUPLICATE_DISABLED = eINSTANCE.getTableControl_DuplicateDisabled();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration

@@ -502,7 +502,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		for (final SWTGridCell gridCell : getControls().keySet()) {
 			try {
 				final boolean observedNotNull = ((IObserving) getModelValue()).getObserved() != null;
-				final boolean enabled = observedNotNull && getVElement().isEnabled();
+				final boolean enabled = observedNotNull && getVElement().isEffectivelyEnabled();
 				setControlEnabled(gridCell, getControls().get(gridCell), enabled);
 				if (Boolean.FALSE.equals(enabled)) {
 					getVElement().setDiagnostic(null);

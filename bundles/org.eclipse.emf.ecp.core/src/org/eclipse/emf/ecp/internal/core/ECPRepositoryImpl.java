@@ -280,6 +280,9 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	@Override
 	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
 		Collection<Entry<String, String>> newProperties) {
-		((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager()).storeElement(this);
+		final ECPRepositoryManagerImpl repositoryManager = (ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager();
+		if (repositoryManager != null) {
+			repositoryManager.storeElement(this);
+		}
 	}
 }

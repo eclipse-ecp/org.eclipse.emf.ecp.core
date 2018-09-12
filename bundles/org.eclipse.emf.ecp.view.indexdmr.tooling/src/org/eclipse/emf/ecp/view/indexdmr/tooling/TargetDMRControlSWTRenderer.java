@@ -61,7 +61,7 @@ public class TargetDMRControlSWTRenderer extends
 
 	@Override
 	protected void linkValue(Shell shell) {
-		final EMFFormsDatabinding emfFormsDatabinding = Activator.getDefault().getEMFFormsDatabinding();
+		final EMFFormsDatabinding emfFormsDatabinding = getEMFFormsDatabinding();
 		IObservableValue observableValue;
 		try {
 			observableValue = emfFormsDatabinding.getObservableValue(getVElement().getDomainModelReference(),

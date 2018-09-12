@@ -40,6 +40,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
@@ -142,8 +143,9 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		assertTrue(Text.class.isInstance(textRender));
 		assertEquals(SWT.LEFT, Text.class.cast(textRender).getStyle()
 			& SWT.LEFT);
-
 		assertEquals("org_eclipse_emf_ecp_control_string", Text.class.cast(textRender).getData(CUSTOM_VARIANT));
+		assertEquals(UUID + "#control", textRender.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals(UUID + "#control", render.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
 	@Override

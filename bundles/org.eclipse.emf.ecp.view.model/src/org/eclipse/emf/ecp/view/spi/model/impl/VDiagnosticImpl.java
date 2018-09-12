@@ -113,6 +113,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 		super();
 		eAdapters().add(new DiagnosticAdapter());
 	}
+	// end of custom code
 
 	private void removeOldDiagnostic(Diagnostic diagnostic) {
 		if (diagnostic == null) {

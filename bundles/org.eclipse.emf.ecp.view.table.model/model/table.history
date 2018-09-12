@@ -316,7 +316,7 @@
     <changes xsi:type="history:OperationChange" xmi:id="_p0kArh96Eeemy-pWGWHIRA">
       <changes xsi:type="history:Create" xmi:id="_p0kArx96Eeemy-pWGWHIRA" referenceName="eStructuralFeatures">
         <target href="table.ecore#//WidthConfiguration"/>
-        <element href="table.ecore#//WidthConfiguration/columnDomainReference"/>
+        <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
         <changes xsi:type="history:Set" xmi:id="_p0kAsB96Eeemy-pWGWHIRA" featureName="name" dataValue="columnDomainReference">
           <element href="table.ecore#//WidthConfiguration/columnDomainReference"/>
         </changes>
@@ -404,6 +404,46 @@
     </changes>
     <changes xsi:type="history:Set" xmi:id="_sQhswB96Eeemy-pWGWHIRA" featureName="name" dataValue="columnDomainReference" oldDataValue="columnDomainModelReference">
       <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_NfeoMHSHEei5z5FEQFfLqA">
+      <changes xsi:type="history:Create" xmi:id="_NfeoMXSHEei5z5FEQFfLqA" referenceName="eStructuralFeatures">
+        <target href="table.ecore#//TableControl"/>
+        <element href="table.ecore#//TableControl/duplicateDisabled"/>
+        <changes xsi:type="history:Set" xmi:id="_NfeoMnSHEei5z5FEQFfLqA" featureName="name" dataValue="duplicateDisabled">
+          <element href="table.ecore#//TableControl/duplicateDisabled"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_NfeoM3SHEei5z5FEQFfLqA" featureName="defaultValueLiteral" dataValue="true">
+          <element href="table.ecore#//TableControl/duplicateDisabled"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_NfeoNHSHEei5z5FEQFfLqA" featureName="eType">
+          <element href="table.ecore#//TableControl/duplicateDisabled"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_NfeoNXSHEei5z5FEQFfLqA" name="newAttribute">
+        <parameters xmi:id="_NfeoNnSHEei5z5FEQFfLqA" name="eClass">
+          <referenceValue xmi:id="_NfeoN3SHEei5z5FEQFfLqA">
+            <element href="table.ecore#//TableControl"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_NfeoOHSHEei5z5FEQFfLqA" name="name">
+          <dataValue>duplicateDisabled</dataValue>
+        </parameters>
+        <parameters xmi:id="_NfeoOXSHEei5z5FEQFfLqA" name="type">
+          <referenceValue xmi:id="_NfeoOnSHEei5z5FEQFfLqA">
+            <element href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_NfeoO3SHEei5z5FEQFfLqA" name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters xmi:id="_NfeoPHSHEei5z5FEQFfLqA" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_NfeoPXSHEei5z5FEQFfLqA" name="defaultValue">
+          <dataValue>true</dataValue>
+        </parameters>
+      </operation>
     </changes>
   </releases>
 </history:History>

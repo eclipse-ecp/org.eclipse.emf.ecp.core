@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.template.annotation.model.edit" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="Changed SPI with 1.18" id="923795461">
+            <message_arguments>
+                <message_argument value="1.18.0"/>
+                <message_argument value="1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

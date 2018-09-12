@@ -18,7 +18,6 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -29,7 +28,6 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -104,10 +102,11 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	}
 
 	private ECPSWTView ecpView;
-	private VView view;
 	private Composite detailPanel;
 	private Composite border;
 	private ScrolledComposite scrolledComposite;
+	private VView currentDetailView;
+	private boolean currentDetailViewOriginalReadonly;
 
 	/**
 	 * {@inheritDoc}
@@ -189,38 +188,47 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		final EReference reference = (EReference) valueProperty.getValueType();
 		return getView(EcoreUtil.create(reference.getEReferenceType()));
 	}
+
 	/**
 	 * Returns a fresh copy of the {@link VView} used for detail editing based on the provided EObject.
-         *
+	 *
 	 * @param selectedEObject The selected EObject for which to provide the View
 	 * @return the view
 	 */
 	protected VView getView(EObject selectedEObject) {
-		if (view == null) {
-			VView detailView = getVElement().getDetailView();
-			if (detailView == null) {
+		VView detailView = getVElement().getDetailView();
+		if (detailView == null) {
 
-				final VElement viewModel = getViewModelContext().getViewModel();
-				final VViewModelProperties properties = ViewModelPropertiesHelper
-					.getInhertitedPropertiesOrEmpty(viewModel);
-				detailView = ViewProviderHelper.getView(selectedEObject, properties);
-			}
-			view = detailView;
+			final VElement viewModel = getViewModelContext().getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper
+				.getInhertitedPropertiesOrEmpty(viewModel);
+			detailView = ViewProviderHelper.getView(selectedEObject, properties);
 		}
-		final VView copy = EcoreUtil.copy(view);
-		for (final Adapter adapter : view.eAdapters()) {
-			if (LocalizationAdapter.class.isInstance(adapter)) {
-				copy.eAdapters().add(new LocalizationAdapter() {
 
-					@Override
-					public String localize(String key) {
-						return LocalizationAdapter.class.cast(adapter).localize(key);
-					}
-				});
-				break;
-			}
+		currentDetailViewOriginalReadonly = detailView.isReadonly();
+		return detailView;
+	}
+
+	@Override
+	protected void applyEnable() {
+		super.applyEnable();
+		if (currentDetailView != null) {
+			// Set the detail view to read only if this table is disabled or read only. Use the detail view's original
+			// read only state if this table is enabled and not read only.
+			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+				|| currentDetailViewOriginalReadonly);
 		}
-		return copy;
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		super.applyReadOnly();
+		if (currentDetailView != null) {
+			// Set the detail view to read only if this table is disabled or read only. Use the detail view's original
+			// read only state if this table is enabled and not read only.
+			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+				|| currentDetailViewOriginalReadonly);
+		}
 	}
 
 	/**
@@ -266,8 +274,8 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @since 1.9
 	 */
 	protected void renderSelectedObject(final Composite composite, final EObject eObject) {
-		final VView detailView = getView(eObject);
-		if (detailView == null) {
+		currentDetailView = getView(eObject);
+		if (currentDetailView == null) {
 
 			final Label label = new Label(composite, SWT.NONE);
 			label.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_RED));
@@ -275,8 +283,12 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 		} else {
 			final ViewModelContext childContext = getViewModelContext().getChildContext(eObject, getVElement(),
-				detailView);
-
+				currentDetailView);
+			currentDetailView = (VView) childContext.getViewModel();
+			// Set the detail view to read only if this table is read only or disabled
+			currentDetailView.setReadonly(
+				!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
+					|| currentDetailViewOriginalReadonly);
 			try {
 				ecpView = ECPSWTViewRenderer.INSTANCE.render(composite, childContext);
 			} catch (final ECPRendererException ex) {
@@ -312,12 +324,10 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#deleteRows(java.util.List,
-	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
 	 * @since 1.6
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature) {

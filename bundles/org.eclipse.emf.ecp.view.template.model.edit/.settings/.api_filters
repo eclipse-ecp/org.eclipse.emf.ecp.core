@@ -7,6 +7,12 @@
                 <message_argument value="1.13.0"/>
             </message_arguments>
         </filter>
+        <filter comment="Changed SPI with 1.18" id="923795461">
+            <message_arguments>
+                <message_argument value="1.18.0"/>
+                <message_argument value="1.17.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>

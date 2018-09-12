@@ -77,7 +77,8 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	 */
 	public String getDisplayName(EStructuralFeature structuralFeature) {
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
-		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
+		if (eContainingClass.isAbstract() || eContainingClass.isInterface()
+			|| eContainingClass.getInstanceClass() == null) {
 			return getFallbackLabel(structuralFeature);
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
@@ -182,7 +183,8 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
-		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
+		if (eContainingClass.isAbstract() || eContainingClass.isInterface()
+			|| eContainingClass.getInstanceClass() == null) {
 			return getConstantObservableValue(getFallbackLabel(structuralFeature));
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);

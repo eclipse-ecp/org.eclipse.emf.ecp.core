@@ -61,7 +61,7 @@
       </children>
     </children>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_9cWmcEDLEeifDej7n0aGUQ">
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_9cWmcEDLEeifDej7n0aGUQ" moveUpDownDisabled="false" duplicateDisabled="false">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_BM7VEEDMEeifDej7n0aGUQ">
       <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_BuvosEDMEeifDej7n0aGUQ">
         <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//RAM/clockSpeed"/>
@@ -77,7 +77,7 @@
       </domainModelReference>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_2oWbsEDOEeifDej7n0aGUQ">
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_2oWbsEDOEeifDej7n0aGUQ" duplicateDisabled="false">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_2oWbsUDOEeifDej7n0aGUQ">
       <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_2oWbskDOEeifDej7n0aGUQ">
         <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emfforms/example/coffeemodel#//Activity/name"/>

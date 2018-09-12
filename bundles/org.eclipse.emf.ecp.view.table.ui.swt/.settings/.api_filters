@@ -57,48 +57,16 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer">
-        <filter comment="SPI Changes in 1.17" id="336658481">
+        <filter comment="SPI change 1.18" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
-                <message_argument value="VALIDATION_PREFERRED_SIZE"/>
+                <message_argument value="createTableViewerSWTBuilder(Composite, IObservableList, IObservableValue, IObservableValue, TableViewerCompositeBuilder, ObservableListContentProvider, TableControlSWTRenderer.ECPTableViewerComparator, TableControlSWTRenderer.TableControlSWTRendererButtonBarBuilder)"/>
             </message_arguments>
         </filter>
-        <filter comment="SPI Change 1.8.0" id="338722907">
+        <filter comment="SPI change 1.18" id="338886760">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
-                <message_argument value="TableControlSWTRenderer(VTableControl, ViewModelContext, ReportService, EMFFormsDatabinding, EMFFormsLabelProvider, VTViewTemplateProvider, ImageRegistryService, EMFFormsEditSupport)"/>
-            </message_arguments>
-        </filter>
-        <filter comment="SPI Change 1.10.0" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
-                <message_argument value="createCellEditor(EObject, EStructuralFeature, Table)"/>
-            </message_arguments>
-        </filter>
-        <filter comment="SPI Change 1.10.0" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
-                <message_argument value="getTableViewer()"/>
-            </message_arguments>
-        </filter>
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
-                <message_argument value="getTableViewerSWTBuilder(Composite, IObservableList, IObservableValue, IObservableValue, TableViewerCompositeBuilder, ObservableListContentProvider, TableControlSWTRenderer.ECPTableViewerComparator, TableControlSWTRenderer.TableControlSWTRendererButtonBarBuilder)"/>
-            </message_arguments>
-        </filter>
-        <filter comment="SPI Change 1.10.0" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
-                <message_argument value="setTableViewer(TableViewer)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer$ECPCellLabelProvider">
-        <filter comment="SPI Change 1.10.0" id="338722907">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.ECPCellLabelProvider"/>
-                <message_argument value="ECPCellLabelProvider(TableControlSWTRenderer, EStructuralFeature, CellEditor, IObservableMap, VTableControl, VDomainModelReference, Table)"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.TableControlSWTRendererButtonBarBuilder"/>
+                <message_argument value="org.eclipse.emf.ecp.view.table.ui.swt_1.18.0"/>
             </message_arguments>
         </filter>
     </resource>

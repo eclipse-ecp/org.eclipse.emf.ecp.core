@@ -161,6 +161,7 @@ public class TableValidationInitiator_Test {
 
 		final EMFFormsViewService viewService = mock(EMFFormsViewService.class);
 		when(context.getService(EMFFormsViewService.class)).thenReturn(viewService);
+		when(context.getService(EMFFormsDatabinding.class)).thenReturn(databinding);
 		when(viewService.getView(any(EClass.class), any(VViewModelProperties.class)))
 			.thenReturn(VViewFactory.eINSTANCE.createView());
 		when(context.getService(EMFFormsDatabinding.class)).thenReturn(databinding);

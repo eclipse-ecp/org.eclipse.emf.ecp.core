@@ -38,6 +38,9 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Jonas
@@ -45,13 +48,10 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 
-	private final EMFFormsRendererFactory factory;
-
 	/**
 	 * Constructor.
 	 */
 	public ECPSWTViewRendererImpl() {
-		factory = Activator.getDefault().getEMFFormsRendererFactory();
 	}
 
 	/**
@@ -86,6 +86,11 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 */
 	@Override
 	public ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory factory = bundleContext.getService(serviceReference);
+
 		AbstractSWTRenderer<VElement> renderer;
 		try {
 			renderer = factory.getRendererInstance(
@@ -93,6 +98,8 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 				viewModelContext);
 		} catch (final EMFFormsNoRendererException ex) {
 			throw new ECPRendererException(ex.getMessage());
+		} finally {
+			bundleContext.ungetService(serviceReference);
 		}
 
 		final ReportService reportService = Activator.getDefault().getReportService();

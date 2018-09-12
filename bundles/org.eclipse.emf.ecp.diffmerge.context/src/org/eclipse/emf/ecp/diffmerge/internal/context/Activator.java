@@ -32,6 +32,8 @@ public class Activator extends Plugin {
 	private static Activator plugin;
 	private ServiceReference<ReportService> reportServiceReference;
 
+	private ServiceReference<EMFFormsDatabinding> emfformsDatabindingServiceReference;
+
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
@@ -41,6 +43,12 @@ public class Activator extends Plugin {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
+		if (emfformsDatabindingServiceReference != null) {
+			bundleContext.ungetService(emfformsDatabindingServiceReference);
+		}
+		if (reportServiceReference != null) {
+			bundleContext.ungetService(reportServiceReference);
+		}
 		plugin = null;
 		super.stop(bundleContext);
 	}
@@ -63,10 +71,9 @@ public class Activator extends Plugin {
 	 */
 	public ReportService getReportService() {
 		if (reportServiceReference == null) {
-			reportServiceReference = plugin.getBundle().getBundleContext()
-				.getServiceReference(ReportService.class);
+			reportServiceReference = getBundle().getBundleContext().getServiceReference(ReportService.class);
 		}
-		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
+		return getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 	/**
@@ -75,13 +82,10 @@ public class Activator extends Plugin {
 	 * @return The {@link EMFFormsDatabinding}
 	 */
 	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
-
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
+		if (emfformsDatabindingServiceReference == null) {
+			emfformsDatabindingServiceReference = getBundle().getBundleContext()
+				.getServiceReference(EMFFormsDatabinding.class);
+		}
+		return getBundle().getBundleContext().getService(emfformsDatabindingServiceReference);
 	}
 }

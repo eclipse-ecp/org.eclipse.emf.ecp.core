@@ -202,9 +202,10 @@ public class CoffeePackageImpl extends EPackageImpl implements CoffeePackage {
 		}
 
 		// Obtain or create and register package
-		final CoffeePackageImpl theCoffeePackage = (CoffeePackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof CoffeePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new CoffeePackageImpl());
+		final Object registeredCoffeePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		final CoffeePackageImpl theCoffeePackage = registeredCoffeePackage instanceof CoffeePackageImpl
+			? (CoffeePackageImpl) registeredCoffeePackage
+			: new CoffeePackageImpl();
 
 		isInited = true;
 
@@ -787,7 +788,7 @@ public class CoffeePackageImpl extends EPackageImpl implements CoffeePackage {
 			ControlUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getControlUnit_Dimension(), getDimension(), null, "dimension", null, 1, 1, //$NON-NLS-1$
-			ControlUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			ControlUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getControlUnit_Ram(), getRAM(), null, "ram", null, 1, -1, ControlUnit.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,

@@ -25,6 +25,12 @@
                 <message_argument value="1.13.0"/>
             </message_arguments>
         </filter>
+        <filter comment="Changed SPI with 1.18" id="923795461">
+            <message_arguments>
+                <message_argument value="1.18.0"/>
+                <message_argument value="1.17.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
@@ -916,6 +922,84 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
                 <message_argument value="TABLE_STYLE_PROPERTY__VISIBLE_LINES"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableValidation/model/VTTableValidationFactory.java" type="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.18.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.annotation.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.annotation.model_1.17.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableValidation/model/VTTableValidationPackage.java" type="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.18.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.annotation.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.annotation.model_1.17.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableValidation/model/VTTableValidationStyleProperty.java" type="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.18.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.annotation.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.annotation.model_1.17.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changed SPI with 1.18" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.17.0"/>
             </message_arguments>
         </filter>
     </resource>

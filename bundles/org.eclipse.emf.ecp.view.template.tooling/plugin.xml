@@ -25,6 +25,8 @@
    </extension>
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodel/KeyBindings.view"/>
+
 <file filePath="viewmodel/viewModelElementSelector.view"/>
 
 <file filePath="viewmodel/dmrSelector.view"/>

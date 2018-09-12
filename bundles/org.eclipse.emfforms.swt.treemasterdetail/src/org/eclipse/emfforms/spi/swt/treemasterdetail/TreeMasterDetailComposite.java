@@ -39,6 +39,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -418,32 +420,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			}
 			if (allOfSameType) {
 				selectedObject = dummy;
-				dummy.eAdapters().add(new AdapterImpl() {
-
-					@Override
-					public void notifyChanged(Notification notification) {
-						if (dummy.eClass().getEAllAttributes().contains(notification.getFeature())) {
-							final CompoundCommand cc = new CompoundCommand();
-							for (final EObject selected : selectedEObjects) {
-								Command command = null;
-								switch (notification.getEventType()) {
-								case Notification.SET:
-									command = SetCommand.create(editingDomain, selected,
-										notification.getFeature(), notification.getNewValue());
-									break;
-								case Notification.UNSET:
-									command = SetCommand.create(editingDomain, selected,
-										notification.getFeature(), SetCommand.UNSET_VALUE);
-									break;
-								default:
-									continue;
-								}
-								cc.append(command);
-							}
-							editingDomain.getCommandStack().execute(cc);
-						}
-					}
-				});
+				dummy.eAdapters().add(new MultiEditAdapter(selectedEObjects, dummy));
 			}
 		}
 		return selectedObject;
@@ -588,6 +565,55 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			return;
 		}
 		updateDetailPanel(setFocusToDetail);
+	}
+
+	/**
+	 * Adapter which listens to changes and delegates the notification to other EObjects.
+	 * 
+	 * @author Eugen Neufeld
+	 *
+	 */
+	private final class MultiEditAdapter extends AdapterImpl {
+		private final Set<EObject> selectedEObjects;
+		private final EObject dummy;
+
+		private MultiEditAdapter(Set<EObject> selectedEObjects, EObject dummy) {
+			this.selectedEObjects = selectedEObjects;
+			this.dummy = dummy;
+		}
+
+		@Override
+		public void notifyChanged(Notification notification) {
+			if (dummy.eClass().getEAllAttributes().contains(notification.getFeature())) {
+				final CompoundCommand cc = new CompoundCommand();
+				for (final EObject selected : selectedEObjects) {
+					Command command = null;
+					switch (notification.getEventType()) {
+					case Notification.SET:
+						command = SetCommand.create(editingDomain, selected,
+							notification.getFeature(), notification.getNewValue());
+						break;
+					case Notification.UNSET:
+						command = SetCommand.create(editingDomain, selected,
+							notification.getFeature(), SetCommand.UNSET_VALUE);
+						break;
+					case Notification.ADD:
+					case Notification.ADD_MANY:
+						command = AddCommand.create(editingDomain, selected,
+							notification.getFeature(), notification.getNewValue());
+						break;
+					case Notification.REMOVE:
+					case Notification.REMOVE_MANY:
+						command = DeleteCommand.create(editingDomain, notification.getOldValue());
+						break;
+					default:
+						continue;
+					}
+					cc.append(command);
+				}
+				editingDomain.getCommandStack().execute(cc);
+			}
+		}
 	}
 
 	/**

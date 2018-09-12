@@ -160,7 +160,7 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 		final AbstractSWTRenderer<VElement> rendererInstance;
 		try {
 			rendererInstance = ContextInjectionFactory.make(rendererClass, childContext);
-		} catch (@SuppressWarnings("restriction") final org.eclipse.e4.core.di.InjectionException ex) {
+		} catch (final org.eclipse.e4.core.di.InjectionException ex) {
 			reportService.report(new AbstractReport(ex));
 			return null;
 		}

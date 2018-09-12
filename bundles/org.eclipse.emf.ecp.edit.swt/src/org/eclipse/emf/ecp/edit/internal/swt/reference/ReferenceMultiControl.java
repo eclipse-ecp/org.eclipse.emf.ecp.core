@@ -20,6 +20,9 @@ import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
@@ -40,8 +43,10 @@ public class ReferenceMultiControl extends MultiControl {
 		actions[0] = new AddReferenceAction(getEditingDomain(firstSetting), firstSetting,
 			getItemPropertyDescriptor(firstSetting), getService(ReferenceService.class));
 		actions[1] = new NewReferenceAction(getEditingDomain(firstSetting), firstSetting,
-			Activator.getDefault().getEMFFormsEditSupport(), Activator.getDefault().getEMFFormsLabelProvider(),
-			getService(ReferenceService.class), Activator.getDefault().getReportService(), getDomainModelReference(),
+			getViewModelContext().getService(EMFFormsEditSupport.class),
+			getViewModelContext().getService(EMFFormsLabelProvider.class),
+			getService(ReferenceService.class), getViewModelContext().getService(ReportService.class),
+			getDomainModelReference(),
 			getViewModelContext().getDomainModel());
 		return actions;
 	}

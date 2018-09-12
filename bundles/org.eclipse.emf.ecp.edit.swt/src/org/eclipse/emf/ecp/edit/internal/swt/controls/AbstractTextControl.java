@@ -19,7 +19,6 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
@@ -142,7 +141,9 @@ public abstract class AbstractTextControl extends SingleControl {
 	}
 
 	private boolean isDisableRenderedAsEditable() {
-		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+
+		final VTViewTemplateProvider vtViewTemplateProvider = getViewModelContext()
+			.getService(VTViewTemplateProvider.class);
 		if (vtViewTemplateProvider == null) {
 			return false;
 		}

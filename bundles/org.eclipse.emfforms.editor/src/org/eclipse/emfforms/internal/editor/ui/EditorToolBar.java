@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emfforms.internal.editor.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ToolBarManager;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
@@ -58,7 +57,6 @@ public class EditorToolBar extends Composite {
 		layout.marginHeight = 5;
 		layout.marginWidth = 5;
 		setLayout(layout);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(this);
 
 		// Create the Icon on the Left
 		final Label titleImage = new Label(this, SWT.NONE);

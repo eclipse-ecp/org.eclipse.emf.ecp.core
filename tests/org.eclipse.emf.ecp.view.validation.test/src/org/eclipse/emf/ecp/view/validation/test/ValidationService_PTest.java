@@ -54,6 +54,7 @@ import org.osgi.framework.ServiceReference;
  * @author Stefan Dirix
  *
  */
+@SuppressWarnings("restriction")
 public class ValidationService_PTest {
 
 	private DefaultRealm defaultRealm;
@@ -66,12 +67,22 @@ public class ValidationService_PTest {
 
 	private CrossReferenceContainer otherContainer;
 
+	private BundleContext bundleContext;
+
+	private ServiceReference<ReportService> reportServiceReference;
+
+	private ReportService reportService;
+
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 		defaultRealm = new DefaultRealm();
+
+		bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+		reportServiceReference = bundleContext.getServiceReference(ReportService.class);
+		reportService = bundleContext.getService(reportServiceReference);
 	}
 
 	/**
@@ -80,6 +91,7 @@ public class ValidationService_PTest {
 	@After
 	public void tearDown() throws Exception {
 		defaultRealm.dispose();
+		bundleContext.ungetService(reportServiceReference);
 	}
 
 	private void setupContent() {
@@ -204,18 +216,18 @@ public class ValidationService_PTest {
 	public void testValidationTimeoutReport2000() {
 		setupContent();
 		container.getContents().add(content);
-		final ReportService reportService = getReportService();
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
-		reportService.addConsumer(new ReportServiceConsumer() {
+		final ReportServiceConsumer reportServiceConsumer = new ReportServiceConsumer() {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
 				assertTrue(reportEntity.getMessage().startsWith("Validation took longer than expected for"));
 				called.set(0, true);
 			}
-		});
+		};
+		reportService.addConsumer(reportServiceConsumer);
 		validationService.addValidationProvider(new ValidationProvider() {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
@@ -229,17 +241,17 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertTrue("Validation report missing", called.get(0));
+		reportService.removeConsumer(reportServiceConsumer);
 	}
 
 	@Test
 	public void testValidationTimeoutReport1000() {
 		setupContent();
 		container.getContents().add(content);
-		final ReportService reportService = getReportService();
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
-		reportService.addConsumer(new ReportServiceConsumer() {
+		final ReportServiceConsumer reportServiceConsumer = new ReportServiceConsumer() {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
@@ -248,7 +260,8 @@ public class ValidationService_PTest {
 				called.set(0, true);
 
 			}
-		});
+		};
+		reportService.addConsumer(reportServiceConsumer);
 		validationService.addValidationProvider(new ValidationProvider() {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
@@ -262,17 +275,17 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertTrue("Validation report missing", called.get(0));
+		reportService.removeConsumer(reportServiceConsumer);
 	}
 
 	@Test
 	public void testValidationTimeoutReportNoDelay() {
 		setupContent();
 		container.getContents().add(content);
-		final ReportService reportService = getReportService();
 
 		final List<Boolean> called = new ArrayList<Boolean>(1);
 		called.add(false);
-		reportService.addConsumer(new ReportServiceConsumer() {
+		final ReportServiceConsumer reportServiceConsumer = new ReportServiceConsumer() {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
@@ -280,7 +293,8 @@ public class ValidationService_PTest {
 				called.set(0, true);
 
 			}
-		});
+		};
+		reportService.addConsumer(reportServiceConsumer);
 		validationService.addValidationProvider(new ValidationProvider() {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
@@ -290,6 +304,8 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertFalse("Validation report present", called.get(0));
+
+		reportService.removeConsumer(reportServiceConsumer);
 	}
 
 	@Test
@@ -324,7 +340,6 @@ public class ValidationService_PTest {
 		/* cutting of should not produce NPEs as this is legit */
 	}
 
-	@SuppressWarnings("restriction")
 	@Test
 	public void testBug529403controlAdded() {
 		/* setup domain */
@@ -361,7 +376,7 @@ public class ValidationService_PTest {
 						.getAllSettingsFor(vControl.getDomainModelReference(), parent);
 					return (T) mock;
 				}
-				return super.getService(serviceType);
+				return super.getServiceWithoutLog(serviceType);
 			}
 		};
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, parent);
@@ -370,14 +385,6 @@ public class ValidationService_PTest {
 		view.getChildren().add(vControl);
 
 		/* assert no NPE */
-	}
-
-	private ReportService getReportService() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
-		final ReportService service = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return service;
 	}
 
 }

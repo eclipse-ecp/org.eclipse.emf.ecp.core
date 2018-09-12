@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
@@ -322,15 +323,7 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (VTTableValidationStyleProperty.class.equals(styleProperty.getClass())) {
-			return false;
-		}
-		final VTTableValidationStyleProperty validationColumnStyleProperty = VTTableValidationStyleProperty.class
-			.cast(styleProperty);
-		return getColumnWidth() == validationColumnStyleProperty.getColumnWidth()
-			&& getColumnName() == validationColumnStyleProperty.getColumnName()
-			&& getImagePath() == validationColumnStyleProperty.getImagePath();
-
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTTableValidationStylePropertyImpl

@@ -34,6 +34,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView <em>Detail View</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog <em>Enable Detail
  * Editing Dialog</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isDuplicateDisabled <em>Duplicate
+ * Disabled</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl()
@@ -213,5 +215,41 @@ public interface VTableControl extends VControl {
 	 */
 	@Deprecated
 	void setEnableDetailEditingDialog(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Duplicate Disabled</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Duplicate Disabled</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Duplicate Disabled</em>' attribute.
+	 * @see #setDuplicateDisabled(boolean)
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_DuplicateDisabled()
+	 * @model default="true"
+	 * @generated
+	 *
+	 */
+	boolean isDuplicateDisabled();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isDuplicateDisabled
+	 * <em>Duplicate Disabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.18
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Duplicate Disabled</em>' attribute.
+	 * @see #isDuplicateDisabled()
+	 * @generated
+	 *
+	 */
+	void setDuplicateDisabled(boolean value);
 
 } // VTableControl

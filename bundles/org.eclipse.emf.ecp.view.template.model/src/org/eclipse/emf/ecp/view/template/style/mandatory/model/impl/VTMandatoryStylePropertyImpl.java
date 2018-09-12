@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
@@ -37,8 +38,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleP
  *
  * @generated
  */
-public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container implements VTMandatoryStyleProperty
-{
+public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container implements VTMandatoryStyleProperty {
 	/**
 	 * The default value of the '{@link #isHighliteMandatoryFields() <em>Highlite Mandatory Fields</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -89,8 +89,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 *
 	 * @generated
 	 */
-	protected VTMandatoryStylePropertyImpl()
-	{
+	protected VTMandatoryStylePropertyImpl() {
 		super();
 	}
 
@@ -101,8 +100,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VTMandatoryPackage.Literals.MANDATORY_STYLE_PROPERTY;
 	}
 
@@ -113,8 +111,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public boolean isHighliteMandatoryFields()
-	{
+	public boolean isHighliteMandatoryFields() {
 		return highliteMandatoryFields;
 	}
 
@@ -125,8 +122,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public void setHighliteMandatoryFields(boolean newHighliteMandatoryFields)
-	{
+	public void setHighliteMandatoryFields(boolean newHighliteMandatoryFields) {
 		final boolean oldHighliteMandatoryFields = highliteMandatoryFields;
 		highliteMandatoryFields = newHighliteMandatoryFields;
 		if (eNotificationRequired()) {
@@ -143,8 +139,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public String getMandatoryMarker()
-	{
+	public String getMandatoryMarker() {
 		return mandatoryMarker;
 	}
 
@@ -155,8 +150,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public void setMandatoryMarker(String newMandatoryMarker)
-	{
+	public void setMandatoryMarker(String newMandatoryMarker) {
 		final String oldMandatoryMarker = mandatoryMarker;
 		mandatoryMarker = newMandatoryMarker;
 		if (eNotificationRequired()) {
@@ -172,10 +166,8 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__HIGHLITE_MANDATORY_FIELDS:
 			return isHighliteMandatoryFields();
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__MANDATORY_MARKER:
@@ -191,10 +183,8 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__HIGHLITE_MANDATORY_FIELDS:
 			setHighliteMandatoryFields((Boolean) newValue);
 			return;
@@ -212,10 +202,8 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__HIGHLITE_MANDATORY_FIELDS:
 			setHighliteMandatoryFields(HIGHLITE_MANDATORY_FIELDS_EDEFAULT);
 			return;
@@ -233,15 +221,14 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__HIGHLITE_MANDATORY_FIELDS:
 			return highliteMandatoryFields != HIGHLITE_MANDATORY_FIELDS_EDEFAULT;
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__MANDATORY_MARKER:
-			return MANDATORY_MARKER_EDEFAULT == null ? mandatoryMarker != null : !MANDATORY_MARKER_EDEFAULT
-				.equals(mandatoryMarker);
+			return MANDATORY_MARKER_EDEFAULT == null ? mandatoryMarker != null
+				: !MANDATORY_MARKER_EDEFAULT
+					.equals(mandatoryMarker);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -253,8 +240,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}
@@ -275,12 +261,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (VTMandatoryStyleProperty.class.equals(styleProperty.getClass())) {
-			return false;
-		}
-		final VTMandatoryStyleProperty mandatoryStyleProperty = VTMandatoryStyleProperty.class.cast(styleProperty);
-		return isHighliteMandatoryFields() == mandatoryStyleProperty.isHighliteMandatoryFields()
-			&& getMandatoryMarker() == mandatoryStyleProperty.getMandatoryMarker();
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTMandatoryStylePropertyImpl

@@ -99,7 +99,6 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		controls = new LinkedHashMap<SWTGridCell, Control>();
 		if (getViewModelContext() != null) {
 			listener = new ModelChangeListener() {
-
 				@Override
 				public void notifyChange(ModelChangeNotification notification) {
 					if (!renderingFinished) {
@@ -108,18 +107,19 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					if (notification.getRawNotification().isTouch()) {
 						return;
 					}
+					// Always apply enable and read-only if it changed because it might have changed for a parent
+					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
+						&& !getVElement().isEffectivelyReadonly()) {
+						applyEnable();
+					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Readonly()) {
+						applyReadOnly();
+					}
 					if (notification.getNotifier() != getVElement()) {
 						return;
 					}
 					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
 						applyVisible();
-					}
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
-						&& !getVElement().isReadonly()) {
-						applyEnable();
-					}
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE
-						.getElement_Diagnostic()) {
+					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Diagnostic()) {
 						final VDiagnostic newDia = (VDiagnostic) notification.getRawNotification().getNewValue();
 						final VDiagnostic oldDia = (VDiagnostic) notification.getRawNotification().getOldValue();
 						applyValidation(oldDia, newDia);
@@ -282,9 +282,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 *
 	 */
 	protected void applyEnable() {
-		for (final SWTGridCell gridCell : controls.keySet()) {
-			setControlEnabled(gridCell, controls.get(gridCell), getVElement().isEnabled());
-		}
+		// Do nothing, implement behavior in implementing class if needed
 	}
 
 	/**

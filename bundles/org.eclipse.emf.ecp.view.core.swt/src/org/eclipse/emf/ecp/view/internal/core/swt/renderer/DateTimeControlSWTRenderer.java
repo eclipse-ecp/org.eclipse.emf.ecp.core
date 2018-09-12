@@ -47,6 +47,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -213,6 +214,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		stackLayout = new StackLayout();
 		stackComposite.setLayout(stackLayout);
 		unsetLabel = new Label(stackComposite, SWT.CENTER);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(unsetLabel, getVElement(), "unsetlabel", //$NON-NLS-1$
+			getViewModelContext());
 		unsetLabel.setText(getUnsetText());
 		unsetLabel.setBackground(stackComposite.getBackground());
 		unsetLabel.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
@@ -222,13 +225,15 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		createDateTimeWidgets(dateTimeDisplayType);
 
 		bUnset = new Button(dateTimeComposite, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(bUnset, getVElement(), "unset", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bUnset);
 		bUnset
 			.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(DateTimeControlSWTRenderer.class),
 				"icons/unset_feature.png")); //$NON-NLS-1$
 		bUnset.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonUnset"); //$NON-NLS-1$
 		final String tooltip = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY
-			? MessageKeys.DateTimeControlSWTRenderer_CleanTime : MessageKeys.DateTimeControlSWTRenderer_CleanDate;
+			? MessageKeys.DateTimeControlSWTRenderer_CleanTime
+			: MessageKeys.DateTimeControlSWTRenderer_CleanDate;
 		bUnset.setToolTipText(getLocalizedString(tooltip));
 		bUnset.addSelectionListener(new UnsetBtnSelectionAdapterExtension());
 
@@ -255,21 +260,25 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		final String imagePath = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY ? "icons/set_feature.png" //$NON-NLS-1$
 			: "icons/date.png"; //$NON-NLS-1$
 		setBtn = new Button(composite, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(setBtn, getVElement(), "set", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(setBtn);
 		setBtn.setImage(
 			imageRegistryService.getImage(FrameworkUtil.getBundle(DateTimeControlSWTRenderer.class), imagePath));
 		setBtn.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonSet"); //$NON-NLS-1$
 		final String tooltip = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY
-			? MessageKeys.DateTimeControlSWTRenderer_SelectTime : MessageKeys.DateTimeControlSWTRenderer_SelectData;
+			? MessageKeys.DateTimeControlSWTRenderer_SelectTime
+			: MessageKeys.DateTimeControlSWTRenderer_SelectData;
 		setBtn.setToolTipText(getLocalizedString(tooltip));
 		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn));
 	}
 
 	private void createDateTimeWidgets(DateTimeDisplayType dateTimeDisplayType) {
 		dateWidget = new DateTime(dateTimeComposite, SWT.DATE | SWT.BORDER);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(dateWidget, getVElement(), "date", getViewModelContext()); //$NON-NLS-1$
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_date"); //$NON-NLS-1$
 		timeWidget = new DateTime(dateTimeComposite, SWT.TIME | SWT.SHORT | SWT.BORDER);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(timeWidget, getVElement(), "time", getViewModelContext()); //$NON-NLS-1$
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_time"); //$NON-NLS-1$
 		if (dateTimeDisplayType == DateTimeDisplayType.TIME_ONLY) {
@@ -305,7 +314,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	@Override
 	protected String getUnsetText() {
 		final String text = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY
-			? MessageKeys.DateTimeControl_NoTimeSetClickToSetTime : MessageKeys.DateTimeControl_NoDateSetClickToSetDate;
+			? MessageKeys.DateTimeControl_NoTimeSetClickToSetTime
+			: MessageKeys.DateTimeControl_NoDateSetClickToSetDate;
 		return getLocalizedString(text);
 	}
 

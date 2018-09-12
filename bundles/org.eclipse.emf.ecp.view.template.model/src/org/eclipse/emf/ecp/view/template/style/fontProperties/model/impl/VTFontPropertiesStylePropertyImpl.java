@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
@@ -450,16 +451,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (VTFontPropertiesStyleProperty.class.equals(styleProperty.getClass())) {
-			return false;
-		}
-		final VTFontPropertiesStyleProperty fontStyleProperty = VTFontPropertiesStyleProperty.class.cast(styleProperty);
-		return getColorHEX() == fontStyleProperty.getColorHEX()
-			&& getFontName() == fontStyleProperty.getFontName()
-			&& getHeight() == fontStyleProperty.getHeight()
-			&& isBold() == fontStyleProperty.isBold()
-			&& isItalic() == fontStyleProperty.isItalic();
-
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTFontPropertiesStylePropertyImpl

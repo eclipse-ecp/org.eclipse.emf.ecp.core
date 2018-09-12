@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage;
@@ -193,11 +194,7 @@ public class VTAlignmentStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 */
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (VTAlignmentStyleProperty.class.equals(styleProperty.getClass())) {
-			return false;
-		}
-		final VTAlignmentStyleProperty alignmentStyleProperty = VTAlignmentStyleProperty.class.cast(styleProperty);
-		return getType() == alignmentStyleProperty.getType();
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTAlignmentStylePropertyImpl

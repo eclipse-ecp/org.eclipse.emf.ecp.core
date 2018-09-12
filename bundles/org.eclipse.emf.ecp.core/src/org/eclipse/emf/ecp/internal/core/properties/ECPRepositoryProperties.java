@@ -28,21 +28,21 @@ public final class ECPRepositoryProperties extends Properties<ECPRepository> {
 	private ECPRepositoryProperties() {
 		super(ECPRepository.class);
 
-		add(new Property<ECPRepository>("name", "Name", "The name of this repository.") {
+		add(new Property<ECPRepository>("name", "Name", "The name of this repository.") { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			@Override
 			protected Object eval(ECPRepository repository) {
 				return repository.getName();
 			}
 		});
 
-		add(new Property<ECPRepository>("repositoryLabel", "Repository", "The repository of this project.") {
+		add(new Property<ECPRepository>("repositoryLabel", "Repository", "The repository of this project.") { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			@Override
 			protected Object eval(ECPRepository repository) {
 				return repository.getLabel();
 			}
 		});
 
-		add(new Property<ECPRepository>("providerName") {
+		add(new Property<ECPRepository>("providerName") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPRepository repository) {
 				final ECPProvider provider = repository.getProvider();
@@ -50,7 +50,7 @@ public final class ECPRepositoryProperties extends Properties<ECPRepository> {
 					return provider.getName();
 				}
 
-				return "<unknown provider>";
+				return "<unknown provider>"; //$NON-NLS-1$
 			}
 		});
 	}
@@ -59,7 +59,7 @@ public final class ECPRepositoryProperties extends Properties<ECPRepository> {
 	 * @author Eike Stepper
 	 */
 	public static final class Tester extends DefaultPropertyTester<ECPRepository> {
-		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.repository";
+		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.repository"; //$NON-NLS-1$
 
 		/** The tester constructor. */
 		public Tester() {

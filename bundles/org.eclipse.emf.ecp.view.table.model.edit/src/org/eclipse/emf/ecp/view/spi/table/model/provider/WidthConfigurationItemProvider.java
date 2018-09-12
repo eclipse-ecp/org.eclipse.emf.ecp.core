@@ -82,20 +82,19 @@ public class WidthConfigurationItemProvider
 	 * @generated
 	 */
 	protected void addColumnDomainReferencePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_SingleColumnConfiguration_columnDomainReference_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-					"_UI_SingleColumnConfiguration_columnDomainReference_feature", //$NON-NLS-1$
-					"_UI_SingleColumnConfiguration_type"), //$NON-NLS-1$
-				VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE,
-				true,
-				false,
-				true,
-				null,
-				null,
-				null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(
+			((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			getResourceLocator(),
+			getString("_UI_SingleColumnConfiguration_columnDomainReference_feature"), //$NON-NLS-1$
+			getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				"_UI_SingleColumnConfiguration_columnDomainReference_feature", "_UI_SingleColumnConfiguration_type"), //$NON-NLS-1$ //$NON-NLS-2$
+			VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE,
+			true,
+			false,
+			true,
+			null,
+			null,
+			null));
 	}
 
 	/**

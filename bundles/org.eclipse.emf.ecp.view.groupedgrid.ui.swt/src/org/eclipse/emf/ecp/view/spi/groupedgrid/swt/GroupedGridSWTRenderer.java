@@ -39,9 +39,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Eugen Neufeld
@@ -128,7 +125,8 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 					final int hSpan = getHSpanOfComposite(child);
 					AbstractSWTRenderer<VElement> renderer;
 					try {
-						renderer = getEMFFormsRendererFactory().getRendererInstance(child,
+						renderer = getViewModelContext().getService(EMFFormsRendererFactory.class).getRendererInstance(
+							child,
 							getViewModelContext());
 					} catch (final EMFFormsNoRendererException ex) {
 						getReportService().report(new RenderingFailedReport(ex));
@@ -211,12 +209,4 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 			|| control.getLabelAlignment() == LabelAlignment.DEFAULT;
 	}
 
-	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
-			.getServiceReference(EMFFormsRendererFactory.class);
-		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
-		bundleContext.ungetService(serviceReference);
-		return rendererFactory;
-	}
 }

@@ -100,11 +100,10 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 			} else {
 				IValueProperty valueProperty;
 				try {
-					valueProperty = org.eclipse.emf.ecp.view.internal.editor.controls.Activator
-						.getDefault().getEMFFormsDatabinding()
+					valueProperty = getEMFFormsDatabinding()
 						.getValueProperty(domainModelReference, getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					getReportService().report(new DatabindingFailedReport(ex));
 					return;
 				}
 				final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
@@ -177,7 +176,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						getReportService().report(new DatabindingFailedReport(ex));
 						return null;
 					}
 				}
@@ -197,7 +196,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						getReportService().report(new DatabindingFailedReport(ex));
 						return null;
 					}
 				}
@@ -217,7 +216,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						getReportService().report(new DatabindingFailedReport(ex));
 						return null;
 					}
 				}
@@ -250,7 +249,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 	 */
 	@Override
 	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();

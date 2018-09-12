@@ -1,10 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.categorization.model.edit" version="2">
     <resource path="META-INF/MANIFEST.MF">
+        <filter comment="Changed SPI with 1.18" id="923795461">
+            <message_arguments>
+                <message_argument value="1.18.0"/>
+                <message_argument value="1.17.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
                 <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalFactoryImpl">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.util.HorizontalAdapterFactory">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.util.HorizontalAdapterFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.horizontal.model.util.HorizontalSwitch">
+        <filter comment="Changed SPI with 1.18" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.util.HorizontalSwitch"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.17.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -29,6 +99,70 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
                 <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/AbstractCategorizationItemProvider.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.AbstractCategorizationItemProvider">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.AbstractCategorizationItemProvider"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/ActionItemProvider.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.ActionItemProvider">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.ActionItemProvider"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/CategorizableElementItemProvider.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizableElementItemProvider">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizableElementItemProvider"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/CategorizationEditPlugin.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationEditPlugin">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationEditPlugin"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/CategorizationElementItemProvider.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationElementItemProvider">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationElementItemProvider"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/CategorizationItemProvider.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationItemProvider">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationItemProvider"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/CategorizationItemProviderAdapterFactory.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationItemProviderAdapterFactory">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationItemProviderAdapterFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/provider/CategoryItemProvider.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategoryItemProvider">
+        <filter comment="Changed SPI with 1.18" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategoryItemProvider"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model.edit_1.18.0"/>
             </message_arguments>
         </filter>
     </resource>

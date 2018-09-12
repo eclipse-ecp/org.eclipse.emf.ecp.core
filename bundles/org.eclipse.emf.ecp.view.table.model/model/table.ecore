@@ -18,6 +18,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enableDetailEditingDialog"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="duplicateDisabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TableColumnConfiguration" abstract="true"
       interface="true"/>

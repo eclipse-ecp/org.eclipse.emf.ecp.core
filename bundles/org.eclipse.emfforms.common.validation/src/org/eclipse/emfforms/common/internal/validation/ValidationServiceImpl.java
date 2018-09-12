@@ -376,5 +376,12 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 			return doValidate(eValidator, eType, eObject, diagnostics, context);
 		}
+
+		// remove containment validation introduced in EMF 2.14 via iterator
+		@Override
+		public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+			return validate(eObject.eClass(), eObject, diagnostics, context);
+		}
+
 	}
 }

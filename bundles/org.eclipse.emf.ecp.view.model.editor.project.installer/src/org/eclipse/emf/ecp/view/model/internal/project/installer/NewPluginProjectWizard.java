@@ -53,8 +53,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator;
@@ -160,8 +162,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 					final String contentURI = projectDescriptorElement
 						.getAttribute("contentURI"); //$NON-NLS-1$
 					if (projectName != null && contentURI != null) {
-						final AbstractExampleInstallerWizard.ProjectDescriptor projectDescriptor =
-							new AbstractExampleInstallerWizard.ProjectDescriptor();
+						final AbstractExampleInstallerWizard.ProjectDescriptor projectDescriptor = new AbstractExampleInstallerWizard.ProjectDescriptor();
 						projectDescriptor.setName(projectName);
 
 						URI uri = URI.createURI(contentURI);
@@ -223,9 +224,12 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 		}
 		if (EPackage.class.isInstance(selectedContainer)) {
 			ePackage = EPackage.class.cast(selectedContainer);
-		}
-		else if (IFile.class.isInstance(selectedContainer)) {
+		} else if (IFile.class.isInstance(selectedContainer)) {
 			final ResourceSetImpl resourceSet = new ResourceSetImpl();
+			// needed to be able to resolve resource paths to plugin paths and thus load referenced ecores
+			resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
+			resourceSet.getLoadOptions().put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
+
 			final String path = ((IFile) selectedContainer).getFullPath().toString();
 			final URI uri = URI.createPlatformResourceURI(path, true);
 
@@ -532,8 +536,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 						line = line.substring(0, end)
 							+ ">\n" + filePathAttribute + "\n</extension>\n" + line.substring(end + 2, line.length()); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-					else {
+					} else {
 						final String filePathAttribute = "<file filePath=\"" //$NON-NLS-1$
 							+ modelFile.getProjectRelativePath().toString() + "\"/>"; //$NON-NLS-1$
 						line = line.concat("\n" + filePathAttribute + "\n"); //$NON-NLS-1$ //$NON-NLS-2$

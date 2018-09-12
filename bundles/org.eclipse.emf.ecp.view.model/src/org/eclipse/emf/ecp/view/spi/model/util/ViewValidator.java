@@ -299,6 +299,9 @@ public class ViewValidator extends EObjectValidator {
 			}
 		}
 		if (rootEClass == null) {
+			if (isProxy(featurePathDomainModelReference)) {
+				return false;
+			}
 			if (featurePathDomainModelReference.getDomainModelEReferencePath().isEmpty()) {
 				rootEClass = (EClass) featurePathDomainModelReference.getDomainModelEFeature().eContainer();
 			} else {
@@ -363,6 +366,18 @@ public class ViewValidator extends EObjectValidator {
 	}
 
 	// END COMPLEX CODE
+
+	private boolean isProxy(VFeaturePathDomainModelReference featurePathDomainModelReference) {
+		if (featurePathDomainModelReference.getDomainModelEFeature().eIsProxy()) {
+			return true;
+		}
+		for (final EReference eReference : featurePathDomainModelReference.getDomainModelEReferencePath()) {
+			if (eReference.eIsProxy()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private Diagnostic createDiagnostic(int severity, int code, String message, EObject object,
 		EStructuralFeature feature) {

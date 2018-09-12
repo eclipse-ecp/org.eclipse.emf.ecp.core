@@ -155,7 +155,7 @@ public class FeaturePathDMRSubMappedEClassControlSWTRenderer extends
 	protected void linkValue(Shell shell) {
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = getEMFFormsDatabinding()
 				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			showLinkValueFailedMessageDialog(shell, ex);
@@ -204,13 +204,13 @@ public class FeaturePathDMRSubMappedEClassControlSWTRenderer extends
 		//
 		// return Status.OK_STATUS;
 		// }
-		//				return new Status(IStatus.ERROR, "org.eclipse.emf.ecp.view.mappingdmr.tooling", //$NON-NLS-1$
-		//					"This is not an EStructuralFeature."); //$NON-NLS-1$
+		// return new Status(IStatus.ERROR, "org.eclipse.emf.ecp.view.mappingdmr.tooling", //$NON-NLS-1$
+		// "This is not an EStructuralFeature."); //$NON-NLS-1$
 		// }
 		// });
 		// dialog.setInput(getInput());
-		//		dialog.setMessage("Select an EClass."); //$NON-NLS-1$
-		//		dialog.setTitle("Select an EClass."); //$NON-NLS-1$
+		// dialog.setMessage("Select an EClass."); //$NON-NLS-1$
+		// dialog.setTitle("Select an EClass."); //$NON-NLS-1$
 		// dialog.setComparator(new ViewerComparator());
 		// final int result = dialog.open();
 		// if (Window.OK == result) {

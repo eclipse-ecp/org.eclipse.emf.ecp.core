@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelwidthPackage;
@@ -232,27 +233,7 @@ public class VTLabelWidthStylePropertyImpl extends MinimalEObjectImpl.Container 
 
 	@Override
 	public boolean equalStyles(VTStyleProperty styleProperty) {
-		if (styleProperty == null) {
-			return false;
-		}
-		if (eClass() != styleProperty.eClass()) {
-			return false;
-		}
-
-		final VTLabelWidthStyleProperty other = VTLabelWidthStyleProperty.class.cast(styleProperty);
-
-		if (isSetWidth()) {
-			if (!other.isSetWidth()) {
-				return false;
-			}
-			return getWidth() == other.getWidth();
-		}
-
-		if (other.isSetWidth()) {
-			return false;
-		}
-
-		return true;
+		return EMFUtils.filteredEquals(this, styleProperty);
 	}
 
 } // VTLabelWidthStylePropertyImpl

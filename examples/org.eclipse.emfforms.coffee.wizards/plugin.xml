@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
+            class="org.eclipse.emfforms.internal.coffee.wizards.CoffeeExampleWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emfforms.coffee.wizards.ExampleModelWizard"
+            name="Coffee: example model"
+            project="true"
+            canFinishEarly="true">
+      </wizard>
+      <wizard
+            category="org.eclipse.ui.Examples/org.eclipse.emfforms.example.common.wizards.EMFForms"
+            class="org.eclipse.emfforms.internal.coffee.wizards.CoffeeExampleWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emfforms.coffee.wizards.ViewModelWizard"
+            name="Coffee: view model"
+            project="true"
+            canFinishEarly="true">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.emf.common.ui.examples">
+      <example
+            id="org.eclipse.emfforms.coffee.wizards.ExampleModel"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emfforms.coffee.wizards.ExampleModelWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emfforms.coffee.model/"
+               description="Coffee Model"
+               name="org.eclipse.emfforms.coffee.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emfforms.coffee.model.edit/"
+               description="Coffee Model Edit"
+               name="org.eclipse.emfforms.coffee.model.edit">
+         </projectDescriptor>
+      </example>
+      <example
+            id="org.eclipse.emfforms.coffee.wizards.ViewModel"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emfforms.coffee.wizards.ViewModelWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emfforms.coffee.model/"
+               description="Coffee Model"
+               name="org.eclipse.emfforms.coffee.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emfforms.coffee.model.edit/"
+               description="Coffee Model Edit"
+               name="org.eclipse.emfforms.coffee.model.edit">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emfforms.coffee.model.viewmodel/"
+               description="Coffee ViewModel"
+               name="org.eclipse.emfforms.coffee.model.viewmodel">
+         </projectDescriptor>
+      </example>
+   </extension>
+
+</plugin>

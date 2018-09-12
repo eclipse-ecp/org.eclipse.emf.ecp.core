@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.ecp.view.template.internal.tooling.util.ValueSelectionHelper;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -84,7 +83,8 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	 */
 	public AttributeValueControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VT_VIEW_TEMPLATEPROVIDER);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER,
+			VT_VIEW_TEMPLATEPROVIDER);
 	}
 
 	/**
@@ -142,12 +142,11 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 				super.widgetSelected(e);
 				IObservableValue observableValue;
 				try {
-					observableValue = Activator.getDefault()
-						.getEMFFormsDatabinding()
+					observableValue = getEMFFormsDatabinding()
 						.getObservableValue(getVElement().getDomainModelReference(),
 							getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					getReportService().report(new DatabindingFailedReport(ex));
 					return;
 				}
 				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();

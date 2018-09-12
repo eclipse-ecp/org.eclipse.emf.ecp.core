@@ -381,7 +381,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			return;
 		}
 		// remove the mapping of each setting of the removed control to the parent element
-		for (final UniqueSetting setting : controlToSettingMap.get(controlToRemove)) {
+		for (final UniqueSetting setting : getSettingsForControl(controlToRemove)) {
 			settingToControlMap.get(setting).remove(parentElement);
 		}
 		// Then compute the parent of the parent element

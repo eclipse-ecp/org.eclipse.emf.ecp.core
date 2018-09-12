@@ -245,9 +245,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private Button createRemoveRowButton(final Composite buttonComposite, IObservableList list) {
 		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 		final Button removeButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(removeButton, getVElement(), "remove", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_DELETE);
 		removeButton.setImage(image);
-		removeButton.setEnabled(!getVElement().isReadonly());
+		removeButton.setEnabled(!getVElement().isEffectivelyReadonly());
 		if (list.size() <= attribute.getLowerBound()) {
 			removeButton.setEnabled(false);
 		}
@@ -257,6 +258,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private Button createAddRowButton(final Composite buttonComposite, IObservableList list) {
 		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 		final Button addButton = new Button(buttonComposite, SWT.None);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(addButton, getVElement(), "add", getViewModelContext()); //$NON-NLS-1$
 		final Image image = getImage(ICON_ADD);
 		addButton.setImage(image);
 		if (attribute.getUpperBound() != -1 && list.size() >= attribute.getUpperBound()) {
@@ -426,10 +428,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			public void selectionChanged(SelectionChangedEvent event) {
 				removeButton.setEnabled(!event.getSelection().isEmpty());
 				if (upButton != null) {
-					upButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isReadonly());
+					upButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isEffectivelyReadonly());
 				}
 				if (downButton != null) {
-					downButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isReadonly());
+					downButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isEffectivelyReadonly());
 				}
 			}
 		});
@@ -490,12 +492,14 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Image down = getImage(ICONS_ARROW_DOWN_PNG);
 
 		upButton = new Button(composite, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(upButton, getVElement(), "up", getViewModelContext()); //$NON-NLS-1$
 		upButton.setImage(up);
-		upButton.setEnabled(!getVElement().isReadonly());
+		upButton.setEnabled(!getVElement().isEffectivelyReadonly());
 
 		downButton = new Button(composite, SWT.PUSH);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(downButton, getVElement(), "down", getViewModelContext()); //$NON-NLS-1$
 		downButton.setImage(down);
-		downButton.setEnabled(!getVElement().isReadonly());
+		downButton.setEnabled(!getVElement().isEffectivelyReadonly());
 	}
 
 	private InternalEObject getInstanceOf(EClass clazz) {
@@ -635,16 +639,19 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	@Override
 	protected void applyEnable() {
 		if (getAddButton() != null) {
-			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getRemoveButton() != null) {
-			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getRemoveButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getMoveUpButton() != null) {
-			getMoveUpButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getMoveUpButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getMoveDownButton() != null) {
-			getMoveDownButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getMoveDownButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 	}
 
@@ -725,9 +732,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex + 1));
 				tableViewer.refresh();
 				tableViewer.getTable().setSelection(currentIndex + 1);
-				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
-				if (selected != null) {
-					tableViewer.reveal(selected);
+				final TableItem[] selection = tableViewer.getTable().getSelection();
+				if (selection.length > 0) {
+					tableViewer.getTable().showItem(selection[0]);
 				}
 			}
 		}
@@ -766,9 +773,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex - 1));
 				tableViewer.refresh();
 				tableViewer.getTable().setSelection(currentIndex - 1);
-				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
-				if (selected != null) {
-					tableViewer.reveal(selected);
+				final TableItem[] selection = tableViewer.getTable().getSelection();
+				if (selection.length > 0) {
+					tableViewer.getTable().showItem(selection[0]);
 				}
 			}
 		}
@@ -882,7 +889,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		@Override
 		protected boolean canEdit(Object element) {
 
-			final boolean editable = control.isEnabled() && !control.isReadonly();
+			final boolean editable = control.isEffectivelyEnabled() && !control.isEffectivelyReadonly();
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);

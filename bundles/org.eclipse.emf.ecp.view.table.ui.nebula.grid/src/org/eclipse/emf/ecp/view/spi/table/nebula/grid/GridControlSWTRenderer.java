@@ -55,7 +55,9 @@ import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
+import org.eclipse.emfforms.spi.swt.table.action.TableActionBar;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
@@ -383,17 +385,16 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
 		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
-		TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder) {
+		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
 		return GridTableViewerFactory.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)
 			.customizeCompositeStructure(compositeBuilder)
-			.customizeButtons(tableControlSWTRendererButtonBarBuilder)
+			.customizeActionBar(actionBar)
 			.customizeTableViewerCreation(getTableViewerCreator())
 			.customizeContentProvider(cp)
 			.customizeComparator(comparator)
 			.enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
 			.enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER);
-
 	}
 
 	@Override
@@ -489,10 +490,13 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 				gridTableViewer.applyEditorValue();
 			}
 			if (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED) {
-				for (final int keyCode : Arrays.asList(SWT.CTRL, SWT.ALT, SWT.SHIFT)) {
+				for (final int keyCode : Arrays.asList(SWT.CTRL, SWT.ALT)) {
 					if ((event.keyCode & keyCode) != 0 || (event.stateMask & keyCode) != 0) {
 						return false;
 					}
+				}
+				if ((event.keyCode & SWT.SHIFT) != 0) {
+					return false;
 				}
 				return !isDoNotEnterEditorCode(event.keyCode);
 			}

@@ -42,6 +42,7 @@ public class EcoreHelperSubpackages_PTest {
 	private static final String SUBPACKAGE1_2_NS_URI = "http://testSubpackages1_subpackage2";
 	private static final String SUBPACKAGE1_3_NS_URI = "http://testSubpackages1_subpackage3";
 
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		try {
@@ -61,6 +62,7 @@ public class EcoreHelperSubpackages_PTest {
 		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
+	// END SUPRESS CATCH EXCEPTION
 
 	@Test
 	public void testRegisteringRootPackage() throws IOException {

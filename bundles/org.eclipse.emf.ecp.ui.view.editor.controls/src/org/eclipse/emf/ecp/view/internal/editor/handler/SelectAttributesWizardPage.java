@@ -374,7 +374,7 @@ public class SelectAttributesWizardPage extends WizardPage {
 				}
 				final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 				if (feature != null && feature.getEContainingClass() != null
-					&& feature.getEContainingClass().equals(eClass)) {
+					&& feature.getEContainingClass().isSuperTypeOf(eClass)) {
 					result.add(feature);
 				}
 			}

@@ -169,7 +169,19 @@ public final class SWTTestUtil {
 	 * @param keyCode the key code
 	 */
 	public static void pressAndReleaseKey(Control control, int keyCode) {
+		pressAndReleaseKey(control, 0, keyCode);
+	}
+
+	/**
+	 * Simulates a key down and key up event on the given {@link Control}.
+	 *
+	 * @param control the control
+	 * @param stateMask the state of the keyboard modifier keys (e.g. M1/ctrl)
+	 * @param keyCode the key code
+	 */
+	public static void pressAndReleaseKey(Control control, int stateMask, int keyCode) {
 		final Event eventDown = new Event();
+		eventDown.stateMask = stateMask;
 		eventDown.keyCode = keyCode;
 		control.notifyListeners(SWT.KeyDown, eventDown);
 		final Event eventUp = new Event();

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.core.swt" version="2">
     <resource path="META-INF/MANIFEST.MF">
+        <filter comment="Changed SPI with 1.18" id="923795461">
+            <message_arguments>
+                <message_argument value="1.18.0"/>
+                <message_argument value="1.17.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
@@ -31,6 +37,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer"/>
                 <message_argument value="getModelValue(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/core/swt/AbstractControlSWTRendererUtil.java" type="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRendererUtil">
+        <filter comment="Changed SPI with 1.18" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRendererUtil"/>
+                <message_argument value="getLabelStyleBits(VTViewTemplateProvider, VControl, ViewModelContext)"/>
             </message_arguments>
         </filter>
     </resource>

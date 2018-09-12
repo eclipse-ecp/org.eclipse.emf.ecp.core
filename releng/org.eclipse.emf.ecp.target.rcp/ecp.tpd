@@ -10,7 +10,7 @@ location "http://download.eclipse.org/technology/swtbot/releases/latest/" {
 	org.eclipse.swtbot.feature.group lazy
 }
 
-location "http://download.eclipse.org/eclipse/updates/4.7" {
+location "http://download.eclipse.org/eclipse/updates/4.8" {
 	org.eclipse.equinox.sdk.feature.group lazy
 	org.eclipse.platform.ide lazy
 }
@@ -58,11 +58,11 @@ location "http://download.eclipse.org/edapt/releases/13x" {
 	org.eclipse.emf.edapt.runtime.feature.source.feature.group lazy
 }
 
-location "http://download.eclipse.org/nebula/releases/1.0.0" {
+location "http://download.eclipse.org/nebula/releases/latest" {
 	org.eclipse.nebula.widgets.grid.feature.feature.group lazy
 }
 
-location "http://download.eclipse.org/releases/oxygen" {
+location "http://download.eclipse.org/releases/photon" {
 	org.eclipse.emf.cdo.sdk.feature.group lazy
 	org.eclipse.emf.sdk.feature.group lazy
 	org.eclipse.emf.transaction.sdk.feature.group lazy

@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
@@ -42,11 +43,12 @@ public final class AbstractControlSWTRendererUtil {
 	 * The style bits for a control label.
 	 *
 	 * @param viewTemplateProvider the {@link VTViewTemplateProvider}
-	 * @param control the {@link VControl}
+	 * @param control the {@link VElement}
 	 * @param viewModelContext the {@link ViewModelContext}
 	 * @return the style bits
+	 * @since 1.18
 	 */
-	public static int getLabelStyleBits(VTViewTemplateProvider viewTemplateProvider, VControl control,
+	public static int getLabelStyleBits(VTViewTemplateProvider viewTemplateProvider, VElement control,
 		ViewModelContext viewModelContext) {
 		final VTControlLabelAlignmentStyleProperty alignmentStyleProperty = RendererUtil.getStyleProperty(
 			viewTemplateProvider,

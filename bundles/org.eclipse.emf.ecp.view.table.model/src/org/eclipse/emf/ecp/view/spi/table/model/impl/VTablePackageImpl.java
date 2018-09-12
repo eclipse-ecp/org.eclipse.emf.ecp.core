@@ -265,6 +265,17 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getTableControl_DuplicateDisabled() {
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getTableColumnConfiguration() {
 		return tableColumnConfigurationEClass;
 	}
@@ -449,6 +460,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		createEAttribute(tableControlEClass, TABLE_CONTROL__DETAIL_EDITING);
 		createEReference(tableControlEClass, TABLE_CONTROL__DETAIL_VIEW);
 		createEAttribute(tableControlEClass, TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG);
+		createEAttribute(tableControlEClass, TABLE_CONTROL__DUPLICATE_DISABLED);
 
 		tableColumnConfigurationEClass = createEClass(TABLE_COLUMN_CONFIGURATION);
 
@@ -536,6 +548,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		initEAttribute(getTableControl_EnableDetailEditingDialog(), ecorePackage.getEBoolean(),
 			"enableDetailEditingDialog", "false", 0, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$ //$NON-NLS-2$
 			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableControl_DuplicateDisabled(), ecorePackage.getEBoolean(), "duplicateDisabled", "true", 0, //$NON-NLS-1$ //$NON-NLS-2$
+			1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(tableColumnConfigurationEClass, VTableColumnConfiguration.class, "TableColumnConfiguration", //$NON-NLS-1$
 			IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
