@@ -646,30 +646,38 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
-	 * @return
+	 * Returns the "move down" button.
+	 *
+	 * @return the "move down" button, may be {@code null}
 	 */
-	private Button getMoveDownButton() {
+	protected Button getMoveDownButton() {
 		return downButton;
 	}
 
 	/**
-	 * @return
+	 * Returns the "move up" button.
+	 * 
+	 * @return the "move up" button, may be {@code null}
 	 */
-	private Button getMoveUpButton() {
+	protected Button getMoveUpButton() {
 		return upButton;
 	}
 
 	/**
-	 * @return
+	 * Returns the "remove" button.
+	 * 
+	 * @return the "remove" button, may be {@code null}
 	 */
-	private Button getRemoveButton() {
+	protected Button getRemoveButton() {
 		return removeButton;
 	}
 
 	/**
-	 * @return
+	 * Returns the "add" button.
+	 * 
+	 * @return the "add" button, may be {@code null}
 	 */
-	private Button getAddButton() {
+	protected Button getAddButton() {
 		return addButton;
 	}
 
