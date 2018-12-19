@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -56,6 +57,7 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAli
 import org.eclipse.emf.ecp.view.template.style.wrap.model.VTLabelWrapStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.wrap.model.VTWrapFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
@@ -115,12 +117,14 @@ public class SWTTableDatabindingLabel_PTest {
 		databindingService = mock(EMFFormsDatabindingEMF.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 
-		when(labelProvider.getDescription(any(VDomainModelReference.class))).thenReturn(DESCRIPTION_COLUMNS);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DESCRIPTION);
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class))).thenReturn(DISPLAYNAME_COLUMNS);
+		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EClass.class)))
+			.thenReturn(DESCRIPTION_COLUMNS);
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DISPLAYNAME);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EClass.class)))
+			.thenReturn(DISPLAYNAME_COLUMNS);
 
 		shell = new Shell();
 
@@ -171,7 +175,9 @@ public class SWTTableDatabindingLabel_PTest {
 			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(same(columnDMR), same(domainModel.eClass()), any(EditingDomain.class)))
+			.thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(columnDMR, (EObject) domainModel)).thenReturn(columnValueProperty);
 
 		final EReference eReference = mock(EReference.class);
 		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
@@ -351,7 +357,9 @@ public class SWTTableDatabindingLabel_PTest {
 			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(same(columnDMR), same(domainModel.eClass()), any(EditingDomain.class)))
+			.thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(columnDMR, (EObject) domainModel)).thenReturn(columnValueProperty);
 
 		when(databindingService.getSetting(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
 			InternalEObject.class.cast(domainModel).eSetting(EcorePackage.eINSTANCE.getEClass_ESuperTypes()));

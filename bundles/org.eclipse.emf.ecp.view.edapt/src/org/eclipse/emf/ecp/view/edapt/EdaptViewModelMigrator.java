@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.spi.view.migrator.NameSpaceHandler;
 import org.eclipse.emf.ecp.spi.view.migrator.SAXUtil;
 import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
@@ -217,7 +218,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		final URI uri = URI.createFileURI(historyFile.getAbsolutePath());
 		final Resource resource = new ResourceSetImpl().createResource(uri);
 		resource.getContents().add(history);
-		resource.save(null);
+		resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 		return uri;
 	}
 

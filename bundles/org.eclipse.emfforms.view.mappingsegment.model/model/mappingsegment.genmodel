@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.&#xA;&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;Lucas Koehler - initial API and implementation"
+    modelDirectory="/org.eclipse.emfforms.view.mappingsegment.model/src" modelPluginID="org.eclipse.emfforms.view.mappingsegment.model"
+    modelName="Mappingsegment" editPluginClass="org.eclipse.emfforms.spi.view.mappingsegment.model.provider.MappingsegmentEditPlugin"
+    editorPluginClass="org.eclipse.emfforms.spi.view.mappingsegment.model.presentation.MappingsegmentEditorPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emfforms.spi.view.mappingsegment.model.tests.MappingsegmentAllTests"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
+  <foreignModel>mappingsegment.ecore</foreignModel>
+  <genPackages prefix="Mappingsegment" basePackage="org.eclipse.emfforms.spi.view"
+      resource="XMI" disposableProviderFactory="true" interfacePackageSuffix="model"
+      metaDataPackageSuffix="model" classPackageSuffix="model.impl" utilityPackageSuffix="model.util"
+      providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.tests" extensibleProviderFactory="true" ecorePackage="mappingsegment.ecore#/">
+    <genClasses ecoreClass="mappingsegment.ecore#//MappingDomainModelReferenceSegment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mappingsegment.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

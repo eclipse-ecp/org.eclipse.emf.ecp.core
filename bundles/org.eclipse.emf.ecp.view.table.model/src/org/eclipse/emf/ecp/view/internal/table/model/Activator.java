@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emfforms.common.ServiceObjectTracker;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -31,7 +32,7 @@ public class Activator extends Plugin {
 	private static Activator plugin;
 
 	private ServiceObjectTracker<ReportService> reportServiceTracker;
-	private ServiceObjectTracker<EMFFormsDatabinding> emfformsDatadingTracker;
+	private ServiceObjectTracker<EMFFormsDatabindingEMF> emfformsDatadingTracker;
 
 	/**
 	 * The constructor.
@@ -92,10 +93,10 @@ public class Activator extends Plugin {
 	 *
 	 * @return The {@link EMFFormsDatabinding}
 	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
+	public EMFFormsDatabindingEMF getEMFFormsDatabinding() {
 		if (emfformsDatadingTracker == null) {
-			emfformsDatadingTracker = new ServiceObjectTracker<EMFFormsDatabinding>(
-				plugin.getBundle().getBundleContext(), EMFFormsDatabinding.class);
+			emfformsDatadingTracker = new ServiceObjectTracker<EMFFormsDatabindingEMF>(
+				plugin.getBundle().getBundleContext(), EMFFormsDatabindingEMF.class);
 		}
 		return emfformsDatadingTracker.getService();
 	}

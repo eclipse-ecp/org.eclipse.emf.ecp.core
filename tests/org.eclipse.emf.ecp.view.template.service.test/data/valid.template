@@ -3,7 +3,7 @@
   <controlValidationConfiguration/>
   <styles>
     <selector xsi:type="org.eclipse.emf.ecp.view.template.selector.viewmodelelement.model:ViewModelElementSelector">
-      <classType href="http://org/eclipse/emf/ecp/view/model/1170#//Control"/>
+      <classType href="http://org/eclipse/emf/ecp/view/model/1180#//Control"/>
     </selector>
     <properties xsi:type="org.eclipse.emf.ecp.view.template.style.textcontrol.enablement.model:TextControlEnablementStyleProperty" RenderDisableAsEditable="true"/>
   </styles>

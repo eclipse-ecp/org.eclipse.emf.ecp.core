@@ -25,7 +25,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -164,6 +166,16 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseHasTooltip(VHasTooltip object) {
 			return createHasTooltipAdapter();
+		}
+
+		@Override
+		public Adapter caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
+			return createDomainModelReferenceSegmentAdapter();
+		}
+
+		@Override
+		public Adapter caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
+			return createFeatureDomainModelReferenceSegmentAdapter();
 		}
 
 		@Override
@@ -322,15 +334,52 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
 	 * @generated
 	 */
 	public Adapter createHasTooltipAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment <em>Domain Model Reference
+	 * Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment <em>Feature Domain Model Reference
+	 * Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
 		return null;
 	}
 

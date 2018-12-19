@@ -18,8 +18,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.resources.IFile;
@@ -50,6 +52,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -62,6 +65,7 @@ import org.eclipse.emfforms.internal.editor.toolbaractions.LoadEcoreAction;
 import org.eclipse.emfforms.internal.editor.ui.EditorToolBar;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDeleteActionBuilder;
 import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
+import org.eclipse.emfforms.spi.editor.messages.Messages;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
@@ -104,11 +108,11 @@ import org.eclipse.ui.part.EditorPart;
  */
 public class GenericEditor extends EditorPart implements IEditingDomainProvider, IGotoMarker {
 
-	private static final String FRAGMENT_URI = "FRAGMENT_URI";
+	private static final String FRAGMENT_URI = "FRAGMENT_URI"; //$NON-NLS-1$
 
-	private static final String RESOURCE_URI = "RESOURCE_URI";
+	private static final String RESOURCE_URI = "RESOURCE_URI"; //$NON-NLS-1$
 
-	private static final String ITOOLBAR_ACTIONS_ID = "org.eclipse.emfforms.editor.toolbarActions";
+	private static final String ITOOLBAR_ACTIONS_ID = "org.eclipse.emfforms.editor.toolbarActions"; //$NON-NLS-1$
 
 	/** The Resource loaded from the provided EditorInput. */
 	private ResourceSet resourceSet;
@@ -152,7 +156,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	public void doSave(IProgressMonitor monitor) {
 		// Remove the Listener, so that we won't get a changed notification for our own save operation
 		preSave();
-		if (ResourceSetHelpers.save(resourceSet)) {
+		if (ResourceSetHelpers.save(resourceSet, getResourceSaveOptions())) {
 			// Tell the CommandStack, that we have saved the file successfully
 			// and inform the Workspace, that the Dirty property has changed.
 			getCommandStack().saveIsDone();
@@ -226,8 +230,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	}
 
 	private boolean discardChanges() {
-		return MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), "File Changed",
-			"The currently opened files were changed. Do you want to discard the changes and reload the file?");
+		return MessageDialog.openQuestion(Display.getCurrent().getActiveShell(),
+			Messages.GenericEditor_DiscardChangesTitle,
+			Messages.GenericEditor_DiscardChangesDescription);
 	}
 
 	@Override
@@ -268,6 +273,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		site.getPage().addPartListener(partListener);
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
+		// Load the resource from the provided input and display the editor
+		resourceSet = loadResource(getEditorInput());
 	}
 
 	/**
@@ -276,7 +283,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @return the context id
 	 */
 	protected String getContextId() {
-		return "org.eclipse.emfforms.editor.context";
+		return "org.eclipse.emfforms.editor.context"; //$NON-NLS-1$
 	}
 
 	@Override
@@ -291,8 +298,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	@Override
 	public void createPartControl(Composite parent) {
-		// Load the resource from the provided input and display the editor
-		resourceSet = loadResource(getEditorInput());
 		parent.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 
@@ -319,7 +324,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			/* we already enqueued an update job which is not running yet */
 			return;
 		}
-		final Job job = Job.create("Add GenericEditor validation markers.", new IJobFunction() {
+		final Job job = Job.create(Messages.GenericEditor_ValidationMarkersJobName, new IJobFunction() {
 
 			@Override
 			public IStatus run(IProgressMonitor monitor) {
@@ -327,7 +332,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 					adjustMarkers(monitor);
 					return Status.OK_STATUS;
 				} catch (final CoreException ex) {
-					return new Status(IStatus.ERROR, "org.eclipse.emfforms.editor", ex.getMessage(), ex);
+					return new Status(IStatus.ERROR, "org.eclipse.emfforms.editor", ex.getMessage(), ex); //$NON-NLS-1$
 				} finally {
 					markerJobs.remove(0);
 				}
@@ -371,7 +376,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		if (!file.isPresent()) {
 			return;
 		}
-		file.get().deleteMarkers("org.eclipse.core.resources.problemmarker", false,
+		file.get().deleteMarkers("org.eclipse.core.resources.problemmarker", false, //$NON-NLS-1$
 			IResource.DEPTH_ZERO);
 	}
 
@@ -434,6 +439,12 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		final TreeMasterDetailComposite treeMasterDetail = createTreeMasterDetail(composite, editorInput,
 			createElementCallback);
 		treeMasterDetail.setLayoutData(treeMasterDetailLayoutData);
+
+		for (final Action action : toolbarActions) {
+			if (action instanceof IEditingDomainAware) {
+				((IEditingDomainAware) action).setEditingDomain(getEditingDomain());
+			}
+		}
 		return treeMasterDetail;
 	}
 
@@ -488,10 +499,68 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 *
 	 * @param editorInput the editor input
 	 * @return the resource set
+	 * @throws PartInitException if the resource could not be loaded
 	 */
-	protected ResourceSet loadResource(IEditorInput editorInput) {
+	protected ResourceSet loadResource(IEditorInput editorInput) throws PartInitException {
 		final URI resourceURI = EditUIUtil.getURI(editorInput, null);
-		return ResourceSetHelpers.loadResourceSetWithProxies(resourceURI, getCommandStack());
+
+		ResourceSet resourceSet = ResourceSetHelpers.createResourceSet(getCommandStack());
+		try {
+			resourceSet = ResourceSetHelpers.loadResourceWithProxies(resourceURI, resourceSet,
+				getResourceLoadOptions());
+			verifyEditorResource(resourceURI, resourceSet);
+			return resourceSet;
+			// CHECKSTYLE.OFF: IllegalCatch
+		} catch (final Exception e) {
+			throw new PartInitException(e.getLocalizedMessage(), e);
+		}
+		// CHECKSTYLE.ON: IllegalCatch
+	}
+
+	/**
+	 * Check that the resource was loaded correctly and show any warnings to the user.
+	 *
+	 * @param resourceSet the resource set
+	 * @param resourceURI the URI of the resource
+	 * @since 1.19
+	 *
+	 */
+	protected void verifyEditorResource(URI resourceURI, ResourceSet resourceSet) {
+		final Resource resource = resourceSet.getResource(resourceURI, true);
+		if (XMLResource.class.isInstance(resource)
+			&& !XMLResource.class.cast(resource).getEObjectToExtensionMap().isEmpty()) {
+			// we are showing a view which wasn't fully loaded
+			MessageDialog
+				.openWarning(
+					getSite().getShell(),
+					Messages.GenericEditor_UnknownFeaturesDialogTitle,
+					Messages.GenericEditor_UnknownFeaturesDialogDescription);
+		}
+	}
+
+	/**
+	 * The options to be used when loading the editor's resource.
+	 *
+	 * @return the load options
+	 * @since 1.19
+	 */
+	protected Map<Object, Object> getResourceLoadOptions() {
+		final HashMap<Object, Object> options = new HashMap<Object, Object>();
+		options.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
+			Boolean.TRUE);
+		return options;
+	}
+
+	/**
+	 * The options to be used when saving the editor's resource.
+	 *
+	 * @return the save options
+	 * @since 1.19
+	 */
+	protected Map<Object, Object> getResourceSaveOptions() {
+		final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
+		return saveOptions;
 	}
 
 	@Override
@@ -515,7 +584,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @return the title
 	 */
 	protected String getEditorTitle() {
-		return "Model Editor";
+		return Messages.GenericEditor_EditorTitle;
 	}
 
 	/**
@@ -562,40 +631,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	protected List<Action> readToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
 
-		final ISelectionProvider selectionProvider = new ISelectionProvider() {
-
-			@Override
-			public void setSelection(ISelection selection) {
-				if (rootView == null) {
-					return;
-				}
-				rootView.getSelectionProvider().setSelection(selection);
-			}
-
-			@Override
-			public void removeSelectionChangedListener(ISelectionChangedListener listener) {
-				if (rootView == null) {
-					return;
-				}
-				rootView.getSelectionProvider().removeSelectionChangedListener(listener);
-			}
-
-			@Override
-			public ISelection getSelection() {
-				if (rootView == null) {
-					return StructuredSelection.EMPTY;
-				}
-				return rootView.getSelectionProvider().getSelection();
-			}
-
-			@Override
-			public void addSelectionChangedListener(ISelectionChangedListener listener) {
-				if (rootView == null) {
-					return;
-				}
-				rootView.getSelectionProvider().addSelectionChangedListener(listener);
-			}
-		};
+		final ISelectionProvider selectionProvider = new GenericEditorSelectionProvider();
 
 		final IExtensionRegistry registry = Platform.getExtensionRegistry();
 		if (registry == null) {
@@ -605,7 +641,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		final IConfigurationElement[] config = registry.getConfigurationElementsFor(ITOOLBAR_ACTIONS_ID);
 		for (final IConfigurationElement e : config) {
 			try {
-				final Object o = e.createExecutableExtension("toolbarAction");
+				final Object o = e.createExecutableExtension("toolbarAction"); //$NON-NLS-1$
 				if (o instanceof IToolbarAction) {
 					final IToolbarAction action = (IToolbarAction) o;
 					if (!action.canExecute(resourceSet)) {
@@ -739,7 +775,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * Returns whether this editor is currently in the process of shutting down.
 	 *
 	 * @return <code>true</code> if the editor is currently closing, <code>false</code> otherwise
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	protected boolean isClosing() {
 		return closing;
@@ -750,7 +786,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * Set this flag in case you will close the editor.
 	 *
 	 * @param closing Whether the editor is currently closing (shutting down)
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	protected void setClosing(boolean closing) {
 		this.closing = closing;
@@ -761,7 +797,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * resources are matched by URI.
 	 *
 	 * @param resources The {@linkplain Resource Resources} to remove from this editor's {@linkplain ResourceSet}.
-	 * @since 1.17
+	 * @since 1.18
 	 */
 	protected void removeResources(final Collection<Resource> resources) {
 		for (final Resource removed : resources) {
@@ -927,6 +963,42 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				return false;
 			}
 			return true;
+		}
+	}
+
+	/** Selection Provider for the GenericEditor. */
+	private class GenericEditorSelectionProvider implements ISelectionProvider {
+
+		@Override
+		public void setSelection(ISelection selection) {
+			if (rootView == null) {
+				return;
+			}
+			rootView.getSelectionProvider().setSelection(selection);
+		}
+
+		@Override
+		public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+			if (rootView == null) {
+				return;
+			}
+			rootView.getSelectionProvider().removeSelectionChangedListener(listener);
+		}
+
+		@Override
+		public ISelection getSelection() {
+			if (rootView == null) {
+				return StructuredSelection.EMPTY;
+			}
+			return rootView.getSelectionProvider().getSelection();
+		}
+
+		@Override
+		public void addSelectionChangedListener(ISelectionChangedListener listener) {
+			if (rootView == null) {
+				return;
+			}
+			rootView.getSelectionProvider().addSelectionChangedListener(listener);
 		}
 	}
 }

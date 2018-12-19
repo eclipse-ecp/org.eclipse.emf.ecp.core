@@ -88,6 +88,9 @@ public final class Helper {
 	public static void getReferenceMap(EClass parent,
 		Map<EClass, EReference> childParentReferenceMap) {
 		for (final EReference eReference : parent.getEAllContainments()) {
+			if (eReference.getEReferenceType() == null) {
+				continue;
+			}
 			if (!eReference.getEReferenceType().isSuperTypeOf(parent)
 				&& childParentReferenceMap.get(eReference.getEReferenceType()) == null) {
 				childParentReferenceMap.put(eReference.getEReferenceType(), eReference);

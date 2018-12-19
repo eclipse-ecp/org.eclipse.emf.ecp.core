@@ -89,6 +89,18 @@ public interface VKeyattributedmrPackage extends EPackage {
 	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
 
 	/**
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__SEGMENTS = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__SEGMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
@@ -114,7 +126,8 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Key Value</b></em>' attribute.
@@ -124,7 +137,8 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The feature id for the '<em><b>Value DMR</b></em>' containment reference.
@@ -134,7 +148,8 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * The number of structural features of the ' <em>Key Attribute Domain Model Reference</em>' class. <!--
@@ -144,7 +159,8 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 3;
+	int KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 3;
 
 	/**
 	 * Returns the meta object for class '

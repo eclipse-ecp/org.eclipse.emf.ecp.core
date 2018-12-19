@@ -130,7 +130,7 @@ public class KeyAttributeDomainModelReferenceConverter_Test {
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getA_B());
 
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(valueDMR, validEObject)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(valueDMR, TestPackage.Literals.C)).thenReturn(targetValueProperty);
 
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
@@ -171,7 +171,7 @@ public class KeyAttributeDomainModelReferenceConverter_Test {
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getA_B());
 
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(valueDMR, validEObject)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(valueDMR, TestPackage.Literals.C)).thenReturn(targetValueProperty);
 
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
@@ -237,7 +237,7 @@ public class KeyAttributeDomainModelReferenceConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = DatabindingFailedException.class)
 	public void testConvertToValuePropertyObjectNull() throws DatabindingFailedException {
 		converter.convertToValueProperty(mock(VKeyAttributeDomainModelReference.class), null);
 	}
@@ -460,7 +460,7 @@ public class KeyAttributeDomainModelReferenceConverter_Test {
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getA_B());
 
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(valueDMR, a)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(valueDMR, TestPackage.Literals.C)).thenReturn(targetValueProperty);
 
 		final Setting keySetting = ((InternalEObject) dWithKey).eSetting(TestPackage.eINSTANCE.getD_X());
 		when(emfFormsDatabinding.getSetting(keyDMR, cWithKey)).thenReturn(keySetting);
@@ -520,7 +520,7 @@ public class KeyAttributeDomainModelReferenceConverter_Test {
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getA_B());
 
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(valueDMR, a)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(valueDMR, TestPackage.Literals.C)).thenReturn(targetValueProperty);
 
 		final Setting keySetting = ((InternalEObject) dWithoutKey).eSetting(TestPackage.eINSTANCE.getD_X());
 		when(emfFormsDatabinding.getSetting(keyDMR, cWithoutKey)).thenReturn(keySetting);

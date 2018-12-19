@@ -38,7 +38,7 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	 * The cached value of the '{@link #getA() <em>A</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getA()
 	 * @generated
 	 * @ordered
@@ -48,7 +48,7 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected DExtendedImpl() {
@@ -58,7 +58,7 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -69,17 +69,18 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public A getA() {
 		if (a != null && a.eIsProxy()) {
-			InternalEObject oldA = (InternalEObject) a;
+			final InternalEObject oldA = (InternalEObject) a;
 			a = (A) eResolveProxy(oldA);
 			if (a != oldA) {
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.DEXTENDED__A, oldA, a));
+				}
 			}
 		}
 		return a;
@@ -88,7 +89,7 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public A basicGetA() {
@@ -98,29 +99,31 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setA(A newA) {
-		A oldA = a;
+		final A oldA = a;
 		a = newA;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.DEXTENDED__A, oldA, a));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case TestPackage.DEXTENDED__A:
-			if (resolve)
+			if (resolve) {
 				return getA();
+			}
 			return basicGetA();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -129,7 +132,7 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -145,7 +148,7 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -161,7 +164,7 @@ public class DExtendedImpl extends DImpl implements DExtended {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

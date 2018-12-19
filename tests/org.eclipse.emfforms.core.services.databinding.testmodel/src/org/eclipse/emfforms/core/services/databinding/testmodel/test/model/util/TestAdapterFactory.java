@@ -23,6 +23,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.DExtended;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
 /**
@@ -119,6 +121,21 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseDExtended(DExtended object) {
 			return createDExtendedAdapter();
+		}
+
+		@Override
+		public Adapter caseE(E object) {
+			return createEAdapter();
+		}
+
+		@Override
+		public Adapter caseF(F object) {
+			return createFAdapter();
+		}
+
+		@Override
+		public Adapter caseEClassToEMap(Map.Entry<EClass, E> object) {
+			return createEClassToEMapAdapter();
 		}
 
 		@Override
@@ -248,6 +265,53 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDExtendedAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E <em>E</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E
+	 * @generated
+	 */
+	public Adapter createEAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F <em>F</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F
+	 * @generated
+	 */
+	public Adapter createFAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>EClass To EMap</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createEClassToEMapAdapter() {
 		return null;
 	}
 

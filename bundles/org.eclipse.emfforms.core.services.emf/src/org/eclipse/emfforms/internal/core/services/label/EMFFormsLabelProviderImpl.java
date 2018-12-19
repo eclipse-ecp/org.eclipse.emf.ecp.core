@@ -31,6 +31,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
@@ -129,7 +130,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private static final String DESCRIPTION_COMPOSITE = "_UI_PropertyDescriptor_description"; //$NON-NLS-1$
 	private static final String TYPE = "_UI_%1$s_type"; //$NON-NLS-1$
 
-	private EMFFormsDatabinding emfFormsDatabinding;
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private EMFFormsLocalizationService localizationService;
 	private ReportService reportService;
 	private BundleResolver bundleResolver = new BundleResolverImpl();
@@ -153,7 +154,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 *
 	 * @param emfFormsDatabinding The databinding service.
 	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
+	protected void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
@@ -214,22 +215,18 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			return getDisplayBundleKeyResultWrapper(structuralFeature).getResult();
 		} catch (final NoBundleFoundException ex) {
-			return labelProviderDefault.getDisplayName(structuralFeature);
+			return (String) labelProviderDefault.getDisplayName(structuralFeature).getValue();
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see EMFFormsLabelProvider#getDisplayName(VDomainModelReference)
-	 */
+	@Deprecated
 	@Override
 	public IObservableValue getDisplayName(VDomainModelReference domainModelReference) throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, (EObject) null);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
@@ -247,20 +244,15 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		return value;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see EMFFormsLabelProvider#getDisplayName(VDomainModelReference,EObject)
-	 */
 	@Override
-	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EObject rootObject)
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
-		Assert.create(rootObject).notNull();
+		Assert.create(rootEClass).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootObject);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
@@ -271,7 +263,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			displayBundleKeyResultWrapper = getDisplayBundleKeyResultWrapper(structuralFeature);
 		} catch (final NoBundleFoundException ex) {
-			return labelProviderDefault.getDisplayName(domainModelReference, rootObject);
+			return labelProviderDefault.getDisplayName(domainModelReference, rootEClass);
 		}
 
 		final WritableValue displayObserveValue = getObservableValue(displayBundleKeyResultWrapper.getResult());
@@ -279,18 +271,23 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		return displayObserveValue;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see EMFFormsLabelProvider#getDescription(VDomainModelReference)
-	 */
+	@Override
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EObject rootObject)
+		throws NoLabelFoundException {
+		Assert.create(domainModelReference).notNull();
+		Assert.create(rootObject).notNull();
+
+		return getDisplayName(domainModelReference, rootObject.eClass());
+	}
+
+	@Deprecated
 	@Override
 	public IObservableValue getDescription(VDomainModelReference domainModelReference) throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, (EObject) null);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
@@ -311,11 +308,29 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		return writableValue;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see EMFFormsLabelProvider#getDescription(VDomainModelReference,EObject)
-	 */
+	@Override
+	public IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws NoLabelFoundException {
+		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
+
+		IValueProperty valueProperty;
+		try {
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
+		} catch (final DatabindingFailedException ex) {
+			reportService.report(new DatabindingFailedReport(ex));
+			throw new NoLabelFoundException(ex);
+		}
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+		Bundle bundle;
+		try {
+			bundle = bundleResolver.getEditBundle(structuralFeature.getEContainingClass());
+		} catch (final NoBundleFoundException ex) {
+			return labelProviderDefault.getDescription(domainModelReference, rootEClass);
+		}
+		return createDescriptionObservableValue(structuralFeature, bundle);
+	}
+
 	@Override
 	public IObservableValue getDescription(VDomainModelReference domainModelReference, EObject rootObject)
 		throws NoLabelFoundException {
@@ -336,9 +351,13 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		} catch (final NoBundleFoundException ex) {
 			return labelProviderDefault.getDescription(domainModelReference, rootObject);
 		}
+		return createDescriptionObservableValue(structuralFeature, bundle);
+	}
+
+	private IObservableValue createDescriptionObservableValue(final EStructuralFeature structuralFeature,
+		Bundle bundle) {
 		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
-			.getName(),
-			structuralFeature.getName(), bundle));
+			.getName(), structuralFeature.getName(), bundle));
 		descriptionKeyObservableMap.put(writableValue,
 			new DescriptionKey(structuralFeature.getEContainingClass().getName(),
 				structuralFeature.getName(), bundle));

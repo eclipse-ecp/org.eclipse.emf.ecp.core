@@ -12,6 +12,9 @@
 package org.eclipse.emfforms.internal.core.services.databinding.mapping;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -23,12 +26,14 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrFactory;
@@ -36,12 +41,14 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.internal.core.services.segments.mapping.IllegalMapTypeException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
@@ -66,13 +73,27 @@ public class MappingDomainModelReferenceConverter_Test {
 	}
 
 	private static EObject createValidEObject() {
+		final Resource resource = createVirtualResource();
+		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		if (resource != null) {
+			resource.getContents().add(domainObject);
+		}
+		return domainObject;
+	}
+
+	private static Resource createVirtualResource() {
 		final ResourceSet rs = new ResourceSetImpl();
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
-		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		return resource;
+	}
+
+	private static EObject createValidEObject(EClass eClass) {
+		final Resource resource = createVirtualResource();
+		final EObject domainObject = EcoreUtil.create(eClass);
 		if (resource != null) {
 			resource.getContents().add(domainObject);
 		}
@@ -114,6 +135,7 @@ public class MappingDomainModelReferenceConverter_Test {
 		mappingReference.setDomainModelEFeature(TestPackage.eINSTANCE.getC_EClassToA());
 		mappingReference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getB_C());
 		mappingReference.setMappedClass(TestPackage.eINSTANCE.getD());
+		final EObject domain = createValidEObject(TestPackage.Literals.B);
 
 		final VFeaturePathDomainModelReference targetReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
@@ -124,14 +146,16 @@ public class MappingDomainModelReferenceConverter_Test {
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getB_C());
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(targetReference, validEObject)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(same(targetReference), eq(TestPackage.Literals.A),
+			any(EditingDomain.class))).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IValueProperty resultProperty = converter.convertToValueProperty(mappingReference, validEObject);
+		final IValueProperty resultProperty = converter.convertToValueProperty(mappingReference, domain);
 
 		final String expected = "B.c<C> => C.eClassToA<EClassToAMap> mapping D => A.b<B> => B.c<C>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
-		verify(emfFormsDatabinding).getValueProperty(targetReference, validEObject);
+		verify(emfFormsDatabinding).getValueProperty(same(targetReference), eq(TestPackage.Literals.A),
+			any(EditingDomain.class));
 	}
 
 	/**
@@ -147,6 +171,7 @@ public class MappingDomainModelReferenceConverter_Test {
 			.createMappingDomainModelReference();
 		mappingReference.setDomainModelEFeature(TestPackage.eINSTANCE.getC_EClassToA());
 		mappingReference.setMappedClass(TestPackage.eINSTANCE.getD());
+		final EObject domain = createValidEObject(TestPackage.Literals.C);
 
 		final VFeaturePathDomainModelReference targetReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
@@ -155,14 +180,16 @@ public class MappingDomainModelReferenceConverter_Test {
 
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(targetReference, validEObject)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(same(targetReference), eq(TestPackage.Literals.A),
+			any(EditingDomain.class))).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IValueProperty resultProperty = converter.convertToValueProperty(mappingReference, validEObject);
+		final IValueProperty resultProperty = converter.convertToValueProperty(mappingReference, domain);
 
 		final String expected = "C.eClassToA<EClassToAMap> mapping D => A.b<B>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
-		verify(emfFormsDatabinding).getValueProperty(targetReference, validEObject);
+		verify(emfFormsDatabinding).getValueProperty(same(targetReference), eq(TestPackage.Literals.A),
+			any(EditingDomain.class));
 	}
 
 	/**
@@ -356,7 +383,7 @@ public class MappingDomainModelReferenceConverter_Test {
 		mappingReference.setDomainModelReference(targetReference);
 
 		final A a = TestFactory.eINSTANCE.createA();
-		final B b = TestFactory.eINSTANCE.createB();
+		final B b = (B) createValidEObject(TestPackage.Literals.B);
 		final B b2 = TestFactory.eINSTANCE.createB();
 		final C c = TestFactory.eINSTANCE.createC();
 		final C c2 = TestFactory.eINSTANCE.createC();
@@ -369,7 +396,8 @@ public class MappingDomainModelReferenceConverter_Test {
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getB_C());
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(targetReference, b)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(same(targetReference), eq(TestPackage.Literals.A),
+			any(EditingDomain.class))).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
 		final Setting setting = converter.getSetting(mappingReference, b);

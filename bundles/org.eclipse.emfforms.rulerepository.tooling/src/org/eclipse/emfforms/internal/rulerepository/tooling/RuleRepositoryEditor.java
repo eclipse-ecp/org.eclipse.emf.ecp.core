@@ -15,16 +15,21 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
+import org.eclipse.emfforms.internal.editor.Activator;
 import org.eclipse.emfforms.internal.editor.toolbaractions.LoadEcoreAction;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.PartInitException;
 
 /**
  * RuleRepositoryEditor.
@@ -71,13 +76,15 @@ public class RuleRepositoryEditor extends GenericEditor {
 
 	@Override
 	protected ResourceSet loadResource(IEditorInput editorInput) {
-		final ResourceSet result = super.loadResource(editorInput);
 		try {
+			final ResourceSet result = super.loadResource(editorInput);
 			registerEcore(result);
-		} catch (final IOException ex) {
-			ex.printStackTrace();
+			return super.loadResource(editorInput);
+		} catch (final IOException | PartInitException ex) {
+			Activator.getDefault().getReportService().report(
+				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
 		}
-		return super.loadResource(editorInput);
+		return null;
 	}
 
 	@Override

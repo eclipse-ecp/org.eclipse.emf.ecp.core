@@ -23,6 +23,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -31,10 +32,12 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
@@ -66,17 +69,35 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	}
 
 	private static EObject createValidEObject() {
+		final Resource resource = createVirtualResource();
+		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		if (resource != null) {
+			resource.getContents().add(domainObject);
+		}
+		return domainObject;
+	}
+
+	private static Resource createVirtualResource() {
 		final ResourceSet rs = new ResourceSetImpl();
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
-		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		return resource;
+	}
+
+	private static EObject createValidEObject(EClass eClass) {
+		final Resource resource = createVirtualResource();
+		final EObject domainObject = EcoreUtil.create(eClass);
 		if (resource != null) {
 			resource.getContents().add(domainObject);
 		}
 		return domainObject;
+	}
+
+	private static EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
 	}
 
 	/**
@@ -218,6 +239,63 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToValuePropertyWrongReferenceType() throws DatabindingFailedException {
 		converter.convertToValueProperty(mock(VDomainModelReference.class), validEObject);
+	}
+
+	@Test
+	public void convertToValueProperty_editingDomain() throws DatabindingFailedException {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		// create reference path to the attribute
+		final LinkedList<EReference> referencePath = new LinkedList<EReference>();
+		referencePath.add(TestPackage.eINSTANCE.getA_B());
+		referencePath.add(TestPackage.eINSTANCE.getB_C());
+		referencePath.add(TestPackage.eINSTANCE.getC_D());
+		final EObject domain = createValidEObject(TestPackage.Literals.A);
+
+		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_X();
+
+		pathReference.getDomainModelEReferencePath().addAll(referencePath);
+		pathReference.setDomainModelEFeature(feature);
+
+		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference, TestPackage.Literals.A,
+			getEditingDomain(domain));
+
+		// The converter should return an IEMFValueProperty
+		assertTrue(valueProperty instanceof IEMFValueProperty);
+
+		final IEMFValueProperty emfProperty = (IEMFValueProperty) valueProperty;
+
+		// Check EStructuralFeature of the property.
+		assertEquals(feature, emfProperty.getStructuralFeature());
+
+		// Check correct path.
+		final String expected = "A.b<B> => B.c<C> => C.d<D> => D.x<EString>"; //$NON-NLS-1$
+		assertEquals(expected, emfProperty.toString());
+	}
+
+	@Test
+	public void convertToValueProperty_editingDomain_NoReferencePath() throws DatabindingFailedException {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+
+		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_X();
+		pathReference.setDomainModelEFeature(feature);
+		final EObject domain = createValidEObject(TestPackage.Literals.D);
+
+		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference, TestPackage.Literals.D,
+			getEditingDomain(domain));
+
+		// The converter should return an IEMFValueProperty
+		assertTrue(valueProperty instanceof IEMFValueProperty);
+
+		final IEMFValueProperty emfProperty = (IEMFValueProperty) valueProperty;
+
+		// Check EStructuralFeature of the property.
+		assertEquals(feature, emfProperty.getStructuralFeature());
+
+		// Check correct path.
+		final String expected = "D.x<EString>"; //$NON-NLS-1$
+		assertEquals(expected, emfProperty.toString());
 	}
 
 	/**

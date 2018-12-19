@@ -29,9 +29,12 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -81,6 +84,8 @@ import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
 import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
+import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
@@ -100,6 +105,7 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.viewers.CellEditor;
@@ -112,6 +118,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -123,6 +130,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 
 @SuppressWarnings({ "restriction", "deprecation" })
 @RunWith(DatabindingClassRunner.class)
@@ -254,7 +262,8 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableActionControlOrderAndSWTData() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+	public void testTableActionControlOrderAndSWTData()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		EMFFormsNoRendererException {
 		// setup model
 		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
@@ -879,6 +888,74 @@ public class SWTTable_PTest {
 		SWTTestUtil.waitForUIThread();
 
 		assertEquals("The tool tip text should be empty.", "", validationIcon.getToolTipText());
+	}
+
+	@Test
+	public void testTable_validationColumnImage()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		// Register test table renderer with configured column image
+		final ColumnImageTableRendererService rendererService = new ColumnImageTableRendererService();
+		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTTable_PTest.class).getBundleContext();
+		@SuppressWarnings("rawtypes")
+		final ServiceRegistration<EMFFormsDIRendererService> registration = bundleContext.registerService(
+			EMFFormsDIRendererService.class, rendererService, new Hashtable<String, Object>());
+
+		// setup model and render table
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+		final TableColumn validationColumn = table.getColumn(0);
+
+		// If the asserts pass, we know the image was loaded because the default error image is 6x6 pixels
+		assertEquals("The configured valdiation column image is not present", 16,
+			validationColumn.getImage().getImageData().height);
+		assertEquals("The configured valdiation column image is not present", 16,
+			validationColumn.getImage().getImageData().width);
+
+		// Unregister test renderer
+		registration.unregister();
+	}
+
+	private static class ColumnImageTableRenderer extends TableControlSWTRenderer {
+		// BEGIN COMPLEX CODE
+		@Inject
+		ColumnImageTableRenderer(VTableControl vElement, ViewModelContext viewContext,
+			ReportService reportService, EMFFormsDatabindingEMF emfFormsDatabinding,
+			EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider,
+			ImageRegistryService imageRegistryService, EMFFormsEditSupport emfFormsEditSupport) {
+			// END COMPLEX CODE
+			super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider,
+				vtViewTemplateProvider,
+				imageRegistryService, emfFormsEditSupport);
+		}
+
+		@Override
+		protected VTTableValidationStyleProperty getTableValidationStyleProperty() {
+			final VTTableValidationStyleProperty property = VTTableValidationFactory.eINSTANCE
+				.createTableValidationStyleProperty();
+			property.setImagePath("platform:/plugin/org.eclipse.emf.ecp.view.table.ui.swt/icons/cake.png");
+			return property;
+		}
+	}
+
+	private static class ColumnImageTableRendererService implements EMFFormsDIRendererService<VTableControl> {
+
+		@Override
+		public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
+			if (vElement instanceof VTableControl) {
+				return Double.MAX_VALUE;
+			}
+			return NOT_APPLICABLE;
+		}
+
+		@Override
+		public Class<? extends AbstractSWTRenderer<VTableControl>> getRendererClass() {
+			return ColumnImageTableRenderer.class;
+		}
+
 	}
 
 	private TableControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)

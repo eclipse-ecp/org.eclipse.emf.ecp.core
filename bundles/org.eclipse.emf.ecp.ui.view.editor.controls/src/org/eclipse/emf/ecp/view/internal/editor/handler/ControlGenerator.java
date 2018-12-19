@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
@@ -130,11 +132,11 @@ public final class ControlGenerator {
 		final VView vview = (VView) resource.getContents().get(0);
 
 		final EClass rootEClass = vview.getRootEClass();
-		final Set<EStructuralFeature> mySet = new
-			LinkedHashSet<EStructuralFeature>(rootEClass.getEAllStructuralFeatures());
+		final Set<EStructuralFeature> mySet = new LinkedHashSet<EStructuralFeature>(
+			rootEClass.getEAllStructuralFeatures());
 		addControls(rootEClass, (VView) resource.getContents().get(0), mySet);
 		try {
-			resource.save(null);
+			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 		} catch (final IOException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}

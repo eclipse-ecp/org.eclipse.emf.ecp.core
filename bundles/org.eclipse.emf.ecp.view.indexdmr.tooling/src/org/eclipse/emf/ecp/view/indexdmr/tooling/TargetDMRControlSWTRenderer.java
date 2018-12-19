@@ -28,13 +28,14 @@ import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -61,7 +62,7 @@ public class TargetDMRControlSWTRenderer extends
 
 	@Override
 	protected void linkValue(Shell shell) {
-		final EMFFormsDatabinding emfFormsDatabinding = getEMFFormsDatabinding();
+		final EMFFormsDatabindingEMF emfFormsDatabinding = (EMFFormsDatabindingEMF) getEMFFormsDatabinding();
 		IObservableValue observableValue;
 		try {
 			observableValue = emfFormsDatabinding.getObservableValue(getVElement().getDomainModelReference(),
@@ -83,7 +84,8 @@ public class TargetDMRControlSWTRenderer extends
 		} else if (mappingDomainModelReference.getPrefixDMR() != null) {
 			try {
 				feature = (EStructuralFeature) emfFormsDatabinding
-					.getValueProperty(mappingDomainModelReference.getPrefixDMR(), null).getValueType();
+					.getValueProperty(mappingDomainModelReference.getPrefixDMR(), Helper.getRootEClass(eObject))
+					.getValueType();
 			} catch (final DatabindingFailedException ex) {
 				showLinkValueFailedMessageDialog(shell, ex);
 				return;

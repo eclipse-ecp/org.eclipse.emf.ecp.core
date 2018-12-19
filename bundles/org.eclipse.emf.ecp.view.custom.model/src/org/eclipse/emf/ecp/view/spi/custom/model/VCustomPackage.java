@@ -247,6 +247,18 @@ public interface VCustomPackage extends EPackage {
 	int CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
 
 	/**
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_DOMAIN_MODEL_REFERENCE__SEGMENTS = VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 *

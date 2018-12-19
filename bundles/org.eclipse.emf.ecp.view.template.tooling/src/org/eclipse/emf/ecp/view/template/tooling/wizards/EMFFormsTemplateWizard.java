@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -48,6 +49,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -417,7 +419,7 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 			final ResourceSet rs = new ResourceSetImpl();
 			final Resource templateResource = rs.createResource(URI.createURI(file.getLocationURI().toString()));
 			templateResource.getContents().add(template);
-			templateResource.save(null);
+			templateResource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 			container.refreshLocal(IResource.DEPTH_ONE, monitor);
 		} catch (final IOException e) {
 

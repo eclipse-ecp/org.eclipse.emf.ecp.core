@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.model.edit" version="2">
     <resource path="META-INF/MANIFEST.MF">
+        <filter comment="Added segments to the DMR" id="923795461">
+            <message_arguments>
+                <message_argument value="1.19.0"/>
+                <message_argument value="1.18.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
@@ -42,6 +48,14 @@
         <filter comment="SPI change 1.17.0" id="1143996420">
             <message_arguments>
                 <message_argument value="addEcorePathsPropertyDescriptor(Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/provider/ViewItemProviderAdapterFactory.java" type="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory">
+        <filter comment="Added segments to the DMR" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory"/>
+                <message_argument value="featureDomainModelReferenceSegmentItemProvider"/>
             </message_arguments>
         </filter>
     </resource>

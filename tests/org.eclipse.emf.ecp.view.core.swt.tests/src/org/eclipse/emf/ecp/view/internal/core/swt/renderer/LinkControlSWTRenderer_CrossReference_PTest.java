@@ -100,7 +100,8 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 
 		final TestObservableValue labelObservable = mock(TestObservableValue.class);
 		when(labelObservable.getValue()).thenReturn("Player");
-		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class))).thenReturn(labelObservable);
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(labelObservable);
 
 	}
 

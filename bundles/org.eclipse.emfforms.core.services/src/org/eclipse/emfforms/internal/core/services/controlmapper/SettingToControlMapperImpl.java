@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
@@ -56,15 +57,11 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		public void notifyChange(ModelChangeNotification notification) {
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
-		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (VDomainModelReference.class.isInstance(notifier)
-				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())) {
+				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())
+				&& !VDomainModelReferenceSegment.class.isInstance(EObject.class.cast(notifier).eContainer())) {
 				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
 
 				final VControl control = findControl(domainModelReference);
@@ -82,11 +79,6 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			return (VControl) parent;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
-		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {
 			if (VControl.class.isInstance(notifier)) {

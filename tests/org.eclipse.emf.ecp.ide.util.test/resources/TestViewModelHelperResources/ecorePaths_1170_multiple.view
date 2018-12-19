@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1170" xmi:id="_4iBP4EDKEeifDej7n0aGUQ" name="TestView">
+  <rootEClass href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  <ecorePaths>/test.1/model/model.ecore</ecorePaths>
+  <ecorePaths>/test.2/model/model.ecore</ecorePaths>
+</org.eclipse.emf.ecp.view.model:View>

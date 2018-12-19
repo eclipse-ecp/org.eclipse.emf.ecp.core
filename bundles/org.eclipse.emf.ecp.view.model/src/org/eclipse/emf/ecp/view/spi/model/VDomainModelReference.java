@@ -31,10 +31,11 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  *             <ul>
  *             <li>{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change
  *             Listener</em>}</li>
+ *             <li>{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments <em>Segments</em>}</li>
  *             </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference()
- * @model interface="true" abstract="true"
+ * @model abstract="true"
  * @generated
  */
 public interface VDomainModelReference extends EObject, ModelChangeListener {
@@ -56,6 +57,24 @@ public interface VDomainModelReference extends EObject, ModelChangeListener {
 	 */
 	@Deprecated
 	EList<DomainModelReferenceChangeListener> getChangeListener();
+
+	/**
+	 * Returns the value of the '<em><b>Segments</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Segments</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 * @return the value of the '<em>Segments</em>' containment reference list.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference_Segments()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<VDomainModelReferenceSegment> getSegments();
 
 	/**
 	 * Resolve attempts to resolve the domain model reference. If it fails existing results will be kept. Thus even

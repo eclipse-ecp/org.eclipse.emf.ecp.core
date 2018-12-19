@@ -18,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.internal.table.model.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
@@ -49,6 +51,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 
 /**
  * <!-- begin-user-doc -->
@@ -117,7 +120,7 @@ public class TableValidator extends EObjectValidator {
 	 *
 	 * @generated NOT
 	 */
-	private EMFFormsDatabinding emfFormsDatabinding;
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
 
 	/**
 	 * Creates an instance of the switch.
@@ -128,7 +131,7 @@ public class TableValidator extends EObjectValidator {
 	 * @generated NOT
 	 * @param emfFormsDatabinding An {@link EMFFormsDatabinding}
 	 */
-	TableValidator(EMFFormsDatabinding emfFormsDatabinding) {
+	TableValidator(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this();
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
@@ -378,8 +381,27 @@ public class TableValidator extends EObjectValidator {
 		// test if table ends a multi reference
 		IValueProperty valueProperty;
 		try {
+			final Optional<EClass> rootEClass = getRootEClass(pathToMultiRef);
+			if (!rootEClass.isPresent()) {
+				if (diagnostics != null) {
+					final String message = "The table DMR could not be resolved because it is not contained in a View with a root EClass"; //$NON-NLS-1$
+					if (tableDomainModelReference.eContainer() != null) {
+						diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message,
+							tableDomainModelReference.eContainer(), tableDomainModelReference.eContainingFeature()));
+					}
+					if (pathToMultiRef == tableDomainModelReference) {
+						diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, pathToMultiRef,
+							VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()));
+					} else {
+						diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, tableDomainModelReference,
+							VTablePackage.eINSTANCE.getTableDomainModelReference_DomainModelReference()));
+					}
+				}
+
+				return false;
+			}
 			valueProperty = getEMFFormsDatabinding()
-				.getValueProperty(pathToMultiRef, null);
+				.getValueProperty(pathToMultiRef, rootEClass.get());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return true;
@@ -453,13 +475,30 @@ public class TableValidator extends EObjectValidator {
 
 	}
 
-	private EMFFormsDatabinding getEMFFormsDatabinding() {
+	private EMFFormsDatabindingEMF getEMFFormsDatabinding() {
 		if (emfFormsDatabinding != null) {
 			return emfFormsDatabinding;
 		}
 		return Activator.getDefault().getEMFFormsDatabinding();
 	}
 
+	/**
+	 * Go upwards in the EObject's containment history to find the root EClass.
+	 *
+	 * @param eObject
+	 * @return the root {@link EClass} if this EObject is contained in a VView
+	 */
+	private Optional<EClass> getRootEClass(EObject eObject) {
+		EObject testObject = eObject;
+		while (!VView.class.isInstance(testObject)
+			&& testObject != null) {
+			testObject = testObject.eContainer();
+		}
+		if (VView.class.isInstance(testObject)) {
+			return Optional.of(VView.class.cast(testObject).getRootEClass());
+		}
+		return Optional.empty();
+	}
 	// END COMPLEX CODE
 
 	private Diagnostic createDiagnostic(int severity, int code, String message, EObject object,

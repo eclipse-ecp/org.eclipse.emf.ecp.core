@@ -31,8 +31,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
@@ -50,8 +48,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener <em>Change
- * Listener</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEFeature
  * <em>Domain Model EFeature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEReferencePath
@@ -60,19 +56,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @generated
  */
-public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
+public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceImpl implements
 	VFeaturePathDomainModelReference {
-	/**
-	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @see #getChangeListener()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<DomainModelReferenceChangeListener> changeListener;
 	/**
 	 * The cached value of the '{@link #getDomainModelEFeature() <em>Domain Model EFeature</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -114,24 +99,6 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	@Override
 	protected EClass eStaticClass() {
 		return VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Deprecated
-	@Override
-	public EList<DomainModelReferenceChangeListener> getChangeListener() {
-		if (changeListener == null) {
-			changeListener = new EDataTypeUniqueEList<DomainModelReferenceChangeListener>(
-				DomainModelReferenceChangeListener.class, this,
-				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
-		}
-		return changeListener;
 	}
 
 	/**
@@ -217,8 +184,6 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			return getChangeListener();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			if (resolve) {
 				return getDomainModelEFeature();
@@ -240,10 +205,6 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			getChangeListener().clear();
-			getChangeListener().addAll((Collection<? extends DomainModelReferenceChangeListener>) newValue);
-			return;
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			setDomainModelEFeature((EStructuralFeature) newValue);
 			return;
@@ -264,9 +225,6 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			getChangeListener().clear();
-			return;
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			setDomainModelEFeature((EStructuralFeature) null);
 			return;
@@ -286,33 +244,12 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			return changeListener != null && !changeListener.isEmpty();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			return domainModelEFeature != null;
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return domainModelEReferencePath != null && !domainModelEReferencePath.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
-
-		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (changeListener: "); //$NON-NLS-1$
-		result.append(changeListener);
-		result.append(')');
-		return result.toString();
 	}
 
 	// /**

@@ -13,7 +13,7 @@
 package org.eclipse.emf.ecp.emf2web;
 
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -37,7 +37,7 @@ public class Activator extends AbstractUIPlugin {
 
 	private ServiceReference<ReportService> reportServiceReference;
 
-	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
+	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
 
 	/**
 	 * The constructor.
@@ -97,14 +97,14 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the {@link EMFFormsDatabinding} service.
+	 * Returns the {@link EMFFormsDatabindingEMF} service.
 	 *
-	 * @return The {@link EMFFormsDatabinding}
+	 * @return The {@link EMFFormsDatabindingEMF}
 	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
+	public EMFFormsDatabindingEMF getEMFFormsDatabinding() {
 		if (databindingServiceReference == null) {
 			databindingServiceReference = plugin.getBundle().getBundleContext()
-				.getServiceReference(EMFFormsDatabinding.class);
+				.getServiceReference(EMFFormsDatabindingEMF.class);
 		}
 		return plugin.getBundle().getBundleContext().getService(databindingServiceReference);
 	}

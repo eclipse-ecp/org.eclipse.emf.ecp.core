@@ -19,10 +19,12 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
+import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -43,11 +45,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  *
  */
 public class GenerateTableColumnsHandler extends MasterDetailAction {
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 */
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
@@ -58,11 +56,6 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#shouldShow(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public boolean shouldShow(EObject eObject) {
 		if (VTableControl.class.isInstance(eObject)) {
@@ -71,16 +64,14 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		return false;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#execute(org.eclipse.emf.ecore.EObject)
-	 */
+	// BEGIN COMPLEX CODE
 	@Override
 	public void execute(EObject object) {
 		final VTableControl tableControl = VTableControl.class.cast(object);
 		final VDomainModelReference domainModelReference = tableControl.getDomainModelReference();
-		if (domainModelReference == null || !VTableDomainModelReference.class.isInstance(domainModelReference)) {
+		final EClass rootEClass = Helper.getRootEClass(tableControl);
+		if (domainModelReference == null || !VTableDomainModelReference.class.isInstance(domainModelReference)
+			|| rootEClass == null) {
 			return;
 		}
 
@@ -89,9 +80,9 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		try {
 			if (tableDMR.getDomainModelReference() != null) {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableDMR.getDomainModelReference(), null);
+					.getValueProperty(tableDMR.getDomainModelReference(), rootEClass);
 			} else {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR, null);
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR, rootEClass);
 			}
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
@@ -125,4 +116,5 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		editingDomainFor.getCommandStack().execute(command);
 
 	}
+	// END COMPLEX CODE
 }

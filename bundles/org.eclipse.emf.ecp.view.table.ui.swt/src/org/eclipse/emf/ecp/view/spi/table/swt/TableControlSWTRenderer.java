@@ -12,7 +12,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -40,6 +39,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -141,6 +141,8 @@ import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
 import org.eclipse.emfforms.spi.swt.table.action.ActionConfigurationBuilder;
 import org.eclipse.emfforms.spi.swt.table.action.TableActionBar;
 import org.eclipse.emfforms.spi.swt.table.action.ViewerActionContext;
+import org.eclipse.emfforms.view.spi.multisegment.model.MultiSegmentUtil;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -321,8 +323,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected Control createLabel(final Composite parent) {
 		final VDomainModelReference dmrToCheck = getDMRToMultiReference();
-		final IObservableValue labelText = getLabelText(dmrToCheck, false);
-		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
+		final IObservableValue labelText = getLabelText(dmrToCheck);
+		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck);
 
 		final Label titleLabel = new Label(parent, AbstractControlSWTRendererUtil
 			.getLabelStyleBits(getVTViewTemplateProvider(), getVElement(), getViewModelContext()));
@@ -370,8 +372,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				actionConfiguration);
 
 			/* get the label text/tooltip */
-			final IObservableValue labelText = getLabelText(dmrToCheck, false);
-			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
+			final IObservableValue labelText = getLabelText(dmrToCheck);
+			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck);
 
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
@@ -739,9 +741,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Widget[] allColumns = tableViewerComposite.getColumns();
 		for (int i = regularColumnsStartIndex; i < allColumns.length; i++) {
 			final Widget tableColumn = allColumns[i];
-			final VDomainModelReference columnDMR = VTableDomainModelReference.class
-				.cast(tableControl.getDomainModelReference()).getColumnDomainModelReferences()
-				.get(i - regularColumnsStartIndex);
+			final VDomainModelReference columnDMR = getColumnDomainModelReferences().get(i - regularColumnsStartIndex);
 			TableConfigurationHelper.updateWidthConfiguration(tableControl, columnDMR, tableColumn);
 		}
 	}
@@ -794,28 +794,28 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (!clazz.isAbstract() && !clazz.isInterface()) {
 			tempInstance = getInstanceOf(clazz);
 		}
-		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
-			.cast(getVElement().getDomainModelReference());
 
 		/* regular columns */
-		for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {
+		for (final VDomainModelReference dmr : getColumnDomainModelReferences()) {
 			try {
 				if (dmr == null) {
 					continue;
 				}
 
-				final IObservableValue text = getLabelText(dmr, true);
-				final IObservableValue tooltip = getLabelTooltipText(dmr, true);
+				final IObservableValue text = getLabelTextForColumn(dmr, clazz);
+				final IObservableValue tooltip = getLabelTooltipTextForColumn(dmr, clazz);
 
-				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr,
-					getViewModelContext().getDomainModel());
+				// Use the same editing domain for the columns as for the view's domain object
+				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
+				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz,
+					editingDomain);
 				final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 				final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
 
 				final TableControlEditingSupportAndLabelProvider labelProvider = new TableControlEditingSupportAndLabelProvider(
 					tempInstance, eStructuralFeature, dmr, valueProperty, observableMap,
-					tableDomainModelReference.getColumnDomainModelReferences().indexOf(dmr));
+					getColumnDomainModelReferences().indexOf(dmr));
 				final EditingSupportCreator editingSupportCreator = TableConfigurationHelper
 					.isReadOnly(getVElement(), dmr) ? null : labelProvider;
 
@@ -891,23 +891,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewerComposite.setComparator(comparator, sortableColumns);
 	}
 
-	private IObservableValue getLabelText(VDomainModelReference dmrToCheck, boolean forColumn) {
-		final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
-		if (forColumn) {
-			try {
-				return labelProvider.getDisplayName(dmrToCheck);
-			} catch (final NoLabelFoundException e) {
-				// FIXME Expectation?
-				getReportService().report(new RenderingFailedReport(e));
-				return Observables.constantObservableValue(e.getMessage(), String.class);
-			}
-		}
+	private IObservableValue getLabelText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
 		default:
 			try {
-				return labelProvider.getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
+				return getEMFFormsLabelProvider().getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
@@ -916,28 +906,38 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck, boolean forColumn) {
-		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
+	private IObservableValue getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
-			if (forColumn) {
-				return labelService.getDescription(dmrToCheck);
-			}
+			return getEMFFormsLabelProvider().getDisplayName(dmrToCheck, dmrRootEClass);
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectation?
 			getReportService().report(new RenderingFailedReport(e));
-			return Observables.constantObservableValue(e.toString(), String.class);
+			return Observables.constantObservableValue(e.getMessage(), String.class);
 		}
+	}
+
+	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
 		default:
 			try {
-				return labelService.getDescription(dmrToCheck, getViewModelContext().getDomainModel());
+				return getEMFFormsLabelProvider().getDescription(dmrToCheck, getViewModelContext().getDomainModel());
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
 				return Observables.constantObservableValue(e.toString(), String.class);
 			}
+		}
+	}
+
+	private IObservableValue getLabelTooltipTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
+		try {
+			return getEMFFormsLabelProvider().getDescription(dmrToCheck, dmrRootEClass);
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectation?
+			getReportService().report(new RenderingFailedReport(e));
+			return Observables.constantObservableValue(e.toString(), String.class);
 		}
 	}
 
@@ -1106,7 +1106,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		Image image = null;
 		if (imagePath != null && !imagePath.isEmpty()) {
 			try {
-				image = getImage(new File(imagePath).toURI().toURL());
+				image = getImage(new URL(imagePath));
 			} catch (final MalformedURLException ex) {
 				getReportService().report(new AbstractReport(ex));
 			}
@@ -1279,6 +1279,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final int green = Integer.parseInt(greenString, 16);
 		final int blue = Integer.parseInt(blueString, 16);
 		return new Color(Display.getDefault(), red, green, blue);
+	}
+
+	/**
+	 * Retrieves this table's column DMRs from the table DMR.
+	 *
+	 * @return The domain model references defining the columns of this table.
+	 * @since 1.19
+	 */
+	protected EList<VDomainModelReference> getColumnDomainModelReferences() {
+		final VDomainModelReference dmr = getVElement().getDomainModelReference();
+		final java.util.Optional<VMultiDomainModelReferenceSegment> multiSegment = MultiSegmentUtil
+			.getMultiSegment(dmr);
+		if (multiSegment.isPresent()) {
+			return multiSegment.get().getChildDomainModelReferences();
+		}
+		return VTableDomainModelReference.class.cast(dmr).getColumnDomainModelReferences();
 	}
 
 	/**
@@ -1593,8 +1609,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		propertyIndex = propertyIndex - regularColumnsStartIndex;
 		int rc = 0;
 
-		final VDomainModelReference dmr = ((VTableDomainModelReference) getVElement().getDomainModelReference())
-			.getColumnDomainModelReferences().get(propertyIndex);
+		final VDomainModelReference dmr = getColumnDomainModelReferences().get(propertyIndex);
 
 		final Optional<Setting> leftSetting = getSettingFromObservable(dmr, (EObject) left);
 		final Optional<Setting> rightSetting = getSettingFromObservable(dmr, (EObject) right);
@@ -1905,16 +1920,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return;
 			}
 
-			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
-				.getDomainModelReference();
-			Optional<Setting> setting;
-
-			if (tableDMR.getDomainModelReference() != null) {
-				setting = getSettingFromObservable(tableDMR.getDomainModelReference(),
-					getViewModelContext().getDomainModel());
-			} else {
-				setting = getSettingFromObservable(tableDMR, getViewModelContext().getDomainModel());
-			}
+			final VDomainModelReference dmr = getDMRToMultiReference();
+			final Optional<Setting> setting = getSettingFromObservable(dmr, getViewModelContext().getDomainModel());
 
 			if (!setting.isPresent()) {
 				return;

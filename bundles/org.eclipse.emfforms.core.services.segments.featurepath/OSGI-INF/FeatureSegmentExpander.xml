@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="FeatureSegmentExpander">
+   <service>
+      <provide interface="org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRSegmentExpander"/>
+   </service>
+   <reference bind="setReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService"/>
+   <implementation class="org.eclipse.emfforms.internal.core.services.segments.featurepath.FeatureSegmentExpander"/>
+</scr:component>

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
 /**
@@ -37,9 +38,11 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getD <em>D</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToString
  * <em>EClass To String</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToA
- * <em>EClass To A</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToA <em>EClass To
+ * A</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getA <em>A</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToE <em>EClass To
+ * E</em>}</li>
  * </ul>
  *
  * @generated
@@ -88,6 +91,17 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * @ordered
 	 */
 	protected A a;
+
+	/**
+	 * The cached value of the '{@link #getEClassToE() <em>EClass To E</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getEClassToE()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<EClass, E> eClassToE;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -251,6 +265,21 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * @generated
 	 */
 	@Override
+	public EMap<EClass, E> getEClassToE() {
+		if (eClassToE == null) {
+			eClassToE = new EcoreEMap<EClass, E>(TestPackage.Literals.ECLASS_TO_EMAP, EClassToEMapImpl.class, this,
+				TestPackage.C__ECLASS_TO_E);
+		}
+		return eClassToE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case TestPackage.C__D:
@@ -259,6 +288,8 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 			return ((InternalEList<?>) getEClassToString()).basicRemove(otherEnd, msgs);
 		case TestPackage.C__ECLASS_TO_A:
 			return ((InternalEList<?>) getEClassToA()).basicRemove(otherEnd, msgs);
+		case TestPackage.C__ECLASS_TO_E:
+			return ((InternalEList<?>) getEClassToE()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -289,6 +320,11 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 				return getA();
 			}
 			return basicGetA();
+		case TestPackage.C__ECLASS_TO_E:
+			if (coreType) {
+				return getEClassToE();
+			}
+			return getEClassToE().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -313,6 +349,9 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 			return;
 		case TestPackage.C__A:
 			setA((A) newValue);
+			return;
+		case TestPackage.C__ECLASS_TO_E:
+			((EStructuralFeature.Setting) getEClassToE()).set(newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -339,6 +378,9 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 		case TestPackage.C__A:
 			setA((A) null);
 			return;
+		case TestPackage.C__ECLASS_TO_E:
+			getEClassToE().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -360,6 +402,8 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 			return eClassToA != null && !eClassToA.isEmpty();
 		case TestPackage.C__A:
 			return a != null;
+		case TestPackage.C__ECLASS_TO_E:
+			return eClassToE != null && !eClassToE.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

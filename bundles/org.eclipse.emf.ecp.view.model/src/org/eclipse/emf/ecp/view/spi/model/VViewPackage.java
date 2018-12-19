@@ -55,7 +55,7 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/1170"; //$NON-NLS-1$
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/1180"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI of releases [1.7.0,1.17.0[.
@@ -173,12 +173,12 @@ public interface VViewPackage extends EPackage {
 	int ATTACHMENT_FEATURE_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain Model
-	 * Reference</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl <em>Domain
+	 * Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReference()
 	 * @generated
 	 */
@@ -196,6 +196,18 @@ public interface VViewPackage extends EPackage {
 	int DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = 0;
 
 	/**
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN_MODEL_REFERENCE__SEGMENTS = 1;
+
+	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -203,7 +215,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 1;
+	int DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
@@ -227,6 +239,18 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
+
+	/**
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__SEGMENTS = DOMAIN_MODEL_REFERENCE__SEGMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
@@ -458,7 +482,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1125,6 +1148,71 @@ public interface VViewPackage extends EPackage {
 	int HAS_TOOLTIP_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment <em>Domain
+	 * Model Reference Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceSegment()
+	 * @generated
+	 */
+	int DOMAIN_MODEL_REFERENCE_SEGMENT = 15;
+
+	/**
+	 * The number of structural features of the '<em>Domain Model Reference Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl <em>Feature Domain Model
+	 * Reference Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeatureDomainModelReferenceSegment()
+	 * @generated
+	 */
+	int FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT = 16;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Feature</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE = DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Feature Domain Model Reference Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT = DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment <em>Label Alignment</em>}'
 	 * enum.
 	 * <!-- begin-user-doc -->
@@ -1134,7 +1222,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getLabelAlignment()
 	 * @generated
 	 */
-	int LABEL_ALIGNMENT = 15;
+	int LABEL_ALIGNMENT = 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType <em>Date Time Display
@@ -1147,7 +1235,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()
 	 * @generated
 	 */
-	int DATE_TIME_DISPLAY_TYPE = 16;
+	int DATE_TIME_DISPLAY_TYPE = 18;
 
 	/**
 	 * The meta object id for the '<em>Domain Model Reference Change Listener</em>' data type.
@@ -1159,7 +1247,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
 	 * @generated
 	 */
-	int DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = 17;
+	int DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = 19;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
@@ -1346,12 +1434,10 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute list '<em>Ecore Paths</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getEcorePaths()
 	 * @see #getView()
 	 * @generated
-	 *
 	 */
 	EAttribute getView_EcorePaths();
 
@@ -1515,6 +1601,50 @@ public interface VViewPackage extends EPackage {
 	EAttribute getHasTooltip_Tooltip();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * <em>Domain Model Reference Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Domain Model Reference Segment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * @generated
+	 */
+	EClass getDomainModelReferenceSegment();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * <em>Feature Domain Model Reference Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Feature Domain Model Reference Segment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * @generated
+	 */
+	EClass getFeatureDomainModelReferenceSegment();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature <em>Domain
+	 * Model Feature</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Domain Model Feature</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature()
+	 * @see #getFeatureDomainModelReferenceSegment()
+	 * @generated
+	 */
+	EAttribute getFeatureDomainModelReferenceSegment_DomainModelFeature();
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
@@ -1669,6 +1799,21 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDomainModelReference_ChangeListener();
+
+	/**
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments <em>Segments</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference list '<em>Segments</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments()
+	 * @see #getDomainModelReference()
+	 * @generated
+	 */
+	EReference getDomainModelReference_Segments();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
@@ -1890,7 +2035,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.17
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute VIEW__ECORE_PATHS = eINSTANCE.getView_EcorePaths();
@@ -2035,6 +2179,47 @@ public interface VViewPackage extends EPackage {
 		EAttribute HAS_TOOLTIP__TOOLTIP = eINSTANCE.getHasTooltip_Tooltip();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+		 * <em>Domain Model Reference Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.19
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceSegment()
+		 * @generated
+		 */
+		EClass DOMAIN_MODEL_REFERENCE_SEGMENT = eINSTANCE.getDomainModelReferenceSegment();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl <em>Feature Domain
+		 * Model Reference Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.19
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeatureDomainModelReferenceSegment()
+		 * @generated
+		 */
+		EClass FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT = eINSTANCE.getFeatureDomainModelReferenceSegment();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model Feature</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.19
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE = eINSTANCE
+			.getFeatureDomainModelReferenceSegment_DomainModelFeature();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
 		 * <em>String To Object Map Entry</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -2148,12 +2333,12 @@ public interface VViewPackage extends EPackage {
 		EDataType DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = eINSTANCE.getDomainModelReferenceChangeListener();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain
-		 * Model Reference</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
+		 * <em>Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReference()
 		 * @generated
 		 */
@@ -2168,6 +2353,17 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = eINSTANCE.getDomainModelReference_ChangeListener();
+
+		/**
+		 * The meta object literal for the '<em><b>Segments</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.19
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference DOMAIN_MODEL_REFERENCE__SEGMENTS = eINSTANCE.getDomainModelReference_Segments();
 
 		/**
 		 * The meta object literal for the

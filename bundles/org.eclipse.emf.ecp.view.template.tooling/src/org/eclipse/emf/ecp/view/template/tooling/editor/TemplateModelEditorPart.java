@@ -71,6 +71,9 @@ public class TemplateModelEditorPart extends GenericEditor {
 		super.init(site, input);
 		super.setPartName(input.getName());
 
+		if (!(input instanceof FileEditorInput)) {
+			throw new PartInitException(Messages.TemplateModelEditorPart_invalidEditorInput);
+		}
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
 		try {

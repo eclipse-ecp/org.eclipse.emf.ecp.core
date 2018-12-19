@@ -23,6 +23,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.internal.editor.ui.CreateNewChildDialog;
 import org.eclipse.emfforms.spi.editor.handler.DeleteShortCutHandler;
+import org.eclipse.emfforms.spi.editor.messages.Messages;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -72,13 +73,13 @@ public class ShortcutHandler extends AbstractHandler {
 			performDelete(sSelection, editingDomain);
 		} else if (getNewChildCmdName().equals(commandName)) {
 			createNewElementDialog(editingDomain, editor.getEditorSite().getSelectionProvider(), currentSelection,
-				"Create Child").open();
+				Messages.ShortcutHandler_NewElementDialogTitle).open();
 		} else if (getNewSiblingCmdName().equals(commandName)) {
 			// Get Parent of current Selection and show the dialog for it
 			final EObject parent = currentSelection.eContainer();
 			final EditingDomain parentEditingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(parent);
 			createNewElementDialog(parentEditingDomain, editor.getEditorSite().getSelectionProvider(), parent,
-				"Create Sibling").open();
+				Messages.ShortcutHandler_NewElementDialogDescription).open();
 		}
 
 		return null;
@@ -111,21 +112,21 @@ public class ShortcutHandler extends AbstractHandler {
 	 * @return the cmd name for new siblings
 	 */
 	protected String getNewSiblingCmdName() {
-		return "org.eclipse.emfforms.editor.new.sibling";
+		return "org.eclipse.emfforms.editor.new.sibling"; //$NON-NLS-1$
 	}
 
 	/**
 	 * @return the cmd name for new children
 	 */
 	protected String getNewChildCmdName() {
-		return "org.eclipse.emfforms.editor.new";
+		return "org.eclipse.emfforms.editor.new"; //$NON-NLS-1$
 	}
 
 	/**
 	 * @return the cmd name for deletions
 	 */
 	protected String getDeleteCmdName() {
-		return "org.eclipse.emfforms.editor.delete";
+		return "org.eclipse.emfforms.editor.delete"; //$NON-NLS-1$
 	}
 
 	/**

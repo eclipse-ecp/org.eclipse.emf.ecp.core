@@ -232,101 +232,90 @@
             class="org.eclipse.emf.ecp.view.template.style.labelwidth.model.provider.LabelwidthItemProviderAdapterFactory$TemplateChildCreationExtender">
       </extender>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated hierarchySelector -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://www.eclipse.org/emf/ecp/view/template/selector/hierarchy/model"
             class="org.eclipse.emf.ecp.view.template.selector.hierarchy.model.provider.HierarchyItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource">
+      </factory>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.childCreationExtenders">
-      <!-- @generated hierarchySelector -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/template/model"
-            class="org.eclipse.emf.ecp.view.template.selector.hierarchy.model.provider.HierarchyItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.template.selector.hierarchy.model.provider.HierarchyItemProviderAdapterFactory$TemplateChildCreationExtender">
+      </extender>
    </extension>
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated boolSelector -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://www.eclipse.org/emf/ecp/view/template/selector/bool/model"
             class="org.eclipse.emf.ecp.view.template.selector.bool.model.provider.BoolItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource">
+      </factory>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.childCreationExtenders">
-      <!-- @generated boolSelector -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/template/model"
-            class="org.eclipse.emf.ecp.view.template.selector.bool.model.provider.BoolItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.template.selector.bool.model.provider.BoolItemProviderAdapterFactory$TemplateChildCreationExtender">
+      </extender>
    </extension>
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated wrapStyle -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://www.eclipse.org/emf/ecp/view/template/style/wrap/model"
             class="org.eclipse.emf.ecp.view.template.style.wrap.model.provider.WrapItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource">
+      </factory>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.childCreationExtenders">
-      <!-- @generated wrapStyle -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/template/model"
-            class="org.eclipse.emf.ecp.view.template.style.wrap.model.provider.WrapItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.template.style.wrap.model.provider.WrapItemProviderAdapterFactory$TemplateChildCreationExtender">
+      </extender>
    </extension>
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated referenceStyle -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://www.eclipse.org/emf/ecp/view/template/style/reference/model"
             class="org.eclipse.emf.ecp.view.template.style.reference.model.provider.ReferenceItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource">
+      </factory>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.childCreationExtenders">
-      <!-- @generated referenceStyle -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/template/model"
-            class="org.eclipse.emf.ecp.view.template.style.reference.model.provider.ReferenceItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.template.style.reference.model.provider.ReferenceItemProviderAdapterFactory$TemplateChildCreationExtender">
+      </extender>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated keyBinding -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://www.eclipse.org/emf/ecp/view/template/style/keybinding/model"
             class="org.eclipse.emf.ecp.view.template.style.keybinding.model.provider.KeybindingItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource">
+      </factory>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.childCreationExtenders">
-      <!-- @generated keyBinding -->
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/template/model"
-            class="org.eclipse.emf.ecp.view.template.style.keybinding.model.provider.KeybindingItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.template.style.keybinding.model.provider.KeybindingItemProviderAdapterFactory$TemplateChildCreationExtender">
+      </extender>
    </extension>
+
 </plugin>

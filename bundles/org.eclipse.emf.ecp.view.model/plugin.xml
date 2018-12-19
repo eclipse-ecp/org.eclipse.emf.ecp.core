@@ -7,7 +7,7 @@
          point="org.eclipse.emf.ecore.generated_package">
       <package
             genModel="model/view.genmodel"
-            uri="http://org/eclipse/emf/ecp/view/model/1170"
+            uri="http://org/eclipse/emf/ecp/view/model/1180"
             class="org.eclipse.emf.ecp.view.spi.model.VViewPackage">
       </package>
    </extension>

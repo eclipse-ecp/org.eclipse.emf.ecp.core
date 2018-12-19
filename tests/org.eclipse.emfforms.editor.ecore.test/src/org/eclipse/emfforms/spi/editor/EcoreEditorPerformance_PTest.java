@@ -135,7 +135,7 @@ public class EcoreEditorPerformance_PTest {
 	public void treeMasterDetailCompositeDoesNotLeak() {
 		final int expectedShellCount = Display.getDefault().getShells().length;
 
-		final GenericEditor editor = open();
+		final GenericEditor editor = open("test.ecore");
 		close(editor);
 
 		final int actualShellCount = Display.getDefault().getShells().length;
@@ -347,10 +347,6 @@ public class EcoreEditorPerformance_PTest {
 		final double stddev = Math.sqrt(sumdev / (n - 1));
 
 		return new Measure(average, stddev);
-	}
-
-	GenericEditor open() {
-		return open(project.getFiles().get(0));
 	}
 
 	GenericEditor open(String fileName) {

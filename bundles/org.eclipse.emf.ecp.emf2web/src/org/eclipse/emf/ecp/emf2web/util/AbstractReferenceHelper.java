@@ -23,13 +23,16 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.emf2web.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.osgi.framework.BundleContext;
@@ -43,7 +46,7 @@ import org.osgi.framework.ServiceReference;
  */
 public abstract class AbstractReferenceHelper implements ReferenceHelper {
 
-	private final EMFFormsDatabinding dataBinding;
+	private final EMFFormsDatabindingEMF dataBinding;
 
 	/**
 	 * Constructor.
@@ -62,13 +65,32 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 	 */
 	protected EStructuralFeature getEStructuralFeature(VDomainModelReference reference) {
 		try {
-			final IValueProperty<?, ?> valueProperty = dataBinding.getValueProperty(reference, null);
+			final IValueProperty<?, ?> valueProperty = dataBinding.getValueProperty(reference,
+				getRootEClass(reference));
 
 			if (valueProperty != null) {
 				return (EStructuralFeature) valueProperty.getValueType();
 			}
 		} catch (final DatabindingFailedException ex) {
 			handleDatabindingFailedException(ex);
+		}
+		return null;
+	}
+
+	/**
+	 * Get the root {@link EClass} by walking up the containment hierarchy of the given EObject (typically a DMR or
+	 * control).
+	 *
+	 * @param eObject The {@link EObject} whose containment hierarchy is searched for a {@link VView}
+	 * @return The root EClass or <code>null</code> if the given EObject is not contained in a {@link VView}
+	 */
+	private static EClass getRootEClass(EObject eObject) {
+		EObject parent = eObject.eContainer();
+		while (parent != null) {
+			if (parent instanceof VView) {
+				return ((VView) parent).getRootEClass();
+			}
+			parent = parent.eContainer();
 		}
 		return null;
 	}
@@ -94,7 +116,8 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 				final ServiceReference<EMFFormsLabelProvider> serviceReference = bundleContext
 					.getServiceReference(EMFFormsLabelProvider.class);
 				final EMFFormsLabelProvider labelProvider = bundleContext.getService(serviceReference);
-				final IObservableValue<?> observableValue = labelProvider.getDisplayName(reference);
+				final IObservableValue<?> observableValue = labelProvider.getDisplayName(reference,
+					getRootEClass(reference));
 				final String result = (String) observableValue.getValue();
 				observableValue.dispose();
 				bundleContext.ungetService(serviceReference);

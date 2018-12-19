@@ -9,6 +9,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emfforms/spi/core/services/databinding/emf/DomainModelReferenceConverterEMF.java" type="org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF">
+        <filter comment="SPI change for DMR segments" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF"/>
+                <message_argument value="convertToValueProperty(VDomainModelReference, EClass, EditingDomain)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF"/>

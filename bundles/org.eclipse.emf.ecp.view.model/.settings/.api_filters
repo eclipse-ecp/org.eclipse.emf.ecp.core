@@ -7,6 +7,12 @@
                 <message_argument value="1.12.0"/>
             </message_arguments>
         </filter>
+        <filter comment="Added segments to the DMR" id="923795461">
+            <message_arguments>
+                <message_argument value="1.19.0"/>
+                <message_argument value="1.18.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change (1.3)" id="923795461">
             <message_arguments>
                 <message_argument value="1.3.0"/>
@@ -87,6 +93,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference"/>
                 <message_argument value="getFullPathIterator()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added segments to the DMR" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference"/>
+                <message_argument value="getSegments()"/>
             </message_arguments>
         </filter>
         <filter comment="SPI change (1.3)" id="403804204">
@@ -396,6 +408,13 @@
                 <message_argument value="15"/>
             </message_arguments>
         </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="DATE_TIME_DISPLAY_TYPE"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -424,11 +443,25 @@
                 <message_argument value="16"/>
             </message_arguments>
         </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change (1.3)" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
                 <message_argument value="0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
+                <message_argument value="1"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -487,6 +520,13 @@
                 <message_argument value="2"/>
             </message_arguments>
         </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change (1.3)" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -494,11 +534,25 @@
                 <message_argument value="0"/>
             </message_arguments>
         </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change (1.3)" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH"/>
                 <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH"/>
+                <message_argument value="2"/>
             </message_arguments>
         </filter>
         <filter comment="SPI 170" id="388194388">
@@ -520,6 +574,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="LABEL_ALIGNMENT"/>
                 <message_argument value="14"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="LABEL_ALIGNMENT"/>
+                <message_argument value="15"/>
             </message_arguments>
         </filter>
         <filter comment="SPI" id="388194388">
@@ -648,6 +709,13 @@
                 <message_argument value="http://org/eclipse/emf/ecp/view/model"/>
             </message_arguments>
         </filter>
+        <filter comment="Added segments to the DMR" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="eNS_URI"/>
+                <message_argument value="http://org/eclipse/emf/ecp/view/model/1170"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change 1.17.0" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -699,10 +767,22 @@
                 <message_argument value="DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER"/>
             </message_arguments>
         </filter>
+        <filter comment="Added segments to the DMR" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_SEGMENT"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change (1.3)" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
                 <message_argument value="DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added segments to the DMR" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE__SEGMENTS"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change" id="403767336">
@@ -721,6 +801,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
                 <message_argument value="ELEMENT__UUID"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added segments to the DMR" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added segments to the DMR" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Changes for 1.13" id="403767336">

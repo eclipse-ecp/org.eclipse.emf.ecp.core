@@ -128,45 +128,50 @@
             class="org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelwidthPackage">
       </package>
    </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated hierarchySelector -->
+   <extension
+         name=""
+         point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/emf/ecp/view/template/selector/hierarchy/model"
             class="org.eclipse.emf.ecp.view.template.selector.hierarchy.model.VTHierarchyPackage"
-            genModel="model/hierarchySelector.genmodel"/>
+            genModel="model/hierarchySelector.genmodel">
+      </package>
    </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated boolSelector -->
+   <extension
+         name=""
+         point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/emf/ecp/view/template/selector/bool/model"
             class="org.eclipse.emf.ecp.view.template.selector.bool.model.VTBoolPackage"
-            genModel="model/boolSelector.genmodel"/>
+            genModel="model/boolSelector.genmodel">
+      </package>
    </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated wrapStyle -->
+   <extension
+         name=""
+         point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/emf/ecp/view/template/style/wrap/model"
             class="org.eclipse.emf.ecp.view.template.style.wrap.model.VTWrapPackage"
-            genModel="model/wrapStyle.genmodel"/>
+            genModel="model/wrapStyle.genmodel">
+      </package>
    </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated referenceStyle -->
+   <extension
+         name=""
+         point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/emf/ecp/view/template/style/reference/model"
             class="org.eclipse.emf.ecp.view.template.style.reference.model.VTReferencePackage"
-            genModel="model/referenceStyle.genmodel"/>
+            genModel="model/referenceStyle.genmodel">
+      </package>
    </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated keyBinding -->
+   <extension
+         name=""
+         point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/emf/ecp/view/template/style/keybinding/model"
             class="org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingPackage"
-            genModel="model/keyBinding.genmodel"/>
+            genModel="model/keyBinding.genmodel">
+      </package>
    </extension>
 
 </plugin>

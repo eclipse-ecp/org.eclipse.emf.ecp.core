@@ -22,6 +22,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrFactory;
@@ -64,8 +65,8 @@ public class KeyAttributeDomainModelReferenceConverter_ITest {
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 50); //$NON-NLS-1$
 		emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mock(IEMFValueProperty.class));
+		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class), any(EClass.class)))
+			.thenReturn(mock(IEMFValueProperty.class));
 		bundleContext.registerService(EMFFormsDatabindingEMF.class, emfFormsDatabinding, dictionary);
 		serviceReference = bundleContext
 			.getServiceReference(DomainModelReferenceConverter.class);
@@ -92,7 +93,7 @@ public class KeyAttributeDomainModelReferenceConverter_ITest {
 		keyAttributeDMR.setValueDMR(valueDMR);
 
 		keyAttributeConverter.convertToValueProperty(keyAttributeDMR, mock(EObject.class));
-		verify(emfFormsDatabinding).getValueProperty(same(valueDMR), any(EObject.class));
+		verify(emfFormsDatabinding).getValueProperty(same(valueDMR), same(TestPackage.Literals.C));
 
 	}
 

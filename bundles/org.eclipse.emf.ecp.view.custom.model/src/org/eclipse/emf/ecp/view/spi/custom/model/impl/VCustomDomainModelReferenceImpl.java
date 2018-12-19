@@ -27,17 +27,15 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
 
@@ -49,35 +47,21 @@ import org.osgi.framework.Bundle;
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
- *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getChangeListener
- *        <em> Change Listener</em>}</li>
- *        <li>
- *        {@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getDomainModelReferences
- *        <em>Domain Model References</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getBundleName <em>
- *        Bundle Name</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getClassName <em>
- *        Class Name </em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#isControlChecked
- *        <em> Control Checked</em>}</li>
- *        </ul>
  *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getDomainModelReferences
+ *        <em>Domain Model References</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getBundleName
+ *        <em>Bundle Name</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getClassName
+ *        <em>Class Name</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#isControlChecked
+ *        <em>Control Checked</em>}</li>
+ *        </ul>
  *
  * @generated
  */
-public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCustomDomainModelReference {
-	/**
-	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @see #getChangeListener()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<DomainModelReferenceChangeListener> changeListener;
-
+public class VCustomDomainModelReferenceImpl extends VDomainModelReferenceImpl implements VCustomDomainModelReference {
 	/**
 	 * The cached value of the '{@link #getDomainModelReferences() <em>Domain Model References</em>}' containment
 	 * reference list.
@@ -175,23 +159,6 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	@Override
 	protected EClass eStaticClass() {
 		return VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Deprecated
-	@Override
-	public EList<DomainModelReferenceChangeListener> getChangeListener() {
-		if (changeListener == null) {
-			changeListener = new EDataTypeUniqueEList<DomainModelReferenceChangeListener>(
-				DomainModelReferenceChangeListener.class, this,
-				VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
-		}
-		return changeListener;
 	}
 
 	/**
@@ -314,8 +281,6 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			return getChangeListener();
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
 			return getDomainModelReferences();
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME:
@@ -338,10 +303,6 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			getChangeListener().clear();
-			getChangeListener().addAll((Collection<? extends DomainModelReferenceChangeListener>) newValue);
-			return;
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
 			getDomainModelReferences().clear();
 			getDomainModelReferences().addAll((Collection<? extends VDomainModelReference>) newValue);
@@ -368,9 +329,6 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			getChangeListener().clear();
-			return;
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
 			getDomainModelReferences().clear();
 			return;
@@ -396,8 +354,6 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			return changeListener != null && !changeListener.isEmpty();
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
 			return domainModelReferences != null && !domainModelReferences.isEmpty();
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME:
@@ -423,9 +379,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 		}
 
 		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (changeListener: "); //$NON-NLS-1$
-		result.append(changeListener);
-		result.append(", bundleName: "); //$NON-NLS-1$
+		result.append(" (bundleName: "); //$NON-NLS-1$
 		result.append(bundleName);
 		result.append(", className: "); //$NON-NLS-1$
 		result.append(className);

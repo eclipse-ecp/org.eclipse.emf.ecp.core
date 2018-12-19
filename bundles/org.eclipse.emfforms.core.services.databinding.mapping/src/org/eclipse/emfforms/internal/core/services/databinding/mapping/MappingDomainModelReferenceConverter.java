@@ -29,6 +29,8 @@ import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenc
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.internal.core.services.segments.mapping.EMFMappingValueProperty;
+import org.eclipse.emfforms.internal.core.services.segments.mapping.IllegalMapTypeException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
@@ -102,11 +104,6 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 		return emfFormsDatabinding;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
-	 */
 	@Override
 	public double isApplicable(VDomainModelReference domainModelReference) {
 		if (domainModelReference == null) {
@@ -118,14 +115,19 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 		return NOT_APPLICABLE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,EObject)
-	 */
 	@Override
 	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
+		return convertToValueProperty(domainModelReference, null, getEditingDomain(object));
+	}
+
+	/**
+	 * @param rootEClass in this implementation, this parameter is ignored and might be <code>null</code>
+	 */
+	@Override
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference,
+		EClass rootEClass, EditingDomain editingDomain) throws DatabindingFailedException {
+
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
@@ -145,7 +147,7 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 
 		final List<EReference> referencePath = mappingReference.getDomainModelEReferencePath();
 		final IEMFValueProperty mappingValueProperty = new EMFValuePropertyDecorator(
-			new EMFMappingValueProperty(getEditingDomain(object),
+			new EMFMappingValueProperty(editingDomain,
 				mappingReference.getMappedClass(),
 				mappingReference.getDomainModelEFeature()),
 			mappingReference.getDomainModelEFeature());
@@ -155,7 +157,7 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 			valueProperty = mappingValueProperty;
 		} else {
 			IEMFValueProperty emfValueProperty = EMFEditProperties
-				.value(getEditingDomain(object), referencePath.get(0));
+				.value(editingDomain, referencePath.get(0));
 			for (int i = 1; i < referencePath.size(); i++) {
 				emfValueProperty = emfValueProperty.value(referencePath.get(i));
 			}
@@ -163,16 +165,22 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 			valueProperty = emfValueProperty.value(mappingValueProperty);
 		}
 
+		// Get the EClass of the values of the map
+		final EStructuralFeature structuralFeature = (EReference) valueProperty.getValueType();
+		final EClass eClass = (EClass) structuralFeature.getEType();
+		final EReference valueReference = (EReference) eClass.getEStructuralFeature("value"); //$NON-NLS-1$
+		// If the values' EClass is a supertype of the mapped EClass use the mapped EClass, otherwise use the values's
+		// EClass
+		final EClass targetDmrRootEClass = valueReference.getEReferenceType()
+			.isSuperTypeOf(mappingReference.getMappedClass())
+				? mappingReference.getMappedClass()
+				: valueReference.getEReferenceType();
+
 		return valueProperty
 			.value(getEMFFormsDatabindingEMF().getValueProperty(mappingReference.getDomainModelReference(),
-				object));
+				targetDmrRootEClass, editingDomain));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,EObject)
-	 */
 	@Override
 	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
@@ -278,12 +286,6 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {

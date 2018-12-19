@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_4vVlUMGOEeiWp6K7A7CK8A">
+  <releases xmi:id="_4vVlUcGOEeiWp6K7A7CK8A" date="2018-09-26T15:20:19.458+0200" label="1190">
+    <changes xsi:type="history:CompositeChange" xmi:id="_4vVlUsGOEeiWp6K7A7CK8A">
+      <changes xsi:type="history:Create" xmi:id="_4vVlU8GOEeiWp6K7A7CK8A">
+        <element href="indexsegment.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_4vVlVMGOEeiWp6K7A7CK8A" featureName="name" dataValue="indexsegment">
+          <element href="indexsegment.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_4vVlVcGOEeiWp6K7A7CK8A" featureName="nsURI" dataValue="http://org/eclipse/emfforms/view/indexsegment/model/1190">
+          <element href="indexsegment.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_4vVlVsGOEeiWp6K7A7CK8A" featureName="nsPrefix" dataValue="org.eclipse.emfforms.view.indexsegment.model">
+          <element href="indexsegment.ecore#/"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_4vVlV8GOEeiWp6K7A7CK8A" referenceName="eClassifiers">
+        <target href="indexsegment.ecore#/"/>
+        <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment"/>
+        <changes xsi:type="history:Set" xmi:id="_4vVlWMGOEeiWp6K7A7CK8A" featureName="name" dataValue="IndexDomainModelReferenceSegment">
+          <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_4vVlWcGOEeiWp6K7A7CK8A" featureName="eSuperTypes">
+          <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_4vVlWsGOEeiWp6K7A7CK8A" referenceName="eStructuralFeatures">
+        <target href="indexsegment.ecore#//IndexDomainModelReferenceSegment"/>
+        <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment/index"/>
+        <changes xsi:type="history:Set" xmi:id="_4vVlW8GOEeiWp6K7A7CK8A" featureName="name" dataValue="index">
+          <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment/index"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_4vVlXMGOEeiWp6K7A7CK8A" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment/index"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_4vVlXcGOEeiWp6K7A7CK8A" featureName="defaultValueLiteral" dataValue="0">
+          <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment/index"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_4vVlXsGOEeiWp6K7A7CK8A" featureName="eType">
+          <element href="indexsegment.ecore#//IndexDomainModelReferenceSegment/index"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </changes>
+      </changes>
+    </changes>
+  </releases>
+  <releases xmi:id="_6kM1MMGOEeiWp6K7A7CK8A"/>
+</history:History>

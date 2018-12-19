@@ -16,8 +16,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -123,7 +125,7 @@ public class ViewEditorPart extends EditorPart implements
 			@Override
 			public void execute(IProgressMonitor monitor) {
 				try {
-					resource.save(null);
+					resource.save(getSaveOptions());
 				} catch (final IOException e) {
 					Activator.getDefault().getLog()
 						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
@@ -142,6 +144,17 @@ public class ViewEditorPart extends EditorPart implements
 				.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 
+	}
+
+	/**
+	 * Get the save options used when saving the view model.
+	 *
+	 * @return The save options
+	 */
+	protected Map<Object, Object> getSaveOptions() {
+		final Map<Object, Object> options = new HashMap<>();
+		options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
+		return options;
 	}
 
 	@Override
@@ -559,7 +572,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	private void saveChangedView(VView view) {
 		try {
-			view.eResource().save(null);
+			view.eResource().save(getSaveOptions());
 		} catch (final IOException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
@@ -607,15 +620,15 @@ public class ViewEditorPart extends EditorPart implements
 			MessageDialog
 				.openWarning(
 					parent.getShell(),
-					Messages.ViewEditorPart_LoadedPartyTitle,
-					Messages.ViewEditorPart_LoadedPartyDescription);
+					Messages.ViewEditorPart_LoadedPartlyTitle,
+					Messages.ViewEditorPart_LoadedPartlyDescription);
 		}
 
 		try {
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE
 				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService(),
 					new EMFDeleteServiceImpl());
-			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE);
+			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE); //$NON-NLS-1$
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, viewModelContext);
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(

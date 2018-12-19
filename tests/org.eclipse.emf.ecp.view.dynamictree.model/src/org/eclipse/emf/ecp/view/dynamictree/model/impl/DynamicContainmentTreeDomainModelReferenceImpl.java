@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -23,15 +22,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,34 +36,18 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getChangeListener
- * <em>Change Listener</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromRoot
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromRoot
  * <em>Path From Root</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromBase
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromBase
  * <em>Path From Base</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl implements
+public class DynamicContainmentTreeDomainModelReferenceImpl extends VDomainModelReferenceImpl implements
 	DynamicContainmentTreeDomainModelReference {
-	/**
-	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @see #getChangeListener()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<DomainModelReferenceChangeListener> changeListener;
-
 	/**
 	 * The cached value of the '{@link #getPathFromRoot() <em>Path From Root</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -113,24 +94,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Deprecated
-	@Override
-	public EList<DomainModelReferenceChangeListener> getChangeListener() {
-		if (changeListener == null) {
-			changeListener = new EDataTypeUniqueEList<DomainModelReferenceChangeListener>(
-				DomainModelReferenceChangeListener.class, this,
-				ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
-		}
-		return changeListener;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -277,8 +241,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			return getChangeListener();
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
 			return getPathFromRoot();
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
@@ -297,10 +259,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			getChangeListener().clear();
-			getChangeListener().addAll((Collection<? extends DomainModelReferenceChangeListener>) newValue);
-			return;
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
 			setPathFromRoot((VDomainModelReference) newValue);
 			return;
@@ -320,9 +278,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			getChangeListener().clear();
-			return;
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
 			setPathFromRoot((VDomainModelReference) null);
 			return;
@@ -342,33 +297,12 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
-			return changeListener != null && !changeListener.isEmpty();
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
 			return pathFromRoot != null;
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
 			return pathFromBase != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
-
-		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (changeListener: ");
-		result.append(changeListener);
-		result.append(')');
-		return result.toString();
 	}
 
 	/**

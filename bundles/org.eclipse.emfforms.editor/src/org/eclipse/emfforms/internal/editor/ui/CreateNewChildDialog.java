@@ -81,50 +81,29 @@ public class CreateNewChildDialog extends Dialog {
 		return selectionProvider;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.window.Window#setShellStyle(int)
-	 */
 	@Override
 	protected void setShellStyle(int newShellStyle) {
 		super.setShellStyle(SWT.TITLE);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#createButton(org.eclipse.swt.widgets.Composite, int, java.lang.String,
-	 * boolean)
-	 */
 	@Override
 	protected Button createButton(Composite parent, int id,
 		String label, boolean defaultButton) {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		final GridLayout layout = (GridLayout) parent.getLayout();
 		layout.marginHeight = 0;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-	 */
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(title);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control createDialogArea(Composite parentComposite) {
 		final ChildrenDescriptorCollector childrenDescriptorCollector = new ChildrenDescriptorCollector();
@@ -145,10 +124,10 @@ public class CreateNewChildDialog extends Dialog {
 				final StringBuilder builder = new StringBuilder(action
 					.getText());
 				if (action.getAccelerator() > 0) {
-					builder.append(" [");
+					builder.append(" ["); //$NON-NLS-1$
 					builder.append(Character.toUpperCase((char) action
 						.getAccelerator()));
-					builder.append("]");
+					builder.append("]"); //$NON-NLS-1$
 				}
 				return builder.toString();
 			}

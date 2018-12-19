@@ -87,6 +87,18 @@ public interface VViewFactory extends EFactory {
 	VDateTimeDisplayAttachment createDateTimeDisplayAttachment();
 
 	/**
+	 * Returns a new object of class '<em>Feature Domain Model Reference Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Feature Domain Model Reference Segment</em>'.
+	 * @generated
+	 */
+	VFeatureDomainModelReferenceSegment createFeatureDomainModelReferenceSegment();
+
+	/**
 	 * Returns a new object of class '<em>Feature Path Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

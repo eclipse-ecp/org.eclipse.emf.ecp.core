@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<view:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:view="http://org/eclipse/emf/ecp/view/model/1170" xmlns:table="http://org/eclipse/emf/ecp/view/table/model/150">
+<view:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:view="http://org/eclipse/emf/ecp/view/model/1180" xmlns:table="http://org/eclipse/emf/ecp/view/table/model/150">
   <ecorePaths>/org.eclipse.emf.ecore/model/Ecore.ecore</ecorePaths>
   <rootEClass href="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
   <children xsi:type="view:Control" name="Control name">

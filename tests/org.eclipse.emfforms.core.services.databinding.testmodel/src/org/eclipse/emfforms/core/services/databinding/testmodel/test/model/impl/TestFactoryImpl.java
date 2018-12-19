@@ -23,6 +23,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.DExtended;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
@@ -88,6 +90,10 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return (EObject) createEClassToAMap();
 		case TestPackage.DEXTENDED:
 			return createDExtended();
+		case TestPackage.F:
+			return createF();
+		case TestPackage.ECLASS_TO_EMAP:
+			return (EObject) createEClassToEMap();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -173,6 +179,29 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public DExtended createDExtended() {
 		final DExtendedImpl dExtended = new DExtendedImpl();
 		return dExtended;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public F createF() {
+		final FImpl f = new FImpl();
+		return f;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public Map.Entry<EClass, E> createEClassToEMap() {
+		final EClassToEMapImpl eClassToEMap = new EClassToEMapImpl();
+		return eClassToEMap;
 	}
 
 	/**

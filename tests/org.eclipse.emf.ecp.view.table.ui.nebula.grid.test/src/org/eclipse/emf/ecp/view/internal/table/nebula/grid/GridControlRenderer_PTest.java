@@ -66,6 +66,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBinding;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeyBindings;
 import org.eclipse.emf.ecp.view.template.style.keybinding.model.VTKeybindingFactory;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -202,11 +203,11 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 
 			when(getLabelProvider().getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 				testDescription);
-			when(getLabelProvider().getDescription(any(VDomainModelReference.class))).thenReturn(
+			when(getLabelProvider().getDescription(any(VDomainModelReference.class), any(EClass.class))).thenReturn(
 				testDescription);
 			when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 				testDisplayName);
-			when(getLabelProvider().getDisplayName(any(VDomainModelReference.class))).thenReturn(
+			when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EClass.class))).thenReturn(
 				testDisplayName);
 		} catch (final NoLabelFoundException ex) {
 			Assert.fail(ex.getMessage());
@@ -389,24 +390,25 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 	 * @throws DatabindingFailedException
 	 */
 	private void mockColumnFeature(final VFeaturePathDomainModelReference dmr) throws DatabindingFailedException {
-		when(getDatabindingService().getValueProperty(Matchers.argThat(new BaseMatcher<VDomainModelReference>() {
+		when(EMFFormsDatabindingEMF.class.cast(getDatabindingService())
+			.getValueProperty(Matchers.argThat(new BaseMatcher<VDomainModelReference>() {
 
-			@Override
-			public boolean matches(Object item) {
-				if (item == null) {
-					return false;
+				@Override
+				public boolean matches(Object item) {
+					if (item == null) {
+						return false;
+					}
+					final VFeaturePathDomainModelReference cast = VFeaturePathDomainModelReference.class.cast(item);
+					return cast.getDomainModelEFeature() == dmr.getDomainModelEFeature();
 				}
-				final VFeaturePathDomainModelReference cast = VFeaturePathDomainModelReference.class.cast(item);
-				return cast.getDomainModelEFeature() == dmr.getDomainModelEFeature();
-			}
 
-			@Override
-			public void describeTo(Description description) {
-			}
+				@Override
+				public void describeTo(Description description) {
+				}
 
-		}), any(EObject.class)))
-			.thenReturn(new EMFValuePropertyDecorator(
-				new EMFValueProperty(dmr.getDomainModelEFeature()), dmr.getDomainModelEFeature()));
+			}), any(EClass.class), any(EditingDomain.class)))
+				.thenReturn(new EMFValuePropertyDecorator(
+					new EMFValueProperty(dmr.getDomainModelEFeature()), dmr.getDomainModelEFeature()));
 	}
 
 	/**

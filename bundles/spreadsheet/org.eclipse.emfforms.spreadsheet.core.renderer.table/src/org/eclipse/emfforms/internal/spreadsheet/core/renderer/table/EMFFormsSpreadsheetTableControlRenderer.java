@@ -146,7 +146,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 				.getDomainModelReference();
 
 			for (int i = 0; i < getNumberOfExportElements(vElement, tableSetting); i++) {
-				final String prefixName = getPrefixName(tableSetting, tableDomainModelReference, i);
+				final String prefixName = getPrefixName(tableSetting, tableDomainModelReference,
+					viewModelContext.getDomainModel(), i);
 
 				final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
 					.createIndexDomainModelReference();
@@ -230,9 +231,9 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	}
 
 	private String getPrefixName(final Setting tableSetting, final VTableDomainModelReference tableDomainModelReference,
-		int index) throws NoLabelFoundException {
+		EObject domainObject, int index) throws NoLabelFoundException {
 		String prefixName = (String) emfformsLabelProvider.getDisplayName(
-			tableDomainModelReference.getDomainModelReference())
+			tableDomainModelReference.getDomainModelReference(), domainObject)
 			.getValue();
 		if (prefixName == null || prefixName.length() == 0) {
 			prefixName = tableSetting.getEStructuralFeature()

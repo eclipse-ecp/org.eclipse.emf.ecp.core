@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC <em>C</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getCList <em>CList</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getEList <em>EList</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getE <em>E</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB()
@@ -40,7 +42,7 @@ public interface B extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>C</em>' containment reference.
 	 * @see #setC(C)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB_C()
@@ -54,7 +56,7 @@ public interface B extends EObject {
 	 * <em>C</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>C</em>' containment reference.
 	 * @see #getC()
 	 * @generated
@@ -70,12 +72,58 @@ public interface B extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>CList</em>' reference list.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB_CList()
 	 * @model
 	 * @generated
 	 */
 	EList<C> getCList();
+
+	/**
+	 * Returns the value of the '<em><b>EList</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>EList</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>EList</em>' containment reference list.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB_EList()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<E> getEList();
+
+	/**
+	 * Returns the value of the '<em><b>E</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>E</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>E</em>' reference.
+	 * @see #setE(E)
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB_E()
+	 * @model
+	 * @generated
+	 */
+	E getE();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getE
+	 * <em>E</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>E</em>' reference.
+	 * @see #getE()
+	 * @generated
+	 */
+	void setE(E value);
 
 } // B

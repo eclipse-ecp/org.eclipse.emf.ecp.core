@@ -31,8 +31,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getX <em>X</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getYList <em>YList</em>}
- * </li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getYList
+ * <em>YList</em>}</li>
  * </ul>
  *
  * @generated
@@ -42,7 +42,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	 * The default value of the '{@link #getX() <em>X</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getX()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	 * The cached value of the '{@link #getX() <em>X</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getX()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	 * The cached value of the '{@link #getYList() <em>YList</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getYList()
 	 * @generated
 	 * @ordered
@@ -74,7 +74,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected DImpl() {
@@ -84,7 +84,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,7 +95,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -106,21 +106,22 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setX(String newX) {
-		String oldX = x;
+		final String oldX = x;
 		x = newX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.D__X, oldX, x));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -134,7 +135,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,7 +152,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -172,7 +173,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -191,7 +192,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -208,15 +209,16 @@ public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (x: "); //$NON-NLS-1$
 		result.append(x);
 		result.append(", yList: "); //$NON-NLS-1$

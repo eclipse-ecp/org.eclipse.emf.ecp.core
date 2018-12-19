@@ -260,6 +260,34 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 
 	/**
 	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment} instances.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected FeatureDomainModelReferenceSegmentItemProvider featureDomainModelReferenceSegmentItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
+		if (featureDomainModelReferenceSegmentItemProvider == null) {
+			featureDomainModelReferenceSegmentItemProvider = new FeatureDomainModelReferenceSegmentItemProvider(this);
+		}
+
+		return featureDomainModelReferenceSegmentItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -450,6 +478,9 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		}
 		if (dateTimeDisplayAttachmentItemProvider != null) {
 			dateTimeDisplayAttachmentItemProvider.dispose();
+		}
+		if (featureDomainModelReferenceSegmentItemProvider != null) {
+			featureDomainModelReferenceSegmentItemProvider.dispose();
 		}
 	}
 

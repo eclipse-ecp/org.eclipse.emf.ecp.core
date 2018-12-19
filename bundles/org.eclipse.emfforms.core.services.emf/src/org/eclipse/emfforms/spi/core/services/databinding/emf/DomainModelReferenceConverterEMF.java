@@ -11,11 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.core.services.databinding.emf;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 
@@ -29,22 +32,26 @@ import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceCo
  */
 public interface DomainModelReferenceConverterEMF extends DomainModelReferenceConverter {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException;
 
 	/**
-	 * {@inheritDoc}
+	 * Converts a {@link VDomainModelReference} to a {@link IValueProperty} which uses the given {@link EditingDomain}.
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
-	 *      org.eclipse.emf.ecore.EObject)
+	 * @param domainModelReference The {@link VDomainModelReference} that will be converted to a {@link IValueProperty}
+	 * @param rootEClass The root {@link EClass} of the given {@link VDomainModelReference}
+	 * @param editingDomain The {@link EditingDomain} used by the created {@link IValueProperty value property}. The
+	 *            EditingDomain might be <code>null</code> but in this case the value property will not support set
+	 *            functionality
+	 * @return The created {@link IValueProperty}, does not return <code>null</code>.
+	 * @throws DatabindingFailedException if no value property could be created due to an invalid
+	 *             {@link VDomainModelReference}.
+	 * @since 1.19
 	 */
+	IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
+		EditingDomain editingDomain) throws DatabindingFailedException;
+
 	@Override
 	IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException;

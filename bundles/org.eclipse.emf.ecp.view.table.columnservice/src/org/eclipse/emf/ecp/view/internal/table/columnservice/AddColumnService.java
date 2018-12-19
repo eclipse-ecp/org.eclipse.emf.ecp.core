@@ -27,6 +27,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
@@ -70,18 +71,31 @@ public class AddColumnService implements ViewModelService {
 		if (!VTableDomainModelReference.class.isInstance(tableControl.getDomainModelReference())) {
 			return;
 		}
-		if (VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
-			.getColumnDomainModelReferences().size() < 1) {
+		final VTableDomainModelReference tableDmr = VTableDomainModelReference.class
+			.cast(tableControl.getDomainModelReference());
+
+		boolean addColumns = false;
+		boolean segments = false;
+		if (tableDmr.getSegments().size() > 0) {
+			final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) tableDmr
+				.getSegments().get(tableDmr.getSegments().size() - 1);
+			addColumns = multiSegment.getChildDomainModelReferences().size() < 1;
+			segments = true;
+		} else {
+			addColumns = tableDmr.getColumnDomainModelReferences().size() < 1;
+		}
+
+		if (addColumns) {
 			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl
 				.getDomainModelReference();
 			final IValueProperty valueProperty;
 			try {
-				if (tableDMR.getDomainModelReference() != null) {
-					valueProperty = context.getService(EMFFormsDatabinding.class)
-						.getValueProperty(tableDMR.getDomainModelReference(), context.getDomainModel());
-				} else {
+				if (segments || tableDMR.getDomainModelReference() == null) {
 					valueProperty = context.getService(EMFFormsDatabinding.class)
 						.getValueProperty(tableDMR, context.getDomainModel());
+				} else {
+					valueProperty = context.getService(EMFFormsDatabinding.class)
+						.getValueProperty(tableDMR.getDomainModelReference(), context.getDomainModel());
 				}
 			} catch (final DatabindingFailedException ex) {
 				context.getService(ReportService.class).report(new DatabindingFailedReport(ex));

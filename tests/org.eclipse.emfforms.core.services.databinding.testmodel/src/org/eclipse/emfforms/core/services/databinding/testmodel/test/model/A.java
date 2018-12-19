@@ -11,8 +11,6 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>A</b></em>'.
@@ -29,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface A extends EObject {
+public interface A extends E {
 	/**
 	 * Returns the value of the '<em><b>B</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -38,7 +36,7 @@ public interface A extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>B</em>' containment reference.
 	 * @see #setB(B)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getA_B()
@@ -52,7 +50,7 @@ public interface A extends EObject {
 	 * <em>B</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>B</em>' containment reference.
 	 * @see #getB()
 	 * @generated

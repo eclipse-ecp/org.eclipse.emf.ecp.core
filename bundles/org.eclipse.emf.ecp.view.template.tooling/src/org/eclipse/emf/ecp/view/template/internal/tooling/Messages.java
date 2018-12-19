@@ -69,6 +69,7 @@ public final class Messages extends NLS {
 	public static String MigrationDialogHelper_TemplatesDescription;
 	public static String MigrationDialogHelper_TemplatesTitle;
 	public static String TemplateModelEditorPart_initError;
+	public static String TemplateModelEditorPart_invalidEditorInput;
 	public static String TemplateModelEditorPart_MigrationDescription;
 	public static String TemplateModelEditorPart_MigrationQuestion;
 	public static String TemplateModelEditorPart_TemplateMigrationDescription;

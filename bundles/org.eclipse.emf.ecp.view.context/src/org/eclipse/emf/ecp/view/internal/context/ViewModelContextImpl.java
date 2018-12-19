@@ -54,6 +54,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -292,7 +293,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private void expandAndInitDMR(EObject domainModelRoot, final EMFFormsDomainExpander domainExpander,
 		final EObject eObject) {
 		if (VDomainModelReference.class.isInstance(eObject)
-			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
+			&& !VDomainModelReference.class.isInstance(eObject.eContainer())
+			&& !VDomainModelReferenceSegment.class.isInstance(eObject.eContainer())) {
 			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
 			try {
 				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);

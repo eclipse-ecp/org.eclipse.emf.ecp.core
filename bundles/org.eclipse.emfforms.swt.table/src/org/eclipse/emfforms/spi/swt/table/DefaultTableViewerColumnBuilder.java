@@ -60,6 +60,7 @@ public class DefaultTableViewerColumnBuilder
 
 		column.setResizable(getConfig().isResizeable());
 		column.setMoveable(getConfig().isMoveable());
+		configureImage(column);
 		// column.setWidth(width);
 	}
 

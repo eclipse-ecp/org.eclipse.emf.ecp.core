@@ -301,9 +301,9 @@ public class EMFUndoRedoActionBarContributor
 		// Add our standard marker.
 		//
 		if ((style & ADDITIONS_LAST_STYLE) == 0) {
-			menuManager.add(new Separator("additions"));
+			menuManager.add(new Separator("additions")); //$NON-NLS-1$
 		}
-		menuManager.add(new Separator("edit"));
+		menuManager.add(new Separator("edit")); //$NON-NLS-1$
 
 		// Add the edit menu actions.
 		//
@@ -312,12 +312,12 @@ public class EMFUndoRedoActionBarContributor
 		menuManager.add(new Separator());
 
 		if ((style & ADDITIONS_LAST_STYLE) != 0) {
-			menuManager.add(new Separator("additions"));
+			menuManager.add(new Separator("additions")); //$NON-NLS-1$
 			menuManager.add(new Separator());
 		}
 		// Add our other standard marker.
 		//
-		menuManager.add(new Separator("additions-end"));
+		menuManager.add(new Separator("additions-end")); //$NON-NLS-1$
 
 		addGlobalActions(menuManager);
 	}
@@ -326,7 +326,7 @@ public class EMFUndoRedoActionBarContributor
 	 * This inserts global actions before the "additions-end" separator.
 	 */
 	protected void addGlobalActions(IMenuManager menuManager) {
-		final String key = (style & ADDITIONS_LAST_STYLE) == 0 ? "additions-end" : "additions";
+		final String key = (style & ADDITIONS_LAST_STYLE) == 0 ? "additions-end" : "additions"; //$NON-NLS-1$ //$NON-NLS-2$
 		if (validateAction != null) {
 			menuManager.insertBefore(key, new ActionContributionItem(validateAction));
 		}

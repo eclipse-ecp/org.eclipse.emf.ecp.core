@@ -48,6 +48,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -143,7 +144,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (VDomainModelReference.class.isInstance(notifier)
-				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())) {
+				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())
+				&& !VDomainModelReferenceSegment.class.isInstance(EObject.class.cast(notifier).eContainer())) {
 				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
 				if (domainModelReference == null) {
 					return;
@@ -323,11 +325,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private ComposedAdapterFactory adapterFactory;
 	private ReportService reportService;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
@@ -428,11 +425,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
-	 */
 	@Override
 	public void dispose() {
 		context.unregisterEMFFormsContextListener(this);
@@ -441,11 +433,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		adapterFactory.dispose();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
-	 */
 	@Override
 	public int getPriority() {
 		return 1;
@@ -475,11 +462,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		return controlMapper.getEObjectsWithSettings();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#validate(java.util.Collection)
-	 */
 	@Override
 	public void validate(Collection<EObject> eObjects) {
 		validationQueue.addAll(eObjects);
@@ -701,23 +683,11 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider)
-	 */
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider) {
 		addValidationProvider(validationProvider, true);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider,
-	 *      boolean)
-	 */
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.addValidator(validationProvider);
@@ -726,23 +696,11 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider)
-	 */
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider) {
 		removeValidationProvider(validationProvider, true);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider,
-	 *      boolean)
-	 */
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.removeValidator(validationProvider);
@@ -756,11 +714,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private EMFFormsSettingToControlMapper controlMapper;
 	private boolean initialized;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#registerValidationListener(org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener)
-	 */
 	@Override
 	public void registerValidationListener(ViewValidationListener listener) {
 		validationListeners.add(listener);
@@ -779,65 +732,34 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		return result;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#deregisterValidationListener(org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener)
-	 */
 	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {
 		validationListeners.remove(listener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService#childViewModelContextAdded(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void childViewModelContextAdded(ViewModelContext childContext) {
 		// do nothing
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
-	 */
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
 		validate(getAllEObjectsToValidate());
 		childContext.registerViewChangeListener(viewChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
-	 */
 	@Override
 	public void childContextDisposed(EMFFormsViewContext childContext) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
-	 */
 	@Override
 	public void contextInitialised() {
 		initialized = true;
 		validate(getAllEObjectsToValidate());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
-	 */
 	@Override
 	public void contextDispose() {
 		// do nothing

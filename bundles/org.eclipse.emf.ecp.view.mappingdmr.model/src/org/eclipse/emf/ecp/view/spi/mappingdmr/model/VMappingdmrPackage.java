@@ -84,6 +84,18 @@ public interface VMappingdmrPackage extends EPackage {
 	int MAPPING_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
 
 	/**
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPING_DOMAIN_MODEL_REFERENCE__SEGMENTS = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__SEGMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
@@ -108,7 +120,8 @@ public interface VMappingdmrPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>'
@@ -117,7 +130,8 @@ public interface VMappingdmrPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The number of structural features of the ' <em>Mapping Domain Model Reference</em>' class. <!-- begin-user-doc
@@ -127,7 +141,8 @@ public interface VMappingdmrPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAPPING_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+	int MAPPING_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * Returns the meta object for class '

@@ -1,55 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
-  <releases date="2014-09-12T12:30:30.165+0200" label="140">
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" element="compoundcontrol.ecore#/">
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#/" featureName="name"
-            dataValue="compoundcontrol"/>
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#/" featureName="nsURI"
-            dataValue="http://org/eclipse/emf/ecp/view/compoundcontrol/model"/>
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#/" featureName="nsPrefix"
-            dataValue="org.eclipse.emf.ecp.view.compoundcontrol.model"/>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_DHfwQO5jEei6A_UIzLZ1ew">
+  <releases xmi:id="_DHfwQe5jEei6A_UIzLZ1ew" date="2014-09-12T12:30:30.165+0200" label="140">
+    <changes xsi:type="history:CompositeChange" xmi:id="_DHfwQu5jEei6A_UIzLZ1ew">
+      <changes xsi:type="history:Create" xmi:id="_DHgXUO5jEei6A_UIzLZ1ew">
+        <element href="compoundcontrol.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_DHgXUe5jEei6A_UIzLZ1ew" featureName="name" dataValue="compoundcontrol">
+          <element href="compoundcontrol.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_DHgXUu5jEei6A_UIzLZ1ew" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/compoundcontrol/model">
+          <element href="compoundcontrol.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_DHgXU-5jEei6A_UIzLZ1ew" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.compoundcontrol.model">
+          <element href="compoundcontrol.ecore#/"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="compoundcontrol.ecore#/" referenceName="eClassifiers"
-          element="compoundcontrol.ecore#//CompoundControl">
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl"
-            featureName="name" dataValue="CompoundControl"/>
-        <changes xsi:type="history:Add" element="compoundcontrol.ecore#//CompoundControl"
-            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      <changes xsi:type="history:Create" xmi:id="_DHgXVO5jEei6A_UIzLZ1ew" referenceName="eClassifiers">
+        <target href="compoundcontrol.ecore#/"/>
+        <element href="compoundcontrol.ecore#//CompoundControl"/>
+        <changes xsi:type="history:Set" xmi:id="_DHgXVe5jEei6A_UIzLZ1ew" featureName="name" dataValue="CompoundControl">
+          <element href="compoundcontrol.ecore#//CompoundControl"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_DHgXVu5jEei6A_UIzLZ1ew" featureName="eSuperTypes">
+          <element href="compoundcontrol.ecore#//CompoundControl"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="compoundcontrol.ecore#//CompoundControl"
-          referenceName="eStructuralFeatures" element="compoundcontrol.ecore#//CompoundControl/controls">
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
-            featureName="name" dataValue="controls"/>
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+      <changes xsi:type="history:Create" xmi:id="_DHgXV-5jEei6A_UIzLZ1ew" referenceName="eStructuralFeatures">
+        <target href="compoundcontrol.ecore#//CompoundControl"/>
+        <element href="compoundcontrol.ecore#//CompoundControl/controls"/>
+        <changes xsi:type="history:Set" xmi:id="_DHgXWO5jEei6A_UIzLZ1ew" featureName="name" dataValue="controls">
+          <element href="compoundcontrol.ecore#//CompoundControl/controls"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_DHgXWe5jEei6A_UIzLZ1ew" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="compoundcontrol.ecore#//CompoundControl/controls"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_DHgXWu5jEei6A_UIzLZ1ew" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="compoundcontrol.ecore#//CompoundControl/controls"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_DHgXW-5jEei6A_UIzLZ1ew" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="compoundcontrol.ecore#//CompoundControl/controls"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_DHgXXO5jEei6A_UIzLZ1ew" featureName="eType">
+          <element href="compoundcontrol.ecore#//CompoundControl/controls"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+        </changes>
       </changes>
     </changes>
-  </releases>
-  <releases>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Remove" element="compoundcontrol.ecore#//CompoundControl"
-          featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
-      <changes xsi:type="history:Add" element="compoundcontrol.ecore#//CompoundControl"
-          featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
-      <operation name="specializeSuperType">
-        <parameters name="eClass">
-          <referenceValue element="compoundcontrol.ecore#//CompoundControl"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_DHgXXu5jEei6A_UIzLZ1ew">
+      <changes xsi:type="history:Remove" xmi:id="_DHgXX-5jEei6A_UIzLZ1ew" featureName="eSuperTypes">
+        <element href="compoundcontrol.ecore#//CompoundControl"/>
+        <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Add" xmi:id="_DHgXYO5jEei6A_UIzLZ1ew" featureName="eSuperTypes">
+        <element href="compoundcontrol.ecore#//CompoundControl"/>
+        <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+      </changes>
+      <operation xmi:id="_DHgXYe5jEei6A_UIzLZ1ew" name="specializeSuperType">
+        <parameters xmi:id="_DHgXYu5jEei6A_UIzLZ1ew" name="eClass">
+          <referenceValue xmi:id="_DHgXY-5jEei6A_UIzLZ1ew">
+            <element href="compoundcontrol.ecore#//CompoundControl"/>
+          </referenceValue>
         </parameters>
-        <parameters name="toReplace">
-          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+        <parameters xmi:id="_DHgXZO5jEei6A_UIzLZ1ew" name="toReplace">
+          <referenceValue xmi:id="_DHgXZe5jEei6A_UIzLZ1ew">
+            <element href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+          </referenceValue>
         </parameters>
-        <parameters name="replaceBy">
-          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+        <parameters xmi:id="_DHgXZu5jEei6A_UIzLZ1ew" name="replaceBy">
+          <referenceValue xmi:id="_DHgXZ-5jEei6A_UIzLZ1ew">
+            <element href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+          </referenceValue>
         </parameters>
       </operation>
     </changes>
   </releases>
+  <releases xmi:id="_DHgXXe5jEei6A_UIzLZ1ew"/>
 </history:History>

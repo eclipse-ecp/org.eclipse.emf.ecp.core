@@ -16,7 +16,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -34,12 +33,12 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  *
  * @generated
  */
-public class AImpl extends MinimalEObjectImpl.Container implements A {
+public class AImpl extends EImpl implements A {
 	/**
 	 * The cached value of the '{@link #getB() <em>B</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getB()
 	 * @generated
 	 * @ordered
@@ -49,7 +48,7 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected AImpl() {
@@ -59,7 +58,7 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,7 +69,7 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -81,19 +80,20 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetB(B newB, NotificationChain msgs) {
-		B oldB = b;
+		final B oldB = b;
 		b = newB;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.A__B, oldB,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.A__B, oldB,
 				newB);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -101,30 +101,34 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setB(B newB) {
 		if (newB != b) {
 			NotificationChain msgs = null;
-			if (b != null)
+			if (b != null) {
 				msgs = ((InternalEObject) b).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.A__B, null,
 					msgs);
-			if (newB != null)
+			}
+			if (newB != null) {
 				msgs = ((InternalEObject) newB).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.A__B, null,
 					msgs);
+			}
 			msgs = basicSetB(newB, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
-		} else if (eNotificationRequired())
+			}
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.A__B, newB, newB));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -139,7 +143,7 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -154,7 +158,7 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -170,7 +174,7 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -186,7 +190,7 @@ public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

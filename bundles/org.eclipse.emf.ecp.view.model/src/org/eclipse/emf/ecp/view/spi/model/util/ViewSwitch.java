@@ -24,7 +24,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -245,6 +247,25 @@ public class ViewSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
+		case VViewPackage.DOMAIN_MODEL_REFERENCE_SEGMENT: {
+			final VDomainModelReferenceSegment domainModelReferenceSegment = (VDomainModelReferenceSegment) theEObject;
+			T result = caseDomainModelReferenceSegment(domainModelReferenceSegment);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT: {
+			final VFeatureDomainModelReferenceSegment featureDomainModelReferenceSegment = (VFeatureDomainModelReferenceSegment) theEObject;
+			T result = caseFeatureDomainModelReferenceSegment(featureDomainModelReferenceSegment);
+			if (result == null) {
+				result = caseDomainModelReferenceSegment(featureDomainModelReferenceSegment);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -436,16 +457,53 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
 	public T caseHasTooltip(VHasTooltip object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
+	 * Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 1.19
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
+	 *         Segment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
 		return null;
 	}
 

@@ -13,6 +13,7 @@ package org.eclipse.emfforms.spi.editor.helpers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,12 +52,26 @@ public final class ResourceSetHelpers {
 	 *
 	 * @param resourceSet the resource set
 	 * @return true, if successful
+	 * @deprecated see {@link ResourceSetHelpers#save(ResourceSet, Map)}
 	 */
+	@Deprecated
 	public static boolean save(ResourceSet resourceSet) {
+		return save(resourceSet, Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
+	}
+
+	/**
+	 * Save all changes in a ResourceSet.
+	 *
+	 * @param resourceSet the resource set
+	 * @param saveOptions the save options
+	 * @return true, if successful
+	 * @since 1.19
+	 */
+	public static boolean save(ResourceSet resourceSet, Map<Object, Object> saveOptions) {
 		try {
 			for (final Resource resource : resourceSet.getResources()) {
 				if (!resource.getURI().isPlatformPlugin()) {
-					resource.save(null);
+					resource.save(saveOptions);
 				}
 			}
 			return true;
@@ -73,12 +88,35 @@ public final class ResourceSetHelpers {
 	 * @param resourceURI the resource uri (= File to load)
 	 * @param commandStack the command stack
 	 * @return the resource set
+	 * @deprecated see {@link ResourceSetHelpers#loadResourceSetWithProxies(URI, BasicCommandStack, Map)}
 	 */
+	@Deprecated
 	public static ResourceSet loadResourceSetWithProxies(URI resourceURI,
 		BasicCommandStack commandStack) {
+		try {
+			loadResourceSetWithProxies(resourceURI, commandStack, null);
+		} catch (final IOException ex) {
+			Activator.getDefault().getReportService().report(
+				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
+		}
+		return null;
+	}
+
+	/**
+	 * Load resource set with proxies.
+	 *
+	 * @param resourceURI the resource uri (= File to load)
+	 * @param commandStack the command stack
+	 * @param options the resource load options
+	 * @return the resource set
+	 * @throws IOException if an error occurred while loading the resource
+	 * @since 1.19
+	 */
+	public static ResourceSet loadResourceSetWithProxies(URI resourceURI, BasicCommandStack commandStack,
+		Map<Object, Object> options) throws IOException {
 		// Create a ResourceSet and add the requested Resource
 		final ResourceSet resourceSet = createResourceSet(commandStack);
-		return loadResourceWithProxies(resourceURI, resourceSet);
+		return loadResourceWithProxies(resourceURI, resourceSet, options);
 	}
 
 	/**
@@ -88,9 +126,34 @@ public final class ResourceSetHelpers {
 	 * @param resourceSet the resource set
 	 * @return the resource set
 	 * @since 1.10
+	 * @deprecated see {@link ResourceSetHelpers#loadResourceWithProxies(URI, ResourceSet, Map)}
 	 */
+	@Deprecated
 	public static ResourceSet loadResourceWithProxies(URI resourceURI, final ResourceSet resourceSet) {
-		if (addResourceToSet(resourceSet, resourceURI)) {
+		try {
+			if (addResourceToSet(resourceSet, resourceURI, null)) {
+				return resourceSet;
+			}
+		} catch (final IOException ex) {
+			Activator.getDefault().getReportService().report(
+				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
+		}
+		return null;
+	}
+
+	/**
+	 * Load resource set with proxies.
+	 *
+	 * @param resourceURI the resource uri (= File to load)
+	 * @param resourceSet the resource set
+	 * @return the resource set
+	 * @param loadOptions the resource load options
+	 * @throws IOException if an error occurred while loading the resource
+	 * @since 1.19
+	 */
+	public static ResourceSet loadResourceWithProxies(URI resourceURI, final ResourceSet resourceSet,
+		final Map<Object, Object> loadOptions) throws IOException {
+		if (addResourceToSet(resourceSet, resourceURI, loadOptions)) {
 			return resourceSet;
 		}
 		return null;
@@ -134,15 +197,22 @@ public final class ResourceSetHelpers {
 	 * @param resourceSet the resource set
 	 * @param resourceURI the resource uri
 	 * @return true, if successful
+	 * @deprecated see {@link ResourceSetHelpers#addResourceToSet(ResourceSet, URI, Map)}
 	 */
+	@Deprecated
 	public static boolean addResourceToSet(ResourceSet resourceSet,
 		URI resourceURI) {
 
 		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
 		loadOptions.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
 			Boolean.TRUE);
-
-		return addResourceToSet(resourceSet, resourceURI, loadOptions);
+		try {
+			return addResourceToSet(resourceSet, resourceURI, loadOptions);
+		} catch (final IOException ex) {
+			Activator.getDefault().getReportService().report(
+				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
+		}
+		return false;
 	}
 
 	/**
@@ -152,27 +222,22 @@ public final class ResourceSetHelpers {
 	 * @param resourceURI the resource uri
 	 * @param loadOptions the resource load options
 	 * @return true, if successful
-	 * @since 1.10
+	 * @throws IOException if an error occurred while loading the resource
+	 * @since 1.18
 	 */
 	public static boolean addResourceToSet(ResourceSet resourceSet, URI resourceURI,
-		final Map<Object, Object> loadOptions) {
-		try {
-			resourceSet.createResource(resourceURI).load(loadOptions);
+		final Map<Object, Object> loadOptions) throws IOException {
+		resourceSet.createResource(resourceURI).load(loadOptions);
 
-			// resolve all proxies
-			int rsSize = resourceSet.getResources().size();
+		// resolve all proxies
+		int rsSize = resourceSet.getResources().size();
 
+		EcoreUtil.resolveAll(resourceSet);
+		while (rsSize != resourceSet.getResources().size()) {
 			EcoreUtil.resolveAll(resourceSet);
-			while (rsSize != resourceSet.getResources().size()) {
-				EcoreUtil.resolveAll(resourceSet);
-				rsSize = resourceSet.getResources().size();
-			}
-			return true;
-		} catch (final IOException ex) {
-			Activator.getDefault().getReportService().report(
-				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
+			rsSize = resourceSet.getResources().size();
 		}
-		return false;
+		return true;
 	}
 
 	/**

@@ -18,7 +18,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -71,7 +73,9 @@ public class EMFFormsDatabindingImpl_ITest {
 	public void testServiceUsageValue() throws DatabindingFailedException {
 		final DomainModelReferenceConverterEMF converter = mock(DomainModelReferenceConverterEMF.class);
 		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
-		when(converter.isApplicable(reference)).thenReturn(0d);
+		final BasicEList<VDomainModelReferenceSegment> segments = new BasicEList<VDomainModelReferenceSegment>();
+		when(reference.getSegments()).thenReturn(segments);
+		when(converter.isApplicable(reference)).thenReturn(Double.MAX_VALUE);
 		final ServiceRegistration<DomainModelReferenceConverterEMF> converterService = bundleContext.registerService(
 			DomainModelReferenceConverterEMF.class, converter, null);
 		service.getValueProperty(reference, mock(EObject.class));
@@ -84,7 +88,9 @@ public class EMFFormsDatabindingImpl_ITest {
 	public void testServiceUsageList() throws DatabindingFailedException {
 		final DomainModelReferenceConverterEMF converter = mock(DomainModelReferenceConverterEMF.class);
 		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
-		when(converter.isApplicable(reference)).thenReturn(0d);
+		final BasicEList<VDomainModelReferenceSegment> segments = new BasicEList<VDomainModelReferenceSegment>();
+		when(reference.getSegments()).thenReturn(segments);
+		when(converter.isApplicable(reference)).thenReturn(Double.MAX_VALUE);
 		final ServiceRegistration<DomainModelReferenceConverterEMF> converterService = bundleContext.registerService(
 			DomainModelReferenceConverterEMF.class, converter, null);
 		service.getListProperty(reference, mock(EObject.class));

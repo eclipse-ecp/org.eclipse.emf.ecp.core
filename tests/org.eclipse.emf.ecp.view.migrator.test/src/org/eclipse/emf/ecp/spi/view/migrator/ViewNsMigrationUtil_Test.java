@@ -51,7 +51,7 @@ public class ViewNsMigrationUtil_Test {
 	@Test
 	public void testMigrateViewEcoreNsUri() throws IOException {
 		final Registry instance = EPackage.Registry.INSTANCE;
-		instance.put("http://org/eclipse/emf/ecp/view/model/1170", mock(EPackage.class));
+		instance.put("http://org/eclipse/emf/ecp/view/model/1180", mock(EPackage.class));
 
 		final File modelFile = new File("testdata/migrate_140.template");
 		final File expectedResultFile = new File("testdata/migrate_expected.template");
@@ -66,7 +66,7 @@ public class ViewNsMigrationUtil_Test {
 	@Test
 	public void testMigrateViewEcoreNsUri_noMigrationNecessary() throws IOException {
 		final Registry instance = EPackage.Registry.INSTANCE;
-		instance.put("http://org/eclipse/emf/ecp/view/model/1170", mock(EPackage.class));
+		instance.put("http://org/eclipse/emf/ecp/view/model/1180", mock(EPackage.class));
 
 		final File modelFile = new File("testdata/migrate_current.template");
 		ViewNsMigrationUtil.migrateViewEcoreNsUri(modelFile, outputFile);
@@ -88,7 +88,7 @@ public class ViewNsMigrationUtil_Test {
 	@Test
 	public void checkMigration_migrationNecessary() throws IOException {
 		final Registry instance = EPackage.Registry.INSTANCE;
-		instance.put("http://org/eclipse/emf/ecp/view/model/1170", mock(EPackage.class));
+		instance.put("http://org/eclipse/emf/ecp/view/model/1180", mock(EPackage.class));
 
 		final File modelFile = new File("testdata/migrate_140.template");
 		final boolean checkMigration = ViewNsMigrationUtil.checkMigration(modelFile);
@@ -98,7 +98,7 @@ public class ViewNsMigrationUtil_Test {
 	@Test
 	public void checkMigration_noMigrationNecessary() throws IOException {
 		final Registry instance = EPackage.Registry.INSTANCE;
-		instance.put("http://org/eclipse/emf/ecp/view/model/1170", mock(EPackage.class));
+		instance.put("http://org/eclipse/emf/ecp/view/model/1180", mock(EPackage.class));
 
 		final File modelFile = new File("testdata/migrate_current.template");
 		final boolean checkMigration = ViewNsMigrationUtil.checkMigration(modelFile);
@@ -115,7 +115,7 @@ public class ViewNsMigrationUtil_Test {
 	@Test
 	public void checkMigration_noModelViewEcore() throws IOException {
 		final Registry instance = EPackage.Registry.INSTANCE;
-		instance.put("http://org/eclipse/emf/ecp/view/model/1170", mock(EPackage.class));
+		instance.put("http://org/eclipse/emf/ecp/view/model/1180", mock(EPackage.class));
 
 		final File modelFile = new File("testdata/no_view_uri.template");
 		final boolean checkMigration = ViewNsMigrationUtil.checkMigration(modelFile);

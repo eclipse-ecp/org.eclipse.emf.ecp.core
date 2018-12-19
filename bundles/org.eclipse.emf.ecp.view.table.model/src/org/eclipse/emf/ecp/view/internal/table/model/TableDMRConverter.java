@@ -13,11 +13,14 @@ package org.eclipse.emf.ecp.view.internal.table.model;
 
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
@@ -76,11 +79,6 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 		return emfFormsDatabinding;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
-	 */
 	@Override
 	public double isApplicable(VDomainModelReference domainModelReference) {
 		if (VTableDomainModelReference.class.isInstance(domainModelReference)
@@ -90,15 +88,22 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 		return NOT_APPLICABLE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,
-	 *      EObject)
-	 */
 	@Override
 	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
+		if (object == null) {
+			return convertToValueProperty(domainModelReference, null, null);
+		}
+		return convertToValueProperty(domainModelReference, object.eClass(), getEditingDomain(object));
+	}
+
+	private EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
+	}
+
+	@Override
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
+		EditingDomain editingDomain) throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
@@ -113,16 +118,14 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 			throw new DatabindingFailedException(
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
+		if (rootEClass == null) {
+			return getEMFFormsDatabindingEMF().getValueProperty(tableDomainModelReference.getDomainModelReference(),
+				(EObject) null);
+		}
 		return getEMFFormsDatabindingEMF().getValueProperty(tableDomainModelReference.getDomainModelReference(),
-			object);
+			rootEClass, editingDomain);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,
-	 *      EObject)
-	 */
 	@Override
 	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
@@ -143,12 +146,6 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 		return getEMFFormsDatabindingEMF().getListProperty(tableDomainModelReference.getDomainModelReference(), object);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {

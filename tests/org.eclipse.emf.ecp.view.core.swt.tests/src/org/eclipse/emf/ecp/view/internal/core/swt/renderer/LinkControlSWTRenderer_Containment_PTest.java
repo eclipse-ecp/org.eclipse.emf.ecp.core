@@ -102,7 +102,8 @@ public class LinkControlSWTRenderer_Containment_PTest extends AbstractControl_PT
 
 		final TestObservableValue labelObservable = mock(TestObservableValue.class);
 		when(labelObservable.getValue()).thenReturn("Merchandise");
-		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class))).thenReturn(labelObservable);
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(labelObservable);
 	}
 
 	@After

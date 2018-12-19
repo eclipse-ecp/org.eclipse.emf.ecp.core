@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.18.0-SNAPSHOT</version>
+		<version>1.19.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.18.0-SNAPSHOT</version>
+	<version>1.19.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -309,6 +309,21 @@
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.richtext</module>
 		
+		<!-- DMR Segment Services -->
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.featurepath</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.segments.multi</module>
+
+		<!-- Segment Models -->
+		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model.edit</module>
+		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model.edit</module>
+		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
+
 		<!-- Annotation attachement -->
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
@@ -375,7 +390,7 @@
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
-				<version>2.7.3</version>
+				<version>${xtend-version}</version>
 				<executions>
 					<execution>
 						<goals>

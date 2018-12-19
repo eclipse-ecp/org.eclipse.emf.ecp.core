@@ -16,9 +16,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -36,6 +35,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMap.ValueListIterator;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -122,8 +123,7 @@ public final class ViewModelHelper {
 		}
 
 		// Save the contents of the resource to the file system.
-		final Map<Object, Object> options = new HashMap<Object, Object>();
-		resource.save(options);
+		resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 
 		return view;
 	}
@@ -194,7 +194,6 @@ public final class ViewModelHelper {
 	 *
 	 * @since 1.17
 	 */
-	@SuppressWarnings("unchecked")
 	public static List<String> getEcorePaths(Resource resource) {
 		if (resource == null || resource.getContents().isEmpty()) {
 			return Collections.emptyList();
@@ -205,20 +204,32 @@ public final class ViewModelHelper {
 		}
 		if (AnyType.class.isInstance(eObject)) {
 			/* view model has older ns uri */
+			// up to 1.16.0
 			final FeatureMap anyAttribute = AnyType.class.cast(eObject).getAnyAttribute();
 			for (int i = 0; i < anyAttribute.size(); i++) {
 				final EStructuralFeature feature = anyAttribute.getEStructuralFeature(i);
-
-				// up to 1.16.0
 				if ("ecorePath".equals(feature.getName())) { //$NON-NLS-1$
 					return Arrays.asList(new String[] { (String) anyAttribute.getValue(i) });
 				}
-				// from 1.17.0
-				if ("ecorePaths".equals(feature.getName())) { //$NON-NLS-1$
-					return (List<String>) anyAttribute.getValue(i);
-				}
-
 			}
+
+			// from 1.17.0
+			final FeatureMap any = AnyType.class.cast(eObject).getAny();
+			final List<String> ecorePaths = new LinkedList<String>();
+			for (int i = 0; i < any.size(); i++) {
+				final EStructuralFeature feature = any.getEStructuralFeature(i);
+				if ("ecorePaths".equals(feature.getName())) { //$NON-NLS-1$
+					final AnyType listType = (AnyType) any.getValue(i);
+					final FeatureMap mixed = listType.getMixed();
+
+					// Use iterator to avoid IndexOutOfBounce exceptions for empty ecore paths
+					final ValueListIterator<Object> iterator = mixed.valueListIterator();
+					if (iterator.hasNext()) {
+						ecorePaths.add((String) iterator.next());
+					}
+				}
+			}
+			return ecorePaths;
 		}
 		return Collections.emptyList();
 	}

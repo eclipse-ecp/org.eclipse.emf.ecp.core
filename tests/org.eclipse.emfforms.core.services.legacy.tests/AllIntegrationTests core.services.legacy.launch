@@ -10,7 +10,7 @@
 <booleanAttribute key="clearConfig" value="true"/>
 <booleanAttribute key="clearws" value="true"/>
 <booleanAttribute key="clearwslog" value="false"/>
-<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/pde-junit"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/AllIntegrationTests core.services.legacy"/>
 <booleanAttribute key="default" value="false"/>
 <booleanAttribute key="includeOptional" value="false"/>
 <stringAttribute key="location" value="${workspace_loc}/../junit-workspace"/>
@@ -32,12 +32,12 @@
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.emf.cdo.explorer.ui.product"/>
 <booleanAttribute key="run_in_ui_thread" value="true"/>
-<stringAttribute key="selected_target_plugins" value="javax.xml@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.databinding.observable@default:default,org.eclipse.core.databinding.property@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.core.runtime@default:true,org.eclipse.emf.common@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.emf.edit@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.ds@1:true,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.region@default:false,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.util@default:default,org.eclipse.osgi.compatibility.state@default:false,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true,org.hamcrest.core@default:default,org.junit@default:default,org.mockito.mockito-all@default:default"/>
+<stringAttribute key="selected_target_plugins" value="org.apache.felix.scr@1:true,org.eclipse.core.contenttype@default:default,org.eclipse.core.databinding.observable*1.5.0.v20150422-0725@default:default,org.eclipse.core.databinding.observable*1.6.300.v20180827-2028@default:default,org.eclipse.core.databinding.property*1.5.0.v20150422-0725@default:default,org.eclipse.core.databinding.property*1.6.300.v20180827-2028@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.runtime@default:true,org.eclipse.emf.common@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.emf.edit@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.ds@1:true,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.region@default:false,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.util@default:default,org.eclipse.osgi.compatibility.state@default:false,org.eclipse.osgi.services@default:default,org.eclipse.osgi.util@default:default,org.eclipse.osgi@-1:true,org.hamcrest.core*1.3.0.v201303031735@default:default,org.hamcrest.core*1.3.0.v20180420-1519@default:default,org.junit@default:default,org.mockito.mockito-core-hamcrest-modified@default:default,org.objenesis@default:default"/>
 <stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.ecp.common@default:default,org.eclipse.emf.ecp.view.context@default:default,org.eclipse.emf.ecp.view.model@default:default,org.eclipse.emfforms.common@default:default,org.eclipse.emfforms.core.services.legacy.tests@default:false,org.eclipse.emfforms.core.services.legacy@default:default,org.eclipse.emfforms.core.services@default:default"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfig" value="true"/>
-<booleanAttribute key="useDefaultConfigArea" value="false"/>
+<booleanAttribute key="useDefaultConfigArea" value="true"/>
 <booleanAttribute key="useProduct" value="false"/>
 </launchConfiguration>

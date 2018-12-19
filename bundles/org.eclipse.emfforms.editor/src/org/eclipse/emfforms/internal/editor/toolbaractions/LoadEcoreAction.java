@@ -38,6 +38,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.action.LoadResourceAction.LoadResourceDialog;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.emfforms.spi.editor.messages.Messages;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -72,7 +73,7 @@ public class LoadEcoreAction extends Action {
 	 * @param currentObject the currently loaded object in the Editor (should be ResourceSet)
 	 */
 	public LoadEcoreAction(Object currentObject) {
-		this(currentObject, "Load Ecore");
+		this(currentObject, Messages.LoadEcoreAction_ActionName);
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class LoadEcoreAction extends Action {
 	public LoadEcoreAction(Object currentObject, String actionName) {
 		super(actionName);
 		setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(this.getClass())
-			.getResource("icons/chart_organisation_add.png")));
+			.getResource("icons/chart_organisation_add.png"))); //$NON-NLS-1$
 		this.currentObject = currentObject;
 	}
 
@@ -143,19 +144,19 @@ public class LoadEcoreAction extends Action {
 							for (final EPackage ePackage : getAllPackages(resource)) {
 								if (nsURIs.contains(ePackage.getNsURI())) {
 									uris.append(resource.getURI());
-									uris.append("  ");
+									uris.append("  "); //$NON-NLS-1$
 									break;
 								}
 							}
 						}
-						uriField.setText((uriField.getText() + "  " + uris.toString()).trim());
+						uriField.setText((uriField.getText() + "  " + uris.toString()).trim()); //$NON-NLS-1$
 					} else {
 						final StringBuffer uris = new StringBuffer();
 						for (int i = 0, length = result.length; i < length; i++) {
 							uris.append(result[i]);
-							uris.append("  ");
+							uris.append("  "); //$NON-NLS-1$
 						}
-						uriField.setText((uriField.getText() + "  " + uris.toString()).trim());
+						uriField.setText((uriField.getText() + "  " + uris.toString()).trim()); //$NON-NLS-1$
 					}
 				}
 			}
@@ -199,12 +200,12 @@ public class LoadEcoreAction extends Action {
 						for (final EPackage ePackage : getAllPackages(resource)) {
 							if (nsURIs.contains(ePackage.getNsURI())) {
 								uris.append(resource.getURI());
-								uris.append("  ");
+								uris.append("  "); //$NON-NLS-1$
 								break;
 							}
 						}
 					}
-					uriField.setText((uriField.getText() + "  " + uris.toString()).trim());
+					uriField.setText((uriField.getText() + "  " + uris.toString()).trim()); //$NON-NLS-1$
 				}
 			}
 		}
@@ -255,7 +256,7 @@ public class LoadEcoreAction extends Action {
 			final Composite buttonComposite = (Composite) composite.getChildren()[0];
 
 			final Button browseRegisteredPackagesButton = new Button(buttonComposite, SWT.PUSH);
-			browseRegisteredPackagesButton.setText("Browser Registered Packages");
+			browseRegisteredPackagesButton.setText(Messages.LoadEcoreAction_BrowseRegPackagesButton);
 			prepareBrowseRegisteredPackagesButton(browseRegisteredPackagesButton);
 			{
 				final FormData data = new FormData();
@@ -265,7 +266,7 @@ public class LoadEcoreAction extends Action {
 			}
 
 			final Button browseTargetPlatformPackagesButton = new Button(buttonComposite, SWT.PUSH);
-			browseTargetPlatformPackagesButton.setText("Browse Target Platform Packages");
+			browseTargetPlatformPackagesButton.setText(Messages.LoadEcoreAction_BrowseTargetPackagesButton);
 			prepareBrowseTargetPlatformPackagesButton(browseTargetPlatformPackagesButton);
 			{
 				final FormData data = new FormData();
@@ -298,14 +299,14 @@ public class LoadEcoreAction extends Action {
 					@Override
 					public Image getImage(Object element) {
 						return ExtendedImageRegistry.getInstance().getImage(
-							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage"));
+							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage")); //$NON-NLS-1$
 					}
 				});
 
 			setMultipleSelection(true);
-			setMessage("Select Registered Package URI");
-			setFilter("*");
-			setTitle("PackageSelection");
+			setMessage(Messages.LoadEcoreAction_TargetPlatformDialogDescription);
+			setFilter("*"); //$NON-NLS-1$
+			setTitle(Messages.LoadEcoreAction_TargetPlatformDialogTitle);
 		}
 
 		protected void updateElements() {
@@ -340,14 +341,14 @@ public class LoadEcoreAction extends Action {
 					@Override
 					public Image getImage(Object element) {
 						return ExtendedImageRegistry.getInstance().getImage(
-							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage"));
+							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage")); //$NON-NLS-1$
 					}
 				});
 
 			setMultipleSelection(true);
-			setMessage("Select Registered Package URI");
-			setFilter("*");
-			setTitle("Package Selection");
+			setMessage(Messages.LoadEcoreAction_RegisteredPackageDialogDescription);
+			setFilter("*"); //$NON-NLS-1$
+			setTitle(Messages.LoadEcoreAction_RegisteredPackageDialogTitle);
 		}
 
 		public boolean isDevelopmentTimeVersion() {
@@ -385,9 +386,9 @@ public class LoadEcoreAction extends Action {
 					updateElements();
 				}
 			});
-			developmentTimeVersionButton.setText("Development Time Version");
+			developmentTimeVersionButton.setText(Messages.LoadEcoreAction_DevelopmentTimeVersionButton);
 			final Button runtimeTimeVersionButton = new Button(buttonGroup, SWT.RADIO);
-			runtimeTimeVersionButton.setText("Runtime Version");
+			runtimeTimeVersionButton.setText(Messages.LoadEcoreAction_RuntimeTimeVersionButton);
 			developmentTimeVersionButton.setSelection(true);
 
 			updateElements();

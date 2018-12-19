@@ -74,6 +74,7 @@ public class DefaultFilter implements ECPFilterProvider {
 	private void addViewModels(Set<String> packages) {
 		packages.add("http://org/eclipse/emf/ecp/view/model/170"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/model/1170"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/model/1180"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/custom/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/group/model"); //$NON-NLS-1$
@@ -124,6 +125,11 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emf/emfforms/view/controlgrid/model"); //$NON-NLS-1$
 
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/labelwidth/model"); //$NON-NLS-1$
+
+		// segments
+		packages.add("http://org/eclipse/emfforms/view/multisegment/model/1190"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emfforms/view/mappingsegment/model/1190"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emfforms/view/indexsegment/model/1190"); //$NON-NLS-1$
 	}
 
 	private void addQ7Models1(Set<String> packages) {

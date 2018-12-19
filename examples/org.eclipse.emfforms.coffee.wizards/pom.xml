@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-examples-parent</artifactId>
-		<version>1.18.0-SNAPSHOT</version>
+		<version>1.19.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.examples/</relativePath>
 	</parent>
 
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emfforms.coffee.wizards</artifactId>
-	<version>1.18.0-SNAPSHOT</version>
+	<version>1.19.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
 	<build>
@@ -112,6 +112,10 @@
 					<replacements>
 						<replacement>
 							<token>\n\t+&lt;buildCommand&gt;\s*&lt;name&gt;net.sf.eclipsecs.core.CheckstyleBuilder&lt;/name&gt;\s*&lt;arguments&gt;\s*&lt;/arguments&gt;\s*&lt;/buildCommand&gt;</token>
+							<value />
+						</replacement>
+						<replacement>
+							<token>\n\t+&lt;nature&gt;net.sf.eclipsecs.core.CheckstyleNature&lt;/nature&gt;</token>
 							<value />
 						</replacement>
 					</replacements>

@@ -39,7 +39,7 @@ public interface D extends EObject {
 	 * If the meaning of the '<em>X</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>X</em>' attribute.
 	 * @see #setX(String)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getD_X()
@@ -53,7 +53,7 @@ public interface D extends EObject {
 	 * <em>X</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>X</em>' attribute.
 	 * @see #getX()
 	 * @generated
@@ -69,7 +69,7 @@ public interface D extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>YList</em>' attribute list.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getD_YList()
 	 * @model

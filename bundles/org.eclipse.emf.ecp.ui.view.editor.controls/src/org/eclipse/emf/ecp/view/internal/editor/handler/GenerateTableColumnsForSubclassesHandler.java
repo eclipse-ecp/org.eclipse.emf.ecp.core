@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
+import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -97,9 +98,10 @@ public class GenerateTableColumnsForSubclassesHandler extends MasterDetailAction
 		}
 
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) domainModelReference;
+		final EClass rootEClass = Helper.getRootEClass(tableControl);
 		IValueProperty valueProperty;
 		try {
-			valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR, null);
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return;

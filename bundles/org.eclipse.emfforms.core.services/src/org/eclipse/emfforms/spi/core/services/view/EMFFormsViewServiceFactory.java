@@ -37,8 +37,13 @@ public interface EMFFormsViewServiceFactory<T> {
 	EMFFormsViewServiceScope getScope();
 
 	/**
-	 * The priority of the service. A service with a higher priority is more likely to be used if more than one service
-	 * of the same type is registered.
+	 * The priority of the service. The usage of this service is twofold:
+	 * <ol>
+	 * <li>A service with a higher priority is more likely to be used if more than one service
+	 * of the same type is registered.</li>
+	 * <li>A service with lower priority is instantiated and thereby executed earlier than other services of all
+	 * types with higher priorities</li>
+	 * </ol>
 	 *
 	 * @return The priority of this service
 	 */

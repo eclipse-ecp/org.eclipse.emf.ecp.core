@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManage
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -50,7 +50,7 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 
 	private ServiceReference<ReportService> reportServiceReference;
-	private ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference;
+	private ServiceReference<EMFFormsDatabindingEMF> emfFormsDatabindingServiceReference;
 
 	/**
 	 * The constructor.
@@ -231,14 +231,14 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the {@link EMFFormsDatabinding} service.
+	 * Returns the {@link EMFFormsDatabindingEMF} service.
 	 *
-	 * @return The {@link EMFFormsDatabinding}
+	 * @return The {@link EMFFormsDatabindingEMF}
 	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
+	public EMFFormsDatabindingEMF getEMFFormsDatabinding() {
 		if (emfFormsDatabindingServiceReference == null) {
 			emfFormsDatabindingServiceReference = plugin.getBundle().getBundleContext()
-				.getServiceReference(EMFFormsDatabinding.class);
+				.getServiceReference(EMFFormsDatabindingEMF.class);
 		}
 		return plugin.getBundle().getBundleContext().getService(emfFormsDatabindingServiceReference);
 	}

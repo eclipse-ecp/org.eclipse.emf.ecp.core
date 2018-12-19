@@ -22,12 +22,14 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
@@ -64,8 +66,9 @@ public class IndexDomainModelReferenceConverter_ITest {
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 50); //$NON-NLS-1$
 		emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mock(IEMFValueProperty.class));
+		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class), any(EClass.class),
+			any(EditingDomain.class))).thenReturn(
+				mock(IEMFValueProperty.class));
 		bundleContext.registerService(EMFFormsDatabindingEMF.class, emfFormsDatabinding, dictionary);
 		serviceReference = bundleContext
 			.getServiceReference(DomainModelReferenceConverter.class);
@@ -89,7 +92,8 @@ public class IndexDomainModelReferenceConverter_ITest {
 		indexReference.setTargetDMR(targetReference);
 
 		indexConverter.convertToValueProperty(indexReference, mock(EObject.class));
-		verify(emfFormsDatabinding).getValueProperty(same(targetReference), any(EObject.class));
+		verify(emfFormsDatabinding).getValueProperty(same(targetReference), same(TestPackage.Literals.C),
+			any(EditingDomain.class));
 
 	}
 }

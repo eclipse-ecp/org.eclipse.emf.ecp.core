@@ -76,6 +76,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.League;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -779,6 +780,40 @@ public class MultiReferenceRenderer_PTest {
 		assertThat(createButton.getToolTipText(), is("Create and link new Player")); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(rendered, 2, Button.class);
 		assertThat(deleteButton.getToolTipText(), is("Delete")); //$NON-NLS-1$
+	}
+
+	public void compare() {
+		// final MultiReferenceSWTRenderer multi = new MultiReferenceSWTRenderer(mock(VControl.class),
+		// mock(ViewModelContext.class), mock(ReportService.class), mock(EMFFormsDatabinding.class),
+		// mock(EMFFormsLabelProvider.class), mock(VTViewTemplateProvider.class), mock(ImageRegistryService.class));
+
+		// Label: Player A
+		final Player pA = BowlingFactory.eINSTANCE.createPlayer();
+		pA.setName("A"); //$NON-NLS-1$
+
+		// Label: Player C
+		final Player pC = BowlingFactory.eINSTANCE.createPlayer();
+		pA.setName("C"); //$NON-NLS-1$
+
+		// Label: Player B
+		final Player pB = BowlingFactory.eINSTANCE.createPlayer();
+		pA.setName("B"); //$NON-NLS-1$
+
+		assertEquals(0, renderer.compare(0, pA, pB));
+		assertEquals(0, renderer.compare(0, pA, pC));
+		assertEquals(0, renderer.compare(0, pB, pC));
+
+		// direction UP
+		assertEquals(0, renderer.compare(1, pA, pA));
+		assertEquals(-1, renderer.compare(1, pA, pB));
+		assertEquals(-1, renderer.compare(1, pA, pC));
+		assertEquals(-1, renderer.compare(1, pB, pC));
+
+		// direction DOWN
+		assertEquals(0, renderer.compare(2, pA, pA));
+		assertEquals(1, renderer.compare(2, pA, pB));
+		assertEquals(1, renderer.compare(2, pA, pC));
+		assertEquals(1, renderer.compare(2, pB, pC));
 	}
 
 	/**

@@ -12,12 +12,15 @@
 package org.eclipse.emf.ecp.internal.view.table.ui.swt.persistedstate;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -25,12 +28,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.spi.view.table.ui.swt.persistedstate.PersistTableStateService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
@@ -42,6 +47,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * Implementation of the {@link PersistTableStateService}.
@@ -99,14 +105,16 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 			if (!VTableControl.class.isInstance(persistedTable)) {
 				continue;
 			}
+
 			final VTableDomainModelReference realTableDMR = VTableDomainModelReference.class
 				.cast(realTable.getDomainModelReference());
+
 			final Map<VDomainModelReference, VWidthConfiguration> persistedDMRIDToConfig = getDMRToConfig(
 				VTableControl.class.cast(persistedTable));
 			for (final Entry<VDomainModelReference, VWidthConfiguration> entry : persistedDMRIDToConfig.entrySet()) {
 				/* find matching real column dmr */
 				VDomainModelReference realMatchingDMR = null;
-				for (final VDomainModelReference realDMR : realTableDMR.getColumnDomainModelReferences()) {
+				for (final VDomainModelReference realDMR : getColumnDomainModelReferences(realTableDMR)) {
 					if (EcoreUtil.equals(entry.getKey(), realDMR)) {
 						realMatchingDMR = realDMR;
 						break;
@@ -127,6 +135,19 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 			}
 		}
 
+	}
+
+	private static EList<VDomainModelReference> getColumnDomainModelReferences(VTableDomainModelReference tableDmr) {
+		if (tableDmr.getSegments().size() > 0) {
+			final VDomainModelReferenceSegment lastSegment = tableDmr.getSegments()
+				.get(tableDmr.getSegments().size() - 1);
+			if (!VMultiDomainModelReferenceSegment.class.isInstance(lastSegment)) {
+				return new BasicEList<VDomainModelReference>();
+			}
+			return VMultiDomainModelReferenceSegment.class.cast(lastSegment)
+				.getChildDomainModelReferences();
+		}
+		return tableDmr.getColumnDomainModelReferences();
 	}
 
 	private static void fillWidthConfig(VWidthConfiguration toFill, VWidthConfiguration lookup) {
@@ -189,7 +210,7 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 			}
 		}
 		try {
-			resource.save(null);
+			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 		} catch (final IOException ex) {
 			reportService.report(new AbstractReport(ex));
 		}

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Lucas Koehler - initial API and implementation
  */
@@ -36,7 +36,7 @@ public interface DExtended extends D {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>A</em>' reference.
 	 * @see #setA(A)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getDExtended_A()
@@ -50,7 +50,7 @@ public interface DExtended extends D {
 	 * <em>A</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>A</em>' reference.
 	 * @see #getA()
 	 * @generated

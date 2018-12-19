@@ -83,8 +83,8 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -182,7 +182,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	private Label validationIcon;
-	private IBaseLabelProvider labelProvider;
+	private ILabelProvider labelProvider;
 	private AdapterFactory adapterFactory;
 	private TableViewer tableViewer;
 	private final EMFDataBindingContext viewModelDBC;
@@ -469,11 +469,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
-	 * Creates a new {@link IBaseLabelProvider} for the table viewer.
+	 * Creates a new {@link ILabelProvider} for the table viewer.
 	 *
-	 * @return the newly created {@link IBaseLabelProvider}.
+	 * @return the newly created {@link ILabelProvider}.
 	 */
-	protected IBaseLabelProvider createLabelProvider() {
+	protected ILabelProvider createLabelProvider() {
 		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		labelProvider.setFireLabelUpdateNotifications(true);
 		return labelProvider;
@@ -856,7 +856,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		// only enable column sorting if move is disabled
 		if (isMoveDisabled) {
 			column.getColumn().addSelectionListener(
-				getSelectionAdapter(tableViewer, isMoveDisabled ? comparator : null, column.getColumn(), 0));
+				getSelectionAdapter(tableViewer, isMoveDisabled ? comparator : null, column.getColumn()));
 		}
 
 		tableViewer.setLabelProvider(labelProvider);
@@ -882,12 +882,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer,
-		final ECPTableViewerComparator comparator, final TableColumn column,
-		final int index) {
+		final ECPTableViewerComparator comparator, final TableColumn column) {
 		final SelectionAdapter selectionAdapter = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				comparator.setColumn(index);
+				comparator.toggleDirection();
 				final int dir = comparator.getDirection();
 				tableViewer.getTable().setSortDirection(dir);
 				tableViewer.getTable().setSortColumn(column);
@@ -1024,20 +1023,24 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
-	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
-	 * none, up and down.
+	 * The {@link ViewerComparator} for the multi reference renderer's table which allows 3 states for sort order:
+	 * none, up and down. This comparator does not use column specific values but only the objects' labels because the
+	 * multi reference renderer always only has one column that shows the label.
 	 *
 	 * @author Eugen Neufeld
 	 *
 	 */
 	private class ECPTableViewerComparator extends ViewerComparator {
-		private int propertyIndex;
 		private static final int NONE = 0;
 		private int direction = NONE;
 
 		ECPTableViewerComparator() {
-			propertyIndex = 0;
 			direction = NONE;
+		}
+
+		/** Toggles through the sorting directions: NONE -&gt; UP -&gt; DOWN -&gt; NONE. */
+		public void toggleDirection() {
+			direction = (direction + 1) % 3;
 		}
 
 		public int getDirection() {
@@ -1054,51 +1057,12 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		}
 
-		public void setColumn(int column) {
-			if (column == propertyIndex) {
-				// Same column as last sort; toggle the direction
-				direction = (direction + 1) % 3;
-			} else {
-				// New column; do an ascending sort
-				propertyIndex = column;
-				direction = 1;
-			}
-		}
-
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
-			if (direction == 0) {
-				return 0;
-			}
-			int rc = 0;
-			final EObject object1 = (EObject) e1;
-			final EObject object2 = (EObject) e2;
-			final EStructuralFeature feat1 = object1.eClass().getEAllStructuralFeatures().get(propertyIndex);
-			final EStructuralFeature feat2 = object2.eClass().getEAllStructuralFeatures().get(propertyIndex);
-
-			final Object value1 = object1.eGet(feat1);
-			final Object value2 = object2.eGet(feat2);
-
-			if (value1 == null) {
-				rc = 1;
-			} else if (value2 == null) {
-				rc = -1;
-			} else {
-				rc = value1.toString().compareTo(value2.toString());
-			}
-			// If descending order, flip the direction
-			if (direction == 2) {
-				rc = -rc;
-			}
-			return rc;
+			return MultiReferenceSWTRenderer.this.compare(direction, e1, e2);
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
-	 */
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		// TODO rebinding of text and tooltip needed? If yes, complete!
@@ -1145,5 +1109,41 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 					.getMessage(), null));
 			}
 		});
+	}
+
+	/**
+	 * <p>
+	 * Sorts two objects based on their labels and the given sorting direction.
+	 * </p>
+	 * <p>
+	 * Override this method to provide a custom sorting algorithm for the objects shown in this control's table.
+	 * </p>
+	 *
+	 * @param direction The sorting direction: 0 == NONE, 1 == UP, 2 == DOWN
+	 * @param object1 The first object of the comparison
+	 * @param object2 The second object of the comparison
+	 * @return 0 if both objects are equal, -1 if object1 will appear higher in the table, 1 if object2 will appear
+	 *         higher in the table
+	 */
+	protected int compare(int direction, Object object1, Object object2) {
+		if (direction == 0) {
+			return 0;
+		}
+		int rc = 0;
+
+		final String label1 = labelProvider.getText(object1);
+		final String label2 = labelProvider.getText(object2);
+		if (label1 == null) {
+			rc = 1;
+		} else if (label2 == null) {
+			rc = -1;
+		} else {
+			rc = label1.toString().compareTo(label2.toString());
+		}
+		// If descending order, flip the direction
+		if (direction == 2) {
+			rc = -rc;
+		}
+		return rc;
 	}
 }

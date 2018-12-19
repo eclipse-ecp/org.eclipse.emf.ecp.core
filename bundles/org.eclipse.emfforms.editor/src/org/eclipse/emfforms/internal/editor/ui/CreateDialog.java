@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
+import org.eclipse.emfforms.spi.editor.messages.Messages;
 import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -62,23 +63,15 @@ public class CreateDialog extends Dialog {
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
-	 */
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Create new " + newObject.eClass().getName());
+		newShell.setText(Messages.CreateDialog_CreateDialogTitle + newObject.eClass().getName());
 		newShell.setMinimumSize(300, 150);
 		newShell.setBackground(new Color(newShell.getDisplay(), 255, 255, 255));
 		newShell.setBackgroundMode(SWT.INHERIT_FORCE);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 
@@ -120,10 +113,6 @@ public class CreateDialog extends Dialog {
 		return parent;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#okPressed()
-	 */
 	@Override
 	protected void okPressed() {
 		getParentShell().forceFocus();
@@ -137,21 +126,22 @@ public class CreateDialog extends Dialog {
 			final StringBuilder sb = new StringBuilder();
 
 			sb.append(errorCount);
-			sb.append(" ");
-			sb.append(errorCount == 1 ? "error" : "errors");
-			sb.append(" occured while analyzing your inputs. The following errors were found:\r\n");
+			sb.append(" "); //$NON-NLS-1$
+			sb.append(errorCount == 1 ? Messages.CreateDialog_ErrorSingular : Messages.CreateDialog_ErrorPlural);
+			sb.append(Messages.CreateDialog_ErrorOccuredMessage);
 
 			int messageCount = 1;
 			for (final Diagnostic d : result.getChildren()) {
-				sb.append("\r\n");
+				sb.append("\r\n"); //$NON-NLS-1$
 				sb.append(messageCount++);
-				sb.append(". ");
+				sb.append(". "); //$NON-NLS-1$
 				sb.append(d.getMessage());
 			}
 
 			final String errorMessage = sb.toString();
 
-			MessageDialog.open(MessageDialog.ERROR, getParentShell(), "Error", errorMessage, SWT.NONE);
+			MessageDialog.open(MessageDialog.ERROR, getParentShell(), Messages.CreateDialog_ErrorDialogTitle,
+				errorMessage, SWT.NONE);
 		}
 	}
 

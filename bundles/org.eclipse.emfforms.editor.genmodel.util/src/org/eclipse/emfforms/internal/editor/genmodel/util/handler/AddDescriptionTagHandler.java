@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.editor.genmodel.util.handler;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collections;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emfforms.editor.genmodel.util.GenModelUtil;
 import org.eclipse.emfforms.internal.editor.genmodel.util.Activator;
 import org.eclipse.jface.viewers.ISelection;
@@ -71,7 +73,7 @@ public class AddDescriptionTagHandler extends AbstractHandler {
 			GenModelUtil.addDescriptionTags(genModel, DESCRIPTION_PLACEHOLDER);
 			for (final Resource r : resourceSet.getResources()) {
 				try {
-					r.save(null);
+					r.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 				} catch (final IOException ex) {
 					Activator.log(MessageFormat.format("Could not save resource with URI {0}.", resource.getURI()), ex); //$NON-NLS-1$
 				}

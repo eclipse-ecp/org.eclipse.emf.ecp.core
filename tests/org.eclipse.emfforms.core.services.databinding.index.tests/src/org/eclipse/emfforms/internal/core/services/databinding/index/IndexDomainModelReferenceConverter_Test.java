@@ -12,6 +12,9 @@
 package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +25,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -29,12 +33,14 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
@@ -42,6 +48,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.internal.core.services.segments.index.IllegalListTypeException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
@@ -67,13 +74,27 @@ public class IndexDomainModelReferenceConverter_Test {
 	}
 
 	private static EObject createValidEObject() {
+		final Resource resource = createVirtualResource();
+		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		if (resource != null) {
+			resource.getContents().add(domainObject);
+		}
+		return domainObject;
+	}
+
+	private static Resource createVirtualResource() {
 		final ResourceSet rs = new ResourceSetImpl();
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
-		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		return resource;
+	}
+
+	private static EObject createValidEObject(EClass eClass) {
+		final Resource resource = createVirtualResource();
+		final EObject domainObject = EcoreUtil.create(eClass);
 		if (resource != null) {
 			resource.getContents().add(domainObject);
 		}
@@ -133,10 +154,13 @@ public class IndexDomainModelReferenceConverter_Test {
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getC_D());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getD_X());
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(targetDMR, validEObject)).thenReturn(targetValueProperty);
+		when(
+			emfFormsDatabinding.getValueProperty(same(targetDMR), eq(TestPackage.Literals.C), any(EditingDomain.class)))
+				.thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR, validEObject);
+		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR,
+			createValidEObject(TestPackage.Literals.A));
 
 		final String expected = "A.b<B> => B.cList<C> index 0 => C.d<D> => D.x<EString>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
@@ -165,10 +189,13 @@ public class IndexDomainModelReferenceConverter_Test {
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getC_D());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getD_X());
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(targetDMR, validEObject)).thenReturn(targetValueProperty);
+		when(
+			emfFormsDatabinding.getValueProperty(same(targetDMR), eq(TestPackage.Literals.C), any(EditingDomain.class)))
+				.thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR, validEObject);
+		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR,
+			createValidEObject(TestPackage.Literals.A));
 
 		final String expected = "A.b<B> => B.cList<C> index 1 => C.d<D> => D.x<EString>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
@@ -196,10 +223,13 @@ public class IndexDomainModelReferenceConverter_Test {
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getC_D());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getD_X());
 		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
-		when(emfFormsDatabinding.getValueProperty(targetDMR, validEObject)).thenReturn(targetValueProperty);
+		when(
+			emfFormsDatabinding.getValueProperty(same(targetDMR), eq(TestPackage.Literals.C), any(EditingDomain.class)))
+				.thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR, validEObject);
+		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR,
+			createValidEObject(TestPackage.Literals.B));
 
 		final String expected = "B.cList<C> index 1 => C.d<D> => D.x<EString>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());

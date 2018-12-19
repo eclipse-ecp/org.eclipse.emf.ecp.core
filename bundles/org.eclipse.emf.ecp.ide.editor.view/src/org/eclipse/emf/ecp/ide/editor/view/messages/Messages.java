@@ -27,8 +27,8 @@ public class Messages extends NLS {
 	public static String ViewEditorPart_invalidVView_noRootEClass;
 	public static String ViewEditorPart_invalidVView_rootEClassNotInPackage;
 	public static String ViewEditorPart_invalidVView_rootEClassPackageNotResolved;
-	public static String ViewEditorPart_LoadedPartyDescription;
-	public static String ViewEditorPart_LoadedPartyTitle;
+	public static String ViewEditorPart_LoadedPartlyDescription;
+	public static String ViewEditorPart_LoadedPartlyTitle;
 	public static String ViewEditorPart_MigrationErrorText1;
 	public static String ViewEditorPart_MigrationErrorText2;
 	public static String ViewEditorPart_MigrationErrorTitle;

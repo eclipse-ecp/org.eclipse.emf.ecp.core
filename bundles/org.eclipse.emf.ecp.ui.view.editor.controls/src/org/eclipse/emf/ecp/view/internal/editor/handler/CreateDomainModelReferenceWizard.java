@@ -119,7 +119,8 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	public void addPages() {
 
 		customizeDMRPage = new CustomizeDomainModelReferencePage(
-			"New Domain Model Reference", "Select an EStructuralFeature", "Select a domain model EStructuralFeature for the domain model reference.", getDummyControl()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			"New Domain Model Reference", "Select an EStructuralFeature", //$NON-NLS-1$ //$NON-NLS-2$
+			"Select a domain model EStructuralFeature for the domain model reference.", getDummyControl()); //$NON-NLS-1$
 
 		if (domainModelReference == null) {
 			firstPage = new WizardPageExtension(getPageName());
@@ -197,8 +198,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 		if (structuralFeature.isMany()) {
 			command = AddCommand.create(editingDomain, eObject,
 				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
-		}
-		else {
+		} else {
 			command = SetCommand.create(editingDomain, eObject,
 				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
 		}
@@ -241,7 +241,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 		}
 		try {
 			Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(dmrToCheck, null);
+				.getValueProperty(dmrToCheck, eclass);
 		} catch (final DatabindingFailedException ex) {
 			// Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return false;
@@ -376,7 +376,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			}
 			try {
 				Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(dmrToCheck, null);
+					.getValueProperty(dmrToCheck, eclass);
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return false;

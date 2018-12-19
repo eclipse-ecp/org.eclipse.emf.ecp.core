@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_m2NXENB1Eei_rO8h0CDrfA">
+  <releases xmi:id="_m2NXEdB1Eei_rO8h0CDrfA" date="2018-10-15T14:27:20.315+0200" label="1190">
+    <changes xsi:type="history:CompositeChange" xmi:id="_m2NXEtB1Eei_rO8h0CDrfA">
+      <changes xsi:type="history:Create" xmi:id="_m2NXE9B1Eei_rO8h0CDrfA">
+        <element href="mappingsegment.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_m2NXFNB1Eei_rO8h0CDrfA" featureName="name" dataValue="mappingsegment">
+          <element href="mappingsegment.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_m2NXFdB1Eei_rO8h0CDrfA" featureName="nsURI" dataValue="http://org/eclipse/emfforms/view/mappingsegment/model/1190">
+          <element href="mappingsegment.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_m2NXFtB1Eei_rO8h0CDrfA" featureName="nsPrefix" dataValue="org.eclipse.emfforms.view.mappingsegment.model">
+          <element href="mappingsegment.ecore#/"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_m2NXF9B1Eei_rO8h0CDrfA" referenceName="eClassifiers">
+        <target href="mappingsegment.ecore#/"/>
+        <element href="mappingsegment.ecore#//MappingDomainModelReferenceSegment"/>
+        <changes xsi:type="history:Set" xmi:id="_m2NXGNB1Eei_rO8h0CDrfA" featureName="name" dataValue="MappingDomainModelReferenceSegment">
+          <element href="mappingsegment.ecore#//MappingDomainModelReferenceSegment"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_m2NXGdB1Eei_rO8h0CDrfA" featureName="eSuperTypes">
+          <element href="mappingsegment.ecore#//MappingDomainModelReferenceSegment"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_m2NXGtB1Eei_rO8h0CDrfA" referenceName="eStructuralFeatures">
+        <target href="mappingsegment.ecore#//MappingDomainModelReferenceSegment"/>
+        <element href="mappingsegment.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+        <changes xsi:type="history:Set" xmi:id="_m2NXG9B1Eei_rO8h0CDrfA" featureName="name" dataValue="mappedClass">
+          <element href="mappingsegment.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_m2NXHNB1Eei_rO8h0CDrfA" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="mappingsegment.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_m2NXHdB1Eei_rO8h0CDrfA" featureName="eType">
+          <element href="mappingsegment.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+        </changes>
+      </changes>
+    </changes>
+  </releases>
+  <releases xmi:id="_qTGUsNB1Eei_rO8h0CDrfA"/>
+</history:History>

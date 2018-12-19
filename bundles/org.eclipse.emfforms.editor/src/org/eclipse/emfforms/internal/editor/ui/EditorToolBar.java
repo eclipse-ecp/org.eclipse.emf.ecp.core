@@ -61,7 +61,7 @@ public class EditorToolBar extends Composite {
 		// Create the Icon on the Left
 		final Label titleImage = new Label(this, SWT.NONE);
 		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(Activator.getDefault().getBundle()
-			.getResource("icons/view.png"));
+			.getResource("icons/view.png")); //$NON-NLS-1$
 		titleImage.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData(100)));
 
 		final FormData titleImageData = new FormData();
@@ -103,11 +103,6 @@ public class EditorToolBar extends Composite {
 		this.layout();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.swt.widgets.Widget#dispose()
-	 */
 	@Override
 	public void dispose() {
 		background.dispose();

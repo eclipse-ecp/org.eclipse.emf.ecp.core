@@ -22,6 +22,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emfforms/spi/core/services/databinding/DomainModelReferenceConverter.java" type="org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter">
+        <filter comment="SPI change for DMR segments" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter"/>
+                <message_argument value="convertToValueProperty(VDomainModelReference, EClass, EditingDomain)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/core/services/label/EMFFormsLabelProvider.java" type="org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider">
+        <filter comment="Needed for DMR Segments" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider"/>
+                <message_argument value="getDescription(VDomainModelReference, EClass)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Needed for DMR Segments" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider"/>
+                <message_argument value="getDisplayName(VDomainModelReference, EClass)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emfforms/spi/core/services/view/EMFFormsViewContext.java" type="org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext">
         <filter comment="SPI Change for 1.9.0" id="403804204">
             <message_arguments>

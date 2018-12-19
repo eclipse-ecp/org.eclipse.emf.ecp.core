@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrFactory;
@@ -212,8 +211,6 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 
 		// Obtain other dependent packages
 		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -223,18 +220,14 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 		mappingDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(mappingDomainModelReferenceEClass, VMappingDomainModelReference.class,
-			"MappingDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getMappingDomainModelReference_MappedClass(),
-			theEcorePackage.getEClass(),
-			null,
-			"mappedClass", null, 0, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getMappingDomainModelReference_DomainModelReference(),
-			theViewPackage.getDomainModelReference(),
-			null,
-			"domainModelReference", null, 1, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(mappingDomainModelReferenceEClass, VMappingDomainModelReference.class, "MappingDomainModelReference", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getMappingDomainModelReference_MappedClass(), ecorePackage.getEClass(), null, "mappedClass", //$NON-NLS-1$
+			null, 0, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingDomainModelReference_DomainModelReference(), theViewPackage.getDomainModelReference(),
+			null, "domainModelReference", null, 1, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

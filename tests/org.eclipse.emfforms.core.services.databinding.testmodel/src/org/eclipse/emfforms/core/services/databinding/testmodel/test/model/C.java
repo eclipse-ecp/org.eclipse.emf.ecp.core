@@ -25,11 +25,13 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getD <em>D</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToString
- * <em>EClass To String</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToA <em>EClass To A</em>}
- * </li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToString <em>EClass To
+ * String</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToA <em>EClass To
+ * A</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getA <em>A</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToE <em>EClass To
+ * E</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC()
@@ -45,7 +47,7 @@ public interface C extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>D</em>' containment reference.
 	 * @see #setD(D)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_D()
@@ -59,7 +61,7 @@ public interface C extends EObject {
 	 * <em>D</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>D</em>' containment reference.
 	 * @see #getD()
 	 * @generated
@@ -76,11 +78,11 @@ public interface C extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>EClass To String</em>' map.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToString()
-	 * @model mapType=
-	 *        "org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToEStringMap<org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToEStringMap&lt;org.eclipse.emf.ecore.EClass,
+	 *        org.eclipse.emf.ecore.EString&gt;"
 	 * @generated
 	 */
 	EMap<EClass, String> getEClassToString();
@@ -95,11 +97,11 @@ public interface C extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>EClass To A</em>' map.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToA()
-	 * @model mapType=
-	 *        "org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToAMap<org.eclipse.emf.ecore.EClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A>"
+	 * @model mapType="org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToAMap&lt;org.eclipse.emf.ecore.EClass,
+	 *        org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A&gt;"
 	 * @generated
 	 */
 	EMap<EClass, A> getEClassToA();
@@ -112,7 +114,7 @@ public interface C extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>A</em>' reference.
 	 * @see #setA(A)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_A()
@@ -126,11 +128,30 @@ public interface C extends EObject {
 	 * <em>A</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>A</em>' reference.
 	 * @see #getA()
 	 * @generated
 	 */
 	void setA(A value);
+
+	/**
+	 * Returns the value of the '<em><b>EClass To E</b></em>' map.
+	 * The key is of type {@link org.eclipse.emf.ecore.EClass},
+	 * and the value is of type {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>EClass To E</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>EClass To E</em>' map.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToE()
+	 * @model mapType="org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToEMap&lt;org.eclipse.emf.ecore.EClass,
+	 *        org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E&gt;"
+	 * @generated
+	 */
+	EMap<EClass, E> getEClassToE();
 
 } // C

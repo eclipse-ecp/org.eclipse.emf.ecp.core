@@ -479,7 +479,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 		while (iterator.hasNext()) {
 			final VDomainModelReference feature = iterator.next();
 			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(feature, null);
+				.getValueProperty(feature, domainObject);
 			final EStructuralFeature currentStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 			if (currentStructuralFeature == structuralFeature) { // && feature.isEditable() == isEditable
 				return feature;

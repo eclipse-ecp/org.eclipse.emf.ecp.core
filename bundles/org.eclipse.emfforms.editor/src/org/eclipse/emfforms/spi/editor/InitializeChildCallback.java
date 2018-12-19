@@ -43,7 +43,7 @@ public class InitializeChildCallback implements CreateElementCallback {
 		}
 
 		final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
-		properties.addInheritableProperty("useOnModifyDatabinding", "true");
+		properties.addInheritableProperty("useOnModifyDatabinding", "true"); //$NON-NLS-1$ //$NON-NLS-2$
 		final VView view = ViewProviderHelper.getView((EObject) newElement, properties);
 		final boolean isViewEmpty = view == null ? true : view.getChildren().isEmpty();
 

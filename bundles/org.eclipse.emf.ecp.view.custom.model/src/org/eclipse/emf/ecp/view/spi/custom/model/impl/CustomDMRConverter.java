@@ -18,6 +18,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -25,6 +26,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
@@ -86,11 +89,6 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 		return emfFormsDatabinding;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see DomainModelReferenceConverterEMF#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
-	 */
 	@Override
 	public double isApplicable(VDomainModelReference domainModelReference) {
 		if (VCustomDomainModelReference.class.isInstance(domainModelReference)) {
@@ -99,15 +97,22 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 		return NOT_APPLICABLE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see DomainModelReferenceConverterEMF#convertToValueProperty(VDomainModelReference,EObject)
-	 * @since 1.7
-	 */
 	@Override
 	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
+		if (object == null) {
+			return convertToValueProperty(domainModelReference, null, null);
+		}
+		return convertToValueProperty(domainModelReference, object.eClass(), getEditingDomain(object));
+	}
+
+	private EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
+	}
+
+	@Override
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
+		EditingDomain editingDomain) throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
@@ -119,8 +124,12 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 		final VCustomDomainModelReference tableDomainModelReference = VCustomDomainModelReference.class
 			.cast(domainModelReference);
 		if (!tableDomainModelReference.getDomainModelReferences().isEmpty()) {
-			return getEMFFormsDatabindingEMF()
-				.getValueProperty(tableDomainModelReference.getDomainModelReferences().iterator().next(), object);
+			final VDomainModelReference nextDmr = tableDomainModelReference.getDomainModelReferences().iterator()
+				.next();
+			if (rootEClass == null) {
+				return getEMFFormsDatabindingEMF().getValueProperty(nextDmr, (EObject) null);
+			}
+			return getEMFFormsDatabindingEMF().getValueProperty(nextDmr, rootEClass, editingDomain);
 		}
 		final ECPHardcodedReferences customControl = loadObject(tableDomainModelReference.getBundleName(),
 			tableDomainModelReference.getClassName());
@@ -139,7 +148,11 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s doesn't define any DomainModelReferences.", //$NON-NLS-1$
 						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
-		return getEMFFormsDatabindingEMF().getValueProperty(neededDomainModelReferences.iterator().next(), object);
+		final VDomainModelReference nextNeededDmr = neededDomainModelReferences.iterator().next();
+		if (rootEClass == null) {
+			return getEMFFormsDatabindingEMF().getValueProperty(nextNeededDmr, (EObject) null);
+		}
+		return getEMFFormsDatabindingEMF().getValueProperty(nextNeededDmr, rootEClass, editingDomain);
 	}
 
 	private static ECPHardcodedReferences loadObject(String bundleName, String clazz)
@@ -166,12 +179,6 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see DomainModelReferenceConverterEMF#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,EObject)
-	 * @since 1.7
-	 */
 	@Override
 	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
@@ -205,13 +212,6 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 		return getEMFFormsDatabindingEMF().getListProperty(neededDomainModelReferences.iterator().next(), object);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
-	 *      org.eclipse.emf.ecore.EObject)
-	 * @since 1.8
-	 */
 	@Override
 	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {

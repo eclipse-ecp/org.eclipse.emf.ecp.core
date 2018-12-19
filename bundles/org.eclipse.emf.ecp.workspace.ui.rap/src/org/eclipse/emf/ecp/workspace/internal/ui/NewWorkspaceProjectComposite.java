@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.workspace.internal.ui;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.ui.CompositeStateObserver;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
@@ -195,7 +197,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 
 			resource.getContents().add(root);
 			try {
-				resource.save(null);
+				resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 			} catch (final IOException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();

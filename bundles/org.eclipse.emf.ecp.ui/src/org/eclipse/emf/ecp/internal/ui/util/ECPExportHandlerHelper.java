@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.internal.ui.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.PreferenceHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -168,7 +170,7 @@ public final class ECPExportHandlerHelper {
 		}
 
 		contents.addAll(eObjects);
-		resource.save(null);
+		resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
 	}
 
 }

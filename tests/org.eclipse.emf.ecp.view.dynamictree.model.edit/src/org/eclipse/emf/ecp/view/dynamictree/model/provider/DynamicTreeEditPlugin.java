@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.dynamictree.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationEditPlugin;
 import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 
@@ -55,7 +54,6 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	{
 		super(new ResourceLocator[] {
 			CategorizationEditPlugin.INSTANCE,
-			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});
 	}

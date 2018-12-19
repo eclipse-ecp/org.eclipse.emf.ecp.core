@@ -3,6 +3,7 @@
 <plugin>
 
    <extension
+         name=""
          point="org.eclipse.ui.newWizards">
       <wizard
             name="Template Model"
@@ -13,6 +14,7 @@
       </wizard>
    </extension>
    <extension
+         name=""
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.ecp.view.template.tooling.editor.TemplateModelEditorPart"
@@ -24,18 +26,23 @@
       </editor>
    </extension>
    <extension
+         name=""
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
-<file filePath="viewmodel/KeyBindings.view"/>
-
-<file filePath="viewmodel/viewModelElementSelector.view"/>
-
-<file filePath="viewmodel/dmrSelector.view"/>
-
+      <file
+            filePath="viewmodel/KeyBindings.view">
+      </file>
+      <file
+            filePath="viewmodel/viewModelElementSelector.view">
+      </file>
+      <file
+            filePath="viewmodel/dmrSelector.view">
+      </file>
       <file
             filePath="viewmodel/template.view">
       </file>
    </extension>
    <extension
+         name=""
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
             renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.ViewModelSelectControlSWTRenderer">

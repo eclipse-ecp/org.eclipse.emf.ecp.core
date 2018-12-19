@@ -559,6 +559,16 @@ public interface ModelPackage extends EPackage
 	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
 
 	/**
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__SEGMENTS = VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Path From Root</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

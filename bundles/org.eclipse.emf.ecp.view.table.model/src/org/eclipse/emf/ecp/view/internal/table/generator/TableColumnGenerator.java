@@ -14,10 +14,12 @@ package org.eclipse.emf.ecp.view.internal.table.generator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * Helper class to generate {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
@@ -55,8 +57,14 @@ public final class TableColumnGenerator {
 		final VFeaturePathDomainModelReference column = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		column.setDomainModelEFeature(attribute);
 
-		VTableDomainModelReference.class.cast(vTableControl.getDomainModelReference()).getColumnDomainModelReferences()
-			.add(column);
+		final VDomainModelReference dmr = vTableControl.getDomainModelReference();
+		if (dmr.getSegments().size() > 0) {
+			final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) dmr
+				.getSegments().get(dmr.getSegments().size() - 1);
+			multiSegment.getChildDomainModelReferences().add(column);
+		} else {
+			VTableDomainModelReference.class.cast(dmr).getColumnDomainModelReferences().add(column);
+		}
 	}
 
 }
