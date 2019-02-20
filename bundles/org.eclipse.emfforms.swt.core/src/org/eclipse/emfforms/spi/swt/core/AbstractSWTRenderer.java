@@ -109,7 +109,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					}
 					// Always apply enable and read-only if it changed because it might have changed for a parent
 					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
-						applyEnable();
+						if (!ignoreEnableOnReadOnly()) {
+							applyEnable();
+						}
 					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Readonly()) {
 						applyReadOnly();
 					}

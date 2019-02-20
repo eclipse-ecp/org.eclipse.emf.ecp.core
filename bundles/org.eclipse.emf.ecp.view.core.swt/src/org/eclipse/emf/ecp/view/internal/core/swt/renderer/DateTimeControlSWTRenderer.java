@@ -237,10 +237,66 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		bUnset.setToolTipText(getLocalizedString(tooltip));
 		bUnset.addSelectionListener(new UnsetBtnSelectionAdapterExtension());
 
-		createSetButton();
+		setBtn = createSetButton();
 
 		updateStack();
 		return composite;
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		super.applyReadOnly();
+		// specific handling for buttons
+		updateButtonVisibility();
+	}
+
+	@Override
+	protected void applyEnable() {
+		super.applyEnable();
+		// specific handling for buttons
+		updateButtonEnabling();
+	}
+
+	/**
+	 * Updates the enablement of buttons according to the bound input.
+	 */
+	protected void updateButtonEnabling() {
+		final boolean isEnable = getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly();
+
+		if (bUnset != null) {
+			bUnset.setEnabled(isEnable);
+		}
+		if (setBtn != null) {
+			setBtn.setEnabled(isEnable);
+		}
+	}
+
+	/**
+	 * Updates the visibility of buttons according to the bound input.
+	 */
+	protected void updateButtonVisibility() {
+		final boolean isVisible = !getVElement().isEffectivelyReadonly() && !isUnchangeableFeature();
+
+		if (bUnset != null) {
+			bUnset.setVisible(isVisible);
+		}
+
+		if (setBtn != null) {
+			try {
+				if (getModelValue() != null) {
+					final Object value = getModelValue().getValue();
+
+					if (getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY) {
+						setBtn.setVisible(isVisible && value == null);
+					} else {
+						setBtn.setVisible(isVisible);
+					}
+				}
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new DatabindingFailedReport(ex));
+			}
+		}
+
 	}
 
 	private void updateStack() throws DatabindingFailedException {
@@ -256,10 +312,10 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		}
 	}
 
-	private void createSetButton() {
+	private Button createSetButton() {
 		final String imagePath = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY ? "icons/set_feature.png" //$NON-NLS-1$
 			: "icons/date.png"; //$NON-NLS-1$
-		setBtn = new Button(composite, SWT.PUSH);
+		final Button setBtn = new Button(composite, SWT.PUSH);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(setBtn, getVElement(), "set", getViewModelContext()); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(setBtn);
 		setBtn.setImage(
@@ -270,6 +326,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			: MessageKeys.DateTimeControlSWTRenderer_SelectData;
 		setBtn.setToolTipText(getLocalizedString(tooltip));
 		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn));
+		return setBtn;
 	}
 
 	private void createDateTimeWidgets(DateTimeDisplayType dateTimeDisplayType) {
@@ -462,8 +519,9 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 				stackComposite.layout();
 			}
 		}
-		if (getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY) {
-			setBtn.setVisible(value == null);
+		updateButtonVisibility();
+		if (!ignoreEnableOnReadOnly()) {
+			applyEnable();
 		}
 	}
 

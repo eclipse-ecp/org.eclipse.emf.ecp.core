@@ -501,7 +501,58 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
-		assertFalse(renderControl.isEnabled());
+		assertFalse(renderControl.getEnabled());
+		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class);
+		assertFalse(unset.getVisible());
+	}
+
+	@Test
+	public void testDisableDeactivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(mockedEStructuralFeature)).thenReturn(true);
+		final TestObservableValue mockedObservable = mock(TestObservableValue.class);
+		when(mockedObservable.getRealm()).thenReturn(realm);
+		when(mockedObservable.getValueType()).thenReturn(mockedEStructuralFeature);
+		when(mockedObservable.getObserved()).thenReturn(mockedEObject);
+		when(mockedObservable.getValue()).thenReturn(null);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable);
+
+		when(getvControl().isEffectivelyReadonly()).thenReturn(false);
+		when(getvControl().isEffectivelyEnabled()).thenReturn(false);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertFalse(renderControl.getEnabled());
+		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class);
+		assertTrue(unset.getVisible());
+		assertFalse(unset.getEnabled());
+	}
+
+	@Test
+	public void testEnabledActivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(mockedEStructuralFeature)).thenReturn(true);
+		final TestObservableValue mockedObservable = mock(TestObservableValue.class);
+		when(mockedObservable.getRealm()).thenReturn(realm);
+		when(mockedObservable.getValueType()).thenReturn(mockedEStructuralFeature);
+		when(mockedObservable.getObserved()).thenReturn(mockedEObject);
+		when(mockedObservable.getValue()).thenReturn(null);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable);
+
+		when(getvControl().isEffectivelyReadonly()).thenReturn(false);
+		when(getvControl().isEffectivelyEnabled()).thenReturn(true);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertTrue(renderControl.getEnabled());
+		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class);
+		assertTrue(unset.getVisible());
+		assertTrue(unset.getEnabled());
+
 	}
 
 	private void setMockDateTimeDisplayAttachment(DateTimeDisplayType displayType) {
