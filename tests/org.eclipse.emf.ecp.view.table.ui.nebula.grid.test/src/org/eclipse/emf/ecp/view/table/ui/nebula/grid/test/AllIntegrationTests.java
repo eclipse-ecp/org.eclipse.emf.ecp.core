@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.table.ui.nebula.grid.test;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridControlRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridPasteKeyListener_Test;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridTable_PTest;
+import org.eclipse.emf.ecp.view.internal.table.nebula.grid.KeyListenerUtil_PTest;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridControlDetailPanelRenderer_PTest;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridViewerColumnBuilder_ITest;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ GridControlRenderer_PTest.class, GridPasteKeyListener_Test.class, GridTable_PTest.class,
-	GridControlDetailPanelRenderer_PTest.class, GridViewerColumnBuilder_ITest.class })
+	GridControlDetailPanelRenderer_PTest.class, GridViewerColumnBuilder_ITest.class, KeyListenerUtil_PTest.class })
 public class AllIntegrationTests {
 
 }
