@@ -11,11 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
@@ -67,11 +71,27 @@ public final class KeyListenerUtil {
 			final EObject eObject = (EObject) grid.getItem(row).getData();
 
 			try {
-				final Setting setting = dataBinding.getSetting(dmr, eObject);
-				setting.unset();
+				unsetFeature(dataBinding, dmr, eObject);
 			} catch (final DatabindingFailedException ex) {
 				// ignore
 			}
 		}
+	}
+
+	/**
+	 * Unsets the feature referenced by the given DMR in the given {@link EObject}.
+	 *
+	 * @param dataBinding The {@link EMFFormsDatabindingEMF} used to resolve the feature
+	 * @param dmr The dmr referencing the feature
+	 * @param eObject The dmr's root object
+	 * @throws DatabindingFailedException If the data binding fails
+	 */
+	static void unsetFeature(EMFFormsDatabindingEMF dataBinding, final VDomainModelReference dmr,
+		final EObject eObject) throws DatabindingFailedException {
+		final Setting setting = dataBinding.getSetting(dmr, eObject);
+		final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(setting.getEObject());
+		final Command command = SetCommand.create(domain, setting.getEObject(), setting.getEStructuralFeature(),
+			SetCommand.UNSET_VALUE);
+		domain.getCommandStack().execute(command);
 	}
 }
