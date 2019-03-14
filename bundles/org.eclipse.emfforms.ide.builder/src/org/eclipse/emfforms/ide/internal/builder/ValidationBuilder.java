@@ -8,7 +8,7 @@
  *
  * Contributors:
  * EclipseSource - initial API and implementation
- * Christian W. Damus - bug 544499
+ * Christian W. Damus - bugs 544499, 545418
  ******************************************************************************/
 package org.eclipse.emfforms.ide.internal.builder;
 
@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emfforms.bazaar.Bazaar;
 import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.bazaar.Vendor;
@@ -56,13 +55,6 @@ public class ValidationBuilder extends IncrementalProjectBuilder {
 	public ValidationBuilder() {
 		super();
 	}
-
-	private final EditUIMarkerHelper projectMarkerHelper = new EditUIMarkerHelper() {
-		@Override
-		protected String getMarkerID() {
-			return MARKER_ID;
-		}
-	};
 
 	@Override
 	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor)
@@ -235,13 +227,15 @@ public class ValidationBuilder extends IncrementalProjectBuilder {
 			try {
 				final Optional<Diagnostic> diagnostics = delegate.validate(file, sub.newChild(1));
 
+				// If there isn't an OK diagnostic, then nothing was validated, so don't
+				// clear existing markers
 				if (diagnostics.isPresent()) {
+					final MarkerHelper markerHelper = markerHelperBazaar.createProduct(context);
 					final Diagnostic diagnostic = diagnostics.get();
-					projectMarkerHelper.deleteMarkers(file);
+					markerHelper.deleteMarkers(file);
 
 					// create markers only if severity >= Warning
 					if (diagnostic.getSeverity() >= IMarker.SEVERITY_WARNING) {
-						final MarkerHelper markerHelper = markerHelperBazaar.createProduct(context);
 						markerHelper.createMarkers(diagnostic);
 					}
 				}

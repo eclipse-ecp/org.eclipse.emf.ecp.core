@@ -8,7 +8,7 @@
  *
  * Contributors:
  * EclipseSource - initial API and implementation
- * Christian W. Damus - bug 544499
+ * Christian W. Damus - bugs 544499, 545418
  ******************************************************************************/
 package org.eclipse.emfforms.ide.builder;
 
@@ -96,7 +96,7 @@ public abstract class AbstractBuilderTest {
 		return project;
 	}
 
-	protected static void waitForAuroBuild() {
+	protected static void waitForAutoBuild() {
 		try {
 			Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, null);
 		} catch (InterruptedException | OperationCanceledException e) {

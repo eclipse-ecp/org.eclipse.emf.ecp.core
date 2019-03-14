@@ -8,15 +8,19 @@
  *
  * Contributors:
  * EclipseSource - initial API and implementation
- * Christian W. Damus - bug 544499
+ * Christian W. Damus - bugs 544499, 545418
  ******************************************************************************/
 package org.eclipse.emfforms.ide.builder;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -65,7 +69,7 @@ public class ValidationBuilder_PTest extends AbstractBuilderTest {
 		// trigger builder by adding nature to the project and auto-build is on
 		setAutoBuild(true);
 		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
-		waitForAuroBuild();
+		waitForAutoBuild();
 
 		// final state
 		markers = findMarkersOnResource(project);
@@ -85,7 +89,7 @@ public class ValidationBuilder_PTest extends AbstractBuilderTest {
 		// trigger builder by adding nature to the project and auto-build is on
 		setAutoBuild(true);
 		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
-		waitForAuroBuild();
+		waitForAutoBuild();
 
 		// final state
 		markers = findMarkersOnResource(project);
@@ -108,7 +112,7 @@ public class ValidationBuilder_PTest extends AbstractBuilderTest {
 		// trigger builder by adding nature to the project and auto-build is on
 		setAutoBuild(true);
 		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
-		waitForAuroBuild();
+		waitForAutoBuild();
 
 		// final state
 		markers = findMarkersOnResource(project);
@@ -139,7 +143,7 @@ public class ValidationBuilder_PTest extends AbstractBuilderTest {
 		// which means that it won't do validation
 		setAutoBuild(false);
 		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
-		waitForAuroBuild();
+		waitForAutoBuild();
 
 		// final state
 		markers = findMarkersOnResource(project);
@@ -161,7 +165,7 @@ public class ValidationBuilder_PTest extends AbstractBuilderTest {
 		// trigger builder by adding nature to the project and auto-build is on
 		setAutoBuild(true);
 		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
-		waitForAuroBuild();
+		waitForAutoBuild();
 
 		// final state
 		markers = findMarkersOnResource(project);
@@ -189,7 +193,7 @@ public class ValidationBuilder_PTest extends AbstractBuilderTest {
 		// trigger builder by adding nature to the project and auto-build is on
 		setAutoBuild(true);
 		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
-		waitForAuroBuild();
+		waitForAutoBuild();
 
 		// final state
 		markers = findMarkersOnResource(project);
@@ -241,12 +245,50 @@ public class ValidationBuilder_PTest extends AbstractBuilderTest {
 		// trigger builder by adding nature to the project and auto-build is on
 		setAutoBuild(true);
 		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
-		waitForAuroBuild();
+		waitForAutoBuild();
 
 		canary.dump();
 		Assert.assertThat("No file", canary.fileName, notNullValue());
 		Assert.assertThat("No content-type ID", canary.contentTypeID, notNullValue());
 		Assert.assertThat("No content-type", canary.contentType, notNullValue());
+	}
+
+	/**
+	 * Test that markers are correctly cleared on incremental validation when
+	 * problems are fixed.
+	 */
+	@Test
+	public void validationProblemsFixed() throws CoreException, IOException {
+		final String projectName = "ValidationErrors";//$NON-NLS-1$
+		final IProgressMonitor monitor = new NullProgressMonitor();
+		final IProject project = createAndPopulateProject(projectName, monitor);
+		IMarker[] markers = findMarkersOnResource(project);
+		// No build yet => no markers
+		assertThat("Should not have error markers, yet", markers, is(new IMarker[0]));
+
+		// trigger builder by adding nature to the project and auto-build is on
+		setAutoBuild(true);
+		ProjectNature.toggleNature(project, ValidationNature.NATURE_ID);
+		waitForAutoBuild();
+
+		// Should have some problems, now
+		markers = findMarkersOnResource(project);
+		assertThat("No problems", markers.length, greaterThan(0));
+
+		// Fix them
+		final IFile problemFile = project.getFile("ValidationError.view");
+		final IFile goodFile = project.getFile("goodModel.view");
+		final InputStream input = goodFile.getContents();
+		try {
+			problemFile.setContents(input, true, true, null);
+		} finally {
+			input.close();
+		}
+
+		waitForAutoBuild();
+		markers = findMarkersOnResource(project);
+		// Problems solved
+		assertThat("Should not have error markers", markers, is(new IMarker[0]));
 	}
 
 	//
