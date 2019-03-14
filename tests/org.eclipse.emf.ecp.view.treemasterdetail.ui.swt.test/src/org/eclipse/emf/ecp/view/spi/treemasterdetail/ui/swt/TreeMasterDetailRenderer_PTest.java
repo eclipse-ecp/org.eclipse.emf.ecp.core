@@ -27,11 +27,13 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
@@ -51,6 +53,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.TypedListener;
+import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,6 +84,8 @@ public class TreeMasterDetailRenderer_PTest {
 		tmd.setDetailView(detailView);
 
 		final League domainModel = BowlingFactory.eINSTANCE.createLeague();
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+		domainModel.getPlayers().add(player);
 		context = new ViewModelContextImpl(tmd, domainModel);
 		renderer = new TreeMasterDetailSWTRenderer(tmd, context, reportService);
 		renderer.init();
@@ -98,6 +104,24 @@ public class TreeMasterDetailRenderer_PTest {
 		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
 		assertEquals(1, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
+	}
+
+	@Test
+	public void contextMenu_delete_resetSelectionToRoot()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Control render = render();
+		final SWTBot bot = new SWTBot(render);
+		final SWTBotTree tree = bot.tree();
+		SWTTestUtil.selectTreeItem(tree.widget.getItem(0).getItem(0));
+		SWTTestUtil.waitForUIThread();
+
+		tree.contextMenu("Delete").click(); //$NON-NLS-1$
+
+		SWTTestUtil.waitForUIThread();
+
+		final TreeItem[] selection = tree.widget.getSelection();
+		assertTrue("Root node was not selected automatically!", //$NON-NLS-1$
+			selection.length == 1 && selection[0].getData() instanceof League);
 	}
 
 	@Test

@@ -32,6 +32,7 @@ import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.IAction;
@@ -52,8 +53,10 @@ import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.keyboard.Keyboard;
 import org.eclipse.swtbot.swt.finder.keyboard.KeyboardFactory;
+import org.eclipse.swtbot.swt.finder.keyboard.Keystrokes;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -250,6 +253,40 @@ public class ViewEditorPart_PTest {
 		SWTTestUtil.waitForUIThread();
 
 		assertTrue(text.getText().contains(string + string));
+	}
+
+	@Test
+	public void shortcuts_delete_resetSelectionToRoot() {
+		final ViewEditorPart editor = open(USER_VIEW_MODEL, ViewEditorPart.class);
+		final Composite parent = getEditorParentComposite(editor);
+		final SWTBot bot = new SWTBot(parent);
+		final SWTBotTree tree = bot.tree();
+		SWTTestUtil.selectTreeItem(tree.widget.getItem(0).getItem(0));
+		SWTTestUtil.waitForUIThread();
+
+		tree.pressShortcut(Keystrokes.DELETE);
+		SWTTestUtil.waitForUIThread();
+
+		final TreeItem[] selection = tree.widget.getSelection();
+		assertTrue("Root node was not selected automatically!",
+			selection.length == 1 && selection[0].getData() instanceof VView);
+	}
+
+	@Test
+	public void contextMenu_delete_resetSelectionToRoot() {
+		final ViewEditorPart editor = open(USER_VIEW_MODEL, ViewEditorPart.class);
+		final Composite parent = getEditorParentComposite(editor);
+		final SWTBot bot = new SWTBot(parent);
+		final SWTBotTree tree = bot.tree();
+		SWTTestUtil.selectTreeItem(tree.widget.getItem(0).getItem(0));
+		SWTTestUtil.waitForUIThread();
+
+		tree.contextMenu("Delete").click();
+		SWTTestUtil.waitForUIThread();
+
+		final TreeItem[] selection = tree.widget.getSelection();
+		assertTrue("Root node was not selected automatically!",
+			selection.length == 1 && selection[0].getData() instanceof VView);
 	}
 
 	@After

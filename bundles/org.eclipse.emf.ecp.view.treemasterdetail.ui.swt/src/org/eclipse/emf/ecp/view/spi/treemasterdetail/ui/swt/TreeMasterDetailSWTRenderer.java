@@ -34,6 +34,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
@@ -54,6 +55,7 @@ import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -185,6 +187,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private Composite rightPanelContainerComposite;
 
 	private ModelChangeListener domainModelListener;
+	private ViewModelContext childContext;
 
 	/**
 	 * @author jfaltermeier
@@ -418,17 +421,25 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer.setAutoExpandLevel(2); // top level element is expanded, but not the children
 		treeViewer.setInput(new RootObject(modelElement));
 
-		// workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=27480
-		// the treeviewer doesn't autoexpand on refresh
-		domainModelListener = new ModelChangeListener() {
+		domainModelListener = new ModelChangeAddRemoveListener() {
 
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
-				// expand the tree if elements are added to the tree and the root isn't already expanded
-				if (notification.getRawNotification().getEventType() == Notification.ADD
-					|| notification.getRawNotification().getEventType() == Notification.ADD_MANY) {
-					final EObject notifier = notification.getNotifier();
-					treeViewer.expandToLevel(notifier, 1);
+				// nothing to do here
+			}
+
+			// workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=27480
+			// the treeviewer doesn't autoexpand on refresh
+			@Override
+			public void notifyAdd(Notifier notifier) {
+				treeViewer.expandToLevel(notifier, 1);
+			}
+
+			@Override
+			public void notifyRemove(Notifier notifier) {
+				// If an element is deleted, reset the selection to the root node
+				if (childContext != null && notifier == childContext.getDomainModel()) {
+					treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 				}
 			}
 		};
@@ -832,7 +843,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					deleteService = new EMFDeleteServiceImpl();
 				}
 				deleteService.deleteElements(selection.toList());
-				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
 		};
 		final String deleteImagePath = "icons/delete.png";//$NON-NLS-1$
@@ -952,7 +962,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
-					ViewModelContext childContext;
 					// we have a multi selection, the multi edit is enabled and the multi selection is valid
 					if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE
 						&& selection.size() > 1

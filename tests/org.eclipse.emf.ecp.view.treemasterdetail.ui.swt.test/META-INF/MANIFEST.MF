@@ -19,7 +19,9 @@ Require-Bundle: org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.4.0,2.0
  org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.20.0,1.21.0)",
  org.eclipse.emfforms.swt.common.test;bundle-version="[1.20.0,1.21.0)",
  org.eclipse.emf.ecp.test.common;bundle-version="[1.20.0,1.21.0)",
- org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)"
+ org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
+ org.eclipse.swtbot.swt.finder;bundle-version="[2.7.0,3.0.0)",
+ org.apache.log4j;bundle-version="[1.2.15,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test
 Bundle-ActivationPolicy: lazy
