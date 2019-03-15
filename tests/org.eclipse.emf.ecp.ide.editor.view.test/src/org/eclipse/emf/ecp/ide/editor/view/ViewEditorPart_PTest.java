@@ -8,7 +8,7 @@
  *
  * Contributors:
  * lucas - initial API and implementation
- * Christian W. Damus - bug 543376
+ * Christian W. Damus - bugs 543376, 545460
  ******************************************************************************/
 package org.eclipse.emf.ecp.ide.editor.view;
 
@@ -28,12 +28,14 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.bindings.keys.ParseException;
@@ -45,6 +47,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
@@ -79,6 +82,8 @@ import org.junit.Test;
 public class ViewEditorPart_PTest {
 
 	private static final String USER_VIEW_MODEL = "View-WellFormed.view";
+
+	private Clipboard clipboard;
 
 	@Test
 	public void openView_NoRootEClass() {
@@ -184,18 +189,14 @@ public class ViewEditorPart_PTest {
 
 		// Manually force focus to increase test stability because sometimes selecting a tree item programmatically
 		// doesn't set focus or at least not fast enough
-		tree.setFocus();
-		SWTTestUtil.waitForUIThread();
-		keyboard.pressShortcut(SWT.CTRL, 'c');
-		SWTTestUtil.waitForUIThread();
+		focus(tree);
+		keystroke(keyboard, tree, SWT.MOD1, 'c');
 
 		SWTTestUtil.selectTreeItem(viewItem);
 		SWTTestUtil.waitForUIThread();
 
-		tree.setFocus();
-		SWTTestUtil.waitForUIThread();
-		keyboard.pressShortcut(SWT.CTRL, 'v');
-		SWTTestUtil.waitForUIThread();
+		focus(tree);
+		keystroke(keyboard, tree, SWT.MOD1, 'v');
 		tree.update();
 		SWTTestUtil.waitForUIThread();
 
@@ -210,12 +211,13 @@ public class ViewEditorPart_PTest {
 		final Keyboard keyboard = KeyboardFactory.getAWTKeyboard();
 
 		final ViewEditorPart editor = open(USER_VIEW_MODEL, ViewEditorPart.class);
-		final Clipboard clipboard = new Clipboard(Display.getCurrent());
+		clipboard = new Clipboard(Display.getCurrent());
 		clipboard.clearContents();
 		final Composite parent = getEditorParentComposite(editor);
 		final Tree tree = SWTTestUtil.findControl(parent, 0, Tree.class);
 		final TreeItem viewItem = tree.getItem(0);
 		final TreeItem controlItem0 = viewItem.getItem(0);
+		focus(tree);
 		SWTTestUtil.selectTreeItem(controlItem0); // select the VControl
 		SWTTestUtil.waitForUIThread();
 
@@ -230,24 +232,30 @@ public class ViewEditorPart_PTest {
 		final SWTBotText botText = bot.text(string);
 		botText.selectAll();
 		SWTTestUtil.waitForUIThread();
-		botText.setFocus();
+		focus(text);
 		// Press multiple times to increase test stability
 		for (int i = 0; i < 10; i++) {
-			keyboard.pressShortcut(SWT.CTRL, 'c');
-			SWTTestUtil.waitForUIThread();
+			keystroke(keyboard, text, SWT.MOD1, 'c');
 		}
 		text.setSelection(0);
+
+		if (Platform.getWS().equals(Platform.WS_COCOA)) {
+			// Can only test that we did not copy in the tree because the native keyboard
+			// copy/paste support in the Cocoa text widget cannot be automated via SWT
+			final EditingDomain domain = editor.getEditingDomain();
+			assertThat("Copied in the tree", domain.getClipboard(), nullValue());
+			return;
+		}
 
 		// Check that copy to clip board worked
 		final Object contents = clipboard.getContents(TextTransfer.getInstance());
 		assertNotNull(contents);
 		assertEquals(string, contents);
 
-		botText.setFocus();
+		focus(text);
 		// Press multiple times to increase test stability
 		for (int i = 0; i < 10; i++) {
-			keyboard.pressShortcut(SWT.CTRL, 'v');
-			SWTTestUtil.waitForUIThread();
+			keystroke(keyboard, text, SWT.MOD1, 'v');
 		}
 		text.update();
 		SWTTestUtil.waitForUIThread();
@@ -264,7 +272,11 @@ public class ViewEditorPart_PTest {
 		SWTTestUtil.selectTreeItem(tree.widget.getItem(0).getItem(0));
 		SWTTestUtil.waitForUIThread();
 
-		tree.pressShortcut(Keystrokes.DELETE);
+		if (Platform.getWS().equals(Platform.WS_COCOA)) {
+			SWTTestUtil.pressAndReleaseKey(tree.widget, SWT.DEL);
+		} else {
+			tree.pressShortcut(Keystrokes.DELETE);
+		}
 		SWTTestUtil.waitForUIThread();
 
 		final TreeItem[] selection = tree.widget.getSelection();
@@ -287,6 +299,13 @@ public class ViewEditorPart_PTest {
 		final TreeItem[] selection = tree.widget.getSelection();
 		assertTrue("Root node was not selected automatically!",
 			selection.length == 1 && selection[0].getData() instanceof VView);
+	}
+
+	@After
+	public void disposeClipboard() {
+		if (clipboard != null) {
+			clipboard.dispose();
+		}
 	}
 
 	@After
@@ -389,4 +408,19 @@ public class ViewEditorPart_PTest {
 			return null; // Never happens
 		}
 	}
+
+	void keystroke(Keyboard keyboard, Control control, int modifier, char key) {
+		if (Platform.getWS().equals(Platform.WS_COCOA)) {
+			SWTTestUtil.pressAndReleaseKey(control, modifier, key);
+		} else {
+			keyboard.pressShortcut(modifier, key);
+		}
+		SWTTestUtil.waitForUIThread();
+	}
+
+	void focus(Control control) {
+		control.setFocus();
+		SWTTestUtil.waitForUIThread();
+	}
+
 }

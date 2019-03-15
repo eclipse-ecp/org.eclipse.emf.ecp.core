@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,7 +9,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bug 533568
+ * Christian W. Damus - bugs 533568, 545460
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
@@ -38,6 +38,9 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.selection.IMasterDetailSelectionProvider;
+import org.eclipse.emf.ecp.view.spi.swt.selection.MasterDetailFocusAdapter;
+import org.eclipse.emf.ecp.view.spi.swt.selection.MasterDetailSelectionProvider;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
@@ -55,6 +58,7 @@ import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -106,6 +110,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	/** The tree viewer. */
 	private TreeViewer treeViewer;
+
+	/** The selection provider. */
+	private IMasterDetailSelectionProvider selectionProvider;
 
 	/** The vertical sash. */
 	private Sash verticalSash;
@@ -209,6 +216,8 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		addTreeViewerLayoutData(treeComposite, verticalSash);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(treeComposite);
 		treeViewer = TreeViewerSWTFactory.createTreeViewer(treeComposite, input, customization);
+		selectionProvider = new MasterDetailSelectionProvider(treeViewer);
+		treeViewer.getControl().addFocusListener(new MasterDetailFocusAdapter(selectionProvider, () -> detailPanel));
 
 		// Create detail composite
 		detailComposite = buildBehaviour.createDetailComposite(this);
@@ -217,7 +226,8 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		/* enable delayed update mechanism */
 		final IViewerObservableValue treeViewerSelectionObservable = ViewersObservables
 			.observeSingleSelection(treeViewer);
-		final DelayedObservableValue delayedObservableValue = new DelayedObservableValue(renderDelay,
+		@SuppressWarnings("unchecked")
+		final DelayedObservableValue<?> delayedObservableValue = new DelayedObservableValue<>(renderDelay,
 			treeViewerSelectionObservable);
 		delayedObservableValue.addChangeListener(new IChangeListener() {
 
@@ -399,7 +409,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			boolean allOfSameType = true;
 			final EObject dummy = EcoreUtil.create(((EObject) selectedObject).eClass());
 
-			final Iterator iterator = selection.iterator();
+			final Iterator<?> iterator = selection.iterator();
 			final Set<EObject> selectedEObjects = new LinkedHashSet<EObject>();
 			while (iterator.hasNext()) {
 				final EObject eObject = (EObject) iterator.next();
@@ -515,12 +525,27 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	}
 
 	/**
-	 * Gets the selection provider.
+	 * Gets the tree viewer.
 	 *
-	 * @return the selection provider
+	 * @return the tree viewer (which is a selection provider)
+	 *
+	 * @deprecated Use the {@link #getMasterDetailSelectionProvider() master-detail selection provider}, instead}
+	 * @see #getMasterDetailSelectionProvider()
 	 */
+	@Deprecated
 	public TreeViewer getSelectionProvider() {
 		return treeViewer;
+	}
+
+	/**
+	 * Get the master/detail-aware selection provider.
+	 *
+	 * @return a selection provider that is aware of the user's focus on either the
+	 *         master tree or the detail view
+	 * @since 1.21
+	 */
+	public ISelectionProvider getMasterDetailSelectionProvider() {
+		return selectionProvider;
 	}
 
 	/**
@@ -569,7 +594,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	/**
 	 * Adapter which listens to changes and delegates the notification to other EObjects.
-	 * 
+	 *
 	 * @author Eugen Neufeld
 	 *
 	 */

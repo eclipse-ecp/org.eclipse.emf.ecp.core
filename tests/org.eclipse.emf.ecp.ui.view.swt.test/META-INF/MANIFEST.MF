@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt.test
 Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.20.0,1.21.0)"
-Export-Package: org.eclipse.emf.ecp.ui.view.swt;version="1.20.0",
+Export-Package: org.eclipse.emf.ecp.ui.view.spi.swt.selection.test;version="1.20.0",
+ org.eclipse.emf.ecp.ui.view.swt;version="1.20.0",
  org.eclipse.emf.ecp.ui.view.swt.test;version="1.20.0"
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jface.databinding;bundle-version="[1.6.0,2.0.0)",

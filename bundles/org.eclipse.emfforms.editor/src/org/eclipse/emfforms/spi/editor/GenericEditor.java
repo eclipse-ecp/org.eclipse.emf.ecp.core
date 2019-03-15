@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 545460
  ******************************************************************************/
 
 package org.eclipse.emfforms.spi.editor;
@@ -318,7 +319,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 		// We need to set the selectionProvider for the editor, so that the EditingDomainActionBarContributor
 		// knows the currently selected object to copy/paste
-		getEditorSite().setSelectionProvider(rootView.getSelectionProvider());
+		getEditorSite().setSelectionProvider(rootView.getMasterDetailSelectionProvider());
 	}
 
 	private synchronized void initMarkers() {

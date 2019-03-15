@@ -17,14 +17,9 @@ import java.util.stream.Stream;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.edit.ui.action.CopyAction;
-import org.eclipse.emf.edit.ui.action.CutAction;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
-import org.eclipse.emf.edit.ui.action.PasteAction;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Tree;
 
 /**
  * Action-bar contributor for the View Model Editor.
@@ -43,21 +38,6 @@ public class ViewEditorActionBarContributor extends EditingDomainActionBarContri
 	@Override
 	protected DeleteAction createDeleteAction() {
 		return new DeleteServiceAction();
-	}
-
-	@Override
-	protected CopyAction createCopyAction() {
-		return new CopyViewTreeAction();
-	}
-
-	@Override
-	protected PasteAction createPasteAction() {
-		return new PasteViewTreeAction();
-	}
-
-	@Override
-	protected CutAction createCutAction() {
-		return new CutViewTreeAction();
 	}
 
 	/**
@@ -80,15 +60,6 @@ public class ViewEditorActionBarContributor extends EditingDomainActionBarContri
 	 */
 	protected ViewModelContext getViewModelContext() {
 		return activeEditor == null ? null : activeEditor.getAdapter(ViewModelContext.class);
-	}
-
-	/**
-	 * Returns whether the tree showing the view model's VElement hierarchy is currently active.
-	 * 
-	 * @return <code>true</code> if the tree is active; <code>false</code> otherwise
-	 */
-	private boolean isViewTreeActive() {
-		return Display.getCurrent().getFocusControl() instanceof Tree;
 	}
 
 	//
@@ -129,36 +100,6 @@ public class ViewEditorActionBarContributor extends EditingDomainActionBarContri
 
 		private boolean isRoot(Object object) {
 			return object instanceof EObject && ((EObject) object).eContainer() == null;
-		}
-
-	}
-
-	/** EMF copy action that is only enabled if the tree of the view model's VElement hierarchy is active. */
-	private class CopyViewTreeAction extends CopyAction {
-
-		@Override
-		public boolean isEnabled() {
-			return isViewTreeActive() && super.isEnabled();
-		}
-
-	}
-
-	/** EMF paste action that is only enabled if the tree of the view model's VElement hierarchy is active. */
-	private class PasteViewTreeAction extends PasteAction {
-
-		@Override
-		public boolean isEnabled() {
-			return isViewTreeActive() && super.isEnabled();
-		}
-
-	}
-
-	/** EMF cut action that is only enabled if the tree of the view model's VElement hierarchy is active. */
-	private class CutViewTreeAction extends CutAction {
-
-		@Override
-		public boolean isEnabled() {
-			return isViewTreeActive() && super.isEnabled();
 		}
 
 	}

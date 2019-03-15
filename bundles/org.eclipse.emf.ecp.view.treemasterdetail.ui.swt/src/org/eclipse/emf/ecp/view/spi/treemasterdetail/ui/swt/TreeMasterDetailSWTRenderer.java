@@ -11,7 +11,7 @@
  * Eugen Neufeld - Refactoring
  * Alexandra Buzila - Refactoring
  * Johannes Faltermeier - integration with validation service
- * Christian W. Damus - bug 543376
+ * Christian W. Damus - bugs 543376, 545460
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
@@ -67,6 +67,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.selection.IMasterDetailSelectionProvider;
 import org.eclipse.emf.ecp.view.spi.swt.services.ECPSelectionProviderService;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
@@ -482,8 +483,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		});
 
 		// Register my tree viewer as the selection provider for my element
-		getViewModelContext().getService(ECPSelectionProviderService.class)
-			.registerSelectionProvider(getVElement(), treeViewer);
+		final ECPSelectionProviderService sps = getViewModelContext().getService(ECPSelectionProviderService.class);
+		final IMasterDetailSelectionProvider mdSelectionProvider = sps.createMasterDetailSelectionProvider(treeViewer,
+			() -> rightPanel);
+		sps.registerSelectionProvider(getVElement(), mdSelectionProvider);
 
 		return treeViewer;
 	}
@@ -831,6 +834,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		final IStructuredSelection selection) {
 
 		final Action deleteAction = new Action() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				super.run();
@@ -1000,7 +1004,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				boolean allOfSameType = true;
 				final EObject dummy = EcoreUtil.create(((EObject) treeSelected).eClass());
 
-				final Iterator iterator = selection.iterator();
+				final Iterator<?> iterator = selection.iterator();
 				final Set<EObject> selectedEObjects = new LinkedHashSet<EObject>();
 				while (iterator.hasNext()) {
 					final EObject eObject = (EObject) iterator.next();
