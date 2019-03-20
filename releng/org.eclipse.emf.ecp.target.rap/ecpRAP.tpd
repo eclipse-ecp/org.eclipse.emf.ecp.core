@@ -4,7 +4,7 @@ with source configurePhase
 
 include "../org.eclipse.emf.ecp.target.rcp/ecp.tpd"
 
-location "http://download.eclipse.org/releases/2018-12" {
+location "http://download.eclipse.org/releases/2019-03" {
 	org.eclipse.rap.equinox.target.feature.feature.group lazy
 	org.eclipse.rap.feature.feature.group lazy
 	org.eclipse.rap.sdk.feature.feature.group lazy
