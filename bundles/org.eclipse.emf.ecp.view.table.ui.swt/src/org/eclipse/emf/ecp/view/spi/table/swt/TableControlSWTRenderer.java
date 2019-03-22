@@ -9,25 +9,25 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537
+ * Christian W. Damus - bugs 544116, 544537, 545686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
-
-import static java.util.stream.Collectors.toCollection;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -1485,33 +1485,23 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void applyValidation(VDiagnostic oldDiagnostic, VDiagnostic newDiagnostic) {
-		final Stream<Object> oldDiagnostics = oldDiagnostic == null ? Stream.empty()
-			: oldDiagnostic.getDiagnostics().stream();
-		final Stream<Object> newDiagnostics = newDiagnostic == null ? Stream.empty()
-			: newDiagnostic.getDiagnostics().stream();
-
-		final Set<Object> updates = Stream.concat(oldDiagnostics, newDiagnostics)
-			.map(this::getSubject).filter(Objects::nonNull).collect(toCollection(LinkedHashSet::new));
-
-		runnableManager.executeAsync(new ApplyValidationRunnable(updates));
-	}
-
-	private Object getSubject(Object diagnostic) {
-		Object result = null;
-
-		if (diagnostic instanceof Diagnostic) {
-			final List<?> data = ((Diagnostic) diagnostic).getData();
-			result = data.isEmpty() ? null : data.get(0);
-		}
-
-		return result;
+		getRunnableManager().executeAsync(new ComputeValidationUpdate(oldDiagnostic, newDiagnostic));
 	}
 
 	@Override
 	protected void applyValidation() {
-		if (!runnableManager.isRunning()) {
-			runnableManager.executeAsync(new ApplyValidationRunnable());
+		if (!getRunnableManager().isRunning()) {
+			getRunnableManager().executeAsync(new ApplyValidationRunnable());
 		}
+	}
+
+	/**
+	 * Obtain my runnable manager (visible for testability).
+	 *
+	 * @return my runnable manager
+	 */
+	final RunnableManager getRunnableManager() {
+		return runnableManager;
 	}
 
 	/**
@@ -1989,6 +1979,149 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
 			viewerSelectionChanged(event);
+		}
+	}
+
+	/**
+	 * A two-stage asynchronous task that first, in the background, computes the objects
+	 * that have actually seen validation changes and then post the viewer update
+	 * on the UI thread.
+	 */
+	private final class ComputeValidationUpdate implements Runnable, RunnableManager.BackgroundStage {
+		private final Set<Diagnostic> oldDiagnostics;
+		private final Set<Diagnostic> newDiagnostics;
+
+		private Runnable update;
+
+		/**
+		 * Initializes me with the old and new diagnostics from which to compute the objects
+		 * that need to be updated in my viewer.
+		 *
+		 * @param oldDiagnostic the old validation state
+		 * @param newDiagnostic the new validation state
+		 */
+		ComputeValidationUpdate(VDiagnostic oldDiagnostic, VDiagnostic newDiagnostic) {
+			super();
+
+			// These have to be extracted on the calling thread because the ELists
+			// are not thread-safe
+			oldDiagnostics = getDiagnostics(oldDiagnostic);
+			newDiagnostics = getDiagnostics(newDiagnostic);
+		}
+
+		@Override
+		public Runnable getNextStage() {
+			return update;
+		}
+
+		@Override
+		public void run() {
+			// Compute the difference between the diagnostics to find what actually
+			// are the logical changes in validation that will need updates in the UI
+			final Set<Diagnostic> difference = difference(oldDiagnostics, newDiagnostics);
+			final Set<Object> updates = difference.stream().map(this::getSubject).filter(Objects::nonNull)
+				.collect(Collectors.toSet());
+			if (!updates.isEmpty()) {
+				update = new ApplyValidationRunnable(updates);
+			} // Otherwise we don't need the UI update stage
+		}
+
+		private Set<Diagnostic> getDiagnostics(VDiagnostic container) {
+			return container == null ? Collections.emptySet()
+				: container.getDiagnostics().stream()
+					.filter(Diagnostic.class::isInstance).map(Diagnostic.class::cast)
+					.collect(Collectors.toSet());
+		}
+
+		private Object getSubject(Diagnostic diagnostic) {
+			final List<?> data = diagnostic.getData();
+			return data.isEmpty() ? null : data.get(0);
+		}
+
+		private Set<Diagnostic> difference(Set<Diagnostic> set1, Set<Diagnostic> set2) {
+			// Diagnostics do not implement equals(), so we have to do it for them.
+			// Most straightforward approach is to use a tree set, which uses the
+			// comparator's zero result to test equality
+			final SortedSet<Diagnostic> sorted1 = new TreeSet<>(this::compare);
+			sorted1.addAll(set1);
+			final SortedSet<Diagnostic> sorted2 = new TreeSet<>(this::compare);
+			sorted2.addAll(set2);
+
+			// Difference each side
+			sorted1.removeAll(set2);
+			sorted2.removeAll(set1);
+
+			// And the union of that
+			sorted1.addAll(sorted2);
+
+			return sorted1;
+		}
+
+		private int compare(Diagnostic d1, Diagnostic d2) {
+			int result = d1.getSeverity() - d2.getSeverity();
+			if (result != 0) {
+				return result;
+			}
+
+			result = d1.getCode() - d2.getCode();
+			if (result != 0) {
+				return result;
+			}
+
+			result = compare(d1.getSource(), d2.getSource());
+			if (result != 0) {
+				return result;
+			}
+
+			result = compare(d1.getMessage(), d2.getMessage());
+			if (result != 0) {
+				return result;
+			}
+
+			result = compare(d1.getData(), d2.getData());
+
+			// The diagnostics from validation should not have exceptions and
+			// the children are immaterial because we've already flattened them
+
+			return result;
+		}
+
+		private int compare(String s1, String s2) {
+			if (s1 == null) {
+				return s2 == null ? 0 : -1;
+			}
+			if (s2 == null) {
+				return +1;
+			}
+			return s1.compareTo(s2);
+		}
+
+		private int compare(List<?> s1, List<?> s2) {
+			if (s1 == null) {
+				return s2 == null ? 0 : -1;
+			}
+			if (s2 == null) {
+				return +1;
+			}
+
+			final int size = s1.size();
+			int result = size - s2.size();
+			if (result != 0) {
+				return result;
+			}
+
+			int i = 0;
+			for (i = 0; i < size; i++) {
+				final Object e1 = s1.get(i);
+				final Object e2 = s2.get(i);
+				if (e1 != e2) {
+					// Arbitrary but stable order
+					result = System.identityHashCode(e1) - System.identityHashCode(e2);
+					break;
+				}
+			}
+
+			return result;
 		}
 	}
 

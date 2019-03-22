@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
+ * Christian W. Damus - bug 545686
  ******************************************************************************/
 /*******************************************************************************
  * Copyright (c) 2006, 2014 Tom Schindl and others.
@@ -24,7 +25,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.celleditor.rcp;
 
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.swt.SWT;
@@ -40,6 +42,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * Util class for faking native widgets.
@@ -55,13 +59,24 @@ public final class NativeWidgetHelper {
 	private static final String CHECKED_DEFAULT = "icons/checked.png"; //$NON-NLS-1$
 	private static final String UNCHECKED_DEFAULT = "icons/unchecked.png"; //$NON-NLS-1$
 
-	private static final Semaphore LOCK = new Semaphore(1, true);
+	private static final Lock LOCK = new ReentrantLock(true);
 	private static boolean initalized;
 
-	private static ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+	private static final Bundle BUNDLE;
+	private static final ServiceTracker<ImageRegistryService, ImageRegistryService> IMAGE_REGISTRY_SERVICE_TRACKER;
 
 	private static ImageData checked;
 	private static ImageData unchecked;
+
+	private static Image defaultCheckedImage;
+	private static Image defaultUncheckedImage;
+
+	static {
+		BUNDLE = FrameworkUtil.getBundle(NativeWidgetHelper.class);
+		IMAGE_REGISTRY_SERVICE_TRACKER = new ServiceTracker<>(BUNDLE.getBundleContext(), ImageRegistryService.class,
+			new ImageRegistryServiceCustomizer());
+		IMAGE_REGISTRY_SERVICE_TRACKER.open();
+	}
 
 	private NativeWidgetHelper() {
 		// util
@@ -76,16 +91,14 @@ public final class NativeWidgetHelper {
 	 */
 	public static void initCheckBoxImages(Control control) {
 		try {
-			LOCK.acquire();
-		} catch (final InterruptedException ex) {
-			if (initalized) {
-				return;
+			LOCK.lock();
+			if (!initalized) {
+				createCheckBoxImage(control, true);
+				createCheckBoxImage(control, false);
+				initalized = true;
 			}
-			createCheckBoxImage(control, true);
-			createCheckBoxImage(control, false);
-			initalized = true;
 		} finally {
-			LOCK.release();
+			LOCK.unlock();
 		}
 	}
 
@@ -100,27 +113,25 @@ public final class NativeWidgetHelper {
 	 */
 	public static Image getCheckBoxImage(Control control, CheckBoxState state) {
 		try {
-			LOCK.acquire();
+			LOCK.lock();
 			switch (state) {
 
 			case checked:
 				if (checked != null) {
 					return new Image(control.getDisplay(), checked);
 				}
-				return getImage(CHECKED_DEFAULT);
+				return defaultCheckedImage;
 			case unchecked:
 				if (unchecked != null) {
 					return new Image(control.getDisplay(), unchecked);
 				}
-				return getImage(UNCHECKED_DEFAULT);
+				return defaultUncheckedImage;
 			default:
 				break;
 
 			}
-		} catch (final InterruptedException ex) {
-
 		} finally {
-			LOCK.release();
+			LOCK.unlock();
 		}
 
 		return null;
@@ -204,22 +215,6 @@ public final class NativeWidgetHelper {
 		return WS_CARBON.equals(ws) || WS_COCOA.equals(ws);
 	}
 
-	private static Image getImage(String path) {
-		final Bundle bundle = FrameworkUtil.getBundle(NativeWidgetHelper.class);
-		final Image image = getImageRegistryService().getImage(bundle, path);
-		bundle.getBundleContext().ungetService(imageRegistryServiceReference);
-		return image;
-	}
-
-	private static ImageRegistryService getImageRegistryService() {
-		final Bundle bundle = FrameworkUtil.getBundle(NativeWidgetHelper.class);
-		if (imageRegistryServiceReference == null) {
-			imageRegistryServiceReference = bundle.getBundleContext()
-				.getServiceReference(ImageRegistryService.class);
-		}
-		return bundle.getBundleContext().getService(imageRegistryServiceReference);
-	}
-
 	/**
 	 * Enum describing the state of a checkbox.
 	 *
@@ -238,4 +233,55 @@ public final class NativeWidgetHelper {
 		unchecked
 	}
 
+	/**
+	 * Service-tracker customizer that uses the image-registry service, when it is
+	 * discovered or updated, to get and cache the default checked and unchecked images.
+	 */
+	private static final class ImageRegistryServiceCustomizer
+		implements ServiceTrackerCustomizer<ImageRegistryService, ImageRegistryService> {
+
+		@Override
+		public ImageRegistryService addingService(ServiceReference<ImageRegistryService> reference) {
+			final ImageRegistryService result = BUNDLE.getBundleContext().getService(reference);
+
+			onUI(() -> updateImages(result));
+
+			return result;
+		}
+
+		@Override
+		public void modifiedService(ServiceReference<ImageRegistryService> reference, ImageRegistryService service) {
+			onUI(() -> updateImages(service));
+		}
+
+		@Override
+		public void removedService(ServiceReference<ImageRegistryService> reference, ImageRegistryService service) {
+			onUI(() -> updateImages(null));
+		}
+
+		private void onUI(Runnable action) {
+			final Display display = Display.getCurrent();
+			if (display != null) {
+				action.run();
+			} else {
+				Display.getDefault().syncExec(action);
+			}
+		}
+
+		private void updateImages(ImageRegistryService imageRegistryService) {
+			LOCK.lock();
+
+			try {
+				if (imageRegistryService != null) {
+					defaultCheckedImage = imageRegistryService.getImage(BUNDLE, CHECKED_DEFAULT);
+					defaultUncheckedImage = imageRegistryService.getImage(BUNDLE, UNCHECKED_DEFAULT);
+				} else {
+					defaultCheckedImage = null;
+					defaultUncheckedImage = null;
+				}
+			} finally {
+				LOCK.unlock();
+			}
+		}
+	}
 }

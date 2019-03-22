@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2017-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 545686
  ******************************************************************************/
 package org.eclipse.emfforms.common.internal.validation;
 
@@ -35,15 +36,25 @@ public final class DiagnosticHelper {
 	 * @return the found {@link EStructuralFeature}, null if no {@link EStructuralFeature} is found
 	 */
 	public static EStructuralFeature getEStructuralFeature(List<?> data) {
-		if (data == null || data.isEmpty()) {
+		// Exclude first object for cases when we validate an EStructuralFeature.
+		if (data == null || data.size() < 2) {
 			return null;
 		}
-		// Exclude first object for cases when we validate an EStructuralFeature.
-		for (final Object object : data.subList(1, data.size())) {
-			if (EStructuralFeature.class.isInstance(object)) {
-				return EStructuralFeature.class.cast(object);
+
+		// The usual case is that the structural feature is the second object.
+		final Object usual = data.get(1);
+		if (usual instanceof EStructuralFeature) {
+			return (EStructuralFeature) usual;
+		}
+
+		if (data.size() > 2) {
+			for (final Object object : data.subList(2, data.size())) {
+				if (EStructuralFeature.class.isInstance(object)) {
+					return EStructuralFeature.class.cast(object);
+				}
 			}
 		}
+
 		return null;
 	}
 
@@ -54,11 +65,24 @@ public final class DiagnosticHelper {
 	 * @return the found {@link InternalEObject}, null if no {@link InternalEObject} is found
 	 */
 	public static InternalEObject getFirstInternalEObject(List<?> data) {
-		for (final Object object : data) {
-			if (InternalEObject.class.isInstance(object)) {
-				return InternalEObject.class.cast(object);
+		if (data == null || data.isEmpty()) {
+			return null;
+		}
+
+		// The usual case is that the subject of the problem is the first object
+		final Object usual = data.get(0);
+		if (usual instanceof InternalEObject) {
+			return (InternalEObject) usual;
+		}
+
+		if (data.size() > 1) {
+			for (final Object object : data) {
+				if (InternalEObject.class.isInstance(object)) {
+					return InternalEObject.class.cast(object);
+				}
 			}
 		}
+
 		return null;
 	}
 

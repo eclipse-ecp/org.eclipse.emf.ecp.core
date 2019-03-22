@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 545686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -286,12 +287,17 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @param selection the selection
 	 */
 	protected void handleSingleSelection(IStructuredSelection selection) {
+		// Did the selection actionally change? We may have stepped sideways in a row
+		final EObject object = (EObject) selection.getFirstElement();
+		if (ecpView != null && ecpView.getViewModelContext().getDomainModel() == object) {
+			return;
+		}
+
 		disposeDetail();
 		final Composite compositeToRenderOn = new Composite(detailPanel, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(compositeToRenderOn);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(compositeToRenderOn);
 
-		final EObject object = (EObject) selection.getFirstElement();
 		renderSelectedObject(compositeToRenderOn, object);
 		border.layout(true, true);
 		scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
