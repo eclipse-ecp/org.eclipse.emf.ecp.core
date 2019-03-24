@@ -24,11 +24,6 @@
         <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EModelElement/eAnnotations"/>
       </domainModelReference>
     </children>
-    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_vkW5phdNEeaEDZYMI15WfQ" name="Control eModelElement">
-      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_vkW5pxdNEeaEDZYMI15WfQ">
-        <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EAnnotation/eModelElement"/>
-      </domainModelReference>
-    </children>
     <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_vkW5qhdNEeaEDZYMI15WfQ" name="Control references">
       <attachments xsi:type="org.eclipse.emfforms.view.annotation.model:Annotation" xmi:id="_vkW5qyvNEeaEDZYMI15WfQ" key="hideAddNewButton"/>
       <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_vkW5qxdNEeaEDZYMI15WfQ">

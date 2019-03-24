@@ -39,13 +39,13 @@ import java.util.HashSet
  */
 class EcoreJsonGenerator extends JsonGenerator {
 
-	private static final val TYPE = "type"
-	private static final val OBJECT = "object"
-	private static final val REQUIRED = "required"
-	private static final val PROPERTIES = "properties"
-	private static final val ADDITIONAL_PROPERTIES = "additionalProperties"	
+	static val TYPE = "type"
+	static val OBJECT = "object"
+	static val REQUIRED = "required"
+	static val PROPERTIES = "properties"
+	static val ADDITIONAL_PROPERTIES = "additionalProperties"	
 	
-	private final val visitedClasses = new HashSet<EClass>();
+	val visitedClasses = new HashSet<EClass>();
 
 	override createJsonElement(EObject object) {
 		synchronized(visitedClasses){

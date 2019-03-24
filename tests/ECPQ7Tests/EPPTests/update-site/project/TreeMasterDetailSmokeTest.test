@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _cR1mwLKLEeebScL4g4WExw
-Runtime-Version: 2.2.0.201706152316
-Save-Time: 2/27/18 12:00 PM
+Runtime-Version: 2.4.0.201901180020
+Save-Time: 1/18/19 3:34 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -31,7 +31,7 @@ with [get-view "EMF Forms Preview" | get-tree] {
 
 
 with [get-view "EMF Forms Preview" | get-control Any -after [get-label Details] -index 2] {
-    get-property "getChildren().length" | equals 3 | verify-true
+    get-property "getChildren().length" | equals 4 | verify-true
     get-property "getChildren().Control[0].getText()" | equals Name | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getText()" | equals "" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getMessage()" | equals Name | verify-true
@@ -268,7 +268,7 @@ with [get-view "EMF Forms Preview" | get-tree] {
 }
 with [get-view "EMF Forms Preview"] {
     with [get-control Any -after [get-label Details] -index 2] {
-        get-property "getChildren().length" | equals 3 | verify-true
+        get-property "getChildren().length" | equals 4 | verify-true
         get-property "getChildren().Control[0].getText()" | equals Name | verify-true
     }
     get-tree | get-property "selection[0].path[0]" | equals "User Group My User Group" | verify-true

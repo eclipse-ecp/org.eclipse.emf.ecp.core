@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * remi - initial API and implementation
+ * Christian W. Damus - add test for null inputs to applyValidation(...)
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -16,13 +17,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.EObjectObservableValue;
@@ -38,10 +50,13 @@ import org.eclipse.emf.ecp.view.model.common.AbstractGridCell.Alignment;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.ECPTableEditingSupport;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.ECPTableEditingSupport.EditingState;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -57,6 +72,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.viewers.TableViewer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -233,6 +249,132 @@ public class TableControlSWTRenderer_ITest {
 
 		assertValidationCell(gridDescription.getGrid().get(0));
 		assertMainCell(gridDescription.getGrid().get(1));
+	}
+
+	@Test
+	public void isUpdateNeeded_BothNull_ReturnFalse() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		final IObservableValue<?> target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn(null);
+		final IObservableValue<?> model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn(null);
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertFalse(updateNeeded);
+	}
+
+	@Test
+	public void isUpdateNeeded_OnlyModelNull_ReturnTrue() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		@SuppressWarnings("unchecked")
+		final IObservableValue<Object> target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn(new Object());
+		final IObservableValue<?> model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn(null);
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertTrue(updateNeeded);
+	}
+
+	@Test
+	public void isUpdateNeeded_TargetModelNull_ReturnTrue() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		@SuppressWarnings("unchecked")
+		final IObservableValue<Object> target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn(null);
+		@SuppressWarnings("unchecked")
+		final IObservableValue<Object> model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn(new Object());
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertTrue(updateNeeded);
+	}
+
+	@Test
+	public void isUpdateNeeded_Same_ReturnFalse() {
+		/* setup */
+		final TableViewer tblViewer = mock(TableViewer.class);
+		final TableControlSWTRenderer renderer = mock(TableControlSWTRenderer.class);
+		@SuppressWarnings("unchecked")
+		final IObservableValue<String> target = mock(IObservableValue.class);
+		when(target.getValue()).thenReturn("VALUE");
+		@SuppressWarnings("unchecked")
+		final IObservableValue<String> model = mock(IObservableValue.class);
+		when(model.getValue()).thenReturn("VALUE");
+		final ECPTableEditingSupport editingSupport = renderer.new ECPTableEditingSupport(tblViewer, null, null, null);
+		final EditingState state = editingSupport.new EditingState(null, target, model);
+		/* act */
+		final boolean updateNeeded = state.isUpdateNeeded();
+		/* assert */
+		assertFalse(updateNeeded);
+	}
+
+	/**
+	 * Simple test to verify that the {@link TableControlSWTRenderer#applyValidation(VDiagnostic, VDiagnostic)}
+	 * method does not NPE on {@code null} inputs.
+	 */
+	@Test
+	public void applyValidation_VDiagnostic_VDiagnostic() {
+		final TableControlSWTRenderer fixture = spy(
+			new TableControlSWTRenderer(vElement, viewContext, reportService, emfFormsDatabinding,
+				emfFormsLabelProvider, vtViewTemplateProvider, imageRegistryService, emfFormsEditSupport));
+		doCallRealMethod().when(fixture).applyValidation(any(), any());
+
+		final Function<Boolean, VDiagnostic> diagnosticFactory = isNull -> {
+			VDiagnostic result = null;
+
+			if (!isNull) {
+				result = mock(VDiagnostic.class);
+				when(result.getDiagnostics()).thenReturn(ECollections.emptyEList());
+			}
+
+			return result;
+		};
+
+		final BiConsumer<Boolean, Boolean> testScenario = (oldIsNull, newIsNull) -> {
+			final VDiagnostic oldDiagnostic = diagnosticFactory.apply(oldIsNull);
+			final VDiagnostic newDiagnostic = diagnosticFactory.apply(newIsNull);
+
+			try {
+				fixture.applyValidation(oldDiagnostic, newDiagnostic);
+				if (oldDiagnostic != null) {
+					verify(oldDiagnostic).getDiagnostics();
+				}
+				if (newDiagnostic != null) {
+					verify(newDiagnostic).getDiagnostics();
+				}
+			} catch (final NullPointerException e) {
+				e.printStackTrace();
+				fail("Should not have got NPE");
+			}
+		};
+
+		// Case of old is not null, new is not null
+		testScenario.accept(false, false);
+
+		// Case of old is null, new is not null
+		testScenario.accept(true, false);
+
+		// Case of old is not null, new is null
+		testScenario.accept(false, true);
+
+		// Case of old is null, new is null
+		testScenario.accept(true, true);
 	}
 
 	private void assertLabelCell(SWTGridCell labelCell) {

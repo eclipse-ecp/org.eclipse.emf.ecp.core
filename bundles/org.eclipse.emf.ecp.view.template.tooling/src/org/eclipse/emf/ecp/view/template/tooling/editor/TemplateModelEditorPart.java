@@ -239,4 +239,10 @@ public class TemplateModelEditorPart extends GenericEditor {
 		}
 		return uris;
 	}
+
+	@Override
+	protected boolean enableValidation() {
+		return true;
+	}
+
 }

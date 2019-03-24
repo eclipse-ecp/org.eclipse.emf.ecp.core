@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_g9tCoH_iEeaZjMd1mcUoMw">
-  <releases xmi:id="_g9528H_iEeaZjMd1mcUoMw" date="2014-08-28T05:34:24.390-0400" label="140">
+  <releases xmi:id="_g9528H_iEeaZjMd1mcUoMw" date="2014-08-28T11:34:24.390+0200" label="140">
     <changes xsi:type="history:CompositeChange" xmi:id="_g97FEH_iEeaZjMd1mcUoMw">
       <changes xsi:type="history:Create" xmi:id="_g98TMH_iEeaZjMd1mcUoMw">
         <element href="rule.ecore#/"/>
@@ -245,8 +245,6 @@
         <parameters xmi:id="_g-cCdX_iEeaZjMd1mcUoMw" name="opposite"/>
       </operation>
     </changes>
-  </releases>
-  <releases xmi:id="_g-cpgH_iEeaZjMd1mcUoMw">
     <changes xsi:type="history:OperationChange" xmi:id="_EI8oYH_jEeaZjMd1mcUoMw">
       <changes xsi:type="history:Create" xmi:id="_EI9PcH_jEeaZjMd1mcUoMw" referenceName="eClassifiers">
         <target href="rule.ecore#/"/>
@@ -870,4 +868,5 @@
       </operation>
     </changes>
   </releases>
+  <releases xmi:id="_g-cpgH_iEeaZjMd1mcUoMw"/>
 </history:History>

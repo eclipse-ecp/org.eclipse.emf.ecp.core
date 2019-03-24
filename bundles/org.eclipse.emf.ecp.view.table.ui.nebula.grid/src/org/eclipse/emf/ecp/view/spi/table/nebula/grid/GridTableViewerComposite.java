@@ -332,10 +332,6 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
 
-			if (grid.getItemCount() == 0) {
-				return true;
-			}
-
 			grid.setRedraw(false);
 			final GridItem dummyItem = new GridItem(grid, SWT.NONE);
 

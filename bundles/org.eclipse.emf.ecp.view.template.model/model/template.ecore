@@ -4,7 +4,7 @@
     nsPrefix="org.eclipse.emf.ecp.view.template.model">
   <eClassifiers xsi:type="ecore:EClass" name="ViewTemplate">
     <eStructuralFeatures xsi:type="ecore:EReference" name="controlValidationConfiguration"
-        lowerBound="1" eType="#//ControlValidationTemplate" containment="true"/>
+        eType="#//ControlValidationTemplate" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="styles" upperBound="-1"
         eType="#//Style" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referencedEcores" upperBound="-1"

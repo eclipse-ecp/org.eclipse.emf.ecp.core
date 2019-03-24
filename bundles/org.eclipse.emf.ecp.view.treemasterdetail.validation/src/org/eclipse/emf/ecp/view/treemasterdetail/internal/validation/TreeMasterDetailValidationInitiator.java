@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.treemasterdetail.internal.validation;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -89,12 +90,8 @@ public class TreeMasterDetailValidationInitiator implements
 						// For every removed child object, remove this listener and the TMD Validation Initiator as
 						// context users from the child object's context. This allows that the child context is disposed
 						// once its other listeners are removed, too.
-						for (final Object child : childrenTreeContextEntry) {
-							final ViewModelContext childContext = getExistingOrNewChildContext(treeContextEntry, child);
-							childContext.removeContextUser(this);
-							childContext.removeContextUser(TreeMasterDetailValidationInitiator.this);
-							mapping.get(treeContextEntry).remove(child);
-						}
+						final Object oldValue = notification.getRawNotification().getOldValue();
+						cleanupRemovedValues(oldValue, treeContextEntry);
 					}
 					return;
 				}
@@ -105,6 +102,38 @@ public class TreeMasterDetailValidationInitiator implements
 					mapping.get(treeContextEntry).add(child);
 					final ViewModelContext childContext = getExistingOrNewChildContext(treeContextEntry, child);
 					childContext.addContextUser(this);
+				}
+			}
+		}
+
+		/**
+		 * Cleans up the removed values.
+		 * For every removed child object, remove this listener and the TMD Validation Initiator as
+		 * context users from the child object's context. This allows that the child context is disposed
+		 * once its other listeners are removed, too.
+		 *
+		 * @param removedValueObject the removed value object.
+		 * @param treeContextEntry the {@link TreeContextMapping} to retrieve the view model context to remove the
+		 *            context users from.
+		 */
+		private void cleanupRemovedValues(Object removedValueObject, TreeContextMapping treeContextEntry) {
+			if (removedValueObject != null) {
+				final Set<Object> removedChildren = new HashSet<Object>();
+				if (removedValueObject instanceof Collection) {
+					for (final Object removedListObject : (Collection<?>) removedValueObject) {
+						if (removedListObject instanceof EObject) {
+							removedChildren.add(removedListObject);
+						}
+					}
+				} else if (removedValueObject instanceof EObject) {
+					removedChildren.add(removedValueObject);
+				}
+				for (final Object removedChild : removedChildren) {
+					final ViewModelContext childContext = getExistingOrNewChildContext(treeContextEntry,
+						removedChild);
+					childContext.removeContextUser(this);
+					childContext.removeContextUser(TreeMasterDetailValidationInitiator.this);
+					mapping.get(treeContextEntry).remove(removedChild);
 				}
 			}
 		}

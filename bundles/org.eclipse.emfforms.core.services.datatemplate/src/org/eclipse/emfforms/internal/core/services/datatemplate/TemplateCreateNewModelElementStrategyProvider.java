@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * lucas - initial API and implementation
- * Christian W. Damus - bug 529138
+ * Christian W. Damus - bugs 529138, 543461
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
@@ -16,7 +16,9 @@ import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIP
 import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -185,9 +187,14 @@ public class TemplateCreateNewModelElementStrategyProvider
 	 *
 	 * @author Lucas Koehler
 	 */
-	private class Strategy implements CreateNewModelElementStrategy {
+	class Strategy implements CreateNewModelElementStrategy {
 		private final EClassSelectionStrategy classSelectionStrategy;
 
+		/**
+		 * Initializes me with a strategy for selecting classes permitted in the particular form context.
+		 *
+		 * @param classSelectionStrategy my class selection strategy
+		 */
 		Strategy(final EClassSelectionStrategy classSelectionStrategy) {
 			super();
 			this.classSelectionStrategy = classSelectionStrategy;
@@ -214,6 +221,12 @@ public class TemplateCreateNewModelElementStrategyProvider
 
 			Template selected = availableTemplates.iterator().next();
 			if (availableTemplates.size() > 1) {
+				// Don't show classes for which we don't have templates (bug 543461)
+				final Set<EClass> templateClasses = availableTemplates.stream()
+					.map(Template::getInstance).filter(Objects::nonNull).map(EObject::eClass)
+					.collect(Collectors.toSet());
+				subClasses.retainAll(templateClasses);
+
 				final Optional<Template> selectedElement = showSelectModelInstancesDialog(subClasses,
 					availableTemplates);
 

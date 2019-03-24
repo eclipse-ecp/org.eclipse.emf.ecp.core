@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Core Rap Sessionprovider Concurrent Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.core.rap.sessionprovider.concurrent.test
-Bundle-Version: 1.19.0.qualifier
+Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.core.rap.sessionprovider.concurrent.test;version="1.19.0"
-Require-Bundle: org.eclipse.emf.ecp.core.rap;bundle-version="[1.19.0,1.20.0)"
+Export-Package: org.eclipse.emf.ecp.core.rap.sessionprovider.concurrent.test;version="1.20.0"
+Require-Bundle: org.eclipse.emf.ecp.core.rap;bundle-version="[1.20.0,1.21.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/component.xml
 Bundle-ActivationPolicy: lazy

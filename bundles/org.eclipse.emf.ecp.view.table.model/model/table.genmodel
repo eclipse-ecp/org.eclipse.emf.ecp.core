@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.ecp.view.table.model/src" modelPluginID="org.eclipse.emf.ecp.view.table.model"
     modelName="Table" nonNLSMarkers="true" codeFormatting="true" commentFormatting="true"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
-    usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
   <foreignModel>table.ecore</foreignModel>
   <genPackages prefix="Table" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
@@ -19,10 +19,12 @@
     </genEnums>
     <genClasses ecoreClass="table.ecore#//TableControl">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/addRemoveDisabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/moveUpDownDisabled"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableControl/columnConfigurations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/detailEditing"/>
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableControl/detailView"/>
+      <genFeatures children="true" createChild="false" ecoreFeature="ecore:EReference table.ecore#//TableControl/detailView"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/enableDetailEditingDialog"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/duplicateDisabled"/>
     </genClasses>
     <genClasses image="false" ecoreClass="table.ecore#//TableColumnConfiguration"/>
     <genClasses ecoreClass="table.ecore#//TableDomainModelReference">

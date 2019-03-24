@@ -57,6 +57,7 @@ import org.eclipse.jface.bindings.keys.IKeyLookup;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.SWT;
@@ -71,6 +72,7 @@ import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.Result;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.junit.After;
 import org.junit.Before;
@@ -107,7 +109,7 @@ public class TreeMasterDetail_PTest {
 			@Override
 			public Shell run() {
 				final Shell shell = new Shell(display);
-				GridDataFactory.fillDefaults().applyTo(shell);
+				GridLayoutFactory.fillDefaults().applyTo(shell);
 				return shell;
 			}
 		});
@@ -476,45 +478,70 @@ public class TreeMasterDetail_PTest {
 				shell.open();
 			}
 		});
+
 		SWTTestUtil.waitForUIThread();
 		final String text = bot.text().getText();
 		assertEquals(ALICE, text);
 		assertEquals("Player Alice", bot.tree().selection().get(0, 0)); //$NON-NLS-1$
 
 		/* press down, selection expected to change */
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ARROW_DOWN_NAME));
-				} catch (final ParseException ex) {
-					throw new RuntimeException(ex);
-				}
-			}
-		});
+		try {
+			bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ARROW_DOWN_NAME));
+		} catch (final ParseException ex) {
+			throw new RuntimeException(ex);
+		}
 
 		/* detail unchanged after down, but selection changed already */
 		SWTTestUtil.waitForUIThread();
 		assertEquals(text, bot.text().getText());
-		assertEquals("Player Bob", bot.tree().selection().get(0, 0)); //$NON-NLS-1$
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				return "Player Bob".equals(bot.tree().selection().get(0, 0));
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "The selection did not update to Bob!";
+			}
+		}, 10000, 100);
 
 		/* press enter */
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ENTER_NAME));
-				} catch (final ParseException ex) {
-					throw new RuntimeException(ex);
-				}
-			}
-		});
+		try {
+			bot.tree().pressShortcut(KeyStroke.getInstance(IKeyLookup.ENTER_NAME));
+		} catch (final ParseException ex) {
+			throw new RuntimeException(ex);
+		}
 
 		/* enter should update immediately, no delay expected */
-		SWTTestUtil.waitForUIThread();
-		assertEquals(BOB, bot.text().getText());
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				SWTTestUtil.waitForUIThread();
+				return BOB.equals(bot.text().getText());
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "The detail did not update to show Bob!";
+			}
+		}, 10000, 100);
 		/* focus change expected */
-		assertSame(bot.text().widget, bot.getFocusedWidget());
+		bot.waitUntil(new DefaultCondition() {
+
+			@Override
+			public boolean test() throws Exception {
+				SWTTestUtil.waitForUIThread();
+				return bot.text().widget == bot.getFocusedWidget();
+			}
+
+			@Override
+			public String getFailureMessage() {
+				return "The focus did not switch to Text Bob!";
+			}
+		}, 10000, 100);
 	}
 
 	@Test

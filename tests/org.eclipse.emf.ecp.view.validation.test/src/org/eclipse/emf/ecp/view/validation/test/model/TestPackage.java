@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543190
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model;
 
@@ -540,6 +541,38 @@ public interface TestPackage extends EPackage {
 	int CONTENT_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableObjectImpl <em>Table
+	 * Object</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableObjectImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableObject()
+	 * @generated
+	 */
+	int TABLE_OBJECT = 22;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_OBJECT__LABEL = 0;
+
+	/**
+	 * The number of structural features of the '<em>Table Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_OBJECT_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithMultiplicityImpl
 	 * <em>Table With Multiplicity</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -552,6 +585,16 @@ public interface TestPackage extends EPackage {
 	int TABLE_WITH_MULTIPLICITY = 9;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_WITH_MULTIPLICITY__LABEL = TABLE_OBJECT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Content</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -559,7 +602,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITH_MULTIPLICITY__CONTENT = 0;
+	int TABLE_WITH_MULTIPLICITY__CONTENT = TABLE_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Table With Multiplicity</em>' class.
@@ -569,7 +612,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITH_MULTIPLICITY_FEATURE_COUNT = 1;
+	int TABLE_WITH_MULTIPLICITY_FEATURE_COUNT = TABLE_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentImpl <em>Table
@@ -693,6 +736,16 @@ public interface TestPackage extends EPackage {
 	int TABLE_WITHOUT_MULTIPLICITY = 13;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_WITHOUT_MULTIPLICITY__LABEL = TABLE_OBJECT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Content</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -700,7 +753,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITHOUT_MULTIPLICITY__CONTENT = 0;
+	int TABLE_WITHOUT_MULTIPLICITY__CONTENT = TABLE_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Table Without Multiplicity</em>' class.
@@ -710,7 +763,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITHOUT_MULTIPLICITY_FEATURE_COUNT = 1;
+	int TABLE_WITHOUT_MULTIPLICITY_FEATURE_COUNT = TABLE_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithUniqueImpl
@@ -725,6 +778,16 @@ public interface TestPackage extends EPackage {
 	int TABLE_WITH_UNIQUE = 14;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_WITH_UNIQUE__LABEL = TABLE_OBJECT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Content</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -732,7 +795,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITH_UNIQUE__CONTENT = 0;
+	int TABLE_WITH_UNIQUE__CONTENT = TABLE_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Table With Unique</em>' class.
@@ -742,7 +805,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITH_UNIQUE_FEATURE_COUNT = 1;
+	int TABLE_WITH_UNIQUE_FEATURE_COUNT = TABLE_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the
@@ -834,6 +897,16 @@ public interface TestPackage extends EPackage {
 	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE = 17;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE__LABEL = TABLE_OBJECT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Content</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -841,7 +914,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT = 0;
+	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT = TABLE_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Table Without Multiplicity Concrete</em>' class.
@@ -851,7 +924,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE_FEATURE_COUNT = 1;
+	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE_FEATURE_COUNT = TABLE_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
@@ -1051,7 +1124,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getStringWithMaxLength8()
 	 * @generated
 	 */
-	int STRING_WITH_MAX_LENGTH8 = 24;
+	int STRING_WITH_MAX_LENGTH8 = 25;
 
 	/**
 	 * The meta object id for the '<em>Only Capitals</em>' data type.
@@ -1062,7 +1135,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getOnlyCapitals()
 	 * @generated
 	 */
-	int ONLY_CAPITALS = 25;
+	int ONLY_CAPITALS = 26;
 
 	/**
 	 * The meta object id for the '<em>Custom Data Type</em>' data type.
@@ -1073,7 +1146,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getCustomDataType()
 	 * @generated
 	 */
-	int CUSTOM_DATA_TYPE = 26;
+	int CUSTOM_DATA_TYPE = 27;
 
 	/**
 	 * The meta object id for the '<em>Phone Number</em>' data type.
@@ -1084,7 +1157,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getPhoneNumber()
 	 * @generated
 	 */
-	int PHONE_NUMBER = 27;
+	int PHONE_NUMBER = 28;
 
 	/**
 	 * The meta object id for the '<em>Min Length Of3</em>' data type.
@@ -1095,7 +1168,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getMinLengthOf3()
 	 * @generated
 	 */
-	int MIN_LENGTH_OF3 = 28;
+	int MIN_LENGTH_OF3 = 29;
 
 	/**
 	 * The meta object id for the '<em>Strict Min Length Of3</em>' data type.
@@ -1106,7 +1179,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getStrictMinLengthOf3()
 	 * @generated
 	 */
-	int STRICT_MIN_LENGTH_OF3 = 29;
+	int STRICT_MIN_LENGTH_OF3 = 30;
 
 	/**
 	 * The meta object id for the '<em>Age</em>' data type.
@@ -1117,7 +1190,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getAge()
 	 * @generated
 	 */
-	int AGE = 30;
+	int AGE = 31;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Gender <em>Gender</em>}' enum.
@@ -1128,7 +1201,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getGender()
 	 * @generated
 	 */
-	int GENDER = 22;
+	int GENDER = 23;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Color <em>Color</em>}' enum.
@@ -1139,7 +1212,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getColor()
 	 * @generated
 	 */
-	int COLOR = 23;
+	int COLOR = 24;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library
@@ -2040,6 +2113,31 @@ public interface TestPackage extends EPackage {
 	EAttribute getPerson_Age();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableObject <em>Table
+	 * Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Table Object</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableObject
+	 * @generated
+	 */
+	EClass getTableObject();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.validation.test.model.TableObject#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableObject#getLabel()
+	 * @see #getTableObject()
+	 * @generated
+	 */
+	EAttribute getTableObject_Label();
+
+	/**
 	 * Returns the meta object for data type '{@link java.lang.String <em>String With Max Length8</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2881,6 +2979,27 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PERSON__AGE = eINSTANCE.getPerson_Age();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableObjectImpl
+		 * <em>Table Object</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableObjectImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableObject()
+		 * @generated
+		 */
+		EClass TABLE_OBJECT = eINSTANCE.getTableObject();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TABLE_OBJECT__LABEL = eINSTANCE.getTableObject_Label();
 
 		/**
 		 * The meta object literal for the '<em>String With Max Length8</em>' data type.

@@ -48,10 +48,10 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -124,6 +124,9 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		/* scrolled composite */
 		scrolledComposite = createScrolledDetail(sashForm);
 
+		scrolledComposite.addListener(SWT.Resize,
+			(Event event) -> scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT)));
+
 		// As a default the table gets 1/3 of the space and the detail panel 2/3.
 		sashForm.setWeights(new int[] { 1, 2 });
 
@@ -181,7 +184,8 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @return The ScrolledComposite containing the detail panel
 	 */
 	protected ScrolledComposite createScrolledDetail(Composite parent) {
-		final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.BORDER);
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(parent,
+			SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER);
 		scrolledComposite.setBackground(parent.getBackground());
 		scrolledComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(scrolledComposite);
@@ -193,9 +197,6 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(detailPanel);
 		scrolledComposite.setContent(detailPanel);
 
-		detailPanel.layout();
-		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		scrolledComposite.setMinHeight(point.y);
 		return scrolledComposite;
 	}
 
@@ -293,8 +294,7 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		final EObject object = (EObject) selection.getFirstElement();
 		renderSelectedObject(compositeToRenderOn, object);
 		border.layout(true, true);
-		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		scrolledComposite.setMinHeight(point.y);
+		scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	/**

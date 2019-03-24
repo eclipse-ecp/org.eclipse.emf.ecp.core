@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -43,11 +44,6 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(factory);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider#getObjectLabel(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public String getObjectLabel(EObject eObject) {
 		final Object provider = factory.adapt(
@@ -59,18 +55,18 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 		return IItemLabelProvider.class.cast(provider).getText(eObject);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider#getFeatureLabel(org.eclipse.emf.ecore.EStructuralFeature)
-	 */
 	@Override
 	public String getFeatureLabel(EStructuralFeature eStructuralFeature) {
 		final EClass eClass = eStructuralFeature.getEContainingClass();
 		if (eClass.isInterface() || eClass.isAbstract()) {
 			return eStructuralFeature.getName();
 		}
-		final EObject tempInstance = EcoreUtil.create(eClass);
+		EObject tempInstance;
+		if (eClass.getInstanceClass() != null) {
+			tempInstance = EcoreUtil.create(eClass);
+		} else {
+			tempInstance = new DynamicEObjectImpl(eClass);
+		}
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 			tempInstance, eStructuralFeature);
 

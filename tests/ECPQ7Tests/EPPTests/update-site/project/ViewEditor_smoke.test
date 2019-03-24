@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _foqG8GzgEeWQGtcwdcx-qw
-Runtime-Version: 2.2.0.201706152316
-Save-Time: 8/16/18 2:32 PM
+Runtime-Version: 2.4.0.201901180020
+Save-Time: 1/18/19 3:24 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -281,10 +281,10 @@ with [get-editor "User.view" | get-tree] {
     select "View/Categorization" | get-menu -path "Leaf Category" | click
     select "View/Categorization/Leaf Category" | get-menu -path VerticalLayout | click
     select "View/Categorization/Leaf Category/VerticalLayout" | key-type Del
-    select "View/Categorization/Leaf Category/VerticalLayout" | get-menu -path Delete | click
+//    select "View/Categorization/Leaf Category/VerticalLayout" | get-menu -path Delete | click
     select "View/Categorization/Leaf Category" | get-menu -path Group | click
     select "View/Categorization/Leaf Category/Group" | key-type Del
-    select "View/Categorization/Leaf Category/Group" | get-menu -path Delete | click
+//    select "View/Categorization/Leaf Category/Group" | get-menu -path Delete | click
     select "View/Categorization/Leaf Category" | get-menu -path TableControl | click
     select "View/Categorization/Leaf Category/TableControl" | get-menu -path Delete | click
     select "View/Categorization/Leaf Category" | get-menu -path HorizontalLayout | click

@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
@@ -407,7 +407,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Collection<EClass> classes = ECPUtil.getSubClasses(((EReferenceImpl) eStructuralFeature)
+			final Collection<EClass> classes = EMFUtils.getSubClasses(((EReferenceImpl) eStructuralFeature)
 				.getEReferenceType());
 
 			final EClass eclass = Helper.getRootEClass(getViewModelContext().getDomainModel());

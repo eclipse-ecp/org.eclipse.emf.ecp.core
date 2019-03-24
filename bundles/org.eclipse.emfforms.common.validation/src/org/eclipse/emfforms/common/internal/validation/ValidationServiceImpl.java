@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
@@ -366,13 +367,18 @@ public class ValidationServiceImpl implements ValidationService {
 			Map<Object, Object> context) {
 			EValidator eValidator;
 			EClass eType = eClass;
-			while ((eValidator = eValidatorRegistry.getEValidator(eType.getEPackage())) == null) {
-				final List<EClass> eSuperTypes = eType.getESuperTypes();
-				if (eSuperTypes.isEmpty()) {
-					eValidator = eValidatorRegistry.getEValidator(null);
-					break;
+			// short cut dynamic emf to avoid ClassCastExceptions in custom validators
+			if (eObject instanceof DynamicEObjectImpl) {
+				eValidator = eValidatorRegistry.getEValidator(null);
+			} else {
+				while ((eValidator = eValidatorRegistry.getEValidator(eType.getEPackage())) == null) {
+					final List<EClass> eSuperTypes = eType.getESuperTypes();
+					if (eSuperTypes.isEmpty()) {
+						eValidator = eValidatorRegistry.getEValidator(null);
+						break;
+					}
+					eType = eSuperTypes.get(0);
 				}
-				eType = eSuperTypes.get(0);
 			}
 			return doValidate(eValidator, eType, eObject, diagnostics, context);
 		}

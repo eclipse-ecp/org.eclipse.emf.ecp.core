@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -64,14 +63,13 @@ public class ViewRenderer_PTest {
 	public void setUp() {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
-		final EMFFormsDatabinding databindingService = mock(EMFFormsDatabinding.class);
 		rendererFactory = mock(EMFFormsRendererFactory.class);
 		final EMFFormsLocaleProvider localeProvider = mock(EMFFormsLocaleProvider.class);
 		view = Mockito.mock(VView.class);
 
 		context = Mockito.mock(ViewModelContext.class);
 		shell = new Shell();
-		viewRenderer = new ViewSWTRenderer(view, context, reportService, rendererFactory, databindingService,
+		viewRenderer = new ViewSWTRenderer(view, context, reportService, rendererFactory,
 			localeProvider);
 		viewRenderer.init();
 	}

@@ -20,6 +20,10 @@
             class="org.eclipse.emf.ecp.edit.internal.swt.table.XmlDateCellEditor"
             tester="org.eclipse.emfforms.internal.view.control.multiattribute.celleditor.XmlDateCellEditorTester">
       </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditor"
+            tester="org.eclipse.emfforms.internal.view.control.multiattribute.celleditor.EnumCellEditorTester">
+      </cellEditor>
    </extension>
 
 </plugin>

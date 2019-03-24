@@ -69,12 +69,16 @@ import org.eclipse.emfforms.spi.editor.messages.Messages;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.decorator.validation.ecp.ECPValidationLabelDecoratorProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache.ValidationListener;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -85,6 +89,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -98,6 +104,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.contexts.IContextActivation;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.ide.IGotoMarker;
@@ -107,6 +114,8 @@ import org.eclipse.ui.part.EditorPart;
  * The Class GenericEditor it is the generic part for editing any EObject.
  */
 public class GenericEditor extends EditorPart implements IEditingDomainProvider, IGotoMarker {
+
+	private static final String GENERIC_EDITOR_CONTEXT = "org.eclipse.emfforms.editor.context"; //$NON-NLS-1$
 
 	private static final String FRAGMENT_URI = "FRAGMENT_URI"; //$NON-NLS-1$
 
@@ -266,10 +275,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			}
 		});
 
-		// Activate our context, so that our key-bindings are more important than
-		// the default ones!
-		site.getService(IContextService.class).activateContext(getContextId());
-
 		site.getPage().addPartListener(partListener);
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
@@ -283,7 +288,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @return the context id
 	 */
 	protected String getContextId() {
-		return "org.eclipse.emfforms.editor.context"; //$NON-NLS-1$
+		return GENERIC_EDITOR_CONTEXT;
 	}
 
 	@Override
@@ -380,12 +385,26 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			IResource.DEPTH_ZERO);
 	}
 
-	private void setupDiagnosticCache(Object editorInput) {
-		if (!Notifier.class.isInstance(editorInput)) {
-			return;
+	/**
+	 * Get the Notifier from the tree input.
+	 * 
+	 * @param editorInput The editor input to transform
+	 * @return {@link Notifier}
+	 * @throws IllegalStateException if the editor input is not a Notifier
+	 */
+	protected Notifier getNotifierFromEditorInput(Object editorInput) {
+		Object input = editorInput;
+		if (input instanceof RootObject) {
+			input = ((RootObject) input).getRoot();
 		}
-		final Notifier input = (Notifier) editorInput;
-		cache = createDiangosticCache(input);
+		if (!Notifier.class.isInstance(input)) {
+			throw new IllegalStateException("The editor input is not a Notifier!"); //$NON-NLS-1$
+		}
+		return (Notifier) input;
+	}
+
+	private void setupDiagnosticCache(Object editorInput) {
+		cache = createDiangosticCache(getNotifierFromEditorInput(editorInput));
 	}
 
 	/**
@@ -449,6 +468,17 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	}
 
 	/**
+	 * Returns the root composite containing the tree and the detail view. This is null before the editor control is
+	 * created.
+	 *
+	 * @return The root {@link TreeMasterDetailComposite} of this editor
+	 * @since 1.20
+	 */
+	protected TreeMasterDetailComposite getRootView() {
+		return rootView;
+	}
+
+	/**
 	 * This method creates a tree master detail. Override this method if you want to customize the tree.
 	 *
 	 * @param composite the parent composite
@@ -461,7 +491,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		final Composite composite,
 		Object editorInput,
 		final CreateElementCallback createElementCallback) {
-		final TreeMasterDetailComposite treeMasterDetail = TreeMasterDetailSWTFactory
+		final TreeMasterDetailSWTBuilder builder = TreeMasterDetailSWTFactory
 			.fillDefaults(composite, SWT.NONE, editorInput)
 			.customizeCildCreation(createElementCallback)
 			.customizeMenu(new MenuProvider() {
@@ -480,8 +510,44 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 				}
 			})
-			.create();
+			.customizeTree(createTreeViewerBuilder());
+
+		if (enableValidation()) {
+			builder.customizeLabelDecorator(
+				new ECPValidationLabelDecoratorProvider(getNotifierFromEditorInput(editorInput), getDiagnosticCache()));
+		}
+
+		final TreeMasterDetailComposite treeMasterDetail = builder.create();
 		return treeMasterDetail;
+	}
+
+	/**
+	 * Create the {@link TreeViewerBuilder} customization which creates the tree for the editor's tree master detail.
+	 * <p>
+	 * Clients can override this to customize the tree viewer.
+	 *
+	 * @return the {@link TreeViewerBuilder} which creates the tree viewer for the editor's tree master detail
+	 * @since 1.20
+	 */
+	protected TreeViewerBuilder createTreeViewerBuilder() {
+		return parent -> {
+			final TreeViewer treeViewer = new TreeViewer(parent, SWT.MULTI | SWT.BORDER);
+			treeViewer.setAutoExpandLevel(3);
+			treeViewer.getTree().addFocusListener(new FocusListener() {
+				private IContextActivation activation;
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					getSite().getService(IContextService.class).deactivateContext(activation);
+				}
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					activation = getSite().getService(IContextService.class).activateContext(getContextId());
+				}
+			});
+			return treeViewer;
+		};
 	}
 
 	/**

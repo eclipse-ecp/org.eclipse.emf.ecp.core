@@ -14,7 +14,6 @@
 package org.eclipse.emfforms.internal.editor.ecore.referenceservices;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -47,7 +46,7 @@ public class EcoreAttachmentStrategyProvider extends ReferenceServiceCustomizati
 
 	@Override
 	protected boolean handles(EObject owner, EReference reference) {
-		return owner instanceof EModelElement;
+		return reference == EcorePackage.Literals.EREFERENCE__EOPPOSITE;
 	}
 
 	/**

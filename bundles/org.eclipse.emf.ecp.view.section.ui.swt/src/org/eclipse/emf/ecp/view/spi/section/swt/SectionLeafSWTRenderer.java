@@ -80,13 +80,20 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 			.extendedMargins(computeLeftMargin(), 0, 0, 0)
 			.applyTo(composite);
 
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
 		final Label label = new Label(composite, getLabelStyleBits());
-		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
-			: getVElement().getName();
-		label.setText(text);
+
+		final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
+			VViewPackage.eINSTANCE.getElement_Label());
+
+		final IObservableValue textObservable = WidgetProperties.text().observe(label);
+
+		getDataBindingContext().bindValue(textObservable, modelLabelValue);
+
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(label);
 
-		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
 		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),

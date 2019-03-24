@@ -225,10 +225,7 @@ public class SelectEClassWizardPage extends WizardPage {
 				children.addAll(EPackage.class.cast(parentElement).getESubpackages());
 				for (final EObject obj : EPackage.class.cast(parentElement).getEClassifiers()) {
 					if (EClass.class.isInstance(obj)) {
-						final EClass eClass = EClass.class.cast(obj);
-						if (!eClass.isAbstract() && !eClass.isInterface()) {
-							children.add(obj);
-						}
+						children.add(obj);
 					}
 				}
 				return children.toArray();

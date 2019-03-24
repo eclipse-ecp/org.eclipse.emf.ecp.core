@@ -5,8 +5,8 @@ Element-Type: testsuite
 Element-Version: 2.0
 Id: _MY-BIBiHEeiwib4PmrBZZQ
 Manually-Ordered: true
-Runtime-Version: 2.2.0.201706152316
-Save-Time: 5/23/18 5:31 PM
+Runtime-Version: 2.4.0.201810292311
+Save-Time: 11/28/18 4:08 PM
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
 Content-Type: text/testcase
@@ -31,5 +31,6 @@ _uCoUgDmmEeiV5MMKft7xVA	// kind: 'test' name: 'TemplateAndSelector' path: 'Templ
 _PcpI0DmJEeiUsKIXZxWPjg	// kind: 'test' name: 'TemplateAnnotationSelector' path: 'TemplateAnnotationSelector.test'
 _JU4aMDmmEeiV5MMKft7xVA	// kind: 'test' name: 'TemplateHierarchySelector' path: 'TemplateHierarchySelector.test'
 _RKICsDmnEeiV5MMKft7xVA	// kind: 'test' name: 'TemplateLabelWrapStyle' path: 'TemplateLabelWrapStyle.test'
+_W4UMAPMcEeik6oWCgIASMQ	// kind: 'test' name: 'View Model With Abstract Root EClass' path: 'View Model With Abstract Root EClass.test'
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

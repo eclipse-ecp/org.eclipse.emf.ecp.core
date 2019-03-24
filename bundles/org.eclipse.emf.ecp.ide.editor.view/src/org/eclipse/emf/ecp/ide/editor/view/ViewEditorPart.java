@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543376
  ******************************************************************************/
 package org.eclipse.emf.ecp.ide.editor.view;
 
@@ -65,7 +66,10 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.services.ECPSelectionProviderService;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -100,7 +104,7 @@ import org.eclipse.ui.part.FileEditorInput;
  *
  */
 public class ViewEditorPart extends EditorPart implements
-	ViewModelEditorCallback {
+	ViewModelEditorCallback, IEditingDomainProvider {
 
 	private Resource resource;
 	private BasicCommandStack basicCommandStack;
@@ -224,6 +228,22 @@ public class ViewEditorPart extends EditorPart implements
 
 		final IResourceChangeListener listener = new EditorResourceChangedListener();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
+	}
+
+	/**
+	 * @since 1.20
+	 */
+	@Override
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
+	}
+
+	@Override
+	public <T> T getAdapter(Class<T> adapter) {
+		if (adapter == ViewModelContext.class) {
+			return adapter.cast(render.getViewModelContext());
+		}
+		return super.getAdapter(adapter);
 	}
 
 	/**
@@ -630,6 +650,8 @@ public class ViewEditorPart extends EditorPart implements
 					new EMFDeleteServiceImpl());
 			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE); //$NON-NLS-1$
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, viewModelContext);
+			getSite().setSelectionProvider(
+				viewModelContext.getService(ECPSelectionProviderService.class).getSelectionProvider());
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(
 				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));

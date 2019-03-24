@@ -32,6 +32,7 @@ import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EClass;
@@ -233,6 +234,13 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(
 				mockedObservableValue);
+
+		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
+		when(structuralFeature.isChangeable()).thenReturn(true);
+		final IEMFValueProperty valueProperty = mock(IEMFValueProperty.class);
+		when(valueProperty.getValueType()).thenReturn(structuralFeature);
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			valueProperty);
 
 		when(getvControl().getColumnConfigurations())
 			.thenReturn(new BasicEList<VTableColumnConfiguration>());
@@ -519,6 +527,10 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		}
 
 		columnConfiguration.matchFilter().setValue("foo");
+		assertEquals(0, filterVisible(grid.getItems()).length);
+
+		// double check, that extending a filter which lead to an empty result still created an empty result
+		columnConfiguration.matchFilter().setValue("foo2");
 		assertEquals(0, filterVisible(grid.getItems()).length);
 
 		columnConfiguration.matchFilter().resetToDefault();

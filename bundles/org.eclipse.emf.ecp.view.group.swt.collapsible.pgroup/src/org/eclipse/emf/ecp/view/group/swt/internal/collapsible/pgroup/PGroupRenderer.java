@@ -25,7 +25,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
@@ -57,12 +56,11 @@ public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
 	@Inject
 	public PGroupRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
-		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		EMFFormsRendererFactory factory) {
+		super(vElement, viewContext, reportService, factory);
 	}
 
 	@Override

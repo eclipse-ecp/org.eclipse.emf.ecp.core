@@ -14,15 +14,15 @@ import org.eclipse.emf.ecp.emf2web.json.generator.xtend.EcoreJsonGenerator
 import org.eclipse.emf.ecore.EClassifier
 
 class EcoreJsonExporter_Test {
-	static final val ECORE_PACKAGE = EcorePackage.eINSTANCE
-	static final val ECORE_FACTORY = EcoreFactory.eINSTANCE
-	static final val TEST_ECLASS_NAME = "TestEClass";
-	static final val TEST_EATTRIBUTE_NAME = "testAttribute";
-    static final val TEST_EREFERENCE_NAME = "testReference";
+	static val ECORE_PACKAGE = EcorePackage.eINSTANCE
+	static val ECORE_FACTORY = EcoreFactory.eINSTANCE
+	static val TEST_ECLASS_NAME = "TestEClass";
+	static val TEST_EATTRIBUTE_NAME = "testAttribute";
+	static val TEST_EREFERENCE_NAME = "testReference";
 
-	final val List<String> testEnumValues = new ArrayList<String>(Arrays.asList("1A", "2B"))
+	val List<String> testEnumValues = new ArrayList<String>(Arrays.asList("1A", "2B"))
 
-	private EcoreJsonGenerator exporter;
+	EcoreJsonGenerator exporter;
 
 	@Before
 	def void init() {
@@ -119,9 +119,6 @@ class EcoreJsonExporter_Test {
 		assertEquals(eClassWithOptionalSingleReferencedEClassJsonElement, result)
 	}
 
-	/*
-	 * New tests
-	 */
 	@Test
 	def void createJsonSchemaElementFromEmptyEClass() {
 		val eClass = emptyEClass()

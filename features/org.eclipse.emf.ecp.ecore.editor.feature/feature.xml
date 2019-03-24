@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.ecore.editor.feature"
       label="Ecore Editor Wizard Feature"
-      version="1.19.0.qualifier"
+      version="1.20.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.ecore.editor.ui"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.19.0.qualifier">
+      license-feature-version="1.20.0.qualifier">
 
    <description>
       %description
@@ -29,6 +29,13 @@
 
    <plugin
          id="org.eclipse.emf.ecp.ecore.editor.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.ide.ecore.builder"
          download-size="0"
          install-size="0"
          version="0.0.0"

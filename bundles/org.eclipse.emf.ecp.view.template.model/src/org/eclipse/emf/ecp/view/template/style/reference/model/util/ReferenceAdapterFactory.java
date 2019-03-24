@@ -23,10 +23,9 @@ import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleP
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
- * 
+ *
  * @since 1.18
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.template.style.reference.model.VTReferencePackage
  * @generated
  */

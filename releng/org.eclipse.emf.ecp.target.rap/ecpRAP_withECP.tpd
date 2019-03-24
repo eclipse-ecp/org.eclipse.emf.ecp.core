@@ -4,7 +4,7 @@ with source configurePhase
 
 include "ecpRAP.tpd"
 
-location "http://download.eclipse.org/ecp/releases/releases_target_119"{
+location "http://download.eclipse.org/ecp/releases/releases_target_120"{
 	org.eclipse.emf.ecp.rap.sdk.feature.feature.group lazy
 	org.eclipse.emf.ecp.rap.util.feature.feature.group lazy
 	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group lazy

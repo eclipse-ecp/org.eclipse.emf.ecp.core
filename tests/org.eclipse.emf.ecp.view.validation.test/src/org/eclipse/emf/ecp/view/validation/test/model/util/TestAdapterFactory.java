@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543190
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.util;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
+import org.eclipse.emf.ecp.view.validation.test.model.TableObject;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
@@ -208,6 +210,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter casePerson(Person object) {
 			return createPersonAdapter();
+		}
+
+		@Override
+		public Adapter caseTableObject(TableObject object) {
+			return createTableObjectAdapter();
 		}
 
 		@Override
@@ -586,6 +593,22 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPersonAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableObject
+	 * <em>Table Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableObject
+	 * @generated
+	 */
+	public Adapter createTableObjectAdapter() {
 		return null;
 	}
 

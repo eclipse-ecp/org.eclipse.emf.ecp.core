@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -59,7 +58,6 @@ import org.eclipse.swt.widgets.Layout;
  */
 public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 	private final EMFFormsRendererFactory factory;
-	private final EMFFormsDatabinding emfFormsDatabinding;
 
 	/**
 	 * The {@link EMFFormsRendererFactory} to use.
@@ -78,14 +76,12 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
-	 * @since 1.6
+	 * @since 1.20
 	 */
 	public ContainerSWTRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
+		EMFFormsRendererFactory factory) {
 		super(vElement, viewContext, reportService);
 		this.factory = factory;
-		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
 	private SWTGridDescription rendererGridDescription;
@@ -209,17 +205,6 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		}
 
 		return columnComposite;
-	}
-
-	/**
-	 * Returns the {@link EMFFormsDatabinding}.
-	 *
-	 * @return The {@link EMFFormsDatabinding}
-	 * @since 1.12
-	 */
-	protected EMFFormsDatabinding getEMFFormsDatabinding() {
-		// Method is eventually needed to check the validity of controls that are to be rendered.
-		return emfFormsDatabinding;
 	}
 
 	// TODO: possible duplicate code

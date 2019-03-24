@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
@@ -439,7 +439,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			}
 			final EClass eclass = EReference.class.cast(valueProperty.getValueType()).getEReferenceType();
 
-			final Collection<EClass> classes = ECPUtil.getSubClasses(VViewPackage.eINSTANCE
+			final Collection<EClass> classes = EMFUtils.getSubClasses(VViewPackage.eINSTANCE
 				.getDomainModelReference());
 
 			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(

@@ -134,7 +134,9 @@ public final class ECPUtil {
 	 * @param superClass
 	 *            - the class for which to get the subclasses
 	 * @return a {@link Collection} of {@link EClass EClasses}
+	 * @deprecated Use {@link EMFUtils}.getSubClasses instead
 	 */
+	@Deprecated
 	public static Collection<EClass> getSubClasses(EClass superClass) {
 		final Collection<EClass> classes = new HashSet<EClass>();
 

@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -19,14 +22,13 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -382,7 +384,7 @@ public class GridTable_PTest {
 		final ScrolledComposite scrolledComposite = (ScrolledComposite) sash.getChildren()[1];
 		final Composite parentForECPView = (Composite) scrolledComposite.getChildren()[0];
 		assertEquals(2, table.getItemCount());
-		final GridTableViewer tableViewer = getTableViewerFromRenderer(tableRenderer);
+		final GridTableViewer tableViewer = GridTestsUtil.getTableViewerFromRenderer(tableRenderer);
 
 		// no initial selection
 		assertEquals(0, parentForECPView.getChildren().length);
@@ -437,7 +439,7 @@ public class GridTable_PTest {
 			fail("No control was rendered");
 		}
 		final Grid table = SWTTestUtil.findControl(control, 0, Grid.class);
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
 
 		// column 0 is validation column
 
@@ -445,29 +447,29 @@ public class GridTable_PTest {
 		// up
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
 		// down
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class2, class1);
+		assertGridItemOrder(table, class3, class2, class1);
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
 
 		// select column 2
 		// up
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class1, class2);
+		assertGridItemOrder(table, class3, class1, class2);
 		// down
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class2, class1, class3);
+		assertGridItemOrder(table, class2, class1, class3);
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
 	}
 
 	@Test
@@ -498,7 +500,7 @@ public class GridTable_PTest {
 			fail("No control was rendered");
 		}
 		final Grid table = SWTTestUtil.findControl(control, 0, Grid.class);
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
 
 		// column 0 is validation column
 
@@ -506,29 +508,85 @@ public class GridTable_PTest {
 		// up
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class2, class1);
+		assertGridItemOrder(table, class3, class2, class1);
 		// down
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[1]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
 
 		// select column 2
 		// up
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class3, class1, class2);
+		assertGridItemOrder(table, class3, class1, class2);
 		// down
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class2, class1, class3);
+		assertGridItemOrder(table, class2, class1, class3);
 		// none
 		SWTTestUtil.selectWidget(table.getColumns()[2]);
 		SWTTestUtil.waitForUIThread();
-		assertTableItemOrder(table, class1, class2, class3);
+		assertGridItemOrder(table, class1, class2, class3);
+	}
+
+	@Test
+	public void gridSorting_autoSortOnEdit()
+		throws EMFFormsNoRendererException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// domain
+		((EClass) domainElement).getEStructuralFeatures().clear();
+		final EAttribute attribute1 = createEAttribute("a", EcorePackage.Literals.ESTRING, 0, 2);
+		final EAttribute attribute2 = createEAttribute("b", EcorePackage.Literals.ESTRING, 0, 11);
+		final EAttribute attribute3 = createEAttribute("c", EcorePackage.Literals.ESTRING, 0, 1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute1);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute2);
+		((EClass) domainElement).getEStructuralFeatures().add(attribute3);
+
+		// table control
+		final VTableControl tableControl = TableTestUtil.createTableControl();
+		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		tableDMR.getColumnDomainModelReferences().add(
+			createDMR(EcorePackage.eINSTANCE.getETypedElement_UpperBound()));
+
+		// render
+		shell.open();
+		// With this shell size, the table will be 77 pixels high and show 2 rows
+		shell.setSize(200, 150);
+		final Control control = SWTViewTestHelper.render(tableControl, domainElement, shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		shell.layout();
+		final Grid grid = SWTTestUtil.findControl(control, 0, Grid.class);
+
+		// column 0 is validation column
+		// select column 1 (name) and ascending sorting
+		SWTTestUtil.selectWidget(grid.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertGridItemOrder(grid, attribute1, attribute2, attribute3);
+
+		// Change the attribute the sorting is currently applied on and assert that the table was automatically
+		// re-sorted
+		attribute1.setName("z");
+		SWTTestUtil.waitForUIThread();
+		assertGridItemOrder(grid, attribute2, attribute3, attribute1);
+
+		final GridItem sortItem = grid.getItem(2);
+		final int itemLowerEnd = sortItem.getBounds(1).y + sortItem.getBounds(1).height;
+		// Assert that the edited grid item was revealed after it had been moved to the end of the grid.
+		assertThat(
+			"The edited grid item is not fully visible after the auto sort because the grid didn't scroll down.",
+			itemLowerEnd, lessThan(grid.getBounds().height));
+		assertThat(
+			"The edited grid item is not fully visible after the auto sort because the grid is scrolled too far down.",
+			sortItem.getBounds(1).y, greaterThan(grid.getHeaderHeight()));
+
+		shell.close();
 	}
 
 	private GridControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)
@@ -560,7 +618,7 @@ public class GridTable_PTest {
 		return tableControlSWTRenderer;
 	}
 
-	private static void assertTableItemOrder(Grid table, Object... objects) {
+	private static void assertGridItemOrder(Grid table, Object... objects) {
 		assertEquals(objects.length, table.getItemCount());
 		final GridItem[] items = table.getItems();
 		for (int i = 0; i < items.length; i++) {
@@ -573,6 +631,15 @@ public class GridTable_PTest {
 		clazz.setName(name);
 		clazz.setInstanceClassName(instanceClassName);
 		return clazz;
+	}
+
+	private static EAttribute createEAttribute(String name, EClassifier classifier, int lowerBound, int upperBound) {
+		final EAttribute attribute = EcoreFactory.eINSTANCE.createEAttribute();
+		attribute.setName(name);
+		attribute.setEType(classifier);
+		attribute.setLowerBound(lowerBound);
+		attribute.setUpperBound(upperBound);
+		return attribute;
 	}
 
 	private static VFeaturePathDomainModelReference createDMR(EAttribute attribute, EReference... refs) {
@@ -619,25 +686,6 @@ public class GridTable_PTest {
 			.createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 		return tableControlHandle;
-	}
-
-	private GridTableViewer getTableViewerFromRenderer(AbstractSWTRenderer<VElement> renderer) {
-		try {
-			final Method method = TableControlSWTRenderer.class.getDeclaredMethod("getTableViewer");
-			method.setAccessible(true);
-			return (GridTableViewer) method.invoke(renderer);
-		} catch (final NoSuchMethodException ex) {
-			fail(ex.getMessage());
-		} catch (final SecurityException ex) {
-			fail(ex.getMessage());
-		} catch (final IllegalAccessException ex) {
-			fail(ex.getMessage());
-		} catch (final IllegalArgumentException ex) {
-			fail(ex.getMessage());
-		} catch (final InvocationTargetException ex) {
-			fail(ex.getMessage());
-		}
-		return null;
 	}
 
 	/**

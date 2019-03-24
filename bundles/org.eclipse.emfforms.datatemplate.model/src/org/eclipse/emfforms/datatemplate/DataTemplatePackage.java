@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Muenchen GmbH - initial API and implementation
+ * Christian W. Damus - bug 544499
  */
 package org.eclipse.emfforms.datatemplate;
 
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ *
  * @see org.eclipse.emfforms.datatemplate.DataTemplateFactory
  * @model kind="package"
  * @generated
@@ -37,6 +39,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	String eNAME = "datatemplate";
@@ -45,6 +48,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emfforms/datatemplate/model";
@@ -53,14 +57,26 @@ public interface DataTemplatePackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emfforms.datatemplate.model";
 
 	/**
+	 * The package content type ID.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.20
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	String eCONTENT_TYPE = "org.eclipse.emfforms.datatemplate.model"; //$NON-NLS-1$
+
+	/**
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	DataTemplatePackage eINSTANCE = org.eclipse.emfforms.datatemplate.impl.DataTemplatePackageImpl.init();
@@ -69,6 +85,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emfforms.datatemplate.impl.TemplateImpl <em>Template</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see org.eclipse.emfforms.datatemplate.impl.TemplateImpl
 	 * @see org.eclipse.emfforms.datatemplate.impl.DataTemplatePackageImpl#getTemplate()
 	 * @generated
@@ -79,6 +96,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -88,6 +106,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The feature id for the '<em><b>Instance</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -97,6 +116,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The number of structural features of the '<em>Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -106,15 +126,18 @@ public interface DataTemplatePackage extends EPackage {
 	 * The number of operations of the '<em>Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
 	int TEMPLATE_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl <em>Template Collection</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl <em>Template
+	 * Collection</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl
 	 * @see org.eclipse.emfforms.datatemplate.impl.DataTemplatePackageImpl#getTemplateCollection()
 	 * @generated
@@ -125,6 +148,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The feature id for the '<em><b>Templates</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -134,6 +158,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The number of structural features of the '<em>Template Collection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -143,6 +168,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * The number of operations of the '<em>Template Collection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -152,6 +178,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.datatemplate.Template <em>Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the meta object for class '<em>Template</em>'.
 	 * @see org.eclipse.emfforms.datatemplate.Template
 	 * @generated
@@ -159,9 +186,11 @@ public interface DataTemplatePackage extends EPackage {
 	EClass getTemplate();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emfforms.datatemplate.Template#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emfforms.datatemplate.Template#getName
+	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipse.emfforms.datatemplate.Template#getName()
 	 * @see #getTemplate()
@@ -170,9 +199,11 @@ public interface DataTemplatePackage extends EPackage {
 	EAttribute getTemplate_Name();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emfforms.datatemplate.Template#getInstance <em>Instance</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emfforms.datatemplate.Template#getInstance <em>Instance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the meta object for the containment reference '<em>Instance</em>'.
 	 * @see org.eclipse.emfforms.datatemplate.Template#getInstance()
 	 * @see #getTemplate()
@@ -181,9 +212,11 @@ public interface DataTemplatePackage extends EPackage {
 	EReference getTemplate_Instance();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emfforms.datatemplate.TemplateCollection <em>Template Collection</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.datatemplate.TemplateCollection <em>Template
+	 * Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the meta object for class '<em>Template Collection</em>'.
 	 * @see org.eclipse.emfforms.datatemplate.TemplateCollection
 	 * @generated
@@ -191,9 +224,11 @@ public interface DataTemplatePackage extends EPackage {
 	EClass getTemplateCollection();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emfforms.datatemplate.TemplateCollection#getTemplates <em>Templates</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emfforms.datatemplate.TemplateCollection#getTemplates <em>Templates</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the meta object for the containment reference list '<em>Templates</em>'.
 	 * @see org.eclipse.emfforms.datatemplate.TemplateCollection#getTemplates()
 	 * @see #getTemplateCollection()
@@ -205,6 +240,7 @@ public interface DataTemplatePackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -221,13 +257,16 @@ public interface DataTemplatePackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emfforms.datatemplate.impl.TemplateImpl <em>Template</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emfforms.datatemplate.impl.TemplateImpl
+		 * <em>Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 *
 		 * @see org.eclipse.emfforms.datatemplate.impl.TemplateImpl
 		 * @see org.eclipse.emfforms.datatemplate.impl.DataTemplatePackageImpl#getTemplate()
 		 * @generated
@@ -238,6 +277,7 @@ public interface DataTemplatePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
 		EAttribute TEMPLATE__NAME = eINSTANCE.getTemplate_Name();
@@ -246,14 +286,17 @@ public interface DataTemplatePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Instance</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
 		EReference TEMPLATE__INSTANCE = eINSTANCE.getTemplate_Instance();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl <em>Template Collection</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl
+		 * <em>Template Collection</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 *
 		 * @see org.eclipse.emfforms.datatemplate.impl.TemplateCollectionImpl
 		 * @see org.eclipse.emfforms.datatemplate.impl.DataTemplatePackageImpl#getTemplateCollection()
 		 * @generated
@@ -264,6 +307,7 @@ public interface DataTemplatePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Templates</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
 		EReference TEMPLATE_COLLECTION__TEMPLATES = eINSTANCE.getTemplateCollection_Templates();

@@ -34,14 +34,11 @@ import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.junit.After;
@@ -161,7 +158,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertEquals(2, subClassTable.getItemCount());
 
 		// Select the registered user class
-		final TreeItem item = selectTreeItem(subClassTable, 1);
+		final TreeItem item = SWTTestUtil.selectTreeItem(subClassTable, 1);
 		SWTTestUtil.waitForUIThread();
 		assertEquals("RegisteredUser", item.getText()); //$NON-NLS-1$
 
@@ -182,7 +179,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 
 		// the two templates for the registered user
 		assertEquals(2, templateTable.getItemCount());
-		selectTableItem(templateTable, 0);
+		SWTTestUtil.selectTableItem(templateTable, 0);
 		SWTTestUtil.waitForUIThread();
 
 		// Finish
@@ -250,7 +247,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		final Table templateTable = (Table) templateSelectionPageComposite.getChildren()[2];
 
 		assertEquals(2, templateTable.getItemCount());
-		selectTableItem(templateTable, 0);
+		SWTTestUtil.selectTableItem(templateTable, 0);
 		SWTTestUtil.waitForUIThread();
 
 		// Finish
@@ -312,7 +309,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertEquals(2, subClassTree.getItemCount());
 
 		// Select the guest user class
-		final TreeItem item = selectTreeItem(subClassTree, 1);
+		final TreeItem item = SWTTestUtil.selectTreeItem(subClassTree, 1);
 		SWTTestUtil.waitForUIThread();
 		assertEquals("GuestUser", item.getText()); //$NON-NLS-1$
 
@@ -385,7 +382,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertEquals(2, subClassTable.getItemCount());
 
 		// Select the admin user class
-		selectTreeItem(subClassTable, 0);
+		SWTTestUtil.selectTreeItem(subClassTable, 0);
 
 		SWTTestUtil.waitForUIThread();
 
@@ -404,7 +401,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		SWTTestUtil.clickButton(backButton);
 
 		// Select guest user class and click next again
-		selectTreeItem(subClassTable, 1);
+		SWTTestUtil.selectTreeItem(subClassTable, 1);
 		SWTTestUtil.waitForUIThread();
 		assertTrue(nextButton.isEnabled());
 		SWTTestUtil.clickButton(nextButton);
@@ -415,7 +412,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		assertTrue(templateTable.getItem(0).getText().contains("GuestUserTemplate1")); //$NON-NLS-1$
 		assertTrue(templateTable.getItem(1).getText().contains("GuestUserTemplate2")); //$NON-NLS-1$
 
-		selectTableItem(templateTable, 1);
+		SWTTestUtil.selectTableItem(templateTable, 1);
 		SWTTestUtil.clickButton(finishButton);
 		SWTTestUtil.waitForUIThread();
 
@@ -478,7 +475,7 @@ public class SelectSubclassAndTemplateWizard_PTest {
 
 		// Select a template
 		assertEquals(2, templateTable.getItemCount());
-		selectTableItem(templateTable, 0);
+		SWTTestUtil.selectTableItem(templateTable, 0);
 		SWTTestUtil.waitForUIThread();
 
 		// Cancel after a template was selected
@@ -527,35 +524,6 @@ public class SelectSubclassAndTemplateWizard_PTest {
 		// take the second as the first is a toolbar with help entries
 		final Composite buttonComposite = (Composite) buttonBar.getChildren()[1];
 		return buttonComposite;
-	}
-
-	/**
-	 * Selects the index in the given table and notifies the table's listeners about the selection
-	 *
-	 * @param table
-	 * @param index
-	 * @return the selected table item
-	 */
-	private TreeItem selectTreeItem(Tree tree, int index) {
-		tree.setSelection(tree.getItem(index));
-		final Event event = new Event();
-		event.type = SWT.Selection;
-		event.widget = tree;
-		final TreeItem result = tree.getItem(index);
-		event.item = result;
-		tree.notifyListeners(SWT.Selection, event);
-		return result;
-	}
-
-	private TableItem selectTableItem(Table table, int index) {
-		table.setSelection(index);
-		final Event event = new Event();
-		event.type = SWT.Selection;
-		event.widget = table;
-		final TableItem result = table.getItem(index);
-		event.item = result;
-		table.notifyListeners(SWT.Selection, event);
-		return result;
 	}
 
 	/**

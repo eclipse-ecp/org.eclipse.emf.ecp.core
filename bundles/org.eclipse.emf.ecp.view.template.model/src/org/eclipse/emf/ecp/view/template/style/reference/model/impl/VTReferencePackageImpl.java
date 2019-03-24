@@ -85,9 +85,10 @@ public class VTReferencePackageImpl extends EPackageImpl implements VTReferenceP
 		}
 
 		// Obtain or create and register package
-		final VTReferencePackageImpl theReferencePackage = (VTReferencePackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof VTReferencePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new VTReferencePackageImpl());
+		final Object registeredReferencePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		final VTReferencePackageImpl theReferencePackage = registeredReferencePackage instanceof VTReferencePackageImpl
+			? (VTReferencePackageImpl) registeredReferencePackage
+			: new VTReferencePackageImpl();
 
 		isInited = true;
 
@@ -137,6 +138,17 @@ public class VTReferencePackageImpl extends EPackageImpl implements VTReferenceP
 	 * @generated
 	 */
 	@Override
+	public EAttribute getReferenceStyleProperty_ShowLinkButtonForContainmentReferences() {
+		return (EAttribute) referenceStylePropertyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public VTReferenceFactory getReferenceFactory() {
 		return (VTReferenceFactory) getEFactoryInstance();
 	}
@@ -167,6 +179,8 @@ public class VTReferencePackageImpl extends EPackageImpl implements VTReferenceP
 		referenceStylePropertyEClass = createEClass(REFERENCE_STYLE_PROPERTY);
 		createEAttribute(referenceStylePropertyEClass,
 			REFERENCE_STYLE_PROPERTY__SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES);
+		createEAttribute(referenceStylePropertyEClass,
+			REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES);
 	}
 
 	/**
@@ -214,6 +228,9 @@ public class VTReferencePackageImpl extends EPackageImpl implements VTReferenceP
 			ecorePackage.getEBoolean(), "showCreateAndLinkButtonForCrossReferences", "true", 0, 1, //$NON-NLS-1$ //$NON-NLS-2$
 			VTReferenceStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getReferenceStyleProperty_ShowLinkButtonForContainmentReferences(), ecorePackage.getEBoolean(),
+			"showLinkButtonForContainmentReferences", "true", 0, 1, VTReferenceStyleProperty.class, !IS_TRANSIENT, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

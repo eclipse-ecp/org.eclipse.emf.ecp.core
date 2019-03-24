@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -179,6 +180,30 @@ public class ValidationServiceImpl_Test {
 		assertSame(BowlingPackage.eINSTANCE.getPlayer_EMails(), diagnostic.getChildren().get(0).getData().get(1));
 		assertSame(BowlingValidator.DIAGNOSTIC_SOURCE, diagnostic.getChildren().get(1).getSource());
 		assertSame(BowlingPackage.eINSTANCE.getPlayer_Height(), diagnostic.getChildren().get(1).getData().get(1));
+	}
+
+	@Test
+	public void diagnosticValidateUsesDefaultValidatorForDynamicDomainModel() {
+
+		final EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		final EClass extendedPlayerClass = EcoreFactory.eINSTANCE.createEClass();
+		extendedPlayerClass.setName("ExtendedPlayer");
+		extendedPlayerClass.getESuperTypes().add(BowlingPackage.eINSTANCE.getPlayer());
+		ePackage.setName("extendedPlayerPackage");
+		ePackage.setNsPrefix("extendedPlayerPackage");
+		ePackage.setNsURI("extendedPlayerPackage");
+		ePackage.getEClassifiers().add(extendedPlayerClass);
+
+		final EObject extendedPlayer = new DynamicEObjectImpl(extendedPlayerClass);
+		extendedPlayer.eSet(BowlingPackage.eINSTANCE.getPlayer_Height(), 20d);
+
+		final EValidator validatorForEObject = fixture.getEValidatorForEObject(extendedPlayer);
+		final BasicDiagnostic diagnostic = new BasicDiagnostic();
+		validatorForEObject.validate(extendedPlayerClass, extendedPlayer, diagnostic, null);
+		assertSame(Diagnostic.ERROR, diagnostic.getSeverity());
+		assertSame(1, diagnostic.getChildren().size());
+		assertSame(EObjectValidator.DIAGNOSTIC_SOURCE, diagnostic.getChildren().get(0).getSource());
+		assertSame(BowlingPackage.eINSTANCE.getPlayer_EMails(), diagnostic.getChildren().get(0).getData().get(1));
 	}
 
 	@Test

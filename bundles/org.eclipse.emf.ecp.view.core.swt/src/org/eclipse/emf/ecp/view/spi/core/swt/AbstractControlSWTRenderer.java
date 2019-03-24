@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +19,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -171,13 +172,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 				if (changeTester.isStructureChanged(getVElement().getDomainModelReference(),
 					getViewModelContext().getDomainModel(), notification)) {
 
-					Display.getDefault().asyncExec(new Runnable() {
-
-						@Override
-						public void run() {
-							if (!isDisposed) {
-								applyEnable();
-							}
+					Display.getDefault().asyncExec(() -> {
+						if (!isDisposed) {
+							applyEnable();
 						}
 					});
 				}
@@ -189,14 +186,37 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			getViewModelContext().registerDomainChangeListener(modelChangeListener);
 		}
 		applyEnable();
+		applyReadOnly();
+		if (isUnchangeableFeature()) {
+			applyUnchangeableFeature();
+		}
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Checks if the value referenced by the DMR can be changed or not by the user.
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#render(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
-	 *      org.eclipse.swt.widgets.Composite)
+	 * @return <code>true</code> if the value cannot be changed.
 	 */
+	protected boolean isUnchangeableFeature() {
+		final VDomainModelReference ref = getVElement().getDomainModelReference();
+		if (ref == null) {
+			getReportService()
+				.report(new AbstractReport(
+					String.format("No DomainModelReference could be found for the VElement %1$s.", //$NON-NLS-1$
+						getVElement().getName()),
+					IStatus.ERROR));
+		}
+		final EObject eObject = getViewModelContext().getDomainModel();
+		try {
+			@SuppressWarnings("rawtypes")
+			final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(ref, eObject);
+			return !EStructuralFeature.class.cast(valueProperty.getValueType()).isChangeable();
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new DatabindingFailedReport(ex));
+			return false;
+		}
+	}
+
 	@Override
 	public Control render(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -211,6 +231,16 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		}
 
 		return control;
+	}
+
+	/**
+	 * This method is applied if the control's feature is configured as unchangeable.
+	 * The renderer is usually disabled when feature is not changeable.
+	 *
+	 * @since 1.20
+	 */
+	protected void applyUnchangeableFeature() {
+		getVElement().setReadonly(true);
 	}
 
 	/**

@@ -69,6 +69,7 @@ public class KeyBindingManager_PTest {
 
 		shell = new Shell(Display.getDefault());
 		shell.setLayout(new FillLayout());
+		shell.open();
 
 		keyBindingManager = new KeyBindingManager();
 	}

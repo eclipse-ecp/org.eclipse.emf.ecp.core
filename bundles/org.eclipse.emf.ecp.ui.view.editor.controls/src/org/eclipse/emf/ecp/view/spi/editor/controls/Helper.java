@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -197,8 +198,15 @@ public final class Helper {
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 
+		EObject toCheck;
+		if (eClassToCheck.getInstanceClass() != null) {
+			toCheck = EcoreUtil.create(eClassToCheck);
+		} else {
+			toCheck = new DynamicEObjectImpl(eClassToCheck);
+		}
+
 		final IItemPropertyDescriptor propertyDescriptor = adapterFactoryItemDelegator
-			.getPropertyDescriptor(EcoreUtil.create(eClassToCheck), featureToCheck);
+			.getPropertyDescriptor(toCheck, featureToCheck);
 
 		composedAdapterFactory.dispose();
 		return propertyDescriptor != null;

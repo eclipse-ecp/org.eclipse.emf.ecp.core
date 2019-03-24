@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmi:id="_nr7fABswEemi2t7e-tayrA" name="Style">
+  <rootEClass href="http://org/eclipse/emf/ecp/view/template/model#//Style"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_nsCzwBswEemi2t7e-tayrA" name="Control selector">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_nsDa0BswEemi2t7e-tayrA">
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/template/model#//StyleSelectorContainer/selector"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_nsDa0RswEemi2t7e-tayrA" name="Control properties">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_nsDa0hswEemi2t7e-tayrA">
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/template/model#//Style/properties"/>
+    </domainModelReference>
+  </children>
+  <ecorePaths>/org.eclipse.emf.ecp.view.template.model/model/template.ecore</ecorePaths>
+</org.eclipse.emf.ecp.view.model:View>

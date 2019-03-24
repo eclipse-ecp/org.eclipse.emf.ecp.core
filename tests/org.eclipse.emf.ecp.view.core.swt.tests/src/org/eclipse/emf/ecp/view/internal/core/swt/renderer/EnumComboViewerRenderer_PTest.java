@@ -59,7 +59,6 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 	private DefaultRealm realm;
 
 	@Before
-	@SuppressWarnings("unchecked")
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
@@ -162,10 +161,9 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings("unchecked")
 	private Combo setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		mockDatabindingIsUnsettable();
+		mockDatabindingIsSettableAndChangeable();
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(
 				mockedObservable);
@@ -193,7 +191,6 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void testEffectivelyReadOnlyDeactivatesControl()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, TestEnum.B,

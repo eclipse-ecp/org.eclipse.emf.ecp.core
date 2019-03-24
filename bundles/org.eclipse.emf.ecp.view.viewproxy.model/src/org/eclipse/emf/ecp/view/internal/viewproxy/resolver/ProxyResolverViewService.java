@@ -73,7 +73,10 @@ public class ProxyResolverViewService implements ViewModelService {
 	 */
 	@Override
 	public int getPriority() {
-		return -10;
+		// Must be lower than the LocalizationViewModelService's priority because otherwise labels of elements defined
+		// in the proxy view are not localized.
+		// Should be lower than the DmrToSegments service so that segments are generated for the loaded proxy views.
+		return -2000;
 	}
 
 	/**

@@ -40,7 +40,8 @@ public final class EMFUtils {
 
 	/**
 	 * This method looks through all known {@link EPackage}s to find all concrete subclasses for the provided super
-	 * class (abstract classes and interfaces will be ignored).
+	 * class (abstract classes and interfaces will be ignored). If the EClass is EObject, all non abstract and non
+	 * interface classes will be returned.
 	 *
 	 * @param superClass
 	 *            - the class for which to get the subclasses

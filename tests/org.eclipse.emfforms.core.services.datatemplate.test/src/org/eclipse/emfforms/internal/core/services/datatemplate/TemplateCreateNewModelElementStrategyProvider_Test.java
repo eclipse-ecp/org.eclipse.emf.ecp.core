@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,17 +8,24 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 543461
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,8 +36,14 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.spi.Labelizer;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emfforms.bazaar.Bid;
@@ -42,6 +55,8 @@ import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditFac
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage;
 import org.eclipse.emfforms.datatemplate.DataTemplateFactory;
 import org.eclipse.emfforms.datatemplate.Template;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
@@ -127,17 +142,60 @@ public class TemplateCreateNewModelElementStrategyProvider_Test {
 	}
 
 	/**
-	 * Simply test that a non-null strategy is created. The strategy's behavior is tested in separate test cases.
+	 * Test creation of the strategy and its implementation of consistency of classes
+	 * presented to the user with available templates.
+	 *
+	 * @see <a href="http://eclip.se/543461">bug 543461</a>
 	 */
 	@Test
-	public void testCreateNewModelELementStrategy() {
+	public void testCreateNewModelElementStrategy() {
+		final TemplateProvider provider = mock(TemplateProvider.class);
+		when(provider.canProvideTemplates(any(EObject.class), any(EReference.class))).thenReturn(true);
+
+		final LinkedHashSet<Template> templates = new LinkedHashSet<Template>();
+		final EDataType datatype = EcoreFactory.eINSTANCE.createEDataType();
+		datatype.setName("Date"); //$NON-NLS-1$
+		final Template dtTemplate = DataTemplateFactory.eINSTANCE.createTemplate();
+		dtTemplate.setInstance(datatype);
+		dtTemplate.setName("Example DataType"); //$NON-NLS-1$
+		templates.add(dtTemplate);
+		final EEnum enum_ = EcoreFactory.eINSTANCE.createEEnum();
+		enum_.setName("YesNo"); //$NON-NLS-1$
+		final Template enTemplate = DataTemplateFactory.eINSTANCE.createTemplate();
+		enTemplate.setInstance(enum_);
+		enTemplate.setName("Example Enum"); //$NON-NLS-1$
+		templates.add(enTemplate);
+		when(provider.provideTemplates(any(EObject.class), any(EReference.class))).thenReturn(templates);
+		strategyProvider.registerTemplateProvider(provider);
+
 		final ComponentContext componentContext = mock(ComponentContext.class);
 		when(componentContext.getProperties()).thenReturn(new Hashtable<String, Object>());
 
 		strategyProvider.activate(componentContext);
 
 		final CreateNewModelElementStrategy strategy = strategyProvider.createCreateNewModelElementStrategy();
-		assertNotNull(strategy);
+		assertThat(strategy, instanceOf(TemplateCreateNewModelElementStrategyProvider.Strategy.class));
+
+		// Spy on the implementation to verify internals
+		final TemplateCreateNewModelElementStrategyProvider.Strategy spy = spy(
+			(TemplateCreateNewModelElementStrategyProvider.Strategy) strategy);
+
+		// Mustn't actually try to show a wizard dialog
+		doReturn(Optional.of(dtTemplate)).when(spy)
+			.showSelectModelInstancesDialog(anySetOf(EClass.class), anySetOf(Template.class));
+
+		final Optional<EObject> created = spy.createNewModelElement(AuditPackage.eINSTANCE,
+			EcorePackage.Literals.EPACKAGE__ECLASSIFIERS);
+		assertThat("Nothing created", created.isPresent(), is(true)); //$NON-NLS-1$
+		assertThat("Wrong thing created", created.get(), eEqualTo(datatype)); //$NON-NLS-1$
+
+		// Verify invocation of the wizard, that it didn't offer classes for which there
+		// weren't any templates
+		final Set<EClass> subClasses = new LinkedHashSet<>();
+		subClasses.add(EcorePackage.Literals.EDATA_TYPE);
+		subClasses.add(EcorePackage.Literals.EENUM);
+		// not EcorePackage.Literals.ECLASS
+		Mockito.verify(spy).showSelectModelInstancesDialog(subClasses, templates);
 	}
 
 	@Test
@@ -233,4 +291,14 @@ public class TemplateCreateNewModelElementStrategyProvider_Test {
 			return strategy;
 		}
 	}
+
+	Matcher<EObject> eEqualTo(EObject other) {
+		return new CustomTypeSafeMatcher<EObject>("structurally equal to " + Labelizer.get(other).getLabel(other)) { //$NON-NLS-1$
+			@Override
+			protected boolean matchesSafely(EObject item) {
+				return EcoreUtil.equals(item, other);
+			}
+		};
+	}
+
 }

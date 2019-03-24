@@ -12,12 +12,14 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
+import java.util.NoSuchElementException;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -155,5 +157,51 @@ public class LinkControlSWTRenderer_Containment_PTest extends AbstractControl_PT
 		assertEquals("Create and link new Merchandise", createAndLinkButton.getToolTipText());
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
 		assertEquals("Delete", deleteButton.getToolTipText());
+	}
+
+	/** For containment references, the 'link' button must be shown by default (:= reference style == true). */
+	@Test
+	public void linkExistingButton_noReferenceStyle()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+
+		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
+		assertEquals("Link Merchandise", linkButton.getToolTipText());
+		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
+		assertEquals("Create and link new Merchandise", createAndLinkButton.getToolTipText());
+		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
+		assertEquals("Delete", deleteButton.getToolTipText());
+	}
+
+	/**
+	 * For containment references, the 'link' button must not be shown if the reference style property
+	 * is set to false.
+	 */
+	@Test
+	public void linkButton_referenceStyleFalse()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+
+		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
+		assertEquals("Create and link new Merchandise", createAndLinkButton.getToolTipText());
+		final Button deleteButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
+		assertEquals("Delete", deleteButton.getToolTipText());
+		try {
+			SWTTestUtil.findControl(renderControl, 2, Button.class);
+			fail(
+				"There must not be a third button for a containment reference with disabled 'link' button."); //$NON-NLS-1$
+		} catch (final NoSuchElementException ex) {
+			// This is what we expect => Test is successful
+			// Cannot use expected in @Test annotation because the test must not succeed if the 'create and link' or the
+			// delete button are not found.
+		}
 	}
 }

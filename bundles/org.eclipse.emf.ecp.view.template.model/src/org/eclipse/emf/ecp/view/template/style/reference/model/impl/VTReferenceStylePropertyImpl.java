@@ -30,6 +30,8 @@ import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleP
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.template.style.reference.model.impl.VTReferenceStylePropertyImpl#isShowCreateAndLinkButtonForCrossReferences
  * <em>Show Create And Link Button For Cross References</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.reference.model.impl.VTReferenceStylePropertyImpl#isShowLinkButtonForContainmentReferences
+ * <em>Show Link Button For Containment References</em>}</li>
  * </ul>
  *
  * @generated
@@ -58,6 +60,30 @@ public class VTReferenceStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @ordered
 	 */
 	protected boolean showCreateAndLinkButtonForCrossReferences = SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isShowLinkButtonForContainmentReferences() <em>Show Link Button For Containment
+	 * References</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #isShowLinkButtonForContainmentReferences()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isShowLinkButtonForContainmentReferences() <em>Show Link Button For Containment
+	 * References</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #isShowLinkButtonForContainmentReferences()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean showLinkButtonForContainmentReferences = SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -115,10 +141,40 @@ public class VTReferenceStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * @generated
 	 */
 	@Override
+	public boolean isShowLinkButtonForContainmentReferences() {
+		return showLinkButtonForContainmentReferences;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setShowLinkButtonForContainmentReferences(boolean newShowLinkButtonForContainmentReferences) {
+		final boolean oldShowLinkButtonForContainmentReferences = showLinkButtonForContainmentReferences;
+		showLinkButtonForContainmentReferences = newShowLinkButtonForContainmentReferences;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES,
+				oldShowLinkButtonForContainmentReferences, showLinkButtonForContainmentReferences));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES:
 			return isShowCreateAndLinkButtonForCrossReferences();
+		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES:
+			return isShowLinkButtonForContainmentReferences();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -134,6 +190,9 @@ public class VTReferenceStylePropertyImpl extends MinimalEObjectImpl.Container i
 		switch (featureID) {
 		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES:
 			setShowCreateAndLinkButtonForCrossReferences((Boolean) newValue);
+			return;
+		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES:
+			setShowLinkButtonForContainmentReferences((Boolean) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -151,6 +210,9 @@ public class VTReferenceStylePropertyImpl extends MinimalEObjectImpl.Container i
 		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES:
 			setShowCreateAndLinkButtonForCrossReferences(SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES_EDEFAULT);
 			return;
+		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES:
+			setShowLinkButtonForContainmentReferences(SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -166,6 +228,8 @@ public class VTReferenceStylePropertyImpl extends MinimalEObjectImpl.Container i
 		switch (featureID) {
 		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES:
 			return showCreateAndLinkButtonForCrossReferences != SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES_EDEFAULT;
+		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES:
+			return showLinkButtonForContainmentReferences != SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -182,9 +246,11 @@ public class VTReferenceStylePropertyImpl extends MinimalEObjectImpl.Container i
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (showCreateAndLinkButtonForCrossReferences: "); //$NON-NLS-1$
 		result.append(showCreateAndLinkButtonForCrossReferences);
+		result.append(", showLinkButtonForContainmentReferences: "); //$NON-NLS-1$
+		result.append(showLinkButtonForContainmentReferences);
 		result.append(')');
 		return result.toString();
 	}

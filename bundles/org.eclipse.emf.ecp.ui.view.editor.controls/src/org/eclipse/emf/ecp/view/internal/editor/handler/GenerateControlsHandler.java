@@ -61,9 +61,14 @@ public class GenerateControlsHandler extends MasterDetailAction {
 			composedAdapterFactory);
 		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
 		IItemPropertyDescriptor propertyDescriptor = null;
+		final EClass rootClass = sad.getRootClass();
 		for (final EStructuralFeature feature : features) {
+			if (rootClass.isAbstract() || rootClass.isInterface()) {
+				featuresToAdd.add(feature);
+				continue;
+			}
 			propertyDescriptor = adapterFactoryItemDelegator
-				.getPropertyDescriptor(EcoreUtil.create(sad.getRootClass()), feature);
+				.getPropertyDescriptor(EcoreUtil.create(rootClass), feature);
 			if (propertyDescriptor != null) {
 				featuresToAdd.add(feature);
 			} else {

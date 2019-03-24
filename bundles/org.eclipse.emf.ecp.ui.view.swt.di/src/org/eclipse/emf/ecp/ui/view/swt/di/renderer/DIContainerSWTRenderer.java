@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.widgets.Composite;
 
@@ -39,11 +38,10 @@ public class DIContainerSWTRenderer extends ContainerSWTRenderer<VElement> {
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
 	public DIContainerSWTRenderer(VElement vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
-		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		EMFFormsRendererFactory factory) {
+		super(vElement, viewContext, reportService, factory);
 	}
 
 	/**

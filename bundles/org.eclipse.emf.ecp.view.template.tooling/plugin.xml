@@ -18,7 +18,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.ecp.view.template.tooling.editor.TemplateModelEditorPart"
-            default="false"
+            default="true"
             extensions="template"
             icon="icons/template.gif"
             id="org.eclipse.emf.ecp.view.template.tooling.editor"
@@ -28,6 +28,8 @@
    <extension
          name=""
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+	  <file 
+	  		filePath="viewmodel/MultiStyleSelectorContainer.view"/>
       <file
             filePath="viewmodel/KeyBindings.view">
       </file>
@@ -39,6 +41,9 @@
       </file>
       <file
             filePath="viewmodel/template.view">
+      </file>
+      <file
+            filePath="viewmodel/Style.view">
       </file>
    </extension>
    <extension
@@ -82,4 +87,7 @@
       </renderer>
    </extension>
 
+   <extension point="org.eclipse.emf.ecp.view.template">
+      <viewTemplate xmi="viewmodel/templateEditor.template"/>
+    </extension>
 </plugin>

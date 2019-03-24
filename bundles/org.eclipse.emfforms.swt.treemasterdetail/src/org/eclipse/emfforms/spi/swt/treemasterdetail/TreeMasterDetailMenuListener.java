@@ -25,6 +25,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -172,9 +173,24 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 				continue;
 			}
 
-			manager.add(new CreateChildAction(eObject, domain, treeViewer, cp, createElementCallback));
+			manager.add(createCreateChildAction(domain, eObject, cp));
 		}
 
+	}
+
+	/**
+	 * Creates a new child creation action based on the given {@link CommandParameter}. Subclasses might override this
+	 * to customize the action creation (e.g. an action's label).
+	 *
+	 * @param domain The {@link EditingDomain} the element is be created with
+	 * @param eObject The parent object the element is added to
+	 * @param cp The {@link CommandParameter} creating the element when executed
+	 * @return The action creating a new child when ran
+	 * @since 1.20
+	 */
+	protected IAction createCreateChildAction(final EditingDomain domain, final EObject eObject,
+		final CommandParameter cp) {
+		return new CreateChildAction(eObject, domain, treeViewer, cp, createElementCallback);
 	}
 
 	/**

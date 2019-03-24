@@ -25,6 +25,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -62,7 +63,7 @@ import org.junit.Test;
  * @author Lucas Koehler
  *
  */
-public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest {
+public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest<VControl> {
 
 	private DefaultRealm realm;
 	private VTUnsettableStyleProperty unsettableStyleProperty;
@@ -102,7 +103,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest {
 	}
 
 	@Override
-	protected void mockDatabindingIsUnsettable() throws DatabindingFailedException {
+	protected void mockDatabindingIsSettableAndChangeable() throws DatabindingFailedException {
 	}
 
 	/**

@@ -71,4 +71,16 @@ abstract class JsonGenerator implements Generator{
 		jsonObject.add(propertyName, jsonArray)
 		jsonObject
 	}
+	
+	// fallback if value is null
+	protected def dispatch with(JsonObject jsonObject, String propertyName, Void x) {
+		jsonObject.addProperty(propertyName, "")
+		jsonObject
+	}
+	
+	// fallback for all values not handled above
+	protected def dispatch with(JsonObject jsonObject, String propertyName, Object object) {
+		jsonObject.addProperty(propertyName, "")
+		jsonObject
+	}
 }

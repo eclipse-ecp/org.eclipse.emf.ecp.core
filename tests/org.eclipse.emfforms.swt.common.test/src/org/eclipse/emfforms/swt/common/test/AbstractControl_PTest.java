@@ -104,7 +104,7 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 		when(setting.getEObject()).thenReturn(eObject);
 		when(setting.getEStructuralFeature()).thenReturn(eStructuralFeature);
 
-		mockDatabindingIsUnsettable();
+		mockDatabindingIsSettableAndChangeable();
 
 		Mockito.when(getvControl().getDomainModelReference()).thenReturn(
 			domainModelReference);
@@ -112,9 +112,10 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 		Mockito.doReturn(UUID).when(getvControl()).getUuid();
 	}
 
-	protected void mockDatabindingIsUnsettable() throws DatabindingFailedException {
+	protected void mockDatabindingIsSettableAndChangeable() throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
 		when(structuralFeature.isUnsettable()).thenReturn(false);
+		when(structuralFeature.isChangeable()).thenReturn(true);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
 		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

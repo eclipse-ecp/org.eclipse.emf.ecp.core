@@ -67,13 +67,11 @@ public class DiagnosticView {
 							if (structuredSelection.size() == 1) {
 								selectionService
 									.setSelection(structuredSelection.getFirstElement());
-							}
-							else {
+							} else {
 								selectionService
 									.setSelection(structuredSelection.toList());
 							}
-						}
-						else {
+						} else {
 							selectionService.setSelection(null);
 						}
 					}
@@ -87,6 +85,29 @@ public class DiagnosticView {
 			}
 		};
 		service.register(listener);
+	}
+
+	/**
+	 * Return the Tree showing the diagnostic data..
+	 *
+	 * @return The {@link TreeViewer} which contains the actual data
+	 */
+	public TreeViewer getDiagnosticTree() {
+		return diagnosticTree;
+	}
+
+	/**
+	 * Expand the diagnostic tree.
+	 */
+	public void expandAll() {
+		diagnosticTree.expandAll();
+	}
+
+	/**
+	 * Collapse the diagnostic tree.
+	 */
+	public void collapseAll() {
+		diagnosticTree.collapseAll();
 	}
 
 	/**

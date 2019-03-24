@@ -14,8 +14,14 @@ package org.eclipse.emfforms.spi.swt.core.layout;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * This Layout Optimizer caches the incoming layout request for 200ms before triggering the layout.
@@ -28,6 +34,7 @@ public class EMFFormsSWTLayoutDelayed implements EMFFormsSWTLayoutOptimizer {
 
 	private Set<Composite> requestedLayouts = new LinkedHashSet<Composite>();
 	private Thread thread;
+	private ReportService reportService;
 
 	/**
 	 * <p>
@@ -52,34 +59,52 @@ public class EMFFormsSWTLayoutDelayed implements EMFFormsSWTLayoutOptimizer {
 			return;
 		}
 		final Display defaultDisplay = Display.getDefault();
-		thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(200);
-				} catch (final InterruptedException ex) {
-					/* silent */
-				}
-				final Set<Composite> toLayout = exchangeRequestedLayouts();
-
-				defaultDisplay.asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						for (final Composite composite : toLayout) {
-							if (composite.isDisposed()) {
-								continue;
-							}
-							composite.layout(true, true);
-						}
-						thread = null;
-						layoutDelayed();
-					}
-				});
-
+		thread = new Thread(() -> {
+			try {
+				Thread.sleep(200);
+			} catch (final InterruptedException ex) {
+				/* silent */
 			}
+			final Set<Composite> toLayout = exchangeRequestedLayouts();
+
+			defaultDisplay.asyncExec(() -> {
+				// BEGIN COMPLEX CODE
+				try {
+					for (final Composite composite : toLayout) {
+						if (composite.isDisposed()) {
+							continue;
+						}
+						composite.layout(true, true);
+					}
+				} catch (final Exception ex) {
+					getReportService().report(new AbstractReport(ex, "An exception occurred during re-layouting")); //$NON-NLS-1$
+				} finally {
+					// To avoid memory leaks we need to reset the thread in any case.
+					thread = null;
+					layoutDelayed();
+				}
+				// END COMPLEX CODE
+			});
+
 		});
 		thread.start();
+	}
+
+	private ReportService getReportService() {
+		if (reportService == null) {
+			final Bundle bundle = FrameworkUtil.getBundle(EMFFormsSWTLayoutDelayed.class);
+			if (bundle == null) {
+				return null;
+			}
+			final BundleContext bundleContext = bundle.getBundleContext();
+			if (bundleContext == null) {
+				return null;
+			}
+			final ServiceReference<ReportService> serviceReference = bundleContext
+				.getServiceReference(ReportService.class);
+			reportService = bundleContext.getService(serviceReference);
+		}
+		return reportService;
 	}
 
 	private synchronized Set<Composite> getRequestedLayouts() {

@@ -28,7 +28,6 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.group.swt.GroupTextProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
@@ -56,13 +55,12 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @since 1.6
 	 */
 	@Inject
 	public GroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
-		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		EMFFormsRendererFactory factory) {
+		super(vElement, viewContext, reportService, factory);
 		dbc = new EMFDataBindingContext();
 	}
 

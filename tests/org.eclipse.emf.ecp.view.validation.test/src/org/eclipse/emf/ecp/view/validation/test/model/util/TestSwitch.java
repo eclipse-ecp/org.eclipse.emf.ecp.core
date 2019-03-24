@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543190
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.util;
 
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
+import org.eclipse.emf.ecp.view.validation.test.model.TableObject;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
@@ -177,6 +179,9 @@ public class TestSwitch<T> extends Switch<T> {
 			final TableWithMultiplicity tableWithMultiplicity = (TableWithMultiplicity) theEObject;
 			T result = caseTableWithMultiplicity(tableWithMultiplicity);
 			if (result == null) {
+				result = caseTableObject(tableWithMultiplicity);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
 			}
 			return result;
@@ -215,6 +220,9 @@ public class TestSwitch<T> extends Switch<T> {
 			final TableWithoutMultiplicity tableWithoutMultiplicity = (TableWithoutMultiplicity) theEObject;
 			T result = caseTableWithoutMultiplicity(tableWithoutMultiplicity);
 			if (result == null) {
+				result = caseTableObject(tableWithoutMultiplicity);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
 			}
 			return result;
@@ -222,6 +230,9 @@ public class TestSwitch<T> extends Switch<T> {
 		case TestPackage.TABLE_WITH_UNIQUE: {
 			final TableWithUnique tableWithUnique = (TableWithUnique) theEObject;
 			T result = caseTableWithUnique(tableWithUnique);
+			if (result == null) {
+				result = caseTableObject(tableWithUnique);
+			}
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -252,6 +263,9 @@ public class TestSwitch<T> extends Switch<T> {
 		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE: {
 			final TableWithoutMultiplicityConcrete tableWithoutMultiplicityConcrete = (TableWithoutMultiplicityConcrete) theEObject;
 			T result = caseTableWithoutMultiplicityConcrete(tableWithoutMultiplicityConcrete);
+			if (result == null) {
+				result = caseTableObject(tableWithoutMultiplicityConcrete);
+			}
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -284,6 +298,14 @@ public class TestSwitch<T> extends Switch<T> {
 		case TestPackage.PERSON: {
 			final Person person = (Person) theEObject;
 			T result = casePerson(person);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.TABLE_OBJECT: {
+			final TableObject tableObject = (TableObject) theEObject;
+			T result = caseTableObject(tableObject);
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -643,6 +665,22 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T casePerson(Person object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Table Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Table Object</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTableObject(TableObject object) {
 		return null;
 	}
 

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.emf2web.ui.json.internal.messages.Messages;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -75,6 +76,9 @@ public class ExportJSONFormsHandler extends AbstractSchemaExportCommandHandler {
 				if (view == null || !ViewModelHelper.viewIsResolved(view)) {
 					failedFiles.add(file);
 					continue;
+				}
+				if (view.getLoadingProperties() == null) {
+					view.setLoadingProperties(VViewFactory.eINSTANCE.createViewModelLoadingProperties());
 				}
 				views.add(view);
 			}

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -98,7 +99,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 			return Optional.empty();
 		}
 		EObject newModelElement = null;
-		final Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
+		final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
 
 		if (classes.size() > 1) {
 			final SelectionComposite<TreeViewer> helper = ECPCompositeFactory.getSelectModelClassComposite(

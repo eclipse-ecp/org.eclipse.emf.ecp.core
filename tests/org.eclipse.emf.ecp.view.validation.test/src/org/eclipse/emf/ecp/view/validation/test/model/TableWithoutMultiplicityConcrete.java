@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,12 +8,12 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543190
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.view.validation.test.model;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface TableWithoutMultiplicityConcrete extends EObject {
+public interface TableWithoutMultiplicityConcrete extends TableObject {
 	/**
 	 * Returns the value of the '<em><b>Content</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild}.

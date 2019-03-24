@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543190
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.impl;
 
@@ -41,6 +42,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
+import org.eclipse.emf.ecp.view.validation.test.model.TableObject;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
@@ -240,6 +242,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 *
 	 * @generated
 	 */
+	private EClass tableObjectEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	private EEnum genderEEnum = null;
 
 	/**
@@ -352,8 +362,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TestPackageImpl());
+		final Object registeredTestPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		final TestPackageImpl theTestPackage = registeredTestPackage instanceof TestPackageImpl
+			? (TestPackageImpl) registeredTestPackage
+			: new TestPackageImpl();
 
 		isInited = true;
 
@@ -1157,6 +1169,28 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getTableObject() {
+		return tableObjectEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTableObject_Label() {
+		return (EAttribute) tableObjectEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EDataType getStringWithMaxLength8() {
 		return stringWithMaxLength8EDataType;
 	}
@@ -1375,6 +1409,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEAttribute(personEClass, PERSON__CUSTOM);
 		createEAttribute(personEClass, PERSON__AGE);
 
+		tableObjectEClass = createEClass(TABLE_OBJECT);
+		createEAttribute(tableObjectEClass, TABLE_OBJECT__LABEL);
+
 		// Create enums
 		genderEEnum = createEEnum(GENDER);
 		colorEEnum = createEEnum(COLOR);
@@ -1421,18 +1458,22 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		tableWithMultiplicityEClass.getESuperTypes().add(getTableObject());
 		tableContentWithoutValidationEClass.getESuperTypes().add(getTableContent());
 		tableContentWithValidationEClass.getESuperTypes().add(getTableContent());
+		tableWithoutMultiplicityEClass.getESuperTypes().add(getTableObject());
+		tableWithUniqueEClass.getESuperTypes().add(getTableObject());
 		tableContentWithInnerChild2EClass.getESuperTypes().add(getTableContent());
 		tableContentWithInnerChildEClass.getESuperTypes().add(getTableContent());
+		tableWithoutMultiplicityConcreteEClass.getESuperTypes().add(getTableObject());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(libraryEClass, Library.class, "Library", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLibrary_Name(), ecorePackage.getEString(), "name", null, 0, 1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1,
-			Library.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1, Library.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 		initEReference(getLibrary_Books(), getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
@@ -1466,13 +1507,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWriter_Pseudonym(), ecorePackage.getEBoolean(), "Pseudonym", "false", 0, 1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1,
-			Writer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWriter_Initials(), getMinLengthOf3(), "initials", null, 0, 1, Writer.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWriter_Title(), getStrictMinLengthOf3(), "title", null, 0, 1, Writer.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1, Writer.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWriter_Initials(), getMinLengthOf3(), "initials", null, 0, 1, Writer.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWriter_Title(), getStrictMinLengthOf3(), "title", null, 0, 1, Writer.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(writerEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1593,14 +1634,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(tableContentWithInnerChild2EClass, TableContentWithInnerChild2.class, "TableContentWithInnerChild2",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableContentWithInnerChild2_InnerChild(), getTableContent(), null, "innerChild", null, 0,
-			1, TableContentWithInnerChild2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+		initEReference(getTableContentWithInnerChild2_InnerChild(), getTableContent(), null, "innerChild", null, 0, 1,
+			TableContentWithInnerChild2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tableContentWithInnerChildEClass, TableContentWithInnerChild.class, "TableContentWithInnerChild",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableContentWithInnerChild_InnerChild(), getTableContent(), null, "innerChild", null, 0,
-			1, TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+		initEReference(getTableContentWithInnerChild_InnerChild(), getTableContent(), null, "innerChild", null, 0, 1,
+			TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTableContentWithInnerChild_Stuff(), ecorePackage.getEString(), "stuff", null, 0, 1,
 			TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
@@ -1608,8 +1649,8 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(tableWithoutMultiplicityConcreteEClass, TableWithoutMultiplicityConcrete.class,
 			"TableWithoutMultiplicityConcrete", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableWithoutMultiplicityConcrete_Content(), getTableContentWithInnerChild(), null,
-			"content", null, 0, -1, TableWithoutMultiplicityConcrete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+		initEReference(getTableWithoutMultiplicityConcrete_Content(), getTableContentWithInnerChild(), null, "content",
+			null, 0, -1, TableWithoutMultiplicityConcrete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(referencerEClass, Referencer.class, "Referencer", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1621,9 +1662,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEClass(crossReferenceContainerEClass, CrossReferenceContainer.class, "CrossReferenceContainer",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCrossReferenceContainer_Contents(), getCrossReferenceContent(),
-			getCrossReferenceContent_Parent(), "contents", null, 0, -1, CrossReferenceContainer.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+			getCrossReferenceContent_Parent(), "contents", null, 0, -1, CrossReferenceContainer.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 		initEReference(getCrossReferenceContainer_SingleContent(), getCrossReferenceContent(),
 			getCrossReferenceContent_SingleParent(), "singleContent", null, 0, 1, CrossReferenceContainer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
@@ -1632,9 +1673,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEClass(crossReferenceContentEClass, CrossReferenceContent.class, "CrossReferenceContent", !IS_ABSTRACT,
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCrossReferenceContent_Parent(), getCrossReferenceContainer(),
-			getCrossReferenceContainer_Contents(), "parent", null, 0, 1, CrossReferenceContent.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+			getCrossReferenceContainer_Contents(), "parent", null, 0, 1, CrossReferenceContent.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 		initEReference(getCrossReferenceContent_SingleParent(), getCrossReferenceContainer(),
 			getCrossReferenceContainer_SingleContent(), "singleParent", null, 0, 1, CrossReferenceContent.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
@@ -1643,14 +1684,19 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEClass(personEClass, Person.class, "Person", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPerson_FirstName(), getStringWithMaxLength8(), "firstName", null, 0, 1, Person.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPerson_Gender(), getGender(), "gender", null, 0, 1, Person.class, !IS_TRANSIENT,
+		initEAttribute(getPerson_Gender(), getGender(), "gender", null, 0, 1, Person.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPerson_LastName(), getOnlyCapitals(), "lastName", null, 0, 1, Person.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPerson_LastName(), getOnlyCapitals(), "lastName", null, 0, 1, Person.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPerson_Custom(), getCustomDataType(), "custom", null, 0, 1, Person.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPerson_Age(), getAge(), "age", null, 0, 1, Person.class, !IS_TRANSIENT, !IS_VOLATILE,
 			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(tableObjectEClass, TableObject.class, "TableObject", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTableObject_Label(), ecorePackage.getEString(), "label", null, 0, 1, TableObject.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(genderEEnum, Gender.class, "Gender");

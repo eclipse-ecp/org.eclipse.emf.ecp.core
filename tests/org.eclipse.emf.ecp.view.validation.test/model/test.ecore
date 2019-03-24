@@ -95,7 +95,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uniqueAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="secondAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableWithMultiplicity">
+  <eClassifiers xsi:type="ecore:EClass" name="TableWithMultiplicity" eSuperTypes="#//TableObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" lowerBound="1"
         upperBound="-1" eType="#//TableContent" containment="true"/>
   </eClassifiers>
@@ -108,11 +108,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableWithoutMultiplicity">
+  <eClassifiers xsi:type="ecore:EClass" name="TableWithoutMultiplicity" eSuperTypes="#//TableObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
         eType="#//TableContent" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableWithUnique">
+  <eClassifiers xsi:type="ecore:EClass" name="TableWithUnique" eSuperTypes="#//TableObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
         eType="#//TableContent" containment="true"/>
   </eClassifiers>
@@ -125,7 +125,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stuff" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableWithoutMultiplicityConcrete">
+  <eClassifiers xsi:type="ecore:EClass" name="TableWithoutMultiplicityConcrete" eSuperTypes="#//TableObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
         eType="#//TableContentWithInnerChild" containment="true"/>
   </eClassifiers>
@@ -194,5 +194,8 @@
     <eLiterals name="Red" literal=""/>
     <eLiterals name="Green" value="1"/>
     <eLiterals name="Blue" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TableObject" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

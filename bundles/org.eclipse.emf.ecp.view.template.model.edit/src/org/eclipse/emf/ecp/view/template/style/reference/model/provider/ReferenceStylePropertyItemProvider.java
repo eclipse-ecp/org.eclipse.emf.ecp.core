@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -16,12 +16,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferencePackage;
 import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -39,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * {@link org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ReferenceStylePropertyItemProvider
@@ -54,7 +51,7 @@ public class ReferenceStylePropertyItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ReferenceStylePropertyItemProvider(AdapterFactory adapterFactory) {
@@ -65,7 +62,7 @@ public class ReferenceStylePropertyItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -74,6 +71,7 @@ public class ReferenceStylePropertyItemProvider
 			super.getPropertyDescriptors(object);
 
 			addShowCreateAndLinkButtonForCrossReferencesPropertyDescriptor(object);
+			addShowLinkButtonForContainmentReferencesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -82,7 +80,7 @@ public class ReferenceStylePropertyItemProvider
 	 * This adds a property descriptor for the Show Create And Link Button For Cross References feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addShowCreateAndLinkButtonForCrossReferencesPropertyDescriptor(Object object) {
@@ -103,10 +101,32 @@ public class ReferenceStylePropertyItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Show Link Button For Containment References feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addShowLinkButtonForContainmentReferencesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ReferenceStyleProperty_showLinkButtonForContainmentReferences_feature"), //$NON-NLS-1$
+				getString("_UI_ReferenceStyleProperty_showLinkButtonForContainmentReferences_description"), //$NON-NLS-1$
+				VTReferencePackage.Literals.REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This returns ReferenceStyleProperty.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -118,12 +138,12 @@ public class ReferenceStylePropertyItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		VTReferenceStyleProperty referenceStyleProperty = (VTReferenceStyleProperty) object;
+		final VTReferenceStyleProperty referenceStyleProperty = (VTReferenceStyleProperty) object;
 		return getString("_UI_ReferenceStyleProperty_type") + " " //$NON-NLS-1$ //$NON-NLS-2$
 			+ referenceStyleProperty.isShowCreateAndLinkButtonForCrossReferences();
 	}
@@ -133,7 +153,7 @@ public class ReferenceStylePropertyItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -142,6 +162,7 @@ public class ReferenceStylePropertyItemProvider
 
 		switch (notification.getFeatureID(VTReferenceStyleProperty.class)) {
 		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES:
+		case VTReferencePackage.REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}
@@ -153,7 +174,7 @@ public class ReferenceStylePropertyItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -165,7 +186,7 @@ public class ReferenceStylePropertyItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

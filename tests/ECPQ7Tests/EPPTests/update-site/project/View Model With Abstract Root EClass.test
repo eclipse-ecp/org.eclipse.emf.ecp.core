@@ -1,0 +1,78 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihvnUC3mEeSwhO5Nwx0hPg,_kHXSIPMaEeik6oWCgIASMQ
+Element-Name: View Model With Abstract Root EClass
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _W4UMAPMcEeik6oWCgIASMQ
+Runtime-Version: 2.4.0.201810292311
+Save-Time: 11/28/18 4:04 PM
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+* Create view model with abstract root EClass
+* Verify that preview works
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// Creare view model with abstract root EClass
+get-view "Project Explorer" | get-tree | select Project | get-menu -path "New/Other..." | click
+with [get-window New] {
+    get-tree | select "EMF Forms/View Model"
+    get-button "Next >" | click
+    get-button "Browse Workspace" | click
+    with [get-window "Select Model"] {
+        get-tree | select "Project/model/My.ecore"
+        get-button OK | click
+    }
+    get-button "Next >" | click
+    get-tree | select Abstract
+    get-button "Fill view model with default layout" | uncheck
+    get-button "Next >" | click
+    get-button Finish | click
+}
+get-editor "Abstract.view" | get-label Abstract | get-property caption | equals Abstract | verify-true
+
+// Generate Controls
+get-editor "Abstract.view" | get-tree | select Abstract | get-menu -path "Generate Controls" | click
+get-window -class SelectAttributesDialog | get-tree | select Abstract
+get-window -class SelectAttributesDialog | get-tree | get-property itemCount | equals 1 | verify-true
+with [get-window -class SelectAttributesDialog] {
+    get-tree | select Abstract
+    get-button "Next >" | click
+}
+get-window -class SelectAttributesDialog | get-table | get-property itemCount | equals 2 | verify-true
+with [get-window -class SelectAttributesDialog] {
+    get-button "Select All" | click
+    get-button Finish | click
+}
+
+// Open Preview
+get-editor "Abstract.view" | get-button "Open Preview" | click
+get-view "EMF Forms Preview" | get-button "Automatically refresh Preview View" | click
+
+// Check that controls are present and that validation works
+get-view "EMF Forms Preview" | get-label "Name*" | get-property caption | equals "Name*" | verify-true
+get-view "EMF Forms Preview" | get-label "" -after [get-label "Name*"] | get-property "image.path" 
+    | equals "org.eclipse.emf.ecp.edit.swt/icons/validation_error.png" | verify-true
+with [get-view "EMF Forms Preview" | get-editbox -after [get-label "Name*"]] {
+    set-text Test
+    key-type "TRAVERSE_TAB_NEXT"
+}
+get-view "EMF Forms Preview" | get-label "" -after [get-label "Name*"] | get-property "getImage()" | equals null 
+    | verify-true
+get-view "EMF Forms Preview" | get-label Concretes | get-property caption | equals Concretes | verify-true
+get-view "EMF Forms Preview" | get-button "Create and link new Concretes" | click
+with [get-window Concrete] {
+    get-editbox -after [get-label Label] | set-text "Concrete!"
+    get-button OK | click
+}
+get-view "EMF Forms Preview" | get-link "<a>Concrete Concrete!</a>" | get-property caption 
+    | equals "<a>Concrete Concrete!</a>" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

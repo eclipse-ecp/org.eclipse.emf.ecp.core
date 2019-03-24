@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,18 +8,25 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Christian W. Damus - bug 543190
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.scoped;
 
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -28,6 +35,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -40,6 +48,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.internal.core.services.controlmapper.SettingToControlMapperImpl;
+import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +76,7 @@ public class SettingToControlMapper_ITest {
 		context = new FakeViewContext(domainObject, view);
 
 		mappingManager = mock(EMFFormsMappingProviderManager.class);
-		when(mappingManager.getAllSettingsFor(any(VDomainModelReference.class), any(EObject.class)))
+		when(mappingManager.getAllSettingsFor(any(VDomainModelReference.class), isA(EClass.class)))
 			.then(new Answer<Set<UniqueSetting>>() {
 
 				@Override
@@ -315,4 +324,57 @@ public class SettingToControlMapper_ITest {
 		assertEquals(1, controlsForParentSetting.size());
 		assertTrue(controlsForParentSetting.contains(control));
 	}
+
+	/**
+	 * Test case for {@link SubControlMapper#getEObjectsWithSettings(VElement)} implementation.
+	 */
+	@Test
+	@SuppressWarnings("nls")
+	public void getEObjectsWithSettings_VElement() {
+		// Create a child view for the EClass showing the name of its ID attribute
+		// and the name of that ID attribute's type. These are two objects, one
+		// contained and one not, that are presented by the child context
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl attributeControl = VViewFactory.eINSTANCE.createControl();
+		attributeControl.setDomainModelReference(EcorePackage.Literals.ENAMED_ELEMENT__NAME);
+		childView.getChildren().add(attributeControl);
+		final VControl isIdControl = VViewFactory.eINSTANCE.createControl();
+		isIdControl.setDomainModelReference(EcorePackage.Literals.EATTRIBUTE__ID);
+		childView.getChildren().add(isIdControl); // This one doesn't add anything interesting
+		final VControl typeNameControl = VViewFactory.eINSTANCE.createControl();
+		typeNameControl.setDomainModelReference(EcorePackage.Literals.ENAMED_ELEMENT__NAME,
+			Arrays.asList(EcorePackage.Literals.EATTRIBUTE__EATTRIBUTE_TYPE));
+		childView.getChildren().add(typeNameControl);
+
+		final EAttribute idAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		idAttribute.setName("id");
+		idAttribute.setID(true);
+		idAttribute.setEType(EcorePackage.Literals.ESTRING);
+		((EClass) domainObject).getEStructuralFeatures().add(idAttribute);
+
+		// Update mocking for the new DMRs
+		when(mappingManager.getAllSettingsFor(attributeControl.getDomainModelReference(),
+			idAttribute))
+				.thenReturn(set(UniqueSetting.createSetting(idAttribute, EcorePackage.Literals.ENAMED_ELEMENT__NAME)));
+		when(mappingManager.getAllSettingsFor(isIdControl.getDomainModelReference(),
+			idAttribute))
+				.thenReturn(
+					set(UniqueSetting.createSetting(idAttribute, EcorePackage.Literals.EATTRIBUTE__EATTRIBUTE_TYPE)));
+		when(mappingManager.getAllSettingsFor(typeNameControl.getDomainModelReference(),
+			idAttribute))
+				.thenReturn(set(UniqueSetting.createSetting(EcorePackage.Literals.ESTRING,
+					EcorePackage.Literals.ENAMED_ELEMENT__NAME)));
+
+		final FakeViewContext childContext = new FakeViewContext(idAttribute, childView);
+		context.addChildContext(control, childContext);
+		final Collection<EObject> objects = mapper.getEObjectsWithSettings(childView);
+		assertThat("Wrong number of objects in child context", objects.size(), is(2));
+		assertThat(objects, hasItems(idAttribute, EcorePackage.Literals.ESTRING));
+	}
+
+	@SafeVarargs
+	static <T> Set<T> set(T... elements) {
+		return new LinkedHashSet<>(Arrays.asList(elements));
+	}
+
 }

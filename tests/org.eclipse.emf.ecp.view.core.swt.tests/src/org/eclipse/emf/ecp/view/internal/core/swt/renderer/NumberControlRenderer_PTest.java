@@ -307,7 +307,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 	 */
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		mockDatabindingIsUnsettable();
+		mockDatabindingIsSettableAndChangeable();
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(
 				mockedObservable, new ObservingWritableValue(mockedObservable));
@@ -324,7 +324,6 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void testEffectivelyReadOnlyDeactivatesControl()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, 1,

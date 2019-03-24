@@ -15,4 +15,26 @@
             genModel="model/datatemplate.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.content_parser">
+      <!-- @generated datatemplate -->
+      <parser
+            contentTypeIdentifier="org.eclipse.emfforms.datatemplate.model"
+            class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <!-- @generated datatemplate -->
+      <content-type
+            base-type="org.eclipse.emf.ecore.xmi"
+            file-extensions="datatemplate"
+            id="org.eclipse.emfforms.datatemplate.model"
+            name="%_UI_DataTemplate_content_type"
+            priority="normal">
+         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
+            <parameter name="namespace" value="http://org/eclipse/emfforms/datatemplate/model"/>
+            <parameter name="kind" value="xmi"/>
+         </describer>
+      </content-type>
+   </extension>
+
 </plugin>

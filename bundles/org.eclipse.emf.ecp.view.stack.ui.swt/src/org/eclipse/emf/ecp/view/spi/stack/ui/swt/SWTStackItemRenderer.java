@@ -20,7 +20,6 @@ import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 
 /**
@@ -38,14 +37,13 @@ public class SWTStackItemRenderer extends ContainerSWTRenderer<VStackItem> {
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @since 1.6
 	 */
 	@Inject
 	public SWTStackItemRenderer(VStackItem vElement, ViewModelContext viewContext,
 		ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
-		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		EMFFormsRendererFactory factory) {
+		super(vElement, viewContext, reportService, factory);
 	}
 
 	private static final String LAYOUT_STACK_ITEM = "org_eclipse_emf_ecp_ui_layout_stackitem"; //$NON-NLS-1$

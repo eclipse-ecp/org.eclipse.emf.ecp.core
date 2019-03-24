@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Default Locale Provider
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.locale.default
-Bundle-Version: 1.19.0.qualifier
+Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.core.services.locale.defaultlocale;version="1.19.0"
-Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[1.19.0,1.20.0)"
+Export-Package: org.eclipse.emfforms.internal.core.services.locale.defaultlocale;version="1.20.0"
+Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[1.20.0,1.21.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/defaultLocalizationService.xml
 Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.emfforms.spi.common.locale;version="[1.19.0,1.20.0)"
+Import-Package: org.eclipse.emfforms.spi.common.locale;version="[1.20.0,1.21.0)"
 Automatic-Module-Name: org.eclipse.emfforms.core.services.locale.default

@@ -14,13 +14,14 @@ package org.eclipse.emf.ecp.emf2web.json.controller.xtend
 import java.util.Collection
 import java.util.LinkedList
 import java.util.List
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationController
 import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo
 import org.eclipse.emf.ecp.emf2web.json.generator.xtend.EcoreJsonGenerator
 import org.eclipse.emf.ecp.emf2web.json.generator.xtend.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.json.util.ReferenceHelperImpl
-import org.eclipse.emf.ecp.view.spi.model.VView
-import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationController
 import org.eclipse.emf.ecp.view.spi.model.VElement
+import org.eclipse.emf.ecp.view.spi.model.VView
 
 /**
  * @author Stefan Dirix <sdirix@eclipsesource.com>
@@ -35,7 +36,8 @@ class JsonGenerationController implements GenerationController {
 		val helper=new ReferenceHelperImpl
 		val formsGenerator = new FormsJsonGenerator(helper)
 
-		for (view : views) {
+		for (rawView : views) {
+			val view = EcoreUtil.copy(rawView)
 			for (ecorePath : view.ecorePaths) {
 				helper.addEcorePath(ecorePath);
 			}
@@ -47,6 +49,8 @@ class JsonGenerationController implements GenerationController {
 				schemaIdentifier + "Model.json", null)
 			schemaInfo.generatedString = schemaFile
 			result.add(schemaInfo)
+
+			ViewCleaner.cleanView(view)
 
 			//internationalize view
 			val allContents = view.eAllContents

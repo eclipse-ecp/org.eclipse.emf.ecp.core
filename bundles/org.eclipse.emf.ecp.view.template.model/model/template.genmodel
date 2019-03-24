@@ -12,7 +12,7 @@
       interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
-      contentTypeIdentifier="" ecorePackage="template.ecore#/">
+      contentTypeIdentifier="org.eclipse.emf.ecp.view.template.model" ecorePackage="template.ecore#/">
     <genClasses ecoreClass="template.ecore#//ViewTemplate">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//ViewTemplate/controlValidationConfiguration"/>
       <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//ViewTemplate/styles"/>

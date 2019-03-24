@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543160
  */
 package org.eclipse.emf.ecp.view.spi.model.impl;
 
@@ -15,14 +16,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -53,43 +53,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  */
 // TODO performance
 public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
-	/**
-	 * @generated NOT
-	 */
-	private final class DiagnosticAdapter extends AdapterImpl {
-		@SuppressWarnings("unchecked")
-		@Override
-		public void notifyChanged(Notification msg) {
-			super.notifyChanged(msg);
-			if (msg.getFeature() != VViewPackage.eINSTANCE.getDiagnostic_Diagnostics()) {
-				return;
-			}
-			switch (msg.getEventType()) {
-			case Notification.ADD:
-				addNewDiagnostic((Diagnostic) msg.getNewValue());
-				break;
-			case Notification.ADD_MANY:
-				if (msg.getNewValue() != null) {
-					for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getNewValue()) {
-						addNewDiagnostic(diagnostic);
-					}
-				}
-				break;
-			case Notification.REMOVE:
-				removeOldDiagnostic((Diagnostic) msg.getOldValue());
-				break;
-			case Notification.REMOVE_MANY:
-				if (msg.getOldValue() != null) {
-					for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getOldValue()) {
-						removeOldDiagnostic(diagnostic);
-					}
-				}
-				break;
-			default:
-				break;
-			}
-		}
-	}
 
 	/**
 	 * The cached value of the '{@link #getDiagnostics() <em>Diagnostics</em>}' attribute list.
@@ -107,43 +70,67 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated NOT
+	 * @generated
 	 */
 	protected VDiagnosticImpl() {
 		super();
-		eAdapters().add(new DiagnosticAdapter());
 	}
-	// end of custom code
 
 	private void removeOldDiagnostic(Diagnostic diagnostic) {
-		if (diagnostic == null) {
+		final EObject eObject = getDiagnosticSubject(diagnostic);
+		if (eObject == null) {
 			return;
 		}
-		final EObject eObject = (EObject) diagnostic.getData().get(0);
-		if (!diagnosticMap.containsKey(eObject)) {
-			return;
-		}
-		final Set<Diagnostic> diagnostics = diagnosticMap.get(eObject);
-		diagnostics.remove(diagnostic);
-		if (diagnostics.size() == 0) {
-			diagnosticMap.remove(eObject);
+
+		EObject parent = eObject;
+		while (parent != null) {
+			final Set<Diagnostic> diagnostics = diagnosticMap.get(parent);
+			if (diagnostics != null) {
+				diagnostics.remove(diagnostic);
+			}
+			parent = parent.eContainer();
 		}
 	}
 
 	private void addNewDiagnostic(Diagnostic diagnostic) {
-		if (diagnostic == null || diagnostic.getData().isEmpty()
-			|| !EObject.class.isInstance(diagnostic.getData().get(0))) {
+		final EObject eObject = getDiagnosticSubject(diagnostic);
+		if (eObject == null) {
 			return;
 		}
-		final EObject eObject = (EObject) diagnostic.getData().get(0);
+
 		EObject parent = eObject;
 		while (parent != null) {
-			if (!diagnosticMap.containsKey(parent)) {
-				diagnosticMap.put(parent, new LinkedHashSet<Diagnostic>());
+			Set<Diagnostic> diagnostics = diagnosticMap.get(parent);
+			if (diagnostics == null) {
+				diagnostics = new LinkedHashSet<Diagnostic>();
+				diagnosticMap.put(parent, diagnostics);
 			}
-			diagnosticMap.get(parent).add(diagnostic);
+			diagnostics.add(diagnostic);
 			parent = parent.eContainer();
 		}
+	}
+
+	/**
+	 * Get the {@link EObject} that is the subject of a {@code diagnostic}.
+	 *
+	 * @param diagnostic a purported {@link Diagnostic}
+	 * @return the object that is the first {@linkplain Diagnostic#getData() data element}
+	 *         of the {@code diagnostic}, or {@code null} if none
+	 */
+	private EObject getDiagnosticSubject(Object diagnostic) {
+		EObject result = null;
+
+		if (diagnostic instanceof Diagnostic) {
+			final Diagnostic d = (Diagnostic) diagnostic;
+			if (!d.getData().isEmpty()) {
+				final Object first = d.getData().get(0);
+				if (first instanceof EObject) {
+					result = (EObject) first;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	/**
@@ -161,15 +148,74 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public EList<Object> getDiagnostics() {
 		if (diagnostics == null) {
-			diagnostics = new EDataTypeUniqueEList<Object>(Object.class, this, VViewPackage.DIAGNOSTIC__DIAGNOSTICS);
+			diagnostics = new DiagnosticEList();
 		}
 		return diagnostics;
 	}
+
+	/**
+	 * Implementation of the list of diagnostics with hooks for tracking diagnostics in
+	 * the per-object sets and leveraging those sets for efficient containment testing
+	 * and duplicate filtering.
+	 */
+	@SuppressWarnings("serial")
+	private final class DiagnosticEList extends EDataTypeUniqueEList<Object> {
+		private DiagnosticEList() {
+			super(Object.class, VDiagnosticImpl.this, VViewPackage.DIAGNOSTIC__DIAGNOSTICS);
+		}
+
+		@Override
+		protected Collection<Object> getNonDuplicates(Collection<? extends Object> collection) {
+			// Our implementation of 'contains' is constant-time
+			final Collection<Object> result = new HashSet<Object>(collection.size() * 2, 0.5f);
+			for (final Object next : collection) {
+				if (!contains(next)) {
+					result.add(next);
+				}
+			}
+			return result;
+		}
+
+		@Override
+		public boolean contains(Object object) {
+			// We can leverage the efficiency of sets maintained already for
+			// unique tracking per object
+			final EObject subject = getDiagnosticSubject(object);
+			final Set<Diagnostic> diagnostics = diagnosticMap.get(subject);
+			if (diagnostics != null) {
+				return diagnostics.contains(object);
+			}
+
+			// Okay, it's not a diagnostic or it doesn't have a subject.
+			// Fall back to the default linear search
+			return super.contains(object);
+		}
+
+		@Override
+		protected void didAdd(int index, Object newObject) {
+			addNewDiagnostic((Diagnostic) newObject);
+		}
+
+		@Override
+		protected void didRemove(int index, Object oldObject) {
+			removeOldDiagnostic((Diagnostic) oldObject);
+		}
+
+		@Override
+		protected void didSet(int index, Object newObject, Object oldObject) {
+			if (newObject != oldObject) {
+				didRemove(index, oldObject);
+				didAdd(index, newObject);
+			}
+		}
+	}
+
+	// end of custom code
 
 	/**
 	 * <!-- begin-user-doc -->

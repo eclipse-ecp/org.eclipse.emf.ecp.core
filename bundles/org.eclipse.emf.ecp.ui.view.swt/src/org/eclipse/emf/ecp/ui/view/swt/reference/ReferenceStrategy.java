@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Christian W. Damus and others.
+ * Copyright (c) 2018, 2019 Christian W. Damus and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,11 +38,7 @@ public interface ReferenceStrategy {
 		public boolean addElementsToReference(EObject owner, EReference reference, Set<? extends EObject> objects) {
 			final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(owner);
 
-			// The ECPControlHelper generic signature is wrong. It should be an upper bound,
-			// but because this utility never actually adds to the set, this cast is safe
-			@SuppressWarnings("unchecked")
-			final Set<EObject> objectsToAdd = (Set<EObject>) objects;
-			ECPControlHelper.addModelElementsInReference(owner, objectsToAdd, reference, domain);
+			ECPControlHelper.addModelElementsInReference(owner, objects, reference, domain);
 
 			return true;
 		}

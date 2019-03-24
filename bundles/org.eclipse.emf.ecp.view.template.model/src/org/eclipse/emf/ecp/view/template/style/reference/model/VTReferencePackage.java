@@ -27,10 +27,9 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * 
+ *
  * @since 1.18
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceFactory
  * @model kind="package"
  * @generated
@@ -98,6 +97,17 @@ public interface VTReferencePackage extends EPackage {
 		+ 0;
 
 	/**
+	 * The feature id for the '<em><b>Show Link Button For Containment References</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT
+		+ 1;
+
+	/**
 	 * The number of structural features of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -105,7 +115,7 @@ public interface VTReferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REFERENCE_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 1;
+	int REFERENCE_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Style Property</em>' class.
@@ -143,6 +153,20 @@ public interface VTReferencePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getReferenceStyleProperty_ShowCreateAndLinkButtonForCrossReferences();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty#isShowLinkButtonForContainmentReferences
+	 * <em>Show Link Button For Containment References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Show Link Button For Containment References</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty#isShowLinkButtonForContainmentReferences()
+	 * @see #getReferenceStyleProperty()
+	 * @generated
+	 */
+	EAttribute getReferenceStyleProperty_ShowLinkButtonForContainmentReferences();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -192,6 +216,17 @@ public interface VTReferencePackage extends EPackage {
 		 */
 		EAttribute REFERENCE_STYLE_PROPERTY__SHOW_CREATE_AND_LINK_BUTTON_FOR_CROSS_REFERENCES = eINSTANCE
 			.getReferenceStyleProperty_ShowCreateAndLinkButtonForCrossReferences();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Link Button For Containment References</b></em>' attribute
+		 * feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute REFERENCE_STYLE_PROPERTY__SHOW_LINK_BUTTON_FOR_CONTAINMENT_REFERENCES = eINSTANCE
+			.getReferenceStyleProperty_ShowLinkButtonForContainmentReferences();
 
 	}
 

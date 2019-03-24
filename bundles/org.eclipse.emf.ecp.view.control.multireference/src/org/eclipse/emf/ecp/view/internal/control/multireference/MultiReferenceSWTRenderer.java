@@ -62,6 +62,7 @@ import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundle
 import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -72,6 +73,7 @@ import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.ui.ObjectViewerComparator;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -85,12 +87,12 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -214,7 +216,28 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @return true if the 'AddExisting' button is shown, false otherwise
 	 */
 	protected boolean showAddExistingButton() {
-		return true;
+		EReference eReference = null;
+		try {
+			eReference = (EReference) getModelValue().getValueType();
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new AbstractReport(ex));
+		}
+
+		if (eReference != null) {
+			// Always show the add existing button for cross references
+			if (!eReference.isContainment()) {
+				return true;
+			}
+
+			VTReferenceStyleProperty referenceStyle = RendererUtil.getStyleProperty(
+				getVTViewTemplateProvider(), getVElement(), getViewModelContext(), VTReferenceStyleProperty.class);
+			if (referenceStyle == null) {
+				referenceStyle = getDefaultReferenceStyle();
+			}
+			return referenceStyle.isShowLinkButtonForContainmentReferences();
+		}
+
+		return false;
 	}
 
 	/**
@@ -349,7 +372,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			getReportService().report(new RenderingFailedReport(ex));
 			return createErrorLabel(composite, ex);
 		}
-		updateButtonEnabling();
+		updateButtons();
 		return composite;
 	}
 
@@ -402,12 +425,22 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 
 		if (getTableStyleProperty().getRenderMode() == RenderMode.DEFAULT) {
-			updateButtonEnabling();
+			initButtons();
+			updateButtons();
 		}
 
 		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement(), getViewModelContext());
 
 		return composite;
+	}
+
+	private void initButtons() {
+		getTableViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				updateButtonEnabling();
+			}
+		});
 	}
 
 	/**
@@ -519,7 +552,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				handleMoveUp(tableViewer, container, structuralFeature);
-				updateButtonEnabling();
+				updateButtons();
 			}
 
 		});
@@ -551,7 +584,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				handleMoveDown(tableViewer, container, structuralFeature);
-				updateButtonEnabling();
+				updateButtons();
 			}
 
 		});
@@ -583,7 +616,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				handleAddExisting(tableViewer, container, structuralFeature);
-				updateButtonEnabling();
+				updateButtons();
 			}
 
 		});
@@ -615,7 +648,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				handleAddNew(tableViewer, container, structuralFeature);
-				updateButtonEnabling();
+				updateButtons();
 			}
 
 		});
@@ -646,33 +679,89 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				handleDelete(tableViewer, container, structuralFeature);
-				updateButtonEnabling();
+				updateButtons();
 			}
 		});
 		return btnDelete;
 	}
 
 	/**
-	 * Updates the 'addExisting', 'addNew', 'delete', 'moveUp' and 'moveDown' buttons according to the bound input.
+	 * Updates button visibility and enablement.
+	 */
+	protected void updateButtons() {
+		updateButtonVisibility();
+		updateButtonEnabling();
+	}
+
+	/**
+	 * Updates the enablement of 'addExisting', 'addNew', 'delete', 'moveUp' and 'moveDown' buttons according to the
+	 * bound input.
 	 */
 	protected void updateButtonEnabling() {
-		final boolean isReadOnly = getVElement().isEffectivelyReadonly();
+		final boolean isEnable = getVElement().isEffectivelyEnabled();
 		final int listSize = tableViewerInputList != null ? tableViewerInputList.size() : 0;
+		final int selectionIndex = tableViewer != null ? tableViewer.getTable().getSelectionIndex() : -1;
 
-		if (showMoveUpButton()) {
-			btnMoveUp.setEnabled(!isReadOnly && listSize > 1);
+		enableUpButton(isEnable, listSize, selectionIndex);
+		enableDownButton(isEnable, listSize, selectionIndex);
+		enableAddExistingButton(isEnable, listSize, selectionIndex);
+		enableAddNewButton(isEnable, listSize, selectionIndex);
+		enableDeleteButton(isEnable, listSize, selectionIndex);
+	}
+
+	private void enableUpButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (btnMoveUp != null && showMoveUpButton()) {
+			final boolean enabled = baseEnable && listSize > 1 && selectionIndex > 0;
+			btnMoveUp.setEnabled(enabled);
 		}
-		if (showMoveDownButton()) {
-			btnMoveDown.setEnabled(!isReadOnly && listSize > 1);
+	}
+
+	private void enableDownButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (btnMoveDown != null && showMoveDownButton()) {
+			final boolean enabled = baseEnable && listSize > 1 && selectionIndex != -1 && selectionIndex < listSize - 1;
+			btnMoveDown.setEnabled(enabled);
 		}
-		if (showAddExistingButton()) {
-			btnAddExisting.setEnabled(!isReadOnly);
+	}
+
+	private void enableAddExistingButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (btnAddExisting != null && showAddExistingButton()) {
+			btnAddExisting.setEnabled(baseEnable);
 		}
-		if (showAddNewButton()) {
-			btnAddNew.setEnabled(!isReadOnly);
+	}
+
+	private void enableAddNewButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (btnAddNew != null && showAddNewButton()) {
+			btnAddNew.setEnabled(baseEnable);
 		}
-		if (showDeleteButton()) {
-			btnDelete.setEnabled(!isReadOnly && listSize > 0);
+	}
+
+	private void enableDeleteButton(boolean baseEnable, int listSize, int selectionIndex) {
+		if (btnDelete != null && showDeleteButton()) {
+			btnDelete.setEnabled(baseEnable && listSize > 0 && selectionIndex != -1);
+		}
+	}
+
+	/**
+	 * Updates the visibility of 'addExisting', 'addNew', 'delete', 'moveUp' and 'moveDown' buttons according to the
+	 * bound input.
+	 */
+	protected void updateButtonVisibility() {
+		final boolean isVisible = !getVElement().isEffectivelyReadonly();
+
+		if (btnMoveUp != null) {
+			btnMoveUp.setVisible(showMoveUpButton() && isVisible);
+		}
+		if (btnMoveDown != null) {
+			btnMoveDown.setVisible(showMoveDownButton() && isVisible);
+		}
+		if (btnAddExisting != null) {
+			btnAddExisting.setVisible(showAddExistingButton() && isVisible);
+		}
+		if (btnAddNew != null) {
+			btnAddNew.setVisible(showAddNewButton() && isVisible);
+		}
+		if (btnDelete != null) {
+			btnDelete.setVisible(showDeleteButton() && isVisible);
 		}
 	}
 
@@ -809,6 +898,9 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
 			@Override
 			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+				if (getVElement().isEffectivelyReadonly()) {
+					return false;
+				}
 				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
 					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
 					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
@@ -821,8 +913,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			| ColumnViewerEditor.KEYBOARD_ACTIVATION);
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
-		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
-		final boolean isMoveDisabled = !showMoveUpButton() && !showMoveDownButton();
+		final ObjectViewerComparator comparator = new ObjectViewerComparator(this::compare);
+		final boolean isMoveDisabled = isMoveDisabled();
 		if (isMoveDisabled) {
 			tableViewer.setComparator(comparator);
 		}
@@ -873,16 +965,22 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				final EObject selectedObject = (EObject) IStructuredSelection.class.cast(event.getSelection())
-					.getFirstElement();
-				handleDoubleClick(selectedObject);
+				if (!getVElement().isEffectivelyReadonly()) {
+					final EObject selectedObject = (EObject) IStructuredSelection.class.cast(event.getSelection())
+						.getFirstElement();
+					handleDoubleClick(selectedObject);
+				}
 			}
 
 		});
 	}
 
+	private boolean isMoveDisabled() {
+		return !showMoveUpButton() && !showMoveDownButton();
+	}
+
 	private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer,
-		final ECPTableViewerComparator comparator, final TableColumn column) {
+		final ObjectViewerComparator comparator, final TableColumn column) {
 		final SelectionAdapter selectionAdapter = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1022,47 +1120,6 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 	}
 
-	/**
-	 * The {@link ViewerComparator} for the multi reference renderer's table which allows 3 states for sort order:
-	 * none, up and down. This comparator does not use column specific values but only the objects' labels because the
-	 * multi reference renderer always only has one column that shows the label.
-	 *
-	 * @author Eugen Neufeld
-	 *
-	 */
-	private class ECPTableViewerComparator extends ViewerComparator {
-		private static final int NONE = 0;
-		private int direction = NONE;
-
-		ECPTableViewerComparator() {
-			direction = NONE;
-		}
-
-		/** Toggles through the sorting directions: NONE -&gt; UP -&gt; DOWN -&gt; NONE. */
-		public void toggleDirection() {
-			direction = (direction + 1) % 3;
-		}
-
-		public int getDirection() {
-			switch (direction) {
-			case 0:
-				return SWT.NONE;
-			case 1:
-				return SWT.UP;
-			case 2:
-				return SWT.DOWN;
-			default:
-				return SWT.NONE;
-			}
-
-		}
-
-		@Override
-		public int compare(Viewer viewer, Object e1, Object e2) {
-			return MultiReferenceSWTRenderer.this.compare(direction, e1, e2);
-		}
-	}
-
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		// TODO rebinding of text and tooltip needed? If yes, complete!
@@ -1086,7 +1143,29 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		container = (EObject) ((IObserving) observableValue).getObserved();
 		observableValue.dispose();
+		applyEnable();
+		applyReadOnly();
+	}
+
+	@Override
+	protected boolean ignoreEnableOnReadOnly() {
+		// always take the enable state into account (read only but enable let the user sort the table content for
+		// example)
+		return false;
+	}
+
+	@Override
+	protected void applyEnable() {
+		super.applyEnable();
+		// specific handling for buttons
 		updateButtonEnabling();
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		// specific handling for buttons
+		// do not let the super method disable the control, so the table is still enabled for sorting for example
+		updateButtonVisibility();
 	}
 
 	@Override
@@ -1134,11 +1213,15 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final String label1 = labelProvider.getText(object1);
 		final String label2 = labelProvider.getText(object2);
 		if (label1 == null) {
-			rc = 1;
+			if (label2 == null) {
+				rc = 0;
+			} else {
+				rc = 1;
+			}
 		} else if (label2 == null) {
 			rc = -1;
 		} else {
-			rc = label1.toString().compareTo(label2.toString());
+			rc = NumberAwareStringComparator.getInstance().compare(label1.toString(), label2.toString());
 		}
 		// If descending order, flip the direction
 		if (direction == 2) {

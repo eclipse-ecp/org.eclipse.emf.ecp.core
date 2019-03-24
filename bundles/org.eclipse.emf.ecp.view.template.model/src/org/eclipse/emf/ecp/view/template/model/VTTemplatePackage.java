@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
+ * Christian W. Damus - bug 544499
  */
 package org.eclipse.emf.ecp.view.template.model;
 
@@ -60,6 +61,16 @@ public interface VTTemplatePackage extends EPackage {
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.model"; //$NON-NLS-1$
+
+	/**
+	 * The package content type ID.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.20
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	String eCONTENT_TYPE = "org.eclipse.emf.ecp.view.template.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.
@@ -550,7 +561,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1022,7 +1032,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the containment reference list '<em>Selectors</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer#getSelectors()
 	 * @see #getMultiStyleSelectorContainer()
@@ -1398,7 +1407,6 @@ public interface VTTemplatePackage extends EPackage {
 		 *
 		 * @since 1.17
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EReference MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS = eINSTANCE.getMultiStyleSelectorContainer_Selectors();

@@ -21,7 +21,10 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -135,7 +138,22 @@ public class Preview {
 				if (myPreviewEClass == null || myPreviewEClass.eIsProxy()) {
 					return;
 				}
-				dummyData = EcoreUtil.create(myPreviewEClass);
+				if (myPreviewEClass.isAbstract() || myPreviewEClass.isInterface()) {
+					final EPackage result = EcoreFactory.eINSTANCE.createEPackage();
+					result.setName("dummy"); //$NON-NLS-1$
+					result.setNsURI("dummy"); //$NON-NLS-1$
+					result.setNsPrefix("dummy"); //$NON-NLS-1$
+
+					final EClass wrapper = EcoreFactory.eINSTANCE.createEClass();
+					wrapper.getESuperTypes().add(myPreviewEClass);
+					wrapper.setName(myPreviewEClass.getName());
+					result.getEClassifiers().add(wrapper);
+					dummyData = new DynamicEObjectImpl(wrapper);
+				} else if (myPreviewEClass.getInstanceClass() == null) {
+					dummyData = new DynamicEObjectImpl(myPreviewEClass);
+				} else {
+					dummyData = EcoreUtil.create(myPreviewEClass);
+				}
 				final ResourceSet resourceSet = new ResourceSetImpl();
 				final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 					new ComposedAdapterFactory(new AdapterFactory[] {

@@ -48,17 +48,15 @@ public class GenModelEditor extends GenericEditor {
 		return super.modifyEditorInput(resourceSet);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.editor.GenericEditor#createTreeMasterDetail(org.eclipse.swt.widgets.Composite,
-	 *      java.lang.Object, org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback)
-	 */
+	@SuppressWarnings("restriction")
 	@Override
 	protected TreeMasterDetailComposite createTreeMasterDetail(Composite composite, Object editorInput,
 		CreateElementCallback createElementCallback) {
+		final GenModelEditorTMDCustomization buildBehaviour = new GenModelEditorTMDCustomization(createElementCallback,
+			(Notifier) editorInput);
+		buildBehaviour.setTree(createTreeViewerBuilder());
 		return TreeMasterDetailSWTFactory.createTreeMasterDetail(composite, SWT.NONE, editorInput,
-			new GenModelEditorTMDCustomization(createElementCallback, (Notifier) editorInput));
+			buildBehaviour);
 	}
 
 }

@@ -2,16 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Services for DMR Segments
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.segments;singleton:=true
-Bundle-Version: 1.19.0.qualifier
+Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.19.0,1.20.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.19.0,1.20.0)",
+Export-Package: org.eclipse.emfforms.internal.core.services.segments;version="1.20.0";x-internal:=true,
+ org.eclipse.emfforms.spi.core.services.segments;version="1.20.0"
+Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.20.0,1.21.0)",
+ org.eclipse.emf.ecp.view.context;bundle-version="[1.20.0,1.21.0)",
  org.eclipse.core.runtime;bundle-version="[3.13.0,4.0.0)"
-Service-Component: OSGI-INF/SegmentGeneratorService.xml,
- OSGI-INF/DmrToSegmentsViewServiceFactory.xml
-Export-Package: org.eclipse.emfforms.internal.core.services.segments;version="1.19.0";x-internal:=true,
- org.eclipse.emfforms.spi.core.services.segments;version="1.19.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Service-Component: OSGI-INF/SegmentGeneratorService.xml,OSGI-INF/DmrToSegmentsViewServiceFactory.xml
+Bundle-ActivationPolicy: lazy
 Import-Package: org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Automatic-Module-Name: org.eclipse.emfforms.core.services.segments

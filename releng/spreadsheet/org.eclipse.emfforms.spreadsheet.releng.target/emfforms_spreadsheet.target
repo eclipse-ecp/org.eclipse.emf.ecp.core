@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
-<!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="emfforms_spreadsheet" sequenceNumber="1542719405">
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
+<target name="emfforms_spreadsheet" sequenceNumber="1545255763">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
@@ -14,7 +14,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/4.10milestones"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.10"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.core.databinding" version="1.5.0.v20150422-0725"/>

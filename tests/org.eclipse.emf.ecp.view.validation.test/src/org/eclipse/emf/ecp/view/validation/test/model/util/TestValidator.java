@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543190
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.util;
 
@@ -47,6 +48,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
+import org.eclipse.emf.ecp.view.validation.test.model.TableObject;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
@@ -218,6 +220,8 @@ public class TestValidator extends EObjectValidator {
 			return validateCrossReferenceContent((CrossReferenceContent) value, diagnostics, context);
 		case TestPackage.PERSON:
 			return validatePerson((Person) value, diagnostics, context);
+		case TestPackage.TABLE_OBJECT:
+			return validateTableObject((TableObject) value, diagnostics, context);
 		case TestPackage.GENDER:
 			return validateGender((Gender) value, diagnostics, context);
 		case TestPackage.COLOR:
@@ -490,7 +494,7 @@ public class TestValidator extends EObjectValidator {
 		// -> verify the diagnostic details, including severity, code, and message
 		// Ensure that you remove @generated or mark it @generated NOT
 		final EList<Content> contents = container.getContents();
-		final Map<String, Set<Content>> uniqueAttToContentMap = new LinkedHashMap<String, Set<Content>>();
+		final Map<String, Set<Content>> uniqueAttToContentMap = new LinkedHashMap<>();
 
 		for (final Content content : contents) {
 			final String uniquiAtt = content.getUniqueAttribute();
@@ -499,7 +503,7 @@ public class TestValidator extends EObjectValidator {
 			}
 			uniqueAttToContentMap.get(uniquiAtt).add(content);
 		}
-		final List<Content> duplicates = new ArrayList<Content>();
+		final List<Content> duplicates = new ArrayList<>();
 		for (final String language : uniqueAttToContentMap.keySet()) {
 			if (uniqueAttToContentMap.get(language).size() > 1) {
 				duplicates.addAll(uniqueAttToContentMap.get(language));
@@ -692,6 +696,17 @@ public class TestValidator extends EObjectValidator {
 	 */
 	public boolean validatePerson(Person person, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(person, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateTableObject(TableObject tableObject, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableObject, diagnostics, context);
 	}
 
 	/**
@@ -953,7 +968,7 @@ public class TestValidator extends EObjectValidator {
 	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 		final EList<TableContent> contents = tableWithUnique.getContent();
-		final Map<String, Set<TableContent>> uniqueAttToContentMap = new LinkedHashMap<String, Set<TableContent>>();
+		final Map<String, Set<TableContent>> uniqueAttToContentMap = new LinkedHashMap<>();
 
 		EStructuralFeature nameFeature = null;
 
@@ -972,7 +987,7 @@ public class TestValidator extends EObjectValidator {
 			}
 			uniqueAttToContentMap.get(uniquiAtt).add(content);
 		}
-		final List<TableContent> duplicates = new ArrayList<TableContent>();
+		final List<TableContent> duplicates = new ArrayList<>();
 		for (final String language : uniqueAttToContentMap.keySet()) {
 			if (uniqueAttToContentMap.get(language).size() > 1) {
 				duplicates.addAll(uniqueAttToContentMap.get(language));

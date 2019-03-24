@@ -21,10 +21,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -55,6 +55,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.test.common.PerformanceClock;
 import org.eclipse.emf.ecp.view.spi.common.callback.ViewModelPropertiesUpdateCallback;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
@@ -146,17 +147,13 @@ public class EcoreEditorPerformance_PTest {
 	@TestResource(value = { "template.ecore", "template.ecore" }, //
 		generator = { EcoreGen.class, EcoreGen.class })
 	public void addElement() {
-		test(new Experiment() {
+		test(filePath -> {
+			final GenericEditor editor = open(filePath);
 
-			@Override
-			public void test(String filePath) {
-				final GenericEditor editor = open(filePath);
+			final EClassifier newEClassifier = addEClassifier(editor);
+			reveal(editor, newEClassifier);
 
-				final EClassifier newEClassifier = addEClassifier(editor);
-				reveal(editor, newEClassifier);
-
-				close(editor);
-			}
+			close(editor);
 		});
 	}
 
@@ -166,17 +163,13 @@ public class EcoreEditorPerformance_PTest {
 	public void validation() {
 		Validation.active = true;
 
-		test(new Experiment() {
+		test(filePath -> {
+			final GenericEditor editor = open(filePath);
 
-			@Override
-			public void test(String filePath) {
-				final GenericEditor editor = open(filePath);
+			final EClassifier lastEClassifier = getLastEClassifier(editor);
+			reveal(editor, lastEClassifier);
 
-				final EClassifier lastEClassifier = getLastEClassifier(editor);
-				reveal(editor, lastEClassifier);
-
-				close(editor);
-			}
+			close(editor);
 		});
 	}
 
@@ -285,68 +278,9 @@ public class EcoreEditorPerformance_PTest {
 	 *
 	 * @param experiment the experiment to run at each scale of model
 	 */
-	final void test(Experiment experiment) {
-		class RunnableExperiment implements Runnable {
-			private final String filePath;
-			private final Experiment experiment;
-
-			RunnableExperiment(String filePath, Experiment experiment) {
-				super();
-
-				this.filePath = filePath;
-				this.experiment = experiment;
-			}
-
-			@Override
-			public void run() {
-				experiment.test(filePath);
-			}
-		}
-
-		final Measure smallScale = time(ITERATIONS, new RunnableExperiment(SMALL_FILE_NAME, experiment));
-		System.out.println("Small scale: " + smallScale);
-		final Measure largeScale = time(ITERATIONS, new RunnableExperiment(LARGE_FILE_NAME, experiment));
-		System.out.println("Large scale: " + largeScale);
-
-		if (largeScale.average > WORST_CASE_MULTIPLIER * smallScale.average) {
-			fail(String.format("Performance does not scale: %s ≫ %s", largeScale, smallScale));
-		}
-	}
-
-	/**
-	 * Run an {@code experiment} several times to compute the average elapsed time
-	 * with standard deviation.
-	 */
-	Measure time(int iterations, Runnable experiment) {
-		final int count = Math.max(7, iterations); // We toss high and low so need at least five
-		final int n = count - 2;
-
-		final double[] samples = new double[count];
-
-		for (int i = 0; i < count; i++) {
-			final long start = System.nanoTime();
-			experiment.run();
-			final long end = System.nanoTime();
-			samples[i] = (end - start) / 1000000d;
-		}
-
-		Arrays.sort(samples);
-
-		final int last = count - 1;
-		double sum = 0.0;
-		for (int i = 1; i < last; i++) {
-			sum = sum + samples[i];
-		}
-
-		final double average = sum / n;
-		double sumdev = 0.0;
-		for (int i = 1; i < last; i++) {
-			final double dev = samples[i] - average;
-			sumdev = sumdev + dev * dev;
-		}
-		final double stddev = Math.sqrt(sumdev / (n - 1));
-
-		return new Measure(average, stddev);
+	final void test(Consumer<String> experiment) {
+		PerformanceClock.test(ITERATIONS, WORST_CASE_MULTIPLIER, () -> SMALL_FILE_NAME, () -> LARGE_FILE_NAME,
+			experiment);
 	}
 
 	GenericEditor open(String fileName) {
@@ -598,34 +532,6 @@ public class EcoreEditorPerformance_PTest {
 				e.printStackTrace();
 			}
 			flushUIEvents();
-		}
-	}
-
-	/**
-	 * Protocol for a measured (timed) experiment.
-	 *
-	 * @author Christian W. Damus
-	 */
-	interface Experiment {
-		void test(String filePath);
-	}
-
-	static final class Measure {
-		// BEGIN COMPLEX CODE
-		final double average;
-		final double stddev;
-		// END COMPLEX CODE
-
-		Measure(double average, double stddev) {
-			super();
-
-			this.average = average;
-			this.stddev = stddev;
-		}
-
-		@Override
-		public String toString() {
-			return String.format("%.1f ms (σ = %.2f ms)", average, stddev);
 		}
 	}
 

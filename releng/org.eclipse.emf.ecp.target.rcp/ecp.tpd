@@ -10,7 +10,7 @@ location "http://download.eclipse.org/technology/swtbot/releases/latest/" {
 	org.eclipse.swtbot.feature.group lazy
 }
 
-location "http://download.eclipse.org/eclipse/updates/4.10milestones" {
+location "http://download.eclipse.org/eclipse/updates/4.10" {
 	org.eclipse.equinox.sdk.feature.group lazy
 	org.eclipse.platform.ide lazy
 }

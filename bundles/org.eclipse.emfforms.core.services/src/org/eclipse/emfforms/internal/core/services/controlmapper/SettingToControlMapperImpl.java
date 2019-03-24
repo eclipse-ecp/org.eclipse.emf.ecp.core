@@ -27,6 +27,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
+import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
@@ -45,7 +47,8 @@ import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
  * @author Lucas Koehler
  *
  */
-public class SettingToControlMapperImpl implements EMFFormsSettingToControlMapper, EMFFormsContextListener {
+public class SettingToControlMapperImpl
+	implements EMFFormsSettingToControlMapper, EMFFormsContextListener, SubControlMapper {
 	/**
 	 * Used to get View model changes.
 	 *
@@ -420,6 +423,21 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	public Collection<EObject> getEObjectsWithSettings() {
 		final Set<EObject> result = new LinkedHashSet<EObject>();
 		result.addAll(eObjectToMappedSettings.keySet());
+		return result;
+	}
+
+	@Override
+	public Collection<EObject> getEObjectsWithSettings(VElement element) {
+		final Set<EObject> result = new LinkedHashSet<>();
+
+		for (final Iterator<EObject> iter = EcoreUtil.getAllContents(Collections.singleton(element)); iter.hasNext();) {
+			final EObject next = iter.next();
+			final List<UniqueSetting> settings = controlToSettingMap.get(next);
+			if (settings != null && !settings.isEmpty()) {
+				settings.stream().map(UniqueSetting::getEObject).forEach(result::add);
+			}
+		}
+
 		return result;
 	}
 

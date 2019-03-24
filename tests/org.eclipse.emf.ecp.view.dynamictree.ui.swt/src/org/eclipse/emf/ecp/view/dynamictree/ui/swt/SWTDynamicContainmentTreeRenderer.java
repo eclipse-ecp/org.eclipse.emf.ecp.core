@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -32,15 +31,12 @@ import org.osgi.framework.ServiceReference;
  */
 public class SWTDynamicContainmentTreeRenderer extends ContainerSWTRenderer<DynamicContainmentTree> {
 
-	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
 	private static final EMFFormsRendererFactory EMFFORMS_RENDERER_FACTORY;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTDynamicContainmentTreeRenderer.class)
 			.getBundleContext();
-		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
-			.getServiceReference(EMFFormsDatabinding.class);
-		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
+
 		final ServiceReference<EMFFormsRendererFactory> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsRendererFactory.class);
 		EMFFORMS_RENDERER_FACTORY = bundleContext.getService(emfFormsLabelProviderServiceReference);
@@ -53,7 +49,7 @@ public class SWTDynamicContainmentTreeRenderer extends ContainerSWTRenderer<Dyna
 	 */
 	public SWTDynamicContainmentTreeRenderer(DynamicContainmentTree vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, EMFFORMS_RENDERER_FACTORY, EMFFORMS_DATABINDING);
+		super(vElement, viewContext, reportService, EMFFORMS_RENDERER_FACTORY);
 	}
 
 	/**

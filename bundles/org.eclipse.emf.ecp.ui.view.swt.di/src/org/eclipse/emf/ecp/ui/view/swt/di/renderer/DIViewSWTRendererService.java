@@ -16,7 +16,6 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
@@ -31,7 +30,6 @@ import org.osgi.framework.ServiceReference;
  */
 public class DIViewSWTRendererService implements EMFFormsRendererService<VView> {
 
-	private EMFFormsDatabinding databindingService;
 	private EMFFormsRendererFactory rendererFactory;
 	private ReportService reportService;
 	private ServiceReference<EMFFormsRendererFactory> serviceReference;
@@ -54,24 +52,6 @@ public class DIViewSWTRendererService implements EMFFormsRendererService<VView> 
 	 */
 	protected void deactivate(BundleContext bundleContext) {
 		bundleContext.ungetService(serviceReference);
-	}
-
-	/**
-	 * Called by the initializer to set the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = databindingService;
-	}
-
-	/**
-	 * Called by the initializer to unset the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
 	}
 
 	/**
@@ -131,8 +111,7 @@ public class DIViewSWTRendererService implements EMFFormsRendererService<VView> 
 	 */
 	@Override
 	public AbstractSWTRenderer<VView> getRendererInstance(VView vElement, ViewModelContext viewModelContext) {
-		return new DIViewSWTRenderer(vElement, viewModelContext, reportService, rendererFactory, databindingService,
-			localeProvider);
+		return new DIViewSWTRenderer(vElement, viewModelContext, reportService, rendererFactory, localeProvider);
 	}
 
 }

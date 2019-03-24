@@ -962,8 +962,9 @@ public class TableControl extends SWTControl {
 			// }
 			// }
 			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);
-			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
-				.getSeverity());
+			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK
+				: diagnostic.get(0)
+					.getSeverity());
 		}
 	}
 
@@ -1013,7 +1014,7 @@ public class TableControl extends SWTControl {
 	 * @author Eugen Neufeld
 	 *
 	 */
-	private class ECPTableEditingSupport extends EditingSupport {
+	class ECPTableEditingSupport extends EditingSupport {
 
 		private final CellEditor cellEditor;
 
@@ -1121,7 +1122,9 @@ public class TableControl extends SWTControl {
 
 		@Override
 		protected final void saveCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
-			editingState.binding.updateTargetToModel();
+			if (editingState.isUpdateNeeded()) {
+				editingState.binding.updateTargetToModel();
+			}
 		}
 
 		class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
@@ -1175,6 +1178,21 @@ public class TableControl extends SWTControl {
 				binding.dispose();
 				target.dispose();
 				model.dispose();
+			}
+
+			/**
+			 * Checks if an update is really needed.
+			 *
+			 * @return <code>true</code> if update is really needed, <code>false</code> otherwise.
+			 */
+			boolean isUpdateNeeded() {
+				final Object targetValue = target.getValue();
+				final Object modelValue = model.getValue();
+
+				if (targetValue == null) {
+					return modelValue != null;
+				}
+				return !targetValue.equals(modelValue);
 			}
 		}
 	}

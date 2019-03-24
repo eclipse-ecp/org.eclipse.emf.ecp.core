@@ -50,10 +50,10 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -129,7 +129,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(border);
 
 		/* scrolled composite */
-		scrolledComposite = new ScrolledComposite(border, SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(border, SWT.V_SCROLL | SWT.H_SCROLL);
 		scrolledComposite.setBackground(composite.getBackground());
 		scrolledComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(scrolledComposite);
@@ -141,9 +141,8 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(detailPanel);
 		scrolledComposite.setContent(detailPanel);
 
-		detailPanel.layout();
-		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		scrolledComposite.setMinHeight(point.y);
+		scrolledComposite.addListener(SWT.Resize,
+			(Event event) -> scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT)));
 
 		return tableComposite;
 	}
@@ -262,8 +261,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		final EObject object = (EObject) selection.getFirstElement();
 		renderSelectedObject(compositeToRenderOn, object);
 		border.layout(true, true);
-		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		scrolledComposite.setMinHeight(point.y);
+		scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 
 	/**

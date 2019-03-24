@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.template.model:ViewTemplate xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emf.ecp.view.template.model="http://org/eclipse/emf/ecp/view/template/model" xmlns:org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model" xmlns:org.eclipse.emf.ecp.view.template.style.reference.model="http://www.eclipse.org/emf/ecp/view/template/style/reference/model">
+  <styles>
+    <selector xsi:type="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model:DomainModelReferenceSelector">
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/template/model#//StyleSelectorContainer/selector"/>
+      </domainModelReference>
+    </selector>
+    <properties xsi:type="org.eclipse.emf.ecp.view.template.style.reference.model:ReferenceStyleProperty" showLinkButtonForContainmentReferences="false"/>
+  </styles>
+</org.eclipse.emf.ecp.view.template.model:ViewTemplate>

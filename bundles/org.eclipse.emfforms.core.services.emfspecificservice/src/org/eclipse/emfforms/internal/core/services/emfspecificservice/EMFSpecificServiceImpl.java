@@ -14,13 +14,13 @@ package org.eclipse.emfforms.internal.core.services.emfspecificservice;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 
 /**
@@ -61,11 +61,6 @@ public class EMFSpecificServiceImpl implements EMFSpecificService {
 	// return new AdapterFactoryItemDelegator(getComposedAdapterFactory());
 	// }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see EMFSpecificService#getIItemPropertyDescriptor(EObject, EStructuralFeature)
-	 */
 	@Override
 	public IItemPropertyDescriptor getIItemPropertyDescriptor(EObject eObject, EStructuralFeature eStructuralFeature) {
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
@@ -76,9 +71,7 @@ public class EMFSpecificServiceImpl implements EMFSpecificService {
 		} else {
 			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
-				// new CustomReflectiveItemProvider(), <-- move to common bundle,
-				// then remove the ReflectiveItemProviderAdapterFactory
-				new ReflectiveItemProviderAdapterFactory()
+				new CustomReflectiveItemProviderAdapterFactory()
 			});
 			itemDelegator = getAdapterFactoryItemDelegator(composedAdapterFactory);
 			composedAdapterFactory.dispose();
@@ -91,11 +84,6 @@ public class EMFSpecificServiceImpl implements EMFSpecificService {
 		return new AdapterFactoryItemDelegator(adapterFactory);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService#getIItemPropertySource(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public IItemPropertySource getIItemPropertySource(EObject eObject) {
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
@@ -106,9 +94,7 @@ public class EMFSpecificServiceImpl implements EMFSpecificService {
 		} else {
 			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
-				// new CustomReflectiveItemProvider(), <-- move to common bundle,
-				// then remove the ReflectiveItemProviderAdapterFactory
-				new ReflectiveItemProviderAdapterFactory()
+				new CustomReflectiveItemProviderAdapterFactory()
 			});
 			propertySource = (IItemPropertySource) composedAdapterFactory.adapt(eObject, IItemPropertySource.class);
 			composedAdapterFactory.dispose();

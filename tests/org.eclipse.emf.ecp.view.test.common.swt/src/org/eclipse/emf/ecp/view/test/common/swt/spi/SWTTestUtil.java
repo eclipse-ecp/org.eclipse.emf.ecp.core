@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 
 import java.util.NoSuchElementException;
 
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Button;
@@ -23,7 +24,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
 /**
@@ -133,6 +138,35 @@ public final class SWTTestUtil {
 	}
 
 	/**
+	 * Retrieves an element in the specified control by its unique Id, as defined in {@link SWTDataElementIdHelper}.
+	 *
+	 * @param control the parent control where the search control should be found.
+	 * @param id the unique ID of the element to find
+	 * @param clazz the class of control to find
+	 * @param <T> the type of Control to find
+	 * @return a optional referencing the control or an empty one if none was found.
+	 */
+	public static <T extends Control> T findControlById(Control control, final String id, final Class<T> clazz) {
+		// only get the first index, assuming id is unique
+		final Control result = find(control, 0, new Counter(), new ControlTest() {
+			@Override
+			public boolean testCondition(Control control) {
+				if (control.getClass() != clazz) {
+					return false;
+				}
+
+				final Object elementID = control.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY);
+				if (elementID != null && id.equals(elementID)) {
+					return true;
+				}
+
+				return false;
+			}
+		});
+		return clazz.cast(result);
+	}
+
+	/**
 	 * Waits for the ui thread to complete its work. Fails a testcase after 5 seconds.
 	 */
 	public static void waitForUIThread() {
@@ -198,6 +232,54 @@ public final class SWTTestUtil {
 	public static void typeAndFocusOut(Text text, String string) {
 		text.setText(string);
 		text.notifyListeners(SWT.FocusOut, new Event());
+	}
+
+	/**
+	 * Selects the index in the given tree and notifies the tree's listeners (e.g. a corresponding tree viewer) about
+	 * the selection.
+	 *
+	 * @param tree The tree to select an element in
+	 * @param index The index of the element to select
+	 * @return the selected {@link TreeItem}
+	 */
+	public static TreeItem selectTreeItem(Tree tree, int index) {
+		final TreeItem result = tree.getItem(index);
+		selectTreeItem(result);
+		return result;
+	}
+
+	/**
+	 * Selects the given {@link TreeItem} in its parent {@link Tree} and notifies the tree's listeners.
+	 *
+	 * @param treeItem The {@link TreeItem} to select
+	 */
+	public static void selectTreeItem(TreeItem treeItem) {
+		final Tree tree = treeItem.getParent();
+		tree.setSelection(treeItem);
+		final Event event = new Event();
+		event.type = SWT.Selection;
+		event.widget = tree;
+		event.item = treeItem;
+		tree.notifyListeners(SWT.Selection, event);
+	}
+
+	/**
+	 * Selects the index in the given table and notifies the table's listeners (e.g. a corresponding table viewer) about
+	 * the selection.
+	 *
+	 * @param table The table to select an element in
+	 * @param index The index of the element to select
+	 * @return the selected {@link TableItem}
+	 */
+	public static TableItem selectTableItem(Table table, int index) {
+		table.setSelection(index);
+		final Event event = new Event();
+		event.type = SWT.Selection;
+		event.widget = table;
+		final TableItem result = table.getItem(index);
+		event.item = result;
+		table.notifyListeners(SWT.Selection, event);
+		return result;
 	}
 
 	/**

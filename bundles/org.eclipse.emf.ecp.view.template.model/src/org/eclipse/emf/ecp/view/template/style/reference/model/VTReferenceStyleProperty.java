@@ -26,6 +26,8 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty#isShowCreateAndLinkButtonForCrossReferences
  *        <em>Show Create And Link Button For Cross References</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty#isShowLinkButtonForContainmentReferences
+ *        <em>Show Link Button For Containment References</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.reference.model.VTReferencePackage#getReferenceStyleProperty()
@@ -63,5 +65,44 @@ public interface VTReferenceStyleProperty extends VTStyleProperty {
 	 * @generated
 	 */
 	void setShowCreateAndLinkButtonForCrossReferences(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Show Link Button For Containment References</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.20
+	 *        <!-- end-user-doc -->
+	 *        <!-- begin-model-doc -->
+	 *        If true, a button to link existing model objects is shown for containment reference controls. Otherwise,
+	 *        the
+	 *        button is hidden.
+	 *        <!-- end-model-doc -->
+	 *
+	 * @return the value of the '<em>Show Link Button For Containment References</em>' attribute.
+	 * @see #setShowLinkButtonForContainmentReferences(boolean)
+	 * @see org.eclipse.emf.ecp.view.template.style.reference.model.VTReferencePackage#getReferenceStyleProperty_ShowLinkButtonForContainmentReferences()
+	 * @model default="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel propertyDescription='If true, a button to link
+	 *        existing model objects is shown for containment reference controls. Otherwise, the button is hidden.
+	 *        [default: true]'"
+	 * @generated
+	 */
+	boolean isShowLinkButtonForContainmentReferences();
+
+	/**
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty#isShowLinkButtonForContainmentReferences
+	 * <em>Show Link Button For Containment References</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.20
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Show Link Button For Containment References</em>' attribute.
+	 * @see #isShowLinkButtonForContainmentReferences()
+	 * @generated
+	 */
+	void setShowLinkButtonForContainmentReferences(boolean value);
 
 } // VTReferenceStyleProperty

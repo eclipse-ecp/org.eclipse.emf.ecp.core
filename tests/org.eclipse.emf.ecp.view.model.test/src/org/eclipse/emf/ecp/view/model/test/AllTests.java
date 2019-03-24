@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 527826
+ * Christian W. Damus - bugs 527826, 543160
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.test;
 
@@ -29,6 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	DiagnosticMessageExtractor_Test.class,
 	DefaultViewModelProperties_Test.class,
 	VElement_Test.class,
+	VDiagnostic_Test.class,
 })
 public class AllTests {
 	// JUnit 4 Test Suite

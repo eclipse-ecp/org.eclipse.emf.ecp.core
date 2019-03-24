@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
+ * Christian W. Damus - Bug 543160
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.test;
 
@@ -99,7 +100,8 @@ public class FeaturePathDMRValidation_Test {
 	}
 
 	private DiagnosticInfo controlDMRWarning() {
-		return new DiagnosticInfo(Diagnostic.WARNING, control, VViewPackage.eINSTANCE.getControl_DomainModelReference());
+		return new DiagnosticInfo(Diagnostic.WARNING, control,
+			VViewPackage.eINSTANCE.getControl_DomainModelReference());
 	}
 
 	private DiagnosticInfo featurePathEFeature() {
@@ -273,7 +275,7 @@ public class FeaturePathDMRValidation_Test {
 		private final EObject object;
 		private final EStructuralFeature feature;
 
-		public DiagnosticInfo(int severity, EObject object, EStructuralFeature feature) {
+		DiagnosticInfo(int severity, EObject object, EStructuralFeature feature) {
 			this.severity = severity;
 			this.object = object;
 			this.feature = feature;

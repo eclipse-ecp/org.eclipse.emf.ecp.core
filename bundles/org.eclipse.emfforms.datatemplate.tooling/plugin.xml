@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="org.eclipse.emfforms.spi.editor.GenericEditor"
+            class="org.eclipse.emfforms.internal.datatemplate.tooling.editor.DataTemplateEditor"
             default="true"
             extensions="datatemplate"
             icon="icons/Template.gif"

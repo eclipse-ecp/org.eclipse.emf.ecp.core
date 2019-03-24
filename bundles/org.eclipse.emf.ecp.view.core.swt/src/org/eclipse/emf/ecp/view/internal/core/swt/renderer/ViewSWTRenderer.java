@@ -26,7 +26,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.widgets.Composite;
@@ -47,13 +46,13 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFF
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
 	@Inject
 	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding, EMFFormsLocaleProvider localeProvider) {
-		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		EMFFormsRendererFactory factory,
+		EMFFormsLocaleProvider localeProvider) {
+		super(vElement, viewContext, reportService, factory);
 		this.localeProvider = localeProvider;
 		localeProvider.addEMFFormsLocaleChangeListener(this);
 	}

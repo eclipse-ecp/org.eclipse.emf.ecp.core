@@ -34,7 +34,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class TableControlItemProvider
@@ -43,7 +43,7 @@ public class TableControlItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public TableControlItemProvider(AdapterFactory adapterFactory) {
@@ -54,7 +54,7 @@ public class TableControlItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -76,7 +76,7 @@ public class TableControlItemProvider
 	 * This adds a property descriptor for the Add Remove Disabled feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addAddRemoveDisabledPropertyDescriptor(Object object) {
@@ -99,7 +99,7 @@ public class TableControlItemProvider
 	 * This adds a property descriptor for the Move Up Down Disabled feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addMoveUpDownDisabledPropertyDescriptor(Object object) {
@@ -122,7 +122,7 @@ public class TableControlItemProvider
 	 * This adds a property descriptor for the Detail Editing feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addDetailEditingPropertyDescriptor(Object object) {
@@ -145,7 +145,7 @@ public class TableControlItemProvider
 	 * This adds a property descriptor for the Detail View feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addDetailViewPropertyDescriptor(Object object) {
@@ -168,7 +168,7 @@ public class TableControlItemProvider
 	 * This adds a property descriptor for the Enable Detail Editing Dialog feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addEnableDetailEditingDialogPropertyDescriptor(Object object) {
@@ -193,9 +193,7 @@ public class TableControlItemProvider
 	 *
 	 * @since 1.18
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
-	 *
 	 */
 	protected void addDuplicateDisabledPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
@@ -219,7 +217,7 @@ public class TableControlItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -235,7 +233,7 @@ public class TableControlItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -250,7 +248,7 @@ public class TableControlItemProvider
 	 * This returns TableControl.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -280,7 +278,7 @@ public class TableControlItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -308,7 +306,7 @@ public class TableControlItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -326,9 +324,6 @@ public class TableControlItemProvider
 
 		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS,
 			VTableFactory.eINSTANCE.createEnablementConfiguration()));
-
-		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__DETAIL_VIEW,
-			VViewFactory.eINSTANCE.createView()));
 	}
 
 }

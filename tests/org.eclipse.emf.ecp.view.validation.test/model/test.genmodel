@@ -131,5 +131,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/custom"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/age"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="test.ecore#//TableObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//TableObject/label"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emfforms.view.annotation.model="http://org/eclipse/emf/emfforms/view/annotation/model" xmi:id="_mfOkgEWAEeWfKJaajyNdyA">
+  <rootEClass href="http://org/eclipse/emf/ecp/view/group/model#//Group"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyA" name="DMR NotAFeature">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPLkUWAEeWfKJaajyNdyA">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/1180#//Element/notAFeature"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyA" name="Control name">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPLkUWAEeWfKJaajyNdyA">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="wrongREF"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyA" name="No DMR"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_SQXGkBs2EemWJdWNOROymw" name="AnnotationFail">
+    <attachments xsi:type="org.eclipse.emfforms.view.annotation.model:Annotation" xmi:id="_ZE-1ABs2EemWJdWNOROymw"/>
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_Yk0HMBs2EemWJdWNOROymw">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/1180#//Element/name"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

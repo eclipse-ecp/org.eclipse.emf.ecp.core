@@ -103,9 +103,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
 	 * @deprecated
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -140,9 +139,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
 	 * @deprecated
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

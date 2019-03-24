@@ -108,8 +108,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 						return;
 					}
 					// Always apply enable and read-only if it changed because it might have changed for a parent
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
-						&& !getVElement().isEffectivelyReadonly()) {
+					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
 						applyEnable();
 					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Readonly()) {
 						applyReadOnly();
@@ -239,7 +238,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			applyVisible();
 		}
 		applyReadOnly();
-		if (!getVElement().isEffectivelyReadonly()) {
+		if (!ignoreEnableOnReadOnly()) {
 			applyEnable();
 		}
 		applyValidation();
@@ -250,6 +249,15 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 				dispose();
 			}
 		});
+	}
+
+	/**
+	 * Returns <code>true</code> when read only will always force control to be disabled.
+	 *
+	 * @return <code>true</code> when read only will always force control to be disabled.
+	 */
+	protected boolean ignoreEnableOnReadOnly() {
+		return getVElement().isEffectivelyReadonly();
 	}
 
 	/**

@@ -233,7 +233,11 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			getReportService().report(new AbstractReport(ex));
 		}
 
-		createAddReferenceButton(parent, elementDisplayName);
+		VTReferenceStyleProperty referenceStyle = RendererUtil.getStyleProperty(
+			getVTViewTemplateProvider(), getVElement(), getViewModelContext(), VTReferenceStyleProperty.class);
+		if (referenceStyle == null) {
+			referenceStyle = getDefaultReferenceStyle();
+		}
 
 		EReference eReference = null;
 		try {
@@ -241,17 +245,19 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new AbstractReport(ex));
 		}
-		// Only allow to create new elements in the reference if it is a containment reference or if it was configured
-		// in a reference style property.
+
 		if (eReference != null) {
 			if (eReference.isContainment()) {
+				// Only allow to link existing elements in a containment reference if it was allowed in a reference
+				// style property.
+				if (referenceStyle.isShowLinkButtonForContainmentReferences()) {
+					createAddReferenceButton(parent, elementDisplayName);
+				}
 				createNewReferenceButton(parent, elementDisplayName);
 			} else {
-				VTReferenceStyleProperty referenceStyle = RendererUtil.getStyleProperty(
-					getVTViewTemplateProvider(), getVElement(), getViewModelContext(), VTReferenceStyleProperty.class);
-				if (referenceStyle == null) {
-					referenceStyle = getDefaultReferenceStyle();
-				}
+				createAddReferenceButton(parent, elementDisplayName);
+				// Only allow to create new elements in a cross reference if it was allowed in a reference style
+				// property.
 				if (referenceStyle.isShowCreateAndLinkButtonForCrossReferences()) {
 					createNewReferenceButton(parent, elementDisplayName);
 				}

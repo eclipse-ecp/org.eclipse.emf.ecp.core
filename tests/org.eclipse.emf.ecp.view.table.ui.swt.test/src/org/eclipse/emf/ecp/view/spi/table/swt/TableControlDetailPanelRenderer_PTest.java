@@ -11,30 +11,48 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.text.MessageFormat;
+
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
+import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper.RendererResult;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
 import org.junit.Before;
@@ -51,10 +69,15 @@ import org.junit.runner.RunWith;
 public class TableControlDetailPanelRenderer_PTest {
 
 	private Shell shell;
+	private EObject domainElement;
 
 	@Before
 	public void setUp() {
 		shell = SWTViewTestHelper.createShell();
+
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
+		domainElement = eClass;
 	}
 
 	@After
@@ -246,6 +269,42 @@ public class TableControlDetailPanelRenderer_PTest {
 		assertTrue(detailView.isReadonly());
 	}
 
+	/**
+	 * Tests that a horizontal and vertical scrollbar appears if the detail is to small.
+	 */
+	@Test
+	public void testScroll() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		shell.open();
+		// the height is needed as the scrolledcomposite is not visible otherwise
+		shell.setSize(100, 350);
+		// setup model
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
+		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
+		//
+		final RendererResult renderControl = SWTViewTestHelper.renderControl(handle.getTableControl(), domainElement,
+			shell);
+		shell.layout();
+		final TableViewer tableViewer = TableRendererTestUtil.getTableViewerFromRenderer(renderControl.getRenderer());
+		final Control render = renderControl.getControl().get();
+		assertTrue(render instanceof Composite);
+		final Composite border = getChild(getChild(render, Composite.class, 0), Composite.class, 1);
+		assertEquals("The table and detail should be surrounded by a common border", SWT.BORDER,
+			border.getStyle() & SWT.BORDER);
+		tableViewer.setSelection(new StructuredSelection(tableViewer.getElementAt(0)));
+		final ScrolledComposite scrolledComposite = getChild(border, ScrolledComposite.class, 1);
+		assertFalse(scrolledComposite.getAlwaysShowScrollBars());
+		assertTrue(scrolledComposite.getHorizontalBar().isVisible());
+		assertTrue(scrolledComposite.getVerticalBar().isVisible());
+
+		// modify shell to force no scroll
+		shell.setSize(1000, 1000);
+		assertFalse(scrolledComposite.getHorizontalBar().isVisible());
+		assertFalse(scrolledComposite.getVerticalBar().isVisible());
+
+		shell.close();
+	}
+
 	private ViewModelContext mockViewModelContext(final VView detailView, final EObject domainObject) {
 		final ViewModelContext context = mock(ViewModelContext.class);
 		final ViewModelContext childContext = mock(ViewModelContext.class);
@@ -255,5 +314,15 @@ public class TableControlDetailPanelRenderer_PTest {
 		when(context.getChildContext(any(EObject.class), any(VElement.class), any(VView.class)))
 			.thenReturn(childContext);
 		return context;
+	}
+
+	private <T> T getChild(Control parent, Class<T> type, int index) {
+		assertTrue(MessageFormat.format("The Control {0} is not a composite => No children can be retrieved", parent),
+			parent instanceof Composite);
+		final Composite composite = (Composite) parent;
+		final Control child = composite.getChildren()[index];
+		assertTrue(MessageFormat.format("Child {0} is not of required type {1}", child, type.getName()),
+			type.isInstance(child));
+		return type.cast(child);
 	}
 }

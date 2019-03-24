@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,16 +22,19 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
  * View Provider.
@@ -44,18 +47,22 @@ public class ViewProvider implements IViewProvider {
 		view.setUuid(generateId(eObject.eClass(), null));
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			new AdapterFactory[] {
-				new ReflectiveItemProviderAdapterFactory(),
+				new CustomReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(
 					ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator delegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 		for (final EStructuralFeature feature : getValidFeatures(delegator, eObject)) {
-
-			final VControl control = VViewFactory.eINSTANCE.createControl();
-			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(feature);
-			control.setDomainModelReference(modelReference);
+			final VControl control;
+			if (isTableFeature(feature)) {
+				control = VTableFactory.eINSTANCE.createTableControl();
+				final VTableDomainModelReference tableDmr = VTableFactory.eINSTANCE.createTableDomainModelReference();
+				tableDmr.setDomainModelReference(createModelReference(feature));
+				control.setDomainModelReference(tableDmr);
+			} else {
+				control = VViewFactory.eINSTANCE.createControl();
+				control.setDomainModelReference(createModelReference(feature));
+			}
 			control.setReadonly(isReadOnly(delegator, eObject, feature));
 			control.setUuid(generateId(eObject.eClass(), feature));
 			view.getChildren().add(control);
@@ -64,6 +71,21 @@ public class ViewProvider implements IViewProvider {
 		view.setRootEClass(eObject.eClass());
 		view.setLoadingProperties(EcoreUtil.copy(properties));
 		return view;
+	}
+
+	private VDomainModelReference createModelReference(final EStructuralFeature feature) {
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		modelReference.setDomainModelEFeature(feature);
+		return modelReference;
+	}
+
+	private boolean isTableFeature(EStructuralFeature feature) {
+		if (feature instanceof EReference) {
+			final EReference ref = (EReference) feature;
+			return ref.isMany() && ref.isContainment();
+		}
+		return false;
 	}
 
 	private boolean isReadOnly(AdapterFactoryItemDelegator delegator,

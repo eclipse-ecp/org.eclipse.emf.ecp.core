@@ -136,8 +136,12 @@ public class SWTTableDatabindingLabel_PTest {
 		vTableControl = VTableFactory.eINSTANCE.createTableControl();
 		vTableControl.setDomainModelReference(tableDomainModelReference);
 
-		final IValueProperty valueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		final IValueProperty delegate = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		final EMFValuePropertyDecorator valueProperty = new EMFValuePropertyDecorator(delegate,
+			EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		final IObservableValue observableValue = valueProperty.observe(domainModel);
+		when(databindingService.getValueProperty(vTableControl.getDomainModelReference(), (EObject) domainModel))
+			.thenReturn(valueProperty);
 		when(databindingService.getObservableValue(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
 			observableValue);
 

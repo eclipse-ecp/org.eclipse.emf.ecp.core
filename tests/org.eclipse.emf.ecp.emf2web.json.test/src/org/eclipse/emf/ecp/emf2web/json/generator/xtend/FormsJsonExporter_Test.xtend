@@ -15,9 +15,11 @@ import static org.junit.Assert.*
 import org.eclipse.emf.ecp.emf2web.json.generator.xtend.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.util.ReferenceHelper
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory
+import org.eclipse.emf.ecore.EcoreFactory
+import com.google.gson.JsonObject
 
 class FormsJsonExporter_Test {
-	private FormsJsonGenerator exporter;
+	FormsJsonGenerator exporter;
 	val testName = "testName";
 	val testReference = "testReference";
 	val EStructuralFeature mockFeature = EcorePackage.eINSTANCE.getEClass_Abstract
@@ -227,6 +229,18 @@ class FormsJsonExporter_Test {
 		vertical.children.add(control2);
 		val result = exporter.createJsonElement(vertical)
 		assertEquals(test2ControlsInVertical, result)
+	}
+
+	@Test
+	def testFallbackObject() {
+		val result = exporter.createJsonElement(EcoreFactory.eINSTANCE.createEObject)
+		assertEquals(new JsonObject, result)
+	}
+
+	@Test
+	def testNull() {
+		val result = exporter.createJsonElement(null)
+		assertEquals(new JsonObject, result)
 	}
 
 	def JsonElement test2HorizontalInVertical() {

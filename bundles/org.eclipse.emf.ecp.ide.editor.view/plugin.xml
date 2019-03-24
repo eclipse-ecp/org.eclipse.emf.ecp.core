@@ -5,6 +5,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart"
+            contributorClass="org.eclipse.emf.ecp.ide.editor.view.ViewEditorActionBarContributor"
             default="false"
             extensions="view"
             icon="icons/view.png"

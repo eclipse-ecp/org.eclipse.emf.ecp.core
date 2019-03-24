@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 
 /**
@@ -40,13 +39,12 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @since 1.6
 	 */
 	@Inject
 	public SWTCategoryRenderer(VCategory vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
-		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		EMFFormsRendererFactory factory) {
+		super(vElement, viewContext, reportService, factory);
 	}
 
 	/**
@@ -94,7 +92,7 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	// .getLog()
 	// .log(
 	// new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-	//						"No Renderer for %s found.", getVElement().getComposite().eClass().getName()))); //$NON-NLS-1$
+	// "No Renderer for %s found.", getVElement().getComposite().eClass().getName()))); //$NON-NLS-1$
 	// return categoryComposite;
 	// }
 	// final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE

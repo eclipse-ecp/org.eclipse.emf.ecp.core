@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bug 533522
+ * Christian W. Damus - bugs 533522, 543160
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -63,6 +63,7 @@ import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
+import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -304,7 +305,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (notifier == context.getDomainModel()) {
-				validate(getAllEObjectsToValidate());
+				validate(getAllEObjectsToValidate(context));
 			}
 		}
 
@@ -318,10 +319,16 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private ValidationDomainModelChangeListener domainChangeListener;
 	private ViewModelChangeListener viewChangeListener;
 	private ViewModelContext context;
-	private final Queue<EObject> validationQueue = new ConcurrentLinkedQueue<EObject>();
+	private final Queue<EObject> validationQueue = new ConcurrentLinkedSetQueue<EObject>();
 	private final Set<EObject> validated = Collections.newSetFromMap(new ConcurrentHashMap<EObject, Boolean>());
 	private final AtomicBoolean validationRunning = new AtomicBoolean(false);
-	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new ConcurrentHashMap<UniqueSetting, VDiagnostic>();
+
+	// In a typical application, these lists will usually have zero or one element. In
+	// any case, uniqueness is ensured by the validation algorithm and so needs not be
+	// enforced by the collection, so just use simple lists
+	private final Map<UniqueSetting, List<Diagnostic>> currentUpdates = new ConcurrentHashMap<UniqueSetting, List<Diagnostic>>();
+	private final Function<Object, List<Diagnostic>> diagnosticListFactory = __ -> new ArrayList<>(3);
+
 	private ComposedAdapterFactory adapterFactory;
 	private ReportService reportService;
 
@@ -454,12 +461,32 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		return result;
 	}
 
-	private Collection<EObject> getAllEObjectsToValidate() {
-		return getAllEObjectsToValidate(controlMapper);
+	private Collection<EObject> getAllEObjectsToValidate(ViewModelContext context) {
+		return getAllEObjectsToValidate(context, controlMapper);
 	}
 
-	private static Collection<EObject> getAllEObjectsToValidate(EMFFormsSettingToControlMapper controlMapper) {
-		return controlMapper.getEObjectsWithSettings();
+	private static Collection<EObject> getAllEObjectsToValidate(ViewModelContext context,
+		EMFFormsSettingToControlMapper controlMapper) {
+
+		if (context.getParentContext() == null || !(controlMapper instanceof SubControlMapper)) {
+			// Easy: validate the whole model
+			return controlMapper.getEObjectsWithSettings();
+		}
+
+		final SubControlMapper subMapper = (SubControlMapper) controlMapper;
+		final Collection<EObject> result = subMapper.getEObjectsWithSettings(context.getViewModel());
+
+		// And all container objects that have settings
+		for (ViewModelContext parent = context.getParentContext(); parent != null; parent = parent
+			.getParentContext()) {
+
+			final EObject parentObject = parent.getDomainModel();
+			if (controlMapper.hasControlsFor(parentObject)) {
+				result.add(parentObject);
+			}
+		}
+
+		return result;
 	}
 
 	@Override
@@ -522,17 +549,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		final Map<VElement, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VElement, VDiagnostic>();
 
 		for (final VElement control : vElementToSettingMap.keySet()) {
-
-			if (!controlDiagnosticMap.containsKey(control)) {
-				controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
-			}
-			for (final UniqueSetting uniqueSetting : vElementToSettingMap.get(control)) {
-				// TODO Performance
-				// controlDiagnosticMap.get(control).getDiagnostics()
-				// .removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-				controlDiagnosticMap.get(control).getDiagnostics()
-					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-			}
+			updateControlDiagnostics(control, vElementToSettingMap, controlDiagnosticMap);
 
 			// add all diagnostics of control which are not in the currentUpdates
 			if (control.getDiagnostic() == null) {
@@ -559,27 +576,39 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				if (!currentUpdates.containsKey(uniqueSetting2)) {
 					controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
 				}
-
 			}
-
 		}
 
 		updateAndPropagate(controlDiagnosticMap);
+	}
 
+	private void updateControlDiagnostics(final VElement control,
+		final Map<VElement, Set<UniqueSetting>> vElementToSettingMap,
+		final Map<VElement, VDiagnostic> controlDiagnosticMap) {
+
+		if (!controlDiagnosticMap.containsKey(control)) {
+			controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
+		}
+
+		for (final UniqueSetting uniqueSetting : vElementToSettingMap.get(control)) {
+			final List<Diagnostic> diagnostics = currentUpdates.get(uniqueSetting);
+			if (!diagnostics.isEmpty()) {
+				controlDiagnosticMap.get(control).getDiagnostics().addAll(diagnostics);
+			}
+		}
 	}
 
 	private Map<VElement, Set<UniqueSetting>> prepareVElementToSettingMap() {
 		final Map<VElement, Set<UniqueSetting>> result = new LinkedHashMap<VElement, Set<UniqueSetting>>();
+		final Function<VElement, Set<UniqueSetting>> setFactory = __ -> new LinkedHashSet<>();
+
 		for (final UniqueSetting uniqueSetting : currentUpdates.keySet()) {
 			final Set<VElement> controls = controlMapper.getControlsFor(uniqueSetting);
-			if (controls == null) {
+			if (controls == null || controls.isEmpty()) {
 				continue;
 			}
 			for (final VElement control : controls) {
-				if (!result.containsKey(control)) {
-					result.put(control, new LinkedHashSet<UniqueSetting>());
-				}
-				result.get(control).add(uniqueSetting);
+				result.computeIfAbsent(control, setFactory).add(uniqueSetting);
 			}
 		}
 		return result;
@@ -590,11 +619,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private void updateAndPropagate(Map<VElement, VDiagnostic> controlDiagnosticMap) {
-		for (final VElement control : controlDiagnosticMap.keySet()) {
-
-			control.setDiagnostic(controlDiagnosticMap.get(control));
-
-			reevaluateToTop(control.eContainer(), controlDiagnosticMap);
+		for (final Map.Entry<VElement, VDiagnostic> next : controlDiagnosticMap.entrySet()) {
+			next.getKey().setDiagnostic(next.getValue());
+			reevaluateToTop(next.getKey().eContainer(), controlDiagnosticMap);
 		}
 	}
 
@@ -639,9 +666,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			}
 			for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, feature);
-				if (!currentUpdates.containsKey(uniqueSetting)) {
-					currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
-				}
+				currentUpdates.computeIfAbsent(uniqueSetting, diagnosticListFactory);
 			}
 			analyzeDiagnostic(diagnostic);
 		} finally {
@@ -671,11 +696,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			}
 			final Setting setting = internalEObject.eSetting(eStructuralFeature);
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-			if (!currentUpdates.containsKey(uniqueSetting)) {
-				currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
-			}
-			currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
-
+			currentUpdates.computeIfAbsent(uniqueSetting, diagnosticListFactory).add(diagnostic);
 		} else {
 			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				analyzeDiagnostic(childDiagnostic);
@@ -691,8 +712,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.addValidator(validationProvider);
-		if (revalidate) {
-			validate(getAllEObjectsToValidate());
+		if (revalidate && context != null) {
+			validate(getAllEObjectsToValidate(context));
 		}
 	}
 
@@ -704,8 +725,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.removeValidator(validationProvider);
-		if (revalidate) {
-			validate(getAllEObjectsToValidate());
+		if (revalidate && context != null) {
+			validate(getAllEObjectsToValidate(context));
 		}
 	}
 
@@ -744,7 +765,12 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
-		validate(getAllEObjectsToValidate());
+		// We are getting this from a parent content that is a view-model context, so the
+		// child really ought to be one, also
+		if (childContext instanceof ViewModelContext) {
+			validate(getAllEObjectsToValidate((ViewModelContext) childContext));
+		}
+
 		childContext.registerViewChangeListener(viewChangeListener);
 	}
 
@@ -757,7 +783,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void contextInitialised() {
 		initialized = true;
-		validate(getAllEObjectsToValidate());
+		validate(getAllEObjectsToValidate(context));
 	}
 
 	@Override
@@ -777,4 +803,5 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 		return null;
 	}
+
 }

@@ -167,7 +167,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(getDatabindingService());
 
-		mockDatabindingIsUnsettable();
+		mockDatabindingIsSettableAndChangeable();
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(
 				mockedObservable);

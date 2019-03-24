@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.structuralchange.test
-Bundle-Version: 1.19.0.qualifier
+Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Fragment-Host: org.eclipse.emfforms.core.services.structuralchange;bundle-version="[1.19.0,1.20.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Fragment-Host: org.eclipse.emfforms.core.services.structuralchange;bundle-version="[1.20.0,1.21.0)"
+Export-Package: org.eclipse.emfforms.core.services.structuralchange.test;version="1.20.0";x-internal:=true,
+ org.eclipse.emfforms.internal.core.services.structuralchange;version="1.20.0";x-internal:=true
 Require-Bundle: org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
  org.objenesis;bundle-version="[1.0.0,2.0.0)",
  org.junit;bundle-version="[4.12.0,5.0.0)",
- org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.19.0,2.0.0)"
-Import-Package: org.osgi.framework;version="0.0.0"
-Export-Package: org.eclipse.emfforms.core.services.structuralchange.test;version="1.19.0";x-internal:=true,
- org.eclipse.emfforms.internal.core.services.structuralchange;version="1.19.0";x-internal:=true
+ org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.20.0,1.21.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emfforms.core.services.structuralchange.test
+Import-Package: org.osgi.framework;version="0.0.0"

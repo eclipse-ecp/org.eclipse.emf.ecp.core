@@ -79,7 +79,7 @@ public class ChildrenDescriptorExtension_PTest {
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
 
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT;
-	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 4;
+	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 3;
 	private static final int ACTION_CHILD_COUNT = 0;
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;

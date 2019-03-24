@@ -17,6 +17,8 @@
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="referenceStyle.ecore#/">
     <genClasses ecoreClass="referenceStyle.ecore#//ReferenceStyleProperty">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute referenceStyle.ecore#//ReferenceStyleProperty/showCreateAndLinkButtonForCrossReferences"/>
+      <genFeatures createChild="false" propertyDescription="If true, a button to link existing model objects is shown for containment reference controls. Otherwise, the button is hidden. [default: true]"
+          ecoreFeature="ecore:EAttribute referenceStyle.ecore#//ReferenceStyleProperty/showLinkButtonForContainmentReferences"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

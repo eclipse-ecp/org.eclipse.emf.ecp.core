@@ -1,0 +1,102 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ
+Element-Name: TableControlWithDetail_Scroll
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _jOkp0CpNEem3i-Gw7uP7Ew
+Runtime-Version: 2.4.0.201902270059
+Save-Time: 2/27/19 10:31 AM
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+tests that the table is not editable when its effectively readonly.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/UserGroup.view" | double-click
+with [get-editor "UserGroup.view"] {
+    with [get-tree] {
+        select View | get-menu -path TableControl | click
+        select "View/TableControl"
+    }
+    get-button "Create and link new Domain Model Reference" | click
+}
+
+// Create table control in UserGroup.view
+with [get-window "Configure TableDomainModelReference"] {
+    get-button "Create and link new Domain Model Reference" | click
+    with [get-window "New Reference Element"] {
+        get-tree | select "model/FeaturePathDomainModelReference"
+        get-button "Next >" | click
+        get-button "Link Domain Model EFeature" | click
+        with [get-window "Select a EStructuralFeature"] {
+            get-tree | select "users : User"
+            get-button OK | click
+        }
+        get-button Finish | click
+    }
+    get-button Finish | click
+}
+
+get-editor "UserGroup.view" | get-combo -after [get-label "Detail Editing*"] | select WithPanel
+get-button "Save (M1+S)" | click
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" 
+    | double-click
+with [get-editor "User.view" | get-tree] {
+    select View | get-menu -path VerticalLayout | click
+    select View | get-menu -path VerticalLayout | click
+    select "View/VerticalLayout" | get-menu -path HorizontalLayout | click
+    select "View/VerticalLayout/HorizontalLayout" | get-menu -path "Generate Controls" | click
+}
+with [get-window -class SelectAttributesDialog] {
+    get-tree | select User
+    get-button "Next >" | click
+    with [get-table] {
+        get-item -path "firstName : EString" | check
+        select "firstName : EString" | get-item -path "lastName : EString" | check
+        select "lastName : EString" | get-item -path "gender : Gender" | check
+        select "gender : Gender" | get-item -path "active : EBoolean" | check
+        select "active : EBoolean" | get-item -path "weight : EDouble" | check
+        select "weight : EDouble" | get-item -path "heigth : EInt" | check
+        select "heigth : EInt"
+    }
+    get-button Finish | click
+}
+get-editor "User.view" | get-tree | select [get-item -path View | get-item -path VerticalLayout -index 1] | get-menu 
+    -path "Generate Controls" | click
+with [get-window -class SelectAttributesDialog] {
+    get-tree | select User
+    get-button "Next >" | click
+    get-button "Select All" | click
+    get-button Finish | click
+}
+get-button "Save (M1+S)" | click
+get-editor "UserGroup.view" | click
+get-view "EMF Forms Preview" | get-button "Manage additional Views" | click
+with [get-window "Manage additional Views"] {
+    get-button "Add View" | click
+    with [get-window -class WorkspaceResourceDialog] {
+        get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view"
+        get-button OK | click
+    }
+    get-button OK | click
+}
+with [get-view "EMF Forms Preview"] {
+    get-button "Refresh Preview View" | click
+    get-button "Add an instance of" | click
+}
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label Users] -index 10] {
+    get-property "getHorizontalBar().isVisible()" | equals true | verify-true
+    get-property "getAlwaysShowScrollBars()" | equals false | verify-true
+    get-property "getVerticalBar().isVisible()" | equals true | verify-true
+    get-property "getShowFocusedControl()" | equals false | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

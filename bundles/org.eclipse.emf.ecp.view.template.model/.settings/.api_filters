@@ -314,6 +314,12 @@
                 <message_argument value="STYLE_SELECTOR_CONTAINER__SELECTOR"/>
             </message_arguments>
         </filter>
+        <filter comment="This is a static field" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="eCONTENT_TYPE"/>
+            </message_arguments>
+        </filter>
         <filter comment="spi change" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>

@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Change Broker
 Bundle-SymbolicName: org.eclipse.emf.ecp.changebroker
-Bundle-Version: 1.19.0.qualifier
+Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.changebroker.internal;version="1.19.0";x-internal:=true,
- org.eclipse.emf.ecp.changebroker.spi;version="1.19.0"
+Export-Package: org.eclipse.emf.ecp.changebroker.internal;version="1.20.0";x-internal:=true,
+ org.eclipse.emf.ecp.changebroker.spi;version="1.20.0"
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.eclipse.emf.ecp.changebroker
 Service-Component: OSGI-INF/component.xml
 Bundle-ActivationPolicy: lazy
-Automatic-Module-Name: org.eclipse.emf.ecp.changebroker

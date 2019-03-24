@@ -219,7 +219,7 @@
    <feature id="org.eclipse.emf.ecp.i18n.feature" version="0.0.0">
       <category name="org.eclipse.emf.ecp.i18n"/>
    </feature>
-   <bundle id="org.eclipse.emf.ecp.view.table.validation" version="1.19.0.qualifier">
+   <bundle id="org.eclipse.emf.ecp.view.table.validation" version="1.20.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </bundle>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">

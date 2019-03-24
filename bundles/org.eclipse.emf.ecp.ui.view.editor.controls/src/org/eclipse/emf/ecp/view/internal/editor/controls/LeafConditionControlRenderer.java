@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
@@ -97,7 +97,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (EReference.class.isInstance(structuralFeature)) {
 			final EReference reference = EReference.class.cast(structuralFeature);
 			final EClass referenceType = reference.getEReferenceType();
-			final Collection<EClass> dmrEClasses = ECPUtil.getSubClasses(VViewPackage.eINSTANCE
+			final Collection<EClass> dmrEClasses = EMFUtils.getSubClasses(VViewPackage.eINSTANCE
 				.getDomainModelReference());
 			final Setting valueDMRSeting = ((LeafConditionImpl) condition).eSetting(RulePackage.eINSTANCE
 				.getLeafCondition_ValueDomainModelReference());

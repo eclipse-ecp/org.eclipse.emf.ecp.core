@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,12 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Christian W. Damus - bug 544116
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.swt.widgets.Display;
 
@@ -26,7 +28,7 @@ import org.eclipse.swt.widgets.Display;
 public class RunnableManager {
 
 	private final AtomicBoolean isRunning = new AtomicBoolean(false);
-	private final AtomicBoolean isPending = new AtomicBoolean(false);
+	private final AtomicReference<Runnable> pending = new AtomicReference<>();
 	private final Display display;
 
 	/**
@@ -42,8 +44,9 @@ public class RunnableManager {
 		// validation finished
 		isRunning.compareAndSet(true, false);
 		// re-trigger validation if we have a pending request
-		if (isPending.compareAndSet(true, false)) {
-			executeAsync(runnable);
+		final Runnable next = pending.getAndSet(null);
+		if (next != null) {
+			executeAsync(next);
 		}
 	}
 
@@ -69,7 +72,7 @@ public class RunnableManager {
 		if (isRunning.compareAndSet(false, true)) {
 			getDisplay().asyncExec(createWrapperRunnable(runnable));
 		} else {
-			isPending.compareAndSet(false, true);
+			pending.compareAndSet(null, runnable);
 		}
 	}
 
@@ -79,4 +82,17 @@ public class RunnableManager {
 	public synchronized Display getDisplay() {
 		return display;
 	}
+
+	/**
+	 * Query whether a runnable is in progress (asynchronously) on the display thread.
+	 * The implication is that posting a new runnable at this instant would be redundant.
+	 *
+	 * @return {@code true} if a runnable is currently running on the display thread
+	 *         or waiting to run on the display thread; {@code false}, otherwise
+	 * @since 1.20
+	 */
+	public boolean isRunning() {
+		return isRunning.get();
+	}
+
 }

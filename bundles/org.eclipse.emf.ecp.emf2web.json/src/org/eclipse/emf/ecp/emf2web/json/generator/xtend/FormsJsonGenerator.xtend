@@ -32,15 +32,15 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel
  * */
 class FormsJsonGenerator extends JsonGenerator {
 	
-	private static final val TYPE = "type"
-	private static final val ELEMENTS = "elements"
-	private static final val CONTROL = "Control"
+	static val TYPE = "type"
+	static val ELEMENTS = "elements"
+	static val CONTROL = "Control"
 	// reactive again
-	// private static final val CATEGORIZATION_ELEMENT = "CategorizationElement"
-	private static final val CATEGORIZATION = "Categorization"
-	private static final val CATEGORY = "Category"
-	private static final val SCOPE = "scope"
-	private static final val LABEL = "label"
+	// static val CATEGORIZATION_ELEMENT = "CategorizationElement"
+	static val CATEGORIZATION = "Categorization"
+	static val CATEGORY = "Category"
+	static val SCOPE = "scope"
+	static val LABEL = "label"
 	
 	ReferenceHelper refHelper
 	
@@ -50,11 +50,6 @@ class FormsJsonGenerator extends JsonGenerator {
 
 	override createJsonElement(EObject object) {
 		createJsonFormsElement(object)
-	}
-	
-	private def dispatch JsonElement createJsonFormsElement(EObject object){
-		throw new UnsupportedOperationException(
-			"Cannot create a JSON Forms element for EObjects that are not instanceof VView, VControl or VContainer.")
 	}
 	
 	private def dispatch JsonElement createJsonFormsElement(VLabel label) {
@@ -116,6 +111,16 @@ class FormsJsonGenerator extends JsonGenerator {
 	private def dispatch JsonElement createJsonFormsElement(Collection<? extends VElement> elements){
 		val jsonObject = new JsonObject
 		jsonObject.withVerticalLayout(elements)
+	}
+	
+	// fallback to avoid generator-breaking exceptions - should not be hit but avoided by only processing valid view models
+	private def dispatch JsonElement createJsonFormsElement(EObject object){
+		new JsonObject
+	}
+	
+	// fallback to avoid generator-breaking exceptions - should not be hit but avoided by only processing valid view models
+	private def dispatch JsonElement createJsonFormsElement(Void x){
+		new JsonObject
 	}
 	
 	private def withType(JsonObject jsonObject, String type) {

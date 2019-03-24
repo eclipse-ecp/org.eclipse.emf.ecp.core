@@ -5,5 +5,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceStyleProperty" eSuperTypes="template.ecore#//StyleProperty">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="showCreateAndLinkButtonForCrossReferences"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="showLinkButtonForContainmentReferences"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="propertyDescription" value="If true, a button to link existing model objects is shown for containment reference controls. Otherwise, the button is hidden. [default: true]"/>
+        <details key="documentation" value="If true, a button to link existing model objects is shown for containment reference controls. Otherwise, the button is hidden."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

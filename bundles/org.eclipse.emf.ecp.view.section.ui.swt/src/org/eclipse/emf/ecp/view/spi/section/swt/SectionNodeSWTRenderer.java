@@ -19,7 +19,9 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -258,12 +260,21 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		setExpandableComposite(new ExpandableComposite(
 			composite, SWT.NONE, ExpandableComposite.TWISTIE));
 		getExpandableComposite().setExpanded(!getVElement().isCollapsed());
-		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
-			: getVElement().getName();
-		getExpandableComposite().setText(text);
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
+
+		final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
+			VViewPackage.eINSTANCE.getElement_Label());
+		final String text = "text"; //$NON-NLS-1$
+		final WritableValue value = new WritableValue(text, String.class);
+		final IObservableValue textObservable = PojoProperties.value(ExpandableComposite.class, text, String.class)
+			.observe(expandableComposite);
+
+		getDataBindingContext().bindValue(textObservable, modelLabelValue);
+
 		initExpandableComposite(getExpandableComposite());
 
-		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
 		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),

@@ -27,10 +27,9 @@ import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleP
  * and proceeding up the inheritance hierarchy
  * until a non-null result is returned,
  * which is the result of the switch.
- * 
+ *
  * @since 1.18
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.template.style.reference.model.VTReferencePackage
  * @generated
  */

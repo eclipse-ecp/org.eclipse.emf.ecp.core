@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Christian W. Damus - bug 543190
  ******************************************************************************/
 package org.eclipse.emf.ecp.common.spi;
 
@@ -144,4 +145,16 @@ public class UniqueSetting {
 	public Setting getSetting() {
 		return ((InternalEObject) eObject).eSetting(structuralFeature);
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder result = new StringBuilder(64);
+		result.append("UniqueSetting("); //$NON-NLS-1$
+		result.append(structuralFeature == null ? "<null>" : structuralFeature.getName()); //$NON-NLS-1$
+		result.append(" of "); //$NON-NLS-1$
+		result.append(eObject == null ? "<null>" : Labelizer.get(eObject).getLabel(eObject)); //$NON-NLS-1$
+		result.append(')');
+		return result.toString();
+	}
+
 }

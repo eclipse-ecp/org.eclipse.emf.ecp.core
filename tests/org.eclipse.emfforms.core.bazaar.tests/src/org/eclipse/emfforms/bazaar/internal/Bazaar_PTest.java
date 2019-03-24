@@ -82,7 +82,7 @@ public class Bazaar_PTest {
 		final IEclipseContext context = EclipseContextFactory.create();
 		// Add another value, otherwise, empty context is too fast
 		context.set(TESTSTRING, mock(Object.class));
-		assertTrue(doComparison(true, context));
+		doComparison(true, context);
 	}
 
 	@Test
@@ -90,15 +90,14 @@ public class Bazaar_PTest {
 		final IEclipseContext context = EclipseContextFactory.create();
 		// Add another value, otherwise, empty context is too fast
 		context.set(VendorWithPrecondition.KEY, VendorWithPrecondition.VALUE);
-		assertTrue(doComparison(false, context));
+		doComparison(false, context);
 	}
 
 	/**
-	 *
-	 * @return if expectedTheWithPreConditionsBetter, true if that is the case. Otherwise true, if with precondition not
-	 *         more the 50% slower
+	 * If expectedTheWithPreConditionsBetter, asserts to true if that is the case.
+	 * Otherwise asserts to true, if with precondition is not more than 60% slower.
 	 */
-	public boolean doComparison(boolean expectedTheWithPreConditionsBetter, IEclipseContext context) {
+	private void doComparison(boolean expectedTheWithPreConditionsBetter, IEclipseContext context) {
 		final int iterations = 50000;
 		final Vendor<MyProduct> vendor = new VendorWithPrecondition();
 		bazaar.addVendor(vendor);
@@ -118,9 +117,15 @@ public class Bazaar_PTest {
 		final long withoutPreConditions = System.currentTimeMillis() - currentTimeMillis;
 
 		if (expectedTheWithPreConditionsBetter) {
-			return withPreConditions < withoutPreConditions;
+			assertTrue(
+				String.format("The preCondition evaluation (%1$s ms) is slower then withoutPreCondition (%2$s ms)!", //$NON-NLS-1$
+					withPreConditions, withoutPreConditions),
+				withPreConditions < withoutPreConditions);
+		} else {
+			final double withoutPreConditionsSlack = 1.6 * withoutPreConditions;
+			assertTrue(String.format(
+				"The preCondition evaluation (%1$s ms) is slower then withoutPreCondition with 60%% slack (%2$s ms)!", //$NON-NLS-1$
+				withPreConditions, withoutPreConditionsSlack), withPreConditions < withoutPreConditionsSlack);
 		}
-		return 1.5 * withoutPreConditions > withPreConditions;
-
 	}
 }

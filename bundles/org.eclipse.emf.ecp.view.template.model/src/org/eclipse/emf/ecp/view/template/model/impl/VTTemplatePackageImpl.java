@@ -632,7 +632,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		initEClass(viewTemplateEClass, VTViewTemplate.class, "ViewTemplate", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getViewTemplate_ControlValidationConfiguration(), getControlValidationTemplate(), null,
-			"controlValidationConfiguration", null, 1, 1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			"controlValidationConfiguration", null, 0, 1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
 			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getViewTemplate_Styles(), getStyle(), null, "styles", null, 0, -1, VTViewTemplate.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,

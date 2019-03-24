@@ -7,6 +7,12 @@
                 <message_argument value="1.17.0"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="923795461">
+            <message_arguments>
+                <message_argument value="1.19.0"/>
+                <message_argument value="1.9.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
@@ -59,6 +65,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer"/>
                 <message_argument value="ContainerSWTRenderer(SWTRendererFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer"/>
+                <message_argument value="ContainerSWTRenderer(VELEMENT, ViewModelContext, ReportService, EMFFormsRendererFactory, EMFFormsDatabinding)"/>
             </message_arguments>
         </filter>
         <filter comment="EMFForms 1.6 SPI Change" id="338792546">

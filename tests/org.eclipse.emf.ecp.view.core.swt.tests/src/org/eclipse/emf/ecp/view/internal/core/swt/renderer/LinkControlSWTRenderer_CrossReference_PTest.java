@@ -187,4 +187,43 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 			// button are not found.
 		}
 	}
+
+	/** For cross references, the 'link' button must be shown by default (:= reference style == true). */
+	@Test
+	public void linkExistingButton_noReferenceStyle()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+
+		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
+		assertEquals("Link Player", linkButton.getToolTipText());
+		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
+		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText());
+		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
+		assertEquals("Delete", deleteButton.getToolTipText());
+	}
+
+	/**
+	 * For cross references, the 'link' button must also be shown if the reference style property
+	 * is set to false.
+	 */
+	@Test
+	public void linkButton_referenceStyleFalse()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+
+		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
+		assertEquals("Link Player", linkButton.getToolTipText());
+		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
+		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText());
+		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
+		assertEquals("Delete", deleteButton.getToolTipText());
+	}
 }

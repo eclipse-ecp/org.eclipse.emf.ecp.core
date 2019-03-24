@@ -50,7 +50,7 @@ public interface VTViewTemplate extends EObject {
 	 * @return the value of the '<em>Control Validation Configuration</em>' containment reference.
 	 * @see #setControlValidationConfiguration(VTControlValidationTemplate)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getViewTemplate_ControlValidationConfiguration()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	@Deprecated

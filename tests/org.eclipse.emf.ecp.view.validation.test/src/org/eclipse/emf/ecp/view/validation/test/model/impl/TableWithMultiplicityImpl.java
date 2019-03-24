@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 543190
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.impl;
 
@@ -17,7 +18,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
@@ -32,13 +32,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithMultiplicityImpl#getContent <em>Content</em>}
- * </li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithMultiplicityImpl#getContent
+ * <em>Content</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TableWithMultiplicityImpl extends EObjectImpl implements TableWithMultiplicity {
+public class TableWithMultiplicityImpl extends TableObjectImpl implements TableWithMultiplicity {
 	/**
 	 * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -80,7 +80,7 @@ public class TableWithMultiplicityImpl extends EObjectImpl implements TableWithM
 	@Override
 	public EList<TableContent> getContent() {
 		if (content == null) {
-			content = new EObjectContainmentEList<TableContent>(TableContent.class, this,
+			content = new EObjectContainmentEList<>(TableContent.class, this,
 				TestPackage.TABLE_WITH_MULTIPLICITY__CONTENT);
 		}
 		return content;
