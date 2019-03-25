@@ -388,7 +388,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	/**
 	 * Get the Notifier from the tree input.
-	 * 
+	 *
 	 * @param editorInput The editor input to transform
 	 * @return {@link Notifier}
 	 * @throws IllegalStateException if the editor input is not a Notifier
