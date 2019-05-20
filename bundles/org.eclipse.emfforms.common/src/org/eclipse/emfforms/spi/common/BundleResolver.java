@@ -11,7 +11,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.core.services.label;
+package org.eclipse.emfforms.spi.common;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.osgi.framework.Bundle;
@@ -20,6 +20,7 @@ import org.osgi.framework.Bundle;
  * Class to resolve an EClassifier to a Bundle.
  *
  * @author Eugen Neufeld
+ * @since 1.22
  *
  */
 public interface BundleResolver {

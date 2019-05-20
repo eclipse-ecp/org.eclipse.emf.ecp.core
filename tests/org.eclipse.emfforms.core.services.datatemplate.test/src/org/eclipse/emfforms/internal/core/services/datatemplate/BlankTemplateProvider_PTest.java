@@ -42,7 +42,7 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emfforms.bazaar.Bid;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.datatemplate.Template;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.CustomTypeSafeMatcher;
@@ -60,7 +60,7 @@ import org.osgi.framework.Bundle;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings({ "restriction", "nls" })
+@SuppressWarnings({ "nls" })
 public class BlankTemplateProvider_PTest {
 
 	private BlankTemplateProvider provider;

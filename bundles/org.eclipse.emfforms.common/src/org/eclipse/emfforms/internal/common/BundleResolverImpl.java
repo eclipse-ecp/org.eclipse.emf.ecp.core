@@ -11,13 +11,14 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.core.services.label;
+package org.eclipse.emfforms.internal.common;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emfforms.spi.common.BundleResolver;
 import org.osgi.framework.Bundle;
 
 /**
@@ -27,11 +28,6 @@ import org.osgi.framework.Bundle;
  */
 public class BundleResolverImpl implements BundleResolver {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.internal.core.services.label.BundleResolver#getEditBundle(org.eclipse.emf.ecore.EClassifier)
-	 */
 	@Override
 	public Bundle getEditBundle(EClassifier eClassifier) throws NoBundleFoundException {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()

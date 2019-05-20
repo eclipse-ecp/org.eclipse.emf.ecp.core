@@ -53,6 +53,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.ecore.EClass;
@@ -125,6 +126,8 @@ import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
@@ -135,6 +138,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindin
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
@@ -274,9 +278,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/** The feature of the column which is currently used for sorting. */
 	private java.util.Optional<EStructuralFeature> sortColumnFeature = java.util.Optional.empty();
 	private ModelChangeListener autoSortModelChangeListener;
+	private final EMFFormsLocalizationService localizationService;
+	private final BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
+	/** DO NOT USE DIRECTLY! Use {@link #getEnumeratorComparator()} instead. */
+	private LocalizedEnumeratorComparator enumeratorComparator;
 
 	/**
-	 * Default constructor.
+	 * Legacy constructor for backwards compatibility.
 	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
@@ -288,7 +296,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @since 1.8
 	 */
-	@Inject
+	@Deprecated
 	// BEGIN COMPLEX CODE
 	public TableControlSWTRenderer(
 		VTableControl vElement,
@@ -301,9 +309,42 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		EMFFormsEditSupport emfFormsEditSupport) {
 		// END COMPLEX CODE
 
+		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
+			imageRegistryService, emfFormsEditSupport, viewContext.getService(EMFFormsLocalizationService.class));
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 * @since 1.22
+	 */
+	@Inject
+	// BEGIN COMPLEX CODE
+	public TableControlSWTRenderer(
+		VTableControl vElement,
+		ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabindingEMF emfFormsDatabinding,
+		EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider,
+		ImageRegistryService imageRegistryService,
+		EMFFormsEditSupport emfFormsEditSupport,
+		EMFFormsLocalizationService localizationService) {
+		// END COMPLEX CODE
+
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.imageRegistryService = imageRegistryService;
 		this.emfFormsEditSupport = emfFormsEditSupport;
+		this.localizationService = localizationService;
 		viewModelDBC = new EMFDataBindingContext();
 	}
 
@@ -1742,7 +1783,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * Get called by the {@link ECPTableViewerComparator} in order to compare the given objects.
 	 *
-	 * @param viewer the tavle viewer
+	 * @param viewer the table viewer
 	 * @param left the first object of the comparison
 	 * @param right the second object of the comparison
 	 * @param propertyIndex index of the selection column. the index is aligned with the index of the associated column
@@ -1756,6 +1797,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *         element is greater than the second element
 	 * @since 1.8
 	 */
+	// BEGIN COMPLEX CODE
 	@SuppressWarnings("unchecked")
 	protected int compare(Viewer viewer, Object left, Object right, int direction, int propertyIndex) {
 		if (direction == 0) {
@@ -1790,7 +1832,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		} else if (rightValue == null) {
 			rc = -1;
 		} else {
-			if (!(leftValue instanceof String) && leftValue instanceof Comparable
+			if (leftValue instanceof Enumerator) {
+				final EStructuralFeature feature = leftSetting.get().getEStructuralFeature();
+				rc = getEnumeratorComparator().compare(feature, (Enumerator) leftValue, (Enumerator) rightValue);
+			} else if (!(leftValue instanceof String) && leftValue instanceof Comparable
 				&& leftValue.getClass().isInstance(rightValue)) {
 				rc = Comparable.class.cast(leftValue).compareTo(rightValue);
 			} else {
@@ -1803,6 +1848,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		return rc;
 	}
+	// END COMPLEX CODE
 
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
@@ -1887,6 +1933,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			getVElement(),
 			dmr,
 			table);
+	}
+
+	/**
+	 * @return The {@link FeatureAwareComparator} used to compare {@link Enumerator enum values} when sorting the table
+	 * @since 1.22
+	 */
+	protected FeatureAwareComparator<Enumerator> getEnumeratorComparator() {
+		if (enumeratorComparator == null) {
+			enumeratorComparator = new LocalizedEnumeratorComparator(localizationService, bundleResolver,
+				getReportService());
+		}
+		return enumeratorComparator;
 	}
 
 	/**

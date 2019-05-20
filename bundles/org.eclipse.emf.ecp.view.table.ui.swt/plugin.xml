@@ -6,7 +6,7 @@
          name=""
          point="org.eclipse.emf.ecp.edit.swt.cellEditor">
       <cellEditor
-            class="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditor"
+            class="org.eclipse.emf.ecp.view.spi.table.swt.ItemProviderEnumCellEditor"
             id="org.eclipse.emf.ecp.view.table.ui.swt.enumCellEditor"
             tester="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditorTester">
       </cellEditor>

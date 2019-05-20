@@ -60,9 +60,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver.NoBundleFoundException;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
@@ -127,7 +127,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
 	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
 
-	private final BundleResolver bundleResolver = new BundleResolverImpl();
+	private final BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
 	private final ImageRegistryService imageRegistryService;
 	private EMFFormsLocalizationService l10n;
 

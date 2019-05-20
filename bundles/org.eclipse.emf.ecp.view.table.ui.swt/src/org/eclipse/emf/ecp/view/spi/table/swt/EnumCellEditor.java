@@ -52,7 +52,9 @@ import org.eclipse.swt.widgets.Control;
  * applicable for all {@link EAttribute EAttributes} with a Single {@link EEnum} data type.
  *
  * @since 1.13
+ * @deprecated Use {@link ItemProviderEnumCellEditor} instead
  */
+@Deprecated
 public class EnumCellEditor extends ECPEnumCellEditor {
 
 	private static final String EMPTY = ""; //$NON-NLS-1$

@@ -16,6 +16,8 @@ package org.eclipse.emfforms.spi.view.control.multiattribute;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
@@ -37,6 +39,8 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emfforms.internal.view.control.multiattribute.celleditor.CellEditorFactory;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
@@ -112,6 +116,10 @@ public class CellEditorFactory_ITest {
 	@Before
 	public void initMocks() {
 		MockitoAnnotations.initMocks(this);
+		when(viewModelContext.getService(EMFFormsLocalizationService.class))
+			.thenReturn(mock(EMFFormsLocalizationService.class));
+		when(viewModelContext.getService(ReportService.class))
+			.thenReturn(mock(ReportService.class));
 	}
 
 	@Before
