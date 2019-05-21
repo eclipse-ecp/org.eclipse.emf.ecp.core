@@ -30,7 +30,11 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.observable.value.ValueDiff;
+import org.eclipse.core.databinding.property.INativePropertyListener;
+import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.IEMFObservable;
@@ -51,7 +55,6 @@ import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -411,7 +414,7 @@ public class ItemProviderEnumCellEditor extends ECPEnumCellEditor {
 	/**
 	 * Observable value of the combo.
 	 */
-	private class ComboValueProperty extends WidgetValueProperty {
+	private class ComboValueProperty extends SimpleValueProperty<Object, Object> {
 
 		@Override
 		public Object getValueType() {
@@ -436,6 +439,12 @@ public class ItemProviderEnumCellEditor extends ECPEnumCellEditor {
 			}
 
 			return ViewerProperties.singleSelection().observe(viewer);
+		}
+
+		@Override
+		public INativePropertyListener<Object> adaptListener(
+			ISimplePropertyListener<Object, ValueDiff<? extends Object>> listener) {
+			return null;
 		}
 	}
 

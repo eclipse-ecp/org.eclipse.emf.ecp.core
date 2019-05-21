@@ -24,12 +24,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.INativePropertyListener;
+import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
@@ -88,7 +90,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public IValueProperty getValueProperty() {
-		return new WidgetValueProperty() {
+		return new SimpleValueProperty() {
 
 			@Override
 			public Object getValueType() {
@@ -111,6 +113,11 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 					return observe(dateWidget);
 				}
 				return super.observe(source);
+			}
+
+			@Override
+			public INativePropertyListener adaptListener(ISimplePropertyListener listener) {
+				return null;
 			}
 		};
 	}
