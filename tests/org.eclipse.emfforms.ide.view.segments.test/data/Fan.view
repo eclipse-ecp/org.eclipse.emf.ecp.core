@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.group.model="http://org/eclipse/emf/ecp/view/group/model" xmlns:org.eclipse.emf.ecp.view.horizontal.model="http://org/eclipse/emf/ecp/view/horizontal/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmlns:org.eclipse.emf.ecp.view.vertical.model="http://org/eclipse/emf/ecp/view/vertical/model" xmi:id="_0sfucIBeEembptacsdx8HQ" name="Fan">
+  <rootEClass href="http://org/eclipse/example/bowling#//Fan"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_ES5JoIBhEembptacsdx8HQ">
+    <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_F5ZNYIBhEembptacsdx8HQ" name="test">
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_I_gCsIBhEembptacsdx8HQ" name="Control name">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_I_gCsYBhEembptacsdx8HQ">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Fan/name"/>
+        </domainModelReference>
+      </children>
+    </children>
+    <children xsi:type="org.eclipse.emf.ecp.view.vertical.model:VerticalLayout" xmi:id="_FKijUIBhEembptacsdx8HQ">
+      <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_I_c_YIBhEembptacsdx8HQ" name="Control dateOfBirth">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_I_c_YYBhEembptacsdx8HQ">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Fan/dateOfBirth"/>
+        </domainModelReference>
+      </children>
+    </children>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_1gtZoIBeEembptacsdx8HQ">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_7VI2YIBeEembptacsdx8HQ">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_-zkFEIBeEembptacsdx8HQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/type"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_-zkFEYBeEembptacsdx8HQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/priceMoney"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_-zkFEoBeEembptacsdx8HQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/receivesTrophy"/>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_7VI2YYBeEembptacsdx8HQ">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Fan/visitedTournaments"/>
+      </domainModelReference>
+    </domainModelReference>
+    <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:ReadOnlyColumnConfiguration" xmi:id="_CuUqcIBfEembptacsdx8HQ" columnDomainReferences="_-zkFEoBeEembptacsdx8HQ _-zkFEYBeEembptacsdx8HQ"/>
+    <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_E74HIIBfEembptacsdx8HQ" columnDomainReference="_-zkFEIBeEembptacsdx8HQ" minWidth="75"/>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

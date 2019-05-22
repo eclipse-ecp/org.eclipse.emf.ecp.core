@@ -331,6 +331,7 @@
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
 
 		<!-- Segment IDE Tooling -->
+		<module>../../bundles/org.eclipse.emfforms.ide.view.segments</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.view.indexsegment</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.view.mappingsegment</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.view.multisegment</module>

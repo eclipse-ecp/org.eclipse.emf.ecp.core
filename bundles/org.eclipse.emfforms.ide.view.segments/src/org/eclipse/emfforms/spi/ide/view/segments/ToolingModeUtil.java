@@ -11,7 +11,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.editor.controls;
+package org.eclipse.emfforms.spi.ide.view.segments;
 
 import java.util.Arrays;
 
@@ -27,7 +27,7 @@ import org.osgi.framework.ServiceReference;
  * Utility class that allows to query whether segment or dmr based tooling is used.
  *
  * @author Lucas Koehler
- * @since 1.20
+ * @since 1.22
  *
  */
 public final class ToolingModeUtil {

@@ -20,9 +20,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -74,6 +76,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
+import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrationException;
+import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator;
+import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -344,6 +349,7 @@ public class ViewEditorPart extends EditorPart implements
 					Messages.WorkspaceMigrationDialog_Title,
 					Messages.WorkspaceMigrationDialog_Description);
 				final List<URI> toMigrate = new ArrayList<URI>();
+				final Set<URI> successfullyMigrated = new HashSet<>();
 				if (migrateWorkspace) {
 					for (final URI uri : getWorkspaceURIsToMigrate(resourceURI)) {
 						try {
@@ -373,6 +379,7 @@ public class ViewEditorPart extends EditorPart implements
 						try {
 							for (final URI uri : toMigrate) {
 								migrator.performMigration(uri);
+								successfullyMigrated.add(uri);
 							}
 						} catch (final ViewModelMigrationException ex) {
 							throw new InvocationTargetException(ex);
@@ -405,9 +412,51 @@ public class ViewEditorPart extends EditorPart implements
 								e));
 				}
 
+				// If a migration is necessary, only allow legacy dmr migration if the view model was migrated
+				// successfully
+				if (ToolingModeUtil.isSegmentToolingEnabled() && successfullyMigrated.contains(resourceURI)) {
+					migrateLegacyDmrs(shell, resourceURI);
+				}
 			}
 
 			migrateTemplateModels(shell);
+
+		} else if (ToolingModeUtil.isSegmentToolingEnabled()) {
+			migrateLegacyDmrs(shell, resourceURI);
+		}
+	}
+
+	/**
+	 * Checks whether the current view model contains any legacy DMRs. If yes, ask the user whether (s)he wants to
+	 * migrate them to segment based DMRs and execute the migration if the user accepts.
+	 *
+	 * @param shell The shell to open UI dialogs on
+	 * @param resourceURI the resource URI of the view model to migrate
+	 */
+	private void migrateLegacyDmrs(Shell shell, final URI resourceURI) {
+		final DmrToSegmentsMigrator migrator = getEditorSite().getService(DmrToSegmentsMigrator.class);
+		if (migrator.needsMigration(resourceURI)) {
+			final boolean migrate = MessageDialog.openQuestion(shell, Messages.ViewEditorPart_LegacyMigrationTitle,
+				Messages.ViewEditorPart_LegacyMigrationQuestion);
+			if (migrate) {
+				try {
+					new ProgressMonitorDialog(shell).run(true, false, monitor -> {
+						try {
+							migrator.performMigration(resourceURI);
+						} catch (final DmrToSegmentsMigrationException ex) {
+							throw new InvocationTargetException(ex);
+						}
+					});
+				} catch (InvocationTargetException | InterruptedException ex) {
+					MessageDialog.openError(
+						Display.getDefault().getActiveShell(), Messages.ViewEditorPart_LegacyMigrationErrorTitle,
+						Messages.ViewEditorPart_LegacyMigrationErrorText +
+							Messages.ViewEditorPart_MigrationErrorText2);
+					Activator.getDefault().getLog().log(
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+							Messages.ViewEditorPart_LegacyMigrationErrorTitle, ex));
+				}
+			}
 		}
 	}
 

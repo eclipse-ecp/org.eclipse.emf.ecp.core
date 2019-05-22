@@ -207,6 +207,7 @@
 		<module>../../tests/org.eclipse.emfforms.ide.view.mappingsegment.test</module>
 		<module>../../tests/org.eclipse.emfforms.ide.view.multisegment.test</module>
 		<module>../../tests/org.eclipse.emfforms.ide.view.multisegment.test.uithread</module>
+		<module>../../tests/org.eclipse.emfforms.ide.view.segments.test</module>
 
 		<!-- Bazaar -->
 		<module>../../tests/org.eclipse.emfforms.core.bazaar.tests</module>
