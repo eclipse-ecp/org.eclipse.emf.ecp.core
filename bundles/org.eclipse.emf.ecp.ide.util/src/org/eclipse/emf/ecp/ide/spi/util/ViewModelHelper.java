@@ -212,6 +212,14 @@ public final class ViewModelHelper {
 	 * Helper class for encapsulating view loading functionality.
 	 */
 	public static class ViewLoader {
+		/**
+		 * Loads the view denoted by the given file. Also tries to register referenced Ecores.
+		 *
+		 * @param file the view to load
+		 * @param registeredEcores a collection to which all Ecores which are successfully registered are added.
+		 * @return the {@link VView} denoted by the given file.
+		 * @throws IOException if something goes wrong during loading or registering
+		 */
 		public VView loadView(IFile file, Collection<String> registeredEcores) throws IOException {
 			final String path = getPath(file);
 			final VView view = loadView(path);
@@ -222,10 +230,22 @@ public final class ViewModelHelper {
 			return view;
 		}
 
+		/**
+		 * Returns the path string of the given file.
+		 *
+		 * @param file the {@link IFile} for which the path string shall be determined.
+		 * @return The determined string path.
+		 */
 		protected String getPath(IFile file) {
 			return file.getLocation().toString();
 		}
 
+		/**
+		 * Loads the view denoted by the given path.
+		 *
+		 * @param path the path denoting the {@link VView}
+		 * @return the loaded {@link VView}
+		 */
 		protected VView loadView(String path) {
 			final ResourceSet resourceSet = new ResourceSetImpl();
 			final URI fileURI = URI.createFileURI(path);
@@ -236,6 +256,14 @@ public final class ViewModelHelper {
 			return null;
 		}
 
+		/**
+		 * Registers the referenced Ecores of the given view.
+		 *
+		 * @param view the {@link VView} which possibly references Ecores.
+		 * @param viewLocation the location of the given view. Used for error reporting.
+		 * @param registeredEcores a collection to which all Ecores which are successfully registered are added.
+		 * @throws IOException if something goes wrong during loading or registering
+		 */
 		protected void registerReferencedEcores(VView view, String viewLocation, Collection<String> registeredEcores)
 			throws IOException {
 			if (view == null || view.getEcorePaths() == null) {
@@ -254,6 +282,13 @@ public final class ViewModelHelper {
 			}
 		}
 
+		/**
+		 * Returns a string representation of the view and its location.
+		 *
+		 * @param view the {@link VView}.
+		 * @param viewLocation the location.
+		 * @return a string representation of the view and its location
+		 */
 		protected String getViewNameAndLocation(VView view, String viewLocation) {
 			return getViewName(view)
 				.map(viewName -> MessageFormat.format(Messages.ViewModelHelper_couldNotFindEcorePath_nameAndLocation,
@@ -261,6 +296,12 @@ public final class ViewModelHelper {
 				.orElse(viewLocation);
 		}
 
+		/**
+		 * Determines a name for the given view.
+		 *
+		 * @param view the [@link VView}.
+		 * @return an optional possibly containing a determined name, empty otherwise.
+		 */
 		protected Optional<String> getViewName(VView view) {
 			if (view.getLabel() != null && !view.getLabel().isEmpty()) {
 				return Optional.of(view.getLabel());
@@ -274,14 +315,31 @@ public final class ViewModelHelper {
 			return Optional.empty();
 		}
 
+		/**
+		 * Indicates whether the Ecore denoted by the path exists in the workspace.
+		 *
+		 * @param ecorePath the potential path to an Ecore
+		 * @return {@code true} if an Ecore exists at the path in the workspace, {@code false} otherwise.
+		 */
 		protected boolean ecoreExistsInWorkspace(String ecorePath) {
 			return ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath) != null;
 		}
 
+		/**
+		 * Returns the service used for error reporting.
+		 *
+		 * @return the {@link ReportService}
+		 */
 		protected ReportService getReportService() {
 			return Activator.getDefault().getReportService();
 		}
 
+		/**
+		 * Try to register the Ecore denoted by the path.
+		 *
+		 * @param ecorePath the path to the Ecore in the workspace which shall be registered.
+		 * @throws IOException if something goes wrong during registering.
+		 */
 		protected void registerEcore(String ecorePath) throws IOException {
 			EcoreHelper.registerEcore(ecorePath);
 		}

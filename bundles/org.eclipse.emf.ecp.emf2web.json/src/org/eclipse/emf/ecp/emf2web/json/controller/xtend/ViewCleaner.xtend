@@ -36,22 +36,42 @@ import java.util.List
 class ViewCleaner {
 	
 	/**
+	 * Number of maximum validation and cleaning iterations on any given view
+	 */
+	static val VALIDATION_TRIES = 5;
+	
+	/**
 	 * Remove invalid and not supported {@link VElement}s.
 	 */
 	def static cleanView(VView view) {
-		removeInvalidElements(view)
-
+		removeInvalidElements(view, VALIDATION_TRIES)
+		
 		val whiteList = #[VLabel, VCategorizationElement, VCategorization, VCategory, VView, VControl, VContainer]
 		removeUnsupportedElements(view, whiteList)
 	}
 
-	private static def void removeInvalidElements(VView view) {
+	/**
+	 * Removing invalid elements from the view might trigger new validation errors.
+	 * Therefore we should try multiple times to validate and clean the view model in case it is invalid.
+	 */
+	private static def void removeInvalidElements(VView view, int tries) {
+		for (var i = 0; i < tries; i++) {
+			var wasInvalid = removeInvalidElements(view);
+			if (!wasInvalid) {
+				// success 
+				return;
+			}
+		}
+	}
+
+	private static def boolean removeInvalidElements(VView view) {
 		val validation = Diagnostician.INSTANCE.validate(view);
 		if (validation.severity == Diagnostic.ERROR) {
 			for (diagnostic : validation.children) {
 				removeInvalidElements(diagnostic)
 			}
 		}
+		validation.severity == Diagnostic.ERROR
 	}
 
 	private static def void removeInvalidElements(Diagnostic diagnostic) {
