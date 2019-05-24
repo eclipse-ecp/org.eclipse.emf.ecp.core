@@ -10,12 +10,15 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
- * Christian W. Damus - bug 543190
+ * Christian W. Damus - bugs 543190, 527686
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.scoped;
 
+import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -50,6 +53,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.internal.core.services.controlmapper.SettingToControlMapperImpl;
+import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.junit.Before;
@@ -95,6 +99,7 @@ public class SettingToControlMapper_ITest {
 				}
 			});
 		mapper = new SettingToControlMapperImpl(mappingManager, context);
+		context.initialize();
 	}
 
 	@Test
@@ -188,7 +193,7 @@ public class SettingToControlMapper_ITest {
 		assertEquals(2, mapper.getControlsFor(childSettingReferences).size());
 
 		// Verification that add control and add child context work is done by other test cases.
-		mapper.childContextDisposed(childContext);
+		context.removeChildContext(childContext);
 
 		// Verify that the mapping for the child setting is empty
 		final Set<UniqueSetting> settingsForControl = mapper.getSettingsForControl(childControl);
@@ -228,7 +233,7 @@ public class SettingToControlMapper_ITest {
 		context.addChildContext(control, childContext);
 
 		mapper.vControlRemoved(childControl);
-		mapper.childContextDisposed(childContext);
+		context.removeChildContext(childContext);
 
 	}
 
@@ -311,7 +316,7 @@ public class SettingToControlMapper_ITest {
 
 		// Verification that add control and add child context work is done by other test cases.
 		// mapper.vControlRemoved(childControl);
-		mapper.childContextDisposed(childContext);
+		context.removeChildContext(childContext);
 
 		final UniqueSetting parentSetting = UniqueSetting.createSetting(domainObject,
 			EcorePackage.eINSTANCE.getEClass_EAttributes());
@@ -373,6 +378,103 @@ public class SettingToControlMapper_ITest {
 		assertThat("Wrong number of objects in child context", objects.size(), is(2));
 		assertThat(objects, hasItems(idAttribute, EcorePackage.Literals.ESTRING));
 	}
+
+	/**
+	 * Verify that we can handle the reuse of a child context and its controls for
+	 * another domain model object.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public void childContextDomainModelChanged() {
+		// Setup and add child context with one control and one setting
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl childControl = VViewFactory.eINSTANCE.createControl();
+		childControl.setDomainModelReference(EcorePackage.Literals.ECLASS__EATTRIBUTES);
+		childView.getChildren().add(childControl);
+		final EClass childDomainObject1 = EcoreFactory.eINSTANCE.createEClass();
+		childDomainObject1.setName("Child1");
+		final EClass childDomainObject2 = EcoreFactory.eINSTANCE.createEClass();
+		childDomainObject2.setName("Child2");
+
+		final FakeViewContext childContext = new FakeViewContext(childDomainObject1, childView);
+		context.addChildContext(control, childContext);
+
+		final UniqueSetting child1SettingAttributes = UniqueSetting.createSetting(childDomainObject1,
+			EcorePackage.Literals.ECLASS__EATTRIBUTES);
+		final UniqueSetting child1SettingReferences = UniqueSetting.createSetting(childDomainObject1,
+			EcorePackage.Literals.ECLASS__EREFERENCES);
+		assertThat(mapper.getControlsFor(child1SettingAttributes).size(), is(2));
+		assertThat(mapper.getControlsFor(child1SettingReferences).size(), is(2));
+
+		// Verification that add control and add child context work is done by other test cases.
+
+		// Change the domain model in the child context
+		childContext.changeDomainModel(childDomainObject2);
+
+		// Verify that the mappings are now for the other object
+		final Set<UniqueSetting> settingsForControl = mapper.getSettingsForControl(childControl);
+		assertThat(settingsForControl.size(), is(2));
+
+		final UniqueSetting child2SettingAttributes = UniqueSetting.createSetting(childDomainObject2,
+			EcorePackage.eINSTANCE.getEClass_EAttributes());
+		final UniqueSetting child2SettingReferences = UniqueSetting.createSetting(childDomainObject2,
+			EcorePackage.eINSTANCE.getEClass_EReferences());
+		assertThat(settingsForControl, hasItems(child2SettingAttributes, child2SettingReferences));
+		assertThat(mapper.getControlsFor(child2SettingAttributes).size(), is(2));
+		assertThat(mapper.getControlsFor(child2SettingReferences).size(), is(2));
+		assertThat(mapper.getControlsFor(child2SettingAttributes), hasItems(control, childControl));
+
+		// There's nothing now for the original object
+		assertThat(mapper.getControlsFor(child1SettingAttributes), not(hasItem(anything())));
+		assertThat(mapper.getControlsFor(child1SettingReferences), not(hasItem(anything())));
+	}
+
+	/**
+	 * Verify the {@link EMFFormsSettingToControlMapper#hasMapping(UniqueSetting, VElement)}
+	 * implementation.
+	 */
+	@Test
+	public void hasMapping_UniqueSetting_VElement() {
+		hasMapping_UniqueSetting_VElement(mapper);
+	}
+
+	@SuppressWarnings("nls")
+	private void hasMapping_UniqueSetting_VElement(EMFFormsSettingToControlMapper mapper) {
+		// Setup and add child context with one control and one setting
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl childControl = VViewFactory.eINSTANCE.createControl();
+		childControl.setDomainModelReference(EcorePackage.Literals.ECLASS__EATTRIBUTES);
+		childView.getChildren().add(childControl);
+		final EClass childDomainObject = EcoreFactory.eINSTANCE.createEClass();
+		childDomainObject.setName("Child");
+
+		final FakeViewContext childContext = new FakeViewContext(childDomainObject, childView);
+		context.addChildContext(control, childContext);
+
+		final UniqueSetting childSetting = UniqueSetting.createSetting(childDomainObject,
+			EcorePackage.Literals.ECLASS__EATTRIBUTES);
+
+		assertThat("No child mapping", mapper.hasMapping(childSetting, childControl), is(true));
+		assertThat("No parent mapping", mapper.hasMapping(childSetting, control), is(true));
+
+		context.removeChildContext(childContext);
+
+		assertThat("Still have child mapping", mapper.hasMapping(childSetting, childControl), is(false));
+		assertThat("Still have parent mapping", mapper.hasMapping(childSetting, control), is(false));
+	}
+
+	/**
+	 * Verify the {@link EMFFormsSettingToControlMapper#hasMapping(UniqueSetting, VElement)}
+	 * default method.
+	 */
+	@Test
+	public void hasMapping_default_UniqueSetting_VElement() {
+		hasMapping_UniqueSetting_VElement(new InterfaceDelegator(mapper));
+	}
+
+	//
+	// Test framework
+	//
 
 	@SafeVarargs
 	static <T> Set<T> set(T... elements) {

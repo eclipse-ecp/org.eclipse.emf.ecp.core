@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,7 @@
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.core;
 
@@ -100,37 +101,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		preInit();
 		controls = new LinkedHashMap<SWTGridCell, Control>();
 		if (getViewModelContext() != null) {
-			listener = new ModelChangeListener() {
-				@Override
-				public void notifyChange(ModelChangeNotification notification) {
-					if (!renderingFinished) {
-						return;
-					}
-					if (notification.getRawNotification().isTouch()) {
-						return;
-					}
-					// Always apply enable and read-only if it changed because it might have changed for a parent
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
-						if (!ignoreEnableOnReadOnly()) {
-							applyEnable();
-						}
-					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Readonly()) {
-						applyReadOnly();
-					}
-					if (notification.getNotifier() != getVElement()) {
-						return;
-					}
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
-						applyVisible();
-					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Diagnostic()) {
-						final VDiagnostic newDia = (VDiagnostic) notification.getRawNotification().getNewValue();
-						final VDiagnostic oldDia = (VDiagnostic) notification.getRawNotification().getOldValue();
-						applyValidation(oldDia, newDia);
-						applyValidation();
-					}
-				}
-
-			};
+			listener = new ViewChangeListener();
 			getViewModelContext().registerViewChangeListener(listener);
 		}
 		getViewModelContext().addContextUser(this);
@@ -237,6 +208,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			return;
 		}
 		renderingFinished = true;
+
+		// Apply visibility, enablement, and validation decorations
 		if (!getVElement().isVisible()) {
 			/* convention is to render visible, so only call apply if we are invisible */
 			applyVisible();
@@ -246,13 +219,30 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			applyEnable();
 		}
 		applyValidation();
-		parent.addDisposeListener(new DisposeListener() {
 
-			@Override
-			public void widgetDisposed(DisposeEvent event) {
-				dispose();
-			}
-		});
+		// When some control is disposed, dispose me. Don't worry about
+		// my parent composite because I could be a detail view that is cached
+		// independently of it in a master-detail situation
+		if (!controls.isEmpty()) {
+			controls.values().iterator().next().addDisposeListener(new DisposeListener() {
+
+				@Override
+				public void widgetDisposed(DisposeEvent event) {
+					dispose();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Query whether rendering has completed and I am ready for user interaction.
+	 *
+	 * @return whether rendering has finished
+	 *
+	 * @sionce 1.22
+	 */
+	protected boolean isRenderingFinished() {
+		return renderingFinished;
 	}
 
 	/**
@@ -366,6 +356,49 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 */
 	protected String getDefaultFontName(Control control) {
 		return control.getDisplay().getSystemFont().getFontData()[0].getName();
+	}
+
+	//
+	// Nested types
+	//
+
+	/**
+	 * A listener that reacts to view-model changes to update the UI accordingly.
+	 * Examples include updating enablement/visibility state and diagnostic decorations.
+	 */
+	private final class ViewChangeListener implements ModelChangeListener {
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (!renderingFinished) {
+				return;
+			}
+
+			// We ned to handle touch events for the diagnostic if in the case of
+			// re-use of the view model we update diagnostics in situ
+			if (notification.getRawNotification().isTouch() &&
+				notification.getStructuralFeature() != VViewPackage.Literals.ELEMENT__DIAGNOSTIC) {
+				return;
+			}
+			// Always apply enable and read-only if it changed because it might have changed for a parent
+			if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__ENABLED) {
+				if (!ignoreEnableOnReadOnly()) {
+					applyEnable();
+				}
+			} else if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__READONLY) {
+				applyReadOnly();
+			}
+			if (notification.getNotifier() != getVElement()) {
+				return;
+			}
+			if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__VISIBLE) {
+				applyVisible();
+			} else if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__DIAGNOSTIC) {
+				final VDiagnostic newDia = (VDiagnostic) notification.getRawNotification().getNewValue();
+				final VDiagnostic oldDia = (VDiagnostic) notification.getRawNotification().getOldValue();
+				applyValidation(oldDia, newDia);
+				applyValidation();
+			}
+		}
 	}
 
 }

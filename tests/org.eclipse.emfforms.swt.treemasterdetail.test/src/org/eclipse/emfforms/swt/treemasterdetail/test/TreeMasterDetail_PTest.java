@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,13 +10,16 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emfforms.swt.treemasterdetail.test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 
 import java.math.BigInteger;
 import java.util.Map;
@@ -50,7 +53,6 @@ import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emf.emfstore.bowling.Tournament;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.InitialSelectionProvider;
-import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
@@ -377,6 +379,7 @@ public class TreeMasterDetail_PTest {
 		/* unchanged after click */
 		SWTTestUtil.waitForUIThread();
 		assertEquals(text, bot.text().getText());
+		assumeThat("Selection not changed in tree", bot.tree().selection().get(0, 0), is("Player Bob"));
 
 		/* changed after delay */
 		bot.waitUntil(new ICondition() {
@@ -496,10 +499,12 @@ public class TreeMasterDetail_PTest {
 		/* detail unchanged after down, but selection changed already */
 		SWTTestUtil.waitForUIThread();
 		assertEquals(text, bot.text().getText());
+		assumeThat("Selection not changed in tree", bot.tree().selection().get(0, 0), is("Player Bob"));
 		bot.waitUntil(new DefaultCondition() {
 
 			@Override
 			public boolean test() throws Exception {
+				SWTTestUtil.waitForUIThread();
 				return "Player Bob".equals(bot.tree().selection().get(0, 0));
 			}
 
@@ -547,6 +552,7 @@ public class TreeMasterDetail_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void cacheNotCached() {
 		/* setup render */
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -576,7 +582,7 @@ public class TreeMasterDetail_PTest {
 
 		/* setup cache */
 		final AtomicReference<EObject> isCachedCalledWith = new AtomicReference<EObject>();
-		tmdComposite.get().setCache(new TreeMasterDetailCache() {
+		tmdComposite.get().setCache(new org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache() {
 
 			@Override
 			public boolean isChached(EObject selection) {
@@ -613,6 +619,7 @@ public class TreeMasterDetail_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void cacheCacheAndRerender() {
 		/* setup render and select something */
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -651,19 +658,19 @@ public class TreeMasterDetail_PTest {
 		final Text nameWidget = bot.text().widget;
 
 		/* setup cache */
-		tmdComposite.get().setCache(new TreeMasterDetailCache() {
+		tmdComposite.get().setCache(new org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache() {
 
 			private ECPSWTView ecpView;
 
 			@Override
 			public boolean isChached(EObject selection) {
-				assertSame(alice, selection);
+				assertSame(alice.eClass(), selection.eClass());
 				return true;
 			}
 
 			@Override
 			public ECPSWTView getCachedView(EObject selection) {
-				assertSame(alice, selection);
+				assertSame(alice.eClass(), selection.eClass());
 				return ecpView;
 			}
 

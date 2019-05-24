@@ -11,6 +11,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Lucas Koehler - Also support DMR segments (Bug 542669)
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
@@ -315,7 +316,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	@Override
 	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
-		final IObservableValue observableValue = getEMFFormsDatabinding()
+		final IObservableValue<?> observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		eObject = (EObject) ((IObserving) observableValue).getObserved();
 		structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -457,6 +458,19 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 */
 	protected EClass getDmrRootEClass() {
 		return Helper.getRootEClass(getViewModelContext().getDomainModel());
+	}
+
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		final IObservableValue<?> observableValue = getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		try {
+			eObject = (EObject) ((IObserving) observableValue).getObserved();
+		} finally {
+			observableValue.dispose();
+		}
+
+		super.rootDomainModelChanged();
 	}
 
 	/** SelectionAdapter for the set button. */

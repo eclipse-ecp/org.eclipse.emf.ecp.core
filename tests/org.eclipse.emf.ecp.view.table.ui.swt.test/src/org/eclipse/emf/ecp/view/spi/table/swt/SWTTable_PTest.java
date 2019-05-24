@@ -10,20 +10,26 @@
  *
  * Contributors:
  * Johannes Faltermeier
- * Christian W. Damus - bugs 527740, 544116, 545686
+ * Christian W. Damus - bugs 527740, 544116, 545686, 527686
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.mock;
@@ -35,6 +41,7 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -87,6 +94,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -132,6 +140,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -467,27 +476,38 @@ public class SWTTable_PTest {
 		final TableViewer tableViewer = getTableViewerFromRenderer(tableRenderer);
 
 		// no initial selection
-		assertEquals(0, parentForECPView.getChildren().length);
+		assertThat("Composite for no selection not present",
+			asList(parentForECPView.getChildren()), hasItem(instanceOf(Composite.class)));
+		final Composite stackComposite = (Composite) parentForECPView.getChildren()[0];
+		final StackLayout stack = (StackLayout) stackComposite.getLayout();
+		Composite labelComposite = (Composite) stack.topControl;
+		assertThat("Composite for label not present", labelComposite, notNullValue());
+		assertThat("Label for no selection not present",
+			asList(labelComposite.getChildren()), hasItem(instanceOf(Label.class)));
 
 		// single selection
 		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
-		assertEquals(1, parentForECPView.getChildren().length);
-		final Composite viewComposite = (Composite) parentForECPView.getChildren()[0];
-		final Composite detailComposite = (Composite) viewComposite.getChildren()[0];
+		Composite detailComposite = (Composite) stack.topControl;
 		assertEquals(6, detailComposite.getChildren().length);
 
-		// multi selection
+		// multi selection (it's like no selection)
 		tableViewer.setSelection(new StructuredSelection(new Object[] { table.getItem(0).getData(),
 			table.getItem(1).getData() }));
-		assertEquals(0, parentForECPView.getChildren().length);
+		detailComposite = (Composite) stack.topControl;
+		assertThat("Label for multi selection not present",
+			asList(labelComposite.getChildren()), hasItem(instanceOf(Label.class)));
 
 		// select again
 		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
-		assertEquals(1, parentForECPView.getChildren().length);
+		detailComposite = (Composite) stack.topControl;
+		assertEquals(6, detailComposite.getChildren().length);
 
 		// no selection
 		tableViewer.setSelection(new StructuredSelection());
-		assertEquals(0, parentForECPView.getChildren().length);
+		labelComposite = (Composite) stack.topControl;
+		assertThat("Composite for label not present", labelComposite, notNullValue());
+		assertThat("Label for no selection not present",
+			asList(labelComposite.getChildren()), hasItem(instanceOf(Label.class)));
 	}
 
 	@Test
@@ -1149,6 +1169,58 @@ public class SWTTable_PTest {
 		registration.unregister();
 	}
 
+	/**
+	 * Verify the reuse of detail renderings with caching.
+	 */
+	@Test
+	public void testPanelTableDetailReused() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		((EClass) domainElement).getESuperTypes().add(eClass);
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
+		handle.getTableControl().setDetailView(createDetailView());
+
+		final ViewModelContext context = new ViewModelContextWithoutServices(handle.getTableControl());
+		context.putContextValue(DetailViewCache.DETAIL_VIEW_CACHE_SIZE, 5);
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(), context);
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		final Control control = Composite.class.cast(render).getChildren()[0];
+		assertThat("No control was rendered", control, notNullValue());
+
+		final Composite controlComposite = (Composite) ((Composite) control).getChildren()[1];
+		final Composite tableComposite = (Composite) controlComposite.getChildren()[0];
+		final Table table = (Table) tableComposite.getChildren()[0];
+		final ScrolledComposite scrolledComposite = (ScrolledComposite) controlComposite.getChildren()[1];
+		final Composite parentForECPView = (Composite) scrolledComposite.getChildren()[0];
+		assumeThat("Not enough rows in the table", table.getItemCount(), greaterThanOrEqualTo(2));
+		final TableViewer tableViewer = getTableViewerFromRenderer(tableRenderer);
+
+		// Select an EClass
+		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
+		assertThat("Composite for selection not present",
+			asList(parentForECPView.getChildren()), hasItem(instanceOf(Composite.class)));
+		final Composite stackComposite = (Composite) parentForECPView.getChildren()[0];
+		final StackLayout stack = (StackLayout) stackComposite.getLayout();
+		Composite detailComposite = (Composite) stack.topControl;
+		assertThat("Composite for details not present", detailComposite, notNullValue());
+		final Control[] detailChildren = detailComposite.getChildren();
+		assertThat("Insufficient number of detail controls", detailChildren.length, greaterThanOrEqualTo(6));
+
+		// Select another EClass
+		tableViewer.setSelection(new StructuredSelection(table.getItem(1).getData()));
+		assertThat(parentForECPView.getChildren().length, is(1));
+		detailComposite = (Composite) stack.topControl;
+		assertThat("Detail controls not reused", detailComposite.getChildren(), is(detailChildren));
+	}
+
+	//
+	// Test framework
+	//
+
 	@SafeVarargs
 	static <T> Set<T> set(T... elements) {
 		return new HashSet<>(Arrays.asList(elements));
@@ -1244,13 +1316,6 @@ public class SWTTable_PTest {
 		}
 	}
 
-	private static EClass createEClass(String name, String instanceClassName) {
-		final EClass clazz = EcoreFactory.eINSTANCE.createEClass();
-		clazz.setName(name);
-		clazz.setInstanceClassName(instanceClassName);
-		return clazz;
-	}
-
 	private static EAttribute createEAttribute(String name, EClassifier classifier, int lowerBound, int upperBound) {
 		final EAttribute attribute = EcoreFactory.eINSTANCE.createEAttribute();
 		attribute.setName(name);
@@ -1335,7 +1400,8 @@ public class SWTTable_PTest {
 
 		private final VElement view;
 		private final EMFFormsContextProvider contextProvider;
-		private final Map<Class<?>, Object> services = new LinkedHashMap<Class<?>, Object>();
+		private final Map<Class<?>, Object> services = new LinkedHashMap<>();
+		private final Map<String, Object> contextValues = new HashMap<>();
 
 		ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
@@ -1474,25 +1540,18 @@ public class SWTTable_PTest {
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
-		 */
 		@Override
 		public Object getContextValue(String key) {
-			return null;
+			Object result = contextValues.get(key);
+			if (result == null && getParentContext() != null) {
+				result = getParentContext().getContextValue(key);
+			}
+			return result;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
-		 *      java.lang.Object)
-		 */
 		@Override
 		public void putContextValue(String key, Object value) {
-
+			contextValues.put(key, value);
 		}
 
 		/**

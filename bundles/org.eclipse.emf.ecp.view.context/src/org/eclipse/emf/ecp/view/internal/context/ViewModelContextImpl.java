@@ -10,10 +10,13 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bugs 527740, 533522, 545686
+ * Christian W. Damus - bugs 527740, 533522, 545686, 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
+import static java.util.Collections.singleton;
+
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -104,22 +107,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The domain object. */
 	private EObject domainObject;
 
-	/** The view model change listener. Needs to be thread safe. */
-	private final List<ModelChangeListener> viewModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
-
-	/** The domain model change listeners. Needs to be thread safe. */
-	private final GroupedListenerList<ModelChangeListener> domainModelChangeListener =
-		// needed to make sure that all data operations are done before any validation etc provided by services happens
-		new GroupedListenerList<ModelChangeListener>(VDomainModelReference.class);
-
 	/** The root domain model change listeners. Needs to be thread safe. */
 	private final List<RootDomainModelChangeListener> rootDomainModelChangeListeners = new CopyOnWriteArrayList<RootDomainModelChangeListener>();
 
 	/** The domain model content adapter. */
-	private EContentAdapter domainModelContentAdapter;
+	private final DomainModelContentAdapter domainModelContentAdapter;
 
 	/** The view model content adapter. */
-	private EContentAdapter viewModelContentAdapter;
+	private final ViewModelContentAdapter viewModelContentAdapter;
 
 	private final Set<EMFFormsContextListener> contextListeners = new CopyOnWriteArraySet<EMFFormsContextListener>();
 
@@ -321,6 +316,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 		}
 
+		viewModelContentAdapter = new ViewModelContentAdapter();
+
+		if (parentContext == null) {
+			domainModelContentAdapter = new DomainModelContentAdapter();
+		} else {
+			domainModelContentAdapter = null;
+		}
+
 		instantiate();
 	}
 
@@ -364,17 +367,18 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * Instantiate.
 	 */
 	private void instantiate() {
-
 		addResourceIfNecessary();
 
 		resolveDomainReferences(getViewModel(), getDomainModel());
-		if (parentContext == null) {
-			domainModelContentAdapter = new DomainModelContentAdapter();
+
+		// Only the root context has this adapter to attach it to the model. Child contents
+		// all push listeners up to the root and expect their own domain object to be in
+		// the content tree of the root context's domain object
+		if (domainModelContentAdapter != null) {
 			domainObject.eAdapters().add(domainModelContentAdapter);
 		}
-		loadImmediateServices();
 
-		viewModelContentAdapter = new ViewModelContentAdapter();
+		loadImmediateServices();
 
 		view.eAdapters().add(viewModelContentAdapter);
 
@@ -383,6 +387,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		for (final ViewModelService viewService : viewServices) {
 			viewService.instantiate(this);
+		}
+
+		// If I have a parent, then I should be added to it if I wasn't already.
+		// e.g., if this is the re-instantiate after dispose on changing the domain
+		// model, then I need to be added back as a child because I was removed
+		if (parentContext instanceof ViewModelContextImpl) {
+			((ViewModelContextImpl) parentContext).addChildContext(getParentVElement(), getDomainModel(), this);
 		}
 
 		for (final EMFFormsContextListener contextListener : contextListeners) {
@@ -535,7 +546,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			listener.contextDisposed(this);
 		}
 		innerDispose();
-		viewModelChangeListener.clear();
+		viewModelContentAdapter.dispose();
+		if (domainModelContentAdapter != null) {
+			domainModelContentAdapter.dispose();
+		}
 		rootDomainModelChangeListeners.clear();
 
 		isDisposing = false;
@@ -565,7 +579,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (modelChangeListener == null) {
 			throw new IllegalArgumentException(MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
 		}
-		viewModelChangeListener.add(modelChangeListener);
+		viewModelContentAdapter.add(modelChangeListener);
 	}
 
 	@Override
@@ -573,7 +587,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
 		// }
-		viewModelChangeListener.remove(modelChangeListener);
+		viewModelContentAdapter.remove(modelChangeListener);
 	}
 
 	@Override
@@ -585,7 +599,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			throw new IllegalArgumentException(MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
 		}
 		if (parentContext == null) {
-			domainModelChangeListener.add(modelChangeListener);
+			domainModelContentAdapter.add(modelChangeListener);
 		} else {
 			parentContext.registerDomainChangeListener(modelChangeListener);
 		}
@@ -601,7 +615,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			return;
 		}
 		if (parentContext == null) {
-			domainModelChangeListener.remove(modelChangeListener);
+			domainModelContentAdapter.remove(modelChangeListener);
 		} else {
 			parentContext.unregisterDomainChangeListener(modelChangeListener);
 		}
@@ -710,6 +724,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	private class ViewModelContentAdapter extends EContentAdapter {
 
+		/** The view model change listener. Needs to be thread safe. */
+		private final List<ModelChangeListener> viewModelChangeListeners = new CopyOnWriteArrayList<ModelChangeListener>();
+
 		@Override
 		public void notifyChanged(Notification notification) {
 			super.notifyChanged(notification);
@@ -724,7 +741,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return;
 			}
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
-			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+			for (final ModelChangeListener modelChangeListener : viewModelChangeListeners) {
 				modelChangeListener.notifyChange(modelChangeNotification);
 			}
 		}
@@ -736,7 +753,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing || isDisposed) {
 				return;
 			}
-			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+			for (final ModelChangeListener modelChangeListener : viewModelChangeListeners) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
 				}
@@ -753,19 +770,60 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (VElement.class.isInstance(notifier)) {
 				VElement.class.cast(notifier).setDiagnostic(null);
 			}
-			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+			for (final ModelChangeListener modelChangeListener : viewModelChangeListeners) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyRemove(notifier);
 				}
 			}
 		}
 
+		void add(ModelChangeListener viewModelChangeListener) {
+			viewModelChangeListeners.add(viewModelChangeListener);
+
+			// do not notify while being disposed
+			if (isDisposing || isDisposed || !view.eAdapters().contains(this)
+				|| !(viewModelChangeListener instanceof ModelChangeAddRemoveListener)) {
+				return;
+			}
+
+			// This listener needs to discover all of the view model as new
+			final ModelChangeAddRemoveListener addRemove = (ModelChangeAddRemoveListener) viewModelChangeListener;
+			for (final Iterator<EObject> iter = EcoreUtil.getAllContents(singleton(view), resolve()); iter.hasNext();) {
+				addRemove.notifyAdd(iter.next());
+			}
+		}
+
+		void remove(ModelChangeListener viewModelChangeListener) {
+			viewModelChangeListeners.remove(viewModelChangeListener);
+
+			// do not notify while being disposed
+			if (isDisposing || !view.eAdapters().contains(this)
+				|| !(viewModelChangeListener instanceof ModelChangeAddRemoveListener)) {
+				return;
+			}
+
+			// This listener needs to un-discover all of the view model
+			final ModelChangeAddRemoveListener addRemove = (ModelChangeAddRemoveListener) viewModelChangeListener;
+			for (final Iterator<EObject> iter = EcoreUtil.getAllContents(singleton(view), resolve()); iter.hasNext();) {
+				addRemove.notifyRemove(iter.next());
+			}
+		}
+
+		void dispose() {
+			viewModelChangeListeners.clear();
+		}
 	}
 
 	/**
 	 * The content adapter for the domain model.
 	 */
 	private class DomainModelContentAdapter extends EContentAdapter {
+
+		/** The domain model change listeners. Needs to be thread safe. */
+		private final GroupedListenerList<ModelChangeListener> domainModelChangeListeners =
+			// needed to make sure that all data operations are done before any validation etc provided by services
+			// happens
+			new GroupedListenerList<ModelChangeListener>(VDomainModelReference.class);
 
 		@Override
 		public void notifyChanged(Notification notification) {
@@ -777,7 +835,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
-			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+			for (final ModelChangeListener modelChangeListener : domainModelChangeListeners) {
 				modelChangeListener.notifyChange(modelChangeNotification);
 			}
 		}
@@ -789,7 +847,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+			for (final ModelChangeListener modelChangeListener : domainModelChangeListeners) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
 				}
@@ -803,10 +861,48 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+			for (final ModelChangeListener modelChangeListener : domainModelChangeListeners) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyRemove(notifier);
 				}
+			}
+		}
+
+		void dispose() {
+			domainModelChangeListeners.clear();
+		}
+
+		void add(ModelChangeListener domainModelChangeListener) {
+			domainModelChangeListeners.add(domainModelChangeListener);
+
+			// do not notify while being disposed
+			if (isDisposing || !domainObject.eAdapters().contains(this)
+				|| !(domainModelChangeListener instanceof ModelChangeAddRemoveListener)) {
+				return;
+			}
+
+			// This listener needs to discover all of the domain model as new
+			final ModelChangeAddRemoveListener addRemove = (ModelChangeAddRemoveListener) domainModelChangeListener;
+			for (final Iterator<EObject> iter = EcoreUtil.getAllContents(singleton(domainObject), resolve()); iter
+				.hasNext();) {
+				addRemove.notifyAdd(iter.next());
+			}
+		}
+
+		void remove(ModelChangeListener domainModelChangeListener) {
+			domainModelChangeListeners.remove(domainModelChangeListener);
+
+			// do not notify while being disposed
+			if (isDisposing || !domainObject.eAdapters().contains(this)
+				|| !(domainModelChangeListener instanceof ModelChangeAddRemoveListener)) {
+				return;
+			}
+
+			// This listener needs to un-discover all of the domain model
+			final ModelChangeAddRemoveListener addRemove = (ModelChangeAddRemoveListener) domainModelChangeListener;
+			for (final Iterator<EObject> iter = EcoreUtil.getAllContents(singleton(domainObject), resolve()); iter
+				.hasNext();) {
+				addRemove.notifyRemove(iter.next());
 			}
 		}
 
@@ -870,16 +966,19 @@ public class ViewModelContextImpl implements ViewModelContext {
 		keyObjectMap.put(key, value);
 	}
 
-	private void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
+	private void addChildContext(VElement parentElement, EObject eObject, ViewModelContext childContext) {
+		if (hasChildContext(parentElement, eObject, childContext)) {
+			return;
+		}
 
 		if (!childContexts.containsKey(eObject)) {
 			childContexts.put(eObject, new LinkedHashSet<ViewModelContext>());
 		}
 		childContexts.get(eObject).add(childContext);
-		childContextUsers.put(childContext, vElement);
+		childContextUsers.put(childContext, parentElement);
 
 		for (final EMFFormsContextListener contextListener : contextListeners) {
-			contextListener.childContextAdded(vElement, childContext);
+			contextListener.childContextAdded(parentElement, childContext);
 		}
 		// notify all global View model services
 		for (final ViewModelService viewModelService : viewServices) {
@@ -890,13 +989,37 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	}
 
+	/**
+	 * Query whether I have a valid child context for the given domain {@code object} under
+	 * the given parent view-model element.
+	 *
+	 * @param parentElement the parent view-model element
+	 * @param object a domain model element
+	 * @param childContext a child context expected possibly for that element
+	 * @return {@code true} if the given context is currently registered as a child
+	 *         context for the {@code object}; {@code false}, otherwise
+	 */
+	private boolean hasChildContext(VElement parentElement, EObject object, ViewModelContext childContext) {
+		boolean result = childContexts.getOrDefault(object, Collections.emptySet()).contains(childContext);
+		result = result && childContextUsers.get(childContext) == parentElement;
+		return result;
+	}
+
 	private void removeChildContext(EObject eObject, ViewModelContext context) {
-		final boolean removed = childContexts.get(eObject).remove(context);
-		if (removed) {
-			childContextUsers.remove(context);
+		final Set<ViewModelContext> children = childContexts.get(eObject);
+		final boolean removed = children != null && children.remove(context);
+
+		if (!removed) {
+			return;
 		}
-		if (childContexts.get(eObject).size() == 0) {
+
+		childContextUsers.remove(context);
+		if (children.size() == 0) {
 			childContexts.remove(eObject);
+		}
+
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.childContextDisposed(context);
 		}
 	}
 
@@ -947,10 +1070,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 			@Override
 			public void contextDisposed(ViewModelContext viewModelContext) {
-				removeChildContext(eObject, viewModelContext);
-				for (final EMFFormsContextListener contextListener : contextListeners) {
-					contextListener.childContextDisposed(viewModelContext);
-				}
+				// If the child context had had its domain object changed along the way,
+				// then re-mapped it, so be sure to use it here for accuracy (it is still
+				// accessible while disposal is in progress)
+				removeChildContext(viewModelContext.getDomainModel(), viewModelContext);
 			}
 		});
 		addChildContext(parent, eObject, childContext);
@@ -987,31 +1110,49 @@ public class ViewModelContextImpl implements ViewModelContext {
 		contextListeners.remove(contextListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#changeDomainModel(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public void changeDomainModel(EObject newDomainModel) {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
 		}
 
-		// =============
-		// DISPOSE CODE
+		if (newDomainModel == domainObject) {
+			// Nothing to do
+			return;
+		}
+
 		innerDispose();
 
-		// =======================
-
+		final EObject oldObject = domainObject;
 		domainObject = newDomainModel;
 
-		// re-instantiate
+		// if I have a parent, it tracks me now under the wrong key
+		if (parentContext instanceof ViewModelContextImpl) {
+			((ViewModelContextImpl) parentContext).updateChildContext(oldObject, domainObject, this);
+		}
+
 		instantiate();
 
 		for (final RootDomainModelChangeListener listener : rootDomainModelChangeListeners) {
 			listener.notifyChange();
 		}
+	}
+
+	/**
+	 * Re-key a child context under its new domain object.
+	 *
+	 * @param oldDomainObject the domain object under which I currently track the child context
+	 * @param newDomainObject the new domain object of the child context
+	 * @param childContext the child context to re-key
+	 */
+	private void updateChildContext(EObject oldDomainObject, EObject newDomainObject, ViewModelContext childContext) {
+		final Set<ViewModelContext> oldSibs = childContexts.get(oldDomainObject);
+		if (oldSibs != null) {
+			oldSibs.remove(childContext);
+		}
+		final Set<ViewModelContext> newSibs = childContexts.computeIfAbsent(newDomainObject,
+			__ -> new LinkedHashSet<ViewModelContext>());
+		newSibs.add(childContext);
 	}
 
 	private void innerDispose() {
@@ -1020,9 +1161,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 		view.eAdapters().remove(viewModelContentAdapter);
-		domainObject.eAdapters().remove(domainModelContentAdapter);
-
-		domainModelChangeListener.clear();
+		if (domainModelContentAdapter != null) {
+			domainObject.eAdapters().remove(domainModelContentAdapter);
+		}
 
 		for (final ViewModelService viewService : viewServices) {
 			viewService.dispose();
@@ -1040,6 +1181,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		childContextUsers.clear();
 		childContexts.clear();
+
+		// Remove me from my parent context, if any
+		if (parentContext instanceof ViewModelContextImpl) {
+			((ViewModelContextImpl) parentContext).removeChildContext(getDomainModel(), this);
+		}
 
 		releaseOSGiServices();
 		serviceMap.clear();
@@ -1084,6 +1230,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 *
 	 * @author Christian W. Damus
 	 *
+	 * @param <T> the type of listener stored in the list
 	 * @see <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=460158">bug 460158</a>
 	 */
 	private static final class GroupedListenerList<T> implements Iterable<T> {

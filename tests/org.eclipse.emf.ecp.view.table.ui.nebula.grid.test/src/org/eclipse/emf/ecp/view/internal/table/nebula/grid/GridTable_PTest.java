@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,14 +11,19 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  * Mat Hansen - modifications for Nebula Grid
+ * Christian W. Damus - bug 527686
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -88,6 +93,7 @@ import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -390,27 +396,38 @@ public class GridTable_PTest {
 		final GridTableViewer tableViewer = GridTestsUtil.getTableViewerFromRenderer(tableRenderer);
 
 		// no initial selection
-		assertEquals(0, parentForECPView.getChildren().length);
+		assertThat("Composite for no selection not present",
+			asList(parentForECPView.getChildren()), hasItem(instanceOf(Composite.class)));
+		final Composite stackComposite = (Composite) parentForECPView.getChildren()[0];
+		final StackLayout stack = (StackLayout) stackComposite.getLayout();
+		Composite labelComposite = (Composite) stack.topControl;
+		assertThat("Composite for label not present", labelComposite, notNullValue());
+		assertThat("Label for no selection not present",
+			asList(labelComposite.getChildren()), hasItem(instanceOf(Label.class)));
 
 		// single selection
 		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
-		assertEquals(1, parentForECPView.getChildren().length);
-		final Composite viewComposite = (Composite) parentForECPView.getChildren()[0];
-		final Composite detailComposite = (Composite) viewComposite.getChildren()[0];
+		Composite detailComposite = (Composite) stack.topControl;
 		assertEquals(6, detailComposite.getChildren().length);
 
-		// multi selection
+		// multi selection (it's like no selection)
 		tableViewer.setSelection(new StructuredSelection(new Object[] { table.getItem(0).getData(),
 			table.getItem(1).getData() }));
-		assertEquals(0, parentForECPView.getChildren().length);
+		detailComposite = (Composite) stack.topControl;
+		assertThat("Label for multi selection not present",
+			asList(labelComposite.getChildren()), hasItem(instanceOf(Label.class)));
 
 		// select again
 		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
-		assertEquals(1, parentForECPView.getChildren().length);
+		detailComposite = (Composite) stack.topControl;
+		assertEquals(6, detailComposite.getChildren().length);
 
 		// no selection
 		tableViewer.setSelection(new StructuredSelection());
-		assertEquals(0, parentForECPView.getChildren().length);
+		labelComposite = (Composite) stack.topControl;
+		assertThat("Composite for label not present", labelComposite, notNullValue());
+		assertThat("Label for no selection not present",
+			asList(labelComposite.getChildren()), hasItem(instanceOf(Label.class)));
 	}
 
 	@Test

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.treemasterdetail;
 
@@ -58,7 +59,7 @@ public final class BaseLabelProviderWrapper implements ILabelProvider {
 	@Override
 	public String getText(Object element) {
 		/* not supported by IBaseLabelProvider */
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override

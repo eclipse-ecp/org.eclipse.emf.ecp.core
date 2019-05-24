@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
@@ -19,14 +20,16 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.BasicDetailViewCache;
 
 /**
  * A default implementation of the TreeMasterDetailCache which uses the EClass as the key.
  *
  * @author Eugen Neufeld
  * @since 1.9
- *
+ * @deprecated Since 1.22, use the {@link BasicDetailViewCache} API, instead.
  */
+@Deprecated
 public class DefaultTreeMasterDetailCache implements TreeMasterDetailCache {
 
 	private final Map<EClass, ECPSWTView> cache;

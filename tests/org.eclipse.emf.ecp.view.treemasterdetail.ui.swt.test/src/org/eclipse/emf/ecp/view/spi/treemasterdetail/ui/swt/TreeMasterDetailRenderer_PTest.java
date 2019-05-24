@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,13 +10,17 @@
  *
  * Contributors:
  * eugen - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -29,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailFactory;
@@ -43,10 +48,12 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
@@ -86,9 +93,15 @@ public class TreeMasterDetailRenderer_PTest {
 		tmd.setDetailView(detailView);
 
 		final League domainModel = BowlingFactory.eINSTANCE.createLeague();
-		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+		Player player = BowlingFactory.eINSTANCE.createPlayer();
+		player.setName("Player 1"); //$NON-NLS-1$
 		domainModel.getPlayers().add(player);
+		player = BowlingFactory.eINSTANCE.createPlayer();
+		player.setName("Player 2"); //$NON-NLS-1$
+		domainModel.getPlayers().add(player);
+
 		context = new ViewModelContextImpl(tmd, domainModel);
+		context.putContextValue(DetailViewCache.DETAIL_VIEW_CACHE_SIZE, 5);
 		renderer = new TreeMasterDetailSWTRenderer(tmd, context, reportService);
 		renderer.init();
 
@@ -211,27 +224,28 @@ public class TreeMasterDetailRenderer_PTest {
 		// too many intermediate composites
 		final Composite content = Composite.class.cast(
 			Composite.class.cast(
-				detailContentComposite.getChildren()[0])
-				.getChildren()[0]);
+				detailContentComposite.getChildren()[0]));
+		final StackLayout stack = (StackLayout) content.getLayout();
+		final Composite details = (Composite) stack.topControl;
 		final StringBuilder sb = new StringBuilder();
-		sb.append(String.format("Instead of 3 Elements of Control found %1$s controls.", content.getChildren().length)); //$NON-NLS-1$
+		sb.append(String.format("Instead of 3 Elements of Control found %1$s controls.", details.getChildren().length)); //$NON-NLS-1$
 		sb.append("The controls are:"); //$NON-NLS-1$
-		for (final Control c : content.getChildren()) {
+		for (final Control c : details.getChildren()) {
 			sb.append(String.format("Control: %1$s.", c)); //$NON-NLS-1$
 		}
 		assertEquals(sb.toString(), 3,
-			content.getChildren().length);
+			details.getChildren().length);
 
-		assertTrue(Label.class.isInstance(content.getChildren()[0]));
-		final Label label = Label.class.cast(content.getChildren()[0]);
+		assertTrue(Label.class.isInstance(details.getChildren()[0]));
+		final Label label = Label.class.cast(details.getChildren()[0]);
 		assertEquals("Name", label.getText()); //$NON-NLS-1$
 
-		assertTrue(Label.class.isInstance(content.getChildren()[1]));
-		final Label validation = Label.class.cast(content.getChildren()[1]);
+		assertTrue(Label.class.isInstance(details.getChildren()[1]));
+		final Label validation = Label.class.cast(details.getChildren()[1]);
 		assertNull(validation.getImage());
 
-		assertTrue(Composite.class.isInstance(content.getChildren()[2]));
-		final Composite control = Composite.class.cast(content.getChildren()[2]);
+		assertTrue(Composite.class.isInstance(details.getChildren()[2]));
+		final Composite control = Composite.class.cast(details.getChildren()[2]);
 		assertEquals(1, control.getChildren().length);
 
 		assertTrue(Text.class.isInstance(control.getChildren()[0]));
@@ -267,6 +281,35 @@ public class TreeMasterDetailRenderer_PTest {
 		assertFalse(content[2].isEnabled());
 
 		assertContextMenu(tree, 1);
+	}
+
+	/**
+	 * Verify that a cached detail view rendering is reused.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public void detailViewRenderingReused() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Control renderResult = render();
+		final Tree tree = getTree(renderResult);
+		final TreeItem leagueItem = tree.getItem(0);
+		leagueItem.setExpanded(true);
+		final TreeItem player1Item = leagueItem.getItem(0);
+		final TreeItem player2Item = leagueItem.getItem(1);
+
+		select(tree, player1Item);
+
+		// Get the player's detail
+		final Composite detail = getDetail(renderResult);
+		final Text nameText = (Text) getDetailContent(detail)[2];
+		assertThat(nameText.getText(), is("Player 1"));
+
+		// Change the selection to another player
+		select(tree, player2Item);
+
+		// Verify the updates
+		assertThat(getDetail(renderResult), sameInstance(detail));
+		assertThat(getDetailContent(detail)[2], sameInstance(nameText));
+		assertThat(nameText.getText(), is("Player 2"));
 	}
 
 	@Test
@@ -317,6 +360,16 @@ public class TreeMasterDetailRenderer_PTest {
 		return renderResult;
 	}
 
+	private void select(Tree tree, TreeItem item) {
+		tree.setSelection(item);
+		final Event selection = new Event();
+		selection.display = tree.getDisplay();
+		selection.widget = tree;
+		selection.item = item;
+		selection.type = SWT.Selection;
+		tree.notifyListeners(SWT.Selection, selection);
+	}
+
 	private Tree getTree(Control renderResult) {
 		final Composite resultComposite = Composite.class.cast(renderResult);
 		final Composite bottomComposite = Composite.class.cast(resultComposite.getChildren()[1]);
@@ -337,10 +390,9 @@ public class TreeMasterDetailRenderer_PTest {
 	}
 
 	private Control[] getDetailContent(Composite detailContentComposite) {
-		final Composite content = Composite.class.cast(
-			Composite.class.cast(
-				detailContentComposite.getChildren()[0])
-				.getChildren()[0]);
+		final Composite detailStackComposite = (Composite) detailContentComposite.getChildren()[0];
+		final StackLayout stackLayout = (StackLayout) detailStackComposite.getLayout();
+		final Composite content = (Composite) stackLayout.topControl;
 		final Label label = Label.class.cast(content.getChildren()[0]);
 		final Label validation = Label.class.cast(content.getChildren()[1]);
 		final Composite control = Composite.class.cast(content.getChildren()[2]);

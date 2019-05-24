@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bugs 533522, 543160, 545686
+ * Christian W. Damus - bugs 533522, 543160, 545686, 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -79,7 +80,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
-import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextTracker;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.osgi.util.NLS;
@@ -91,13 +92,20 @@ import org.eclipse.osgi.util.NLS;
  * @author Eugen Neufeld
  *
  */
-public class ValidationServiceImpl implements ValidationService, EMFFormsContextListener {
+public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * The {@link ValidationDomainModelChangeListener} for the view model.
 	 *
 	 */
 	private class ViewModelChangeListener implements ModelChangeAddRemoveListener {
+		private final EMFFormsViewContext context;
+
+		ViewModelChangeListener(EMFFormsViewContext context) {
+			super();
+
+			this.context = context;
+		}
 
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
@@ -209,6 +217,13 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 *
 	 */
 	private class ValidationDomainModelChangeListener implements ModelChangeAddRemoveListener {
+		private final ViewModelContext context;
+
+		ValidationDomainModelChangeListener(ViewModelContext context) {
+			super();
+
+			this.context = context;
+		}
 
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
@@ -330,10 +345,11 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	private org.eclipse.emfforms.common.spi.validation.ValidationService validationService;
 	private ValidationDomainModelChangeListener domainChangeListener;
-	private ViewModelChangeListener viewChangeListener;
-	private ViewModelContext context;
-	private final Queue<EObject> validationQueue = new ConcurrentLinkedSetQueue<EObject>();
-	private final Set<EObject> validated = Collections.newSetFromMap(new ConcurrentHashMap<EObject, Boolean>());
+	private ViewModelContext rootContext;
+	private EMFFormsContextTracker contextTracker;
+	private final Map<EMFFormsViewContext, ViewModelChangeListener> viewModelChangeListeners = new HashMap<>();
+	private final Queue<EObject> validationQueue = new ConcurrentLinkedSetQueue<>();
+	private final Set<EObject> validated = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private final AtomicBoolean validationRunning = new AtomicBoolean(false);
 
 	// In a typical application, these lists will usually have zero or one element. In
@@ -352,7 +368,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	@Override
 	public void instantiate(ViewModelContext context) {
-		this.context = context;
+		rootContext = context;
 		reportService = context.getService(ReportService.class);
 		l10n = context.getService(EMFFormsLocalizationService.class);
 		placeholderFactory = new ThresholdDiagnostic.Factory(l10n);
@@ -414,11 +430,15 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 		registerValidationProviders();
 
-		domainChangeListener = new ValidationDomainModelChangeListener();
-		viewChangeListener = new ViewModelChangeListener();
+		domainChangeListener = new ValidationDomainModelChangeListener(context);
 		context.registerDomainChangeListener(domainChangeListener);
-		context.registerViewChangeListener(viewChangeListener);
-		context.registerEMFFormsContextListener(this);
+		addViewModelChangeListener(context);
+
+		contextTracker = new EMFFormsContextTracker(rootContext);
+		contextTracker.onContextInitialized(this::contextInitialised)
+			.onChildContextAdded(this::childContextAdded)
+			.onChildContextRemoved(this::childContextRemoved)
+			.open();
 	}
 
 	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {
@@ -456,15 +476,32 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	@Override
 	public void dispose() {
-		context.unregisterEMFFormsContextListener(this);
-		context.unregisterDomainChangeListener(domainChangeListener);
-		context.unregisterViewChangeListener(viewChangeListener);
+		contextTracker.close();
+		viewModelChangeListeners.forEach((ctx, l) -> ctx.unregisterViewChangeListener(l));
+		viewModelChangeListeners.clear();
+		rootContext.unregisterDomainChangeListener(domainChangeListener);
 		adapterFactory.dispose();
 	}
 
 	@Override
 	public int getPriority() {
 		return 1;
+	}
+
+	private void addViewModelChangeListener(EMFFormsViewContext context) {
+		final ViewModelChangeListener listener = new ViewModelChangeListener(context);
+
+		if (viewModelChangeListeners.putIfAbsent(context, listener) == null) {
+			context.registerViewChangeListener(listener);
+		}
+	}
+
+	private void removeViewModelChangeListener(EMFFormsViewContext context) {
+		final ViewModelChangeListener listener = viewModelChangeListeners.remove(context);
+
+		if (listener != null) {
+			context.unregisterViewChangeListener(listener);
+		}
 	}
 
 	/**
@@ -590,7 +627,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					continue;
 				}
 				// TODO performance
-				if (!isObjectStillValid(diagnosticEobject)) {
+				if (!isObjectStillValid(diagnosticEobject, eStructuralFeature, control)) {
 					continue;
 				}
 				final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
@@ -636,8 +673,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		return result;
 	}
 
-	private boolean isObjectStillValid(EObject diagnosticEobject) {
-		return controlMapper.hasControlsFor(diagnosticEobject);
+	private boolean isObjectStillValid(EObject diagnosticEobject, EStructuralFeature feature, VElement element) {
+		final UniqueSetting setting = UniqueSetting.createSetting(diagnosticEobject, feature);
+		return controlMapper.hasMapping(setting, element);
 	}
 
 	/**
@@ -899,8 +937,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.addValidator(validationProvider);
-		if (revalidate && context != null) {
-			validate(getAllEObjectsToValidate(context));
+		if (revalidate && rootContext != null) {
+			validate(getAllEObjectsToValidate(rootContext));
 		}
 	}
 
@@ -912,8 +950,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationService.removeValidator(validationProvider);
-		if (revalidate && context != null) {
-			validate(getAllEObjectsToValidate(context));
+		if (revalidate && rootContext != null) {
+			validate(getAllEObjectsToValidate(rootContext));
 		}
 	}
 
@@ -931,7 +969,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	private Set<Diagnostic> getDiagnosticResult() {
 		final Set<Diagnostic> result = new LinkedHashSet<Diagnostic>();
-		final VDiagnostic diagnostic = context.getViewModel().getDiagnostic();
+		final VDiagnostic diagnostic = rootContext.getViewModel().getDiagnostic();
 		if (diagnostic != null) {
 			for (final Object diagObject : diagnostic.getDiagnostics()) {
 				result.add((Diagnostic) diagObject);
@@ -950,31 +988,27 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		// do nothing
 	}
 
-	@Override
-	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+	private void childContextAdded(EMFFormsViewContext parentContext, VElement parentElement,
+		EMFFormsViewContext childContext) {
 		// We are getting this from a parent content that is a view-model context, so the
 		// child really ought to be one, also
 		if (childContext instanceof ViewModelContext) {
 			validate(getAllEObjectsToValidate((ViewModelContext) childContext));
 		}
 
-		childContext.registerViewChangeListener(viewChangeListener);
+		addViewModelChangeListener(childContext);
 	}
 
-	@Override
-	public void childContextDisposed(EMFFormsViewContext childContext) {
-		// do nothing
+	private void childContextRemoved(EMFFormsViewContext parentContext, VElement parentElement,
+		EMFFormsViewContext childContext) {
+		removeViewModelChangeListener(childContext);
 	}
 
-	@Override
-	public void contextInitialised() {
-		initialized = true;
-		validate(getAllEObjectsToValidate(context));
-	}
-
-	@Override
-	public void contextDispose() {
-		// do nothing
+	private void contextInitialised(EMFFormsViewContext context) {
+		if (context == rootContext) {
+			initialized = true;
+			validate(getAllEObjectsToValidate(rootContext));
+		}
 	}
 
 	/**
@@ -984,8 +1018,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 *         {@code null} otherwise
 	 */
 	protected ViewSubstitutionLabelProviderFactory getSubstitutionLabelProviderFactory() {
-		if (context.hasService(ViewSubstitutionLabelProviderFactory.class)) {
-			return context.getService(ViewSubstitutionLabelProviderFactory.class);
+		if (rootContext.hasService(ViewSubstitutionLabelProviderFactory.class)) {
+			return rootContext.getService(ViewSubstitutionLabelProviderFactory.class);
 		}
 		return null;
 	}
@@ -1002,7 +1036,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private int getPropagationThreshold() {
 		int result = -1; // Internal code for unlimited
 
-		final Object value = context.getContextValue(PROPAGATION_LIMIT_KEY);
+		final Object value = rootContext.getContextValue(PROPAGATION_LIMIT_KEY);
 		if (value instanceof Integer) {
 			final int intValue = (Integer) value;
 			if (intValue < 0) {

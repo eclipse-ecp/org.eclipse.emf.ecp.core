@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emfforms.spi.core.services.controlmapper;
 
@@ -102,5 +103,20 @@ public interface EMFFormsSettingToControlMapper {
 	 * @return the unique settings for the given control
 	 */
 	Set<UniqueSetting> getSettingsForControl(VControl control);
+
+	/**
+	 * Query whether I have mapped the given {@code control} for the the a {@code setting}.
+	 *
+	 * @param setting an unique setting of some feature of some domain model object
+	 * @param control a control in the view model
+	 * @return {@code true} if I have mapped the {@code setting} to the {@code control};
+	 *         {@code false}, otherwise
+	 *
+	 * @since 1.22
+	 */
+	default boolean hasMapping(UniqueSetting setting, VElement control) {
+		return hasControlsFor(setting.getEObject())
+			&& getControlsFor(setting).contains(control);
+	}
 
 }

@@ -265,7 +265,9 @@ public interface DiagnosticFrequencyMap extends Iterable<Diagnostic> {
 				}
 				break;
 			default:
-				// We don't track OK diagnostics at all
+				// We don't track OK diagnostics at all, but we don't need to
+				// tell anyone that
+				result = true;
 				break;
 			}
 

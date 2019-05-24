@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,10 +10,13 @@
  *
  * Contributors:
  * cleme_000 - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.BasicDetailViewCache;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
 import org.eclipse.emfforms.spi.editor.InitializeChildCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
@@ -46,8 +49,12 @@ public class EcoreEditor extends GenericEditor {
 		final EcoreEditorTMDCustomization buildBehaviour = new EcoreEditorTMDCustomization(createElementCallback,
 			(Notifier) editorInput, (EcoreDiagnosticCache) getDiagnosticCache());
 		buildBehaviour.setTree(createTreeViewerBuilder());
-		return TreeMasterDetailSWTFactory.createTreeMasterDetail(composite, SWT.NONE, editorInput,
+
+		final TreeMasterDetailComposite result = TreeMasterDetailSWTFactory.createTreeMasterDetail(composite, SWT.NONE,
+			editorInput,
 			buildBehaviour);
+		result.setCache(new BasicDetailViewCache(EcorePackage.eINSTANCE.getEClassifiers().size()));
+		return result;
 	}
 
 	@Override

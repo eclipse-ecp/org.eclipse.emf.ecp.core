@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,13 +10,20 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,7 +31,9 @@ import static org.mockito.Mockito.when;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.text.MessageFormat;
+import java.util.Collections;
 
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -34,11 +43,13 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridTestsUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -56,6 +67,8 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.widgets.grid.Grid;
@@ -64,13 +77,17 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.stubbing.Answer;
+import org.osgi.framework.Bundle;
 
 /**
  * Unit tests for the {@link GridControlDetailPanelRenderer}.
@@ -190,6 +207,7 @@ public class GridControlDetailPanelRenderer_PTest {
 			mock(EMFFormsLocalizationService.class));
 		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		final EReference eReference = EcoreFactory.eINSTANCE.createEReference();
+		renderer.createDetailManager(shell);
 		final VView viewAttribute1 = renderer.getView(eAttribute);
 		final VView viewReference = renderer.getView(eReference);
 		assertFalse(EcoreUtil.equals(viewAttribute1, viewReference));
@@ -366,14 +384,88 @@ public class GridControlDetailPanelRenderer_PTest {
 		assertTrue(detailView.isReadonly());
 	}
 
+	/**
+	 * Verify the reuse of detail renderings with caching.
+	 */
+	@Test
+	public void testDetailReused() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns(
+			EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES);
+		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
+
+		final EAttribute a1 = EcoreFactory.eINSTANCE.createEAttribute();
+		a1.setName("a1");
+		final EAttribute a2 = EcoreFactory.eINSTANCE.createEAttribute();
+		a2.setName("a2");
+		domainElement.eSet(EcorePackage.Literals.ECLASS__ESTRUCTURAL_FEATURES, ECollections.asEList(a1, a2));
+
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			handle.getTableControl(), domainElement,
+			Collections.singletonMap(DetailViewCache.DETAIL_VIEW_CACHE_SIZE, 5));
+
+		final GridControlDetailPanelRenderer renderer = new GridControlDetailPanelRenderer(handle.getTableControl(),
+			context,
+			context.getService(ReportService.class), context.getService(EMFFormsDatabindingEMF.class),
+			context.getService(EMFFormsLabelProvider.class),
+			context.getService(VTViewTemplateProvider.class), context.getService(ImageRegistryService.class),
+			context.getService(EMFFormsEditSupport.class),
+			context.getService(EStructuralFeatureValueConverterService.class),
+			context.getService(EMFFormsLocalizationService.class));
+		renderer.init();
+
+		final SWTGridDescription grid = renderer
+			.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		final Control render = renderer.render(grid.getGrid().get(0), shell);
+		renderer.finalizeRendering(shell);
+
+		assertThat(render, instanceOf(Composite.class));
+		final Composite border = getChild(getChild(render, Composite.class, 0), Composite.class, 1);
+		final SashForm sashForm = getChild(border, SashForm.class, 0);
+		assumeThat("SashForm malformed", sashForm.getChildren().length, is(2));
+		final Composite detailComposite = getChild(sashForm, Composite.class, 1);
+		final GridTableViewer tableViewer = GridTestsUtil.getTableViewerFromRenderer(renderer);
+
+		// Select an attribute
+		tableViewer.setSelection(new StructuredSelection(a1));
+
+		final Text nameText = getControl(detailComposite, Text.class, "Name");
+		assertThat(nameText.getText(), is("a1"));
+
+		// Select another attribute
+		tableViewer.setSelection(new StructuredSelection(a2));
+
+		assertThat("Details not reused", getControl(detailComposite, Text.class, "Name"), sameInstance(nameText));
+		assertThat(nameText.getText(), is("a2"));
+	}
+
+	//
+	// Test framework
+	//
+
 	private ViewModelContext mockViewModelContext(final VView detailView, final EObject domainObject) {
+		final ReportService reportService = mock(ReportService.class);
+
+		final EMFFormsLocalizationService l10nService = mock(EMFFormsLocalizationService.class);
+		final Answer<String> l10nAnwer = invocation -> String.format("String for key '%s'",
+			invocation.getArguments()[1]);
+		when(l10nService.getString(any(Bundle.class), any(String.class))).then(l10nAnwer);
+		when(l10nService.getString(any(Class.class), any(String.class))).then(l10nAnwer);
+
 		final ViewModelContext context = mock(ViewModelContext.class);
+		when(context.getService(ReportService.class)).thenReturn(reportService);
+		when(context.getService(EMFFormsLocalizationService.class)).thenReturn(l10nService);
+
 		final ViewModelContext childContext = mock(ViewModelContext.class);
 		when(childContext.getDomainModel()).thenReturn(domainObject);
 		when(childContext.getViewModel()).thenReturn(detailView);
+		when(childContext.getService(ReportService.class)).thenReturn(reportService);
+		when(childContext.getService(EMFFormsLocalizationService.class)).thenReturn(l10nService);
 
 		when(context.getChildContext(any(EObject.class), any(VElement.class), any(VView.class)))
 			.thenReturn(childContext);
+
 		return context;
 	}
 
@@ -385,6 +477,39 @@ public class GridControlDetailPanelRenderer_PTest {
 		assertTrue(MessageFormat.format("Child {0} is not of required type {1}", child, type.getName()),
 			type.isInstance(child));
 		return type.cast(child);
+	}
+
+	private <T> T getControl(Control root, Class<T> type, String afterLabel) {
+		final T result = getControlHelper(root, type, afterLabel, new boolean[1]);
+		assertThat(String.format("No %s found after label '%s'", type.getSimpleName(), afterLabel),
+			result, notNullValue());
+		return result;
+	}
+
+	private <T> T getControlHelper(Control control, Class<T> type, String afterLabel, boolean[] foundLabel) {
+		if (type.isInstance(control) && foundLabel[0]) {
+			return type.cast(control);
+		}
+		if (control instanceof Label) {
+			final Label label = (Label) control;
+			if (foundLabel[0]) {
+				// Next label? Give up search
+				return null;
+			}
+			if (label.getText().equals(afterLabel)) {
+				foundLabel[0] = true;
+			}
+		}
+		if (control instanceof Composite) {
+			// Descend
+			for (final Control next : ((Composite) control).getChildren()) {
+				final T result = getControlHelper(next, type, afterLabel, foundLabel);
+				if (result != null) {
+					return result;
+				}
+			}
+		}
+		return null;
 	}
 
 	private static class PrintStreamWrapper extends PrintStream {
