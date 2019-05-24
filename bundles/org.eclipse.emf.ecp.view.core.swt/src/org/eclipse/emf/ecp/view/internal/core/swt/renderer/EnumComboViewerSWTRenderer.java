@@ -12,6 +12,7 @@
  * Eugen - initial API and implementation
  * Christian Damus - enum choice filtering based on ItemPropertyDescriptor
  * Lucas Koehler - enum choice filtering based on ItemPropertyDescriptor
+ * Christian W. Damus - bug 547422
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
@@ -207,7 +208,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 			availableChoicesValue = new ComputedValue<Collection<?>>(Collection.class) {
 				private final Optional<IChangeNotifier> changeNotifier = propertySource
 					.filter(IChangeNotifier.class::isInstance).map(IChangeNotifier.class::cast);
-				private final INotifyChangedListener listener = __ -> makeDirty();
+				private final INotifyChangedListener listener = __ -> getRealm().exec(this::makeDirty);
 
 				{
 					changeNotifier.ifPresent(cn -> cn.addListener(listener));
