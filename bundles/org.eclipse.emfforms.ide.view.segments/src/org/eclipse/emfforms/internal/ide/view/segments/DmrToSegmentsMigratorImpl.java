@@ -116,7 +116,8 @@ public class DmrToSegmentsMigratorImpl implements DmrToSegmentsMigrator {
 	}
 
 	@Override
-	public void performMigration(URI resourceUri) throws DmrToSegmentsMigrationException {
+	public void performMigration(URI resourceUri, PreReplaceProcessor... preReplaceProcessors)
+		throws DmrToSegmentsMigrationException {
 		final Resource resource;
 		try {
 			resource = loadResource(resourceUri);
@@ -124,7 +125,7 @@ public class DmrToSegmentsMigratorImpl implements DmrToSegmentsMigrator {
 			throw new DmrToSegmentsMigrationException(ex, "The resource {0} could not be loaded", resourceUri); //$NON-NLS-1$
 		}
 
-		performMigration(resource);
+		performMigration(resource, preReplaceProcessors);
 
 		try {
 			resource.save(Collections.singletonMap(XMLResource.OPTION_ENCODING, "UTF-8")); //$NON-NLS-1$
@@ -138,9 +139,11 @@ public class DmrToSegmentsMigratorImpl implements DmrToSegmentsMigrator {
 	 * {@link Resource#load(java.util.Map) loaded} before handing it into this method.
 	 *
 	 * @param resource The loaded resource
+	 * @param preReplaceProcessors The {@link PreReplaceProcessor PreReplaceProcessors}
 	 * @throws DmrToSegmentsMigrationException if the migration fails
 	 */
-	protected void performMigration(final Resource resource) throws DmrToSegmentsMigrationException {
+	protected void performMigration(final Resource resource, PreReplaceProcessor... preReplaceProcessors)
+		throws DmrToSegmentsMigrationException {
 		// Collect all legacy DMRs
 		final List<VDomainModelReference> legacyDmrs = new LinkedList<>();
 		final TreeIterator<EObject> allContents = resource.getAllContents();
@@ -179,6 +182,10 @@ public class DmrToSegmentsMigratorImpl implements DmrToSegmentsMigrator {
 				for (int i = 0; i < columnDmrs.size(); i++) {
 					crossRefReplacements.put(columnDmrs.get(i), childDmrs.get(i));
 				}
+			}
+
+			for (final PreReplaceProcessor processor : preReplaceProcessors) {
+				processor.process(legacyDmr, newDmr);
 			}
 
 			// Replace legacy dmr with new dmr and then update all cross references to the legacy dmr or its child dmrs

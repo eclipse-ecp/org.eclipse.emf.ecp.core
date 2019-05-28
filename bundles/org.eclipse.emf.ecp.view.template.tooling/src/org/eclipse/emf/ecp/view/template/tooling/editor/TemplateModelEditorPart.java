@@ -18,13 +18,16 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -35,11 +38,18 @@ import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigrationException;
 import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigratorUtil;
 import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelWorkspaceMigrator;
 import org.eclipse.emf.ecp.spi.view.migrator.ViewNsMigrationUtil;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.ecp.view.template.internal.tooling.util.MigrationDialogHelper;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
+import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector;
+import org.eclipse.emfforms.spi.core.services.segments.LegacyDmrToRootEClass;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
+import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrationException;
+import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator;
+import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator.PreReplaceProcessor;
+import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
@@ -71,11 +81,13 @@ public class TemplateModelEditorPart extends GenericEditor {
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
+		super.setSite(site);
 		if (!(input instanceof FileEditorInput)) {
 			throw new PartInitException(Messages.TemplateModelEditorPart_invalidEditorInput);
 		}
 		final FileEditorInput fei = (FileEditorInput) input;
 
+		// resourceURI must be a platform resource URI
 		try {
 			if (!ViewNsMigrationUtil.checkMigration(fei.getPath().toFile())) {
 				final boolean migrate = MessageDialog.openQuestion(site.getShell(),
@@ -84,7 +96,12 @@ public class TemplateModelEditorPart extends GenericEditor {
 				if (migrate) {
 					ViewNsMigrationUtil.migrateViewEcoreNsUri(fei.getPath().toFile());
 					migrateWorkspaceModels(site.getShell());
+					if (ToolingModeUtil.isSegmentToolingEnabled()) {
+						migrateLegacyDmrs(site.getShell(), fei.getPath());
+					}
 				}
+			} else if (ToolingModeUtil.isSegmentToolingEnabled()) {
+				migrateLegacyDmrs(site.getShell(), fei.getPath());
 			}
 
 			final ResourceSet resourceSet = new ResourceSetImpl();
@@ -161,6 +178,44 @@ public class TemplateModelEditorPart extends GenericEditor {
 		treeMasterDetail.getSelectionProvider().refresh();
 		treeMasterDetail.getSelectionProvider().reveal(objectToReveal);
 		treeMasterDetail.setSelection(new StructuredSelection(objectToReveal));
+	}
+
+	/**
+	 * Checks whether the current view model contains any legacy DMRs. If yes, ask the user whether (s)he wants to
+	 * migrate them to segment based DMRs and execute the migration if the user accepts.
+	 *
+	 * @param shell The shell to open UI dialogs on
+	 * @param resourcePath the resource path of the template model to migrate
+	 */
+	private void migrateLegacyDmrs(Shell shell, final IPath resourcePath) {
+		final DmrToSegmentsMigrator migrator = getEditorSite().getService(DmrToSegmentsMigrator.class);
+		final URI resourceURI = URI.createFileURI(resourcePath.toFile().getAbsolutePath());
+		if (migrator.needsMigration(resourceURI)) {
+			final boolean migrate = MessageDialog.openQuestion(shell,
+				Messages.TemplateModelEditorPart_LegacyMigrationQuestionTitle,
+				Messages.TemplateModelEditorPart_LegacyMigrationQuestionMessage);
+			if (migrate) {
+				try {
+					new ProgressMonitorDialog(shell).run(true, false, monitor -> {
+						try {
+							final LegacyDmrToRootEClass dmrToRootEClass = getEditorSite()
+								.getService(LegacyDmrToRootEClass.class);
+							migrator.performMigration(resourceURI, new DmrSelectorPreReplaceProcessor(dmrToRootEClass));
+						} catch (final DmrToSegmentsMigrationException ex) {
+							throw new InvocationTargetException(ex);
+						}
+					});
+				} catch (InvocationTargetException | InterruptedException ex) {
+					MessageDialog.openError(
+						Display.getDefault().getActiveShell(),
+						Messages.TemplateModelEditorPart_LegacyMigrationErrorTitle,
+						Messages.TemplateModelEditorPart_LegacyMigrationErrorMessage);
+					Activator.getDefault().getLog().log(
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+							Messages.TemplateModelEditorPart_LegacyMigrationErrorTitle, ex));
+				}
+			}
+		}
 	}
 
 	/**
@@ -256,4 +311,31 @@ public class TemplateModelEditorPart extends GenericEditor {
 		return true;
 	}
 
+	/**
+	 * {@link PreReplaceProcessor} for the legacy dmr migration which extracts the root EClass from a legacy dmr and
+	 * sets it to its containing {@link VTDomainModelReferenceSelector}.
+	 */
+	protected static class DmrSelectorPreReplaceProcessor implements PreReplaceProcessor {
+
+		private final LegacyDmrToRootEClass dmrToRootEClass;
+
+		/**
+		 * Default constructor.
+		 *
+		 * @param dmrToRootEClass The {@link LegacyDmrToRootEClass}
+		 */
+		public DmrSelectorPreReplaceProcessor(LegacyDmrToRootEClass dmrToRootEClass) {
+			this.dmrToRootEClass = dmrToRootEClass;
+		}
+
+		@Override
+		public void process(VDomainModelReference legacyDmr, VDomainModelReference segmentDmr) {
+			if (legacyDmr.eContainer() instanceof VTDomainModelReferenceSelector) {
+				final VTDomainModelReferenceSelector selector = (VTDomainModelReferenceSelector) legacyDmr.eContainer();
+				final Optional<EClass> rootEClass = dmrToRootEClass.getRootEClass(legacyDmr);
+				rootEClass.ifPresent(selector::setRootEClass);
+			}
+		}
+
+	}
 }

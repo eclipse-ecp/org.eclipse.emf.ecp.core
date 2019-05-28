@@ -16,6 +16,7 @@ package org.eclipse.emfforms.core.services.segments.multi.test;
 import org.eclipse.emfforms.internal.core.services.segments.multi.EMFFormsMappingProviderMulti_Test;
 import org.eclipse.emfforms.internal.core.services.segments.multi.MultiSegmentConverter_Test;
 import org.eclipse.emfforms.internal.core.services.segments.multi.MultiSegmentExpander_Test;
+import org.eclipse.emfforms.internal.core.services.segments.multi.TableDmrToRootEClassConverter_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -28,7 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ EMFFormsMappingProviderMulti_Test.class, MultiSegmentConverter_Test.class,
-	MultiSegmentExpander_Test.class })
+	MultiSegmentExpander_Test.class, TableDmrToRootEClassConverter_Test.class })
 public class AllTests {
 
 }

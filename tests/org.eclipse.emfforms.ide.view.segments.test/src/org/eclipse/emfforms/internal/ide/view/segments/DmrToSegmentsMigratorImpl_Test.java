@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.segments.EMFFormsSegmentGenerator;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrationException;
+import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator.PreReplaceProcessor;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentFactory;
 import org.junit.Before;
@@ -220,6 +222,56 @@ public class DmrToSegmentsMigratorImpl_Test {
 
 		assertSame(resource, segmentControl.eResource());
 		assertSame(segmentDmr, segmentControl.getDomainModelReference());
+		verify(reportService, never()).report(any());
+		verify(segmentGenerator, times(1)).generateSegments(any());
+	}
+
+	/**
+	 * Tests that the migration applies given {@link PreReplaceProcessor}s and does so in the correct order.
+	 * 
+	 * @throws DmrToSegmentsMigrationException
+	 */
+	@Test
+	public void performMigration_preReplaceProcessor() throws DmrToSegmentsMigrationException {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl legacyControl = VViewFactory.eINSTANCE.createControl();
+
+		final VFeaturePathDomainModelReference legacyDmr = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		legacyControl.setDomainModelReference(legacyDmr);
+
+		view.getChildren().add(legacyControl);
+		resource.getContents().add(view);
+
+		final VFeatureDomainModelReferenceSegment featureSegment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		when(segmentGenerator.generateSegments(legacyDmr)).thenReturn(Collections.singletonList(featureSegment));
+
+		// mock pre replace processors
+		final VDomainModelReferenceSegment addedByProcessor1 = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		final VDomainModelReferenceSegment addedByProcessor2 = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		final PreReplaceProcessor processor1 = (legacy, segment) -> {
+			segment.getSegments().add(addedByProcessor1);
+		};
+		final PreReplaceProcessor processor2 = (legacy, segment) -> {
+			segment.getSegments().add(addedByProcessor2);
+		};
+
+		migrator.performMigration(resource, processor1, processor2);
+
+		assertSame(resource, legacyControl.eResource());
+		final VDomainModelReference dmr = legacyControl.getDomainModelReference();
+		assertNotNull(dmr);
+		assertNotSame(legacyDmr, dmr);
+		assertSame(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE, dmr.eClass());
+		assertEquals(3, dmr.getSegments().size());
+
+		assertSame(featureSegment, dmr.getSegments().get(0));
+		assertSame(addedByProcessor1, dmr.getSegments().get(1));
+		assertSame(addedByProcessor2, dmr.getSegments().get(2));
+
 		verify(reportService, never()).report(any());
 		verify(segmentGenerator, times(1)).generateSegments(any());
 	}

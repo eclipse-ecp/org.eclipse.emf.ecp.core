@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
@@ -43,6 +43,7 @@ import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTD
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.segments.EMFFormsSegmentGenerator;
+import org.eclipse.emfforms.spi.core.services.segments.LegacyDmrToRootEClass;
 import org.eclipse.emfforms.spi.core.services.segments.RuntimeModeUtil;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -66,6 +67,7 @@ public class ViewTemplateSupplierImpl implements ViewTemplateSupplier {
 
 	private ReportService reportService;
 	private EMFFormsSegmentGenerator segmentGenerator;
+	private LegacyDmrToRootEClass dmrToRootEClass;
 
 	/**
 	 * Sets the report service.
@@ -85,6 +87,16 @@ public class ViewTemplateSupplierImpl implements ViewTemplateSupplier {
 	@Reference(unbind = "-")
 	void setEMFFormsSegmentGenerator(EMFFormsSegmentGenerator segmentGenerator) {
 		this.segmentGenerator = segmentGenerator;
+	}
+
+	/**
+	 * Sets the {@link LegacyDmrToRootEClass}.
+	 *
+	 * @param dmrToRootEClass The {@link LegacyDmrToRootEClass}
+	 */
+	@Reference(unbind = "-")
+	void setLegacyDmrToRootEClass(LegacyDmrToRootEClass dmrToRootEClass) {
+		this.dmrToRootEClass = dmrToRootEClass;
 	}
 
 	/**
@@ -139,23 +151,25 @@ public class ViewTemplateSupplierImpl implements ViewTemplateSupplier {
 		for (final VTDomainModelReferenceSelector dmrSelector : dmrSelectors) {
 			final VDomainModelReference dmr = dmrSelector.getDomainModelReference();
 
-			// If the dmr isn't a feature dmr, we cannot determine the root EClass
 			// If the dmr already contains segments, there isn't anything to do
-			if (!(dmr instanceof VFeaturePathDomainModelReference) || !dmr.getSegments().isEmpty()) {
+			if (!dmr.getSegments().isEmpty()) {
 				continue;
 			}
+
+			// Do not set segments if the root EClass cannot be determined because a segment based dmr is not resolvable
+			// without its root EClass
+			final Optional<EClass> rootEClass = dmrToRootEClass.getRootEClass(dmr);
+			if (!rootEClass.isPresent()) {
+				continue;
+			}
+
 			final List<VDomainModelReferenceSegment> segments = segmentGenerator.generateSegments(dmr);
 			if (segments.isEmpty()) {
 				continue;
 			}
 			dmr.getSegments().addAll(segments);
 
-			// determine and set root EClass
-			final VFeaturePathDomainModelReference featureDmr = (VFeaturePathDomainModelReference) dmr;
-			final EClass rootEClass = featureDmr.getDomainModelEReferencePath().isEmpty()
-				? featureDmr.getDomainModelEFeature().getEContainingClass()
-				: featureDmr.getDomainModelEReferencePath().get(0).getEContainingClass();
-			dmrSelector.setRootEClass(rootEClass);
+			dmrSelector.setRootEClass(rootEClass.get());
 		}
 	}
 

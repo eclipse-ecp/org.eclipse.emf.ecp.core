@@ -19,7 +19,7 @@ import java.text.MessageFormat;
  * Thrown when the migration of a resource from legacy to segment based dmrs fails.
  *
  * @author Lucas Koehler
- *
+ * @since 1.22
  */
 public class DmrToSegmentsMigrationException extends Exception {
 
