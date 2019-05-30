@@ -10,18 +10,18 @@
  *
  * Contributors:
  * Johannes Faltermeier
- * Christian W. Damus - bugs 527740, 544116, 545686, 527686
+ * Christian W. Damus - bugs 527740, 544116, 545686, 527686, 547787
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -96,6 +96,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -369,6 +370,33 @@ public class SWTTable_PTest {
 		final Table table = (Table) control;
 		assertEquals(2 + 1, table.getColumnCount());
 
+	}
+
+	@Test
+	public void testTableCustomColumnHeading() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+
+		// The custom label is specified by the Enablement Configuration
+		final VEnablementConfiguration config = VTableFactory.eINSTANCE.createEnablementConfiguration();
+		config.setColumnDomainReference(handle.getTableColumn2());
+		final String customHeading = "Custom Heading";
+		config.setName(customHeading);
+		config.setLabel(customHeading); // Normally, the view localization service would supply this
+		handle.getTableControl().getColumnConfigurations().add(config);
+
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
+		assumeThat("Expected a composite", render, instanceOf(Composite.class));
+
+		final Control control = getTable(render);
+		assumeThat("Expected a Table", control, instanceOf(Table.class));
+		final Table table = (Table) control;
+		assumeThat("Expected three columns (including validation status)",
+			table.getColumnCount(), is(1 + 2));
+
+		final TableColumn column = table.getColumn(2);
+		assertThat("Wrong column heading", column.getText(), is(customHeading));
 	}
 
 	@Test

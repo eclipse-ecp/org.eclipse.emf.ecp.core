@@ -102,6 +102,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.editor.controls.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
+		<module>../../tests/org.eclipse.emfforms.swt.reference.table.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>

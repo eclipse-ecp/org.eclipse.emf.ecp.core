@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Jonas - initial API and implementation
+ * Christian W. Damus - bug 547787
  ******************************************************************************/
 package org.eclipse.emf.ecp.spi.common.ui;
 
@@ -22,6 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.internal.common.ui.MessageKeys;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
@@ -42,12 +44,30 @@ public abstract class SelectModelElementWizardFactory {
 	 *
 	 * @param <T> the type to select
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T extends EObject> Set<T> openModelElementSelectionDialog(
 		final Set<T> elements, boolean isMany) {
 
 		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
 			.getTableSelectionComposite(elements.toArray(), isMany);
+
+		return openModelElementSelectionDialog(tableSelectionComposite);
+	}
+
+	/**
+	 * Open a model element selection dialog using a specific table selection composite.
+	 *
+	 * @param tableSelectionComposite a table selection composite to use in the dialog
+	 *
+	 * @return the selected elements
+	 *
+	 * @param <T> the type of object to select
+	 * @param <V> the type of viewer to present
+	 *
+	 * @since 1.22
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends EObject, V extends StructuredViewer> Set<T> openModelElementSelectionDialog(
+		SelectionComposite<V> tableSelectionComposite) {
 
 		final SelectModelElementWizard wizard = new SelectModelElementWizard(
 			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,

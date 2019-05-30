@@ -11,7 +11,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -54,6 +54,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -85,6 +86,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -945,6 +947,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private IObservableValue<?> getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
+			// See whether the view model specifies a label for the column
+			final Optional<VEnablementConfiguration> config = TableConfigurationHelper
+				.findEnablementConfiguration(getVElement(), dmrToCheck);
+			if (config.isPresent()) {
+				final String label = config.get().getLabel();
+				if (label != null && !label.isEmpty()) {
+					@SuppressWarnings("unchecked")
+					final IValueProperty<VElement, String> labelProperty = EMFProperties
+						.value(VViewPackage.Literals.ELEMENT__LABEL);
+					return labelProperty.observe(config.get());
+				}
+			}
 			return getEMFFormsLabelProvider().getDisplayName(dmrToCheck, dmrRootEClass);
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectation?

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,9 +10,14 @@
  *
  * Contributors:
  * Jonas - initial API and implementation
+ * Christian W. Damus - bug 547787
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -22,6 +27,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,11 +45,15 @@ import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Jonas
  *
  */
+@RunWith(Parameterized.class)
 public class ViewModelFileExtensionsManager_ITest {
 
 	private static final String FILEPATH = "viewmodel.view";
@@ -52,6 +62,32 @@ public class ViewModelFileExtensionsManager_ITest {
 	private static final String VIEWNAME = "the view name";
 	private ViewModelFileExtensionsManager manager;
 	private final EClass eClass1 = BowlingPackage.eINSTANCE.getLeague();
+
+	/** Test parameter for keys to require matching in the view look-up. */
+	private final Set<String> requiredKeys;
+
+	/**
+	 * Test parameter for whether the look-up is expected to match the required keys.
+	 * <strong>Note</strong> that many tests are not sensitive to the required keys at all,
+	 * so they may not make assertions on the basis of this expectation. Its purpose is to
+	 * control tests that are sensitive to the specification of required keys.
+	 */
+	private final boolean expectProvided;
+
+	public ViewModelFileExtensionsManager_ITest(Set<String> requiredKeys, boolean expectProvided) {
+		super();
+
+		this.requiredKeys = requiredKeys;
+		this.expectProvided = expectProvided;
+	}
+
+	@Parameters(name = "requiredKeys={0}")
+	public static Iterable<Object[]> parameters() {
+		return Arrays.asList(new Object[][] {
+			{ Collections.emptySet(), true },
+			{ Collections.singleton("a"), false },
+		});
+	}
 
 	@Before
 	public void init() throws IOException {
@@ -95,7 +131,8 @@ public class ViewModelFileExtensionsManager_ITest {
 			Collections.<String, String> emptyMap(), "");
 		manager.registerView(view, extensionDescription);
 		final EObject eObject = EcoreUtil.create(eClass1);
-		assertTrue(manager.hasViewModelFor(eObject, null));
+
+		assertThat(manager.hasViewModelFor(eObject, null, requiredKeys), is(expectProvided));
 	}
 
 	@Test
@@ -106,7 +143,9 @@ public class ViewModelFileExtensionsManager_ITest {
 			Collections.<String, String> emptyMap(), "");
 		manager.registerView(view, extensionDescription);
 		final EObject eObject = EcoreUtil.create(eClass1);
-		assertTrue(manager.hasViewModelFor(eObject, VViewFactory.eINSTANCE.createViewModelLoadingProperties()));
+		assertThat(
+			manager.hasViewModelFor(eObject, VViewFactory.eINSTANCE.createViewModelLoadingProperties(), requiredKeys),
+			is(expectProvided));
 	}
 
 	@Test
@@ -120,7 +159,9 @@ public class ViewModelFileExtensionsManager_ITest {
 		final VViewModelLoadingProperties viewModelLoadingProperties = VViewFactory.eINSTANCE
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addInheritableProperty("key", "value");
-		assertTrue(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+
+		assertThat(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys),
+			is(expectProvided));
 	}
 
 	@Test
@@ -134,7 +175,9 @@ public class ViewModelFileExtensionsManager_ITest {
 		final VViewModelLoadingProperties viewModelLoadingProperties = VViewFactory.eINSTANCE
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addNonInheritableProperty("key", "value");
-		assertTrue(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+
+		assertThat(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys),
+			is(expectProvided));
 	}
 
 	@Test
@@ -145,7 +188,7 @@ public class ViewModelFileExtensionsManager_ITest {
 			Collections.singletonMap("key", "value"), "");
 		manager.registerView(view, extensionDescription);
 		final EObject eObject = EcoreUtil.create(eClass1);
-		assertFalse(manager.hasViewModelFor(eObject, null));
+		assertFalse(manager.hasViewModelFor(eObject, null, requiredKeys));
 	}
 
 	@Test
@@ -156,7 +199,8 @@ public class ViewModelFileExtensionsManager_ITest {
 			Collections.singletonMap("key", "value"), "");
 		manager.registerView(view, extensionDescription);
 		final EObject eObject = EcoreUtil.create(eClass1);
-		assertFalse(manager.hasViewModelFor(eObject, VViewFactory.eINSTANCE.createViewModelLoadingProperties()));
+		assertFalse(
+			manager.hasViewModelFor(eObject, VViewFactory.eINSTANCE.createViewModelLoadingProperties(), requiredKeys));
 	}
 
 	@Test
@@ -170,7 +214,9 @@ public class ViewModelFileExtensionsManager_ITest {
 		final VViewModelLoadingProperties viewModelLoadingProperties = VViewFactory.eINSTANCE
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addInheritableProperty("key", "value");
-		assertTrue(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+
+		assertThat(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys),
+			is(expectProvided));
 	}
 
 	@Test
@@ -184,7 +230,9 @@ public class ViewModelFileExtensionsManager_ITest {
 		final VViewModelLoadingProperties viewModelLoadingProperties = VViewFactory.eINSTANCE
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addNonInheritableProperty("key", "value");
-		assertTrue(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+
+		assertThat(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys),
+			is(expectProvided));
 	}
 
 	@Test
@@ -198,7 +246,7 @@ public class ViewModelFileExtensionsManager_ITest {
 		final VViewModelLoadingProperties viewModelLoadingProperties = VViewFactory.eINSTANCE
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addInheritableProperty("key", "value");
-		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys));
 	}
 
 	@Test
@@ -212,7 +260,7 @@ public class ViewModelFileExtensionsManager_ITest {
 		final VViewModelLoadingProperties viewModelLoadingProperties = VViewFactory.eINSTANCE
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addNonInheritableProperty("key", "value");
-		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys));
 	}
 
 	@Test
@@ -229,7 +277,7 @@ public class ViewModelFileExtensionsManager_ITest {
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addInheritableProperty("key", "value");
 		viewModelLoadingProperties.addInheritableProperty("key1", "value");
-		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys));
 	}
 
 	@Test
@@ -246,7 +294,7 @@ public class ViewModelFileExtensionsManager_ITest {
 			.createViewModelLoadingProperties();
 		viewModelLoadingProperties.addNonInheritableProperty("key", "value");
 		viewModelLoadingProperties.addNonInheritableProperty("key1", "value");
-		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties));
+		assertFalse(manager.hasViewModelFor(eObject, viewModelLoadingProperties, requiredKeys));
 	}
 
 	@Test
@@ -258,9 +306,15 @@ public class ViewModelFileExtensionsManager_ITest {
 			Collections.<String, String> emptyMap(), "");
 		manager.registerView(view, extensionDescription);
 		final EObject eObject = EcoreUtil.create(eClass1);
-		final VView foundView = manager.createView(eObject, null);
-		assertNull(view.getLoadingProperties());
-		assertEquals(VIEWNAME, foundView.getName());
+		final VView foundView = manager.createView(eObject, null, requiredKeys);
+
+		if (expectProvided) {
+			assertThat(foundView, notNullValue());
+			assertNull(view.getLoadingProperties());
+			assertEquals(VIEWNAME, foundView.getName());
+		} else {
+			assertThat(foundView, nullValue());
+		}
 	}
 
 	@Test
@@ -276,10 +330,16 @@ public class ViewModelFileExtensionsManager_ITest {
 		final VViewModelLoadingProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 		properties.addInheritableProperty("key", "value");
 
-		final VView foundView = manager.createView(eObject, properties);
-		assertNotNull(foundView.getLoadingProperties());
-		assertEquals("value", foundView.getLoadingProperties().get("key"));
-		assertEquals(VIEWNAME, foundView.getName());
+		final VView foundView = manager.createView(eObject, properties, requiredKeys);
+
+		if (expectProvided) {
+			assertThat(foundView, notNullValue());
+			assertNotNull(foundView.getLoadingProperties());
+			assertEquals("value", foundView.getLoadingProperties().get("key"));
+			assertEquals(VIEWNAME, foundView.getName());
+		} else {
+			assertThat(foundView, nullValue());
+		}
 	}
 
 	@Test
@@ -294,7 +354,7 @@ public class ViewModelFileExtensionsManager_ITest {
 
 		final VViewModelLoadingProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 
-		assertNull(manager.createView(eObject, properties));
+		assertNull(manager.createView(eObject, properties, requiredKeys));
 	}
 
 	@Test
@@ -324,7 +384,7 @@ public class ViewModelFileExtensionsManager_ITest {
 		properties.addInheritableProperty("a", "value");
 		properties.addInheritableProperty("b", "value");
 
-		final VView foundView = manager.createView(eObject, properties);
+		final VView foundView = manager.createView(eObject, properties, requiredKeys);
 		assertNotNull(foundView.getLoadingProperties());
 		assertEquals("value", foundView.getLoadingProperties().get("a"));
 		assertEquals("value", foundView.getLoadingProperties().get("b"));
@@ -355,7 +415,7 @@ public class ViewModelFileExtensionsManager_ITest {
 		properties.addInheritableProperty("a", "value");
 		properties.addInheritableProperty("b", "value");
 
-		final VView foundView = manager.createView(eObject, properties);
+		final VView foundView = manager.createView(eObject, properties, requiredKeys);
 		assertNotNull(foundView);
 		assertNotNull(foundView.getLoadingProperties());
 		assertEquals("value", foundView.getLoadingProperties().get("a"));
@@ -386,7 +446,7 @@ public class ViewModelFileExtensionsManager_ITest {
 		properties.addInheritableProperty("a", "value");
 		properties.addInheritableProperty("b", "value");
 
-		final VView foundView = manager.createView(eObject, properties);
+		final VView foundView = manager.createView(eObject, properties, requiredKeys);
 		assertNotNull(foundView);
 		assertNotNull(foundView.getLoadingProperties());
 		assertEquals("value", foundView.getLoadingProperties().get("a"));

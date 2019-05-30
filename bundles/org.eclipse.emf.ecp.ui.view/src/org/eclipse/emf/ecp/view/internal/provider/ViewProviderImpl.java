@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,11 +11,13 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Edgar Mueller - refactorings
+ * Christian W. Damus - bug 547787
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.provider;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -25,7 +27,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.provider.EMFFormsFilteredViewService;
 import org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService;
+import org.eclipse.emf.ecp.view.spi.provider.IFilteredViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.NoViewProviderFoundReport;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.ViewModelIsNullReport;
@@ -45,13 +49,13 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  *
  * @author Eugen Neufeld
  */
-@Component(name = "EMFFormsViewService")
-public class ViewProviderImpl implements EMFFormsViewService {
+@Component(name = "EMFFormsViewService", service = { EMFFormsViewService.class, EMFFormsFilteredViewService.class })
+public class ViewProviderImpl implements EMFFormsFilteredViewService {
 
 	private static final String CLASS_CANNOT_BE_RESOLVED = "%1$s cannot be loaded because bundle %2$s cannot be resolved."; //$NON-NLS-1$
 	private static final String CLASS = "class"; //$NON-NLS-1$
 	private static final String EXTENSION_POINT_ID = "org.eclipse.emf.ecp.ui.view.viewModelProviders"; //$NON-NLS-1$
-	private final Set<IViewProvider> viewProviders = new CopyOnWriteArraySet<IViewProvider>();
+	private final Set<IFilteredViewProvider> viewProviders = new CopyOnWriteArraySet<IFilteredViewProvider>();
 	private ReportService reportService;
 
 	/**
@@ -75,7 +79,7 @@ public class ViewProviderImpl implements EMFFormsViewService {
 				final Constructor<? extends IViewProvider> controlConstructor = resolvedClass
 					.getConstructor();
 				final IViewProvider viewProvider = controlConstructor.newInstance();
-				viewProviders.add(viewProvider);
+				viewProviders.add(FilteredViewProviderAdapter.adapt(viewProvider));
 			} catch (final ClassNotFoundException ex) {
 				report(new ViewProviderInitFailedReport(ex));
 			} catch (final NoSuchMethodException ex) {
@@ -110,28 +114,23 @@ public class ViewProviderImpl implements EMFFormsViewService {
 
 	}
 
-	/**
-	 * This allows to retrieve a {@link VView} based on an {@link EObject}. This method reads all {@link IViewProvider
-	 * IViewProviders} and searches for the best fitting. If none can be found, then null is returned.
-	 *
-	 * @param eObject the {@link EObject} to find a {@link VView} for
-	 * @param properties the {@link VViewModelProperties properties}
-	 * @return a view model for the given {@link EObject} or null if no suited provider could be found
-	 */
 	@Override
-	public VView getView(EObject eObject, VViewModelProperties properties) {
+	public VView getView(EObject object, VViewModelProperties properties, Collection<String> requiredKeys) {
+		VView result = null;
+
+		if (viewProviders.isEmpty()) {
+			report(new NoViewProviderFoundReport());
+			return result;
+		}
+
 		double highestPrio = IViewProvider.NOT_APPLICABLE;
-		IViewProvider selectedProvider = null;
+		IFilteredViewProvider selectedProvider = null;
 		if (properties == null) {
 			properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 		}
 
-		if (viewProviders.isEmpty()) {
-			report(new NoViewProviderFoundReport());
-		}
-
-		for (final IViewProvider viewProvider : viewProviders) {
-			final double prio = viewProvider.canProvideViewModel(eObject, properties);
+		for (final IFilteredViewProvider viewProvider : viewProviders) {
+			final double prio = viewProvider.canProvideViewModel(object, properties, requiredKeys);
 			if (prio > highestPrio) {
 				highestPrio = prio;
 				selectedProvider = viewProvider;
@@ -139,36 +138,26 @@ public class ViewProviderImpl implements EMFFormsViewService {
 		}
 
 		if (selectedProvider != null) {
-			final VView view = selectedProvider.provideViewModel(eObject, properties);
-			if (view == null) {
+			result = selectedProvider.provideViewModel(object, properties, requiredKeys);
+			if (result == null) {
 				report(new ViewModelIsNullReport());
 			}
-			return view;
 		}
 
-		return null;
-
+		return result;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService#addProvider(org.eclipse.emf.ecp.view.spi.provider.IViewProvider)
-	 */
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
 	@Override
 	public void addProvider(IViewProvider viewProvider) {
-		viewProviders.add(viewProvider);
+		viewProviders.add(FilteredViewProviderAdapter.adapt(viewProvider));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService#removeProvider(org.eclipse.emf.ecp.view.spi.provider.IViewProvider)
-	 */
 	@Override
 	public void removeProvider(IViewProvider viewProvider) {
-		viewProviders.remove(viewProvider);
+		final IFilteredViewProvider filtered = FilteredViewProviderAdapter.adapt(viewProvider);
+		viewProviders.remove(filtered);
+		FilteredViewProviderAdapter.dispose(filtered);
 	}
 
 	/**
@@ -180,4 +169,5 @@ public class ViewProviderImpl implements EMFFormsViewService {
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
+
 }

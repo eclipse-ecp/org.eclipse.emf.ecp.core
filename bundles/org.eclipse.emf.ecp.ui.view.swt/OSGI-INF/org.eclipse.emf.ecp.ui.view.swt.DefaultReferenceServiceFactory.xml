@@ -9,4 +9,5 @@
    <reference bind="addEObjectSelectionStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy$Provider" name="EObjectSelectionStrategyProvider" policy="dynamic" unbind="removeEObjectSelectionStrategyProvider"/>
    <reference bind="addOpenInNewContextStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy$Provider" name="OpenInNewContextStrategyProvider" policy="dynamic" unbind="removeOpenInNewContextStrategyProvider"/>
    <reference bind="addReferenceStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy$Provider" name="ReferenceStrategyProvider" policy="dynamic" unbind="removeReferenceStrategyProvider"/>
+   <reference bind="addReferenceTableColumnStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.SelectionCompositeStrategy$Provider" name="ReferenceTableColumnStrategyProvider" policy="dynamic" unbind="removeReferenceTableColumnStrategyProvider"/>
 </scr:component>
