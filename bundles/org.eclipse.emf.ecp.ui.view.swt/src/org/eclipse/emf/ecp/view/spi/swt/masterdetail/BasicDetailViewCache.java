@@ -16,10 +16,14 @@ package org.eclipse.emf.ecp.view.spi.swt.masterdetail;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 
 /**
  * A default implementation of the {@link DetailViewCache} that uses the {@link EClass} as the key.
@@ -28,7 +32,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
  */
 public class BasicDetailViewCache implements DetailViewCache {
 
-	private final Map<EClass, ECPSWTView> cache;
+	private final Map<EClass, Record> cache;
 
 	/**
 	 * Creates a cache with maximal 5 entries.
@@ -43,12 +47,12 @@ public class BasicDetailViewCache implements DetailViewCache {
 	 * @param maxEntries The number of maximal entries to cache
 	 */
 	public BasicDetailViewCache(final int maxEntries) {
-		cache = new LinkedHashMap<EClass, ECPSWTView>(maxEntries + 1, .75F, true) {
+		cache = new LinkedHashMap<EClass, Record>(maxEntries + 1, .75F, true) {
 			private static final long serialVersionUID = 1L;
 
 			// This method is called just after a new entry has been added
 			@Override
-			public boolean removeEldestEntry(Map.Entry<EClass, ECPSWTView> eldest) {
+			public boolean removeEldestEntry(Map.Entry<EClass, Record> eldest) {
 				final boolean result = size() > maxEntries;
 				if (result) {
 					eldest.getValue().dispose();
@@ -65,7 +69,11 @@ public class BasicDetailViewCache implements DetailViewCache {
 
 	@Override
 	public ECPSWTView getCachedView(EObject selection) {
-		return selection == null ? null : cache.get(selection.eClass());
+		return getRecord(selection).map(Supplier::get).orElse(null);
+	}
+
+	private Optional<Record> getRecord(EObject selection) {
+		return Optional.ofNullable(selection).map(EObject::eClass).map(cache::get);
 	}
 
 	@Override
@@ -76,13 +84,56 @@ public class BasicDetailViewCache implements DetailViewCache {
 		}
 
 		final EClass key = ecpView.getViewModelContext().getDomainModel().eClass();
-		final ECPSWTView previous = cache.put(key, ecpView);
+		final Record existing = cache.get(key);
 
-		if (previous != null && previous != ecpView) {
-			previous.dispose();
-		}
+		if (existing == null) {
+			// Easy. Add it
+			cache.put(key, new Record(key, ecpView));
+		} else if (existing.get() != ecpView) {
+			// Not the same view. Dispose the old
+			existing.dispose();
+			cache.put(key, new Record(key, ecpView));
+		} // Otherwise we already have cached exactly this view
 
 		return true;
+	}
+
+	//
+	// Nested types
+	//
+
+	/**
+	 * Self-disposing record of the caching of a rendered view for some {@link EClass}.
+	 * Disposes itself when the view context is disposed.
+	 */
+	private final class Record implements ViewModelContextDisposeListener, Supplier<ECPSWTView> {
+
+		private final EClass eClass;
+		private final ECPSWTView ecpView;
+
+		Record(EClass eClass, ECPSWTView ecpView) {
+			super();
+
+			this.eClass = eClass;
+			this.ecpView = ecpView;
+
+			ecpView.getViewModelContext().registerDisposeListener(this);
+		}
+
+		void dispose() {
+			ecpView.dispose();
+		}
+
+		@Override
+		public ECPSWTView get() {
+			return ecpView;
+		}
+
+		@Override
+		public void contextDisposed(ViewModelContext viewModelContext) {
+			dispose();
+			cache.remove(eClass, this);
+		}
 	}
 
 }

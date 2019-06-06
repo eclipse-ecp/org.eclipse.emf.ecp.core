@@ -80,6 +80,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -1243,6 +1244,61 @@ public class SWTTable_PTest {
 		assertThat(parentForECPView.getChildren().length, is(1));
 		detailComposite = (Composite) stack.topControl;
 		assertThat("Detail controls not reused", detailComposite.getChildren(), is(detailChildren));
+	}
+
+	/**
+	 * Verify the replacement of the parent context root domain model object while a detail
+	 * is showing, in which the detail must be put away because the table selection is lost.
+	 */
+	@Test
+	public void testRootDomainModelChangedWhilePanelTableDetail()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		((EClass) domainElement).getESuperTypes().add(eClass);
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
+		handle.getTableControl().setDetailView(createDetailView());
+
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE
+			.createViewModelContext(handle.getView(), domainElement);
+		context.putContextValue(DetailViewCache.DETAIL_VIEW_CACHE_SIZE, 5);
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(), context);
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		final Control control = Composite.class.cast(render).getChildren()[0];
+		assumeThat("No control was rendered", control, notNullValue());
+
+		final Composite controlComposite = (Composite) ((Composite) control).getChildren()[1];
+		final Composite tableComposite = (Composite) controlComposite.getChildren()[0];
+		final Table table = (Table) tableComposite.getChildren()[0];
+		final ScrolledComposite scrolledComposite = (ScrolledComposite) controlComposite.getChildren()[1];
+		final Composite parentForECPView = (Composite) scrolledComposite.getChildren()[0];
+		assumeThat("Not enough rows in the table", table.getItemCount(), greaterThanOrEqualTo(2));
+		final TableViewer tableViewer = getTableViewerFromRenderer(tableRenderer);
+
+		// Select an EClass
+		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
+		assumeThat("Composite for selection not present",
+			asList(parentForECPView.getChildren()), hasItem(instanceOf(Composite.class)));
+		final Composite stackComposite = (Composite) parentForECPView.getChildren()[0];
+		final StackLayout stack = (StackLayout) stackComposite.getLayout();
+		Composite detailComposite = (Composite) stack.topControl;
+		assumeThat("Composite for details not present", detailComposite, notNullValue());
+		Control[] detailChildren = detailComposite.getChildren();
+		assumeThat("Insufficient number of detail controls", detailChildren.length, greaterThanOrEqualTo(6));
+
+		// Now, replace the parent context domain model element
+		context.changeDomainModel(eClass);
+
+		// Assert that the table is now empty and the detail is the "No selection" label
+		assertThat("Table should be empty", table.getItemCount(), is(0));
+		detailComposite = (Composite) stack.topControl;
+		detailChildren = detailComposite.getChildren();
+		assumeThat("Wrong number of detail controls", detailChildren.length, is(1));
+		assertThat("Detail is not a label", detailChildren[0], instanceOf(Label.class));
 	}
 
 	//

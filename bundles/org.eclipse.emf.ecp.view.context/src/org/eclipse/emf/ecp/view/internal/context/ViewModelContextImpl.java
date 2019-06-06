@@ -538,7 +538,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@Override
 	public void dispose() {
-		if (isDisposed) {
+		if (isDisposed || isDisposing) {
 			return;
 		}
 		isDisposing = true;

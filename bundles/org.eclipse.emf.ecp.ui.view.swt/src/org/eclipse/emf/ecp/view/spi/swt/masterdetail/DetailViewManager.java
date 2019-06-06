@@ -13,7 +13,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.masterdetail;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.RenderFailureView;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelFactory;
@@ -91,6 +94,8 @@ public class DetailViewManager implements DetailViewCache {
 
 	private String noDetailMessage;
 
+	private boolean disposed;
+
 	/**
 	 * Initializes me.
 	 *
@@ -115,12 +120,16 @@ public class DetailViewManager implements DetailViewCache {
 
 		detailProperties.addNonInheritableProperty(DETAIL_PROPERTY, true);
 		detailViewFunction = detailView != null ? detailView : __ -> null;
+
+		detailStack.addDisposeListener(__ -> dispose());
 	}
 
 	/**
 	 * Dispose of me and my UI resources.
 	 */
 	public void dispose() {
+		disposed = true;
+
 		disposeViews();
 
 		if (renderedNoDetails != null) {
@@ -129,8 +138,7 @@ public class DetailViewManager implements DetailViewCache {
 
 		if (currentDetailView != null) {
 			currentDetailView.dispose();
-			currentDetailView = null;
-			currentDetailViewReadOnly = false;
+			setCurrentDetail(null, false);
 		}
 
 		detailStack.dispose();
@@ -142,12 +150,14 @@ public class DetailViewManager implements DetailViewCache {
 	 * @return whether I am disposed
 	 */
 	public boolean isDisposed() {
-		return detailStack.isDisposed();
+		return disposed;
 	}
 
 	private void disposeViews() {
-		views.forEach(ECPSWTView::dispose);
+		// Copy 'views' set because disposal of the contexts will try to remove from it
+		final List<ECPSWTView> toDispose = new ArrayList<>(views);
 		views.clear();
+		toDispose.forEach(ECPSWTView::dispose);
 	}
 
 	/**
@@ -231,6 +241,9 @@ public class DetailViewManager implements DetailViewCache {
 
 				result = new RenderFailureView(detailStack, context, e);
 			}
+
+			// Track it for eventual disposal
+			context.registerDisposeListener(new ContextDisposeListener(result));
 		} else {
 			if (result.getViewModelContext().getDomainModel() != domainModel) {
 				result.getViewModelContext().changeDomainModel(domainModel);
@@ -244,15 +257,23 @@ public class DetailViewManager implements DetailViewCache {
 
 		showDetail(result.getSWTControl());
 
-		currentDetailView = result;
-		final VElement currentDetailVView = currentDetailView.getViewModelContext().getViewModel();
-		currentDetailViewReadOnly = currentDetailVView.isEffectivelyReadonly()
-			|| !currentDetailVView.isEffectivelyEnabled();
+		final VElement detailVView = result.getViewModelContext().getViewModel();
+		setCurrentDetail(result,
+			detailVView.isEffectivelyReadonly() || !detailVView.isEffectivelyEnabled());
 
 		// It's currently showing, so don't track it for disposal on flushing the cache
 		views.remove(result);
 
 		return result;
+	}
+
+	private void setCurrentDetail(ECPSWTView ecpView, boolean readOnly) {
+		if (currentDetailView == ecpView) {
+			return; // Nothing to change
+		}
+
+		currentDetailView = ecpView;
+		currentDetailViewReadOnly = readOnly;
 	}
 
 	private void showDetail(Control control) {
@@ -320,20 +341,19 @@ public class DetailViewManager implements DetailViewCache {
 
 	private void cacheCurrentDetail(boolean showEmpty) {
 		if (currentDetailView != null) {
+			final ECPSWTView ecpView = currentDetailView;
+			setCurrentDetail(null, false);
+
 			if (isDisposed()) {
 				// Just dispose the detail, then, because we can't cache it
-				currentDetailView.dispose();
+				ecpView.dispose();
 				// but we need to show something ...
 				showEmpty = true;
-			} else {
-				if (!cacheView(currentDetailView)) {
-					// The current detail view was disposed,so show this instead
-					showEmpty = true;
-				}
+			} else if (!cacheView(ecpView)) {
+				// The current detail view was disposed, so show this instead
+				showEmpty = true;
 			}
 
-			currentDetailView = null;
-			currentDetailViewReadOnly = false;
 		}
 
 		if (showEmpty && !isDisposed()) {
@@ -589,6 +609,39 @@ public class DetailViewManager implements DetailViewCache {
 		}
 
 		return result;
+	}
+
+	//
+	// Nested types
+	//
+
+	/**
+	 * Listener for disposal of the current view context.
+	 */
+	private final class ContextDisposeListener implements ViewModelContextDisposeListener {
+
+		private final ECPSWTView ecpView;
+
+		ContextDisposeListener(ECPSWTView ecpView) {
+			super();
+
+			this.ecpView = ecpView;
+		}
+
+		@Override
+		public void contextDisposed(ViewModelContext viewModelContext) {
+			ecpView.dispose();
+
+			if (ecpView == currentDetailView) {
+				// The current context is disposed, so this will result in
+				// its rendering being disposed and the no-details control
+				// being shown in its place
+				cacheCurrentDetail();
+			} else {
+				views.remove(ecpView);
+			}
+		}
+
 	}
 
 }
