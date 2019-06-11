@@ -68,6 +68,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerEditor;
@@ -394,7 +395,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	// CHECKSTYLE.OFF: ParameterNumber
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
 		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
-		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
+		ObservableListContentProvider cp, ViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
 		return GridTableViewerFactory.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)

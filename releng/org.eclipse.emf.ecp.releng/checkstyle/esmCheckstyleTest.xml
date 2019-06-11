@@ -47,6 +47,11 @@
       <property name="onCommentFormat" value="// END REUSED CLASS"/>
       <metadata name="com.atlassw.tools.eclipse.checkstyle.comment" value="High Complexity Code Warning Suppression"/>
     </module>
+    <module name="SuppressionCommentFilter">
+      <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
+      <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
+      <property name="checkFormat" value="$1"/>
+    </module>
     <module name="PackageName"/>
     <module name="ParameterName"/>
     <module name="StaticVariableName"/>

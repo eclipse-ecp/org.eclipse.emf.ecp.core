@@ -380,4 +380,11 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	 */
 	public abstract void setComparator(TableViewerComparator comparator, List<Integer> sortableColumns);
 
+	/**
+	 * Allow to set an initial sort.
+	 *
+	 * @param column The column to sort
+	 * @since 1.22
+	 */
+	public abstract void setCompareColumn(int column);
 }

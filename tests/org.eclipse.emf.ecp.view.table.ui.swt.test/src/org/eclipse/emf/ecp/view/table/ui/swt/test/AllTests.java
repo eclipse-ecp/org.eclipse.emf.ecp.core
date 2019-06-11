@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceTooltipMod
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTableDatabindingLabel_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTable_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailPanelRenderer_PTest;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlRendererSort_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRendererPerformance_PTest;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer_ITest;
 import org.junit.runner.RunWith;
@@ -30,7 +31,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ SWTTable_PTest.class, SWTTableDatabindingLabel_PTest.class, RunnableManagerTest.class,
 	TableControlDetailPanelRenderer_PTest.class, MultiReferenceTooltipModifier_PTest.class,
 	MultiReferenceCellEditor_PTest.class, TableControlSWTRendererPerformance_PTest.class,
-	TableControlSWTRenderer_ITest.class,
+	TableControlSWTRenderer_ITest.class, TableControlRendererSort_PTest.class
 })
 public class AllTests {
 

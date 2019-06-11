@@ -410,8 +410,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-			final ECPTableViewerComparator comparator = getVElement().isMoveUpDownDisabled()
-				? new ECPTableViewerComparator()
+			final TableControlComparator comparator = getVElement().isMoveUpDownDisabled()
+				? createTableViewerComparator()
 				: null;
 
 			/* render */
@@ -482,6 +482,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 		}
+	}
+
+	/**
+	 * Creates a TableControlComparator.
+	 *
+	 * @return TableControlComparator
+	 * @since 1.22
+	 */
+	protected TableControlComparator createTableViewerComparator() {
+		return new ECPTableViewerComparator();
 	}
 
 	/**
@@ -677,6 +687,39 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param actionBar the {@link ActionBar}
 	 * @return the {@link TableViewerSWTBuilder}
 	 * @since 1.18
+	 * @deprecated Please use
+	 *             {@link #createTableViewerSWTBuilder(Composite, IObservableList, IObservableValue, IObservableValue, TableViewerCompositeBuilder, ObservableListContentProvider, ViewerComparator, TableActionBar)}
+	 *             instead
+	 */
+	@Deprecated
+	// CHECKSTYLE.OFF: ParameterNumber
+	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent,
+		@SuppressWarnings("rawtypes") IObservableList list,
+		@SuppressWarnings("rawtypes") IObservableValue labelText,
+		@SuppressWarnings("rawtypes") IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
+		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
+		TableActionBar<? extends AbstractTableViewer> actionBar) {
+		// CHECKSTYLE.ON: ParameterNumber
+
+		return createTableViewerSWTBuilder(parent, list, labelText, labelTooltipText, compositeBuilder, cp,
+			(ViewerComparator) comparator,
+			actionBar);
+	}
+
+	/**
+	 * Creates a new {@link TableViewerSWTBuilder}.
+	 *
+	 * @param parent the parent {@link Composite}
+	 * @param list the input object
+	 * @param labelText the title
+	 * @param labelTooltipText the tooltip
+	 * @param compositeBuilder the {@link TableViewerCompositeBuilder}
+	 * @param cp the content provider
+	 * @param comparator the {@link ViewerComparator}; has no effect if move up/down
+	 *            functionality is enabled
+	 * @param actionBar the {@link ActionBar}
+	 * @return the {@link TableViewerSWTBuilder}
+	 * @since 1.22
 	 *
 	 */
 	// CHECKSTYLE.OFF: ParameterNumber
@@ -684,7 +727,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@SuppressWarnings("rawtypes") IObservableList list,
 		@SuppressWarnings("rawtypes") IObservableValue labelText,
 		@SuppressWarnings("rawtypes") IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
-		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
+		ObservableListContentProvider cp, ViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
 		return TableViewerFactory.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)
@@ -913,7 +956,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
+	private void setupSorting(final TableViewerComparator comparator, int regularColumnsStartIndex,
 		final AbstractTableViewerComposite<? extends AbstractTableViewer> tableViewerComposite) {
 
 		final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
@@ -1721,6 +1764,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		// We might have ignored columns at the beginning
 		propertyIndex = propertyIndex - regularColumnsStartIndex;
+		if (propertyIndex < 0) {
+			return 0;
+		}
 		int rc = 0;
 
 		final VDomainModelReference dmr = getColumnDomainModelReferences().get(propertyIndex);
@@ -2430,6 +2476,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * This class combines the {@link ViewerComparator} with the {@link TableViewerComparator}.
+	 * This is needed to allow customizations.
+	 *
+	 * @author Eugen Neufeld
+	 * @since 1.22
+	 */
+	protected abstract class TableControlComparator extends ViewerComparator implements TableViewerComparator {
+	}
+
+	/**
 	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
 	 * none, up and down.
 	 *
@@ -2437,7 +2493,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.10
 	 *
 	 */
-	protected class ECPTableViewerComparator extends ViewerComparator implements TableViewerComparator {
+	protected class ECPTableViewerComparator extends TableControlComparator {
 		private int propertyIndex;
 		private static final int NONE = 0;
 		private int direction = NONE;
@@ -2475,10 +2531,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			// No sorting is the same as no column being selected for sorting
 			if (direction == NONE) {
-				sortColumnFeature = java.util.Optional.empty();
+				setSortColumnFeature(null);
 			} else {
 				// columnFeatures starts at index 0 with the first regular column
-				sortColumnFeature = java.util.Optional.of(columnFeatures[propertyIndex - regularColumnsStartIndex]);
+				setSortColumnFeature(getColumnFeature(propertyIndex));
 			}
 		}
 
@@ -2499,11 +2555,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		public void notifyChange(ModelChangeNotification notification) {
 			final int event = notification.getRawNotification().getEventType();
 			if (notification.getStructuralFeature() == tableEReference
-				&& sortColumnFeature.isPresent()
+				&& getSortColumnFeature().isPresent()
 				&& (event == Notification.ADD || event == Notification.ADD_MANY)) {
 				sortAndReveal(notification.getNewEObjects());
-			} else if (sortColumnFeature.isPresent()
-				&& notification.getStructuralFeature() == sortColumnFeature.get()) {
+			} else if (getSortColumnFeature().isPresent()
+				&& notification.getStructuralFeature() == getSortColumnFeature().get()) {
 				sortAndReveal(notification.getNotifier());
 			}
 		}
@@ -3012,6 +3068,34 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return String.format(LocalizationServiceHelper.getString(
 			TableControlSWTRenderer.class, messageKey),
 			instanceName);
+	}
+
+	/**
+	 * Returns the current sort column feature.
+	 *
+	 * @return an {@link java.util.Optional} containing the feature used for sorting
+	 */
+	protected java.util.Optional<EStructuralFeature> getSortColumnFeature() {
+		return sortColumnFeature;
+	}
+
+	/**
+	 * Set the column to use for sorting.
+	 *
+	 * @param sortColumnFeature an optional containing the feature to use for sorting
+	 */
+	protected void setSortColumnFeature(EStructuralFeature sortColumnFeature) {
+		this.sortColumnFeature = java.util.Optional.ofNullable(sortColumnFeature);
+	}
+
+	/**
+	 * Find the feature for a specific index.
+	 *
+	 * @param propertyIndex The index to find the feature for
+	 * @return The {@link EStructuralFeature} for the provided index
+	 */
+	protected EStructuralFeature getColumnFeature(int propertyIndex) {
+		return columnFeatures[propertyIndex - regularColumnsStartIndex];
 	}
 
 }
