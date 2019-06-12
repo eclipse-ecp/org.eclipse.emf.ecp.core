@@ -239,7 +239,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 *
 	 * @return whether rendering has finished
 	 *
-	 * @sionce 1.22
+	 * @since 1.22
 	 */
 	protected boolean isRenderingFinished() {
 		return renderingFinished;
