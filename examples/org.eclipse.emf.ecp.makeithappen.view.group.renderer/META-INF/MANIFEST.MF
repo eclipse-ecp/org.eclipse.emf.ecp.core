@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Expandbar Group Renderer
 Bundle-SymbolicName: org.eclipse.emf.ecp.makeithappen.view.group.renderer;singleton:=true
 Bundle-Version: 1.22.0.qualifier
-Bundle-ClassPath: lib/org.eclipse.nebula.widgets.pgroup_1.0.0.201310241250.jar,
+Bundle-ClassPath: lib/org.eclipse.nebula.widgets.pgroup_1.0.0.201905211554.jar,
  .
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.makeithappen.view.group.swt.pgroup;version="1.22.0",

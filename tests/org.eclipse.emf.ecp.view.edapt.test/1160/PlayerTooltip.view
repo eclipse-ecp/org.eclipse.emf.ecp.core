@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.categorization.model="http://org/eclipse/emf/ecp/view/categorization/model" xmlns:org.eclipse.emf.ecp.view.group.model="http://org/eclipse/emf/ecp/view/group/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.section.model="http://org/eclipse/emf/ecp/view/section/model" xmi:id="_L-6d8Hi9Eem60OAtSKsTwA" name="Player" ecorePath="/org.eclipse.emf.emfstore.examplemodel/model/bowling.ecore">
+  <rootEClass href="http://org/eclipse/example/bowling#//Player"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_NQh20Hi9Eem60OAtSKsTwA" tooltip="Group Tooltip"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.categorization.model:CategorizationElement" xmi:id="_Nqi5UHi9Eem60OAtSKsTwA">
+    <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Categorization" xmi:id="_ODVz0Hi9Eem60OAtSKsTwA" tooltip="Composite Category Tooltip"/>
+    <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_OQsTUHi9Eem60OAtSKsTwA" tooltip="Leaf Category Tooltip"/>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.section.model:SectionedArea" xmi:id="_OwbjUHi9Eem60OAtSKsTwA">
+    <root xmi:id="_O_nO0Hi9Eem60OAtSKsTwA" tooltip="Section Tooltip"/>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

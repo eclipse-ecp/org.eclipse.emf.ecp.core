@@ -222,6 +222,9 @@
    <feature id="org.eclipse.emfforms.i18n.feature" version="0.0.0">
       <category name="org.eclipse.emf.ecp.i18n"/>
    </feature>
+   <feature id="org.eclipse.emf.ecp.view.groupedgrid.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <bundle id="org.eclipse.emf.ecp.view.table.validation" version="1.22.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </bundle>

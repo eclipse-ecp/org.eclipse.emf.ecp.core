@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy.Provider;
 import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
@@ -26,7 +27,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Lucas Koehler
  *
  */
-@Component(name = "IterateConditionDmrOpenInNewContextStrategyProvider", property = "service.ranking:Integer=50")
+@Component(name = "IterateConditionDmrOpenInNewContextStrategyProvider", property = "service.ranking:Integer=50", service = {
+	Provider.class })
 public class IterateConditionDmrOpenInNewContextStrategyProvider
 	extends RuleConditionDmrOpenInNewContextStrategyProvider {
 

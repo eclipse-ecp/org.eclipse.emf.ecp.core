@@ -238,6 +238,8 @@
 		
 		<module>../../tests/org.eclipse.emfforms.editor.test</module>
 		
+		<module>../../tests/org.eclipse.emfforms.sdk.integration.test</module>
+		
 	</modules>
 	
 	<build>

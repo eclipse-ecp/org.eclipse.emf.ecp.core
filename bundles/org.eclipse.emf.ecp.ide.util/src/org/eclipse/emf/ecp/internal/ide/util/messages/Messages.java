@@ -24,6 +24,8 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.internal.ide.util.messages.messages"; //$NON-NLS-1$
 	public static String EcoreHelper_invalidEcore;
 	public static String EcoreHelper_invalidEcorePath;
+	public static String ViewModelHelper_couldNotFindEcorePath_message;
+	public static String ViewModelHelper_couldNotFindEcorePath_nameAndLocation;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

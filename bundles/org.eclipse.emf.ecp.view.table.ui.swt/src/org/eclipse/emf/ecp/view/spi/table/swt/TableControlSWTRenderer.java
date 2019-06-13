@@ -1617,14 +1617,28 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
-	 * Post a refresh request on the asynchronous refresh manager.
+	 * Post a request to refresh my {@linkplain #getTableViewer() viewer} on the
+	 * asynchronous refresh manager.
 	 *
 	 * @since 1.21
+	 * @see #getTableViewer()
+	 * @see ViewerRefreshManager
 	 */
 	protected void postRefresh() {
+		postRefresh(getRefreshRunnable(getTableViewer()));
+	}
+
+	/**
+	 * Post a refresh request on the asynchronous refresh manager.
+	 *
+	 * @param refreshRunnable the refresh operation to execute
+	 * @since 1.21
+	 * @see ViewerRefreshManager
+	 */
+	protected void postRefresh(Runnable refreshRunnable) {
 		final Viewer viewer = getTableViewer();
 		if (viewer != null && !viewer.getControl().isDisposed()) {
-			getRunnableManager().executeAsync(getRefreshRunnable(viewer));
+			getRunnableManager().executeAsync(refreshRunnable);
 		}
 	}
 
@@ -2623,9 +2637,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		private void sortAndReveal(Object toReveal) {
-			Display.getDefault().asyncExec(() -> {
-				postRefresh();
-				getTableViewer().reveal(toReveal);
+			final AbstractTableViewer viewer = getTableViewer();
+			postRefresh(() -> {
+				viewer.refresh();
+				viewer.reveal(toReveal);
 			});
 		}
 	}

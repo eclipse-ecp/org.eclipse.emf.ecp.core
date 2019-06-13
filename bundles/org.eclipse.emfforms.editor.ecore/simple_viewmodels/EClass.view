@@ -1,19 +1,18 @@
-<?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180">
-  <ecorePaths>/org.eclipse.emf.ecore/model/Ecore.ecore</ecorePaths>
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmi:id="_lZ_YoHvHEem8B6FFC4bHkQ">
   <rootEClass href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control name">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_lZ_YoXvHEem8B6FFC4bHkQ" name="Control name">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_lZ_YonvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control abstract">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_lZ_Yo3vHEem8B6FFC4bHkQ" name="Control abstract">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_lZ_YpHvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/abstract"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control interface">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_lZ_YpXvHEem8B6FFC4bHkQ" name="Control interface">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_lZ_YpnvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EClass/interface"/>
     </domainModelReference>
   </children>

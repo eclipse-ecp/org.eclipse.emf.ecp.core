@@ -426,9 +426,15 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 	private Release getReleaseFromMigrator(final String nsUri, final Migrator migrator) {
 		final Map<String, Set<Release>> releaseMap = migrator.getReleaseMap();
 		final Set<Release> nsReleases = releaseMap.get(nsUri);
-		// TODO: what happens if there's more than one release per NS although that should not happen?
-		final Release nsRelease = nsReleases.iterator().next();
-		return nsRelease;
+		/* in case multiple are found pick the newest one */
+		return nsReleases.stream()
+			.sorted(this::compareReleases)
+			.findFirst()
+			.orElse(null);
+	}
+
+	private int compareReleases(Release r1, Release r2) {
+		return r2.getNumber() - r1.getNumber();
 	}
 
 	/**

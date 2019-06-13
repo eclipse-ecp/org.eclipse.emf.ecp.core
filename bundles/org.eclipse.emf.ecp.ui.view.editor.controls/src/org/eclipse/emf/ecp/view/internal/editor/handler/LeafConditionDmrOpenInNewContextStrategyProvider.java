@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.view.internal.editor.handler;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy.Provider;
 import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
@@ -28,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Lucas Koehler
  */
-@Component(name = "LeafConditionDmrOpenInNewContextStrategyProvider", property = "service.ranking:Integer=50")
+@Component(name = "LeafConditionDmrOpenInNewContextStrategyProvider", property = "service.ranking:Integer=50", service = {
+	Provider.class })
 public class LeafConditionDmrOpenInNewContextStrategyProvider extends RuleConditionDmrOpenInNewContextStrategyProvider {
 
 	@Override

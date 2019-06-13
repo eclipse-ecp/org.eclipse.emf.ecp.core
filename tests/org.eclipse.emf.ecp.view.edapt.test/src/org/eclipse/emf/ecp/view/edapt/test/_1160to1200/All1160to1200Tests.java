@@ -18,7 +18,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	CompareTypeMigration_PTest.class
+	CompareTypeMigration_PTest.class,
+	TooltipMIgration_PTest.class
 })
 public class All1160to1200Tests {
 
