@@ -16,7 +16,11 @@ package org.eclipse.emf.ecp.view.spi.table.swt.action;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -68,22 +72,23 @@ public class MoveRowDownAction extends AbstractMoveRowAction {
 		// need to reverse to avoid the moves interfering each other
 		Collections.reverse(moveDownList);
 
-		// shouldn't this be wrapped in a CompositeCommand?
 		final int maxIndex = containments.size() - 1;
 		final EditingDomain editingDomain = getActionContext().getEditingDomain();
 		final Setting setting = getActionContext().getSetting();
 		final EObject eObject = setting.getEObject();
 		final EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
-		for (final Object moveDownObject : moveDownList) {
+
+		final List<Command> commands = moveDownList.stream().map(moveDownObject -> {
 			final int currentIndex = containments.indexOf(moveDownObject);
 			if (currentIndex < 0 || currentIndex == maxIndex) {
-				return;
+				return null;
 			}
-			editingDomain.getCommandStack()
-				.execute(
-					new MoveCommand(
-						editingDomain, eObject, eStructuralFeature, currentIndex, currentIndex + 1));
-		}
+			return new MoveCommand(
+				editingDomain, eObject, eStructuralFeature, currentIndex, currentIndex + 1);
+		}).filter(Objects::nonNull).collect(Collectors.toList());
+
+		editingDomain.getCommandStack().execute(new CompoundCommand(commands));
+		getTableViewer().refresh();
 	}
 
 	@Override

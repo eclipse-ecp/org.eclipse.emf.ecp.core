@@ -15,7 +15,11 @@ package org.eclipse.emf.ecp.view.spi.table.swt.action;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -65,21 +69,22 @@ public class MoveRowUpAction extends AbstractMoveRowAction {
 			((IStructuredSelection) getTableViewer().getSelection()).toArray());
 		sortSelectionBasedOnIndex(moveUpList, containments);
 
-		// shouldn't this be wrapped in a CompositeCommand?
 		final EditingDomain editingDomain = getActionContext().getEditingDomain();
 		final Setting setting = getActionContext().getSetting();
 		final EObject eObject = setting.getEObject();
 		final EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
-		for (final Object moveUpObject : moveUpList) {
+
+		final List<Command> commands = moveUpList.stream().map(moveUpObject -> {
 			final int currentIndex = containments.indexOf(moveUpObject);
 			if (currentIndex <= 0) {
-				return;
+				return null;
 			}
-			editingDomain.getCommandStack()
-				.execute(
-					new MoveCommand(
-						editingDomain, eObject, eStructuralFeature, currentIndex, currentIndex - 1));
-		}
+			return new MoveCommand(
+				editingDomain, eObject, eStructuralFeature, currentIndex, currentIndex - 1);
+		}).filter(Objects::nonNull).collect(Collectors.toList());
+
+		editingDomain.getCommandStack().execute(new CompoundCommand(commands));
+		getTableViewer().refresh();
 	}
 
 	@Override
