@@ -101,10 +101,19 @@ public class ValidationServiceImpl implements ValidationService {
 	private class ViewModelChangeListener implements ModelChangeAddRemoveListener {
 		private final EMFFormsViewContext context;
 
+		private boolean initialized;
+
 		ViewModelChangeListener(EMFFormsViewContext context) {
 			super();
 
 			this.context = context;
+		}
+
+		/**
+		 * Start listening for changes in the view model.
+		 */
+		void start() {
+			initialized = true;
 		}
 
 		@Override
@@ -165,6 +174,11 @@ public class ValidationServiceImpl implements ValidationService {
 
 		@Override
 		public void notifyAdd(Notifier notifier) {
+			if (!initialized) {
+				// Not interested in discover of the view model because we already validated everything
+				return;
+			}
+
 			if (VDomainModelReference.class.isInstance(notifier)
 				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())
 				&& !VDomainModelReferenceSegment.class.isInstance(EObject.class.cast(notifier).eContainer())) {
@@ -493,6 +507,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 		if (viewModelChangeListeners.putIfAbsent(context, listener) == null) {
 			context.registerViewChangeListener(listener);
+			listener.start();
 		}
 	}
 

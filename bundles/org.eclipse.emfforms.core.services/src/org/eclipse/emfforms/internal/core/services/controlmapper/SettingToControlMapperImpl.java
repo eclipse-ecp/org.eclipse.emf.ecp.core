@@ -122,14 +122,14 @@ public class SettingToControlMapperImpl
 		this.viewModelContext = viewModelContext;
 
 		contextTracker = new EMFFormsContextTracker(viewModelContext);
-		contextTracker.onContextInitialized(this::contextInitialized)
-			.onChildContextAdded(this::childContextAdded)
+		contextTracker.onChildContextAdded(this::childContextAdded)
 			.onChildContextRemoved(this::childContextRemoved)
 			.onContextDisposed(this::contextDisposed)
 			.open();
 
 		viewModelChangeListener = new ModelChangeAddRemoveListenerImplementation();
 		dataModelListener = new ViewModelListener(viewModelContext, this);
+		viewModelContext.registerViewChangeListener(viewModelChangeListener);
 	}
 
 	/**
@@ -380,12 +380,6 @@ public class SettingToControlMapperImpl
 		// Then compute the parent of the parent element
 		final EMFFormsViewContext parentContext = controlContextMap.get(parentElement);
 		vControlParentsRemoved(parentContext, controlToRemove);
-	}
-
-	private void contextInitialized(EMFFormsViewContext context) {
-		if (contextTracker.isRoot(context)) {
-			viewModelContext.registerViewChangeListener(viewModelChangeListener);
-		}
 	}
 
 	private void contextDisposed(EMFFormsViewContext context) {
