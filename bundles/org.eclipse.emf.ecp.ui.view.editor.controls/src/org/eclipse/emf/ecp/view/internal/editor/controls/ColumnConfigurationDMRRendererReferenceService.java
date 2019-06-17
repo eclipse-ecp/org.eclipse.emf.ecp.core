@@ -10,10 +10,12 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Lucas Koehler - adapt to work with segments, too
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -21,12 +23,14 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.view.spi.multisegment.model.MultiSegmentUtil;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * Special {@link ReferenceService} allowing stream lined DMR selection for the width configuration.
@@ -71,9 +75,10 @@ public class ColumnConfigurationDMRRendererReferenceService implements Reference
 	}
 
 	@Override
-	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
+	public org.eclipse.emfforms.common.Optional<EObject> addNewModelElements(EObject eObject, EReference eReference,
+		boolean openInNewContext) {
 		/* no-op */
-		return Optional.empty();
+		return org.eclipse.emfforms.common.Optional.empty();
 	}
 
 	@SuppressWarnings("restriction")
@@ -83,24 +88,22 @@ public class ColumnConfigurationDMRRendererReferenceService implements Reference
 			return;
 		}
 		final VTableControl tableControl = VTableControl.class.cast(eObject.eContainer());
-		if (!VTableDomainModelReference.class.isInstance(tableControl.getDomainModelReference())) {
+		final Optional<Set<EObject>> unconfiguredColumns = getUnconfiguredColumns(
+			tableControl.getDomainModelReference());
+		if (!unconfiguredColumns.isPresent()) {
 			return;
 		}
-		final VTableDomainModelReference tableDMR = VTableDomainModelReference.class
-			.cast(tableControl.getDomainModelReference());
-		final Set<EObject> unconfiguredColumns = new LinkedHashSet<EObject>(
-			tableDMR.getColumnDomainModelReferences());
 		for (final VTableColumnConfiguration columnConfiguration : tableControl.getColumnConfigurations()) {
 			if (!columnConfigClass.isInstance(columnConfiguration)) {
 				continue;
 			}
-			unconfiguredColumns
+			unconfiguredColumns.get()
 				.remove(columnConfigClass.cast(columnConfiguration).getColumnDomainReference());
 		}
 
 		final Set<EObject> selectedColumns = SelectModelElementWizardFactory
 			.openModelElementSelectionDialog(
-				unconfiguredColumns,
+				unconfiguredColumns.get(),
 				eReference.isMany());
 
 		org.eclipse.emf.ecp.internal.edit.ECPControlHelper.addModelElementsInReference(
@@ -108,6 +111,20 @@ public class ColumnConfigurationDMRRendererReferenceService implements Reference
 			selectedColumns,
 			eReference,
 			AdapterFactoryEditingDomain.getEditingDomainFor(eObject));
+	}
+
+	private Optional<Set<EObject>> getUnconfiguredColumns(VDomainModelReference dmr) {
+		Set<EObject> result = null;
+		if (!dmr.getSegments().isEmpty()) {
+			final Optional<VMultiDomainModelReferenceSegment> multiSegment = MultiSegmentUtil.getMultiSegment(dmr);
+			if (multiSegment.isPresent()) {
+				result = new LinkedHashSet<>(multiSegment.get().getChildDomainModelReferences());
+			}
+		} else if (dmr instanceof VTableDomainModelReference) {
+			final VTableDomainModelReference tableDmr = (VTableDomainModelReference) dmr;
+			result = new LinkedHashSet<>(tableDmr.getColumnDomainModelReferences());
+		}
+		return Optional.ofNullable(result);
 	}
 
 	@Override
