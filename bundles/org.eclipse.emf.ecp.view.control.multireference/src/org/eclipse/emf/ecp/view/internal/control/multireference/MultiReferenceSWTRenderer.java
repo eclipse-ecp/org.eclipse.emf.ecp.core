@@ -1034,7 +1034,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param selectedObject the selected {@link EObject}
 	 */
 	protected void handleDoubleClick(EObject selectedObject) {
-		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		final ReferenceService referenceService = getReferenceService();
 		referenceService.openInNewContext(selectedObject);
 	}
 
@@ -1046,7 +1046,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
 	protected void handleAddExisting(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
-		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		final ReferenceService referenceService = getReferenceService();
 		referenceService.addExistingModelElements(eObject, (EReference) structuralFeature);
 	}
 
@@ -1058,8 +1058,17 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
 	protected void handleAddNew(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
-		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		final ReferenceService referenceService = getReferenceService();
 		referenceService.addNewModelElements(eObject, (EReference) structuralFeature, true);
+	}
+
+	/**
+	 * Override to customize linking and creation of EObjects in this renderer's EReference.
+	 * 
+	 * @return The {@link ReferenceService} used to link and create new EObjects in this renderer's reference.
+	 */
+	protected ReferenceService getReferenceService() {
+		return getViewModelContext().getService(ReferenceService.class);
 	}
 
 	/**
