@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Jonas - initial API and implementation
@@ -66,8 +68,9 @@ public class ChildrenDescriptorExtension_PTest {
 	// label, table, vertical, horizontal, group, groupedgrid, categorizationElement, custom control, section,
 	// stack,viewproxy, compoundcontrol, treemasterdetail
 	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 13;
-	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR,KEYDMR, MAPPINGDMR,IndexDMR
-	private static final int DOMAINMODELREFERENCE_COUNT = 6;
+	// DMRs should not be creatable via child extender. Existing Dmrs: DMR, VFeaturePathDR, VPredefinedDR,
+	// VTableDR,KEYDMR, MAPPINGDMR,IndexDMR
+	private static final int DOMAINMODELREFERENCE_COUNT = 0;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	// categorization, category
 	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
@@ -75,7 +78,8 @@ public class ChildrenDescriptorExtension_PTest {
 		+ NUMBER_OF_CATEGORIZATIONS;
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
-	private static final int LEAFCONDITION_CHILD_COUNT = 1;
+	// Neither the main dmr nor the value dmr should be returned as children
+	private static final int LEAFCONDITION_CHILD_COUNT = 0;
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
 
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT;
@@ -235,8 +239,7 @@ public class ChildrenDescriptorExtension_PTest {
 	@Test
 	public void testLabelDescriptors() {
 		final int size = getChildrenSize(VLabelPackage.eINSTANCE.getLabel());
-		// -5 because only the VFeaturePath is found
-		assertEquals(ATTACHMENT_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT - 5, size);
+		assertEquals(ATTACHMENT_CHILD_COUNT, size);
 	}
 
 	@Test

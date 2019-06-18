@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -36,8 +38,7 @@ import org.eclipse.emf.ecp.makeithappen.model.task.UserGroup;
  *
  * @generated
  */
-public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
-{
+public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -45,18 +46,14 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public static TaskFactory init()
-	{
-		try
-		{
+	public static TaskFactory init() {
+		try {
 			final TaskFactory theTaskFactory = (TaskFactory) EPackage.Registry.INSTANCE
 				.getEFactory(TaskPackage.eNS_URI);
-			if (theTaskFactory != null)
-			{
+			if (theTaskFactory != null) {
 				return theTaskFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new TaskFactoryImpl();
@@ -69,8 +66,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public TaskFactoryImpl()
-	{
+	public TaskFactoryImpl() {
 		super();
 	}
 
@@ -81,10 +77,8 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case TaskPackage.TASK:
 			return createTask();
 		case TaskPackage.USER:
@@ -103,10 +97,8 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Override
-	public Object createFromString(EDataType eDataType, String initialValue)
-	{
-		switch (eDataType.getClassifierID())
-		{
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
 		case TaskPackage.GENDER:
 			return createGenderFromString(eDataType, initialValue);
 		case TaskPackage.NATIONALITY:
@@ -125,10 +117,8 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Override
-	public String convertToString(EDataType eDataType, Object instanceValue)
-	{
-		switch (eDataType.getClassifierID())
-		{
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
 		case TaskPackage.GENDER:
 			return convertGenderToString(eDataType, instanceValue);
 		case TaskPackage.NATIONALITY:
@@ -147,8 +137,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Override
-	public Task createTask()
-	{
+	public Task createTask() {
 		final TaskImpl task = new TaskImpl();
 		return task;
 	}
@@ -160,8 +149,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Override
-	public User createUser()
-	{
+	public User createUser() {
 		final UserImpl user = new UserImpl();
 		return user;
 	}
@@ -173,8 +161,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Override
-	public UserGroup createUserGroup()
-	{
+	public UserGroup createUserGroup() {
 		final UserGroupImpl userGroup = new UserGroupImpl();
 		return userGroup;
 	}
@@ -185,11 +172,9 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public Gender createGenderFromString(EDataType eDataType, String initialValue)
-	{
+	public Gender createGenderFromString(EDataType eDataType, String initialValue) {
 		final Gender result = Gender.get(initialValue);
-		if (result == null)
-		{
+		if (result == null) {
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
@@ -202,8 +187,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public String convertGenderToString(EDataType eDataType, Object instanceValue)
-	{
+	public String convertGenderToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -213,11 +197,9 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public Nationality createNationalityFromString(EDataType eDataType, String initialValue)
-	{
+	public Nationality createNationalityFromString(EDataType eDataType, String initialValue) {
 		final Nationality result = Nationality.get(initialValue);
-		if (result == null)
-		{
+		if (result == null) {
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
@@ -230,8 +212,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public String convertNationalityToString(EDataType eDataType, Object instanceValue)
-	{
+	public String convertNationalityToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -241,8 +222,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public XMLGregorianCalendar createDateOfBirthFromString(EDataType eDataType, String initialValue)
-	{
+	public XMLGregorianCalendar createDateOfBirthFromString(EDataType eDataType, String initialValue) {
 		return (XMLGregorianCalendar) XMLTypeFactory.eINSTANCE.createFromString(XMLTypePackage.Literals.DATE,
 			initialValue);
 	}
@@ -253,8 +233,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 *
 	 * @generated
 	 */
-	public String convertDateOfBirthToString(EDataType eDataType, Object instanceValue)
-	{
+	public String convertDateOfBirthToString(EDataType eDataType, Object instanceValue) {
 		return XMLTypeFactory.eINSTANCE.convertToString(XMLTypePackage.Literals.DATE, instanceValue);
 	}
 
@@ -265,8 +244,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Override
-	public TaskPackage getTaskPackage()
-	{
+	public TaskPackage getTaskPackage() {
 		return (TaskPackage) getEPackage();
 	}
 
@@ -278,8 +256,7 @@ public class TaskFactoryImpl extends EFactoryImpl implements TaskFactory
 	 * @generated
 	 */
 	@Deprecated
-	public static TaskPackage getPackage()
-	{
+	public static TaskPackage getPackage() {
 		return TaskPackage.eINSTANCE;
 	}
 

@@ -2,13 +2,15 @@
  * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * lucas - initial API and implementation
- * Christian W. Damus - bugs 529138, 543461
+ * Christian W. Damus - bugs 529138, 543461, 546974
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
@@ -18,6 +20,7 @@ import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
@@ -31,8 +34,10 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceServiceCustomizationVendor;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategyUtil;
 import org.eclipse.emfforms.bazaar.Bazaar;
+import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.core.services.datatemplate.TemplateFilterService;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.datatemplate.Template;
 import org.eclipse.emfforms.spi.bazaar.BazaarUtil;
@@ -63,6 +68,8 @@ public class TemplateCreateNewModelElementStrategyProvider
 
 	private final Bazaar<EClassSelectionStrategy> eclassSelectionStrategyBazaar = BazaarUtil.createBazaar(
 		EClassSelectionStrategy.NULL);
+	private final Bazaar<TemplateFilterService> templateFilterBazaar = BazaarUtil.createBazaar(
+		TemplateFilterService.NULL);
 	private ComponentContext context;
 
 	/**
@@ -122,6 +129,27 @@ public class TemplateCreateNewModelElementStrategyProvider
 	}
 
 	/**
+	 * Add a template filter service provider.
+	 *
+	 * @param provider the provider to add
+	 *
+	 * @since 1.21
+	 */
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
+	public void addFilterServiceProvider(TemplateFilterService.Provider provider) {
+		templateFilterBazaar.addVendor(provider);
+	}
+
+	/**
+	 * Remove a template filter service provider.
+	 *
+	 * @param provider the provider to remove
+	 */
+	void removeFilterServiceProvider(TemplateFilterService.Provider provider) {
+		templateFilterBazaar.removeVendor(provider);
+	}
+
+	/**
 	 * Called by the framework to set the {@link EMFFormsLocalizationService}.
 	 *
 	 * @param localizationService The {@link EMFFormsLocalizationService}
@@ -150,22 +178,31 @@ public class TemplateCreateNewModelElementStrategyProvider
 	 */
 	protected Set<Template> collectAvailableTemplates(EObject eObject, EReference eReference) {
 		final Set<Template> templates = new LinkedHashSet<Template>();
+
+		final Predicate<? super Template> filter = getFilter(eObject, eReference);
+
 		for (final TemplateProvider provider : templateProviders) {
 			if (!provider.canProvideTemplates(eObject, eReference)) {
 				continue;
 			}
-			Set<Template> provideTemplates;
+
+			Set<Template> providedTemplates;
 			if (provider instanceof BlankTemplateProvider) {
 				final EClassSelectionStrategy eClassSelectionStrategy = ReferenceStrategyUtil
 					.createDynamicEClassSelectionStrategy(eclassSelectionStrategyBazaar, context);
-				provideTemplates = ((BlankTemplateProvider) provider).provideTemplates(eObject, eReference,
+				providedTemplates = ((BlankTemplateProvider) provider).provideTemplates(eObject, eReference,
 					eClassSelectionStrategy);
 			} else {
-				provideTemplates = provider.provideTemplates(eObject, eReference);
+				providedTemplates = provider.provideTemplates(eObject, eReference);
 			}
-			templates.addAll(provideTemplates);
 
+			if (filter == null) {
+				templates.addAll(providedTemplates);
+			} else {
+				providedTemplates.stream().filter(filter).forEach(templates::add);
+			}
 		}
+
 		return templates;
 	}
 
@@ -179,6 +216,26 @@ public class TemplateCreateNewModelElementStrategyProvider
 		final EClassSelectionStrategy eClassSelectionStrategy = ReferenceStrategyUtil
 			.createDynamicEClassSelectionStrategy(eclassSelectionStrategyBazaar, context);
 		return new Strategy(eClassSelectionStrategy);
+	}
+
+	/**
+	 * Obtain a filter predicate for the templates provided for the given {@code reference}
+	 * of an {@code owner} object in the editor.
+	 *
+	 * @param owner the {@link EObject} in the model
+	 * @param reference the {@link EReference} in which templates are to be instantiated
+	 *
+	 * @return the filter, or {@code null} if none
+	 *
+	 * @since 1.21
+	 */
+	protected Predicate<? super Template> getFilter(EObject owner, EReference reference) {
+		final BazaarContext bazaarContext = ReferenceStrategyUtil.createBazaarContext(context, owner, reference);
+		return templateFilterBazaar.createProducts(bazaarContext).stream()
+			.map(service -> service.getTemplateFilter(owner, reference))
+			.filter(Objects::nonNull)
+			.reduce(Predicate::and)
+			.orElse(null);
 	}
 
 	/**

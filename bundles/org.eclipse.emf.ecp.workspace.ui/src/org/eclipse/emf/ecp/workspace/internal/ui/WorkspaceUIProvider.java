@@ -2,9 +2,11 @@
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eike Stepper - initial API and implementation
@@ -61,13 +63,15 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 	}
 
 	@Override
-	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties) {
+	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource,
+		ECPProperties projectProperties) {
 		// Suppress default properties composite
 		return null;
 	}
 
 	@Override
-	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer, ECPProperties projectProperties) {
+	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer,
+		ECPProperties projectProperties) {
 		return new NewWorkspaceProjectComposite(parent, observer, projectProperties);
 	}
 }

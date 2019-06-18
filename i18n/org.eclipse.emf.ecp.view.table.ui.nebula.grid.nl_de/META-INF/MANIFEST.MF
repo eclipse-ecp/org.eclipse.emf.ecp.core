@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms Nebula Grid Table UI German NLS Support
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.ui.nebula.grid.nl_de;singleton:=true
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Fragment-Host: org.eclipse.emf.ecp.view.table.ui.nebula.grid;bundle-version="[1.20.0,1.21.0)"
+Fragment-Host: org.eclipse.emf.ecp.view.table.ui.nebula.grid;bundle-version="[1.21.0,1.22.0)"
 Automatic-Module-Name: org.eclipse.emf.ecp.view.table.ui.nebula.grid.nl_de
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

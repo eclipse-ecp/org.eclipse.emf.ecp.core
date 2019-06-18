@@ -2,9 +2,11 @@
  * Copyright (c) 2002-2010 IBM Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * IBM - Initial API and implementation
@@ -50,10 +52,9 @@ import org.eclipse.swt.widgets.Widget;
  * adapters is typically hooked up:
  *
  * <pre>
- * viewer.addDropSupport
- * 	(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK,
- * 		new Transfer[] { LocalTransfer.getInstance() },
- * 		EditingDomainViewerDropAdapter(viewer));
+ * viewer.addDropSupport(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK,
+ * 	new Transfer[] { LocalTransfer.getInstance() },
+ * 	EditingDomainViewerDropAdapter(viewer));
  * </pre>
  * <p>
  * This implementation prefers to use a {@link LocalTransfer}, which short-circuits the transfer process for simple
@@ -64,8 +65,7 @@ import org.eclipse.swt.widgets.Widget;
  * SWT's {@link DND#FEEDBACK_SCROLL auto-scroll} and {@link DND#FEEDBACK_EXPAND auto-expand} (hover) are enabled by
  * default. The method {@link #getAutoFeedback} can be overridden to change this behaviour.
  */
-public class EditingDomainViewerDropAdapter extends DropTargetAdapter
-{
+public class EditingDomainViewerDropAdapter extends DropTargetAdapter {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -118,8 +118,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	/**
 	 * This creates an instance with the given domain and viewer.
 	 */
-	public EditingDomainViewerDropAdapter(EditingDomain domain, Viewer viewer)
-	{
+	public EditingDomainViewerDropAdapter(EditingDomain domain, Viewer viewer) {
 		this.viewer = viewer;
 		this.domain = domain;
 	}
@@ -128,8 +127,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This is called when the mouse first enters or starts dragging in the viewer.
 	 */
 	@Override
-	public void dragEnter(DropTargetEvent event)
-	{
+	public void dragEnter(DropTargetEvent event) {
 		// Remember the requested operation.
 		originalOperation = event.detail;
 
@@ -144,13 +142,11 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * command later, if necessary.
 	 */
 	@Override
-	public void dragLeave(DropTargetEvent event)
-	{
+	public void dragLeave(DropTargetEvent event) {
 		// Clean up the command if there is one. If we need it again in drop,
 		// we'll recreate it from dragAndDropCommandInformation.
 		//
-		if (command != null)
-		{
+		if (command != null) {
 			command.dispose();
 			command = null;
 			commandTarget = null;
@@ -166,8 +162,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This is called when the operation has changed in some way, typically because the user changes keyboard modifiers.
 	 */
 	@Override
-	public void dragOperationChanged(DropTargetEvent event)
-	{
+	public void dragOperationChanged(DropTargetEvent event) {
 		// Remember the requested operation.
 		originalOperation = event.detail;
 
@@ -178,8 +173,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This is called repeatedly, as the mouse moves over the viewer.
 	 */
 	@Override
-	public void dragOver(DropTargetEvent event)
-	{
+	public void dragOver(DropTargetEvent event) {
 		helper(event);
 	}
 
@@ -188,8 +182,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * drop, between dragLeave and drop.
 	 */
 	@Override
-	public void dropAccept(DropTargetEvent event)
-	{
+	public void dropAccept(DropTargetEvent event) {
 		helper(event);
 	}
 
@@ -197,19 +190,15 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This is called to indicate that the drop action should be invoked.
 	 */
 	@Override
-	public void drop(DropTargetEvent event)
-	{
+	public void drop(DropTargetEvent event) {
 		// A command was created if the source was available early, and the
 		// information used to create it was cached...
 		//
-		if (dragAndDropCommandInformation != null)
-		{
+		if (dragAndDropCommandInformation != null) {
 			// Recreate the command.
 			//
 			command = dragAndDropCommandInformation.createCommand();
-		}
-		else
-		{
+		} else {
 			// Otherwise, the source should be available now as event.data, and we
 			// can create the command.
 			//
@@ -221,14 +210,11 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 
 		// If the command can execute...
 		//
-		if (command.canExecute())
-		{
+		if (command.canExecute()) {
 			// Execute it.
 			//
 			domain.getCommandStack().execute(command);
-		}
-		else
-		{
+		} else {
 			// Otherwise, let's call the whole thing off.
 			//
 			event.detail = DND.DROP_NONE;
@@ -250,8 +236,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * the {@link DragAndDropCommand}, and updates the event's detail (operation)
 	 * and feedback (drag under effect), appropriately.
 	 */
-	protected void helper(DropTargetEvent event)
-	{
+	protected void helper(DropTargetEvent event) {
 		// If we can't do anything else, we'll provide the default select feedback
 		// and enable auto-scroll and auto-expand effects.
 		event.feedback = DND.FEEDBACK_SELECT | getAutoFeedback();
@@ -259,11 +244,9 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 		// If we don't already have it, try to get the source early. We can't give
 		// feedback if it's not available yet (this is platform-dependent).
 		//
-		if (source == null)
-		{
+		if (source == null) {
 			source = getDragSource(event);
-			if (source == null)
-			{
+			if (source == null) {
 				// Clear out any old information from a previous drag.
 				//
 				dragAndDropCommandInformation = null;
@@ -282,8 +265,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 
 		// If we don't have a previous cached command...
 		//
-		if (command == null)
-		{
+		if (command == null) {
 			// We'll need to keep track of the information we use to create the
 			// command, so that we can recreate it in drop.
 			dragAndDropCommandInformation = new DragAndDropCommandInformation(domain, target, location,
@@ -294,13 +276,10 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 			commandTarget = target;
 			command = dragAndDropCommandInformation.createCommand();
 			valid = command.canExecute();
-		}
-		else
-		{
+		} else {
 			// Check if the cached command can provide DND feedback/revalidation.
 			//
-			if (target == commandTarget && command instanceof DragAndDropFeedback)
-			{
+			if (target == commandTarget && command instanceof DragAndDropFeedback) {
 				// If so, revalidate the command.
 				//
 				valid = ((DragAndDropFeedback) command).validate(target, location, event.operations, originalOperation,
@@ -309,9 +288,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 				// Keep track of any changes to the command information.
 				dragAndDropCommandInformation = new DragAndDropCommandInformation(domain, target, location,
 					event.operations, originalOperation, source);
-			}
-			else
-			{
+			} else {
 				// If not, dispose the current command and create a new one.
 				//
 				dragAndDropCommandInformation = new DragAndDropCommandInformation(domain, target, location,
@@ -325,16 +302,13 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 
 		// If this command can provide detailed drag and drop feedback...
 		//
-		if (command instanceof DragAndDropFeedback)
-		{
+		if (command instanceof DragAndDropFeedback) {
 			// Use it for the operation and drag under effect.
 			//
 			final DragAndDropFeedback dragAndDropFeedback = (DragAndDropFeedback) command;
 			event.detail = dragAndDropFeedback.getOperation();
 			event.feedback = dragAndDropFeedback.getFeedback() | getAutoFeedback();
-		}
-		else if (!valid)
-		{
+		} else if (!valid) {
 			// There is no executable command, so we'd better nix the whole deal.
 			//
 			event.detail = DND.DROP_NONE;
@@ -347,8 +321,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This implementation enables {@link DND#FEEDBACK_SCROLL auto-scroll} and {@link DND#FEEDBACK_EXPAND auto-expand}
 	 * (hover).
 	 */
-	protected int getAutoFeedback()
-	{
+	protected int getAutoFeedback() {
 		return DND.FEEDBACK_SCROLL | DND.FEEDBACK_EXPAND;
 	}
 
@@ -358,24 +331,20 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * the data is not yet
 	 * available (e.g. on platforms other than win32), it just returns null.
 	 */
-	protected Collection<?> getDragSource(DropTargetEvent event)
-	{
+	protected Collection<?> getDragSource(DropTargetEvent event) {
 		// Check whether the current data type can be transfered locally.
 		//
 		final LocalTransfer localTransfer = LocalTransfer.getInstance();
-		if (!localTransfer.isSupportedType(event.currentDataType))
-		{
+		if (!localTransfer.isSupportedType(event.currentDataType)) {
 			// Iterate over the data types to see if there is a data type that supports a local transfer.
 			//
 			final TransferData[] dataTypes = event.dataTypes;
-			for (int i = 0; i < dataTypes.length; ++i)
-			{
+			for (int i = 0; i < dataTypes.length; ++i) {
 				final TransferData transferData = dataTypes[i];
 
 				// If the local transfer supports this data type, switch to that data type
 				//
-				if (localTransfer.isSupportedType(transferData))
-				{
+				if (localTransfer.isSupportedType(transferData)) {
 					event.currentDataType = transferData;
 				}
 			}
@@ -398,12 +367,10 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This extracts a collection of dragged source objects from the given object retrieved from the transfer agent.
 	 * This default implementation converts a structured selection into a collection of elements.
 	 */
-	protected Collection<?> extractDragSource(Object object)
-	{
+	protected Collection<?> extractDragSource(Object object) {
 		// Transfer the data and convert the structured selection to a collection of objects.
 		//
-		if (object instanceof IStructuredSelection)
-		{
+		if (object instanceof IStructuredSelection) {
 			final List<?> list = ((IStructuredSelection) object).toList();
 			return list;
 		}
@@ -414,8 +381,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This extracts an object from the given item widget, providing the special
 	 * support required by an {@link org.eclipse.emf.common.ui.viewer.ExtendedTableTreeViewer.ExtendedTableTreeItem}.
 	 */
-	protected Object extractDropTarget(Widget item)
-	{
+	protected Object extractDropTarget(Widget item) {
 		if (item == null) {
 			return null;
 		}
@@ -426,26 +392,20 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	 * This returns the location of the mouse in the vertical direction, relative
 	 * to the item widget, from 0 (top) to 1 (bottom).
 	 */
-	protected float getLocation(DropTargetEvent event)
-	{
-		if (event.item instanceof TreeItem)
-		{
+	protected float getLocation(DropTargetEvent event) {
+		if (event.item instanceof TreeItem) {
 			final TreeItem treeItem = (TreeItem) event.item;
 			final Control control = treeItem.getParent();
 			final Point point = control.toControl(new Point(event.x, event.y));
 			final Rectangle bounds = treeItem.getBounds();
 			return (float) (point.y - bounds.y) / (float) bounds.height;
-		}
-		else if (event.item instanceof TableItem)
-		{
+		} else if (event.item instanceof TableItem) {
 			final TableItem tableItem = (TableItem) event.item;
 			final Control control = tableItem.getParent();
 			final Point point = control.toControl(new Point(event.x, event.y));
 			final Rectangle bounds = tableItem.getBounds(0);
 			return (float) (point.y - bounds.y) / (float) bounds.height;
-		}
-		else
-		{
+		} else {
 			return 0.0F;
 		}
 	}
@@ -453,8 +413,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 	/**
 	 * This holds all of the information used to create a {@link DragAndDropCommand}, but does not need to be disposed.
 	 */
-	protected static class DragAndDropCommandInformation
-	{
+	protected static class DragAndDropCommandInformation {
 		protected EditingDomain domain;
 		protected Object target;
 		protected float location;
@@ -463,8 +422,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 		protected Collection<?> source;
 
 		public DragAndDropCommandInformation(EditingDomain domain, Object target, float location, int operations,
-			int operation, Collection<?> source)
-		{
+			int operation, Collection<?> source) {
 			this.domain = domain;
 			this.target = target;
 			this.location = location;
@@ -473,8 +431,7 @@ public class EditingDomainViewerDropAdapter extends DropTargetAdapter
 			this.source = new ArrayList<Object>(source);
 		}
 
-		public Command createCommand()
-		{
+		public Command createCommand() {
 			return DragAndDropCommand.create(domain, target, location, operations, operation, source);
 		}
 	}

@@ -1,34 +1,33 @@
-<?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180">
-  <ecorePaths>/org.eclipse.emf.ecore/model/Ecore.ecore</ecorePaths>
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmi:id="_kr6xsHvHEem8B6FFC4bHkQ">
   <rootEClass href="http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control name">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_kr6xsXvHEem8B6FFC4bHkQ" name="Control name">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_kr6xsnvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control eType">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_kr6xs3vHEem8B6FFC4bHkQ" name="Control eType">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_kr6xtHvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control upperBound">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_kr6xtXvHEem8B6FFC4bHkQ" name="Control upperBound">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_kr6xtnvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control unsettable">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_kr6xt3vHEem8B6FFC4bHkQ" name="Control unsettable">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_kr6xuHvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature/unsettable"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control ordered">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_kr6xuXvHEem8B6FFC4bHkQ" name="Control ordered">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_kr6xunvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/ordered"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control unique">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_kr6xu3vHEem8B6FFC4bHkQ" name="Control unique">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_kr6xvHvHEem8B6FFC4bHkQ">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/unique"/>
     </domainModelReference>
   </children>

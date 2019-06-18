@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -84,7 +86,7 @@ public class VKeyattributedmrPackageImpl extends EPackageImpl implements
 		// Obtain or create and register package
 		final VKeyattributedmrPackageImpl theKeyattributedmrPackage = (VKeyattributedmrPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VKeyattributedmrPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VKeyattributedmrPackageImpl());
+				: new VKeyattributedmrPackageImpl());
 
 		isInited = true;
 
@@ -98,16 +100,13 @@ public class VKeyattributedmrPackageImpl extends EPackageImpl implements
 		theKeyattributedmrPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theKeyattributedmrPackage,
-				new EValidator.Descriptor()
-				{
-					@Override
-					public EValidator getEValidator()
-					{
-						return KeyattributedmrValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theKeyattributedmrPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return KeyattributedmrValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theKeyattributedmrPackage.freeze();
@@ -134,8 +133,7 @@ public class VKeyattributedmrPackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	@Override
-	public EReference getKeyAttributeDomainModelReference_KeyDMR()
-	{
+	public EReference getKeyAttributeDomainModelReference_KeyDMR() {
 		return (EReference) keyAttributeDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -146,8 +144,7 @@ public class VKeyattributedmrPackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	@Override
-	public EAttribute getKeyAttributeDomainModelReference_KeyValue()
-	{
+	public EAttribute getKeyAttributeDomainModelReference_KeyValue() {
 		return (EAttribute) keyAttributeDomainModelReferenceEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -158,8 +155,7 @@ public class VKeyattributedmrPackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	@Override
-	public EReference getKeyAttributeDomainModelReference_ValueDMR()
-	{
+	public EReference getKeyAttributeDomainModelReference_ValueDMR() {
 		return (EReference) keyAttributeDomainModelReferenceEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -244,16 +240,19 @@ public class VKeyattributedmrPackageImpl extends EPackageImpl implements
 			getKeyAttributeDomainModelReference_KeyDMR(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"keyDMR", null, 1, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"keyDMR", null, 1, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getKeyAttributeDomainModelReference_KeyValue(),
 			ecorePackage.getEJavaObject(),
-			"keyValue", null, 1, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"keyValue", null, 1, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getKeyAttributeDomainModelReference_ValueDMR(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"valueDMR", null, 1, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"valueDMR", null, 1, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -270,13 +269,11 @@ public class VKeyattributedmrPackageImpl extends EPackageImpl implements
 	 *
 	 * @generated
 	 */
-	protected void createEcoreAnnotations()
-	{
+	protected void createEcoreAnnotations() {
 		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(keyAttributeDomainModelReferenceEClass,
 			source,
-			new String[]
-			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			new String[] { "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
 			});
 	}
 

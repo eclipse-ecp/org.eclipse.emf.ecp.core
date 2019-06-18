@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -39,12 +41,12 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class UserGroupItemProvider
-extends ItemProviderAdapter
-implements
-IEditingDomainItemProvider,
-ITreeItemContentProvider,
-IItemLabelProvider,
-IItemPropertySource {
+	extends ItemProviderAdapter
+	implements
+	IEditingDomainItemProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -65,8 +67,7 @@ IItemPropertySource {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
@@ -83,9 +84,8 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_UserGroup_name_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_UserGroup_name_feature", "_UI_UserGroup_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -106,9 +106,8 @@ IItemPropertySource {
 	 * @generated
 	 */
 	protected void addUsersPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-		(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_UserGroup_users_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_UserGroup_users_feature", "_UI_UserGroup_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -132,8 +131,7 @@ IItemPropertySource {
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(TaskPackage.Literals.USER_GROUP__USERS);
 		}
@@ -178,9 +176,8 @@ IItemPropertySource {
 	@Override
 	public String getText(Object object) {
 		final String label = ((UserGroup) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_UserGroup_type") : //$NON-NLS-1$
-				getString("_UI_UserGroup_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_UserGroup_type") : //$NON-NLS-1$
+			getString("_UI_UserGroup_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -195,8 +192,7 @@ IItemPropertySource {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(UserGroup.class))
-		{
+		switch (notification.getFeatureID(UserGroup.class)) {
 		case TaskPackage.USER_GROUP__NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -219,10 +215,8 @@ IItemPropertySource {
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-		(createChildParameter
-			(TaskPackage.Literals.USER_GROUP__USERS,
-				TaskFactory.eINSTANCE.createUser()));
+		newChildDescriptors.add(createChildParameter(TaskPackage.Literals.USER_GROUP__USERS,
+			TaskFactory.eINSTANCE.createUser()));
 	}
 
 	/**

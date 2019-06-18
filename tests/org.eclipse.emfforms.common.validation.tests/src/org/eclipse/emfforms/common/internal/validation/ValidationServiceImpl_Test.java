@@ -2,9 +2,11 @@
  * Copyright (c) 2017 Christian W. Damus and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Christian W. Damus - initial API and implementation
@@ -16,7 +18,9 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyMapOf;
@@ -47,6 +51,9 @@ import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emf.emfstore.bowling.util.BowlingValidator;
 import org.eclipse.emfforms.common.spi.validation.exception.ValidationCanceledException;
+import org.eclipse.emfforms.common.spi.validation.filter.DiagnosticFilter;
+import org.eclipse.emfforms.common.spi.validation.filter.ObjectFilter;
+import org.eclipse.emfforms.common.spi.validation.filter.SubTreeFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -231,6 +238,78 @@ public class ValidationServiceImpl_Test {
 		assertSame(1, diagnostic.getChildren().size());
 		assertSame(EObjectValidator.DIAGNOSTIC_SOURCE, diagnostic.getChildren().get(0).getSource());
 		assertSame(nameAttribute, diagnostic.getChildren().get(0).getData().get(1));
+	}
+
+	@Test
+	public void testAddRemoveSubTreeFilter() {
+		final SubTreeFilter subTreeFilterMock = mock(SubTreeFilter.class);
+
+		fixture.addSubTreeFilter(subTreeFilterMock);
+
+		assertTrue(fixture.getSubTreeFilters().contains(subTreeFilterMock));
+		assertEquals(1, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
+
+		fixture.removeSubTreeFilter(subTreeFilterMock);
+
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
+
+		fixture.addSubTreeFilter(null);
+
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
+	}
+
+	@Test
+	public void testAddRemoveObjectFilter() {
+		final ObjectFilter objectFilterMock = mock(ObjectFilter.class);
+
+		fixture.addObjectFilter(objectFilterMock);
+
+		assertTrue(fixture.getObjectFilters().contains(objectFilterMock));
+		assertEquals(1, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
+
+		fixture.removeObjectFilter(objectFilterMock);
+
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
+
+		fixture.addObjectFilter(null);
+
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
+	}
+
+	@Test
+	public void testAddRemoveDiagnosticFilter() {
+		final DiagnosticFilter diagnosticFilterMock = mock(DiagnosticFilter.class);
+
+		fixture.addDiagnosticFilter(diagnosticFilterMock);
+
+		assertTrue(fixture.getDiagnosticFilters().contains(diagnosticFilterMock));
+		assertEquals(1, fixture.getDiagnosticFilters().size());
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+
+		fixture.removeDiagnosticFilter(diagnosticFilterMock);
+
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
+
+		fixture.addDiagnosticFilter(null);
+
+		assertEquals(0, fixture.getSubTreeFilters().size());
+		assertEquals(0, fixture.getObjectFilters().size());
+		assertEquals(0, fixture.getDiagnosticFilters().size());
 	}
 
 }

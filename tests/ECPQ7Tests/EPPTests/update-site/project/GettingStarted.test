@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _lx7aYE_YEeWlOMw7vcjT4A
-Runtime-Version: 2.1.0.201606221726
-Save-Time: 1/30/17 9:39 AM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 5/6/19 3:11 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -15,7 +15,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 // 01 Choose A Domain Model
-get-view "Project Explorer" | get-tree | get-menu "New/Project..." | click
+get-menu -path "File/New/Project..." | click
 with [get-window "New Project"] {
     get-tree | select "Examples/EMF Forms/Make it happen: example model"
     get-tree | select "Examples/EMF Forms/Make it happen: example model"

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -39,8 +41,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
  * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage
  * @generated
  */
-public class MappingdmrValidator extends EObjectValidator
-{
+public class MappingdmrValidator extends EObjectValidator {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -97,8 +98,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public MappingdmrValidator()
-	{
+	public MappingdmrValidator() {
 		super();
 		viewValidator = ViewValidator.INSTANCE;
 	}
@@ -111,8 +111,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected EPackage getEPackage()
-	{
+	protected EPackage getEPackage() {
 		return VMappingdmrPackage.eINSTANCE;
 	}
 
@@ -124,10 +123,9 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE:
 			return validateMappingDomainModelReference((VMappingDomainModelReference) value, diagnostics, context);
 		default:
@@ -142,8 +140,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateMappingDomainModelReference(VMappingDomainModelReference mappingDomainModelReference,
-		DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(mappingDomainModelReference, diagnostics, context)) {
 			return false;
 		}
@@ -170,7 +167,8 @@ public class MappingdmrValidator extends EObjectValidator
 			result &= validate_EveryMapEntryUnique(mappingDomainModelReference, diagnostics, context);
 		}
 		if (result || diagnostics != null) {
-			result &= validateMappingDomainModelReference_resolveable(mappingDomainModelReference, diagnostics, context);
+			result &= validateMappingDomainModelReference_resolveable(mappingDomainModelReference, diagnostics,
+				context);
 		}
 		return result;
 	}
@@ -261,8 +259,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT

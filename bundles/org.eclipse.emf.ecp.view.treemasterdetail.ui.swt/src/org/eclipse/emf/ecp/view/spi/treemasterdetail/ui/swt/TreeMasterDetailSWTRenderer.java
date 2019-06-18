@@ -2,16 +2,18 @@
  * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Anas Chakfeh - initial API and implementation
  * Eugen Neufeld - Refactoring
  * Alexandra Buzila - Refactoring
  * Johannes Faltermeier - integration with validation service
- * Christian W. Damus - bug 543376
+ * Christian W. Damus - bugs 543376, 545460
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
@@ -34,6 +36,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
@@ -54,6 +57,7 @@ import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -65,6 +69,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.selection.IMasterDetailSelectionProvider;
 import org.eclipse.emf.ecp.view.spi.swt.services.ECPSelectionProviderService;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
@@ -185,6 +190,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private Composite rightPanelContainerComposite;
 
 	private ModelChangeListener domainModelListener;
+	private ViewModelContext childContext;
 
 	/**
 	 * @author jfaltermeier
@@ -418,17 +424,25 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer.setAutoExpandLevel(2); // top level element is expanded, but not the children
 		treeViewer.setInput(new RootObject(modelElement));
 
-		// workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=27480
-		// the treeviewer doesn't autoexpand on refresh
-		domainModelListener = new ModelChangeListener() {
+		domainModelListener = new ModelChangeAddRemoveListener() {
 
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
-				// expand the tree if elements are added to the tree and the root isn't already expanded
-				if (notification.getRawNotification().getEventType() == Notification.ADD
-					|| notification.getRawNotification().getEventType() == Notification.ADD_MANY) {
-					final EObject notifier = notification.getNotifier();
-					treeViewer.expandToLevel(notifier, 1);
+				// nothing to do here
+			}
+
+			// workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=27480
+			// the treeviewer doesn't autoexpand on refresh
+			@Override
+			public void notifyAdd(Notifier notifier) {
+				treeViewer.expandToLevel(notifier, 1);
+			}
+
+			@Override
+			public void notifyRemove(Notifier notifier) {
+				// If an element is deleted, reset the selection to the root node
+				if (childContext != null && notifier == childContext.getDomainModel()) {
+					treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 				}
 			}
 		};
@@ -471,8 +485,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		});
 
 		// Register my tree viewer as the selection provider for my element
-		getViewModelContext().getService(ECPSelectionProviderService.class)
-			.registerSelectionProvider(getVElement(), treeViewer);
+		final ECPSelectionProviderService sps = getViewModelContext().getService(ECPSelectionProviderService.class);
+		final IMasterDetailSelectionProvider mdSelectionProvider = sps.createMasterDetailSelectionProvider(treeViewer,
+			() -> rightPanel);
+		sps.registerSelectionProvider(getVElement(), mdSelectionProvider);
 
 		return treeViewer;
 	}
@@ -820,6 +836,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		final IStructuredSelection selection) {
 
 		final Action deleteAction = new Action() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				super.run();
@@ -832,7 +849,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					deleteService = new EMFDeleteServiceImpl();
 				}
 				deleteService.deleteElements(selection.toList());
-				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
 		};
 		final String deleteImagePath = "icons/delete.png";//$NON-NLS-1$
@@ -952,7 +968,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
-					ViewModelContext childContext;
 					// we have a multi selection, the multi edit is enabled and the multi selection is valid
 					if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE
 						&& selection.size() > 1
@@ -991,7 +1006,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				boolean allOfSameType = true;
 				final EObject dummy = EcoreUtil.create(((EObject) treeSelected).eClass());
 
-				final Iterator iterator = selection.iterator();
+				final Iterator<?> iterator = selection.iterator();
 				final Set<EObject> selectedEObjects = new LinkedHashSet<EObject>();
 				while (iterator.hasNext()) {
 					final EObject eObject = (EObject) iterator.next();

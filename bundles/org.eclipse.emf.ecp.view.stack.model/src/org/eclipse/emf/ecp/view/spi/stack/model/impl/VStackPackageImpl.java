@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
@@ -30,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  *
  * @generated
  */
-public class VStackPackageImpl extends EPackageImpl implements VStackPackage
-{
+public class VStackPackageImpl extends EPackageImpl implements VStackPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -62,8 +63,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @see #init()
 	 * @generated
 	 */
-	private VStackPackageImpl()
-	{
+	private VStackPackageImpl() {
 		super(eNS_URI, VStackFactory.eINSTANCE);
 	}
 
@@ -88,16 +88,16 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VStackPackage init()
-	{
+	public static VStackPackage init() {
 		if (isInited) {
 			return (VStackPackage) EPackage.Registry.INSTANCE.getEPackage(VStackPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final VStackPackageImpl theStackPackage = (VStackPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VStackPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VStackPackageImpl());
+		final VStackPackageImpl theStackPackage = (VStackPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VStackPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new VStackPackageImpl());
 
 		isInited = true;
 
@@ -125,8 +125,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getStackLayout()
-	{
+	public EClass getStackLayout() {
 		return stackLayoutEClass;
 	}
 
@@ -137,8 +136,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getStackLayout_DomainModelReference()
-	{
+	public EReference getStackLayout_DomainModelReference() {
 		return (EReference) stackLayoutEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -149,8 +147,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getStackLayout_StackItems()
-	{
+	public EReference getStackLayout_StackItems() {
 		return (EReference) stackLayoutEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -161,8 +158,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getStackLayout_TopElement()
-	{
+	public EReference getStackLayout_TopElement() {
 		return (EReference) stackLayoutEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -173,8 +169,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getStackItem()
-	{
+	public EClass getStackItem() {
 		return stackItemEClass;
 	}
 
@@ -185,8 +180,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getStackItem_Value()
-	{
+	public EAttribute getStackItem_Value() {
 		return (EAttribute) stackItemEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -197,8 +191,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public VStackFactory getStackFactory()
-	{
+	public VStackFactory getStackFactory() {
 		return (VStackFactory) getEFactoryInstance();
 	}
 
@@ -218,8 +211,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -251,8 +243,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -283,24 +274,28 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 			getStackLayout_DomainModelReference(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"domainModelReference", null, 0, 1, VStackLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"domainModelReference", null, 0, 1, VStackLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getStackLayout_StackItems(),
 			getStackItem(),
 			null,
-			"stackItems", null, 0, -1, VStackLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"stackItems", null, 0, -1, VStackLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getStackLayout_TopElement(),
 			getStackItem(),
 			null,
-			"topElement", null, 0, 1, VStackLayout.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"topElement", null, 0, 1, VStackLayout.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stackItemEClass, VStackItem.class,
 			"StackItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getStackItem_Value(),
 			theEcorePackage.getEJavaObject(),
-			"value", null, 0, 1, VStackItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"value", null, 0, 1, VStackItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -45,8 +47,7 @@ public class KeyattributedmrAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public KeyattributedmrAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VKeyattributedmrPackage.eINSTANCE;
 		}
 	}
@@ -62,12 +63,10 @@ public class KeyattributedmrAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -79,29 +78,24 @@ public class KeyattributedmrAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected KeyattributedmrSwitch<Adapter> modelSwitch = new KeyattributedmrSwitch<Adapter>()
-	{
+	protected KeyattributedmrSwitch<Adapter> modelSwitch = new KeyattributedmrSwitch<Adapter>() {
 		@Override
-		public Adapter caseKeyAttributeDomainModelReference(VKeyAttributeDomainModelReference object)
-		{
+		public Adapter caseKeyAttributeDomainModelReference(VKeyAttributeDomainModelReference object) {
 			return createKeyAttributeDomainModelReferenceAdapter();
 		}
 
 		@Override
-		public Adapter caseDomainModelReference(VDomainModelReference object)
-		{
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
 			return createDomainModelReferenceAdapter();
 		}
 
 		@Override
-		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-		{
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
 			return createFeaturePathDomainModelReferenceAdapter();
 		}
 
 		@Override
-		public Adapter defaultCase(EObject object)
-		{
+		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
 	};

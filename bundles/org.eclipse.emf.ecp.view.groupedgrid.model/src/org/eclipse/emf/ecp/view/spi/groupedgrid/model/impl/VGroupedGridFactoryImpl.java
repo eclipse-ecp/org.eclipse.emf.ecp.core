@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -31,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan;
  * @generated
  * @since 1.2
  */
-public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGridFactory
-{
+public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGridFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -40,18 +41,14 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 *
 	 * @generated
 	 */
-	public static VGroupedGridFactory init()
-	{
-		try
-		{
+	public static VGroupedGridFactory init() {
+		try {
 			final VGroupedGridFactory theGroupedGridFactory = (VGroupedGridFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VGroupedGridPackage.eNS_URI);
-			if (theGroupedGridFactory != null)
-			{
+			if (theGroupedGridFactory != null) {
 				return theGroupedGridFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VGroupedGridFactoryImpl();
@@ -64,8 +61,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 *
 	 * @generated
 	 */
-	public VGroupedGridFactoryImpl()
-	{
+	public VGroupedGridFactoryImpl() {
 		super();
 	}
 
@@ -76,10 +72,8 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VGroupedGridPackage.GROUPED_GRID:
 			return createGroupedGrid();
 		case VGroupedGridPackage.GROUP:
@@ -100,8 +94,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * @generated
 	 */
 	@Override
-	public VGroupedGrid createGroupedGrid()
-	{
+	public VGroupedGrid createGroupedGrid() {
 		final VGroupedGridImpl groupedGrid = new VGroupedGridImpl();
 		return groupedGrid;
 	}
@@ -113,8 +106,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * @generated
 	 */
 	@Override
-	public VGroup createGroup()
-	{
+	public VGroup createGroup() {
 		final VGroupImpl group = new VGroupImpl();
 		return group;
 	}
@@ -126,8 +118,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * @generated
 	 */
 	@Override
-	public VRow createRow()
-	{
+	public VRow createRow() {
 		final VRowImpl row = new VRowImpl();
 		return row;
 	}
@@ -139,8 +130,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * @generated
 	 */
 	@Override
-	public VSpan createSpan()
-	{
+	public VSpan createSpan() {
 		final VSpanImpl span = new VSpanImpl();
 		return span;
 	}
@@ -152,8 +142,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * @generated
 	 */
 	@Override
-	public VGroupedGridPackage getGroupedGridPackage()
-	{
+	public VGroupedGridPackage getGroupedGridPackage() {
 		return (VGroupedGridPackage) getEPackage();
 	}
 
@@ -165,8 +154,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * @generated
 	 */
 	@Deprecated
-	public static VGroupedGridPackage getPackage()
-	{
+	public static VGroupedGridPackage getPackage() {
 		return VGroupedGridPackage.eINSTANCE;
 	}
 

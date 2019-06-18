@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -39,8 +41,7 @@ import org.eclipse.emf.ecp.makeithappen.model.task.util.TaskValidator;
  *
  * @generated
  */
-public class TaskPackageImpl extends EPackageImpl implements TaskPackage
-{
+public class TaskPackageImpl extends EPackageImpl implements TaskPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,8 +104,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @see #init()
 	 * @generated
 	 */
-	private TaskPackageImpl()
-	{
+	private TaskPackageImpl() {
 		super(eNS_URI, TaskFactory.eINSTANCE);
 	}
 
@@ -129,16 +129,16 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static TaskPackage init()
-	{
+	public static TaskPackage init() {
 		if (isInited) {
 			return (TaskPackage) EPackage.Registry.INSTANCE.getEPackage(TaskPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final TaskPackageImpl theTaskPackage = (TaskPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TaskPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new TaskPackageImpl());
+		final TaskPackageImpl theTaskPackage = (TaskPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof TaskPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new TaskPackageImpl());
 
 		isInited = true;
 
@@ -149,16 +149,13 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 		theTaskPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theTaskPackage,
-				new EValidator.Descriptor()
-				{
-					@Override
-					public EValidator getEValidator()
-					{
-						return TaskValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theTaskPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return TaskValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theTaskPackage.freeze();
@@ -175,8 +172,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getTask()
-	{
+	public EClass getTask() {
 		return taskEClass;
 	}
 
@@ -187,8 +183,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getTask_Name()
-	{
+	public EAttribute getTask_Name() {
 		return (EAttribute) taskEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -199,8 +194,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getTask_Description()
-	{
+	public EAttribute getTask_Description() {
 		return (EAttribute) taskEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -211,8 +205,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getTask_Assignee()
-	{
+	public EReference getTask_Assignee() {
 		return (EReference) taskEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -223,8 +216,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getTask_DueDate()
-	{
+	public EAttribute getTask_DueDate() {
 		return (EAttribute) taskEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -235,8 +227,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getTask_SubTasks()
-	{
+	public EReference getTask_SubTasks() {
 		return (EReference) taskEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -247,8 +238,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getTask_Done()
-	{
+	public EAttribute getTask_Done() {
 		return (EAttribute) taskEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -259,8 +249,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EOperation getTask__HasName__DiagnosticChain_Map()
-	{
+	public EOperation getTask__HasName__DiagnosticChain_Map() {
 		return taskEClass.getEOperations().get(0);
 	}
 
@@ -271,8 +260,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getUser()
-	{
+	public EClass getUser() {
 		return userEClass;
 	}
 
@@ -283,8 +271,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_FirstName()
-	{
+	public EAttribute getUser_FirstName() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -295,8 +282,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_LastName()
-	{
+	public EAttribute getUser_LastName() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -307,8 +293,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_Gender()
-	{
+	public EAttribute getUser_Gender() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -319,8 +304,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_Active()
-	{
+	public EAttribute getUser_Active() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -331,8 +315,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_TimeOfRegistration()
-	{
+	public EAttribute getUser_TimeOfRegistration() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -343,8 +326,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_Weight()
-	{
+	public EAttribute getUser_Weight() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -355,8 +337,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_Heigth()
-	{
+	public EAttribute getUser_Heigth() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -367,8 +348,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_Nationality()
-	{
+	public EAttribute getUser_Nationality() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -379,8 +359,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_DateOfBirth()
-	{
+	public EAttribute getUser_DateOfBirth() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -391,8 +370,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUser_Email()
-	{
+	public EAttribute getUser_Email() {
 		return (EAttribute) userEClass.getEStructuralFeatures().get(9);
 	}
 
@@ -403,8 +381,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getUser_Tasks()
-	{
+	public EReference getUser_Tasks() {
 		return (EReference) userEClass.getEStructuralFeatures().get(10);
 	}
 
@@ -415,8 +392,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getUserGroup()
-	{
+	public EClass getUserGroup() {
 		return userGroupEClass;
 	}
 
@@ -427,8 +403,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getUserGroup_Name()
-	{
+	public EAttribute getUserGroup_Name() {
 		return (EAttribute) userGroupEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -439,8 +414,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getUserGroup_Users()
-	{
+	public EReference getUserGroup_Users() {
 		return (EReference) userGroupEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -451,8 +425,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EEnum getGender()
-	{
+	public EEnum getGender() {
 		return genderEEnum;
 	}
 
@@ -463,8 +436,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EEnum getNationality()
-	{
+	public EEnum getNationality() {
 		return nationalityEEnum;
 	}
 
@@ -475,8 +447,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public EDataType getDateOfBirth()
-	{
+	public EDataType getDateOfBirth() {
 		return dateOfBirthEDataType;
 	}
 
@@ -487,8 +458,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 * @generated
 	 */
 	@Override
-	public TaskFactory getTaskFactory()
-	{
+	public TaskFactory getTaskFactory() {
 		return (TaskFactory) getEFactoryInstance();
 	}
 
@@ -508,8 +478,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -566,8 +535,7 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -589,29 +557,35 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 		initEAttribute(
 			getTask_Name(),
 			ecorePackage.getEString(),
-			"name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getTask_Description(),
 			ecorePackage.getEString(),
-			"description", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"description", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getTask_Assignee(),
 			getUser(),
 			getUser_Tasks(),
-			"assignee", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"assignee", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getTask_DueDate(),
 			ecorePackage.getEDate(),
-			"dueDate", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"dueDate", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getTask_SubTasks(),
 			getTask(),
 			null,
-			"subTasks", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"subTasks", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getTask_Done(),
 			ecorePackage.getEBoolean(),
-			"done", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"done", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		final EOperation op = initEOperation(getTask__HasName__DiagnosticChain_Map(), ecorePackage.getEBoolean(),
 			"hasName", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -627,60 +601,73 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 		initEAttribute(
 			getUser_FirstName(),
 			ecorePackage.getEString(),
-			"firstName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"firstName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_LastName(),
 			ecorePackage.getEString(),
-			"lastName", null, 1, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"lastName", null, 1, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_Gender(),
 			getGender(),
-			"gender", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"gender", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_Active(),
 			ecorePackage.getEBoolean(),
-			"active", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"active", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_TimeOfRegistration(),
 			ecorePackage.getEDate(),
-			"timeOfRegistration", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"timeOfRegistration", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_Weight(),
 			ecorePackage.getEDouble(),
-			"weight", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"weight", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_Heigth(),
 			ecorePackage.getEInt(),
-			"heigth", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"heigth", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_Nationality(),
 			getNationality(),
-			"nationality", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"nationality", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_DateOfBirth(),
 			getDateOfBirth(),
-			"dateOfBirth", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"dateOfBirth", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getUser_Email(),
 			ecorePackage.getEString(),
-			"email", null, 1, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"email", null, 1, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getUser_Tasks(),
 			getTask(),
 			getTask_Assignee(),
-			"tasks", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"tasks", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(userGroupEClass, UserGroup.class,
 			"UserGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getUserGroup_Name(),
 			ecorePackage.getEString(),
-			"name", null, 0, 1, UserGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"name", null, 0, 1, UserGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getUserGroup_Users(),
 			getUser(),
 			null,
-			"users", null, 0, -1, UserGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"users", null, 0, -1, UserGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(genderEEnum, Gender.class, "Gender"); //$NON-NLS-1$
@@ -715,13 +702,11 @@ public class TaskPackageImpl extends EPackageImpl implements TaskPackage
 	 *
 	 * @generated
 	 */
-	protected void createExtendedMetaDataAnnotations()
-	{
+	protected void createExtendedMetaDataAnnotations() {
 		final String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$
 		addAnnotation(dateOfBirthEDataType,
 			source,
-			new String[]
-			{ "baseType", "http://www.eclipse.org/emf/2003/XMLType#date" //$NON-NLS-1$ //$NON-NLS-2$
+			new String[] { "baseType", "http://www.eclipse.org/emf/2003/XMLType#date" //$NON-NLS-1$ //$NON-NLS-2$
 			});
 	}
 

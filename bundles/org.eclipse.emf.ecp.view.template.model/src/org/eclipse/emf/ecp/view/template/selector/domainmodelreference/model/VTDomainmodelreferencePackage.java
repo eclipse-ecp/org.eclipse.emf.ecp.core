@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -33,8 +35,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * @model kind="package"
  * @generated
  */
-public interface VTDomainmodelreferencePackage extends EPackage
-{
+public interface VTDomainmodelreferencePackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -73,8 +74,8 @@ public interface VTDomainmodelreferencePackage extends EPackage
 		.init();
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl
 	 * <em>Domain Model Reference Selector</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,6 +97,18 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	int DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE = VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Root EClass</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.21
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS = VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Domain Model Reference Selector</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,7 +116,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DOMAIN_MODEL_REFERENCE_SELECTOR_FEATURE_COUNT = VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 1;
+	int DOMAIN_MODEL_REFERENCE_SELECTOR_FEATURE_COUNT = VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Domain Model Reference Selector</em>' class.
@@ -116,8 +129,8 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	int DOMAIN_MODEL_REFERENCE_SELECTOR_OPERATION_COUNT = VTTemplatePackage.STYLE_SELECTOR_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector
 	 * <em>Domain Model Reference Selector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -129,8 +142,8 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	EClass getDomainModelReferenceSelector();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getDomainModelReference
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getDomainModelReference
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -141,6 +154,22 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * @generated
 	 */
 	EReference getDomainModelReferenceSelector_DomainModelReference();
+
+	/**
+	 * Returns the meta object for the reference
+	 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getRootEClass
+	 * <em>Root EClass</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.21
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the reference '<em>Root EClass</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getRootEClass()
+	 * @see #getDomainModelReferenceSelector()
+	 * @generated
+	 */
+	EReference getDomainModelReferenceSelector_RootEClass();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -166,11 +195,10 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl
 		 * <em>Domain Model Reference Selector</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -190,6 +218,18 @@ public interface VTDomainmodelreferencePackage extends EPackage
 		 */
 		EReference DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE = eINSTANCE
 			.getDomainModelReferenceSelector_DomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Root EClass</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.21
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS = eINSTANCE
+			.getDomainModelReferenceSelector_RootEClass();
 
 	}
 

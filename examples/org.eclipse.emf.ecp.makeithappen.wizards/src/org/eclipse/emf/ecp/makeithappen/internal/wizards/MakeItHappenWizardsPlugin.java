@@ -2,9 +2,11 @@
  * Copyright (c) 2002-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * IBM - Initial API and implementation
@@ -30,8 +32,7 @@ import org.osgi.framework.BundleContext;
  *
  * @see #INSTANCE
  */
-public final class MakeItHappenWizardsPlugin extends EMFPlugin
-{
+public final class MakeItHappenWizardsPlugin extends EMFPlugin {
 	/**
 	 * The singleton instance of the plugin.
 	 */
@@ -45,8 +46,7 @@ public final class MakeItHappenWizardsPlugin extends EMFPlugin
 	/**
 	 * Creates the singleton instance.
 	 */
-	private MakeItHappenWizardsPlugin()
-	{
+	private MakeItHappenWizardsPlugin() {
 		super(new ResourceLocator[] {});
 	}
 
@@ -54,8 +54,7 @@ public final class MakeItHappenWizardsPlugin extends EMFPlugin
 	 * Javadoc copied from base class.
 	 */
 	@Override
-	public ResourceLocator getPluginResourceLocator()
-	{
+	public ResourceLocator getPluginResourceLocator() {
 		return plugin;
 	}
 
@@ -64,16 +63,14 @@ public final class MakeItHappenWizardsPlugin extends EMFPlugin
 	 *
 	 * @return the singleton instance.
 	 */
-	public static Implementation getPlugin()
-	{
+	public static Implementation getPlugin() {
 		return plugin;
 	}
 
 	/**
 	 * The actual implementation of the Eclipse <b>Plugin</b>.
 	 */
-	public static class Implementation extends EclipseUIPlugin
-	{
+	public static class Implementation extends EclipseUIPlugin {
 		@Override
 		public void start(BundleContext context) throws Exception {
 			super.start(context);
@@ -81,8 +78,7 @@ public final class MakeItHappenWizardsPlugin extends EMFPlugin
 		}
 
 		@Override
-		public void stop(BundleContext context) throws Exception
-		{
+		public void stop(BundleContext context) throws Exception {
 
 			super.stop(context);
 		}

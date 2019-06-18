@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
@@ -84,7 +86,8 @@ public class ChildImpl extends AbstractChildImpl implements Child {
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetIntermediateTarget(IntermediateTarget newIntermediateTarget, NotificationChain msgs) {
+	public NotificationChain basicSetIntermediateTarget(IntermediateTarget newIntermediateTarget,
+		NotificationChain msgs) {
 		final IntermediateTarget oldIntermediateTarget = intermediateTarget;
 		intermediateTarget = newIntermediateTarget;
 		if (eNotificationRequired()) {
@@ -121,8 +124,7 @@ public class ChildImpl extends AbstractChildImpl implements Child {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.CHILD__INTERMEDIATE_TARGET,
 				newIntermediateTarget, newIntermediateTarget));
 		}

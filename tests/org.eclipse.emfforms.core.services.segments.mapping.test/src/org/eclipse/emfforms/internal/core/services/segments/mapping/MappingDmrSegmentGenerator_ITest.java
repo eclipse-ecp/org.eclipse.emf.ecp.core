@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -111,7 +113,8 @@ public class MappingDmrSegmentGenerator_ITest {
 			.filter(service -> MappingDmrSegmentGenerator.class.equals(service.getClass())).findFirst();
 		assertTrue(generator.isPresent());
 
-		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE.createMappingDomainModelReference();
+		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE
+			.createMappingDomainModelReference();
 		mappingDmr.setDomainModelEFeature(TestPackage.Literals.C__ECLASS_TO_A);
 		mappingDmr.setMappedClass(TestPackage.Literals.A);
 		final VFeaturePathDomainModelReference targetDmr = VViewFactory.eINSTANCE
@@ -138,7 +141,8 @@ public class MappingDmrSegmentGenerator_ITest {
 			.filter(service -> MappingDmrSegmentGenerator.class.equals(service.getClass())).findFirst();
 		assertTrue(generator.isPresent());
 
-		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE.createMappingDomainModelReference();
+		final VMappingDomainModelReference mappingDmr = VMappingdmrFactory.eINSTANCE
+			.createMappingDomainModelReference();
 		when(emfFormsSegmentGenerator.generateSegments(any(VDomainModelReference.class)))
 			.thenReturn(Collections.emptyList());
 		generator.get().generateSegments(mappingDmr);

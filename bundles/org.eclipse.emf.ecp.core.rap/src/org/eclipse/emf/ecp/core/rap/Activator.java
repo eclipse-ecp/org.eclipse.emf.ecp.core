@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Neil Mackenzie - initial implementation
@@ -30,8 +32,7 @@ public class Activator extends Plugin {
 
 	@Override
 	public final void start(final BundleContext context) throws Exception {
-		final Dictionary<String, Object> dictionary =
-			new Hashtable<String, Object>();
+		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put(Constants.SERVICE_RANKING, 1000);
 		context.registerService(ECPProjectManager.class,
 			new ECPProjectManagerFactory(), dictionary);

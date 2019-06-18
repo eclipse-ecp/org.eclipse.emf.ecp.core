@@ -86,11 +86,11 @@ public class CarPackageImpl extends EPackageImpl implements CarPackage {
 	public static CarPackage init() {
 		if (isInited)
 			return (CarPackage) EPackage.Registry.INSTANCE
-					.getEPackage(CarPackage.eNS_URI);
+				.getEPackage(CarPackage.eNS_URI);
 
 		// Obtain or create and register package
 		CarPackageImpl theCarPackage = (CarPackageImpl) (EPackage.Registry.INSTANCE
-				.get(eNS_URI) instanceof CarPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof CarPackageImpl ? EPackage.Registry.INSTANCE
 				.get(eNS_URI) : new CarPackageImpl());
 
 		isInited = true;
@@ -297,44 +297,44 @@ public class CarPackageImpl extends EPackageImpl implements CarPackage {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(personEClass, Person.class, "Person", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPerson_Name(), ecorePackage.getEString(), "name",
-				null, 1, 1, Person.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
+			null, 1, 1, Person.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 		initEReference(getPerson_Children(), this.getPerson(), null,
-				"children", null, 0, -1, Person.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+			"children", null, 0, -1, Person.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPerson_BirthPlace(), ecorePackage.getEString(),
-				"birthPlace", null, 0, 1, Person.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+			"birthPlace", null, 0, 1, Person.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(driverEClass, Driver.class, "Driver", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDriver_Age(), ecorePackage.getEInt(), "age", null, 0,
-				1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-				!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+			1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(carEClass, Car.class, "Car", !IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
+			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCar_Manufacturer(), ecorePackage.getEString(),
-				"manufacturer", null, 0, 1, Car.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+			"manufacturer", null, 0, 1, Car.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCar_LicensePlate(), ecorePackage.getEString(),
-				"licensePlate", null, 0, 1, Car.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+			"licensePlate", null, 0, 1, Car.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCar_SeatCount(), ecorePackage.getEInt(), "seatCount",
-				null, 0, 1, Car.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
+			null, 0, 1, Car.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 		initEReference(getCar_Driver(), this.getDriver(), null, "driver", null,
-				0, 1, Car.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-				IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+			0, 1, Car.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

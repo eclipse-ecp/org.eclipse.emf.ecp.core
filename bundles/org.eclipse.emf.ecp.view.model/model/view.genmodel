@@ -30,7 +30,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Diagnostic/diagnostics"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Attachment"/>
-    <genClasses image="false" ecoreClass="view.ecore#//DomainModelReference">
+    <genClasses ecoreClass="view.ecore#//DomainModelReference">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DomainModelReference/changeListener"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//DomainModelReference/segments"/>
     </genClasses>
@@ -62,7 +62,7 @@
     <genClasses image="false" ecoreClass="view.ecore#//ContainedContainer"/>
     <genClasses ecoreClass="view.ecore#//Control">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
-      <genFeatures createChild="true" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//ViewModelLoadingProperties">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>

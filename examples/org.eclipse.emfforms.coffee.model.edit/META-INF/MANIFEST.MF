@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emfforms.coffee.model.edit;singleton:=true
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emfforms.coffee.model.coffee.provider.CoffeeEditPlugin$Implementation
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emfforms.coffee.model.coffee.provider;version="1.20.0"
+Export-Package: org.eclipse.emfforms.coffee.model.coffee.provider;version="1.21.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.emfforms.coffee.model;bundle-version="[1.20.0,1.21.0)";visibility:=reexport,
+ org.eclipse.emfforms.coffee.model;bundle-version="[1.21.0,1.22.0)";visibility:=reexport,
  org.eclipse.emf.edit;bundle-version="[2.5.0,3.0.0)";visibility:=reexport
 Automatic-Module-Name: org.eclipse.emfforms.coffee.model.edit
 Bundle-ActivationPolicy: lazy

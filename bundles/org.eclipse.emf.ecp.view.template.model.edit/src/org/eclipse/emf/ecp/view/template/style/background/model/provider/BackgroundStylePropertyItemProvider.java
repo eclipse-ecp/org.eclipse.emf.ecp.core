@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -46,8 +48,7 @@ public class BackgroundStylePropertyItemProvider
 	IStructuredItemContentProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -55,8 +56,7 @@ public class BackgroundStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	public BackgroundStylePropertyItemProvider(AdapterFactory adapterFactory)
-	{
+	public BackgroundStylePropertyItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -68,10 +68,8 @@ public class BackgroundStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addColorPropertyDescriptor(object);
@@ -86,16 +84,14 @@ public class BackgroundStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addColorPropertyDescriptor(Object object)
-	{
+	protected void addColorPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_BackgroundStyleProperty_color_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_BackgroundStyleProperty_color_feature", "_UI_BackgroundStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_BackgroundStyleProperty_color_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_BackgroundStyleProperty_type"), //$NON-NLS-1$
 				VTBackgroundPackage.Literals.BACKGROUND_STYLE_PROPERTY__COLOR,
 				true,
 				false,
@@ -113,8 +109,7 @@ public class BackgroundStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/BackgroundStyleProperty")); //$NON-NLS-1$
 	}
 
@@ -126,11 +121,9 @@ public class BackgroundStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final String label = ((VTBackgroundStyleProperty) object).getColor();
-		return label == null || label.length() == 0 ?
-			getString("_UI_BackgroundStyleProperty_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_BackgroundStyleProperty_type") : //$NON-NLS-1$
 			getString("_UI_BackgroundStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -143,12 +136,10 @@ public class BackgroundStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTBackgroundStyleProperty.class))
-		{
+		switch (notification.getFeatureID(VTBackgroundStyleProperty.class)) {
 		case VTBackgroundPackage.BACKGROUND_STYLE_PROPERTY__COLOR:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -165,8 +156,7 @@ public class BackgroundStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -178,8 +168,7 @@ public class BackgroundStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

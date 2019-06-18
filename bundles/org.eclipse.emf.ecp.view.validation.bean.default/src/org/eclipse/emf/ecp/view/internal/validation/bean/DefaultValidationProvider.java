@@ -21,7 +21,7 @@ public class DefaultValidationProvider extends BeanValidationProvider {
 
 	@Override
 	protected MessageInterpolator getMessageInterpolator(
-			MessageInterpolator messageInterpolator) {
+		MessageInterpolator messageInterpolator) {
 		return messageInterpolator;
 	}
 

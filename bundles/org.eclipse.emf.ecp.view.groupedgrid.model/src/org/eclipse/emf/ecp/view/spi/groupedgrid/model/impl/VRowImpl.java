@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -38,8 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @generated
  * @since 1.2
  */
-public class VRowImpl extends EObjectImpl implements VRow
-{
+public class VRowImpl extends EObjectImpl implements VRow {
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -57,8 +58,7 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 *
 	 * @generated
 	 */
-	protected VRowImpl()
-	{
+	protected VRowImpl() {
 		super();
 	}
 
@@ -69,8 +69,7 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VGroupedGridPackage.Literals.ROW;
 	}
 
@@ -81,10 +80,8 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * @generated
 	 */
 	@Override
-	public EList<VContainedElement> getChildren()
-	{
-		if (children == null)
-		{
+	public EList<VContainedElement> getChildren() {
+		if (children == null) {
 			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
 				VGroupedGridPackage.ROW__CHILDREN);
 		}
@@ -98,10 +95,8 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VGroupedGridPackage.ROW__CHILDREN:
 			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
 		}
@@ -115,10 +110,8 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VGroupedGridPackage.ROW__CHILDREN:
 			return getChildren();
 		}
@@ -133,10 +126,8 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VGroupedGridPackage.ROW__CHILDREN:
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
@@ -152,10 +143,8 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.ROW__CHILDREN:
 			getChildren().clear();
 			return;
@@ -170,10 +159,8 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.ROW__CHILDREN:
 			return children != null && !children.isEmpty();
 		}

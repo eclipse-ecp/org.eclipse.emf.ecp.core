@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
@@ -28,8 +30,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  *
  * @generated
  */
-public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
-{
+public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -37,18 +38,14 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 *
 	 * @generated
 	 */
-	public static VStackFactory init()
-	{
-		try
-		{
+	public static VStackFactory init() {
+		try {
 			final VStackFactory theStackFactory = (VStackFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VStackPackage.eNS_URI);
-			if (theStackFactory != null)
-			{
+			if (theStackFactory != null) {
 				return theStackFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VStackFactoryImpl();
@@ -61,8 +58,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 *
 	 * @generated
 	 */
-	public VStackFactoryImpl()
-	{
+	public VStackFactoryImpl() {
 		super();
 	}
 
@@ -73,10 +69,8 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VStackPackage.STACK_LAYOUT:
 			return createStackLayout();
 		case VStackPackage.STACK_ITEM:
@@ -93,8 +87,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 * @generated
 	 */
 	@Override
-	public VStackLayout createStackLayout()
-	{
+	public VStackLayout createStackLayout() {
 		final VStackLayoutImpl stackLayout = new VStackLayoutImpl();
 		return stackLayout;
 	}
@@ -106,8 +99,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 * @generated
 	 */
 	@Override
-	public VStackItem createStackItem()
-	{
+	public VStackItem createStackItem() {
 		final VStackItemImpl stackItem = new VStackItemImpl();
 		return stackItem;
 	}
@@ -119,8 +111,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 * @generated
 	 */
 	@Override
-	public VStackPackage getStackPackage()
-	{
+	public VStackPackage getStackPackage() {
 		return (VStackPackage) getEPackage();
 	}
 
@@ -132,8 +123,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 * @generated
 	 */
 	@Deprecated
-	public static VStackPackage getPackage()
-	{
+	public static VStackPackage getPackage() {
 		return VStackPackage.eINSTANCE;
 	}
 

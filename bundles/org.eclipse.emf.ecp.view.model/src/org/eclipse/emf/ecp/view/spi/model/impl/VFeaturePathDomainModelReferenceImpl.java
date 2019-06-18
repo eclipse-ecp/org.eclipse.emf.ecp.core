@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -282,7 +284,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 	// return true;
 	// }
 
-	private final List<Setting> resolvedSetting = new ArrayList<Setting>();
+	private final List<Setting> resolvedSetting = new ArrayList<>();
 
 	/**
 	 * @since 1.3
@@ -294,7 +296,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 		}
 
 		EObject currentResolvedEObject = domainModel;
-		final ArrayList<EReference> currentLeftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
+		final ArrayList<EReference> currentLeftReferences = new ArrayList<>(getDomainModelEReferencePath());
 		for (final EReference eReference : getDomainModelEReferencePath()) {
 			if (!currentResolvedEObject.eClass().getEAllReferences().contains(eReference)) {
 				return false;
@@ -308,13 +310,18 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			}
 			EObject child = (EObject) currentResolvedEObject.eGet(eReference);
 			if (createMissingChildren && child == null) {
-				if (!eReference.getEReferenceType().isAbstract() && !eReference.getEReferenceType().isInterface()) {
-					child = EcoreUtil.create(eReference.getEReferenceType());
-				} else if (currentLeftReferences.size() == 1
+				if (eReference.getEReferenceType() == VViewPackage.Literals.DOMAIN_MODEL_REFERENCE
 					&& !domainModelEFeatureValue.getEContainingClass().isAbstract()
 					&& !domainModelEFeatureValue.getEContainingClass().isInterface()) {
+					// This case should only be relevant for the table tooling:
+					// If a feature is defined by a subclass of VDomainModelReference,
+					// instantiate the sub class instead of a general DMR
 					child = EcoreUtil.create(domainModelEFeatureValue.getEContainingClass());
+				} else if (!eReference.getEReferenceType().isAbstract()
+					&& !eReference.getEReferenceType().isInterface()) {
+					child = EcoreUtil.create(eReference.getEReferenceType());
 				}
+
 				if (child != null) {
 					/*
 					 * only set the reference if we could create a child. otherwise we could end up in a infinite loop,
@@ -525,7 +532,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			cleanDiagnostic(getDomainModelEFeature().equals(notification.getStructuralFeature()), notification);
 
 			resolve(rootEObject, false);
-			final List<DomainModelReferenceChangeListener> copyOfChangeListeners = new ArrayList<DomainModelReferenceChangeListener>(
+			final List<DomainModelReferenceChangeListener> copyOfChangeListeners = new ArrayList<>(
 				getChangeListener());
 			for (final DomainModelReferenceChangeListener listener : copyOfChangeListeners) {
 				listener.notifyChange();
@@ -551,7 +558,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			vControl.setDiagnostic(null);
 		} else if (Notification.REMOVE == notification.getRawNotification().getEventType()) {
 			final EObject oldValue = (EObject) notification.getRawNotification().getOldValue();
-			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+			final Set<Diagnostic> toDelete = new LinkedHashSet<>();
 			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
 				EObject diagnosticDataObject = (EObject) diagnostic.getData().get(0);
@@ -567,7 +574,7 @@ public class VFeaturePathDomainModelReferenceImpl extends VDomainModelReferenceI
 			}
 		} else if (Notification.REMOVE_MANY == notification.getRawNotification().getEventType()) {
 			final Collection<?> oldValue = (Collection<?>) notification.getRawNotification().getOldValue();
-			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+			final Set<Diagnostic> toDelete = new LinkedHashSet<>();
 			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
 				EObject diagnosticDataObject = (EObject) diagnostic.getData().get(0);

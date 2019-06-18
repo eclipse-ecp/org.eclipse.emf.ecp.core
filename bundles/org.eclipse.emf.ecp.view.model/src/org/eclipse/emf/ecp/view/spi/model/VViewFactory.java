@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -43,6 +45,17 @@ public interface VViewFactory extends EFactory {
 	 * @generated
 	 */
 	VDiagnostic createDiagnostic();
+
+	/**
+	 * Returns a new object of class '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.21
+	 *        <!-- end-user-doc -->
+	 * @return a new object of class '<em>Domain Model Reference</em>'.
+	 * @generated
+	 */
+	VDomainModelReference createDomainModelReference();
 
 	/**
 	 * Returns a new object of class '<em>View</em>'.
@@ -92,7 +105,6 @@ public interface VViewFactory extends EFactory {
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return a new object of class '<em>Feature Domain Model Reference Segment</em>'.
 	 * @generated
 	 */

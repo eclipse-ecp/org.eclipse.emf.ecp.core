@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -27,8 +29,7 @@ import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTD
  *
  * @generated
  */
-public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements VTDomainmodelreferenceFactory
-{
+public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements VTDomainmodelreferenceFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -36,18 +37,14 @@ public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements V
 	 *
 	 * @generated
 	 */
-	public static VTDomainmodelreferenceFactory init()
-	{
-		try
-		{
+	public static VTDomainmodelreferenceFactory init() {
+		try {
 			final VTDomainmodelreferenceFactory theDomainmodelreferenceFactory = (VTDomainmodelreferenceFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTDomainmodelreferencePackage.eNS_URI);
-			if (theDomainmodelreferenceFactory != null)
-			{
+			if (theDomainmodelreferenceFactory != null) {
 				return theDomainmodelreferenceFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTDomainmodelreferenceFactoryImpl();
@@ -60,8 +57,7 @@ public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements V
 	 *
 	 * @generated
 	 */
-	public VTDomainmodelreferenceFactoryImpl()
-	{
+	public VTDomainmodelreferenceFactoryImpl() {
 		super();
 	}
 
@@ -72,10 +68,8 @@ public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements V
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR:
 			return createDomainModelReferenceSelector();
 		default:
@@ -90,8 +84,7 @@ public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements V
 	 * @generated
 	 */
 	@Override
-	public VTDomainModelReferenceSelector createDomainModelReferenceSelector()
-	{
+	public VTDomainModelReferenceSelector createDomainModelReferenceSelector() {
 		final VTDomainModelReferenceSelectorImpl domainModelReferenceSelector = new VTDomainModelReferenceSelectorImpl();
 		return domainModelReferenceSelector;
 	}
@@ -103,8 +96,7 @@ public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements V
 	 * @generated
 	 */
 	@Override
-	public VTDomainmodelreferencePackage getDomainmodelreferencePackage()
-	{
+	public VTDomainmodelreferencePackage getDomainmodelreferencePackage() {
 		return (VTDomainmodelreferencePackage) getEPackage();
 	}
 
@@ -116,8 +108,7 @@ public class VTDomainmodelreferenceFactoryImpl extends EFactoryImpl implements V
 	 * @generated
 	 */
 	@Deprecated
-	public static VTDomainmodelreferencePackage getPackage()
-	{
+	public static VTDomainmodelreferencePackage getPackage() {
 		return VTDomainmodelreferencePackage.eINSTANCE;
 	}
 

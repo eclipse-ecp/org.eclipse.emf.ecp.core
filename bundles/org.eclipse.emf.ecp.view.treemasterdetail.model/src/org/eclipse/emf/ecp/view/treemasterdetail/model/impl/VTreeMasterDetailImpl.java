@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -35,8 +37,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage;
  *
  * @generated
  */
-public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTreeMasterDetail
-{
+public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTreeMasterDetail {
 	/**
 	 * The cached value of the '{@link #getDetailView() <em>Detail View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -54,8 +55,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 *
 	 * @generated
 	 */
-	protected VTreeMasterDetailImpl()
-	{
+	protected VTreeMasterDetailImpl() {
 		super();
 	}
 
@@ -66,8 +66,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VTreeMasterDetailPackage.Literals.TREE_MASTER_DETAIL;
 	}
 
@@ -78,8 +77,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	public VView getDetailView()
-	{
+	public VView getDetailView() {
 		return detailView;
 	}
 
@@ -89,12 +87,10 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetDetailView(VView newDetailView, NotificationChain msgs)
-	{
+	public NotificationChain basicSetDetailView(VView newDetailView, NotificationChain msgs) {
 		final VView oldDetailView = detailView;
 		detailView = newDetailView;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, oldDetailView, newDetailView);
 			if (msgs == null) {
@@ -113,10 +109,8 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	public void setDetailView(VView newDetailView)
-	{
-		if (newDetailView != detailView)
-		{
+	public void setDetailView(VView newDetailView) {
+		if (newDetailView != detailView) {
 			NotificationChain msgs = null;
 			if (detailView != null) {
 				msgs = ((InternalEObject) detailView).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -130,8 +124,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, newDetailView, newDetailView));
 		}
@@ -144,10 +137,8 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW:
 			return basicSetDetailView(null, msgs);
 		}
@@ -161,10 +152,8 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW:
 			return getDetailView();
 		}
@@ -178,10 +167,8 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW:
 			setDetailView((VView) newValue);
 			return;
@@ -196,10 +183,8 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW:
 			setDetailView((VView) null);
 			return;
@@ -214,10 +199,8 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW:
 			return detailView != null;
 		}

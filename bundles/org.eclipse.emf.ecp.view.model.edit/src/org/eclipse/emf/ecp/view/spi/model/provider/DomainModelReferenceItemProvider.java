@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -13,6 +15,7 @@ package org.eclipse.emf.ecp.view.spi.model.provider;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -21,6 +24,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,6 +34,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -37,7 +43,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  *
  * @since 1.19
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class DomainModelReferenceItemProvider
@@ -48,6 +53,8 @@ public class DomainModelReferenceItemProvider
 	ITreeItemContentProvider,
 	IItemLabelProvider,
 	IItemPropertySource {
+	private final AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -57,6 +64,10 @@ public class DomainModelReferenceItemProvider
 	 */
 	public DomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 	}
 
 	/**
@@ -108,15 +119,30 @@ public class DomainModelReferenceItemProvider
 	}
 
 	/**
-	 * This returns the label text for the adapted class.
+	 * This returns DomainModelReference.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DomainModelReference")); //$NON-NLS-1$
+	}
+
+	/**
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 */
+	@Override
 	public String getText(Object object) {
-		return getString("_UI_DomainModelReference_type"); //$NON-NLS-1$
+		final VDomainModelReference dmr = (VDomainModelReference) object;
+		final String label = dmr.getSegments().stream().map(adapterFactoryItemDelegator::getText)
+			.collect(Collectors.joining(" -> ")); //$NON-NLS-1$
+		return label == null ? getString("_UI_DomainModelReference_type") : label; //$NON-NLS-1$
 	}
 
 	/**

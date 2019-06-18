@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -249,7 +251,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		final String oldLastName = lastName;
 		lastName = newLastName;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LAST_NAME, oldLastName, lastName));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LAST_NAME, oldLastName, lastName));
 		}
 	}
 
@@ -419,7 +422,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 			if (diagnostic != null) {
 				diagnostic.add(new BasicDiagnostic(Diagnostic.ERROR, TestValidator.DIAGNOSTIC_SOURCE,
 					TestValidator.WRITER__VALIDATE, EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic",
-						new Object[] { "validate", EObjectValidator.getObjectLabel(this, context) }), new Object[] {
+						new Object[] { "validate", EObjectValidator.getObjectLabel(this, context) }),
+					new Object[] {
 						this, TestPackage.eINSTANCE.getWriter_FirstName() }));
 			}
 			return false;
@@ -431,7 +435,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 					.add(new BasicDiagnostic(Diagnostic.WARNING, TestValidator.DIAGNOSTIC_SOURCE,
 						TestValidator.WRITER__VALIDATE, EcorePlugin.INSTANCE.getString(
 							"_UI_GenericInvariant_diagnostic",
-							new Object[] { "validate", EObjectValidator.getObjectLabel(this, context) }), new Object[] {
+							new Object[] { "validate", EObjectValidator.getObjectLabel(this, context) }),
+						new Object[] {
 							this, TestPackage.eINSTANCE.getWriter_FirstName(),
 							TestPackage.eINSTANCE.getWriter_LastName() }));
 			}

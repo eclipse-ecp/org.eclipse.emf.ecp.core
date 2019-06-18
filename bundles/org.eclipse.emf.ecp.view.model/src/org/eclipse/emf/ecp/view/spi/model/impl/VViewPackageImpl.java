@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
@@ -258,11 +261,15 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		}
 
 		// Obtain or create and register package
-		final VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new VViewPackageImpl());
+		final Object registeredViewPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		final VViewPackageImpl theViewPackage = registeredViewPackage instanceof VViewPackageImpl
+			? (VViewPackageImpl) registeredViewPackage
+			: new VViewPackageImpl();
 
 		isInited = true;
+
+		// Initialize simple dependencies
+		EcorePackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theViewPackage.createPackageContents();
@@ -951,6 +958,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
+		// Obtain other dependent packages
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
+
 		// Create type parameters
 
 		// Set bounds for type parameters
@@ -970,14 +981,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		// Initialize classes and features; add operations and parameters
 		initEClass(diagnosticEClass, VDiagnostic.class, "Diagnostic", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDiagnostic_Diagnostics(), ecorePackage.getEJavaObject(), "diagnostics", null, 0, -1, //$NON-NLS-1$
+		initEAttribute(getDiagnostic_Diagnostics(), theEcorePackage.getEJavaObject(), "diagnostics", null, 0, -1, //$NON-NLS-1$
 			VDiagnostic.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(attachmentEClass, VAttachment.class, "Attachment", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(domainModelReferenceEClass, VDomainModelReference.class, "DomainModelReference", IS_ABSTRACT, //$NON-NLS-1$
+		initEClass(domainModelReferenceEClass, VDomainModelReference.class, "DomainModelReference", !IS_ABSTRACT, //$NON-NLS-1$
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDomainModelReference_ChangeListener(), getDomainModelReferenceChangeListener(),
 			"changeListener", null, 0, -1, VDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
@@ -988,25 +999,25 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(featurePathDomainModelReferenceEClass, VFeaturePathDomainModelReference.class,
 			"FeaturePathDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getFeaturePathDomainModelReference_DomainModelEFeature(), ecorePackage.getEStructuralFeature(),
-			null, "domainModelEFeature", null, 1, 1, VFeaturePathDomainModelReference.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
-		initEReference(getFeaturePathDomainModelReference_DomainModelEReferencePath(), ecorePackage.getEReference(),
+		initEReference(getFeaturePathDomainModelReference_DomainModelEFeature(),
+			theEcorePackage.getEStructuralFeature(), null, "domainModelEFeature", null, 1, 1, //$NON-NLS-1$
+			VFeaturePathDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFeaturePathDomainModelReference_DomainModelEReferencePath(), theEcorePackage.getEReference(),
 			null, "domainModelEReferencePath", null, 0, -1, VFeaturePathDomainModelReference.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
 
 		initEClass(elementEClass, VElement.class, "Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, VElement.class, !IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getElement_Label(), ecorePackage.getEString(), "label", null, 0, 1, VElement.class, IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getElement_Visible(), ecorePackage.getEBoolean(), "visible", "true", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getElement_Name(), theEcorePackage.getEString(), "name", null, 0, 1, VElement.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getElement_Label(), theEcorePackage.getEString(), "label", null, 0, 1, VElement.class, //$NON-NLS-1$
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getElement_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getElement_Visible(), theEcorePackage.getEBoolean(), "visible", "true", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getElement_Readonly(), ecorePackage.getEBoolean(), "readonly", "false", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getElement_Enabled(), theEcorePackage.getEBoolean(), "enabled", "true", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
+			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getElement_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getElement_Diagnostic(), getDiagnostic(), null, "diagnostic", null, 0, 1, VElement.class, //$NON-NLS-1$
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
@@ -1014,17 +1025,17 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEReference(getElement_Attachments(), getAttachment(), null, "attachments", null, 0, -1, VElement.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getElement_Uuid(), ecorePackage.getEString(), "uuid", null, 0, 1, VElement.class, IS_TRANSIENT, //$NON-NLS-1$
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getElement_Uuid(), theEcorePackage.getEString(), "uuid", null, 0, 1, VElement.class, //$NON-NLS-1$
+			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(viewEClass, VView.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getView_RootEClass(), ecorePackage.getEClass(), null, "rootEClass", null, 1, 1, VView.class, //$NON-NLS-1$
+		initEReference(getView_RootEClass(), theEcorePackage.getEClass(), null, "rootEClass", null, 1, 1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEReference(getView_Children(), getContainedElement(), null, "children", null, 0, -1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getView_EcorePaths(), ecorePackage.getEString(), "ecorePaths", null, 0, -1, VView.class, //$NON-NLS-1$
+		initEAttribute(getView_EcorePaths(), theEcorePackage.getEString(), "ecorePaths", null, 0, -1, VView.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getView_LoadingProperties(), getViewModelProperties(), null, "loadingProperties", null, 1, //$NON-NLS-1$
 			1, VView.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
@@ -1061,9 +1072,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(stringToObjectMapEntryEClass, Map.Entry.class, "StringToObjectMapEntry", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			!IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToObjectMapEntry_Key(), ecorePackage.getEString(), "key", null, 1, 1, Map.Entry.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToObjectMapEntry_Value(), ecorePackage.getEJavaObject(), "value", null, 1, 1, //$NON-NLS-1$
+		initEAttribute(getStringToObjectMapEntry_Key(), theEcorePackage.getEString(), "key", null, 1, 1, //$NON-NLS-1$
+			Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
+		initEAttribute(getStringToObjectMapEntry_Value(), theEcorePackage.getEJavaObject(), "value", null, 1, 1, //$NON-NLS-1$
 			Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
 
@@ -1078,7 +1090,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(hasTooltipEClass, VHasTooltip.class, "HasTooltip", IS_ABSTRACT, IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getHasTooltip_Tooltip(), ecorePackage.getEString(), "tooltip", null, 0, 1, VHasTooltip.class, //$NON-NLS-1$
+		initEAttribute(getHasTooltip_Tooltip(), theEcorePackage.getEString(), "tooltip", null, 0, 1, VHasTooltip.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(domainModelReferenceSegmentEClass, VDomainModelReferenceSegment.class, "DomainModelReferenceSegment", //$NON-NLS-1$
@@ -1086,7 +1098,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(featureDomainModelReferenceSegmentEClass, VFeatureDomainModelReferenceSegment.class,
 			"FeatureDomainModelReferenceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getFeatureDomainModelReferenceSegment_DomainModelFeature(), ecorePackage.getEString(),
+		initEAttribute(getFeatureDomainModelReferenceSegment_DomainModelFeature(), theEcorePackage.getEString(),
 			"domainModelFeature", null, 1, 1, VFeatureDomainModelReferenceSegment.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
 			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

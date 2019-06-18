@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -154,24 +156,20 @@ public class DynamicContainmentTreeDomainModelReferenceItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
 				ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
 				ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
+		newChildDescriptors.add(
+			createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
@@ -187,9 +185,9 @@ public class DynamicContainmentTreeDomainModelReferenceItemProvider
 		final Object childFeature = feature;
 		final Object childObject = child;
 
-		final boolean qualify =
-			childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT ||
-				childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE;
+		final boolean qualify = childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT
+			||
+			childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE;
 
 		if (qualify) {
 			return getString("_UI_CreateChild_text2",

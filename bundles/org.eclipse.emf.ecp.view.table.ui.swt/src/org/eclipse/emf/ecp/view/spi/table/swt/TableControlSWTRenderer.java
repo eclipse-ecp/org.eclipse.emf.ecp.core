@@ -2,32 +2,36 @@
  * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import static java.util.stream.Collectors.toCollection;
+import static org.eclipse.emfforms.spi.swt.table.ViewerRefreshManager.getRefreshRunnable;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -41,7 +45,9 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Notification;
@@ -61,6 +67,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPFilterableCell;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPViewerAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
@@ -78,6 +85,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -146,6 +154,7 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
+import org.eclipse.emfforms.spi.swt.table.ViewerRefreshManager;
 import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
 import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
 import org.eclipse.emfforms.spi.swt.table.action.ActionConfigurationBuilder;
@@ -411,9 +420,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			tableViewerSWTBuilder.customizeActionConfiguration(actionConfiguration);
 
 			tableViewerSWTBuilder
-				.configureTable(TableConfigurationBuilder.usingDefaults()
-					.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+				.configureTable(TableConfigurationBuilder.from(tableViewerSWTBuilder)
 					.dataMapEntry(TableConfiguration.DMR, dmrToCheck)
+					.dataMapEntry(ViewerRefreshManager.REFRESH_MANAGER,
+						(ViewerRefreshManager) this::postRefresh)
 					.build());
 
 			regularColumnsStartIndex = 0;
@@ -870,8 +880,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 
 				tableViewerSWTBuilder.addColumn(
-					ColumnConfigurationBuilder.usingDefaults()
-						.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+					ColumnConfigurationBuilder.from(tableViewerSWTBuilder)
 						.weight(weight)
 						.minWidth(minWidth)
 						.text(text)
@@ -974,6 +983,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.11
 	 */
 	protected VDomainModelReference getDMRToMultiReference() {
+		// A segment based view model uses the plain dmr
+		if (getVElement().getDomainModelReference().eClass() == VViewPackage.Literals.DOMAIN_MODEL_REFERENCE) {
+			return getVElement().getDomainModelReference();
+		}
+
 		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
 			.getDomainModelReference();
 		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null
@@ -1485,32 +1499,48 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void applyValidation(VDiagnostic oldDiagnostic, VDiagnostic newDiagnostic) {
-		final Stream<Object> oldDiagnostics = oldDiagnostic == null ? Stream.empty()
-			: oldDiagnostic.getDiagnostics().stream();
-		final Stream<Object> newDiagnostics = newDiagnostic == null ? Stream.empty()
-			: newDiagnostic.getDiagnostics().stream();
-
-		final Set<Object> updates = Stream.concat(oldDiagnostics, newDiagnostics)
-			.map(this::getSubject).filter(Objects::nonNull).collect(toCollection(LinkedHashSet::new));
-
-		runnableManager.executeAsync(new ApplyValidationRunnable(updates));
-	}
-
-	private Object getSubject(Object diagnostic) {
-		Object result = null;
-
-		if (diagnostic instanceof Diagnostic) {
-			final List<?> data = ((Diagnostic) diagnostic).getData();
-			result = data.isEmpty() ? null : data.get(0);
-		}
-
-		return result;
+		getRunnableManager().executeAsync(new ComputeValidationUpdate(oldDiagnostic, newDiagnostic));
 	}
 
 	@Override
 	protected void applyValidation() {
-		if (!runnableManager.isRunning()) {
-			runnableManager.executeAsync(new ApplyValidationRunnable());
+		if (!getRunnableManager().isRunning()) {
+			getRunnableManager().executeAsync(new ApplyValidationRunnable());
+		}
+	}
+
+	/**
+	 * Obtain my runnable manager (visible for testability).
+	 *
+	 * @return my runnable manager
+	 */
+	final RunnableManager getRunnableManager() {
+		return runnableManager;
+	}
+
+	/**
+	 * Post a request to refresh my {@linkplain #getTableViewer() viewer} on the
+	 * asynchronous refresh manager.
+	 *
+	 * @since 1.21
+	 * @see #getTableViewer()
+	 * @see ViewerRefreshManager
+	 */
+	protected void postRefresh() {
+		postRefresh(getRefreshRunnable(getTableViewer()));
+	}
+
+	/**
+	 * Post a refresh request on the asynchronous refresh manager.
+	 *
+	 * @param refreshRunnable the refresh operation to execute
+	 * @since 1.21
+	 * @see ViewerRefreshManager
+	 */
+	protected void postRefresh(Runnable refreshRunnable) {
+		final Viewer viewer = getTableViewer();
+		if (viewer != null && !viewer.getControl().isDisposed()) {
+			getRunnableManager().executeAsync(refreshRunnable);
 		}
 	}
 
@@ -1826,7 +1856,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		private final class TableControlDropAdapter extends EditingDomainViewerDropAdapter {
 
-			private final AbstractTableViewer tableViewer;
 			private EObject eObject;
 			private EStructuralFeature eStructuralFeature;
 			private List<Object> list;
@@ -1834,7 +1863,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			@SuppressWarnings("unchecked")
 			TableControlDropAdapter(EditingDomain domain, Viewer viewer, AbstractTableViewer tableViewer) {
 				super(domain, viewer);
-				this.tableViewer = tableViewer;
 				try {
 					final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
 						getViewModelContext().getDomainModel());
@@ -1911,7 +1939,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 				domain.getCommandStack().execute(command);
 
-				tableViewer.refresh();
+				postRefresh();
 			}
 		}
 
@@ -1993,6 +2021,149 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * A two-stage asynchronous task that first, in the background, computes the objects
+	 * that have actually seen validation changes and then post the viewer update
+	 * on the UI thread.
+	 */
+	private final class ComputeValidationUpdate implements Runnable, RunnableManager.BackgroundStage {
+		private final Set<Diagnostic> oldDiagnostics;
+		private final Set<Diagnostic> newDiagnostics;
+
+		private Runnable update;
+
+		/**
+		 * Initializes me with the old and new diagnostics from which to compute the objects
+		 * that need to be updated in my viewer.
+		 *
+		 * @param oldDiagnostic the old validation state
+		 * @param newDiagnostic the new validation state
+		 */
+		ComputeValidationUpdate(VDiagnostic oldDiagnostic, VDiagnostic newDiagnostic) {
+			super();
+
+			// These have to be extracted on the calling thread because the ELists
+			// are not thread-safe
+			oldDiagnostics = getDiagnostics(oldDiagnostic);
+			newDiagnostics = getDiagnostics(newDiagnostic);
+		}
+
+		@Override
+		public Runnable getNextStage() {
+			return update;
+		}
+
+		@Override
+		public void run() {
+			// Compute the difference between the diagnostics to find what actually
+			// are the logical changes in validation that will need updates in the UI
+			final Set<Diagnostic> difference = difference(oldDiagnostics, newDiagnostics);
+			final Set<Object> updates = difference.stream().map(this::getSubject).filter(Objects::nonNull)
+				.collect(Collectors.toSet());
+			if (!updates.isEmpty()) {
+				update = new ApplyValidationRunnable(updates);
+			} // Otherwise we don't need the UI update stage
+		}
+
+		private Set<Diagnostic> getDiagnostics(VDiagnostic container) {
+			return container == null ? Collections.emptySet()
+				: container.getDiagnostics().stream()
+					.filter(Diagnostic.class::isInstance).map(Diagnostic.class::cast)
+					.collect(Collectors.toSet());
+		}
+
+		private Object getSubject(Diagnostic diagnostic) {
+			final List<?> data = diagnostic.getData();
+			return data.isEmpty() ? null : data.get(0);
+		}
+
+		private Set<Diagnostic> difference(Set<Diagnostic> set1, Set<Diagnostic> set2) {
+			// Diagnostics do not implement equals(), so we have to do it for them.
+			// Most straightforward approach is to use a tree set, which uses the
+			// comparator's zero result to test equality
+			final SortedSet<Diagnostic> sorted1 = new TreeSet<>(this::compare);
+			sorted1.addAll(set1);
+			final SortedSet<Diagnostic> sorted2 = new TreeSet<>(this::compare);
+			sorted2.addAll(set2);
+
+			// Difference each side
+			sorted1.removeAll(set2);
+			sorted2.removeAll(set1);
+
+			// And the union of that
+			sorted1.addAll(sorted2);
+
+			return sorted1;
+		}
+
+		private int compare(Diagnostic d1, Diagnostic d2) {
+			int result = d1.getSeverity() - d2.getSeverity();
+			if (result != 0) {
+				return result;
+			}
+
+			result = d1.getCode() - d2.getCode();
+			if (result != 0) {
+				return result;
+			}
+
+			result = compare(d1.getSource(), d2.getSource());
+			if (result != 0) {
+				return result;
+			}
+
+			result = compare(d1.getMessage(), d2.getMessage());
+			if (result != 0) {
+				return result;
+			}
+
+			result = compare(d1.getData(), d2.getData());
+
+			// The diagnostics from validation should not have exceptions and
+			// the children are immaterial because we've already flattened them
+
+			return result;
+		}
+
+		private int compare(String s1, String s2) {
+			if (s1 == null) {
+				return s2 == null ? 0 : -1;
+			}
+			if (s2 == null) {
+				return +1;
+			}
+			return s1.compareTo(s2);
+		}
+
+		private int compare(List<?> s1, List<?> s2) {
+			if (s1 == null) {
+				return s2 == null ? 0 : -1;
+			}
+			if (s2 == null) {
+				return +1;
+			}
+
+			final int size = s1.size();
+			int result = size - s2.size();
+			if (result != 0) {
+				return result;
+			}
+
+			int i = 0;
+			for (i = 0; i < size; i++) {
+				final Object e1 = s1.get(i);
+				final Object e2 = s2.get(i);
+				if (e1 != e2) {
+					// Arbitrary but stable order
+					result = System.identityHashCode(e1) - System.identityHashCode(e2);
+					break;
+				}
+			}
+
+			return result;
+		}
+	}
+
+	/**
 	 * Runnable which is called by {@link TableControlSWTRenderer#applyValidation() applyValidation}.
 	 *
 	 */
@@ -2039,7 +2210,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				// Update these specific objects
 				getTableViewer().update(updates.toArray(), null);
 			} else {
-				// Just refresh everything
+				// Just refresh everything. We are already in the RunnableManager
+				// context, so don't post but do it directly
 				getTableViewer().refresh();
 			}
 		}
@@ -2337,9 +2509,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		private void sortAndReveal(Object toReveal) {
-			Display.getDefault().asyncExec(() -> {
-				getTableViewer().refresh();
-				getTableViewer().reveal(toReveal);
+			final AbstractTableViewer viewer = getTableViewer();
+			postRefresh(() -> {
+				viewer.refresh();
+				viewer.reveal(toReveal);
 			});
 		}
 	}
@@ -2351,7 +2524,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @author emueller
 	 *
 	 */
-	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
+	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider, IAdaptable {
 
 		private final EStructuralFeature feature;
 		private final CellEditor cellEditor;
@@ -2416,21 +2589,50 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public void update(ViewerCell cell) {
 			final EObject element = (EObject) cell.getElement();
-			final Object value = attributeMaps[0].get(element);
+			final Object value = getValue(element);
 			if (ECPCustomUpdateCellEditor.class.isInstance(cellEditor)) {
 				((ECPCustomUpdateCellEditor) cellEditor).updateCell(cell, value);
-			} else if (ECPCellEditor.class.isInstance(cellEditor)) {
-				final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
-				final String text = ecpCellEditor.getFormatedString(value);
-				cell.setText(text == null ? "" : text); //$NON-NLS-1$
-				cell.setImage(ecpCellEditor.getImage(value));
 			} else {
-				cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
-				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
+				String text;
+				Image image = null;
+
+				if (ECPCellEditor.class.isInstance(cellEditor)) {
+					final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
+					text = Objects.toString(ecpCellEditor.getFormatedString(value), ""); //$NON-NLS-1$
+					image = ecpCellEditor.getImage(value);
+				} else {
+					text = Objects.toString(value, ""); //$NON-NLS-1$
+					cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
+				}
+
+				if (!Objects.equals(text, cell.getText())) {
+					cell.setText(text);
+				}
+
+				// Don't try to compare images
+				if (image != null || cell.getImage() != null) {
+					cell.setImage(image);
+				}
 			}
 
-			cell.setForeground(getForeground(element));
-			cell.setBackground(getBackground(element));
+			final Color foreground = getForeground(element);
+			if (!Objects.equals(cell.getForeground(), foreground)) {
+				cell.setForeground(foreground);
+			}
+			final Color background = getBackground(element);
+			if (!Objects.equals(cell.getBackground(), background)) {
+				cell.setBackground(background);
+			}
+		}
+
+		/**
+		 * Get the value for an {@code object} from my observable map.
+		 *
+		 * @param object an object to look up the value for
+		 * @return its value
+		 */
+		Object getValue(Object object) {
+			return attributeMaps[0].get(object);
 		}
 
 		/**
@@ -2480,6 +2682,30 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		protected VDomainModelReference getDmr() {
 			return dmr;
 		}
+
+		@Override
+		public <T> T getAdapter(Class<T> adapter) {
+			T result = null;
+
+			// For custom cell update, we must ask the cell editor to render a string for filtering
+			if (adapter == ECPFilterableCell.class && !(cellEditor instanceof ECPCustomUpdateCellEditor)) {
+				ECPFilterableCell filterable = null;
+
+				if (cellEditor instanceof ECPCellEditor) {
+					final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
+					filterable = object -> ecpCellEditor.getFormatedString(getValue(object));
+				} else {
+					filterable = object -> Objects.toString(object, ""); //$NON-NLS-1$
+				}
+
+				result = adapter.cast(filterable);
+			} else {
+				result = Platform.getAdapterManager().getAdapter(this, adapter);
+			}
+
+			return result;
+		}
+
 	}
 
 	/**

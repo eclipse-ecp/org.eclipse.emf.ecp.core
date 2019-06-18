@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -30,12 +32,12 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getDate <em>Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getXmlDate <em>Xml Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getMyEnum <em>My Enum</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -290,7 +292,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (date: "); //$NON-NLS-1$
 		result.append(date);
 		result.append(", xmlDate: "); //$NON-NLS-1$

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -15,24 +17,33 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.spi.view.template.service.ViewTemplateSupplier;
 import org.eclipse.emf.ecp.spi.view.template.service.ViewTemplateSupplierUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
+import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.segments.EMFFormsSegmentGenerator;
+import org.eclipse.emfforms.spi.core.services.segments.RuntimeModeUtil;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -54,6 +65,7 @@ public class ViewTemplateSupplierImpl implements ViewTemplateSupplier {
 	private Set<VTViewTemplate> registeredTemplates = new LinkedHashSet<VTViewTemplate>();
 
 	private ReportService reportService;
+	private EMFFormsSegmentGenerator segmentGenerator;
 
 	/**
 	 * Sets the report service.
@@ -63,6 +75,16 @@ public class ViewTemplateSupplierImpl implements ViewTemplateSupplier {
 	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	void setReportService(ReportService reportService) {
 		this.reportService = reportService;
+	}
+
+	/**
+	 * Sets the segment generator.
+	 *
+	 * @param segmentGenerator The {@link EMFFormsSegmentGenerator}
+	 */
+	@Reference(unbind = "-")
+	void setEMFFormsSegmentGenerator(EMFFormsSegmentGenerator segmentGenerator) {
+		this.segmentGenerator = segmentGenerator;
 	}
 
 	/**
@@ -88,12 +110,52 @@ public class ViewTemplateSupplierImpl implements ViewTemplateSupplier {
 			final VTViewTemplate viewTemplate = ViewTemplateSupplierUtil.loadViewTemplate(resourceURI);
 
 			if (viewTemplate != null) {
+				// If segment generation is enabled, generate segments for all dmr selectors' legacy dmrs
+				if (RuntimeModeUtil.isSegmentMode()) {
+					generateSegments(viewTemplate);
+				}
 				registeredTemplates.add(viewTemplate);
 			} else {
 				reportService.report(new AbstractReport(MessageFormat.format(
 					"The registered resource at location \"{0}\" did not contain a valid VTViewTemplate.", //$NON-NLS-1$
 					resourceURI.toPlatformString(true)), IStatus.WARNING));
 			}
+		}
+	}
+
+	/**
+	 * Generate segments for all DMRs of domain model reference selectors and set the corresponding EClasses to the
+	 * selectors.
+	 *
+	 * @param template The view template containing the DMR selectors
+	 */
+	protected void generateSegments(VTViewTemplate template) {
+		final List<VTDomainModelReferenceSelector> dmrSelectors = template.getStyles().stream()
+			.map(VTStyle::getSelector)
+			.filter(VTDomainModelReferenceSelector.class::isInstance)
+			.map(VTDomainModelReferenceSelector.class::cast)
+			.collect(Collectors.toList());
+
+		for (final VTDomainModelReferenceSelector dmrSelector : dmrSelectors) {
+			final VDomainModelReference dmr = dmrSelector.getDomainModelReference();
+
+			// If the dmr isn't a feature dmr, we cannot determine the root EClass
+			// If the dmr already contains segments, there isn't anything to do
+			if (!(dmr instanceof VFeaturePathDomainModelReference) || !dmr.getSegments().isEmpty()) {
+				continue;
+			}
+			final List<VDomainModelReferenceSegment> segments = segmentGenerator.generateSegments(dmr);
+			if (segments.isEmpty()) {
+				continue;
+			}
+			dmr.getSegments().addAll(segments);
+
+			// determine and set root EClass
+			final VFeaturePathDomainModelReference featureDmr = (VFeaturePathDomainModelReference) dmr;
+			final EClass rootEClass = featureDmr.getDomainModelEReferencePath().isEmpty()
+				? featureDmr.getDomainModelEFeature().getEContainingClass()
+				: featureDmr.getDomainModelEReferencePath().get(0).getEContainingClass();
+			dmrSelector.setRootEClass(rootEClass);
 		}
 	}
 

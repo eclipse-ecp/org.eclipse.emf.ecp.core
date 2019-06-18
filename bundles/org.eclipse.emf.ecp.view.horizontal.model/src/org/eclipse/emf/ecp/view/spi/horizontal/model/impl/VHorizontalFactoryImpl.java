@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -29,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
  *
  * @generated
  */
-public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalFactory
-{
+public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -38,18 +39,14 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 *
 	 * @generated
 	 */
-	public static VHorizontalFactory init()
-	{
-		try
-		{
+	public static VHorizontalFactory init() {
+		try {
 			final VHorizontalFactory theHorizontalFactory = (VHorizontalFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VHorizontalPackage.eNS_URI);
-			if (theHorizontalFactory != null)
-			{
+			if (theHorizontalFactory != null) {
 				return theHorizontalFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VHorizontalFactoryImpl();
@@ -62,8 +59,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 *
 	 * @generated
 	 */
-	public VHorizontalFactoryImpl()
-	{
+	public VHorizontalFactoryImpl() {
 		super();
 	}
 
@@ -74,10 +70,8 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VHorizontalPackage.HORIZONTAL_LAYOUT:
 			return createHorizontalLayout();
 		default:
@@ -92,8 +86,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Override
-	public VHorizontalLayout createHorizontalLayout()
-	{
+	public VHorizontalLayout createHorizontalLayout() {
 		final VHorizontalLayoutImpl horizontalLayout = new VHorizontalLayoutImpl();
 		return horizontalLayout;
 	}
@@ -105,8 +98,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Override
-	public VHorizontalPackage getHorizontalPackage()
-	{
+	public VHorizontalPackage getHorizontalPackage() {
 		return (VHorizontalPackage) getEPackage();
 	}
 
@@ -118,8 +110,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * @generated
 	 */
 	@Deprecated
-	public static VHorizontalPackage getPackage()
-	{
+	public static VHorizontalPackage getPackage() {
 		return VHorizontalPackage.eINSTANCE;
 	}
 

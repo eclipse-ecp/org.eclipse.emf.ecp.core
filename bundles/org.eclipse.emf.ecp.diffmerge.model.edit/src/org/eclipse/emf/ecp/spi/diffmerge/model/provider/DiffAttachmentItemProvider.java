@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -80,7 +82,8 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 				getResourceLocator(),
 				getString("_UI_DiffAttachment_totalNumberOfDiffs_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_totalNumberOfDiffs_feature", "_UI_DiffAttachment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_totalNumberOfDiffs_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_DiffAttachment_type"), //$NON-NLS-1$
 				VDiffmergePackage.Literals.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS,
 				true, false, false,
 				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
@@ -100,7 +103,8 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 				getResourceLocator(),
 				getString("_UI_DiffAttachment_mergedDiffs_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_mergedDiffs_feature", "_UI_DiffAttachment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_mergedDiffs_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_DiffAttachment_type"), //$NON-NLS-1$
 				VDiffmergePackage.Literals.DIFF_ATTACHMENT__MERGED_DIFFS,
 				true, false, false,
 				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
@@ -127,9 +131,11 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 	@Override
 	public String getText(Object object) {
 		final VDiffAttachment diffAttachment = (VDiffAttachment) object;
-		//		return getString("_UI_DiffAttachment_type") + " " + diffAttachment.getTotalNumberOfDiffs(); //$NON-NLS-1$ //$NON-NLS-2$
+		// return getString("_UI_DiffAttachment_type") + " " + diffAttachment.getTotalNumberOfDiffs(); //$NON-NLS-1$
+		// //$NON-NLS-2$
 		return getString(
-			"_UI_DiffAttachment_text", new Object[] { diffAttachment.getMergedDiffs(), diffAttachment.getTotalNumberOfDiffs() });//$NON-NLS-1$
+			"_UI_DiffAttachment_text", //$NON-NLS-1$
+			new Object[] { diffAttachment.getMergedDiffs(), diffAttachment.getTotalNumberOfDiffs() });
 	}
 
 	/**

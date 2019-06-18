@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
@@ -28,8 +30,7 @@ import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage;
  *
  * @generated
  */
-public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPackage
-{
+public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -52,8 +53,7 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 	 * @see #init()
 	 * @generated
 	 */
-	private VViewproxyPackageImpl()
-	{
+	private VViewproxyPackageImpl() {
 		super(eNS_URI, VViewproxyFactory.eINSTANCE);
 	}
 
@@ -78,8 +78,7 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VViewproxyPackage init()
-	{
+	public static VViewproxyPackage init() {
 		if (isInited) {
 			return (VViewproxyPackage) EPackage.Registry.INSTANCE.getEPackage(VViewproxyPackage.eNS_URI);
 		}
@@ -87,8 +86,8 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 		// Obtain or create and register package
 		final VViewproxyPackageImpl theViewproxyPackage = (VViewproxyPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VViewproxyPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VViewproxyPackageImpl());
+				.get(eNS_URI)
+				: new VViewproxyPackageImpl());
 
 		isInited = true;
 
@@ -116,8 +115,7 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 	 * @generated
 	 */
 	@Override
-	public EClass getViewProxy()
-	{
+	public EClass getViewProxy() {
 		return viewProxyEClass;
 	}
 
@@ -128,8 +126,7 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 	 * @generated
 	 */
 	@Override
-	public EAttribute getViewProxy_Id()
-	{
+	public EAttribute getViewProxy_Id() {
 		return (EAttribute) viewProxyEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -140,8 +137,7 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 	 * @generated
 	 */
 	@Override
-	public VViewproxyFactory getViewproxyFactory()
-	{
+	public VViewproxyFactory getViewproxyFactory() {
 		return (VViewproxyFactory) getEFactoryInstance();
 	}
 
@@ -161,8 +157,7 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -189,8 +184,7 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -219,7 +213,8 @@ public class VViewproxyPackageImpl extends EPackageImpl implements VViewproxyPac
 		initEAttribute(
 			getViewProxy_Id(),
 			theEcorePackage.getEString(),
-			"id", null, 1, 1, VViewProxy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"id", null, 1, 1, VViewProxy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

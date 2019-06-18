@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -35,8 +37,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
  *
  * @generated
  */
-public class DomainIntermediateImpl extends EObjectImpl implements DomainIntermediate
-{
+public class DomainIntermediateImpl extends EObjectImpl implements DomainIntermediate {
 	/**
 	 * The cached value of the '{@link #getTestElementContainer() <em>Test Element Container</em>}' containment
 	 * reference.
@@ -55,8 +56,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 *
 	 * @generated
 	 */
-	protected DomainIntermediateImpl()
-	{
+	protected DomainIntermediateImpl() {
 		super();
 	}
 
@@ -67,8 +67,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return ModelPackage.Literals.DOMAIN_INTERMEDIATE;
 	}
 
@@ -79,8 +78,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public TestElementContainer getTestElementContainer()
-	{
+	public TestElementContainer getTestElementContainer() {
 		return testElementContainer;
 	}
 
@@ -114,8 +112,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public void setTestElementContainer(TestElementContainer newTestElementContainer)
-	{
+	public void setTestElementContainer(TestElementContainer newTestElementContainer) {
 		if (newTestElementContainer != testElementContainer) {
 			NotificationChain msgs = null;
 			if (testElementContainer != null) {
@@ -130,8 +127,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER, newTestElementContainer,
 				newTestElementContainer));
@@ -160,8 +156,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
 			return getTestElementContainer();
@@ -176,8 +171,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
 			setTestElementContainer((TestElementContainer) newValue);
@@ -193,8 +187,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
+	public void eUnset(int featureID) {
 		switch (featureID) {
 		case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
 			setTestElementContainer((TestElementContainer) null);
@@ -210,8 +203,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
 			return testElementContainer != null;

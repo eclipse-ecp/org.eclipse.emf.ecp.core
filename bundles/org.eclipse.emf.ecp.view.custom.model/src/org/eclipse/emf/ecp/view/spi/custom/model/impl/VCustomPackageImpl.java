@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -90,9 +92,10 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		}
 
 		// Obtain or create and register package
-		final VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VCustomPackageImpl());
+		final VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new VCustomPackageImpl());
 
 		isInited = true;
 
@@ -122,8 +125,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getCustomControl()
-	{
+	public EClass getCustomControl() {
 		return customControlEClass;
 	}
 
@@ -136,8 +138,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCustomControl_BundleName()
-	{
+	public EAttribute getCustomControl_BundleName() {
 		return (EAttribute) customControlEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -150,8 +151,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCustomControl_ClassName()
-	{
+	public EAttribute getCustomControl_ClassName() {
 		return (EAttribute) customControlEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -164,8 +164,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getCustomDomainModelReference()
-	{
+	public EClass getCustomDomainModelReference() {
 		return customDomainModelReferenceEClass;
 	}
 
@@ -178,8 +177,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getCustomDomainModelReference_DomainModelReferences()
-	{
+	public EReference getCustomDomainModelReference_DomainModelReferences() {
 		return (EReference) customDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -192,8 +190,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCustomDomainModelReference_BundleName()
-	{
+	public EAttribute getCustomDomainModelReference_BundleName() {
 		return (EAttribute) customDomainModelReferenceEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -206,8 +203,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCustomDomainModelReference_ClassName()
-	{
+	public EAttribute getCustomDomainModelReference_ClassName() {
 		return (EAttribute) customDomainModelReferenceEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -220,8 +216,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCustomDomainModelReference_ControlChecked()
-	{
+	public EAttribute getCustomDomainModelReference_ControlChecked() {
 		return (EAttribute) customDomainModelReferenceEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -314,11 +309,13 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		initEAttribute(
 			getCustomControl_BundleName(),
 			ecorePackage.getEString(),
-			"bundleName", null, 1, 1, VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"bundleName", null, 1, 1, VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getCustomControl_ClassName(),
 			ecorePackage.getEString(),
-			"className", null, 1, 1, VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"className", null, 1, 1, VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(customDomainModelReferenceEClass, VCustomDomainModelReference.class,
 			"CustomDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -326,19 +323,23 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 			getCustomDomainModelReference_DomainModelReferences(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"domainModelReferences", null, 0, -1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"domainModelReferences", null, 0, -1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getCustomDomainModelReference_BundleName(),
 			ecorePackage.getEString(),
-			"bundleName", null, 1, 1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"bundleName", null, 1, 1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getCustomDomainModelReference_ClassName(),
 			ecorePackage.getEString(),
-			"className", null, 1, 1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"className", null, 1, 1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getCustomDomainModelReference_ControlChecked(),
 			ecorePackage.getEBoolean(),
-			"controlChecked", "false", 1, 1, VCustomDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"controlChecked", "false", 1, 1, VCustomDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$ //$NON-NLS-2$
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

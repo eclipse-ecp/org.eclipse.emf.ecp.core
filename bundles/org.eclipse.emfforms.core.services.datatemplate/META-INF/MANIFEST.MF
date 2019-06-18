@@ -2,19 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms DataTemplate Service
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.datatemplate;singleton:=true
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.core.services.datatemplate;version="1.20.0",
- org.eclipse.emfforms.internal.core.services.datatemplate;version="1.20.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.core.services.datatemplate;version="1.21.0",
+ org.eclipse.emfforms.internal.core.services.datatemplate;version="1.21.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.8.0,3.0.0)",
- org.eclipse.emf.ecp.edit;bundle-version="[1.20.0,1.21.0)",
- org.eclipse.emf.ecp.common.ui;bundle-version="[1.20.0,1.21.0)",
- org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.20.0,1.21.0)",
- org.eclipse.emfforms.localization;bundle-version="[1.20.0,1.21.0)",
- org.eclipse.emfforms.core.services.emf;bundle-version="[1.20.0,1.21.0)",
- org.eclipse.emfforms.datatemplate.model;bundle-version="[1.20.0,1.21.0)",
- org.eclipse.emfforms.core.bazaar;bundle-version="[1.20.0,1.21.0)"
+ org.eclipse.emf.ecp.edit;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emf.ecp.common.ui;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emfforms.localization;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emfforms.core.services.emf;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emfforms.datatemplate.model;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emfforms.core.bazaar;bundle-version="[1.21.0,1.22.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/XmiTemplateProvider.xml,OSGI-INF/TemplateCreateNewModelElementStrategyProvider.xml,OSGI-INF/BlankTemplateProvider.xml
 Bundle-ActivationPolicy: lazy

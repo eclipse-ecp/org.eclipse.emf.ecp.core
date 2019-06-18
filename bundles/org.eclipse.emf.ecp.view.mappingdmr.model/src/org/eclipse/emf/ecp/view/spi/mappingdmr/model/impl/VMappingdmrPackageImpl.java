@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -84,7 +86,7 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 		// Obtain or create and register package
 		final VMappingdmrPackageImpl theMappingdmrPackage = (VMappingdmrPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VMappingdmrPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VMappingdmrPackageImpl());
+				.get(eNS_URI) : new VMappingdmrPackageImpl());
 
 		isInited = true;
 
@@ -98,16 +100,13 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 		theMappingdmrPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theMappingdmrPackage,
-				new EValidator.Descriptor()
-				{
-					@Override
-					public EValidator getEValidator()
-					{
-						return MappingdmrValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theMappingdmrPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return MappingdmrValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theMappingdmrPackage.freeze();
@@ -244,13 +243,11 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	 *
 	 * @generated
 	 */
-	protected void createEcoreAnnotations()
-	{
+	protected void createEcoreAnnotations() {
 		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(mappingDomainModelReferenceEClass,
 			source,
-			new String[]
-			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			new String[] { "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
 			});
 	}
 

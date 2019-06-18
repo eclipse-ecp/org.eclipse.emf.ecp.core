@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -85,13 +87,13 @@ public class TextControlEnablementStylePropertyItemProvider
 	 */
 	protected void addRenderDisableAsEditablePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TextControlEnablementStyleProperty_RenderDisableAsEditable_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TextControlEnablementStyleProperty_RenderDisableAsEditable_feature", "_UI_TextControlEnablementStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_TextControlEnablementStyleProperty_RenderDisableAsEditable_feature", //$NON-NLS-1$
+					"_UI_TextControlEnablementStyleProperty_type"), //$NON-NLS-1$
 				VTTextControlEnablementPackage.Literals.TEXT_CONTROL_ENABLEMENT_STYLE_PROPERTY__RENDER_DISABLE_AS_EDITABLE,
 				true,
 				false,
@@ -123,7 +125,8 @@ public class TextControlEnablementStylePropertyItemProvider
 	@Override
 	public String getText(Object object) {
 		final VTTextControlEnablementStyleProperty textControlEnablementStyleProperty = (VTTextControlEnablementStyleProperty) object;
-		return getString("_UI_TextControlEnablementStyleProperty_type") + " " + textControlEnablementStyleProperty.isRenderDisableAsEditable(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString("_UI_TextControlEnablementStyleProperty_type") + " " //$NON-NLS-1$ //$NON-NLS-2$
+			+ textControlEnablementStyleProperty.isRenderDisableAsEditable();
 	}
 
 	/**

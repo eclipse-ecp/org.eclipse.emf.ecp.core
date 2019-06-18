@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -54,8 +56,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public CustomSwitch() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VCustomPackage.eINSTANCE;
 		}
 	}
@@ -85,8 +86,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID)
-		{
+		switch (classifierID) {
 		case VCustomPackage.CUSTOM_CONTROL: {
 			final VCustomControl customControl = (VCustomControl) theEObject;
 			T result = caseCustomControl(customControl);
@@ -134,8 +134,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCustomControl(VCustomControl object)
-	{
+	public T caseCustomControl(VCustomControl object) {
 		return null;
 	}
 
@@ -153,8 +152,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCustomDomainModelReference(VCustomDomainModelReference object)
-	{
+	public T caseCustomDomainModelReference(VCustomDomainModelReference object) {
 		return null;
 	}
 
@@ -188,8 +186,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -207,8 +204,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 
@@ -226,8 +222,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseControl(VControl object)
-	{
+	public T caseControl(VControl object) {
 		return null;
 	}
 

@@ -2,22 +2,30 @@
  * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
- * Christian W. Damus - bug 543461
+ * Christian W. Damus - bugs 543461, 546974
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
+import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.both;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anySetOf;
@@ -30,10 +38,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -48,7 +58,9 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emfforms.bazaar.Bid;
 import org.eclipse.emfforms.bazaar.Create;
+import org.eclipse.emfforms.bazaar.StaticBid;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.core.services.datatemplate.TemplateFilterService;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AdminUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditFactory;
@@ -81,7 +93,11 @@ public class TemplateCreateNewModelElementStrategyProvider_Test {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		final ComponentContext context = mock(ComponentContext.class);
+		when(context.getProperties()).thenReturn(new Hashtable<>());
+
 		strategyProvider = new TemplateCreateNewModelElementStrategyProvider();
+		strategyProvider.activate(context);
 	}
 
 	@Test
@@ -268,6 +284,85 @@ public class TemplateCreateNewModelElementStrategyProvider_Test {
 
 		verify(selectionStrategy, times(0)).collectEClasses(any(EObject.class), any(EReference.class),
 			Matchers.<Collection<EClass>> any());
+	}
+
+	@SuppressWarnings("nls")
+	@Test
+	public void testTemplateFilters() {
+		final TemplateProvider canProvide = mock(TemplateProvider.class);
+		when(canProvide.canProvideTemplates(any(EObject.class), any(EReference.class))).thenReturn(true);
+		final Template template1 = mock(Template.class);
+		when(template1.getName()).thenReturn("First Template");
+		final Template template2 = mock(Template.class);
+		when(template2.getName()).thenReturn("Second Template");
+		final Template template3 = mock(Template.class);
+		when(template3.getName()).thenReturn("Third Template");
+		final Set<Template> canProvideTemplates = new LinkedHashSet<>(Arrays.asList(template1, template2, template3));
+		when(canProvide.provideTemplates(any(EObject.class), any(EReference.class))).thenReturn(canProvideTemplates);
+		strategyProvider.registerTemplateProvider(canProvide);
+
+		final RegexFilterService.Provider filter1 = new RegexFilterService.Provider("^Template$");
+		final RegexFilterService.Provider filter2 = new RegexFilterService.Provider("^\\w{5} .+$");
+		strategyProvider.addFilterServiceProvider(filter1);
+		strategyProvider.addFilterServiceProvider(filter2);
+
+		final EObject eObject = mock(EObject.class);
+		final EReference eReference = mock(EReference.class);
+		Set<Template> templates = strategyProvider.collectAvailableTemplates(eObject, eReference);
+
+		assertThat("Filters should have excluded everything", templates, not(hasItem(anything())));
+
+		filter1.setRegex("^.+ Template$");
+		templates = strategyProvider.collectAvailableTemplates(eObject, eReference);
+		assertThat("Filters should have excluded only Second Template", templates,
+			both(hasItems(template1, template3)).and(not(hasItem(template2))));
+
+		strategyProvider.removeFilterServiceProvider(filter2);
+		templates = strategyProvider.collectAvailableTemplates(eObject, eReference);
+		assertThat("Filters should have excluded no templates", templates, hasItems(template1, template2, template3));
+	}
+
+	//
+	// Test framework
+	//
+
+	static class RegexFilterService implements TemplateFilterService {
+		private String regex;
+
+		@Override
+		public Predicate<? super Template> getTemplateFilter(EObject owner, EReference reference) {
+			assertThat(owner, notNullValue());
+			assertThat(reference, notNullValue());
+
+			return template -> //
+			template.getName().matches(regex);
+		}
+
+		//
+		// Nested types
+		//
+
+		@StaticBid(bid = 10.0)
+		static final class Provider implements TemplateFilterService.Provider {
+			private final RegexFilterService service = new RegexFilterService();
+
+			Provider(String regex) {
+				super();
+
+				setRegex(regex);
+			}
+
+			void setRegex(String regex) {
+				service.regex = regex;
+			}
+
+			@Create
+			public TemplateFilterService create() {
+				return service;
+			}
+
+		}
+
 	}
 
 	class TestEClassSelectionStrategyProvider implements EClassSelectionStrategy.Provider {

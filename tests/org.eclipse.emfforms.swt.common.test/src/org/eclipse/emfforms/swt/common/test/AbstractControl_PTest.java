@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -71,6 +73,8 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 	private AbstractControlSWTRenderer<C> renderer;
 	private EMFFormsLabelProvider labelProvider;
 
+	private EObject eObject;
+
 	protected Resource createResource() {
 		final Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> extToFactoryMap = registry
@@ -95,6 +99,7 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 
 	protected void mockControl(EObject eObject,
 		final EStructuralFeature eStructuralFeature) throws DatabindingFailedException {
+		this.eObject = eObject;
 		final VDomainModelReference domainModelReference = Mockito
 			.mock(VDomainModelReference.class);
 		final Setting setting = mock(Setting.class);
@@ -135,7 +140,7 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 		setvControl((C) Mockito.mock(VControl.class));
 		mockControl();
 		setContext(Mockito.mock(ViewModelContext.class));
-		when(getContext().getDomainModel()).thenReturn(mock(EObject.class));
+		when(getContext().getDomainModel()).thenReturn(eObject);
 		setShell(new Shell(Display.getDefault(), SWT.NONE));
 	}
 

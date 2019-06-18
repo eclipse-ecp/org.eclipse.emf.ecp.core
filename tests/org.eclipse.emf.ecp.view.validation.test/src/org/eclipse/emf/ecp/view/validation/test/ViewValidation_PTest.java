@@ -1,36 +1,48 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 545686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.emf.ecp.view.spi.validation.ValidationServiceConstants.PROPAGATION_LIMIT_KEY;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -52,6 +64,10 @@ import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceScope;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -66,6 +82,10 @@ public class ViewValidation_PTest extends CommonValidationTest {
 
 	private DefaultRealm defaultRealm;
 
+	//
+	// Test framework
+	//
+
 	@Before
 	public void setup() {
 		defaultRealm = new DefaultRealm();
@@ -75,6 +95,10 @@ public class ViewValidation_PTest extends CommonValidationTest {
 	public void tearDown() {
 		defaultRealm.dispose();
 	}
+
+	//
+	// Tests
+	//
 
 	@Test
 	public void testValidationMissingElementOnInit() {
@@ -340,6 +364,41 @@ public class ViewValidation_PTest extends CommonValidationTest {
 			.getHighestSeverity());
 		assertEquals("Severity of column must be error", Diagnostic.ERROR, column.getDiagnostic().getHighestSeverity());
 		assertEquals("Severity of view must be error", Diagnostic.ERROR, view.getDiagnostic().getHighestSeverity());
+	}
+
+	/**
+	 * Test the limiting of validation propagation by annotation.
+	 */
+	@Test
+	public void testValidationInitPropagation_limited() {
+		final List<Computer> computers = Stream.generate(TestFactory.eINSTANCE::createComputer)
+			.limit(3L).collect(toList());
+
+		final Map<String, Object> contextValues = Collections.singletonMap(PROPAGATION_LIMIT_KEY, 1);
+
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
+		view.getChildren().add(column);
+
+		computers.forEach(c -> {
+			final VControl control = VViewFactory.eINSTANCE.createControl();
+			control.setDomainModelReference(
+				getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
+			column.getChildren().add(control);
+			ViewModelContextFactory.INSTANCE.createViewModelContext(control, c, contextValues);
+		});
+
+		final VDiagnostic columnDiagnostic = column.getDiagnostic();
+		assertThat("Severity of column must be error", columnDiagnostic.getHighestSeverity(), is(Diagnostic.ERROR));
+		// But we only propagated one error, plus the one that indicates more
+		assertThat("Wrong number of problems", columnDiagnostic.getDiagnostics().size(), is(2));
+		final Diagnostic additional = columnDiagnostic.getDiagnostics().stream()
+			.filter(Diagnostic.class::isInstance).map(Diagnostic.class::cast)
+			.filter(d -> d.getMessage() != null)
+			.filter(d -> d.getMessage().startsWith("Additional problems"))
+			.findAny().orElse(null);
+		assertThat("No placeholder for additional problems", additional, notNullValue());
+		assertThat("Placehold is not an error", additional.getSeverity(), is(Diagnostic.ERROR));
 	}
 
 	@Test
@@ -1681,4 +1740,100 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		assertEquals("One Diagnostic expected", 1, lastResult.size());
 		assertEquals("Severity of control must be Error", Diagnostic.ERROR, lastResult.iterator().next().getSeverity());
 	}
+
+	//
+	// Nested types
+	//
+
+	/**
+	 * A global service that injects the validation problems propagation limit
+	 * into the view-model context.
+	 */
+	static final class PropagationLimitService implements GlobalViewModelService {
+		private final int limit;
+
+		/**
+		 * Initializes me with the propagation limit.
+		 *
+		 * @param limit the propagation limit
+		 */
+		PropagationLimitService(int limit) {
+			super();
+
+			this.limit = limit;
+		}
+
+		@Override
+		public void instantiate(ViewModelContext context) {
+			context.putContextValue(PROPAGATION_LIMIT_KEY, limit);
+		}
+
+		@Override
+		public void dispose() {
+			// Nothing to dispose
+		}
+
+		@Override
+		public int getPriority() {
+			return Integer.MIN_VALUE;
+		}
+
+		@Override
+		public void childViewModelContextAdded(ViewModelContext childContext) {
+			// Not interesting
+		}
+
+		//
+		// Nested types
+		//
+
+		/**
+		 * Factory for the propagation-limit injection service.
+		 */
+		static final class Factory implements EMFFormsViewServiceFactory<PropagationLimitService> {
+
+			private final int limit;
+
+			Factory(int limit) {
+				super();
+
+				this.limit = limit;
+			}
+
+			@Override
+			public EMFFormsViewServicePolicy getPolicy() {
+				return EMFFormsViewServicePolicy.IMMEDIATE;
+			}
+
+			@Override
+			public EMFFormsViewServiceScope getScope() {
+				return EMFFormsViewServiceScope.GLOBAL;
+			}
+
+			@Override
+			public double getPriority() {
+				// Don't use -∞ because that prevents registration of the factory!
+				return Integer.MIN_VALUE;
+			}
+
+			@Override
+			public Class<PropagationLimitService> getType() {
+				return PropagationLimitService.class;
+			}
+
+			@Override
+			public PropagationLimitService createService(EMFFormsViewContext emfFormsViewContext) {
+				final PropagationLimitService result = new PropagationLimitService(limit);
+
+				if (emfFormsViewContext instanceof ViewModelContext) {
+					result.instantiate((ViewModelContext) emfFormsViewContext);
+				}
+
+				return result;
+			}
+
+		}
+
+	}
+
 }

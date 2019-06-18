@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
+ * Christian W. Damus - bug 547271
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.celleditor.rcp;
 
@@ -233,13 +236,19 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPC
 	 */
 	@Override
 	public void updateCell(ViewerCell cell, Object value) {
+		if (!"".equals(cell.getText())) { //$NON-NLS-1$
 		cell.setText(""); //$NON-NLS-1$
-		cell.setImage(getImage(value));
+		}
+		final Image image = getImage(value);
+		if (cell.getImage() != image) {
+			cell.setImage(image);
+		}
 		setCopyTextMarker(cell, value);
 	}
 
 	/**
 	 * Sets the copy text marker for the given {@code cell} and {@code value}.
+	 * 
 	 * @param cell the {@link ViewerCell}.
 	 * @param value the {@link Object} value.
 	 */

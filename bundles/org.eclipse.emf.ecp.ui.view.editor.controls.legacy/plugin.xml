@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
+         <command
+               commandId="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass"
+               label="Unset Root EClass"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.view.spi.model.VView">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            name="Unset Root EClass"
+            defaultHandler="org.eclipse.emf.ecp.ui.view.internal.editor.controls.legacy.handler.UnsetRootEClass"
+            id="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.ui.dropAdapter">
+      <ECPDropAdapter
+            class="org.eclipse.emf.ecp.ui.view.internal.editor.controls.legacy.handler.ViewEditorDropAdapter">
+      </ECPDropAdapter>
+   </extension>
+
+</plugin>

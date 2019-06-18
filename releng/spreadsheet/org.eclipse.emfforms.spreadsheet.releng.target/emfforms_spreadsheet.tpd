@@ -4,7 +4,7 @@ with source configurePhase
 // TPD validation uses workspace path, but the generation uses real path. Therefore, the following line will not validated, but the generation should still be work.
 include "../../org.eclipse.emf.ecp.target.rcp/ecp.tpd"
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/" {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository/" {
 	org.apache.commons.codec lazy
 	org.apache.poi lazy
 	org.apache.poi.source lazy

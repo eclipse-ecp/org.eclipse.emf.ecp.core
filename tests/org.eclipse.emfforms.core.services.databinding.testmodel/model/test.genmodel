@@ -20,6 +20,7 @@
       childCreationExtenders="true" ecorePackage="test.ecore#/">
     <genClasses ecoreClass="test.ecore#//A">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//A/b"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//A/bList"/>
     </genClasses>
     <genClasses ecoreClass="test.ecore#//B">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//B/c"/>

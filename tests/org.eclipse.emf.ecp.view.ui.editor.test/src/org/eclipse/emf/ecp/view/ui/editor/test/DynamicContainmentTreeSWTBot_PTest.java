@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -60,8 +62,8 @@ public class DynamicContainmentTreeSWTBot_PTest extends ECPCommonSWTBotTest {
 		// used for validation
 		final VControl childNameControl = VViewFactory.eINSTANCE.createControl();
 
-		final DynamicContainmentTreeDomainModelReference reference =
-			ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference();
+		final DynamicContainmentTreeDomainModelReference reference = ModelFactory.eINSTANCE
+			.createDynamicContainmentTreeDomainModelReference();
 		final VFeaturePathDomainModelReference rootRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 
 		rootRef.getDomainModelEReferencePath().addAll(tree.getPathToRoot());
@@ -70,8 +72,7 @@ public class DynamicContainmentTreeSWTBot_PTest extends ECPCommonSWTBotTest {
 		reference.setPathFromRoot(rootRef);
 		reference.setPathFromBase(createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Name()));
 
-		childNameControl.setDomainModelReference(reference
-			);
+		childNameControl.setDomainModelReference(reference);
 		tree.setChildComposite(childNameControl);
 
 		final VControl viewControl = VViewFactory.eINSTANCE.createControl();

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -15,7 +17,8 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
- * The EMFFormsRendererService encapsulates the tester and the access to the {@link EMFFormsAbstractSpreadsheetRenderer}.
+ * The EMFFormsRendererService encapsulates the tester and the access to the
+ * {@link EMFFormsAbstractSpreadsheetRenderer}.
  *
  * @author Eugen Neufeld
  *
@@ -31,7 +34,8 @@ public interface EMFFormsSpreadsheetRendererService<VELEMENT extends VElement> {
 	double NOT_APPLICABLE = Double.NaN;
 
 	/**
-	 * Check whether the provided {@link VElement} can be rendered by the {@link EMFFormsAbstractSpreadsheetRenderer} provided
+	 * Check whether the provided {@link VElement} can be rendered by the {@link EMFFormsAbstractSpreadsheetRenderer}
+	 * provided
 	 * by {@link #getRendererInstance(VElement, ViewModelContext)}.
 	 *
 	 * @param vElement The {@link VElement} to check
@@ -47,5 +51,6 @@ public interface EMFFormsSpreadsheetRendererService<VELEMENT extends VElement> {
 	 * @param viewModelContext The {@link ViewModelContext} to use for the renderer instance
 	 * @return The AbstractSWTRenderer
 	 */
-	EMFFormsAbstractSpreadsheetRenderer<VELEMENT> getRendererInstance(VELEMENT vElement, ViewModelContext viewModelContext);
+	EMFFormsAbstractSpreadsheetRenderer<VELEMENT> getRendererInstance(VELEMENT vElement,
+		ViewModelContext viewModelContext);
 }

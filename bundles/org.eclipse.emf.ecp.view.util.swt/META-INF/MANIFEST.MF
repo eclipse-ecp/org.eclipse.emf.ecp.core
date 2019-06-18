@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Util
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.util.swt
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.internal.util.swt;version="1.20.0";x-internal:=true,
- org.eclipse.emf.ecp.view.spi.util.swt;version="1.20.0"
+Export-Package: org.eclipse.emf.ecp.view.internal.util.swt;version="1.21.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.util.swt;version="1.21.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.view.util.swt
 Import-Package: org.eclipse.jface.resource;version="0.0.0",

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -123,7 +125,8 @@ public class EMFFormsRendererFactory_ITest {
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final AbstractAdditionalSWTRenderer<VElement> additionalSWTRenderer = new MockedAbstractAdditionalSWTRenderer(
 			vElement, viewModelContext, mock(ReportService.class));
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		Mockito.when(rendererService.getRendererInstances(vElement, viewModelContext)).thenReturn(
 			Collections.singleton(additionalSWTRenderer));
 		Mockito.when(rendererService.isApplicable(Matchers.any(VElement.class), Matchers.any(ViewModelContext.class)))
@@ -143,7 +146,8 @@ public class EMFFormsRendererFactory_ITest {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void testRemoveAdditionalRendererService() {
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		final ServiceRegistration<EMFFormsAdditionalRendererService> registerService = bundleContext.registerService(
 			EMFFormsAdditionalRendererService.class, rendererService, null);
 		registerService.unregister();

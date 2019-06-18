@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -30,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @generated
  */
-public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPackage
-{
+public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -54,8 +55,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @see #init()
 	 * @generated
 	 */
-	private VIndexdmrPackageImpl()
-	{
+	private VIndexdmrPackageImpl() {
 		super(eNS_URI, VIndexdmrFactory.eINSTANCE);
 	}
 
@@ -80,16 +80,16 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VIndexdmrPackage init()
-	{
+	public static VIndexdmrPackage init() {
 		if (isInited) {
 			return (VIndexdmrPackage) EPackage.Registry.INSTANCE.getEPackage(VIndexdmrPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final VIndexdmrPackageImpl theIndexdmrPackage = (VIndexdmrPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VIndexdmrPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VIndexdmrPackageImpl());
+		final VIndexdmrPackageImpl theIndexdmrPackage = (VIndexdmrPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VIndexdmrPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new VIndexdmrPackageImpl());
 
 		isInited = true;
 
@@ -103,16 +103,13 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		theIndexdmrPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theIndexdmrPackage,
-				new EValidator.Descriptor()
-				{
-					@Override
-					public EValidator getEValidator()
-					{
-						return IndexdmrValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theIndexdmrPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return IndexdmrValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theIndexdmrPackage.freeze();
@@ -129,8 +126,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EClass getIndexDomainModelReference()
-	{
+	public EClass getIndexDomainModelReference() {
 		return indexDomainModelReferenceEClass;
 	}
 
@@ -141,8 +137,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EReference getIndexDomainModelReference_PrefixDMR()
-	{
+	public EReference getIndexDomainModelReference_PrefixDMR() {
 		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -153,8 +148,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EReference getIndexDomainModelReference_TargetDMR()
-	{
+	public EReference getIndexDomainModelReference_TargetDMR() {
 		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -165,8 +159,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EAttribute getIndexDomainModelReference_Index()
-	{
+	public EAttribute getIndexDomainModelReference_Index() {
 		return (EAttribute) indexDomainModelReferenceEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -177,8 +170,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public VIndexdmrFactory getIndexdmrFactory()
-	{
+	public VIndexdmrFactory getIndexdmrFactory() {
 		return (VIndexdmrFactory) getEFactoryInstance();
 	}
 
@@ -198,8 +190,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -228,8 +219,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -257,16 +247,19 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 			getIndexDomainModelReference_PrefixDMR(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"prefixDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"prefixDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getIndexDomainModelReference_Index(),
 			ecorePackage.getEInt(),
-			"index", null, 0, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"index", null, 0, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getIndexDomainModelReference_TargetDMR(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -283,13 +276,11 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	protected void createEcoreAnnotations()
-	{
+	protected void createEcoreAnnotations() {
 		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(indexDomainModelReferenceEClass,
 			source,
-			new String[]
-			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			new String[] { "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
 			});
 	}
 

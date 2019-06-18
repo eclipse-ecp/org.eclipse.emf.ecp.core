@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Muenchen GmbH - initial API and implementation
@@ -85,7 +87,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 *
 	 * @generated
 	 */
-	protected Collection<Object> supportedTypes = new ArrayList<Object>();
+	protected Collection<Object> supportedTypes = new ArrayList<>();
 
 	/**
 	 * This constructs an instance.
@@ -126,6 +128,34 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		}
 
 		return diagnosticItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.21
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected DomainModelReferenceItemProvider domainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createDomainModelReferenceAdapter() {
+		if (domainModelReferenceItemProvider == null) {
+			domainModelReferenceItemProvider = new DomainModelReferenceItemProvider(this);
+		}
+
+		return domainModelReferenceItemProvider;
 	}
 
 	/**
@@ -265,7 +295,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 *
 	 * @since 1.19
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected FeatureDomainModelReferenceSegmentItemProvider featureDomainModelReferenceSegmentItemProvider;
@@ -460,6 +489,9 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public void dispose() {
 		if (diagnosticItemProvider != null) {
 			diagnosticItemProvider.dispose();
+		}
+		if (domainModelReferenceItemProvider != null) {
+			domainModelReferenceItemProvider.dispose();
 		}
 		if (featurePathDomainModelReferenceItemProvider != null) {
 			featurePathDomainModelReferenceItemProvider.dispose();

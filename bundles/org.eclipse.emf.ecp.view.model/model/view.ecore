@@ -7,7 +7,7 @@
         transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attachment" abstract="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DomainModelReference" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="DomainModelReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeListener" upperBound="-1"
         eType="#//DomainModelReferenceChangeListener" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="segments" upperBound="-1"

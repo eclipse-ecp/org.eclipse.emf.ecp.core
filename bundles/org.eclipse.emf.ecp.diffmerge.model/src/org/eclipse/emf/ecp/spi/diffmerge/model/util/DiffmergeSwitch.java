@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -46,8 +48,7 @@ public class DiffmergeSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public DiffmergeSwitch() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VDiffmergePackage.eINSTANCE;
 		}
 	}
@@ -76,8 +77,7 @@ public class DiffmergeSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID)
-		{
+		switch (classifierID) {
 		case VDiffmergePackage.DIFF_ATTACHMENT: {
 			final VDiffAttachment diffAttachment = (VDiffAttachment) theEObject;
 			T result = caseDiffAttachment(diffAttachment);

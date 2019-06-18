@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMF Forms Mapping Segment IDE Tooling Tests
+Bundle-SymbolicName: org.eclipse.emfforms.ide.view.mappingsegment.test
+Bundle-Version: 1.21.0.qualifier
+Fragment-Host: org.eclipse.emfforms.ide.view.mappingsegment;bundle-version="[1.21.0,1.22.0)"
+Automatic-Module-Name: org.eclipse.emfforms.ide.view.mappingsegment.test
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
+ org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
+ org.objenesis;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.swtbot.swt.finder;bundle-version="[2.7.0,3.0.0)",
+ org.eclipse.swtbot.junit4_x;bundle-version="[2.7.0,3.0.0)",
+ org.apache.log4j;bundle-version="[1.2.15,2.0.0)",
+ org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emf.ecp.test.common;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emfforms.core.services.segments.featurepath;bundle-version="[1.21.0,1.22.0)"
+Export-Package: org.eclipse.emfforms.internal.ide.view.mappingsegment;version="1.21.0";x-internal:=true
+Import-Package: org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.layout;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0"

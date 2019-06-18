@@ -1,14 +1,17 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 545460
  ******************************************************************************/
 
 package org.eclipse.emfforms.spi.editor;
@@ -318,7 +321,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 		// We need to set the selectionProvider for the editor, so that the EditingDomainActionBarContributor
 		// knows the currently selected object to copy/paste
-		getEditorSite().setSelectionProvider(rootView.getSelectionProvider());
+		getEditorSite().setSelectionProvider(rootView.getMasterDetailSelectionProvider());
 	}
 
 	private synchronized void initMarkers() {
@@ -387,7 +390,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	/**
 	 * Get the Notifier from the tree input.
-	 * 
+	 *
 	 * @param editorInput The editor input to transform
 	 * @return {@link Notifier}
 	 * @throws IllegalStateException if the editor input is not a Notifier
@@ -614,6 +617,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		final HashMap<Object, Object> options = new HashMap<Object, Object>();
 		options.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
 			Boolean.TRUE);
+		options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
 		return options;
 	}
 

@@ -2,14 +2,19 @@
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.segments.featurepath;
+
+import java.util.Objects;
+import java.util.Optional;
 
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.databinding.edit.IEMFEditListProperty;
@@ -20,6 +25,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
@@ -57,13 +63,7 @@ public class FeatureSegmentConverter implements DomainModelReferenceSegmentConve
 		EditingDomain editingDomain) throws DatabindingFailedException {
 		final VFeatureDomainModelReferenceSegment featureSegment = checkAndConvertSegment(segment);
 
-		final EStructuralFeature structuralFeature = segmentRoot
-			.getEStructuralFeature(featureSegment.getDomainModelFeature());
-		if (structuralFeature == null) {
-			throw new DatabindingFailedException(String.format(
-				"The segment's feature could not be resolved for the given EClass. The segment was %1$s. The EClass was %2$s.", //$NON-NLS-1$
-				segment, segmentRoot));
-		}
+		final EStructuralFeature structuralFeature = findStructuralFeature(segmentRoot, featureSegment);
 		final IEMFEditValueProperty valueProperty = EMFEditProperties.value(editingDomain, structuralFeature);
 		if (EReference.class.isInstance(structuralFeature)) {
 			return new SegmentConverterValueResultImpl(valueProperty,
@@ -77,13 +77,8 @@ public class FeatureSegmentConverter implements DomainModelReferenceSegmentConve
 		EditingDomain editingDomain) throws DatabindingFailedException {
 		final VFeatureDomainModelReferenceSegment featureSegment = checkAndConvertSegment(segment);
 
-		final EStructuralFeature structuralFeature = segmentRoot
-			.getEStructuralFeature(featureSegment.getDomainModelFeature());
-		if (structuralFeature == null) {
-			throw new DatabindingFailedException(String.format(
-				"The segment's feature could not be resolved for the given EClass. The segment was %1$s. The EClass was %2$s.", //$NON-NLS-1$
-				segment, segmentRoot));
-		}
+		final EStructuralFeature structuralFeature = findStructuralFeature(segmentRoot, featureSegment);
+
 		final IEMFEditListProperty listProperty = EMFEditProperties.list(editingDomain, structuralFeature);
 		if (EReference.class.isInstance(structuralFeature)) {
 			return new SegmentConverterListResultImpl(listProperty,
@@ -109,6 +104,25 @@ public class FeatureSegmentConverter implements DomainModelReferenceSegmentConve
 		}
 
 		return InternalEObject.class.cast(eObject).eSetting(structuralFeature);
+	}
+
+	private EStructuralFeature findStructuralFeature(EClass segmentRoot, VFeatureDomainModelReferenceSegment segment)
+		throws DatabindingFailedException {
+		final String featureName = segment.getDomainModelFeature();
+		EStructuralFeature structuralFeature = segmentRoot.getEStructuralFeature(featureName);
+		if (structuralFeature == null) {
+			// If the feature is not present in the segment's root EClass, try to find it in one of its sub classes
+			final Optional<EStructuralFeature> feature = EMFUtils.getSubClasses(segmentRoot).stream()
+				.map(c -> c.getEStructuralFeature(featureName))
+				.filter(Objects::nonNull)
+				.findFirst();
+
+			structuralFeature = feature.orElseThrow(
+				() -> new DatabindingFailedException(String.format(
+					"The segment's feature could not be resolved for the given EClass. The segment was %1$s. The EClass was %2$s.", //$NON-NLS-1$
+					segment, segmentRoot)));
+		}
+		return structuralFeature;
 	}
 
 	private VFeatureDomainModelReferenceSegment checkAndConvertSegment(VDomainModelReferenceSegment segment)

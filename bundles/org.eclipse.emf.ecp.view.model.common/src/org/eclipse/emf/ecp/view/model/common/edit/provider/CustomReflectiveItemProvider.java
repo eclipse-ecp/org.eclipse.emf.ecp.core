@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
@@ -39,19 +41,16 @@ public class CustomReflectiveItemProvider extends ReflectiveItemProvider
 	}
 
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		super.getPropertyDescriptors(object);
 
 		for (final EStructuralFeature eFeature : ((EObject) object).eClass().getEAllStructuralFeatures()) {
 			if (eFeature instanceof EReference && ((EReference) eFeature).isContainment()) {
-				itemPropertyDescriptors.add
-					(new ItemPropertyDescriptor
-					(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				itemPropertyDescriptors.add(
+					new ItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 						getFeatureText(eFeature),
-						getResourceLocator().getString
-							("_UI_Property_description", //$NON-NLS-1$
-								new Object[] { getFeatureText(eFeature), eFeature.getEType().getName() }),
+						getResourceLocator().getString("_UI_Property_description", //$NON-NLS-1$
+							new Object[] { getFeatureText(eFeature), eFeature.getEType().getName() }),
 						eFeature,
 						eFeature.isChangeable(),
 						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE));

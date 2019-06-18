@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -205,7 +207,8 @@ public class EMFFormsRendererFactory_Test {
 	public void testAddAdditionalRendererService() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		when(rendererService.isApplicable(vElement, viewModelContext)).thenReturn(true);
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> mockedResults = new ArrayList<AbstractAdditionalSWTRenderer<VElement>>();
 		mockedResults
@@ -227,7 +230,8 @@ public class EMFFormsRendererFactory_Test {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testRemoveAdditionalRendererService() {
-		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(
+			EMFFormsAdditionalRendererService.class);
 		rendererFactory.addEMFFormsAdditionalRendererService(rendererService);
 		rendererFactory.removeEMFFormsAdditionalRendererService(rendererService);
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = rendererFactory
@@ -246,7 +250,8 @@ public class EMFFormsRendererFactory_Test {
 	@Test
 	public void testGetAdditionalRendererInstanceNoFittingServices() {
 		final VElement vElement = mock(VElement.class);
-		final EMFFormsAdditionalRendererService<VElement> rendererService1 = mock(EMFFormsAdditionalRendererService.class);
+		final EMFFormsAdditionalRendererService<VElement> rendererService1 = mock(
+			EMFFormsAdditionalRendererService.class);
 		when(rendererService1.isApplicable(Matchers.same(vElement), Matchers.any(ViewModelContext.class))).thenReturn(
 			false);
 		final AbstractAdditionalSWTRenderer<VElement> renderer1 = mock(AbstractAdditionalSWTRenderer.class);

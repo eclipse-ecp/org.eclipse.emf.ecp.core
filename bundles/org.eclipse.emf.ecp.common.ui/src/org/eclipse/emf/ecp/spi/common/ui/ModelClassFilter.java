@@ -2,9 +2,11 @@
  * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
  * Technische Universitaet Muenchen.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  ******************************************************************************/
@@ -38,7 +40,7 @@ public class ModelClassFilter extends ECPViewerFilter {
 		if (element instanceof EClass) {
 			return ((EClass) element).getName().toLowerCase().contains(getSearchTerm().toLowerCase())
 				|| EPackage.class.isInstance(parentElement)
-				&& ((EPackage) parentElement).getName().toLowerCase().contains(getSearchTerm().toLowerCase());
+					&& ((EPackage) parentElement).getName().toLowerCase().contains(getSearchTerm().toLowerCase());
 		} else if (element instanceof EPackage) {
 			final EPackage ePackage = (EPackage) element;
 			final Object[] children = ((ITreeContentProvider) ((TreeViewer) viewer).getContentProvider())

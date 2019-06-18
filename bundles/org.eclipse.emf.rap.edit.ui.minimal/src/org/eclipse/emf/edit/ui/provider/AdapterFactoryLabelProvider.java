@@ -2,9 +2,11 @@
  * Copyright (c) 2002-2012 IBM Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * IBM - Initial API and implementation
@@ -55,18 +57,16 @@ import org.eclipse.swt.graphics.Image;
  * in an AdapterFactoryContentProvider, this won't be a problem, because notifications will be forward as a result of
  * that.
  */
-public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelProvider, INotifyChangedListener
-{
+public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelProvider, INotifyChangedListener {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * An extended version of the adapter factory label provider that also provides for fonts.
 	 */
-	public static class FontProvider extends AdapterFactoryLabelProvider implements IFontProvider, ITableFontProvider
-	{
+	public static class FontProvider extends AdapterFactoryLabelProvider implements IFontProvider, ITableFontProvider {
 		/**
-     *
-     */
+		*
+		*/
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -76,8 +76,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		 *            interfaces.
 		 * @param defaultFont the font that will be used when no font is specified.
 		 */
-		public FontProvider(AdapterFactory adapterFactory, Font defaultFont)
-		{
+		public FontProvider(AdapterFactory adapterFactory, Font defaultFont) {
 			super(adapterFactory);
 			setDefaultFont(defaultFont);
 		}
@@ -89,8 +88,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		 *            interfaces.
 		 * @param viewer the viewer for which the control's font should be used.
 		 */
-		public FontProvider(AdapterFactory adapterFactory, Viewer viewer)
-		{
+		public FontProvider(AdapterFactory adapterFactory, Viewer viewer) {
 			this(adapterFactory, viewer.getControl().getFont());
 		}
 	}
@@ -99,11 +97,10 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * An extended version of the adapter factory label provider that also provides for colors.
 	 */
 	public static class ColorProvider extends AdapterFactoryLabelProvider implements IColorProvider,
-		ITableColorProvider
-	{
+		ITableColorProvider {
 		/**
-     *
-     */
+		*
+		*/
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -114,8 +111,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		 * @param defaultForeground the foreground color that will be used when no foreground color is specified.
 		 * @param defaultBackground the background color that will be used when no background color is specified.
 		 */
-		public ColorProvider(AdapterFactory adapterFactory, Color defaultForeground, Color defaultBackground)
-		{
+		public ColorProvider(AdapterFactory adapterFactory, Color defaultForeground, Color defaultBackground) {
 			super(adapterFactory);
 			setDefaultForeground(defaultForeground);
 			setDefaultBackground(defaultBackground);
@@ -128,8 +124,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		 *            interfaces.
 		 * @param viewer the viewer for which the control's color should be used.
 		 */
-		public ColorProvider(AdapterFactory adapterFactory, Viewer viewer)
-		{
+		public ColorProvider(AdapterFactory adapterFactory, Viewer viewer) {
 			this(adapterFactory, viewer.getControl().getForeground(), viewer.getControl().getBackground());
 		}
 	}
@@ -138,11 +133,10 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * An extended version of the adapter factory label provider that also provides for fonts and colors.
 	 */
 	public static class FontAndColorProvider extends AdapterFactoryLabelProvider implements IColorProvider,
-		IFontProvider, ITableColorProvider, ITableFontProvider
-	{
+		IFontProvider, ITableColorProvider, ITableFontProvider {
 		/**
-     *
-     */
+		*
+		*/
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -155,8 +149,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		 * @param defaultBackground the background color that will be used when no background color is specified.
 		 */
 		public FontAndColorProvider(AdapterFactory adapterFactory, Font defaultFont, Color defaultForeground,
-			Color defaultBackground)
-		{
+			Color defaultBackground) {
 			super(adapterFactory);
 			setDefaultFont(defaultFont);
 			setDefaultForeground(defaultForeground);
@@ -170,8 +163,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		 *            interfaces.
 		 * @param viewer the viewer for which the control's font and color should be used.
 		 */
-		public FontAndColorProvider(AdapterFactory adapterFactory, Viewer viewer)
-		{
+		public FontAndColorProvider(AdapterFactory adapterFactory, Viewer viewer) {
 			this(adapterFactory, viewer.getControl().getFont(), viewer.getControl().getForeground(), viewer
 				.getControl().getBackground());
 		}
@@ -225,11 +217,9 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 	 *            interfaces.
 	 */
-	public AdapterFactoryLabelProvider(AdapterFactory adapterFactory)
-	{
+	public AdapterFactoryLabelProvider(AdapterFactory adapterFactory) {
 		this.adapterFactory = adapterFactory;
-		if (adapterFactory instanceof IChangeNotifier)
-		{
+		if (adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) adapterFactory).addListener(this);
 		}
 
@@ -239,8 +229,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	/**
 	 * Return the wrapped AdapterFactory.
 	 */
-	public AdapterFactory getAdapterFactory()
-	{
+	public AdapterFactory getAdapterFactory() {
 		return adapterFactory;
 	}
 
@@ -250,15 +239,12 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * a listener is added to it,
 	 * so it's important to call {@link #dispose()}.
 	 */
-	public void setAdapterFactory(AdapterFactory adapterFactory)
-	{
-		if (this.adapterFactory instanceof IChangeNotifier)
-		{
+	public void setAdapterFactory(AdapterFactory adapterFactory) {
+		if (this.adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) this.adapterFactory).removeListener(this);
 		}
 
-		if (adapterFactory instanceof IChangeNotifier)
-		{
+		if (adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) adapterFactory).addListener(this);
 		}
 
@@ -268,48 +254,42 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	/**
 	 * Return the default font.
 	 */
-	public Font getDefaultFont()
-	{
+	public Font getDefaultFont() {
 		return defaultFont;
 	}
 
 	/**
 	 * Set the default font.
 	 */
-	public void setDefaultFont(Font font)
-	{
+	public void setDefaultFont(Font font) {
 		defaultFont = font;
 	}
 
 	/**
 	 * Return the default foreground color.
 	 */
-	public Color getDefaultForeground()
-	{
+	public Color getDefaultForeground() {
 		return defaultForeground;
 	}
 
 	/**
 	 * Set the default foreground color.
 	 */
-	public void setDefaultForeground(Color color)
-	{
+	public void setDefaultForeground(Color color) {
 		defaultForeground = color;
 	}
 
 	/**
 	 * Return the default background color.
 	 */
-	public Color getDefaultBackground()
-	{
+	public Color getDefaultBackground() {
 		return defaultBackground;
 	}
 
 	/**
 	 * Set the default background color.
 	 */
-	public void setDefaultBackground(Color color)
-	{
+	public void setDefaultBackground(Color color) {
 		defaultBackground = color;
 	}
 
@@ -317,8 +297,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * Since we won't ever generate these notifications, we can just ignore this.
 	 */
 	@Override
-	public void addListener(ILabelProviderListener listener)
-	{
+	public void addListener(ILabelProviderListener listener) {
 		labelProviderListeners.add(listener);
 	}
 
@@ -326,8 +305,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * Since we won't ever add listeners, we can just ignore this.
 	 */
 	@Override
-	public void removeListener(ILabelProviderListener listener)
-	{
+	public void removeListener(ILabelProviderListener listener) {
 		labelProviderListeners.remove(listener);
 	}
 
@@ -335,10 +313,8 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * This discards the content provider and removes this as a listener to the {@link #adapterFactory}.
 	 */
 	@Override
-	public void dispose()
-	{
-		if (adapterFactory instanceof IChangeNotifier)
-		{
+	public void dispose() {
+		if (adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) adapterFactory).removeListener(this);
 		}
 	}
@@ -347,8 +323,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * This always returns true right now.
 	 */
 	@Override
-	public boolean isLabelProperty(Object object, String id)
-	{
+	public boolean isLabelProperty(Object object, String id) {
 		return true;
 	}
 
@@ -357,44 +332,33 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * implements {@link org.eclipse.emf.edit.provider.IItemLabelProvider#getImage IItemLabelProvider.getImage}
 	 */
 	@Override
-	public Image getImage(Object object)
-	{
+	public Image getImage(Object object) {
 		// Get the adapter from the factory.
 		//
 		final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) adapterFactory.adapt(object,
 			IItemLabelProviderClass);
 
-		return itemLabelProvider != null ?
-			getImageFromObject(itemLabelProvider.getImage(object)) :
-			getDefaultImage(object);
+		return itemLabelProvider != null ? getImageFromObject(itemLabelProvider.getImage(object))
+			: getDefaultImage(object);
 	}
 
-	protected Image getDefaultImage(Object object)
-	{
+	protected Image getDefaultImage(Object object) {
 		String image = "full/obj16/GenericValue"; //$NON-NLS-1$
-		if (object instanceof String)
-		{
+		if (object instanceof String) {
 			image = "full/obj16/TextValue"; //$NON-NLS-1$
-		}
-		else if (object instanceof Boolean)
-		{
+		} else if (object instanceof Boolean) {
 			image = "full/obj16/BooleanValue"; //$NON-NLS-1$
-		}
-		else if (object instanceof Float || object instanceof Double)
-		{
+		} else if (object instanceof Float || object instanceof Double) {
 			image = "full/obj16/RealValue"; //$NON-NLS-1$
-		}
-		else if (object instanceof Integer || object instanceof Short || object instanceof Long
-			|| object instanceof Byte)
-		{
+		} else if (object instanceof Integer || object instanceof Short || object instanceof Long
+			|| object instanceof Byte) {
 			image = "full/obj16/RealValue"; //$NON-NLS-1$
 		}
 
 		return getImageFromObject(EMFEditPlugin.INSTANCE.getImage(image));
 	}
 
-	protected Image getImageFromObject(Object object)
-	{
+	protected Image getImageFromObject(Object object) {
 		return ExtendedImageRegistry.getInstance().getImage(object);
 	}
 
@@ -403,37 +367,30 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * {@link IItemLabelProvider#getText IItemLabelProvider.getText}
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		// Get the adapter from the factory.
 		//
 		final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) adapterFactory.adapt(object,
 			IItemLabelProviderClass);
 
-		return itemLabelProvider != null ?
-			itemLabelProvider.getText(object) :
-			object == null ? "" : //$NON-NLS-1$
-				object.toString();
+		return itemLabelProvider != null ? itemLabelProvider.getText(object) : object == null ? "" : //$NON-NLS-1$
+			object.toString();
 	}
 
 	/**
 	 * This implements {@link org.eclipse.jface.viewers.IFontProvider}.getFont by forwarding it to an object that
 	 * implements {@link org.eclipse.emf.edit.provider.IItemFontProvider#getFont IItemFontProvider.getFont}
 	 */
-	public Font getFont(Object object)
-	{
+	public Font getFont(Object object) {
 		// Get the adapter from the factory.
 		//
 		final IItemFontProvider itemFontProvider = (IItemFontProvider) adapterFactory.adapt(object,
 			IItemFontProviderClass);
 
-		return itemFontProvider != null ?
-			getFontFromObject(itemFontProvider.getFont(object)) :
-			null;
+		return itemFontProvider != null ? getFontFromObject(itemFontProvider.getFont(object)) : null;
 	}
 
-	protected Font getFontFromObject(Object object)
-	{
+	protected Font getFontFromObject(Object object) {
 		return object == null ? null : ExtendedFontRegistry.INSTANCE.getFont(defaultFont, object);
 	}
 
@@ -442,16 +399,13 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * implements {@link org.eclipse.emf.edit.provider.IItemColorProvider#getForeground
 	 * IItemColorProvider.getForeground}
 	 */
-	public Color getForeground(Object object)
-	{
+	public Color getForeground(Object object) {
 		// Get the adapter from the factory.
 		//
 		final IItemColorProvider itemColorProvider = (IItemColorProvider) adapterFactory.adapt(object,
 			IItemColorProviderClass);
 
-		return itemColorProvider != null ?
-			getColorFromObject(itemColorProvider.getForeground(object)) :
-			null;
+		return itemColorProvider != null ? getColorFromObject(itemColorProvider.getForeground(object)) : null;
 	}
 
 	/**
@@ -459,22 +413,19 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * implements {@link org.eclipse.emf.edit.provider.IItemColorProvider#getBackground
 	 * IItemColorProvider.getBackground}
 	 */
-	public Color getBackground(Object object)
-	{
+	public Color getBackground(Object object) {
 		// Get the adapter from the factory.
 		//
 		final IItemColorProvider itemColorProvider = (IItemColorProvider) adapterFactory.adapt(object,
 			IItemColorProviderClass);
 
-		return itemColorProvider != null ?
-			getColorFromObject(itemColorProvider.getBackground(object)) :
-			null;
+		return itemColorProvider != null ? getColorFromObject(itemColorProvider.getBackground(object)) : null;
 	}
 
-	protected Color getColorFromObject(Object object)
-	{
-		return object == null ? null : ExtendedColorRegistry.INSTANCE.getColor(defaultForeground, defaultBackground,
-			object);
+	protected Color getColorFromObject(Object object) {
+		return object == null ? null
+			: ExtendedColorRegistry.INSTANCE.getColor(defaultForeground, defaultBackground,
+				object);
 	}
 
 	/**
@@ -483,8 +434,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * that implements {@link IItemLabelProvider#getImage IItemLabelProvider.getImage} where the columnIndex is ignored.
 	 */
 	@Override
-	public Image getColumnImage(Object object, int columnIndex)
-	{
+	public Image getColumnImage(Object object, int columnIndex) {
 		// Get the adapter from the factory.
 		//
 		final ITableItemLabelProvider tableItemLabelProvider = (ITableItemLabelProvider) adapterFactory.adapt(object,
@@ -496,20 +446,17 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		// Now we could check that the adapter implements interface ITableItemLabelProvider.
 		//
-		if (tableItemLabelProvider != null)
-		{
+		if (tableItemLabelProvider != null) {
 			// And delegate the call.
 			//
 			result = getImageFromObject(tableItemLabelProvider.getColumnImage(object, columnIndex));
 		}
 		// Otherwise, we could check that the adapter implements interface IItemLabelProvider.
 		//
-		else
-		{
+		else {
 			final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) adapterFactory.adapt(object,
 				IItemLabelProviderClass);
-			if (itemLabelProvider != null)
-			{
+			if (itemLabelProvider != null) {
 				// And delegate the call.
 				//
 				result = getImageFromObject(itemLabelProvider.getImage(object));
@@ -526,8 +473,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * ignored.
 	 */
 	@Override
-	public String getColumnText(Object object, int columnIndex)
-	{
+	public String getColumnText(Object object, int columnIndex) {
 		// Get the adapter from the factory.
 		//
 		final ITableItemLabelProvider tableItemLabelProvider = (ITableItemLabelProvider) adapterFactory.adapt(object,
@@ -535,32 +481,26 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		// Now we could check that the adapter implements interface ITableItemLabelProvider.
 		//
-		if (tableItemLabelProvider != null)
-		{
+		if (tableItemLabelProvider != null) {
 			// And delegate the call.
 			//
 			return tableItemLabelProvider.getColumnText(object, columnIndex);
 		}
 		// Otherwise, we could check that the adapter implements interface IItemLabelProvider.
 		//
-		else
-		{
+		else {
 			final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) adapterFactory.adapt(object,
 				IItemLabelProviderClass);
-			if (itemLabelProvider != null)
-			{
+			if (itemLabelProvider != null) {
 				// And delegate the call.
 				//
 				return itemLabelProvider.getText(object);
 			}
 			// If there is a column object, just convert it to a string.
 			//
-			else if (object != null)
-			{
+			else if (object != null) {
 				return object.toString();
-			}
-			else
-			{
+			} else {
 				return ""; //$NON-NLS-1$
 			}
 		}
@@ -571,8 +511,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * {@link ITableItemFontProvider#getFont ITableItemFontProvider.getFont} or failing that, an object that implements
 	 * {@link IItemFontProvider#getFont IItemFontProvider.getFont} where the columnIndex is ignored.
 	 */
-	public Font getFont(Object object, int columnIndex)
-	{
+	public Font getFont(Object object, int columnIndex) {
 		// Get the adapter from the factory.
 		//
 		final ITableItemFontProvider tableItemFontProvider = (ITableItemFontProvider) adapterFactory.adapt(object,
@@ -584,20 +523,17 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		// Now we could check that the adapter implements interface ITableItemFontProvider.
 		//
-		if (tableItemFontProvider != null)
-		{
+		if (tableItemFontProvider != null) {
 			// And delegate the call.
 			//
 			result = getFontFromObject(tableItemFontProvider.getFont(object, columnIndex));
 		}
 		// Otherwise, we could check that the adapter implements interface IItemFontProvider.
 		//
-		else
-		{
+		else {
 			final IItemFontProvider itemFontProvider = (IItemFontProvider) adapterFactory.adapt(object,
 				IItemFontProviderClass);
-			if (itemFontProvider != null)
-			{
+			if (itemFontProvider != null) {
 				// And delegate the call.
 				//
 				result = getFontFromObject(itemFontProvider.getFont(object));
@@ -613,8 +549,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * that implements {@link IItemColorProvider#getForeground IItemColorProvider.getForeground} where the columnIndex
 	 * is ignored.
 	 */
-	public Color getForeground(Object object, int columnIndex)
-	{
+	public Color getForeground(Object object, int columnIndex) {
 		// Get the adapter from the factory.
 		//
 		final ITableItemColorProvider tableItemColorProvider = (ITableItemColorProvider) adapterFactory.adapt(object,
@@ -626,20 +561,17 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		// Now we could check that the adapter implements interface ITableItemColorProvider.
 		//
-		if (tableItemColorProvider != null)
-		{
+		if (tableItemColorProvider != null) {
 			// And delegate the call.
 			//
 			result = getColorFromObject(tableItemColorProvider.getForeground(object, columnIndex));
 		}
 		// Otherwise, we could check that the adapter implements interface IItemColorProvider.
 		//
-		else
-		{
+		else {
 			final IItemColorProvider itemColorProvider = (IItemColorProvider) adapterFactory.adapt(object,
 				IItemColorProviderClass);
-			if (itemColorProvider != null)
-			{
+			if (itemColorProvider != null) {
 				// And delegate the call.
 				//
 				result = getColorFromObject(itemColorProvider.getForeground(object));
@@ -655,8 +587,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * that implements {@link IItemColorProvider#getBackground IItemColorProvider.getBackground} where the columnIndex
 	 * is ignored.
 	 */
-	public Color getBackground(Object object, int columnIndex)
-	{
+	public Color getBackground(Object object, int columnIndex) {
 		// Get the adapter from the factory.
 		//
 		final ITableItemColorProvider tableItemColorProvider = (ITableItemColorProvider) adapterFactory.adapt(object,
@@ -668,20 +599,17 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		// Now we could check that the adapter implements interface ITableItemColorProvider.
 		//
-		if (tableItemColorProvider != null)
-		{
+		if (tableItemColorProvider != null) {
 			// And delegate the call.
 			//
 			result = getColorFromObject(tableItemColorProvider.getBackground(object, columnIndex));
 		}
 		// Otherwise, we could check that the adapter implements interface IItemColorProvider.
 		//
-		else
-		{
+		else {
 			final IItemColorProvider itemColorProvider = (IItemColorProvider) adapterFactory.adapt(object,
 				IItemColorProviderClass);
-			if (itemColorProvider != null)
-			{
+			if (itemColorProvider != null) {
 				// And delegate the call.
 				//
 				result = getColorFromObject(itemColorProvider.getBackground(object));
@@ -695,8 +623,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * Returns whether this label provider fires
 	 * {@link ILabelProviderListener#labelProviderChanged(LabelProviderChangedEvent) update notifications}.
 	 */
-	public boolean isFireLabelUpdateNotifications()
-	{
+	public boolean isFireLabelUpdateNotifications() {
 		return isFireLabelUpdateNotifications;
 	}
 
@@ -704,28 +631,22 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * Sets whether this label provider fires
 	 * {@link ILabelProviderListener#labelProviderChanged(LabelProviderChangedEvent) update notifications}.
 	 */
-	public void setFireLabelUpdateNotifications(boolean isFireLabelUpdateNotifications)
-	{
+	public void setFireLabelUpdateNotifications(boolean isFireLabelUpdateNotifications) {
 		this.isFireLabelUpdateNotifications = isFireLabelUpdateNotifications;
 	}
 
-	public void fireLabelProviderChanged()
-	{
-		for (final ILabelProviderListener labelProviderListener : labelProviderListeners)
-		{
+	public void fireLabelProviderChanged() {
+		for (final ILabelProviderListener labelProviderListener : labelProviderListeners) {
 			labelProviderListener.labelProviderChanged(new LabelProviderChangedEvent(this));
 		}
 	}
 
 	@Override
-	public void notifyChanged(Notification notification)
-	{
-		if (isFireLabelUpdateNotifications())
-		{
-			if (!(notification instanceof IViewerNotification) || ((IViewerNotification) notification).isLabelUpdate())
-			{
-				for (final ILabelProviderListener labelProviderListener : labelProviderListeners)
-				{
+	public void notifyChanged(Notification notification) {
+		if (isFireLabelUpdateNotifications()) {
+			if (!(notification instanceof IViewerNotification)
+				|| ((IViewerNotification) notification).isLabelUpdate()) {
+				for (final ILabelProviderListener labelProviderListener : labelProviderListeners) {
 					labelProviderListener.labelProviderChanged(new LabelProviderChangedEvent(this, notification
 						.getNotifier()));
 				}

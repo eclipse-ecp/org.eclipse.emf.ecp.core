@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -217,12 +219,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public User getAssignee() {
-		if (assignee != null && assignee.eIsProxy())
-		{
+		if (assignee != null && assignee.eIsProxy()) {
 			final InternalEObject oldAssignee = (InternalEObject) assignee;
 			assignee = (User) eResolveProxy(oldAssignee);
-			if (assignee != oldAssignee)
-			{
+			if (assignee != oldAssignee) {
 				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TaskPackage.TASK__ASSIGNEE, oldAssignee,
 						assignee));
@@ -251,8 +251,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	public NotificationChain basicSetAssignee(User newAssignee, NotificationChain msgs) {
 		final User oldAssignee = assignee;
 		assignee = newAssignee;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				TaskPackage.TASK__ASSIGNEE,
 				oldAssignee, newAssignee);
@@ -273,8 +272,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public void setAssignee(User newAssignee) {
-		if (newAssignee != assignee)
-		{
+		if (newAssignee != assignee) {
 			NotificationChain msgs = null;
 			if (assignee != null) {
 				msgs = ((InternalEObject) assignee).eInverseRemove(this, TaskPackage.USER__TASKS, User.class, msgs);
@@ -286,9 +284,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TaskPackage.TASK__ASSIGNEE, newAssignee, newAssignee));
+		} else if (eNotificationRequired()) {
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, TaskPackage.TASK__ASSIGNEE, newAssignee, newAssignee));
 		}
 	}
 
@@ -300,8 +298,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public EList<Task> getSubTasks() {
-		if (subTasks == null)
-		{
+		if (subTasks == null) {
 			subTasks = new EObjectContainmentEList<Task>(Task.class, this, TaskPackage.TASK__SUB_TASKS);
 		}
 		return subTasks;
@@ -346,12 +343,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	public boolean hasName(DiagnosticChain chain, Map<?, ?> context) {
 		if (getName() == null || getName().equals("")) { //$NON-NLS-1$
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.ERROR,
-						TaskValidator.DIAGNOSTIC_SOURCE,
-						TaskValidator.TASK__HAS_NAME, "Task needs to have a name", //$NON-NLS-1$
-						new Object[] { this, TaskPackage.eINSTANCE.getTask_Name() }));
+				chain.add(new BasicDiagnostic(Diagnostic.ERROR,
+					TaskValidator.DIAGNOSTIC_SOURCE,
+					TaskValidator.TASK__HAS_NAME, "Task needs to have a name", //$NON-NLS-1$
+					new Object[] { this, TaskPackage.eINSTANCE.getTask_Name() }));
 			}
 			return false;
 		}
@@ -366,8 +361,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case TaskPackage.TASK__ASSIGNEE:
 			if (assignee != null) {
 				msgs = ((InternalEObject) assignee).eInverseRemove(this, TaskPackage.USER__TASKS, User.class, msgs);
@@ -438,8 +432,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case TaskPackage.TASK__ASSIGNEE:
 			return basicSetAssignee(null, msgs);
 		case TaskPackage.TASK__SUB_TASKS:
@@ -456,8 +449,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case TaskPackage.TASK__NAME:
 			return getName();
 		case TaskPackage.TASK__DESCRIPTION:
@@ -486,8 +478,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case TaskPackage.TASK__NAME:
 			setName((String) newValue);
 			return;
@@ -519,8 +510,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case TaskPackage.TASK__NAME:
 			setName(NAME_EDEFAULT);
 			return;
@@ -551,8 +541,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case TaskPackage.TASK__NAME:
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case TaskPackage.TASK__DESCRIPTION:
@@ -577,8 +566,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID)
-		{
+		switch (operationID) {
 		case TaskPackage.TASK___HAS_NAME__DIAGNOSTICCHAIN_MAP:
 			return hasName((DiagnosticChain) arguments.get(0), (Map<?, ?>) arguments.get(1));
 		}

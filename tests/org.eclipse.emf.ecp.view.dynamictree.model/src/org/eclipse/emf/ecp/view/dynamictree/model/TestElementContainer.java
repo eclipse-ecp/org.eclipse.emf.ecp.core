@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -22,7 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getTestElements <em>Test Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getTestElements <em>Test
+ * Elements</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getId <em>Id</em>}</li>
  * </ul>
  * </p>
@@ -31,8 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface TestElementContainer extends EObject
-{
+public interface TestElementContainer extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Test Elements</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement}.

@@ -1,0 +1,6 @@
+<delta .*(1\.19\.0).*>\n.*\n.*\n.*\n.*\n.*</delta>\n
+
+
+<delta .*emf\.edapt.*>\n.*\n.*\n.*\n.*\n.*</delta>\n
+
+(?s)<resolver_errors>.*</resolver_errors>

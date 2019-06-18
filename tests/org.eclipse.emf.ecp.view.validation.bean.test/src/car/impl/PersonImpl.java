@@ -122,7 +122,7 @@ public class PersonImpl extends MinimalEObjectImpl.Container implements Person {
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					CarPackage.PERSON__NAME, oldName, name));
+				CarPackage.PERSON__NAME, oldName, name));
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class PersonImpl extends MinimalEObjectImpl.Container implements Person {
 	public EList<Person> getChildren() {
 		if (children == null) {
 			children = new EObjectContainmentEList<Person>(Person.class, this,
-					CarPackage.PERSON__CHILDREN);
+				CarPackage.PERSON__CHILDREN);
 		}
 		return children;
 	}
@@ -160,7 +160,7 @@ public class PersonImpl extends MinimalEObjectImpl.Container implements Person {
 		birthPlace = newBirthPlace;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					CarPackage.PERSON__BIRTH_PLACE, oldBirthPlace, birthPlace));
+				CarPackage.PERSON__BIRTH_PLACE, oldBirthPlace, birthPlace));
 	}
 
 	/**
@@ -170,11 +170,11 @@ public class PersonImpl extends MinimalEObjectImpl.Container implements Person {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
-			int featureID, NotificationChain msgs) {
+		int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case CarPackage.PERSON__CHILDREN:
 			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd,
-					msgs);
+				msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -250,13 +250,14 @@ public class PersonImpl extends MinimalEObjectImpl.Container implements Person {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case CarPackage.PERSON__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
+			return NAME_EDEFAULT == null ? name != null
+				: !NAME_EDEFAULT
 					.equals(name);
 		case CarPackage.PERSON__CHILDREN:
 			return children != null && !children.isEmpty();
 		case CarPackage.PERSON__BIRTH_PLACE:
 			return BIRTH_PLACE_EDEFAULT == null ? birthPlace != null
-					: !BIRTH_PLACE_EDEFAULT.equals(birthPlace);
+				: !BIRTH_PLACE_EDEFAULT.equals(birthPlace);
 		}
 		return super.eIsSet(featureID);
 	}

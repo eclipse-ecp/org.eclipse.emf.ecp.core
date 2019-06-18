@@ -1,34 +1,32 @@
 /*******************************************************************************
- * Copyright (c) 2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2017-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Lucas Koehler - adapt matching for internationalization
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecp.view.internal.core.swt.ComboUtil;
 import org.eclipse.emf.ecp.view.internal.core.swt.MatchItemComboViewer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusEvent;
@@ -42,6 +40,8 @@ import org.eclipse.swt.widgets.Listener;
  *
  */
 public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSWTRenderer {
+
+	private MatchItemComboViewer viewer;
 
 	/**
 	 * Default constructor.
@@ -63,11 +63,6 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 			emfFormsEditSupport);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRenderer#createComboViewer(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected ComboViewer createComboViewer(final Composite parent, final EEnum eEnum) {
 		final CCombo combo = new CCombo(parent, SWT.BORDER);
@@ -77,10 +72,22 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 				combo.setText(combo.getText());
 			}
 		});
+		combo.setEditable(true);
+
+		viewer = new MatchItemComboViewer(combo) {
+			@Override
+			public void onEnter() {
+				// Trigger databinding for current selection
+				fireViewerSelectionEvents();
+				combo.clearSelection();
+			}
+		};
+
 		combo.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
+				fireViewerSelectionEvents();
 				combo.clearSelection();
 			}
 
@@ -89,45 +96,24 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 
 			}
 		});
-		combo.setEditable(true);
-
-		final MatchItemComboViewer viewer = new MatchItemComboViewer(combo) {
-			@Override
-			public void onEnter() {
-				final int selectedIndex = ComboUtil.getClosestMatchIndex(getCCombo().getItems(),
-					getBuffer().asString());
-				if (!getBuffer().isEmpty() && selectedIndex > -1) {
-					final String closestMatch = getCCombo().getItems()[selectedIndex];
-					final Optional<EEnumLiteral> findLiteral = findLiteral(eEnum.getELiterals(), closestMatch);
-					if (findLiteral.isPresent()) {
-						setSelection(new StructuredSelection(findLiteral.get().getInstance()));
-					}
-				} else {
-					setClosestMatch(getCCombo().getText());
-				}
-				combo.clearSelection();
-			}
-		};
 
 		return viewer;
 	}
 
 	/**
-	 * Search the given collection of {@link org.eclipse.emf.common.util.Enumerator Enumerator}s for the given literal.
-	 *
-	 * @param enumerators a collection of {@link org.eclipse.emf.common.util.Enumerator Enumerator}s to be searched
-	 * @param literal the literal to be searched for as a string
-	 * @return an {@link Optional} containing the matched literal
+	 * Triggers the combo viewer's selection events by re-setting its selection.
+	 * <p>
+	 * When typing in the match item viewer's combo box, the selection is updated correctly in the underlying combo.
+	 * However, the databinding is not triggered because StructuredViewer#updateSelection does not fire post selection
+	 * change events. To trigger the databinding, we manually set the selection to the viewer.
+	 * We do not set empty selections because the user cannot set an empty value and the ccombo sometimes
+	 * returns an empty selection when manually setting the cursor in the combo box (even though a value is
+	 * shown in the CCombo).
 	 */
-	private static Optional<EEnumLiteral> findLiteral(
-		List<EEnumLiteral> enumerators, String literal) {
-
-		for (final EEnumLiteral e : enumerators) {
-			if (e.getLiteral().equals(literal)) {
-				return Optional.of(e);
-			}
+	private void fireViewerSelectionEvents() {
+		final IStructuredSelection selection = viewer.getStructuredSelection();
+		if (!selection.isEmpty()) {
+			viewer.setSelection(selection);
 		}
-
-		return Optional.empty();
 	}
 }

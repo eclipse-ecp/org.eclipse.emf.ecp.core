@@ -2,9 +2,11 @@
  * Copyright (c) 2002-2006 IBM Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * IBM - Initial API and implementation
@@ -24,18 +26,16 @@ import org.eclipse.swt.dnd.DragSourceListener;
  * This is how one of these adapters is typically hooked up:
  *
  * <pre>
- * viewer.addDragSupport
- * 	(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK,
- * 		new Transfer[] { LocalTransfer.getInstance() },
- * 		ViewerDragAdapter(viewer));
+ * viewer.addDragSupport(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK,
+ * 	new Transfer[] { LocalTransfer.getInstance() },
+ * 	ViewerDragAdapter(viewer));
  * </pre>
  *
  * Doing so simply allows a drag operation to be initiated from the viewer
  * such that the viewer's selection is transferred to the drop target.
  * See {@link EditingDomainViewerDropAdapter} and {@link LocalTransfer} for more details.
  */
-public class ViewerDragAdapter implements DragSourceListener
-{
+public class ViewerDragAdapter implements DragSourceListener {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -51,8 +51,7 @@ public class ViewerDragAdapter implements DragSourceListener
 	/**
 	 * This creates an instance for the given viewer.
 	 */
-	public ViewerDragAdapter(Viewer viewer)
-	{
+	public ViewerDragAdapter(Viewer viewer) {
 		super();
 
 		// Remember the viewer and listen to SWT.DragDetect to alert the start of the drag operation.
@@ -64,8 +63,7 @@ public class ViewerDragAdapter implements DragSourceListener
 	 * This is called when dragging is initiated; it records the {@link #selection} of {@link #viewer}.
 	 */
 	@Override
-	public void dragStart(DragSourceEvent event)
-	{
+	public void dragStart(DragSourceEvent event) {
 		selection = viewer.getSelection();
 	}
 
@@ -73,8 +71,7 @@ public class ViewerDragAdapter implements DragSourceListener
 	 * This is called when dragging is completed; it forgets the {@link #selection}.
 	 */
 	@Override
-	public void dragFinished(DragSourceEvent event)
-	{
+	public void dragFinished(DragSourceEvent event) {
 		selection = null;
 		LocalTransfer.getInstance().javaToNative(null, null);
 	}
@@ -83,10 +80,8 @@ public class ViewerDragAdapter implements DragSourceListener
 	 * This is called to transfer the data.
 	 */
 	@Override
-	public void dragSetData(DragSourceEvent event)
-	{
-		if (LocalTransfer.getInstance().isSupportedType(event.dataType))
-		{
+	public void dragSetData(DragSourceEvent event) {
+		if (LocalTransfer.getInstance().isSupportedType(event.dataType)) {
 			event.data = selection;
 		}
 	}

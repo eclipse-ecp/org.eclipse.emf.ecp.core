@@ -1,14 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bugs 527740, 533522
+ * Christian W. Damus - bugs 527740, 533522, 545686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
@@ -256,6 +258,48 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
 		VElement parentVElement, ViewModelServiceProvider modelServiceProvider) {
+
+		this(view, domainObject, parent, parentVElement, modelServiceProvider, null);
+	}
+
+	/**
+	 * Instantiates a new view model context with initial {@linkplain #getContextValue(String) context values}.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 * @param contextValues initial context values to set
+	 *
+	 * @since 1.21
+	 * @see #getContextValue(String)
+	 */
+	public ViewModelContextImpl(VElement view, EObject domainObject, Map<String, ?> contextValues) {
+		this(view, domainObject, ViewModelServiceProvider.NULL, contextValues);
+	}
+
+	/**
+	 * Instantiates a new view model context with initial {@linkplain #getContextValue(String) context values}.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 * @param modelServiceProvider a provider of services to use in the {@link ViewModelContext}. May be {@code null} if
+	 *            local service overrides are not needed
+	 * @param contextValues initial context values to set
+	 *
+	 * @since 1.21
+	 * @see #getContextValue(String)
+	 */
+	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelServiceProvider modelServiceProvider,
+		Map<String, ?> contextValues) {
+
+		this(view, domainObject, null, null, modelServiceProvider, contextValues);
+	}
+
+	/**
+	 * Internal constructor to which all others ultimately delegate.
+	 */
+	private ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
+		VElement parentVElement, ViewModelServiceProvider modelServiceProvider, Map<String, ?> contextValues) {
+
 		this.view = view;
 		this.domainObject = domainObject;
 		parentContext = parent;
@@ -265,6 +309,18 @@ public class ViewModelContextImpl implements ViewModelContext {
 			viewServiceProvider = modelServiceProvider;
 		}
 		this.parentVElement = parentVElement;
+
+		// This must be done before instantiating services that may use the context values
+		if (contextValues != null) {
+			if (parentContext != null) {
+				// Values go up to the parent
+				contextValues.forEach(parentContext::putContextValue);
+			} else {
+				// I am the root
+				keyObjectMap.putAll(contextValues);
+			}
+		}
+
 		instantiate();
 	}
 

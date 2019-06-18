@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
@@ -46,6 +48,10 @@ public class DateCellStringTooltipModifier implements ECPStringModifier {
 	@Override
 	public String modifyString(String text, Setting setting) {
 		if (setting != null) {
+			final Object value = setting.get(true);
+			if (value == null) {
+				return text;
+			}
 			final EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				return text;
@@ -55,11 +61,11 @@ public class DateCellStringTooltipModifier implements ECPStringModifier {
 				return text;
 			}
 			if (XMLGregorianCalendar.class.isAssignableFrom(eType.getInstanceClass())) {
-				final XMLGregorianCalendar calendar = (XMLGregorianCalendar) setting.get(true);
+				final XMLGregorianCalendar calendar = (XMLGregorianCalendar) value;
 				return dateInstance.format(calendar.toGregorianCalendar().getTime());
 			}
 			if (Date.class.isAssignableFrom(eType.getInstanceClass())) {
-				final Date date = (Date) setting.get(true);
+				final Date date = (Date) value;
 				final String string = dateInstance.format(date);
 				return string;
 			}

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -80,7 +82,7 @@ public abstract class VContainerImpl extends VElementImpl implements VContainer 
 	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null) {
-			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
+			children = new EObjectContainmentEList<>(VContainedElement.class, this,
 				VViewPackage.CONTAINER__CHILDREN);
 		}
 		return children;

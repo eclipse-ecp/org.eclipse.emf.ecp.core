@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emf.ecp.view.rule.model="http://org/eclipse/emf/ecp/view/rule/model" xmi:id="_pXvpwEWAEeWfKJaajyNdyA">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emf.ecp.view.rule.model="http://org/eclipse/emf/ecp/view/rule/model" xmlns:org.eclipse.emfforms.view.annotation.model="http://org/eclipse/emf/emfforms/view/annotation/model" xmi:id="_pXvpwEWAEeWfKJaajyNdyA">
   <rootEClass href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_pXvpwUWAEeWfKJaajyNdyA" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_pXvpwkWAEeWfKJaajyNdyA">
@@ -42,9 +42,9 @@
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_twMc4ND8EeelrbphwT5uew" name="Control columns">
+    <attachments xsi:type="org.eclipse.emfforms.view.annotation.model:Annotation" xmi:id="_IVurAKW4EeaJfej-O3bewQ" key="showChildDomainModelReferences"/>
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_twMc4dD8EeelrbphwT5uew">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableDomainModelReference/columnDomainModelReferences"/>
-      <domainModelEReferencePath href="http://org/eclipse/emf/ecp/view/model/1180#//Control/domainModelReference"/>
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/model/1180#//Control/domainModelReference"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>

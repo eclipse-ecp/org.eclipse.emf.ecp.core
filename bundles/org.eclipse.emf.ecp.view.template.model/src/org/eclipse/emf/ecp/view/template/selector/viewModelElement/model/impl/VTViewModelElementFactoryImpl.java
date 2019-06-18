@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -36,16 +38,13 @@ public class VTViewModelElementFactoryImpl extends EFactoryImpl implements VTVie
 	 * @generated
 	 */
 	public static VTViewModelElementFactory init() {
-		try
-		{
+		try {
 			final VTViewModelElementFactory theViewModelElementFactory = (VTViewModelElementFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTViewModelElementPackage.eNS_URI);
-			if (theViewModelElementFactory != null)
-			{
+			if (theViewModelElementFactory != null) {
 				return theViewModelElementFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTViewModelElementFactoryImpl();
@@ -70,8 +69,7 @@ public class VTViewModelElementFactoryImpl extends EFactoryImpl implements VTVie
 	 */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID())
-		{
+		switch (eClass.getClassifierID()) {
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR:
 			return createViewModelElementSelector();
 		default:

@@ -11,25 +11,33 @@
             class="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage">
       </package>
    </extension>
-
-   <extension point="org.eclipse.emf.ecore.content_parser">
-      <!-- @generated template -->
+   <extension
+         name=""
+         point="org.eclipse.emf.ecore.content_parser">
       <parser
             contentTypeIdentifier="org.eclipse.emf.ecp.view.template.model"
-            class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"/>
+            class="org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl">
+      </parser>
    </extension>
-
-   <extension point="org.eclipse.core.contenttype.contentTypes">
-      <!-- @generated template -->
+   <extension
+         name=""
+         point="org.eclipse.core.contenttype.contentTypes">
       <content-type
             base-type="org.eclipse.emf.ecore.xmi"
             file-extensions="template"
             id="org.eclipse.emf.ecp.view.template.model"
             name="%_UI_Template_content_type"
             priority="normal">
-         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
-            <parameter name="namespace" value="http://org/eclipse/emf/ecp/view/template/model"/>
-            <parameter name="kind" value="xmi"/>
+         <describer
+               class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
+            <parameter
+                  name="namespace"
+                  value="http://org/eclipse/emf/ecp/view/template/model">
+            </parameter>
+            <parameter
+                  name="kind"
+                  value="xmi">
+            </parameter>
          </describer>
       </content-type>
    </extension>

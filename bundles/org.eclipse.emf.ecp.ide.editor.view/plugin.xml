@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-  <extension
+
+   <extension
+         name=""
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart"
@@ -13,4 +15,5 @@
             name="View Model Editor">
       </editor>
    </extension>
+
 </plugin>

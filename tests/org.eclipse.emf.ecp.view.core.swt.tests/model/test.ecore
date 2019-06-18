@@ -7,9 +7,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" eType="#//TestEnum"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TestEnum" instanceTypeName="TestEnum">
-    <eLiterals name="a"/>
+    <eLiterals name="a">
+      <eAnnotations source="http://org/eclipse/emf/ecp/view/model/170">
+        <details key="isInputtable" value="false"/>
+      </eAnnotations>
+    </eLiterals>
     <eLiterals name="b" value="1"/>
     <eLiterals name="c" value="2"/>
+    <eLiterals name="d" value="3" literal="d"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="XMLDate" instanceClassName="javax.xml.datatype.XMLGregorianCalendar"/>
 </ecore:EPackage>

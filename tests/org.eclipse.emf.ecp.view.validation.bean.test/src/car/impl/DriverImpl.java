@@ -82,7 +82,7 @@ public class DriverImpl extends PersonImpl implements Driver {
 		age = newAge;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					CarPackage.DRIVER__AGE, oldAge, age));
+				CarPackage.DRIVER__AGE, oldAge, age));
 	}
 
 	/**

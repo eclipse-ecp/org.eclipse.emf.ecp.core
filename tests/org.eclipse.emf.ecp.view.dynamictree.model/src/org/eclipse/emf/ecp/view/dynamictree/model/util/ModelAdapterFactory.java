@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -38,8 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage
  * @generated
  */
-public class ModelAdapterFactory extends AdapterFactoryImpl
-{
+public class ModelAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -56,8 +57,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public ModelAdapterFactory()
-	{
+	public ModelAdapterFactory() {
 		if (modelPackage == null) {
 			modelPackage = ModelPackage.eINSTANCE;
 		}
@@ -74,8 +74,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
+	public boolean isFactoryForType(Object object) {
 		if (object == modelPackage) {
 			return true;
 		}
@@ -92,74 +91,73 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected ModelSwitch<Adapter> modelSwitch =
-		new ModelSwitch<Adapter>() {
-			@Override
-			public Adapter caseDynamicContainmentTree(DynamicContainmentTree object) {
-				return createDynamicContainmentTreeAdapter();
-			}
+	protected ModelSwitch<Adapter> modelSwitch = new ModelSwitch<Adapter>() {
+		@Override
+		public Adapter caseDynamicContainmentTree(DynamicContainmentTree object) {
+			return createDynamicContainmentTreeAdapter();
+		}
 
-			@Override
-			public Adapter caseDynamicContainmentItem(DynamicContainmentItem object) {
-				return createDynamicContainmentItemAdapter();
-			}
+		@Override
+		public Adapter caseDynamicContainmentItem(DynamicContainmentItem object) {
+			return createDynamicContainmentItemAdapter();
+		}
 
-			@Override
-			public Adapter caseTestElement(TestElement object) {
-				return createTestElementAdapter();
-			}
+		@Override
+		public Adapter caseTestElement(TestElement object) {
+			return createTestElementAdapter();
+		}
 
-			@Override
-			public Adapter caseDomainRoot(DomainRoot object) {
-				return createDomainRootAdapter();
-			}
+		@Override
+		public Adapter caseDomainRoot(DomainRoot object) {
+			return createDomainRootAdapter();
+		}
 
-			@Override
-			public Adapter caseDomainIntermediate(DomainIntermediate object) {
-				return createDomainIntermediateAdapter();
-			}
+		@Override
+		public Adapter caseDomainIntermediate(DomainIntermediate object) {
+			return createDomainIntermediateAdapter();
+		}
 
-			@Override
-			public Adapter caseTestElementContainer(TestElementContainer object) {
-				return createTestElementContainerAdapter();
-			}
+		@Override
+		public Adapter caseTestElementContainer(TestElementContainer object) {
+			return createTestElementContainerAdapter();
+		}
 
-			@Override
-			public Adapter caseDynamicContainmentTreeDomainModelReference(
-				DynamicContainmentTreeDomainModelReference object) {
-				return createDynamicContainmentTreeDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseDynamicContainmentTreeDomainModelReference(
+			DynamicContainmentTreeDomainModelReference object) {
+			return createDynamicContainmentTreeDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object) {
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseCategorizableElement(VCategorizableElement object) {
-				return createCategorizableElementAdapter();
-			}
+		@Override
+		public Adapter caseCategorizableElement(VCategorizableElement object) {
+			return createCategorizableElementAdapter();
+		}
 
-			@Override
-			public Adapter caseAbstractCategorization(VAbstractCategorization object) {
-				return createAbstractCategorizationAdapter();
-			}
+		@Override
+		public Adapter caseAbstractCategorization(VAbstractCategorization object) {
+			return createAbstractCategorizationAdapter();
+		}
 
-			@Override
-			public Adapter caseCategory(VCategory object) {
-				return createCategoryAdapter();
-			}
+		@Override
+		public Adapter caseCategory(VCategory object) {
+			return createCategoryAdapter();
+		}
 
-			@Override
-			public Adapter caseDomainModelReference(VDomainModelReference object) {
-				return createDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
+			return createDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -171,8 +169,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -188,8 +185,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree
 	 * @generated
 	 */
-	public Adapter createDynamicContainmentTreeAdapter()
-	{
+	public Adapter createDynamicContainmentTreeAdapter() {
 		return null;
 	}
 
@@ -205,8 +201,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem
 	 * @generated
 	 */
-	public Adapter createDynamicContainmentItemAdapter()
-	{
+	public Adapter createDynamicContainmentItemAdapter() {
 		return null;
 	}
 
@@ -222,8 +217,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElement
 	 * @generated
 	 */
-	public Adapter createTestElementAdapter()
-	{
+	public Adapter createTestElementAdapter() {
 		return null;
 	}
 
@@ -239,8 +233,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot
 	 * @generated
 	 */
-	public Adapter createDomainRootAdapter()
-	{
+	public Adapter createDomainRootAdapter() {
 		return null;
 	}
 
@@ -256,8 +249,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate
 	 * @generated
 	 */
-	public Adapter createDomainIntermediateAdapter()
-	{
+	public Adapter createDomainIntermediateAdapter() {
 		return null;
 	}
 
@@ -273,8 +265,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer
 	 * @generated
 	 */
-	public Adapter createTestElementContainerAdapter()
-	{
+	public Adapter createTestElementContainerAdapter() {
 		return null;
 	}
 
@@ -307,8 +298,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -341,8 +331,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
 	 * @generated
 	 */
-	public Adapter createAbstractCategorizationAdapter()
-	{
+	public Adapter createAbstractCategorizationAdapter() {
 		return null;
 	}
 
@@ -358,8 +347,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
 	 * @generated
 	 */
-	public Adapter createCategoryAdapter()
-	{
+	public Adapter createCategoryAdapter() {
 		return null;
 	}
 
@@ -388,8 +376,7 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

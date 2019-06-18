@@ -1,10 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -27,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigrationException;
 import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigratorUtil;
@@ -68,13 +71,10 @@ public class TemplateModelEditorPart extends GenericEditor {
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
-		super.init(site, input);
-		super.setPartName(input.getName());
-
 		if (!(input instanceof FileEditorInput)) {
 			throw new PartInitException(Messages.TemplateModelEditorPart_invalidEditorInput);
 		}
-		final FileEditorInput fei = (FileEditorInput) getEditorInput();
+		final FileEditorInput fei = (FileEditorInput) input;
 
 		try {
 			if (!ViewNsMigrationUtil.checkMigration(fei.getPath().toFile())) {
@@ -105,10 +105,21 @@ public class TemplateModelEditorPart extends GenericEditor {
 			throw new PartInitException(Messages.TemplateModelEditorPart_initError, e);
 		}
 
+		// super.init is called at the end because we need to check for necessary migrations and register referenced
+		// ecores before the resource is finally loaded in GenericEditor#init
+		super.init(site, input);
+		super.setPartName(input.getName());
 	}
 
 	@Override
 	protected Object modifyEditorInput(ResourceSet resourceSet) {
+		// Make sure all proxies are resolved before showing the editor
+		int rsSize = getResourceSet().getResources().size();
+		EcoreUtil.resolveAll(getResourceSet());
+		while (rsSize != getResourceSet().getResources().size()) {
+			EcoreUtil.resolveAll(getResourceSet());
+			rsSize = getResourceSet().getResources().size();
+		}
 		/* this access is save, otherwise we would have thrown a part init exception in init */
 		template = VTViewTemplate.class.cast(resourceSet.getResources().get(0).getContents().get(0));
 		return new RootObject(template);

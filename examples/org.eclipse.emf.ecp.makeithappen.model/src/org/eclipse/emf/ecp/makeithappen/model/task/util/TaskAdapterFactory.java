@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -29,8 +31,7 @@ import org.eclipse.emf.ecp.makeithappen.model.task.UserGroup;
  * @see org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage
  * @generated
  */
-public class TaskAdapterFactory extends AdapterFactoryImpl
-{
+public class TaskAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -47,10 +48,8 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public TaskAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public TaskAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = TaskPackage.eINSTANCE;
 		}
 	}
@@ -66,14 +65,11 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -86,33 +82,27 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected TaskSwitch<Adapter> modelSwitch =
-		new TaskSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseTask(Task object)
-			{
-				return createTaskAdapter();
-			}
+	protected TaskSwitch<Adapter> modelSwitch = new TaskSwitch<Adapter>() {
+		@Override
+		public Adapter caseTask(Task object) {
+			return createTaskAdapter();
+		}
 
-			@Override
-			public Adapter caseUser(User object)
-			{
-				return createUserAdapter();
-			}
+		@Override
+		public Adapter caseUser(User object) {
+			return createUserAdapter();
+		}
 
-			@Override
-			public Adapter caseUserGroup(UserGroup object)
-			{
-				return createUserGroupAdapter();
-			}
+		@Override
+		public Adapter caseUserGroup(UserGroup object) {
+			return createUserGroupAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -124,8 +114,7 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -141,8 +130,7 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.makeithappen.model.task.Task
 	 * @generated
 	 */
-	public Adapter createTaskAdapter()
-	{
+	public Adapter createTaskAdapter() {
 		return null;
 	}
 
@@ -158,8 +146,7 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.makeithappen.model.task.User
 	 * @generated
 	 */
-	public Adapter createUserAdapter()
-	{
+	public Adapter createUserAdapter() {
 		return null;
 	}
 
@@ -175,8 +162,7 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.makeithappen.model.task.UserGroup
 	 * @generated
 	 */
-	public Adapter createUserGroupAdapter()
-	{
+	public Adapter createUserGroupAdapter() {
 		return null;
 	}
 
@@ -189,8 +175,7 @@ public class TaskAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

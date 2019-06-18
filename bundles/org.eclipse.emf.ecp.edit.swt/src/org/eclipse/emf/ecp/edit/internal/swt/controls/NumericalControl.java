@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -221,8 +223,8 @@ public class NumericalControl extends AbstractTextControl {
 					formatedNumber = format.format(number);
 				}
 				// if (number.toString().contains("E") //$NON-NLS-1$
-				// || ((String) value).matches("0*" + formatedNumber + "\\"  //$NON-NLS-1$  //$NON-NLS-2$
-				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {  //$NON-NLS-1$
+				// || ((String) value).matches("0*" + formatedNumber + "\\" //$NON-NLS-1$ //$NON-NLS-2$
+				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) { //$NON-NLS-1$
 				//
 				// }
 				// return revertToOldValue(value);
@@ -246,9 +248,11 @@ public class NumericalControl extends AbstractTextControl {
 
 			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
 				LocalizationServiceHelper.getString(getClass(),
-					DepricatedControlMessageKeys.NumericalControl_InvalidNumber), null,
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumber),
+				null,
 				LocalizationServiceHelper.getString(getClass(),
-					DepricatedControlMessageKeys.NumericalControl_InvalidNumberWillBeUnset), MessageDialog.ERROR,
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumberWillBeUnset),
+				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {

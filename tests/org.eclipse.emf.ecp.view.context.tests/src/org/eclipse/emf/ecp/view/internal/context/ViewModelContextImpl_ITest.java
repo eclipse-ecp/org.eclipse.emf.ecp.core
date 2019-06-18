@@ -1,14 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 527740
+ * Christian W. Damus - bugs 527740, 545686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
@@ -32,7 +34,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -933,6 +937,69 @@ public class ViewModelContextImpl_ITest {
 
 			assertThat("Service not restored", context.hasService(MyService.class), is(true));
 			verify(provider).getViewModelServices(view, newModel);
+		} finally {
+			context.dispose();
+		}
+	}
+
+	/**
+	 * Test initialization of the root context's map of values.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public void testRootContextInitialValues() {
+		final EObject model = EcoreFactory.eINSTANCE.createEObject();
+		final VElement view = VViewFactory.eINSTANCE.createView();
+
+		final Map<String, Object> values = new HashMap<>();
+		values.put("foo", "bar");
+		values.put("baz", 42);
+
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			view, model, values);
+		try {
+			assertThat(context, notNullValue());
+			assertThat(context.getContextValue("foo"), is("bar"));
+			assertThat(context.getContextValue("baz"), is(42));
+		} finally {
+			context.dispose();
+		}
+	}
+
+	/**
+	 * Test initialization of the root context's map of values with a service provider.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public void testRootContextInitialValuesWithServiceProvider() {
+		final EObject model = EcoreFactory.eINSTANCE.createEObject();
+		final VElement view = VViewFactory.eINSTANCE.createView();
+
+		final Map<String, Object> found = new HashMap<>();
+
+		final ViewModelService canary = mock(MyService.class);
+		final ViewModelServiceProvider provider = mock(ViewModelServiceProvider.class);
+		when(provider.getViewModelServices(any(VElement.class), any(EObject.class)))
+			.then(invocation -> Collections.singleton(canary));
+		Mockito.doAnswer(invocation -> {
+			// The context should already have the values at this point
+			final ViewModelContext ctx = (ViewModelContext) invocation.getArguments()[0];
+			found.put("foo", ctx.getContextValue("foo"));
+			found.put("baz", ctx.getContextValue("baz"));
+			return null;
+		}).when(canary).instantiate(any(ViewModelContext.class));
+
+		final Map<String, Object> values = new HashMap<>();
+		values.put("foo", "bar");
+		values.put("baz", 42);
+
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			view, model, provider, values);
+
+		try {
+			assertThat("Service not provided", context.hasService(MyService.class), is(true));
+			assertThat("Service initialization did not find the 'foo' context value", found.get("foo"), is("bar"));
+			assertThat("Service initialization did not find the 'baz' context value", found.get("baz"), is(42));
 		} finally {
 			context.dispose();
 		}

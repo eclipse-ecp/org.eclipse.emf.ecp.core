@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * jonas - initial API and implementation
+ * Christian W. Damus - bugs 534829, 530314
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -69,9 +72,11 @@ import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerEditor;
 import org.eclipse.nebula.widgets.grid.Grid;
+import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
@@ -156,11 +161,13 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	 * @author Eugen Neufeld
 	 *
 	 */
-	private class CopyDragListener implements MouseListener, ISelectionChangedListener {
+	private class CopyDragListener implements MouseListener, MouseMoveListener, ISelectionChangedListener {
 
 		private IStructuredSelection lastSelection;
 		private EObject masterObject;
 		private final PreSetValidationService preSetValidationService;
+		private boolean copyDragActive = false;
+		private GridItem startDragItem;
 
 		CopyDragListener() {
 			final BundleContext bundleContext = FrameworkUtil
@@ -173,36 +180,36 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			preSetValidationService = serviceReference != null ? bundleContext.getService(serviceReference) : null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
-		 */
+		private boolean isCopyModifierPressed(MouseEvent e) {
+			return (e.stateMask & SWT.MOD2) != 0;
+		}
+
+		@Override
+		public void mouseMove(MouseEvent e) {
+			copyDragActive = isCopyModifierPressed(e) && lastSelection != null && lastSelection.size() > 1
+				&& masterObject != null;
+		}
+
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.swt.events.MouseListener#mouseDown(org.eclipse.swt.events.MouseEvent)
-		 */
 		@Override
 		public void mouseDown(MouseEvent e) {
+			if (isCopyModifierPressed(e)) {
+				final Grid grid = (Grid) e.widget;
+				startDragItem = grid.getItem(new Point(e.x, e.y));
+			}
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.swt.events.MouseListener#mouseUp(org.eclipse.swt.events.MouseEvent)
-		 */
 		@Override
 		public void mouseUp(MouseEvent e) {
 			if (e.button == 1) {
-				if ((e.stateMask & SWT.SHIFT) != 0 && lastSelection != null && lastSelection.size() > 1
-					&& masterObject != null) {
+
+				final Grid grid = (Grid) e.widget;
+				final GridItem currentItem = grid.getItem(new Point(e.x, e.y));
+				if (isCopyModifierPressed(e) && copyDragActive && startDragItem != currentItem) {
 					final List list = lastSelection.toList();
-					final Grid grid = (Grid) e.widget;
 					final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(new Point(e.x, e.y))
 						.getData(TableConfiguration.DMR);
 
@@ -240,6 +247,8 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 					}
 					editingDomain.getCommandStack().execute(cc);
 				}
+				copyDragActive = false;
+				startDragItem = null;
 			}
 		}
 
@@ -310,6 +319,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE) {
 				final CopyDragListener mdl = new CopyDragListener();
 				tableViewer.addSelectionChangedListener(mdl);
+				tableViewer.getGrid().addMouseMoveListener(mdl);
 				tableViewer.getGrid().addMouseListener(mdl);
 			}
 
@@ -393,8 +403,9 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			.customizeTableViewerCreation(getTableViewerCreator())
 			.customizeContentProvider(cp)
 			.customizeComparator(comparator)
-			.enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
-			.enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER);
+			.showHideColumns(true)
+			.columnSubstringFilter(true)
+			.columnRegexFilter(true);
 	}
 
 	@Override

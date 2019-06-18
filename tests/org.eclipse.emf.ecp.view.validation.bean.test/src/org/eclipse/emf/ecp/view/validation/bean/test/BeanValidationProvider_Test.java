@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -38,7 +40,7 @@ public class BeanValidationProvider_Test {
 		assertEquals(1, validate.size());
 		assertEquals(driverEMF, validate.get(0).getData().get(0));
 		assertEquals(CarPackage.eINSTANCE.getDriver_Age(), validate.get(0)
-				.getData().get(1));
+			.getData().get(1));
 	}
 
 	@Test
@@ -72,6 +74,6 @@ public class BeanValidationProvider_Test {
 		assertEquals(1, validate.size());
 		assertEquals(driverEMF, validate.get(0).getData().get(0));
 		assertEquals(CarPackage.eINSTANCE.getDriver_Age(), validate.get(0)
-				.getData().get(1));
+			.getData().get(1));
 	}
 }

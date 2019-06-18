@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eike Stepper - initial API and implementation
@@ -46,7 +48,8 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 		});
 
 		add(new Property<ECPProject>(
-			"repositoryLabel", Messages.ECPProjectProperties_Repository, Messages.ECPProjectProperties_RepositoryOfProject) { //$NON-NLS-1$
+			"repositoryLabel", Messages.ECPProjectProperties_Repository, //$NON-NLS-1$
+			Messages.ECPProjectProperties_RepositoryOfProject) {
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.getRepository().getLabel();
@@ -78,7 +81,8 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 			}
 		});
 		add(new Property<ECPProject>(
-			"isDirty", Messages.ECPProjectProperties_IsProjectDirty, Messages.ECPProjectProperties_HasProjectUnsavedChanges) { //$NON-NLS-1$
+			"isDirty", Messages.ECPProjectProperties_IsProjectDirty, //$NON-NLS-1$
+			Messages.ECPProjectProperties_HasProjectUnsavedChanges) {
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.hasDirtyContents();

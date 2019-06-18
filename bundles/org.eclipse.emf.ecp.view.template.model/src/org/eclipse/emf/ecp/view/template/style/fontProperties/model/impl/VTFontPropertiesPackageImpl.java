@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -83,7 +85,7 @@ public class VTFontPropertiesPackageImpl extends EPackageImpl implements VTFontP
 		// Obtain or create and register package
 		final VTFontPropertiesPackageImpl theFontPropertiesPackage = (VTFontPropertiesPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTFontPropertiesPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTFontPropertiesPackageImpl());
+				: new VTFontPropertiesPackageImpl());
 
 		isInited = true;
 
@@ -256,23 +258,28 @@ public class VTFontPropertiesPackageImpl extends EPackageImpl implements VTFontP
 		initEAttribute(
 			getFontPropertiesStyleProperty_Italic(),
 			ecorePackage.getEBoolean(),
-			"italic", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"italic", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getFontPropertiesStyleProperty_Bold(),
 			ecorePackage.getEBoolean(),
-			"bold", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"bold", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getFontPropertiesStyleProperty_ColorHEX(),
 			ecorePackage.getEString(),
-			"colorHEX", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"colorHEX", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getFontPropertiesStyleProperty_Height(),
 			ecorePackage.getEInt(),
-			"height", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"height", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getFontPropertiesStyleProperty_FontName(),
 			ecorePackage.getEString(),
-			"fontName", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"fontName", null, 0, 1, VTFontPropertiesStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

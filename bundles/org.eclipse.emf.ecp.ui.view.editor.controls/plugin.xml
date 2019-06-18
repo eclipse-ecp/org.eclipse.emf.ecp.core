@@ -52,27 +52,6 @@
                </with>
             </visibleWhen>
          </command>
-         <command
-               commandId="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass"
-               label="Unset Root EClass"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <instanceof
-                              value="org.eclipse.emf.ecp.view.spi.model.VView">
-                        </instanceof>
-                     </iterate>
-                  </and>
-               </with>
-            </visibleWhen>
-         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -141,18 +120,6 @@
             defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler"
             id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView">
       </command>
-      <command
-            name="Unset Root EClass"
-            defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.UnsetRootEClass"
-            id="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass">
-      </command>
-   </extension>
-   <extension
-         name=""
-         point="org.eclipse.emf.ecp.ui.dropAdapter">
-      <ECPDropAdapter
-            class="org.eclipse.emf.ecp.view.internal.editor.handler.ViewEditorDropAdapter">
-      </ECPDropAdapter>
    </extension>
    <extension
          name=""
@@ -174,6 +141,18 @@
             location="menu"
             label="Generate Columns for Subclass"
             command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnsForSubclassesHandler">
+      </MasterDetailAction>
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnSegmentDmrsHandler"
+            imagePath="icons/generateColumns.png"
+            label="Generate Columns"
+            location="menu">
+      </MasterDetailAction>
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnSegmentDmrsForSubclassesHandler"
+            imagePath="icons/generateColumns.png"
+            label="Generate Columns for Subclass"
+            location="menu">
       </MasterDetailAction>
    </extension>
 

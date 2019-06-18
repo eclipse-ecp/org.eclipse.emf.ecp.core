@@ -1,21 +1,28 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 546899
  *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.ui.validation;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -29,10 +36,27 @@ import org.eclipse.swt.widgets.TreeColumn;
  * @author jfaltermeier
  *
  */
+@Creatable
 public final class ValidationTreeViewerFactory {
 
-	private ValidationTreeViewerFactory() {
-		// util
+	private static final ValidationTreeViewerFactory BASIC = new ValidationTreeViewerFactory();
+
+	@Inject
+	private Provider<ValidationContentProvider> contentProviderProvider;
+
+	@Inject
+	private Provider<ValidationLabelProvider> labelProviderProvider;
+
+	static {
+		BASIC.contentProviderProvider = ValidationContentProvider::new;
+		BASIC.labelProviderProvider = ValidationLabelProvider::new;
+	}
+
+	/**
+	 * Initializes me.
+	 */
+	public ValidationTreeViewerFactory() {
+		super();
 	}
 
 	/**
@@ -42,7 +66,7 @@ public final class ValidationTreeViewerFactory {
 	 * @param parent the parent of the viewer
 	 * @return the tree viewer
 	 */
-	public static TreeViewer createValidationViewer(Composite parent) {
+	public TreeViewer create(Composite parent) {
 		final Tree validationTree = new Tree(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		validationTree.setHeaderVisible(true);
 		validationTree.setLinesVisible(true);
@@ -63,10 +87,21 @@ public final class ValidationTreeViewerFactory {
 		featureColumn.setText(Messages.ValidationTreeViewerFactory_Feature);
 		featureColumn.setWidth(200);
 
-		treeViewer.setContentProvider(new ValidationContentProvider());
-		treeViewer.setLabelProvider(new ValidationLabelProvider());
+		treeViewer.setContentProvider(contentProviderProvider.get());
+		treeViewer.setLabelProvider(labelProviderProvider.get());
 		addDoubleClickListener(treeViewer);
 		return treeViewer;
+	}
+
+	/**
+	 * Creates a {@link TreeViewer} which is able to display validation results from
+	 * {@link org.eclipse.core.runtime.IStatus IStatus} objects.
+	 *
+	 * @param parent the parent of the viewer
+	 * @return the tree viewer
+	 */
+	public static TreeViewer createValidationViewer(Composite parent) {
+		return BASIC.create(parent);
 	}
 
 	/**

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
@@ -105,8 +107,8 @@ public class PackageDependencyIterator implements Iterator<Set<String>> {
 		final Set<Set<PackageTreeNode>> allCircles = new LinkedHashSet<Set<PackageTreeNode>>();
 		for (final PackageTreeNode nodeToAllocate : unvisitedNodes) {
 			// get existing circle set from map or create new set
-			final Set<PackageTreeNode> circle = nodeToCircleMap.containsKey(nodeToAllocate) ?
-				nodeToCircleMap.get(nodeToAllocate)
+			final Set<PackageTreeNode> circle = nodeToCircleMap.containsKey(nodeToAllocate)
+				? nodeToCircleMap.get(nodeToAllocate)
 				: new LinkedHashSet<PackageTreeNode>();
 
 			// if new set, fill map

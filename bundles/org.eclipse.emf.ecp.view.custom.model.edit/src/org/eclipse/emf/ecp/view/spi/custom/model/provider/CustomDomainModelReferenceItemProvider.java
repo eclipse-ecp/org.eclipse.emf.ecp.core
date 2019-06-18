@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -16,11 +18,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.provider.DomainModelReferenceItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -45,8 +44,7 @@ public class CustomDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	public CustomDomainModelReferenceItemProvider(AdapterFactory adapterFactory)
-	{
+	public CustomDomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -58,10 +56,8 @@ public class CustomDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addBundleNamePropertyDescriptor(object);
@@ -78,16 +74,13 @@ public class CustomDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addBundleNamePropertyDescriptor(Object object)
-	{
+	protected void addBundleNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_CustomDomainModelReference_bundleName_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CustomDomainModelReference_bundleName_feature", "_UI_CustomDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_CustomDomainModelReference_bundleName_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_CustomDomainModelReference_type"), //$NON-NLS-1$
 				VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME,
 				true,
 				false,
@@ -104,16 +97,13 @@ public class CustomDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addClassNamePropertyDescriptor(Object object)
-	{
+	protected void addClassNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_CustomDomainModelReference_className_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CustomDomainModelReference_className_feature", "_UI_CustomDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_CustomDomainModelReference_className_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_CustomDomainModelReference_type"), //$NON-NLS-1$
 				VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME,
 				true,
 				false,
@@ -130,16 +120,13 @@ public class CustomDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addControlCheckedPropertyDescriptor(Object object)
-	{
+	protected void addControlCheckedPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_CustomDomainModelReference_controlChecked_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CustomDomainModelReference_controlChecked_feature", "_UI_CustomDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_CustomDomainModelReference_controlChecked_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_CustomDomainModelReference_type"), //$NON-NLS-1$
 				VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED,
 				true,
 				false,
@@ -150,41 +137,6 @@ public class CustomDomainModelReferenceItemProvider
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
 	 * This returns CustomDomainModelReference.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -192,8 +144,7 @@ public class CustomDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/CustomDomainModelReference")); //$NON-NLS-1$
 	}
 
@@ -205,11 +156,9 @@ public class CustomDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final String label = ((VCustomDomainModelReference) object).getBundleName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_CustomDomainModelReference_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_CustomDomainModelReference_type") : //$NON-NLS-1$
 			getString("_UI_CustomDomainModelReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -222,19 +171,15 @@ public class CustomDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VCustomDomainModelReference.class))
-		{
+		switch (notification.getFeatureID(VCustomDomainModelReference.class)) {
+		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME:
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME:
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
-		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -249,19 +194,8 @@ public class CustomDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES,
-				VCustomFactory.eINSTANCE.createCustomDomainModelReference()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES,
-				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
 }

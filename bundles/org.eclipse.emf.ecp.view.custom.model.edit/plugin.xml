@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-
-<!--
--->
-
 <plugin>
 
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://org/eclipse/emf/ecp/view/custom/model"
             class="org.eclipse.emf.ecp.view.spi.custom.model.provider.CustomItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource">
+      </factory>
    </extension>
-<extension point="org.eclipse.emf.edit.childCreationExtenders">
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             class="org.eclipse.emf.ecp.view.spi.custom.model.provider.CustomItemProviderAdapterFactory$ViewChildCreationExtender"
-            uri="http://org/eclipse/emf/ecp/view/model/1180"/>
+            uri="http://org/eclipse/emf/ecp/view/model/1180">
+      </extender>
    </extension>
+
 </plugin>

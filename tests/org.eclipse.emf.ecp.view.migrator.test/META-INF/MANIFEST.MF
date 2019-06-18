@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms Template Tooling Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.migrator.test
-Bundle-Version: 1.20.0.qualifier
-Fragment-Host: org.eclipse.emf.ecp.view.migrator;bundle-version="[1.20.0,1.21.0)"
-Export-Package: org.eclipse.emf.ecp.spi.view.migrator;version="1.20.0"
+Bundle-Version: 1.21.0.qualifier
+Fragment-Host: org.eclipse.emf.ecp.view.migrator;bundle-version="[1.21.0,1.22.0)"
+Export-Package: org.eclipse.emf.ecp.spi.view.migrator;version="1.21.0"
 Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
  org.objenesis;bundle-version="[1.0.0,2.0.0)"

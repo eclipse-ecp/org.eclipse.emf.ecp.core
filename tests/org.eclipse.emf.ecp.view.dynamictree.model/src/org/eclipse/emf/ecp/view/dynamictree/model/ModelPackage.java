@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -35,8 +37,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface ModelPackage extends EPackage
-{
+public interface ModelPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -576,7 +577,8 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Path From Base</b></em>' containment reference.
@@ -586,7 +588,8 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The number of structural features of the '<em>Dynamic Containment Tree Domain Model Reference</em>' class.
@@ -596,7 +599,8 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 2;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree
@@ -959,8 +963,7 @@ public interface ModelPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '
 		 * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl

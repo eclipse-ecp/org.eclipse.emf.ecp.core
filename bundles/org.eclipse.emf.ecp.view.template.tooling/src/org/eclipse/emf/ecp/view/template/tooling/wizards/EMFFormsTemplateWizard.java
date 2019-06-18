@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -261,6 +263,14 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 			return false;
 		}
 
+		/*
+		 * We must set the root e class for a dmr selector.
+		 * This must be done before checking whether it is present to ensure an equivalent selector is found.
+		 */
+		if (VTDomainModelReferenceSelector.class.isInstance(styleSelector)) {
+			VTDomainModelReferenceSelector.class.cast(styleSelector).setRootEClass(getView().getRootEClass());
+		}
+
 		/* check if there is a style with the same selector already present */
 		final TreeIterator<EObject> templateContents = EcoreUtil.getAllContents(template, true);
 		while (templateContents.hasNext()) {
@@ -284,11 +294,7 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 			VTTemplatePackage.eINSTANCE.getViewTemplate_Styles(), style);
 
 		if (VTDomainModelReferenceSelector.class.isInstance(styleSelector)) {
-			EObject view = vElement.get();
-			while (!VView.class.isInstance(view) && view != null) {
-				view = view.eContainer();
-			}
-			command = addEcorePathIfRequired(template, domain, command, view);
+			command = addEcorePathIfRequired(template, domain, command, getView());
 		}
 
 		if (!command.canExecute()) {
@@ -298,6 +304,17 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 		templateEditor.reveal(styleSelector);
 
 		return true;
+	}
+
+	/**
+	 * @return the {@link VView} containing the {@link VElement}.
+	 */
+	private VView getView() {
+		EObject view = vElement.get();
+		while (!VView.class.isInstance(view) && view != null) {
+			view = view.eContainer();
+		}
+		return VView.class.cast(view);
 	}
 
 	private Command addEcorePathIfRequired(

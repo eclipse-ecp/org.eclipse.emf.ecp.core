@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -25,10 +27,12 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain Model</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain
+ * Model</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference <em>Child Reference
  * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To Root</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To
+ * Root</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite <em>Child Composite
  * </em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getItems <em>Items</em>}</li>
@@ -39,8 +43,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @model
  * @generated
  */
-public interface DynamicContainmentTree extends VCategory
-{
+public interface DynamicContainmentTree extends VCategory {
 	/**
 	 * Returns the value of the '<em><b>Domain Model</b></em>' reference.
 	 * <!-- begin-user-doc -->

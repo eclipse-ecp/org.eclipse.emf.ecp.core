@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -33,8 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated
  */
-public class HorizontalAdapterFactory extends AdapterFactoryImpl
-{
+public class HorizontalAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -51,10 +52,8 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public HorizontalAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public HorizontalAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VHorizontalPackage.eINSTANCE;
 		}
 	}
@@ -70,14 +69,11 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -90,45 +86,37 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected HorizontalSwitch<Adapter> modelSwitch =
-		new HorizontalSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseHorizontalLayout(VHorizontalLayout object)
-			{
-				return createHorizontalLayoutAdapter();
-			}
+	protected HorizontalSwitch<Adapter> modelSwitch = new HorizontalSwitch<Adapter>() {
+		@Override
+		public Adapter caseHorizontalLayout(VHorizontalLayout object) {
+			return createHorizontalLayoutAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(VContainer object)
-			{
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(VContainer object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedContainer(VContainedContainer object)
-			{
-				return createContainedContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainedContainer(VContainedContainer object) {
+			return createContainedContainerAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -140,8 +128,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -157,8 +144,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout
 	 * @generated
 	 */
-	public Adapter createHorizontalLayoutAdapter()
-	{
+	public Adapter createHorizontalLayoutAdapter() {
 		return null;
 	}
 
@@ -174,8 +160,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -191,8 +176,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -208,8 +192,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
 	 */
-	public Adapter createContainerAdapter()
-	{
+	public Adapter createContainerAdapter() {
 		return null;
 	}
 
@@ -227,8 +210,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedContainer
 	 * @generated
 	 */
-	public Adapter createContainedContainerAdapter()
-	{
+	public Adapter createContainedContainerAdapter() {
 		return null;
 	}
 
@@ -241,8 +223,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

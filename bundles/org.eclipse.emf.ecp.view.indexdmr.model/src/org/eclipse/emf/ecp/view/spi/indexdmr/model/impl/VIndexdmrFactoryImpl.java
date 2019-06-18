@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -27,8 +29,7 @@ import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage;
  *
  * @generated
  */
-public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFactory
-{
+public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -36,18 +37,14 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 *
 	 * @generated
 	 */
-	public static VIndexdmrFactory init()
-	{
-		try
-		{
+	public static VIndexdmrFactory init() {
+		try {
 			final VIndexdmrFactory theIndexdmrFactory = (VIndexdmrFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VIndexdmrPackage.eNS_URI);
-			if (theIndexdmrFactory != null)
-			{
+			if (theIndexdmrFactory != null) {
 				return theIndexdmrFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VIndexdmrFactoryImpl();
@@ -60,8 +57,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 *
 	 * @generated
 	 */
-	public VIndexdmrFactoryImpl()
-	{
+	public VIndexdmrFactoryImpl() {
 		super();
 	}
 
@@ -72,10 +68,8 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE:
 			return createIndexDomainModelReference();
 		default:
@@ -90,8 +84,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * @generated
 	 */
 	@Override
-	public VIndexDomainModelReference createIndexDomainModelReference()
-	{
+	public VIndexDomainModelReference createIndexDomainModelReference() {
 		final VIndexDomainModelReferenceImpl indexDomainModelReference = new VIndexDomainModelReferenceImpl();
 		return indexDomainModelReference;
 	}
@@ -103,8 +96,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * @generated
 	 */
 	@Override
-	public VIndexdmrPackage getIndexdmrPackage()
-	{
+	public VIndexdmrPackage getIndexdmrPackage() {
 		return (VIndexdmrPackage) getEPackage();
 	}
 
@@ -116,8 +108,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * @generated
 	 */
 	@Deprecated
-	public static VIndexdmrPackage getPackage()
-	{
+	public static VIndexdmrPackage getPackage() {
 		return VIndexdmrPackage.eINSTANCE;
 	}
 

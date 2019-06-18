@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
@@ -31,7 +33,7 @@ public final class Assert<T> {
 	 * @param object the object that will be checked
 	 * @param <T> the type of the object the <code>Assert</code> class verifies.
 	 * @return a new instance of the <code>Assert</code> class.
-	 * */
+	 */
 	public static <T> Assert<T> create(T object) {
 		return new Assert<T>(object);
 	}

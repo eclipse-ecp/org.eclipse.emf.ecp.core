@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
@@ -15,7 +17,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.ecp.view.model.presentation.SelectEClassWizardPage;
+import org.eclipse.emf.ecp.view.model.presentation.SelectEClassForViewWizardPage;
 import org.eclipse.emf.ecp.view.model.presentation.ViewModelWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -65,7 +67,7 @@ public class CreateViewModel extends AbstractHandler {
 
 		@Override
 		protected void backPressed() {
-			if (SelectEClassWizardPage.class.isInstance(getCurrentPage())) {
+			if (SelectEClassForViewWizardPage.class.isInstance(getCurrentPage())) {
 				wizard.clearSelectedContainer();
 			}
 			super.backPressed();

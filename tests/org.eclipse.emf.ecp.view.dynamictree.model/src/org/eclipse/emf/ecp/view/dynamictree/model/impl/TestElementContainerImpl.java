@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -41,8 +43,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
  *
  * @generated
  */
-public class TestElementContainerImpl extends EObjectImpl implements TestElementContainer
-{
+public class TestElementContainerImpl extends EObjectImpl implements TestElementContainer {
 	/**
 	 * The cached value of the '{@link #getTestElements() <em>Test Elements</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -82,8 +83,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 *
 	 * @generated
 	 */
-	protected TestElementContainerImpl()
-	{
+	protected TestElementContainerImpl() {
 		super();
 	}
 
@@ -94,8 +94,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return ModelPackage.Literals.TEST_ELEMENT_CONTAINER;
 	}
 
@@ -106,8 +105,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public EList<TestElement> getTestElements()
-	{
+	public EList<TestElement> getTestElements() {
 		if (testElements == null) {
 			testElements = new EObjectContainmentEList<TestElement>(TestElement.class, this,
 				ModelPackage.TEST_ELEMENT_CONTAINER__TEST_ELEMENTS);
@@ -122,8 +120,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public String getId()
-	{
+	public String getId() {
 		return id;
 	}
 
@@ -134,8 +131,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public void setId(String newId)
-	{
+	public void setId(String newId) {
 		final String oldId = id;
 		id = newId;
 		if (eNotificationRequired()) {
@@ -150,8 +146,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT_CONTAINER__TEST_ELEMENTS:
 			return ((InternalEList<?>) getTestElements()).basicRemove(otherEnd, msgs);
@@ -166,8 +161,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT_CONTAINER__TEST_ELEMENTS:
 			return getTestElements();
@@ -185,8 +179,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT_CONTAINER__TEST_ELEMENTS:
 			getTestElements().clear();
@@ -206,8 +199,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
+	public void eUnset(int featureID) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT_CONTAINER__TEST_ELEMENTS:
 			getTestElements().clear();
@@ -226,8 +218,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT_CONTAINER__TEST_ELEMENTS:
 			return testElements != null && !testElements.isEmpty();
@@ -244,8 +235,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

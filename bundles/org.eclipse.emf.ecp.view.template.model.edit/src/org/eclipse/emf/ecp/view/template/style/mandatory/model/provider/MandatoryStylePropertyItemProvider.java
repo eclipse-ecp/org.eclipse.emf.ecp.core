@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -46,8 +48,7 @@ public class MandatoryStylePropertyItemProvider
 	IStructuredItemContentProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -55,8 +56,7 @@ public class MandatoryStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	public MandatoryStylePropertyItemProvider(AdapterFactory adapterFactory)
-	{
+	public MandatoryStylePropertyItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -68,10 +68,8 @@ public class MandatoryStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addHighliteMandatoryFieldsPropertyDescriptor(object);
@@ -87,16 +85,14 @@ public class MandatoryStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addHighliteMandatoryFieldsPropertyDescriptor(Object object)
-	{
+	protected void addHighliteMandatoryFieldsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_MandatoryStyleProperty_highliteMandatoryFields_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MandatoryStyleProperty_highliteMandatoryFields_feature", "_UI_MandatoryStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_MandatoryStyleProperty_highliteMandatoryFields_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_MandatoryStyleProperty_type"), //$NON-NLS-1$
 				VTMandatoryPackage.Literals.MANDATORY_STYLE_PROPERTY__HIGHLITE_MANDATORY_FIELDS,
 				true,
 				false,
@@ -113,16 +109,14 @@ public class MandatoryStylePropertyItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addMandatoryMarkerPropertyDescriptor(Object object)
-	{
+	protected void addMandatoryMarkerPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_MandatoryStyleProperty_mandatoryMarker_feature"), //$NON-NLS-1$
 				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MandatoryStyleProperty_mandatoryMarker_feature", "_UI_MandatoryStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					"_UI_PropertyDescriptor_description", "_UI_MandatoryStyleProperty_mandatoryMarker_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_MandatoryStyleProperty_type"), //$NON-NLS-1$
 				VTMandatoryPackage.Literals.MANDATORY_STYLE_PROPERTY__MANDATORY_MARKER,
 				true,
 				false,
@@ -140,8 +134,7 @@ public class MandatoryStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/MandatoryStyleProperty")); //$NON-NLS-1$
 	}
 
@@ -153,8 +146,7 @@ public class MandatoryStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final VTMandatoryStyleProperty mandatoryStyleProperty = (VTMandatoryStyleProperty) object;
 		return getString("_UI_MandatoryStyleProperty_type") + " " + mandatoryStyleProperty.isHighliteMandatoryFields(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
@@ -168,12 +160,10 @@ public class MandatoryStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTMandatoryStyleProperty.class))
-		{
+		switch (notification.getFeatureID(VTMandatoryStyleProperty.class)) {
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__HIGHLITE_MANDATORY_FIELDS:
 		case VTMandatoryPackage.MANDATORY_STYLE_PROPERTY__MANDATORY_MARKER:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
@@ -191,8 +181,7 @@ public class MandatoryStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -204,8 +193,7 @@ public class MandatoryStylePropertyItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

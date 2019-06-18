@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.ui.view.editor.controls" version="2">
+    <resource path="src/org/eclipse/emf/ecp/view/spi/editor/controls/Helper.java" type="org.eclipse.emf.ecp.view.spi.editor.controls.Helper">
+        <filter comment="SPI Changes 1.21.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.editor.controls.Helper"/>
+                <message_argument value="getRootEClass(ECPProject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

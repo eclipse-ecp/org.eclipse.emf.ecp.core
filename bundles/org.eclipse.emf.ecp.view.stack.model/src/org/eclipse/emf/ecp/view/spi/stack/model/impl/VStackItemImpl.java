@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
@@ -31,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  *
  * @generated
  */
-public class VStackItemImpl extends VContainerImpl implements VStackItem
-{
+public class VStackItemImpl extends VContainerImpl implements VStackItem {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -61,8 +62,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 *
 	 * @generated
 	 */
-	protected VStackItemImpl()
-	{
+	protected VStackItemImpl() {
 		super();
 	}
 
@@ -73,8 +73,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VStackPackage.Literals.STACK_ITEM;
 	}
 
@@ -85,8 +84,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	public Object getValue()
-	{
+	public Object getValue() {
 		return value;
 	}
 
@@ -97,8 +95,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	public void setValue(Object newValue)
-	{
+	public void setValue(Object newValue) {
 		final Object oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
@@ -113,10 +110,8 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VStackPackage.STACK_ITEM__VALUE:
 			return getValue();
 		}
@@ -130,10 +125,8 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VStackPackage.STACK_ITEM__VALUE:
 			setValue(newValue);
 			return;
@@ -148,10 +141,8 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VStackPackage.STACK_ITEM__VALUE:
 			setValue(VALUE_EDEFAULT);
 			return;
@@ -166,10 +157,8 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VStackPackage.STACK_ITEM__VALUE:
 			return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
@@ -183,8 +172,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

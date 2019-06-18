@@ -1,21 +1,18 @@
-<project default="freeze" basedir=".">
-	<property name="xml" value="${basedir}/reports/xml" />
-	<property name="html" value="${basedir}/reports/html" />
-	<property name="profile" value="C:\Users\Eugen\API_Baselines\repository" />
-	<property name="baseline" value="C:\Users\Eugen\API_Baselines\ecp_111" />
-	<target name="compare">
-		<apitooling.compare baseline="${baseline}" profile="${profile}" report="${basedir}\xml" debug="true" visibility="ALL" />
-	</target>	
-	<target name="analysis">
-		<apitooling.analysis baseline="${baseline}" profile="${profile}" report="${xml}" debug="true" />
-		<apitooling.analysis_reportconversion xmlfiles="${xml}" htmlfiles="${html}" debug="true" />
-	</target>
-	<target name="freeze">
+<project default="generateXml" basedir=".">
+	<property name="xml" value="${basedir}/reports/analysis/xml" />
+	<property name="html" value="${basedir}/reports/analysis/html" />
+	<property name="includelist" value="${basedir}/includelist.properties" />
+	<property name="profile" value="/home/eugen/API_Baselines/1200_RC1/ecp" />
+	<property name="baseline" value="/home/eugen/API_Baselines/1190/ecp" />
+	
+	<target name="generateXml">
 		<apitooling.apifreeze baseline="${baseline}" profile="${profile}" report="${xml}/test.xml" debug="false" />
+	</target>
+	<target name="convertToHTML">
 		<apitooling.apifreeze_reportconversion xmlfile="${xml}/test.xml" debug="false" />
 	</target>
-	<target name="freezeReport">
-
-		<apitooling.apifreeze_reportconversion xmlfile="${xml}/test.xml" debug="false" />
+	<target name="test">
+		<apitooling.analysis baseline="${baseline}" profile="${profile}" report="${xml}" debug="true" includelist="${includelist}"/>
+		<apitooling.analysis_reportconversion xmlfiles="${xml}" htmlfiles="${html}" debug="true" />
 	</target>
 </project>

@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.ecp.view.keyattributedmr.model/src" modelPluginID="org.eclipse.emf.ecp.view.keyattributedmr.model"
     modelName="Keyattributedmr" modelPluginClass="" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true"
     cleanup="true">
   <foreignModel>keyattributedmr.ecore</foreignModel>
@@ -14,9 +14,9 @@
       presentationPackageSuffix="model.presentation" testsPackageSuffix="model.tests"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="keyattributedmr.ecore#/">
     <genClasses ecoreClass="keyattributedmr.ecore#//KeyAttributeDomainModelReference">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference keyattributedmr.ecore#//KeyAttributeDomainModelReference/keyDMR"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference keyattributedmr.ecore#//KeyAttributeDomainModelReference/keyDMR"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keyattributedmr.ecore#//KeyAttributeDomainModelReference/keyValue"/>
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference keyattributedmr.ecore#//KeyAttributeDomainModelReference/valueDMR"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference keyattributedmr.ecore#//KeyAttributeDomainModelReference/valueDMR"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

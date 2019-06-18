@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -23,8 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
  *
  * @generated
  */
-public final class DynamicTreeEditPlugin extends EMFPlugin
-{
+public final class DynamicTreeEditPlugin extends EMFPlugin {
 	/**
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
@@ -50,8 +51,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 *
 	 * @generated
 	 */
-	public DynamicTreeEditPlugin()
-	{
+	public DynamicTreeEditPlugin() {
 		super(new ResourceLocator[] {
 			CategorizationEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
@@ -67,8 +67,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getPluginResourceLocator()
-	{
+	public ResourceLocator getPluginResourceLocator() {
 		return plugin;
 	}
 
@@ -80,8 +79,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 * @return the singleton instance.
 	 * @generated
 	 */
-	public static Implementation getPlugin()
-	{
+	public static Implementation getPlugin() {
 		return plugin;
 	}
 
@@ -92,8 +90,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 	 *
 	 * @generated
 	 */
-	public static class Implementation extends EclipsePlugin
-	{
+	public static class Implementation extends EclipsePlugin {
 		/**
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
@@ -101,8 +98,7 @@ public final class DynamicTreeEditPlugin extends EMFPlugin
 		 *
 		 * @generated
 		 */
-		public Implementation()
-		{
+		public Implementation() {
 			super();
 
 			// Remember the static instance.

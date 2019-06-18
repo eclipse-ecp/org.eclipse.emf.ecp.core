@@ -3,6 +3,8 @@
    <service>
       <provide interface="org.eclipse.emfforms.core.services.datatemplate.TemplateProvider"/>
    </service>
+   <reference bind="setExtensionRegistry" interface="org.eclipse.core.runtime.IExtensionRegistry" name="ExtensionRegistry"/>
+   <reference bind="addLoaderServiceProvider" cardinality="0..n" interface="org.eclipse.emfforms.core.services.datatemplate.TemplateLoaderService$Provider" name="LoaderServiceProvider" policy="dynamic" unbind="removeLoaderServiceProvider"/>
    <reference bind="setReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService"/>
    <implementation class="org.eclipse.emfforms.internal.core.services.datatemplate.XmiTemplateProvider"/>
 </scr:component>

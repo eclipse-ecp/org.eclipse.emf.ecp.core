@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -33,8 +35,7 @@ import org.eclipse.emf.ecp.makeithappen.model.task.UserGroup;
  * @see org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage
  * @generated
  */
-public class TaskSwitch<T> extends Switch<T>
-{
+public class TaskSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -51,10 +52,8 @@ public class TaskSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public TaskSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public TaskSwitch() {
+		if (modelPackage == null) {
 			modelPackage = TaskPackage.eINSTANCE;
 		}
 	}
@@ -69,8 +68,7 @@ public class TaskSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -84,10 +82,8 @@ public class TaskSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case TaskPackage.TASK: {
 			final Task task = (Task) theEObject;
 			T result = caseTask(task);
@@ -129,8 +125,7 @@ public class TaskSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTask(Task object)
-	{
+	public T caseTask(Task object) {
 		return null;
 	}
 
@@ -146,8 +141,7 @@ public class TaskSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseUser(User object)
-	{
+	public T caseUser(User object) {
 		return null;
 	}
 
@@ -163,8 +157,7 @@ public class TaskSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseUserGroup(UserGroup object)
-	{
+	public T caseUserGroup(UserGroup object) {
 		return null;
 	}
 
@@ -181,8 +174,7 @@ public class TaskSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

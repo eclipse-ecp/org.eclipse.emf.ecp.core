@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -48,8 +50,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  *
  * @generated
  */
-public class DynamicContainmentItemImpl extends VCategorizableElementImpl implements DynamicContainmentItem
-{
+public class DynamicContainmentItemImpl extends VCategorizableElementImpl implements DynamicContainmentItem {
 	/**
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -111,8 +112,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 *
 	 * @generated NOT
 	 */
-	protected DynamicContainmentItemImpl()
-	{
+	protected DynamicContainmentItemImpl() {
 		super();
 		addLocalDependencyToLabelAdapter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL);
 	}
@@ -125,8 +125,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM;
 	}
 
@@ -137,8 +136,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public EObject getDomainModel()
-	{
+	public EObject getDomainModel() {
 		if (domainModel != null && domainModel.eIsProxy()) {
 			final InternalEObject oldDomainModel = (InternalEObject) domainModel;
 			domainModel = eResolveProxy(oldDomainModel);
@@ -158,8 +156,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 *
 	 * @generated
 	 */
-	public EObject basicGetDomainModel()
-	{
+	public EObject basicGetDomainModel() {
 		return domainModel;
 	}
 
@@ -170,8 +167,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public void setDomainModel(EObject newDomainModel)
-	{
+	public void setDomainModel(EObject newDomainModel) {
 		final EObject oldDomainModel = domainModel;
 		domainModel = newDomainModel;
 		if (eNotificationRequired()) {
@@ -187,8 +183,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public EList<DynamicContainmentItem> getItems()
-	{
+	public EList<DynamicContainmentItem> getItems() {
 		if (items == null) {
 			items = new EObjectContainmentEList<DynamicContainmentItem>(DynamicContainmentItem.class, this,
 				ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS);
@@ -203,8 +198,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public VContainedElement getComposite()
-	{
+	public VContainedElement getComposite() {
 		return composite;
 	}
 
@@ -214,8 +208,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs)
-	{
+	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs) {
 		final VContainedElement oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired()) {
@@ -237,8 +230,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public void setComposite(VContainedElement newComposite)
-	{
+	public void setComposite(VContainedElement newComposite) {
 		if (newComposite != composite) {
 			NotificationChain msgs = null;
 			if (composite != null) {
@@ -253,8 +245,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
 				newComposite, newComposite));
 		}
@@ -294,8 +285,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
 			return ((InternalEList<?>) getItems()).basicRemove(otherEnd, msgs);
@@ -312,8 +302,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
 			if (resolve) {
@@ -338,8 +327,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
 			setDomainModel((EObject) newValue);
@@ -365,8 +353,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
+	public void eUnset(int featureID) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
 			setDomainModel((EObject) null);
@@ -391,8 +378,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
 			return domainModel != null;
@@ -401,8 +387,9 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 			return composite != null;
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
-			return BASE_ITEM_INDEX_EDEFAULT == null ? baseItemIndex != null : !BASE_ITEM_INDEX_EDEFAULT
-				.equals(baseItemIndex);
+			return BASE_ITEM_INDEX_EDEFAULT == null ? baseItemIndex != null
+				: !BASE_ITEM_INDEX_EDEFAULT
+					.equals(baseItemIndex);
 		}
 		return super.eIsSet(featureID);
 	}

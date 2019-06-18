@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * jonas - initial API and implementation
+ * Christian W. Damus - bug 547271
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -16,6 +19,7 @@ import org.eclipse.emfforms.common.Property;
 import org.eclipse.emfforms.common.Property.ChangeListener;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerColumnBuilder;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.emfforms.spi.swt.table.ViewerRefreshManager;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -48,6 +52,12 @@ import org.eclipse.swt.widgets.Widget;
 public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<GridTableViewer, GridViewerColumn> {
 
 	/**
+	 * To avoid redundant refreshes from the filtering control listener of every column
+	 * in the grid, refresh requests are posted on this async runnable manager.
+	 */
+	private ViewerRefreshManager refreshManager;
+
+	/**
 	 * The constructor.
 	 *
 	 * @param config the {@link ColumnConfiguration}
@@ -58,6 +68,8 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 
 	@Override
 	public GridViewerColumn createViewerColumn(GridTableViewer tableViewer) {
+		refreshManager = ViewerRefreshManager.getInstance(tableViewer);
+
 		return new GridViewerColumn(tableViewer, getConfig().getStyleBits());
 	}
 
@@ -176,7 +188,7 @@ public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<Gr
 		getConfig().matchFilter().addChangeListener(new ChangeListener<Object>() {
 			@Override
 			public void valueChanged(Property<Object> property, Object oldValue, Object newValue) {
-				tableViewer.refresh();
+				refreshManager.postRefresh();
 			}
 		});
 

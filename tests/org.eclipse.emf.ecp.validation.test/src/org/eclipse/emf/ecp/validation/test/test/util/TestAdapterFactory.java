@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -82,28 +84,27 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected TestSwitch<Adapter> modelSwitch =
-		new TestSwitch<Adapter>() {
-			@Override
-			public Adapter caseLibrary(Library object) {
-				return createLibraryAdapter();
-			}
+	protected TestSwitch<Adapter> modelSwitch = new TestSwitch<Adapter>() {
+		@Override
+		public Adapter caseLibrary(Library object) {
+			return createLibraryAdapter();
+		}
 
-			@Override
-			public Adapter caseWriter(Writer object) {
-				return createWriterAdapter();
-			}
+		@Override
+		public Adapter caseWriter(Writer object) {
+			return createWriterAdapter();
+		}
 
-			@Override
-			public Adapter caseBook(Book object) {
-				return createBookAdapter();
-			}
+		@Override
+		public Adapter caseBook(Book object) {
+			return createBookAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

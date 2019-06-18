@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -38,8 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * @generated
  * @since 1.2
  */
-public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedGrid
-{
+public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedGrid {
 	/**
 	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -57,8 +58,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 *
 	 * @generated
 	 */
-	protected VGroupedGridImpl()
-	{
+	protected VGroupedGridImpl() {
 		super();
 	}
 
@@ -69,8 +69,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VGroupedGridPackage.Literals.GROUPED_GRID;
 	}
 
@@ -81,10 +80,8 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * @generated
 	 */
 	@Override
-	public EList<VGroup> getGroups()
-	{
-		if (groups == null)
-		{
+	public EList<VGroup> getGroups() {
+		if (groups == null) {
 			groups = new EObjectContainmentEList<VGroup>(VGroup.class, this, VGroupedGridPackage.GROUPED_GRID__GROUPS);
 		}
 		return groups;
@@ -97,10 +94,8 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			return ((InternalEList<?>) getGroups()).basicRemove(otherEnd, msgs);
 		}
@@ -114,10 +109,8 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			return getGroups();
 		}
@@ -132,10 +125,8 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			getGroups().clear();
 			getGroups().addAll((Collection<? extends VGroup>) newValue);
@@ -151,10 +142,8 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			getGroups().clear();
 			return;
@@ -169,10 +158,8 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			return groups != null && !groups.isEmpty();
 		}

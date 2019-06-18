@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -46,8 +48,7 @@ public class DynamicContainmentTreeItemProvider
 	 *
 	 * @generated
 	 */
-	public DynamicContainmentTreeItemProvider(AdapterFactory adapterFactory)
-	{
+	public DynamicContainmentTreeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,8 +60,7 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -78,11 +78,9 @@ public class DynamicContainmentTreeItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addDomainModelPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addDomainModelPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DynamicContainmentTree_domainModel_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_domainModel_feature",
@@ -103,11 +101,9 @@ public class DynamicContainmentTreeItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addChildReferencePropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addChildReferencePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DynamicContainmentTree_childReference_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_childReference_feature",
@@ -128,11 +124,9 @@ public class DynamicContainmentTreeItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addPathToRootPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addPathToRootPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DynamicContainmentTree_pathToRoot_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_pathToRoot_feature",
@@ -156,8 +150,7 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE);
@@ -173,8 +166,7 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -189,8 +181,7 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/DynamicContainmentTree"));
 	}
 
@@ -202,12 +193,10 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final String label = ((DynamicContainmentTree) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_DynamicContainmentTree_type") :
-			getString("_UI_DynamicContainmentTree_type") + " " + label;
+		return label == null || label.length() == 0 ? getString("_UI_DynamicContainmentTree_type")
+			: getString("_UI_DynamicContainmentTree_type") + " " + label;
 	}
 
 	/**
@@ -219,8 +208,7 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DynamicContainmentTree.class)) {
@@ -241,24 +229,17 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
-				VCategorizationFactory.eINSTANCE.createCategorizationElement()));
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
+			VCategorizationFactory.eINSTANCE.createCategorizationElement()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
-				VViewFactory.eINSTANCE.createControl()));
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
+			VViewFactory.eINSTANCE.createControl()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__ITEMS,
-				ModelFactory.eINSTANCE.createDynamicContainmentItem()));
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__ITEMS,
+			ModelFactory.eINSTANCE.createDynamicContainmentItem()));
 	}
 
 	/**
@@ -269,14 +250,12 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection)
-	{
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
 		final Object childFeature = feature;
 		final Object childObject = child;
 
-		final boolean qualify =
-			childFeature == VCategorizationPackage.Literals.CATEGORY__COMPOSITE ||
-				childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE;
+		final boolean qualify = childFeature == VCategorizationPackage.Literals.CATEGORY__COMPOSITE ||
+			childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE;
 
 		if (qualify) {
 			return getString("_UI_CreateChild_text2",
@@ -293,8 +272,7 @@ public class DynamicContainmentTreeItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return DynamicTreeEditPlugin.INSTANCE;
 	}
 

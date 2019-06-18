@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: RAP Util
 Bundle-SymbolicName: org.eclipse.emf.ecp.rap.util;singleton:=true
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.rap.spi.util;version="1.20.0"
-Require-Bundle: org.eclipse.emf.ecp.edit.swt;bundle-version="[1.20.0,1.21.0)"
+Export-Package: org.eclipse.emf.ecp.rap.spi.util;version="1.21.0"
+Require-Bundle: org.eclipse.emf.ecp.edit.swt;bundle-version="[1.21.0,1.22.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.rap.util
 Import-Package: org.eclipse.jface.dialogs;version="0.0.0",

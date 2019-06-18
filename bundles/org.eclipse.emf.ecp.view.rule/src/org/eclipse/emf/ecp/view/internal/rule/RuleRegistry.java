@@ -1,14 +1,17 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  * Johannes Faltermeier - registry setting based instead of feature based
+ * Lucas Koehler - adapt for segments and nested conditions
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
@@ -16,6 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -29,8 +33,11 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.rule.RuleConditionDmrUtil;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 
 /**
@@ -251,42 +258,50 @@ public class RuleRegistry<T extends Rule> {
 	 */
 	private class DomainModelChangeListener implements ModelChangeListener {
 		private final EMFFormsStructuralChangeTester structuralChangeTester;
+		private final EMFFormsDatabindingEMF databinding;
+		private final ReportService reportService;
 
 		/**
 		 * Creates a new {@link DomainModelChangeListener}.
 		 */
 		DomainModelChangeListener() {
 			structuralChangeTester = context.getService(EMFFormsStructuralChangeTester.class);
+			databinding = context.getService(EMFFormsDatabindingEMF.class);
+			reportService = context.getService(ReportService.class);
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
-		 */
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
 			final Set<VDomainModelReference> dmrs = new LinkedHashSet<VDomainModelReference>(dmrsToRules.keySet());
 			for (final VDomainModelReference dmr : dmrs) {
-				if (structuralChangeTester.isStructureChanged(dmr, context.getDomainModel(), notification)) {
-					// dmr has changed => re-register every rule associated with it
-					final Set<T> rules = dmrsToRules.remove(dmr);
-					if (rules == null) {
-						return;
-					}
+				final List<EObject> dmrRoots = RuleConditionDmrUtil.getDmrRootObject(databinding, reportService,
+					context.getDomainModel(), dmr.eContainer());
 
-					for (final T rule : rules) {
-						final VElement element = removeRule(rule);
-						if (element == null) {
+				for (final EObject dmrRoot : dmrRoots) {
+					if (structuralChangeTester.isStructureChanged(dmr, dmrRoot, notification)) {
+						// dmr has changed => re-register every rule associated with it
+						final Set<T> rules = dmrsToRules.remove(dmr);
+						if (rules == null) {
 							return;
 						}
-						if (notification.getRawNotification().getEventType() == Notification.SET
-							&& notification.getRawNotification().getNewValue() == null
-							|| notification.getRawNotification().getEventType() == Notification.UNSET) {
-							continue;
+
+						for (final T rule : rules) {
+							final VElement element = removeRule(rule);
+							if (element == null) {
+								return;
+							}
+							if (notification.getRawNotification().getEventType() == Notification.SET
+								&& notification.getRawNotification().getNewValue() == null
+								|| notification.getRawNotification().getEventType() == Notification.UNSET) {
+								continue;
+							}
+							register(element, rule, rule.getCondition(), dmrRoot);
 						}
-						register(element, rule, rule.getCondition(), context.getDomainModel());
+						// We can break out after the first change was detected, because the whole rule will be
+						// re-evaluated anyway
+						break;
 					}
+
 				}
 			}
 		}

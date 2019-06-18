@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.ecp.view.mappingdmr.model/src" modelPluginID="org.eclipse.emf.ecp.view.mappingdmr.model"
     modelName="Mappingdmr" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true"
     cleanup="true">
   <foreignModel>mappingdmr.ecore</foreignModel>
@@ -15,7 +15,7 @@
       ecorePackage="mappingdmr.ecore#/">
     <genClasses ecoreClass="mappingdmr.ecore#//MappingDomainModelReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mappingdmr.ecore#//MappingDomainModelReference/mappedClass"/>
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

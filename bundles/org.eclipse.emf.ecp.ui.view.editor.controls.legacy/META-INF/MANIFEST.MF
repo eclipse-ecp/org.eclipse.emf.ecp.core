@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Legacy View Model Editor Controls
+Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.editor.controls.legacy;singleton:=true
+Bundle-Version: 1.21.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Automatic-Module-Name: org.eclipse.emf.ecp.ui.view.editor.controls.legacy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.core.commands;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emf.ecp.core;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.ui.workbench;bundle-version="[3.7.0,4.0.0)",
+ org.eclipse.emf.ecp.ui;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emf.edit.ui;bundle-version="[2.7.0,3.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.emf.ecp.workspace.core;bundle-version="[1.21.0,1.22.0)",
+ org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="[1.21.0,1.22.0)"
+Bundle-Activator: org.eclipse.emf.ecp.ui.view.internal.editor.controls.legacy.Activator
+Export-Package: org.eclipse.emf.ecp.ui.view.internal.editor.controls.legacy;version="1.21.0";x-internal:=true,
+ org.eclipse.emf.ecp.ui.view.internal.editor.controls.legacy.handler;version="1.21.0";x-internal:=true
+Bundle-ActivationPolicy: lazy

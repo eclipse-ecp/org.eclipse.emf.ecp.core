@@ -10,7 +10,8 @@
     operationReflection="true" importOrganizing="true" cleanup="true">
   <foreignModel>datatemplate.ecore</foreignModel>
   <genPackages prefix="DataTemplate" basePackage="org.eclipse.emfforms" disposableProviderFactory="true"
-      contentTypeIdentifier="org.eclipse.emfforms.datatemplate.model" ecorePackage="datatemplate.ecore#/">
+      extensibleProviderFactory="true" contentTypeIdentifier="org.eclipse.emfforms.datatemplate.model"
+      ecorePackage="datatemplate.ecore#/">
     <genClasses ecoreClass="datatemplate.ecore#//Template">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute datatemplate.ecore#//Template/name"/>
       <genFeatures children="true" createChild="false" ecoreFeature="ecore:EReference datatemplate.ecore#//Template/instance"/>

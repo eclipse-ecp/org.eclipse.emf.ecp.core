@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMFForms Editor Tests
+Bundle-SymbolicName: org.eclipse.emfforms.editor.test
+Bundle-Version: 1.21.0.qualifier
+Fragment-Host: org.eclipse.emfforms.editor;bundle-version="[1.21.0,1.22.0)"
+Automatic-Module-Name: org.eclipse.emfforms.editor.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Eclipse Modeling Project
+Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)"
+Export-Package: org.eclipse.emfforms.spi.editor.helpers;version="1.21.0"

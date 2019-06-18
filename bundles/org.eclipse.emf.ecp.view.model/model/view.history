@@ -1226,9 +1226,12 @@
     <changes xsi:type="history:Set" xmi:id="_nO4oUJCkEeicUdmSXarX1Q" featureName="lowerBound" dataValue="0" oldDataValue="1">
       <element href="view.ecore#//DomainModelReference/segments"/>
     </changes>
+    <changes xsi:type="history:Set" xmi:id="_2EDToBfZEem80KOc7Ecgbw" featureName="abstract" dataValue="false" oldDataValue="true">
+      <element href="view.ecore#//DomainModelReference"/>
+    </changes>
     <changes xsi:type="history:Set" xmi:id="_tzrKQJAQEeicUdmSXarX1Q" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/1180" oldDataValue="http://org/eclipse/emf/ecp/view/model/1170">
       <element href="view.ecore#/"/>
     </changes>
   </releases>
-  <releases xmi:id="_1SFckJAQEeicUdmSXarX1Q"/>
+  <releases xmi:id="_6lL8gBfZEem80KOc7Ecgbw"/>
 </history:History>

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -19,14 +21,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrFactory;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrPackage;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.util.KeyattributedmrAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
-import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
@@ -89,7 +85,7 @@ public class KeyattributedmrItemProviderAdapterFactory extends
 	 *
 	 * @generated
 	 */
-	protected Collection<Object> supportedTypes = new ArrayList<Object>();
+	protected Collection<Object> supportedTypes = new ArrayList<>();
 
 	/**
 	 * This constructs an instance. <!-- begin-user-doc --> <!-- end-user-doc
@@ -123,8 +119,7 @@ public class KeyattributedmrItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Adapter createKeyAttributeDomainModelReferenceAdapter() {
-		if (keyAttributeDomainModelReferenceItemProvider == null)
-		{
+		if (keyAttributeDomainModelReferenceItemProvider == null) {
 			keyAttributeDomainModelReferenceItemProvider = new KeyAttributeDomainModelReferenceItemProvider(this);
 		}
 
@@ -182,11 +177,9 @@ public class KeyattributedmrItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -257,8 +250,7 @@ public class KeyattributedmrItemProviderAdapterFactory extends
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -273,102 +265,6 @@ public class KeyattributedmrItemProviderAdapterFactory extends
 	public void dispose() {
 		if (keyAttributeDomainModelReferenceItemProvider != null) {
 			keyAttributeDomainModelReferenceItemProvider.dispose();
-		}
-	}
-
-	/**
-	 * A child creation extender for the {@link VViewPackage}. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	public static class ViewChildCreationExtender implements
-		IChildCreationExtender {
-		/**
-		 * The switch for creating child descriptors specific to each extended class.
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		protected static class CreationSwitch extends ViewSwitch<Object> {
-			/**
-			 * The child descriptors being populated.
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			protected List<Object> newChildDescriptors;
-
-			/**
-			 * The domain in which to create the children.
-			 * <!-- begin-user-doc
-			 * --> <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			protected EditingDomain editingDomain;
-
-			/**
-			 * Creates the a switch for populating child descriptors in the given domain.
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			CreationSwitch(List<Object> newChildDescriptors,
-				EditingDomain editingDomain) {
-				this.newChildDescriptors = newChildDescriptors;
-				this.editingDomain = editingDomain;
-			}
-
-			/**
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			@Override
-			public Object caseControl(VControl object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VKeyattributedmrFactory.eINSTANCE.createKeyAttributeDomainModelReference()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			protected CommandParameter createChildParameter(Object feature,
-				Object child) {
-				return new CommandParameter(null, feature, child);
-			}
-
-		}
-
-		/**
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		@Override
-		public Collection<Object> getNewChildDescriptors(Object object,
-			EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
-			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
-			return result;
-		}
-
-		/**
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		@Override
-		public ResourceLocator getResourceLocator() {
-			return KeyattributedmrEditPlugin.INSTANCE;
 		}
 	}
 

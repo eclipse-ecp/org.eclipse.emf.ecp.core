@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -51,8 +53,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  *
  * @generated
  */
-public class DynamicContainmentTreeImpl extends VCategoryImpl implements DynamicContainmentTree
-{
+public class DynamicContainmentTreeImpl extends VCategoryImpl implements DynamicContainmentTree {
 	/**
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -114,8 +115,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 *
 	 * @generated NOT
 	 */
-	protected DynamicContainmentTreeImpl()
-	{
+	protected DynamicContainmentTreeImpl() {
 		super();
 		addLocalDependencyToLabelAdapter(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL);
 	}
@@ -128,8 +128,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE;
 	}
 
@@ -140,8 +139,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public EObject getDomainModel()
-	{
+	public EObject getDomainModel() {
 		if (domainModel != null && domainModel.eIsProxy()) {
 			final InternalEObject oldDomainModel = (InternalEObject) domainModel;
 			domainModel = eResolveProxy(oldDomainModel);
@@ -161,8 +159,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 *
 	 * @generated
 	 */
-	public EObject basicGetDomainModel()
-	{
+	public EObject basicGetDomainModel() {
 		return domainModel;
 	}
 
@@ -173,8 +170,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public void setDomainModel(EObject newDomainModel)
-	{
+	public void setDomainModel(EObject newDomainModel) {
 		final EObject oldDomainModel = domainModel;
 		domainModel = newDomainModel;
 		if (eNotificationRequired()) {
@@ -190,8 +186,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public EReference getChildReference()
-	{
+	public EReference getChildReference() {
 		if (childReference != null && childReference.eIsProxy()) {
 			final InternalEObject oldChildReference = (InternalEObject) childReference;
 			childReference = (EReference) eResolveProxy(oldChildReference);
@@ -211,8 +206,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 *
 	 * @generated
 	 */
-	public EReference basicGetChildReference()
-	{
+	public EReference basicGetChildReference() {
 		return childReference;
 	}
 
@@ -223,8 +217,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public void setChildReference(EReference newChildReference)
-	{
+	public void setChildReference(EReference newChildReference) {
 		final EReference oldChildReference = childReference;
 		childReference = newChildReference;
 		if (eNotificationRequired()) {
@@ -240,8 +233,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public EList<EReference> getPathToRoot()
-	{
+	public EList<EReference> getPathToRoot() {
 		if (pathToRoot == null) {
 			pathToRoot = new EObjectResolvingEList<EReference>(EReference.class, this,
 				ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT);
@@ -256,8 +248,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public VContainedElement getChildComposite()
-	{
+	public VContainedElement getChildComposite() {
 		return childComposite;
 	}
 
@@ -267,8 +258,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetChildComposite(VContainedElement newChildComposite, NotificationChain msgs)
-	{
+	public NotificationChain basicSetChildComposite(VContainedElement newChildComposite, NotificationChain msgs) {
 		final VContainedElement oldChildComposite = childComposite;
 		childComposite = newChildComposite;
 		if (eNotificationRequired()) {
@@ -290,8 +280,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public void setChildComposite(VContainedElement newChildComposite)
-	{
+	public void setChildComposite(VContainedElement newChildComposite) {
 		if (newChildComposite != childComposite) {
 			NotificationChain msgs = null;
 			if (childComposite != null) {
@@ -306,8 +295,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, newChildComposite, newChildComposite));
 		}
@@ -320,8 +308,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public EList<DynamicContainmentItem> getItems()
-	{
+	public EList<DynamicContainmentItem> getItems() {
 		if (items == null) {
 			items = new EObjectContainmentEList<DynamicContainmentItem>(DynamicContainmentItem.class, this,
 				ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS);
@@ -336,8 +323,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
 			return basicSetChildComposite(null, msgs);
@@ -354,8 +340,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
 			if (resolve) {
@@ -385,8 +370,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
+	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
 			setDomainModel((EObject) newValue);
@@ -416,8 +400,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
+	public void eUnset(int featureID) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
 			setDomainModel((EObject) null);
@@ -445,8 +428,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
+	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
 			return domainModel != null;

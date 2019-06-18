@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -39,8 +41,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
  * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrPackage
  * @generated
  */
-public class KeyattributedmrValidator extends EObjectValidator
-{
+public class KeyattributedmrValidator extends EObjectValidator {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -97,8 +98,7 @@ public class KeyattributedmrValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public KeyattributedmrValidator()
-	{
+	public KeyattributedmrValidator() {
 		super();
 		viewValidator = ViewValidator.INSTANCE;
 	}
@@ -111,8 +111,7 @@ public class KeyattributedmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected EPackage getEPackage()
-	{
+	protected EPackage getEPackage() {
 		return VKeyattributedmrPackage.eINSTANCE;
 	}
 
@@ -124,10 +123,9 @@ public class KeyattributedmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE:
 			return validateKeyAttributeDomainModelReference((VKeyAttributeDomainModelReference) value, diagnostics,
 				context);
@@ -144,8 +142,7 @@ public class KeyattributedmrValidator extends EObjectValidator
 	 */
 	public boolean validateKeyAttributeDomainModelReference(
 		VKeyAttributeDomainModelReference keyAttributeDomainModelReference, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(keyAttributeDomainModelReference, diagnostics, context)) {
 			return false;
 		}
@@ -291,8 +288,7 @@ public class KeyattributedmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT

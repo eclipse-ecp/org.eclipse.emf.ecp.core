@@ -70,7 +70,8 @@ public class ProjectInstallerWizard extends ExampleInstallerWizard {
 								.createPlatformPluginURI(
 									projectDescriptorElement
 										.getContributor().getName()
-										+ "/" + contentURI, true); //$NON-NLS-1$
+										+ "/" + contentURI, //$NON-NLS-1$
+									true);
 						}
 						projectDescriptor.setContentURI(uri);
 						projectDescriptor

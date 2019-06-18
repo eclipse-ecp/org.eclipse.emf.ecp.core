@@ -2,9 +2,11 @@
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eike Stepper - initial API and implementation
@@ -129,7 +131,8 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 	/**
 	 * @author Eike Stepper
 	 */
-	public static class ExtensionDescriptor<ELEMENT extends InternalRegistryElement> extends ElementDescriptor<ELEMENT> {
+	public static class ExtensionDescriptor<ELEMENT extends InternalRegistryElement>
+		extends ElementDescriptor<ELEMENT> {
 		private final String type;
 
 		private final IConfigurationElement configurationElement;

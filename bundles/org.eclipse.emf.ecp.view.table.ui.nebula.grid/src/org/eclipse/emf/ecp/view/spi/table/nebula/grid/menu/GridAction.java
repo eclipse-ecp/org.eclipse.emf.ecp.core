@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid.menu;
 
@@ -35,8 +38,21 @@ class GridAction extends Action {
 	 *
 	 */
 	GridAction(GridTableViewerComposite gridTableViewerComposite, String actionLabel) {
+		this(gridTableViewerComposite, actionLabel, AS_PUSH_BUTTON);
+	}
+
+	/**
+	 * Initializes me with my grid composite, label, and style.
+	 *
+	 * @param gridTableViewerComposite the {@link GridTableViewerComposite}
+	 * @param actionLabel the label text for the menu action
+	 * @param style my presentation style
+	 *
+	 */
+	GridAction(GridTableViewerComposite gridTableViewerComposite, String actionLabel, int style) {
+		super(actionLabel, style);
+
 		this.gridTableViewerComposite = gridTableViewerComposite;
-		setText(actionLabel);
 	}
 
 	/**

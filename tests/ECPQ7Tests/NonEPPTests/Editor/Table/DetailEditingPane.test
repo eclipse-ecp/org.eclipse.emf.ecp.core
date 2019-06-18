@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _50-KoCeuEeSaN-fwc2C_0w
-Runtime-Version: 1.5.4.201412181238
-Save-Time: 4/14/16 4:41 PM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 5/7/19 12:53 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -136,27 +136,28 @@ try {
 	get-editor Fan | get-control Any -after [get-label "Fan Merchandise"] -index 11 | get-property "getChildren().length" 
 	    | equals 0 | verify-true
 	get-editor Fan | close
-	get-view "Model Explorer" | get-tree | select "Project/View/TableControl" | get-menu View | click
-	get-editor View -index 1 | get-button "Link Root EClass" | click
-	with [get-window "Select an EClass."] {
-	    get-tree | select "bowling/Merchandise \\[org.eclipse.emf.emfstore.bowling.Merchandise\\]"
-	    get-button OK | click
-	}
-	get-view "Model Explorer" | get-tree | select "Project/View/TableControl/View" | get-menu "Generate Controls" | click
-	with [get-window -class SelectAttributesDialog] {
-	    get-tree | select "Merchandise \\[org.eclipse.emf.emfstore.bowling.Merchandise\\]"
-	    get-button "Next >" | click
-	    get-table | get-item "name : EString" | check
-	    get-button Finish | click
-	}
-	with [get-view "Model Explorer"] {
-	    get-tree | select "Project/View/TableControl"
-	    get-button "Save Project" | click
-	}
+	
+//	get-view "Model Explorer" | get-tree | select "Project/View/TableControl" | get-menu View | click
+//	get-editor View -index 1 | get-button "Link Root EClass" | click
+//	with [get-window "Select an EClass."] {
+//	    get-tree | select "bowling/Merchandise \\[org.eclipse.emf.emfstore.bowling.Merchandise\\]"
+//	    get-button OK | click
+//	}
+//	get-view "Model Explorer" | get-tree | select "Project/View/TableControl/View" | get-menu "Generate Controls" | click
+//	with [get-window -class SelectAttributesDialog] {
+//	    get-tree | select "Merchandise \\[org.eclipse.emf.emfstore.bowling.Merchandise\\]"
+//	    get-button "Next >" | click
+//	    get-table | get-item "name : EString" | check
+//	    get-button Finish | click
+//	}
+//	with [get-view "Model Explorer"] {
+//	    get-tree | select "Project/View/TableControl"
+//	    get-button "Save Project" | click
+//	}
 	invoke-static -pluginId org.eclipse.emf.ecp.view.model.provider.xmi -className org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager -methodName dispose
 	get-view "Model Explorer" | get-tree | select "test/Fan" | double-click
 	get-editor Fan | get-table | select merch1 -column Name
-	get-editor Fan | get-control Any -after [get-label "Fan Merchandise"] -index 13 | get-property "getChildren().length" | equals 3 | verify-true
+	get-editor Fan | get-control Any -after [get-label "Fan Merchandise"] -index 13 | get-property "getChildren().length" | equals 9 | verify-true
 	get-editor Fan | get-editbox -after [get-label Name] | set-text merc1
 	get-editor Fan | get-table | get-item merc1 -column Name | get-property "columns[1]" | equals merc1 | verify-true
 } -finally {

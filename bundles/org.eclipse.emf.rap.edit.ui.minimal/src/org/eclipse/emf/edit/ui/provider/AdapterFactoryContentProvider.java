@@ -2,9 +2,11 @@
  * Copyright (c) 2002-2006 IBM Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * IBM - Initial API and implementation
@@ -48,8 +50,7 @@ import org.eclipse.swt.widgets.Display;
 public class AdapterFactoryContentProvider
 	implements
 	ITreeContentProvider,
-	INotifyChangedListener
-{
+	INotifyChangedListener {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -81,12 +82,10 @@ public class AdapterFactoryContentProvider
 	 * a listener is added to it,
 	 * so it's important to call {@link #dispose()}.
 	 */
-	public AdapterFactoryContentProvider(AdapterFactory adapterFactory)
-	{
+	public AdapterFactoryContentProvider(AdapterFactory adapterFactory) {
 		this.adapterFactory = adapterFactory;
 
-		if (adapterFactory instanceof IChangeNotifier)
-		{
+		if (adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) adapterFactory).addListener(this);
 		}
 	}
@@ -97,15 +96,12 @@ public class AdapterFactoryContentProvider
 	 * a listener is added to it,
 	 * so it's important to call {@link #dispose()}.
 	 */
-	public void setAdapterFactory(AdapterFactory adapterFactory)
-	{
-		if (this.adapterFactory instanceof IChangeNotifier)
-		{
+	public void setAdapterFactory(AdapterFactory adapterFactory) {
+		if (this.adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) this.adapterFactory).removeListener(this);
 		}
 
-		if (adapterFactory instanceof IChangeNotifier)
-		{
+		if (adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) adapterFactory).addListener(this);
 		}
 
@@ -115,8 +111,7 @@ public class AdapterFactoryContentProvider
 	/**
 	 * This returns the wrapped factory.
 	 */
-	public AdapterFactory getAdapterFactory()
-	{
+	public AdapterFactory getAdapterFactory() {
 		return adapterFactory;
 	}
 
@@ -124,8 +119,7 @@ public class AdapterFactoryContentProvider
 	 * The given Viewer will start (oldInput == null) or stop (newInput == null) listening for domain events.
 	 */
 	@Override
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-	{
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		// If there was no old input, then we must be providing content for this part for the first time...
 		//
 		this.viewer = viewer;
@@ -138,18 +132,16 @@ public class AdapterFactoryContentProvider
 	 * IStructuredItemContentProvider.getElements}.
 	 */
 	@Override
-	public Object[] getElements(Object object)
-	{
+	public Object[] getElements(Object object) {
 		// Get the adapter from the factory.
 		//
-		final IStructuredItemContentProvider structuredItemContentProvider =
-			(IStructuredItemContentProvider) adapterFactory.adapt(object, IStructuredItemContentProviderClass);
+		final IStructuredItemContentProvider structuredItemContentProvider = (IStructuredItemContentProvider) adapterFactory
+			.adapt(object, IStructuredItemContentProviderClass);
 
 		// Either delegate the call or return nothing.
 		//
-		return (structuredItemContentProvider != null ?
-			structuredItemContentProvider.getElements(object) :
-			Collections.EMPTY_LIST).toArray();
+		return (structuredItemContentProvider != null ? structuredItemContentProvider.getElements(object)
+			: Collections.EMPTY_LIST).toArray();
 	}
 
 	/**
@@ -158,18 +150,16 @@ public class AdapterFactoryContentProvider
 	 * ITreeItemContentProvider.getChildren}.
 	 */
 	@Override
-	public Object[] getChildren(Object object)
-	{
+	public Object[] getChildren(Object object) {
 		// Get the adapter from the factory.
 		//
-		final ITreeItemContentProvider treeItemContentProvider =
-			(ITreeItemContentProvider) adapterFactory.adapt(object, ITreeItemContentProviderClass);
+		final ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider) adapterFactory.adapt(object,
+			ITreeItemContentProviderClass);
 
 		// Either delegate the call or return nothing.
 		//
-		return (treeItemContentProvider != null ?
-			treeItemContentProvider.getChildren(object) :
-			Collections.EMPTY_LIST).toArray();
+		return (treeItemContentProvider != null ? treeItemContentProvider.getChildren(object) : Collections.EMPTY_LIST)
+			.toArray();
 	}
 
 	/**
@@ -178,12 +168,11 @@ public class AdapterFactoryContentProvider
 	 * ITreeItemContentProvider.hasChildren}.
 	 */
 	@Override
-	public boolean hasChildren(Object object)
-	{
+	public boolean hasChildren(Object object) {
 		// Get the adapter from the factory.
 		//
-		final ITreeItemContentProvider treeItemContentProvider =
-			(ITreeItemContentProvider) adapterFactory.adapt(object, ITreeItemContentProviderClass);
+		final ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider) adapterFactory.adapt(object,
+			ITreeItemContentProviderClass);
 
 		// Either delegate the call or return nothing.
 		//
@@ -197,57 +186,45 @@ public class AdapterFactoryContentProvider
 	 * ITreeItemContentProvider.getParent}.
 	 */
 	@Override
-	public Object getParent(Object object)
-	{
+	public Object getParent(Object object) {
 		// Get the adapter from the factory.
 		//
-		final ITreeItemContentProvider treeItemContentProvider =
-			(ITreeItemContentProvider) adapterFactory.adapt(object, ITreeItemContentProviderClass);
+		final ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider) adapterFactory.adapt(object,
+			ITreeItemContentProviderClass);
 
 		// Either delegate the call or return nothing.
 		//
-		return treeItemContentProvider != null ?
-			treeItemContentProvider.getParent(object) :
-			null;
+		return treeItemContentProvider != null ? treeItemContentProvider.getParent(object) : null;
 	}
 
 	/**
 	 * This discards the content provider and removes this as a listener to the {@link #adapterFactory}.
 	 */
 	@Override
-	public void dispose()
-	{
-		if (adapterFactory instanceof IChangeNotifier)
-		{
+	public void dispose() {
+		if (adapterFactory instanceof IChangeNotifier) {
 			((IChangeNotifier) adapterFactory).removeListener(this);
 		}
 		viewer = null;
 	}
 
 	@Override
-	public void notifyChanged(Notification notification)
-	{
-		if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed())
-		{
+	public void notifyChanged(Notification notification) {
+		if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed()) {
 			// If the notification is an IViewerNotification, it specifies how ViewerRefresh should behave. Otherwise
 			// fall
 			// back to NotifyChangedToViewerRefresh, which determines how to refresh the viewer directly from the model
 			// notification.
 			//
-			if (notification instanceof IViewerNotification)
-			{
-				if (viewerRefresh == null)
-				{
+			if (notification instanceof IViewerNotification) {
+				if (viewerRefresh == null) {
 					viewerRefresh = new ViewerRefresh(viewer);
 				}
 
-				if (viewerRefresh.addNotification((IViewerNotification) notification))
-				{
+				if (viewerRefresh.addNotification((IViewerNotification) notification)) {
 					viewer.getControl().getDisplay().asyncExec(viewerRefresh);
 				}
-			}
-			else
-			{
+			} else {
 				NotifyChangedToViewerRefresh.handleNotifyChanged(
 					viewer,
 					notification.getNotifier(),
@@ -264,8 +241,7 @@ public class AdapterFactoryContentProvider
 	 * A runnable class that efficiently updates a {@link org.eclipse.jface.viewers.Viewer} via standard APIs, based on
 	 * queued {@link org.eclipse.emf.edit.provider.IViewerNotification}s from the model's item providers.
 	 */
-	public static class ViewerRefresh implements Runnable
-	{
+	public static class ViewerRefresh implements Runnable {
 		Viewer viewer;
 		List<IViewerNotification> notifications;
 		boolean compatibility;
@@ -273,8 +249,7 @@ public class AdapterFactoryContentProvider
 		/**
 		 * @since 2.2.0
 		 */
-		public ViewerRefresh(Viewer viewer)
-		{
+		public ViewerRefresh(Viewer viewer) {
 			this.viewer = viewer;
 		}
 
@@ -282,8 +257,7 @@ public class AdapterFactoryContentProvider
 		 * @deprecated in 2.2.0
 		 */
 		@Deprecated
-		public ViewerRefresh(Viewer viewer, IViewerNotification notification)
-		{
+		public ViewerRefresh(Viewer viewer, IViewerNotification notification) {
 			this.viewer = viewer;
 			addNotification(notification);
 			compatibility = true;
@@ -298,38 +272,29 @@ public class AdapterFactoryContentProvider
 		 *         needs to be {@link Display#asyncExec scheduled} on the event queue
 		 * @since 2.2.0
 		 */
-		public synchronized boolean addNotification(IViewerNotification notification)
-		{
-			if (notifications == null)
-			{
+		public synchronized boolean addNotification(IViewerNotification notification) {
+			if (notifications == null) {
 				notifications = new ArrayList<IViewerNotification>();
 			}
 
-			if (notifications.isEmpty())
-			{
+			if (notifications.isEmpty()) {
 				notifications.add(notification);
 				return true;
 			}
 
-			if (viewer instanceof StructuredViewer)
-			{
+			if (viewer instanceof StructuredViewer) {
 				for (final Iterator<IViewerNotification> i = notifications.iterator(); i.hasNext()
-					&& notification != null;)
-				{
+					&& notification != null;) {
 					final IViewerNotification old = i.next();
 					final IViewerNotification merged = merge(old, notification);
-					if (merged == old)
-					{
+					if (merged == old) {
 						notification = null;
-					}
-					else if (merged != null)
-					{
+					} else if (merged != null) {
 						notification = merged;
 						i.remove();
 					}
 				}
-				if (notification != null)
-				{
+				if (notification != null) {
 					notifications.add(notification);
 				}
 			}
@@ -345,8 +310,7 @@ public class AdapterFactoryContentProvider
 		 * @return a single notification that is equivalent to the two parameters, or null if they are non-duplicative
 		 * @since 2.2.0
 		 */
-		protected IViewerNotification merge(IViewerNotification n1, IViewerNotification n2)
-		{
+		protected IViewerNotification merge(IViewerNotification n1, IViewerNotification n2) {
 			// This implements the following order of preference:
 			// 1. full refresh and update
 			// 2. full refresh (add update if necessary)
@@ -354,61 +318,38 @@ public class AdapterFactoryContentProvider
 			// 4. refresh element (if necessary)
 			// 5. update element
 			//
-			if (n1.getElement() == null && n1.isLabelUpdate())
-			{
+			if (n1.getElement() == null && n1.isLabelUpdate()) {
 				return n1;
-			}
-			else if (n2.getElement() == null && n2.isLabelUpdate())
-			{
+			} else if (n2.getElement() == null && n2.isLabelUpdate()) {
 				return n2;
-			}
-			else if (n1.getElement() == null)
-			{
-				if (n2.isLabelUpdate())
-				{
+			} else if (n1.getElement() == null) {
+				if (n2.isLabelUpdate()) {
 					n1 = new ViewerNotification(n1);
 				}
 				return n1;
-			}
-			else if (n2.getElement() == null)
-			{
-				if (n1.isLabelUpdate())
-				{
+			} else if (n2.getElement() == null) {
+				if (n1.isLabelUpdate()) {
 					n2 = new ViewerNotification(n2);
 				}
 				return n2;
-			}
-			else if (n1.getElement() == n2.getElement())
-			{
-				if (n1.isContentRefresh() && n1.isLabelUpdate())
-				{
+			} else if (n1.getElement() == n2.getElement()) {
+				if (n1.isContentRefresh() && n1.isLabelUpdate()) {
 					return n1;
-				}
-				else if (n2.isContentRefresh() && n2.isLabelUpdate())
-				{
+				} else if (n2.isContentRefresh() && n2.isLabelUpdate()) {
 					return n2;
-				}
-				else if (n1.isContentRefresh())
-				{
-					if (n2.isLabelUpdate())
-					{
+				} else if (n1.isContentRefresh()) {
+					if (n2.isLabelUpdate()) {
 						n1 = new ViewerNotification(n1, n1.getElement(), true, true);
 					}
 					return n1;
-				}
-				else if (n2.isContentRefresh())
-				{
-					if (n1.isLabelUpdate())
-					{
+				} else if (n2.isContentRefresh()) {
+					if (n1.isLabelUpdate()) {
 						n2 = new ViewerNotification(n2, n2.getElement(), true, true);
 					}
 					return n2;
-				}
-				else if (n1.isLabelUpdate())
-				{
+				} else if (n1.isLabelUpdate()) {
 					return n1;
-				}
-				else // n2.isLabelUpdate()
+				} else // n2.isLabelUpdate()
 				{
 					return n2;
 				}
@@ -417,22 +358,17 @@ public class AdapterFactoryContentProvider
 		}
 
 		@Override
-		public void run()
-		{
-			if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed())
-			{
+		public void run() {
+			if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed()) {
 				List<IViewerNotification> current;
 
-				synchronized (this)
-				{
+				synchronized (this) {
 					current = notifications;
 					notifications = null;
 				}
 
-				if (current != null)
-				{
-					for (final IViewerNotification viewerNotification : current)
-					{
+				if (current != null) {
+					for (final IViewerNotification viewerNotification : current) {
 						refresh(viewerNotification);
 					}
 				}
@@ -442,8 +378,7 @@ public class AdapterFactoryContentProvider
 		/**
 		 * @since 2.2.0
 		 */
-		protected void refresh(IViewerNotification notification)
-		{
+		protected void refresh(IViewerNotification notification) {
 			// Previously, we never updated the viewer on a resolve. Now we post and merge it as appropriate.
 			//
 			if (compatibility && notification.getEventType() == Notification.RESOLVE) {
@@ -452,59 +387,44 @@ public class AdapterFactoryContentProvider
 
 			final Object element = notification.getElement();
 
-			if (viewer instanceof StructuredViewer)
-			{
+			if (viewer instanceof StructuredViewer) {
 				final StructuredViewer structuredViewer = (StructuredViewer) viewer;
 
 				final ISelection selection = structuredViewer.getSelection();
 				final boolean isStaleSelection = AdapterFactoryEditingDomain.isStale(selection);
-				if (isStaleSelection)
-				{
+				if (isStaleSelection) {
 					viewer.setSelection(StructuredSelection.EMPTY);
 				}
 
-				if (element != null)
-				{
-					if (notification.isContentRefresh())
-					{
+				if (element != null) {
+					if (notification.isContentRefresh()) {
 						structuredViewer.refresh(element, notification.isLabelUpdate());
-					}
-					else if (notification.isLabelUpdate())
-					{
+					} else if (notification.isLabelUpdate()) {
 						structuredViewer.update(element, null);
 					}
-				}
-				else
-				{
+				} else {
 					structuredViewer.refresh(notification.isLabelUpdate());
 				}
 
-				if (isStaleSelection)
-				{
+				if (isStaleSelection) {
 					final Object object = structuredViewer.getInput();
 					EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(object);
-					if (editingDomain == null)
-					{
+					if (editingDomain == null) {
 						for (final Object child : ((IStructuredContentProvider) structuredViewer.getContentProvider())
-							.getElements(object))
-						{
+							.getElements(object)) {
 							editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(child);
-							if (editingDomain != null)
-							{
+							if (editingDomain != null) {
 								break;
 							}
 						}
 					}
-					if (editingDomain instanceof AdapterFactoryEditingDomain)
-					{
-						structuredViewer.setSelection
-							(new StructuredSelection(((AdapterFactoryEditingDomain) editingDomain)
+					if (editingDomain instanceof AdapterFactoryEditingDomain) {
+						structuredViewer
+							.setSelection(new StructuredSelection(((AdapterFactoryEditingDomain) editingDomain)
 								.resolve(((IStructuredSelection) selection).toList())), true);
 					}
 				}
-			}
-			else
-			{
+			} else {
 				viewer.refresh();
 			}
 		}

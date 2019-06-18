@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -84,7 +86,7 @@ public class VTTextControlEnablementPackageImpl extends EPackageImpl implements 
 		// Obtain or create and register package
 		final VTTextControlEnablementPackageImpl theTextControlEnablementPackage = (VTTextControlEnablementPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTTextControlEnablementPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTTextControlEnablementPackageImpl());
+				: new VTTextControlEnablementPackageImpl());
 
 		isInited = true;
 
@@ -210,7 +212,8 @@ public class VTTextControlEnablementPackageImpl extends EPackageImpl implements 
 		initEAttribute(
 			getTextControlEnablementStyleProperty_RenderDisableAsEditable(),
 			ecorePackage.getEBoolean(),
-			"RenderDisableAsEditable", "false", 0, 1, VTTextControlEnablementStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"RenderDisableAsEditable", "false", 0, 1, VTTextControlEnablementStyleProperty.class, !IS_TRANSIENT, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

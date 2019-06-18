@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
@@ -199,7 +201,8 @@ public class UnknownFeaturesDialog extends Dialog {
 		});
 	}
 
-	private TableViewerColumn createTableViewerColumn(TableViewer viewer, String title, int bound, final int colNumber) {
+	private TableViewerColumn createTableViewerColumn(TableViewer viewer, String title, int bound,
+		final int colNumber) {
 		final TableViewerColumn viewerColumn = new TableViewerColumn(viewer,
 			SWT.NONE);
 		final TableColumn column = viewerColumn.getColumn();

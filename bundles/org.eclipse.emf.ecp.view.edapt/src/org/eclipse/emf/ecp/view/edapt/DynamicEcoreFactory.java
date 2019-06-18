@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
@@ -416,25 +418,20 @@ public class DynamicEcoreFactory extends EFactoryImpl {
 
 	// END COMPLEX CODE
 
-	private String convertEBooleanObjectToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEBooleanObjectToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertECharacterObjectToString(EDataType metaObject, Object instanceValue)
-	{
-		if (instanceValue instanceof Character)
-		{
+	private String convertECharacterObjectToString(EDataType metaObject, Object instanceValue) {
+		if (instanceValue instanceof Character) {
 			return Integer.toString((Character) instanceValue);
 		}
 
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEDateToString(EDataType eDataType, Object instanceValue)
-	{
-		if (instanceValue == null)
-		{
+	private String convertEDateToString(EDataType eDataType, Object instanceValue) {
+		if (instanceValue == null) {
 			return null;
 		}
 
@@ -442,85 +439,68 @@ public class DynamicEcoreFactory extends EFactoryImpl {
 
 	}
 
-	private String convertEDoubleObjectToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEDoubleObjectToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEFloatObjectToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEFloatObjectToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEIntegerObjectToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEIntegerObjectToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEBigDecimalToString(EDataType eDataType, Object instanceValue)
-	{
+	private String convertEBigDecimalToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEBigIntegerToString(EDataType eDataType, Object instanceValue)
-	{
+	private String convertEBigIntegerToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEStringToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEStringToString(EDataType metaObject, Object instanceValue) {
 		return (String) instanceValue;
 	}
 
-	private String convertEIntToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEIntToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEBooleanToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEBooleanToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEByteObjectToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEByteObjectToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEFloatToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEFloatToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertECharToString(EDataType metaObject, Object instanceValue)
-	{
-		if (instanceValue instanceof Character)
-		{
+	private String convertECharToString(EDataType metaObject, Object instanceValue) {
+		if (instanceValue instanceof Character) {
 			return Integer.toString((Character) instanceValue);
 		}
 
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertELongToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertELongToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEDoubleToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEDoubleToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEByteToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEByteToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEByteArrayToString(EDataType eDataType, Object instanceValue)
-	{
-		if (instanceValue == null)
-		{
+	private String convertEByteArrayToString(EDataType eDataType, Object instanceValue) {
+		if (instanceValue == null) {
 			return null;
 		}
 		final byte[] bytes = (byte[]) instanceValue;
@@ -528,43 +508,35 @@ public class DynamicEcoreFactory extends EFactoryImpl {
 
 	}
 
-	private String convertEShortToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEShortToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEJavaClassToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEJavaClassToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? "" : ((Class<?>) instanceValue).getName(); //$NON-NLS-1$
 	}
 
-	private String convertEJavaObjectToString(EDataType eDataType, Object instanceValue)
-	{
+	private String convertEJavaObjectToString(EDataType eDataType, Object instanceValue) {
 		return convertToString(instanceValue);
 	}
 
-	private String convertELongObjectToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertELongObjectToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private String convertEShortObjectToString(EDataType metaObject, Object instanceValue)
-	{
+	private String convertEShortObjectToString(EDataType metaObject, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
-	private static final char[] HEX_DIGITS =
-	{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+		'E', 'F' };
 
-	private String convertBytesToHexString(byte[] bytes, int count)
-	{
-		if (bytes == null)
-		{
+	private String convertBytesToHexString(byte[] bytes, int count) {
+		if (bytes == null) {
 			return null;
 		}
 		final char[] result = new char[2 * count];
-		for (int i = 0, j = 0; i < count; ++i)
-		{
+		for (int i = 0, j = 0; i < count; ++i) {
 			final int high = bytes[i] >> 4 & 0xF;
 			final int low = bytes[i] & 0xF;
 			result[j++] = HEX_DIGITS[high];

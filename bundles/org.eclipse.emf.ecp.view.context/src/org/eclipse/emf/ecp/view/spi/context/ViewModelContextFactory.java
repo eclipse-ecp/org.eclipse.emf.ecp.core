@@ -1,16 +1,20 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 527740
+ * Christian W. Damus - bugs 527740, 545686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.context;
+
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.context.ArrayOnceViewModelServiceProvider;
@@ -81,6 +85,48 @@ public final class ViewModelContextFactory {
 	public ViewModelContext createViewModelContext(VElement view, EObject domainObject,
 		ViewModelServiceProvider serviceProvider) {
 		return new ViewModelContextImpl(view, domainObject, serviceProvider);
+	}
+
+	/**
+	 * Instantiates a new view model context with initial {@linkplain ViewModelContext#getContextValue(String) context
+	 * values}.
+	 * The {@code serviceProvider} is propagated to child contexts to override registered
+	 * services in their scope, too.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 * @param contextValues initial context values to set
+	 * @return the created {@link ViewModelContext}
+	 *
+	 * @since 1.21
+	 * @see ViewModelContext#getContextValue(String)
+	 */
+	public ViewModelContext createViewModelContext(VElement view, EObject domainObject,
+		Map<String, ?> contextValues) {
+
+		return new ViewModelContextImpl(view, domainObject, contextValues);
+	}
+
+	/**
+	 * Instantiates a new view model context with a provider of local service overrides and
+	 * initial {@linkplain ViewModelContext#getContextValue(String) context values}.
+	 * The {@code serviceProvider} is propagated to child contexts to override registered
+	 * services in their scope, too.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 * @param serviceProvider a provider of local view-model services to override any
+	 *            statically registered services of the same types. May be {@code null} if
+	 *            local service overrides are not needed
+	 * @param contextValues initial context values to set
+	 * @return the created {@link ViewModelContext}
+	 *
+	 * @since 1.21
+	 */
+	public ViewModelContext createViewModelContext(VElement view, EObject domainObject,
+		ViewModelServiceProvider serviceProvider, Map<String, ?> contextValues) {
+
+		return new ViewModelContextImpl(view, domainObject, serviceProvider, contextValues);
 	}
 
 }

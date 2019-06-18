@@ -465,6 +465,49 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/selector/domainmodelreference/model/VTDomainModelReferenceSelector.java" type="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector">
+        <filter comment="Add optional root EClass to VTDomainModelReferenceSelector" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector"/>
+                <message_argument value="getRootEClass()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Add optional root EClass to VTDomainModelReferenceSelector" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector"/>
+                <message_argument value="setRootEClass(EClass)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/selector/domainmodelreference/model/VTDomainmodelreferencePackage.java" type="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage">
+        <filter comment="Added optional root EClass to VTDomainModelReferenceSelector" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_SELECTOR_FEATURE_COUNT"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added optional root EClass to VTDomainModelReferenceSelector" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Added optional root EClass to VTDomainModelReferenceSelector" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage"/>
+                <message_argument value="getDomainModelReferenceSelector_RootEClass()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/selector/domainmodelreference/model/VTDomainmodelreferencePackage.java" type="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage$Literals">
+        <filter comment="Added optional root EClass to VTDomainModelReferenceSelector" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage.Literals"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/selector/viewModelElement/model/impl/VTViewModelElementFactoryImpl.java" type="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementFactoryImpl">
         <filter comment="Removed Impl packages from export" id="305365105">
             <message_arguments>

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edagr Mueller - initial API and implementation
@@ -109,7 +111,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					}
 					// Always apply enable and read-only if it changed because it might have changed for a parent
 					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
-						applyEnable();
+						if (!ignoreEnableOnReadOnly()) {
+							applyEnable();
+						}
 					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Readonly()) {
 						applyReadOnly();
 					}

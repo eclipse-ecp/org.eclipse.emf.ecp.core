@@ -8,8 +8,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<rcptt-runner-version>2.4.0-SNAPSHOT</rcptt-runner-version>
-		<rcptt-maven-version>2.4.0-SNAPSHOT</rcptt-maven-version>
+		<rcptt-runner-version>2.4.2-SNAPSHOT</rcptt-runner-version>
+		<rcptt-maven-version>2.4.2-SNAPSHOT</rcptt-maven-version>
 		<build_job>ecp-develop-full</build_job>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
 		<jacoco-version>0.7.9</jacoco-version>

@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 530314
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
@@ -15,7 +18,6 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.emfforms.common.Feature;
-import org.eclipse.emfforms.common.Feature.STRATEGY;
 
 /**
  * Abstract helper class for feature support.
@@ -24,7 +26,12 @@ import org.eclipse.emfforms.common.Feature.STRATEGY;
  * @since 1.14
  *
  * @param <B> the builder type
+ *
+ * @deprecated as of 1.21, {@link Feature}s are used only to communicate configuration data
+ *             to the UI controls that interrogate the configurations. The builder API for
+ *             users is a fluent API, not abstracted in terms of features
  */
+@Deprecated
 public abstract class AbstractFeatureAwareBuilder<B> {
 
 	/**
@@ -93,15 +100,7 @@ public abstract class AbstractFeatureAwareBuilder<B> {
 	 * @return self
 	 */
 	public B inheritFeatures(Collection<Feature> features) {
-		for (final Feature feature : features) {
-			if (!STRATEGY.INHERIT.equals(feature.getStrategy())) {
-				continue;
-			}
-			if (!this.isFeatureSupported(feature)) {
-				continue;
-			}
-			this.enableFeature(feature);
-		}
+		getEnabledFeatures().addAll(Feature.inherit(features, this::isFeatureSupported));
 		return getBuilder();
 	}
 

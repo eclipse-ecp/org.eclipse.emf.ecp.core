@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -83,7 +85,7 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 		// Obtain or create and register package
 		final VTTableValidationPackageImpl theTableValidationPackage = (VTTableValidationPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTTableValidationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTTableValidationPackageImpl());
+				: new VTTableValidationPackageImpl());
 
 		isInited = true;
 
@@ -232,15 +234,18 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 		initEAttribute(
 			getTableValidationStyleProperty_ColumnWidth(),
 			ecorePackage.getEInt(),
-			"columnWidth", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"columnWidth", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getTableValidationStyleProperty_ColumnName(),
 			ecorePackage.getEString(),
-			"columnName", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"columnName", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(
 			getTableValidationStyleProperty_ImagePath(),
 			ecorePackage.getEString(),
-			"imagePath", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"imagePath", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

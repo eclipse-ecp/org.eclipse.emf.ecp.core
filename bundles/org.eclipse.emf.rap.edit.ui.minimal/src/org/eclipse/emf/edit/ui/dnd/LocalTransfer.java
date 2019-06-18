@@ -2,9 +2,11 @@
  * Copyright (c) 2002-2006 IBM Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * IBM - Initial API and implementation
@@ -26,8 +28,7 @@ import org.eclipse.swt.dnd.TransferData;
  * As an added guard, the time is recorded and serialized in javaToNative to that native to java can ensure that it's
  * returns the value that was really to have been transferred.
  */
-public class LocalTransfer extends ByteArrayTransfer
-{
+public class LocalTransfer extends ByteArrayTransfer {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -48,10 +49,8 @@ public class LocalTransfer extends ByteArrayTransfer
 	/**
 	 * This returns the one instance of this transfer agent.
 	 */
-	public static LocalTransfer getInstance()
-	{
-		if (instance == null)
-		{
+	public static LocalTransfer getInstance() {
+		if (instance == null) {
 			instance = new LocalTransfer();
 		}
 
@@ -71,8 +70,7 @@ public class LocalTransfer extends ByteArrayTransfer
 	/**
 	 * This creates an instance; typically you get one from {@link #getInstance}.
 	 */
-	protected LocalTransfer()
-	{
+	protected LocalTransfer() {
 		super();
 	}
 
@@ -80,8 +78,7 @@ public class LocalTransfer extends ByteArrayTransfer
 	 * This returns the transfer IDs that this agent supports.
 	 */
 	@Override
-	protected int[] getTypeIds()
-	{
+	protected int[] getTypeIds() {
 		return new int[] { TYPE_ID };
 	}
 
@@ -89,8 +86,7 @@ public class LocalTransfer extends ByteArrayTransfer
 	 * This returns the transfer names that this agent supports.
 	 */
 	@Override
-	public String[] getTypeNames()
-	{
+	public String[] getTypeNames() {
 		return new String[] { TYPE_NAME };
 	}
 
@@ -98,12 +94,10 @@ public class LocalTransfer extends ByteArrayTransfer
 	 * This records the object and current time and encodes only the current time into the transfer data.
 	 */
 	@Override
-	public void javaToNative(Object object, TransferData transferData)
-	{
+	public void javaToNative(Object object, TransferData transferData) {
 		startTime = System.currentTimeMillis();
 		this.object = object;
-		if (transferData != null)
-		{
+		if (transferData != null) {
 			super.javaToNative(String.valueOf(startTime).getBytes(), transferData);
 		}
 	}
@@ -113,19 +107,16 @@ public class LocalTransfer extends ByteArrayTransfer
 	 * time match.
 	 */
 	@Override
-	public Object nativeToJava(TransferData transferData)
-	{
+	public Object nativeToJava(TransferData transferData) {
 		final byte[] bytes = (byte[]) super.nativeToJava(transferData);
 		if (bytes == null) {
 			return null;
 		}
 
-		try
-		{
+		try {
 			final long startTime = Long.parseLong(new String(bytes));
 			return this.startTime == startTime ? object : null;
-		} catch (final NumberFormatException exception)
-		{
+		} catch (final NumberFormatException exception) {
 			return null;
 		}
 	}

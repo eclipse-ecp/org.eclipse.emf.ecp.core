@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -59,6 +61,22 @@ public final class Optional<T> {
 			return empty();
 		}
 		return of(value);
+	}
+
+	/**
+	 * Creates a new Optional from the given java.util.Optional. If the java Optional is empty, an empty Optional is
+	 * returned. Otherwise, the value is re-wrapped in this Optional.
+	 *
+	 * @param <T> the class of the value
+	 * @param javaOptional The java.util.Optional to convert to an EMF Forms Optional
+	 * @return An EMF Forms Optional equivalent to the given Java Optional
+	 * @since 1.20
+	 */
+	public static <T> Optional<T> fromJavaOptional(java.util.Optional<T> javaOptional) {
+		if (javaOptional.isPresent()) {
+			return of(javaOptional.get());
+		}
+		return empty();
 	}
 
 	private final T value;

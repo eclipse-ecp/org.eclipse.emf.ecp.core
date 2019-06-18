@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Bazaar
 Bundle-SymbolicName: org.eclipse.emfforms.core.bazaar
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.bazaar;version="1.20.0",
- org.eclipse.emfforms.bazaar.internal;version="1.20.0";x-internal:=true,
- org.eclipse.emfforms.spi.bazaar;version="1.20.0"
+Export-Package: org.eclipse.emfforms.bazaar;version="1.21.0",
+ org.eclipse.emfforms.bazaar.internal;version="1.21.0";x-internal:=true,
+ org.eclipse.emfforms.spi.bazaar;version="1.21.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emfforms.core.bazaar
 Import-Package: javax.inject;version="1.0.0",

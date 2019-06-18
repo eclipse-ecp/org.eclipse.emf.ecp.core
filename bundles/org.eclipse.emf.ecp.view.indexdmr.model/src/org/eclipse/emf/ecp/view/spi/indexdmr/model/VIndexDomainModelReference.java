@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -22,9 +24,11 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix DMR</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix
+ * DMR</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex <em>Index</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target DMR</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target
+ * DMR</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,8 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
  * @generated
  */
-public interface VIndexDomainModelReference extends VFeaturePathDomainModelReference
-{
+public interface VIndexDomainModelReference extends VFeaturePathDomainModelReference {
 	/**
 	 * Returns the value of the '<em><b>Prefix DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

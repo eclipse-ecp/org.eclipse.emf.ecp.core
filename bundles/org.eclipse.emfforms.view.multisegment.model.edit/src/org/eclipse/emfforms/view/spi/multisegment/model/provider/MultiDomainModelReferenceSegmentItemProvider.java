@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -110,13 +112,13 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		final String label = ((VMultiDomainModelReferenceSegment) object).getDomainModelFeature();
 		return label == null || label.length() == 0 ? getString("_UI_MultiDomainModelReferenceSegment_type") : //$NON-NLS-1$
-			getString("_UI_MultiDomainModelReferenceSegment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			label + "[]"; //$NON-NLS-1$
 	}
 
 	/**

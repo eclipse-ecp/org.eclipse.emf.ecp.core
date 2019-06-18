@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -29,7 +31,7 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
@@ -37,7 +39,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static TestFactory init() {
@@ -57,7 +59,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TestFactoryImpl() {
@@ -67,7 +69,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -83,7 +85,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -101,7 +103,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -119,7 +121,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -131,13 +133,12 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TestEnum createTestEnumFromString(EDataType eDataType, String initialValue) {
 		final TestEnum result = TestEnum.get(initialValue);
-		if (result == null)
-		{
+		if (result == null) {
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
@@ -147,7 +148,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public String convertTestEnumToString(EDataType eDataType, Object instanceValue) {
@@ -157,7 +158,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public XMLGregorianCalendar createXMLDateFromString(EDataType eDataType, String initialValue) {
@@ -167,7 +168,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public String convertXMLDateToString(EDataType eDataType, Object instanceValue) {
@@ -177,7 +178,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -188,7 +189,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

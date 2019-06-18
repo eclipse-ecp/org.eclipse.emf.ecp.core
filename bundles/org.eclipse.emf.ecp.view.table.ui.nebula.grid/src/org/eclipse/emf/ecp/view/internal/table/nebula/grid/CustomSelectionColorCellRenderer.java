@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Mathias Schaefer - initial API and implementation
@@ -12,9 +14,11 @@
 /*******************************************************************************
  * Copyright (c) 2006 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * chris.gross@us.ibm.com - initial API and implementation
@@ -177,7 +181,8 @@ public class CustomSelectionColorCellRenderer extends GridCellRenderer {
 			} else {
 				checkRenderer.setBounds(getBounds().x + x, (getBounds().height - checkRenderer
 					.getBounds().height)
-					/ 2 + getBounds().y, checkRenderer
+					/ 2 + getBounds().y,
+					checkRenderer
 						.getBounds().width,
 					checkRenderer.getBounds().height);
 

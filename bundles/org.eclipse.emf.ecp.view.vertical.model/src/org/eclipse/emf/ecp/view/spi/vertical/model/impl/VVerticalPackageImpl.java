@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -28,8 +30,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  *
  * @generated
  */
-public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPackage
-{
+public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -52,8 +53,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 * @see #init()
 	 * @generated
 	 */
-	private VVerticalPackageImpl()
-	{
+	private VVerticalPackageImpl() {
 		super(eNS_URI, VVerticalFactory.eINSTANCE);
 	}
 
@@ -78,16 +78,16 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VVerticalPackage init()
-	{
+	public static VVerticalPackage init() {
 		if (isInited) {
 			return (VVerticalPackage) EPackage.Registry.INSTANCE.getEPackage(VVerticalPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final VVerticalPackageImpl theVerticalPackage = (VVerticalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VVerticalPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VVerticalPackageImpl());
+		final VVerticalPackageImpl theVerticalPackage = (VVerticalPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VVerticalPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new VVerticalPackageImpl());
 
 		isInited = true;
 
@@ -115,8 +115,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 * @generated
 	 */
 	@Override
-	public EClass getVerticalLayout()
-	{
+	public EClass getVerticalLayout() {
 		return verticalLayoutEClass;
 	}
 
@@ -127,8 +126,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 * @generated
 	 */
 	@Override
-	public VVerticalFactory getVerticalFactory()
-	{
+	public VVerticalFactory getVerticalFactory() {
 		return (VVerticalFactory) getEFactoryInstance();
 	}
 
@@ -148,8 +146,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -175,8 +172,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}

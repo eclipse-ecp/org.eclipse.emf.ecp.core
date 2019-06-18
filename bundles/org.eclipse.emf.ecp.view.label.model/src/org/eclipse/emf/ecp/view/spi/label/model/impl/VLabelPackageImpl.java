@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -30,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @generated
  */
-public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
-{
+public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -62,8 +63,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * @see #init()
 	 * @generated
 	 */
-	private VLabelPackageImpl()
-	{
+	private VLabelPackageImpl() {
 		super(eNS_URI, VLabelFactory.eINSTANCE);
 	}
 
@@ -88,16 +88,16 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VLabelPackage init()
-	{
+	public static VLabelPackage init() {
 		if (isInited) {
 			return (VLabelPackage) EPackage.Registry.INSTANCE.getEPackage(VLabelPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final VLabelPackageImpl theLabelPackage = (VLabelPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VLabelPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VLabelPackageImpl());
+		final VLabelPackageImpl theLabelPackage = (VLabelPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VLabelPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
+				: new VLabelPackageImpl());
 
 		isInited = true;
 
@@ -125,8 +125,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getLabel()
-	{
+	public EClass getLabel() {
 		return labelEClass;
 	}
 
@@ -137,8 +136,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getLabel_Style()
-	{
+	public EAttribute getLabel_Style() {
 		return (EAttribute) labelEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -151,8 +149,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getLabel_DomainModelReference()
-	{
+	public EReference getLabel_DomainModelReference() {
 		return (EReference) labelEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -163,8 +160,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * @generated
 	 */
 	@Override
-	public EEnum getVLabelStyle()
-	{
+	public EEnum getVLabelStyle() {
 		return vLabelStyleEEnum;
 	}
 
@@ -175,8 +171,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * @generated
 	 */
 	@Override
-	public VLabelFactory getLabelFactory()
-	{
+	public VLabelFactory getLabelFactory() {
 		return (VLabelFactory) getEFactoryInstance();
 	}
 
@@ -196,8 +191,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -228,8 +222,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -255,12 +248,14 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 		initEAttribute(
 			getLabel_Style(),
 			getVLabelStyle(),
-			"style", null, 0, 1, VLabel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"style", null, 0, 1, VLabel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(
 			getLabel_DomainModelReference(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"domainModelReference", null, 0, 1, VLabel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"domainModelReference", null, 0, 1, VLabel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(vLabelStyleEEnum, VLabelStyle.class, "VLabelStyle"); //$NON-NLS-1$

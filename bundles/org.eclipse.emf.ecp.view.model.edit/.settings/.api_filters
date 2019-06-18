@@ -52,6 +52,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/provider/ViewItemProviderAdapterFactory.java" type="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory">
+        <filter comment="DMR was made non-abstract in 1.20" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory"/>
+                <message_argument value="domainModelReferenceItemProvider"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added segments to the DMR" id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory"/>

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -12,6 +14,7 @@
 package org.eclipse.emfforms.internal.core.services.segments.featurepath;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
 import org.eclipse.emf.databinding.IEMFListProperty;
@@ -131,6 +134,30 @@ public class FeatureSegmentConverter_Test {
 		final Setting expected = ((InternalEObject) b).eSetting(reference);
 
 		assertEquals(expected, result);
+	}
+
+	@Test
+	public void convertToListProperty_subClassFeature() throws DatabindingFailedException {
+		final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segment.setDomainModelFeature(TestPackage.Literals.A__BLIST.getName());
+
+		final SegmentConverterListResultEMF conversionResult = converter.convertToListProperty(segment,
+			TestPackage.Literals.E, null);
+		assertSame(TestPackage.Literals.B, conversionResult.getNextEClass().get());
+		assertEquals("A.bList[]<B>", conversionResult.getListProperty().toString()); //$NON-NLS-1$
+	}
+
+	@Test
+	public void convertToValueProperty_subClassFeature() throws DatabindingFailedException {
+		final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segment.setDomainModelFeature(TestPackage.Literals.A__B.getName());
+
+		final SegmentConverterValueResultEMF conversionResult = converter.convertToValueProperty(segment,
+			TestPackage.Literals.E, null);
+		assertSame(TestPackage.Literals.B, conversionResult.getNextEClass().get());
+		assertEquals("A.b<B>", conversionResult.getValueProperty().toString()); //$NON-NLS-1$
 	}
 
 	private EditingDomain getEditingDomain(EObject object) {

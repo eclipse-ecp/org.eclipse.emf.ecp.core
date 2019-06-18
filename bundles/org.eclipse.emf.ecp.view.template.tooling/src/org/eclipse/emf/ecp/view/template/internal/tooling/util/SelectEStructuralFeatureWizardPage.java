@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
@@ -122,9 +124,9 @@ public class SelectEStructuralFeatureWizardPage extends WizardPage {
 	 * Constructor.
 	 */
 	public SelectEStructuralFeatureWizardPage() {
-		super("Select EClass"); //$NON-NLS-1$
-		setTitle("Select EClass"); //$NON-NLS-1$
-		setDescription("Select an EClass for the current View Model."); //$NON-NLS-1$
+		super("Select EStructuralFeature"); //$NON-NLS-1$
+		setTitle("Select EStructuralFeature"); //$NON-NLS-1$
+		setDescription("Select an EEstructuralFeature for the Domain Model Reference Selector."); //$NON-NLS-1$
 	}
 
 	/**
@@ -153,7 +155,7 @@ public class SelectEStructuralFeatureWizardPage extends WizardPage {
 		layout.numColumns = 1;
 
 		final Label label1 = new Label(container, SWT.NONE);
-		label1.setText("Select an EClass:"); //$NON-NLS-1$
+		label1.setText("Select an EStructuralFeature:"); //$NON-NLS-1$
 
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new CustomReflectiveItemProviderAdapterFactory(),

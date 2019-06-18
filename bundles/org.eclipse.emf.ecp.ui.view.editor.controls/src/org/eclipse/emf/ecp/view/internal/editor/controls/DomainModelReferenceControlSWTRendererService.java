@@ -1,10 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -76,7 +78,7 @@ public class DomainModelReferenceControlSWTRendererService implements EMFFormsDI
 		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
-		IValueProperty valueProperty;
+		IValueProperty<?, ?> valueProperty;
 		try {
 			valueProperty = databindingService.getValueProperty(control.getDomainModelReference(),
 				viewModelContext.getDomainModel());
@@ -106,14 +108,10 @@ public class DomainModelReferenceControlSWTRendererService implements EMFFormsDI
 		if (VTablePackage.eINSTANCE.getTableDomainModelReference_DomainModelReference() == feature) {
 			return 3;
 		}
+
 		return NOT_APPLICABLE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
-	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
 		return DomainModelReferenceControlSWTRenderer.class;

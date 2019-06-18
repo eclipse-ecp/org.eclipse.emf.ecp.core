@@ -1,100 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
-  <releases date="2014-10-16T15:54:36.546+0200" label="140">
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" element="group.ecore#/">
-        <changes xsi:type="history:Set" element="group.ecore#/" featureName="name"
-            dataValue="group"/>
-        <changes xsi:type="history:Set" element="group.ecore#/" featureName="nsURI"
-            dataValue="http://org/eclipse/emf/ecp/view/group/model"/>
-        <changes xsi:type="history:Set" element="group.ecore#/" featureName="nsPrefix"
-            dataValue="org.eclipse.emf.ecp.view.group.model"/>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_bIln4HrjEemfTuAHmald_w">
+  <releases xmi:id="_bIln4XrjEemfTuAHmald_w" date="2014-10-16T15:54:36.546+0200" label="140">
+    <changes xsi:type="history:CompositeChange" xmi:id="_bIln4nrjEemfTuAHmald_w">
+      <changes xsi:type="history:Create" xmi:id="_bIln43rjEemfTuAHmald_w">
+        <element href="group.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_bIln5HrjEemfTuAHmald_w" featureName="name" dataValue="group">
+          <element href="group.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bIln5XrjEemfTuAHmald_w" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/group/model">
+          <element href="group.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImO8HrjEemfTuAHmald_w" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.group.model">
+          <element href="group.ecore#/"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#/" referenceName="eClassifiers"
-          element="group.ecore#//Group">
-        <changes xsi:type="history:Set" element="group.ecore#//Group" featureName="name"
-            dataValue="Group"/>
-        <changes xsi:type="history:Add" element="group.ecore#//Group" featureName="eSuperTypes"
-            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedContainer"/>
+      <changes xsi:type="history:Create" xmi:id="_bImO8XrjEemfTuAHmald_w" referenceName="eClassifiers">
+        <target href="group.ecore#/"/>
+        <element href="group.ecore#//Group"/>
+        <changes xsi:type="history:Set" xmi:id="_bImO8nrjEemfTuAHmald_w" featureName="name" dataValue="Group">
+          <element href="group.ecore#//Group"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_bImO83rjEemfTuAHmald_w" featureName="eSuperTypes">
+          <element href="group.ecore#//Group"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedContainer"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//Group" referenceName="eStructuralFeatures"
-          element="group.ecore#//Group/collapsed">
-        <changes xsi:type="history:Set" element="group.ecore#//Group/collapsed" featureName="name"
-            dataValue="collapsed"/>
-        <changes xsi:type="history:Set" element="group.ecore#//Group/collapsed" featureName="eType"
-            referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <changes xsi:type="history:Create" xmi:id="_bImO9HrjEemfTuAHmald_w" referenceName="eStructuralFeatures">
+        <target href="group.ecore#//Group"/>
+        <element href="group.ecore#//Group/collapsed"/>
+        <changes xsi:type="history:Set" xmi:id="_bImO9XrjEemfTuAHmald_w" featureName="name" dataValue="collapsed">
+          <element href="group.ecore#//Group/collapsed"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImO9nrjEemfTuAHmald_w" featureName="eType">
+          <element href="group.ecore#//Group/collapsed"/>
+          <referenceValue href="../../../plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#/" referenceName="eClassifiers"
-          element="group.ecore#//GroupType">
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType" featureName="name"
-            dataValue="GroupType"/>
+      <changes xsi:type="history:Create" xmi:id="_bImO93rjEemfTuAHmald_w" referenceName="eClassifiers">
+        <target href="group.ecore#/"/>
+        <element href="group.ecore#//GroupType"/>
+        <changes xsi:type="history:Set" xmi:id="_bImO-HrjEemfTuAHmald_w" featureName="name" dataValue="GroupType">
+          <element href="group.ecore#//GroupType"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//Group" referenceName="eStructuralFeatures"
-          element="group.ecore#//Group/groupType">
-        <changes xsi:type="history:Set" element="group.ecore#//Group/groupType" featureName="name"
-            dataValue="groupType"/>
-        <changes xsi:type="history:Set" element="group.ecore#//Group/groupType" featureName="lowerBound"
-            dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="group.ecore#//Group/groupType" featureName="eType"
-            referenceValue="group.ecore#//GroupType"/>
+      <changes xsi:type="history:Create" xmi:id="_bImO-XrjEemfTuAHmald_w" referenceName="eStructuralFeatures">
+        <target href="group.ecore#//Group"/>
+        <element href="group.ecore#//Group/groupType"/>
+        <changes xsi:type="history:Set" xmi:id="_bImO-nrjEemfTuAHmald_w" featureName="name" dataValue="groupType">
+          <element href="group.ecore#//Group/groupType"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImO-3rjEemfTuAHmald_w" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="group.ecore#//Group/groupType"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImO_HrjEemfTuAHmald_w" featureName="eType">
+          <element href="group.ecore#//Group/groupType"/>
+          <referenceValue href="group.ecore#//GroupType"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//GroupType" referenceName="eLiterals"
-          element="group.ecore#//GroupType/Normal">
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Normal" featureName="name"
-            dataValue="Normal"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Normal" featureName="literal"
-            dataValue="Normal"/>
+      <changes xsi:type="history:Create" xmi:id="_bImO_XrjEemfTuAHmald_w" referenceName="eLiterals">
+        <target href="group.ecore#//GroupType"/>
+        <element href="group.ecore#//GroupType/Normal"/>
+        <changes xsi:type="history:Set" xmi:id="_bImO_nrjEemfTuAHmald_w" featureName="name" dataValue="Normal">
+          <element href="group.ecore#//GroupType/Normal"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImO_3rjEemfTuAHmald_w" featureName="literal" dataValue="Normal">
+          <element href="group.ecore#//GroupType/Normal"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//GroupType" referenceName="eLiterals"
-          element="group.ecore#//GroupType/Embedded">
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Embedded"
-            featureName="name" dataValue="Embedded"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Embedded"
-            featureName="value" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Embedded"
-            featureName="literal" dataValue="Embedded"/>
+      <changes xsi:type="history:Create" xmi:id="_bImPAHrjEemfTuAHmald_w" referenceName="eLiterals">
+        <target href="group.ecore#//GroupType"/>
+        <element href="group.ecore#//GroupType/Embedded"/>
+        <changes xsi:type="history:Set" xmi:id="_bImPAXrjEemfTuAHmald_w" featureName="name" dataValue="Embedded">
+          <element href="group.ecore#//GroupType/Embedded"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPAnrjEemfTuAHmald_w" featureName="value" dataValue="1" oldDataValue="0">
+          <element href="group.ecore#//GroupType/Embedded"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPA3rjEemfTuAHmald_w" featureName="literal" dataValue="Embedded">
+          <element href="group.ecore#//GroupType/Embedded"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//GroupType" referenceName="eLiterals"
-          element="group.ecore#//GroupType/Collapsible">
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Collapsible"
-            featureName="name" dataValue="Collapsible"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Collapsible"
-            featureName="value" dataValue="2" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupType/Collapsible"
-            featureName="literal" dataValue="Collapsible"/>
+      <changes xsi:type="history:Create" xmi:id="_bImPBHrjEemfTuAHmald_w" referenceName="eLiterals">
+        <target href="group.ecore#//GroupType"/>
+        <element href="group.ecore#//GroupType/Collapsible"/>
+        <changes xsi:type="history:Set" xmi:id="_bImPBXrjEemfTuAHmald_w" featureName="name" dataValue="Collapsible">
+          <element href="group.ecore#//GroupType/Collapsible"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPBnrjEemfTuAHmald_w" featureName="value" dataValue="2" oldDataValue="0">
+          <element href="group.ecore#//GroupType/Collapsible"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPB3rjEemfTuAHmald_w" featureName="literal" dataValue="Collapsible">
+          <element href="group.ecore#//GroupType/Collapsible"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#/" referenceName="eClassifiers"
-          element="group.ecore#//GroupLabelAlignment">
-        <changes xsi:type="history:Set" element="group.ecore#//GroupLabelAlignment"
-            featureName="name" dataValue="GroupLabelAlignment"/>
+      <changes xsi:type="history:Create" xmi:id="_bImPCHrjEemfTuAHmald_w" referenceName="eClassifiers">
+        <target href="group.ecore#/"/>
+        <element href="group.ecore#//GroupLabelAlignment"/>
+        <changes xsi:type="history:Set" xmi:id="_bImPCXrjEemfTuAHmald_w" featureName="name" dataValue="GroupLabelAlignment">
+          <element href="group.ecore#//GroupLabelAlignment"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//Group" referenceName="eStructuralFeatures"
-          element="group.ecore#//Group/labelAlignment">
-        <changes xsi:type="history:Set" element="group.ecore#//Group/labelAlignment"
-            featureName="name" dataValue="labelAlignment"/>
-        <changes xsi:type="history:Set" element="group.ecore#//Group/labelAlignment"
-            featureName="defaultValueLiteral" dataValue="LabelAligned"/>
-        <changes xsi:type="history:Set" element="group.ecore#//Group/labelAlignment"
-            featureName="eType" referenceValue="group.ecore#//GroupLabelAlignment"/>
+      <changes xsi:type="history:Create" xmi:id="_bImPCnrjEemfTuAHmald_w" referenceName="eStructuralFeatures">
+        <target href="group.ecore#//Group"/>
+        <element href="group.ecore#//Group/labelAlignment"/>
+        <changes xsi:type="history:Set" xmi:id="_bImPC3rjEemfTuAHmald_w" featureName="name" dataValue="labelAlignment">
+          <element href="group.ecore#//Group/labelAlignment"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPDHrjEemfTuAHmald_w" featureName="defaultValueLiteral" dataValue="LabelAligned">
+          <element href="group.ecore#//Group/labelAlignment"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPDXrjEemfTuAHmald_w" featureName="eType">
+          <element href="group.ecore#//Group/labelAlignment"/>
+          <referenceValue href="group.ecore#//GroupLabelAlignment"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//GroupLabelAlignment"
-          referenceName="eLiterals" element="group.ecore#//GroupLabelAlignment/LabelAligned">
-        <changes xsi:type="history:Set" element="group.ecore#//GroupLabelAlignment/LabelAligned"
-            featureName="name" dataValue="LabelAligned"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupLabelAlignment/LabelAligned"
-            featureName="literal" dataValue="LabelAligned"/>
+      <changes xsi:type="history:Create" xmi:id="_bImPDnrjEemfTuAHmald_w" referenceName="eLiterals">
+        <target href="group.ecore#//GroupLabelAlignment"/>
+        <element href="group.ecore#//GroupLabelAlignment/LabelAligned"/>
+        <changes xsi:type="history:Set" xmi:id="_bImPD3rjEemfTuAHmald_w" featureName="name" dataValue="LabelAligned">
+          <element href="group.ecore#//GroupLabelAlignment/LabelAligned"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPEHrjEemfTuAHmald_w" featureName="literal" dataValue="LabelAligned">
+          <element href="group.ecore#//GroupLabelAlignment/LabelAligned"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="group.ecore#//GroupLabelAlignment"
-          referenceName="eLiterals" element="group.ecore#//GroupLabelAlignment/InputAligned">
-        <changes xsi:type="history:Set" element="group.ecore#//GroupLabelAlignment/InputAligned"
-            featureName="name" dataValue="InputAligned"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupLabelAlignment/InputAligned"
-            featureName="value" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="group.ecore#//GroupLabelAlignment/InputAligned"
-            featureName="literal" dataValue="InputAligned"/>
+      <changes xsi:type="history:Create" xmi:id="_bImPEXrjEemfTuAHmald_w" referenceName="eLiterals">
+        <target href="group.ecore#//GroupLabelAlignment"/>
+        <element href="group.ecore#//GroupLabelAlignment/InputAligned"/>
+        <changes xsi:type="history:Set" xmi:id="_bImPEnrjEemfTuAHmald_w" featureName="name" dataValue="InputAligned">
+          <element href="group.ecore#//GroupLabelAlignment/InputAligned"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPE3rjEemfTuAHmald_w" featureName="value" dataValue="1" oldDataValue="0">
+          <element href="group.ecore#//GroupLabelAlignment/InputAligned"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bImPFHrjEemfTuAHmald_w" featureName="literal" dataValue="InputAligned">
+          <element href="group.ecore#//GroupLabelAlignment/InputAligned"/>
+        </changes>
       </changes>
     </changes>
   </releases>
-  <releases/>
+  <releases xmi:id="_bImPFXrjEemfTuAHmald_w" date="2019-05-20T11:43:12.057+0200" label="170">
+    <changes xsi:type="history:Add" xmi:id="_pXFt8HrjEemfTuAHmald_w" featureName="eSuperTypes">
+      <element href="group.ecore#//Group"/>
+      <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//HasTooltip"/>
+    </changes>
+  </releases>
+  <releases xmi:id="_rtBqkHrjEemfTuAHmald_w"/>
 </history:History>

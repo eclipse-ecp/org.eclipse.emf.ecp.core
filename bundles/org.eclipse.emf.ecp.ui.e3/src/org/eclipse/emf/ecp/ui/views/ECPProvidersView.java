@@ -2,9 +2,11 @@
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eike Stepper - initial API and implementation
@@ -21,8 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author Eike Stepper
  */
-public class ECPProvidersView extends TreeView
-{
+public class ECPProvidersView extends TreeView {
 	/**
 	 * ID of the view.
 	 */
@@ -31,14 +32,12 @@ public class ECPProvidersView extends TreeView
 	/**
 	 * Default constructor.
 	 */
-	public ECPProvidersView()
-	{
+	public ECPProvidersView() {
 		super(ID);
 	}
 
 	@Override
-	protected TreeViewer createViewer(Composite parent)
-	{
+	protected TreeViewer createViewer(Composite parent) {
 		final TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new ProvidersLabelProvider(),
 			new ProvidersContentProvider(), ECPUtil.getECPProviderRegistry(), createLabelDecorator(), true);
 		return viewer;

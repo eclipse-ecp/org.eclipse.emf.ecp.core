@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -126,9 +128,9 @@ public class TaskValidator extends EObjectValidator {
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case TaskPackage.TASK:
 			return validateTask((Task) value, diagnostics, context);
 		case TaskPackage.USER:
@@ -231,7 +233,8 @@ public class TaskValidator extends EObjectValidator {
 	 *
 	 * @generated
 	 */
-	public boolean validateNationality(Nationality nationality, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateNationality(Nationality nationality, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		return true;
 	}
 

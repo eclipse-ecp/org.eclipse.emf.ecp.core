@@ -5,7 +5,7 @@
     modelName="Custom" modelPluginClass="" editPluginClass="org.eclipse.emf.ecp.view.spi.custom.model.provider.CustomEditPlugin"
     nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.custom.model.edit"
-    usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>custom.ecore</foreignModel>
   <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
@@ -18,7 +18,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/className"/>
     </genClasses>
     <genClasses ecoreClass="custom.ecore#//CustomDomainModelReference">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference custom.ecore#//CustomDomainModelReference/domainModelReferences"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference custom.ecore#//CustomDomainModelReference/domainModelReferences"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomDomainModelReference/bundleName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomDomainModelReference/className"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomDomainModelReference/controlChecked"/>

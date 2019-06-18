@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -32,8 +34,7 @@ import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTD
  * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage
  * @generated
  */
-public class DomainmodelreferenceSwitch<T> extends Switch<T>
-{
+public class DomainmodelreferenceSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -50,10 +51,8 @@ public class DomainmodelreferenceSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public DomainmodelreferenceSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public DomainmodelreferenceSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VTDomainmodelreferencePackage.eINSTANCE;
 		}
 	}
@@ -63,13 +62,12 @@ public class DomainmodelreferenceSwitch<T> extends Switch<T>
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -83,10 +81,8 @@ public class DomainmodelreferenceSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR: {
 			final VTDomainModelReferenceSelector domainModelReferenceSelector = (VTDomainModelReferenceSelector) theEObject;
 			T result = caseDomainModelReferenceSelector(domainModelReferenceSelector);
@@ -115,8 +111,7 @@ public class DomainmodelreferenceSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDomainModelReferenceSelector(VTDomainModelReferenceSelector object)
-	{
+	public T caseDomainModelReferenceSelector(VTDomainModelReferenceSelector object) {
 		return null;
 	}
 
@@ -132,8 +127,7 @@ public class DomainmodelreferenceSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStyleSelector(VTStyleSelector object)
-	{
+	public T caseStyleSelector(VTStyleSelector object) {
 		return null;
 	}
 
@@ -150,8 +144,7 @@ public class DomainmodelreferenceSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

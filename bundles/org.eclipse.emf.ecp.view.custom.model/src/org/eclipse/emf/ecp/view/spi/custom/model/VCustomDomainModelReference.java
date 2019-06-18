@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -24,8 +26,10 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getDomainModelReferences <em>Domain
  * Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getBundleName <em>Bundle Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getClassName <em>Class Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getBundleName <em>Bundle
+ * Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getClassName <em>Class
+ * Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#isControlChecked <em>Control Checked
  * </em>}</li>
  * </ul>
@@ -36,8 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * @generated
  * @since 1.3
  */
-public interface VCustomDomainModelReference extends VDomainModelReference
-{
+public interface VCustomDomainModelReference extends VDomainModelReference {
 	/**
 	 * Returns the value of the '<em><b>Domain Model References</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}.

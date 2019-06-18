@@ -5,6 +5,7 @@
       <provide interface="org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy$Provider"/>
    </service>
    <reference bind="addEClassSelectionStrategyProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy$Provider" name="EClassSelectionStrategyProvider" policy="dynamic" unbind="removeEClassSelectionStrategyProvider"/>
+   <reference bind="addFilterServiceProvider" cardinality="0..n" interface="org.eclipse.emfforms.core.services.datatemplate.TemplateFilterService$Provider" name="FilterServiceProvider" policy="dynamic" unbind="removeFilterServiceProvider"/>
    <reference bind="setLocalizationService" interface="org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService" name="LocalizationService"/>
    <reference bind="registerTemplateProvider" cardinality="0..n" interface="org.eclipse.emfforms.core.services.datatemplate.TemplateProvider" name="registerTemplateProvider" unbind="unregisterTemplateProvider"/>
    <implementation class="org.eclipse.emfforms.internal.core.services.datatemplate.TemplateCreateNewModelElementStrategyProvider"/>

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -27,8 +29,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage;
  *
  * @generated
  */
-public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeMasterDetailFactory
-{
+public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeMasterDetailFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -36,18 +37,14 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 *
 	 * @generated
 	 */
-	public static VTreeMasterDetailFactory init()
-	{
-		try
-		{
+	public static VTreeMasterDetailFactory init() {
+		try {
 			final VTreeMasterDetailFactory theTreeMasterDetailFactory = (VTreeMasterDetailFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTreeMasterDetailPackage.eNS_URI);
-			if (theTreeMasterDetailFactory != null)
-			{
+			if (theTreeMasterDetailFactory != null) {
 				return theTreeMasterDetailFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTreeMasterDetailFactoryImpl();
@@ -60,8 +57,7 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 *
 	 * @generated
 	 */
-	public VTreeMasterDetailFactoryImpl()
-	{
+	public VTreeMasterDetailFactoryImpl() {
 		super();
 	}
 
@@ -72,10 +68,8 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL:
 			return createTreeMasterDetail();
 		default:
@@ -90,8 +84,7 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 * @generated
 	 */
 	@Override
-	public VTreeMasterDetail createTreeMasterDetail()
-	{
+	public VTreeMasterDetail createTreeMasterDetail() {
 		final VTreeMasterDetailImpl treeMasterDetail = new VTreeMasterDetailImpl();
 		return treeMasterDetail;
 	}
@@ -103,8 +96,7 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 * @generated
 	 */
 	@Override
-	public VTreeMasterDetailPackage getTreeMasterDetailPackage()
-	{
+	public VTreeMasterDetailPackage getTreeMasterDetailPackage() {
 		return (VTreeMasterDetailPackage) getEPackage();
 	}
 
@@ -116,8 +108,7 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 * @generated
 	 */
 	@Deprecated
-	public static VTreeMasterDetailPackage getPackage()
-	{
+	public static VTreeMasterDetailPackage getPackage() {
 		return VTreeMasterDetailPackage.eINSTANCE;
 	}
 

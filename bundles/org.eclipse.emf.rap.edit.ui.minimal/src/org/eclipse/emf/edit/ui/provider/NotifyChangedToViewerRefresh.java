@@ -2,9 +2,11 @@
  * Copyright (c) 2002-2010 IBM Corporation and others.
  * 
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * IBM - Initial API and implementation
@@ -28,81 +30,59 @@ import org.eclipse.swt.widgets.Display;
 /**
  * This class calls optimized refresh APIs for all the standard Viewer subclasses.
  */
-public class NotifyChangedToViewerRefresh
-{
-	public static void handleNotifyChanged
-		(final Viewer viewer,
-			final Object object,
-			final int eventType,
-			final Object feature,
-			final Object oldValue,
-			final Object newValue,
-			final int index)
-	{
+public class NotifyChangedToViewerRefresh {
+	public static void handleNotifyChanged(final Viewer viewer,
+		final Object object,
+		final int eventType,
+		final Object feature,
+		final Object oldValue,
+		final Object newValue,
+		final int index) {
 		if (viewer.getControl() == null || viewer.getControl().isDisposed()) {
 			return;
 		}
 		final Display d = viewer.getControl().getDisplay();
-		if (d != Display.getCurrent())
-		{
-			d.asyncExec
-				(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						if (viewer.getControl() != null && !viewer.getControl().isDisposed())
-						{
-							new NotifyChangedToViewerRefresh().refresh(viewer, object, eventType, feature, oldValue,
-								newValue, index);
-						}
+		if (d != Display.getCurrent()) {
+			d.asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					if (viewer.getControl() != null && !viewer.getControl().isDisposed()) {
+						new NotifyChangedToViewerRefresh().refresh(viewer, object, eventType, feature, oldValue,
+							newValue, index);
 					}
-				});
-		}
-		else
-		{
+				}
+			});
+		} else {
 			new NotifyChangedToViewerRefresh().refresh(viewer, object, eventType, feature, oldValue, newValue, index);
 		}
 	}
 
-	public void refresh
-		(Viewer viewer,
-			Object object,
-			int eventType,
-			Object feature,
-			Object oldValue,
-			Object newValue,
-			int index)
-	{
-		if (viewer instanceof TreeViewer)
-		{
+	public void refresh(Viewer viewer,
+		Object object,
+		int eventType,
+		Object feature,
+		Object oldValue,
+		Object newValue,
+		int index) {
+		if (viewer instanceof TreeViewer) {
 			refreshTreeViewer((TreeViewer) viewer, object, eventType, feature, oldValue, newValue, index);
-		}
-		else if (viewer instanceof TableViewer)
-		{
+		} else if (viewer instanceof TableViewer) {
 			refreshTableViewer((TableViewer) viewer, object, eventType, feature, oldValue, newValue, index);
-		}
-		else if (viewer instanceof ListViewer)
-		{
+		} else if (viewer instanceof ListViewer) {
 			refreshListViewer((ListViewer) viewer, object, eventType, feature, oldValue, newValue, index);
-		}
-		else
-		{
+		} else {
 			refreshViewer(viewer, object, eventType, feature, oldValue, newValue, index);
 		}
 	}
 
-	public void refreshTreeViewer
-		(TreeViewer viewer,
-			Object object,
-			int eventType,
-			Object feature,
-			Object oldValue,
-			Object newValue,
-			int index)
-	{
-		switch (eventType)
-		{
+	public void refreshTreeViewer(TreeViewer viewer,
+		Object object,
+		int eventType,
+		Object feature,
+		Object oldValue,
+		Object newValue,
+		int index) {
+		switch (eventType) {
 		case Notification.ADD:
 		case Notification.ADD_MANY:
 		case Notification.REMOVE:
@@ -117,17 +97,14 @@ public class NotifyChangedToViewerRefresh
 		}
 	}
 
-	public void refreshListViewer
-		(ListViewer viewer,
-			Object object,
-			int eventType,
-			Object feature,
-			Object oldValue,
-			Object newValue,
-			int index)
-	{
-		switch (eventType)
-		{
+	public void refreshListViewer(ListViewer viewer,
+		Object object,
+		int eventType,
+		Object feature,
+		Object oldValue,
+		Object newValue,
+		int index) {
+		switch (eventType) {
 		case Notification.ADD: {
 			viewer.add(newValue);
 			break;
@@ -156,30 +133,23 @@ public class NotifyChangedToViewerRefresh
 		}
 	}
 
-	public void refreshTableViewer
-		(TableViewer viewer,
-			Object object,
-			int eventType,
-			Object feature,
-			Object oldValue,
-			Object newValue,
-			int index)
-	{
-		switch (eventType)
-		{
+	public void refreshTableViewer(TableViewer viewer,
+		Object object,
+		int eventType,
+		Object feature,
+		Object oldValue,
+		Object newValue,
+		int index) {
+		switch (eventType) {
 		case Notification.ADD: {
 			viewer.insert(newValue, index);
 			break;
 		}
 		case Notification.ADD_MANY: {
-			if (index == -1)
-			{
+			if (index == -1) {
 				viewer.add(((Collection<?>) newValue).toArray());
-			}
-			else
-			{
-				for (final Object value : (Collection<?>) newValue)
-				{
+			} else {
+				for (final Object value : (Collection<?>) newValue) {
 					viewer.insert(value, index++);
 				}
 			}
@@ -203,24 +173,18 @@ public class NotifyChangedToViewerRefresh
 		}
 	}
 
-	public void refreshAbstractTreeViewer
-		(AbstractTreeViewer viewer,
-			Object object,
-			int eventType,
-			Object feature,
-			Object oldValue,
-			Object newValue,
-			int index)
-	{
-		switch (eventType)
-		{
+	public void refreshAbstractTreeViewer(AbstractTreeViewer viewer,
+		Object object,
+		int eventType,
+		Object feature,
+		Object oldValue,
+		Object newValue,
+		int index) {
+		switch (eventType) {
 		case Notification.ADD: {
-			if (newValue == null)
-			{
+			if (newValue == null) {
 				viewer.refresh(object);
-			}
-			else
-			{
+			} else {
 				viewer.add(object, newValue);
 			}
 			break;
@@ -230,12 +194,9 @@ public class NotifyChangedToViewerRefresh
 			break;
 		}
 		case Notification.REMOVE: {
-			if (oldValue == null)
-			{
+			if (oldValue == null) {
 				viewer.refresh(object);
-			}
-			else
-			{
+			} else {
 				viewer.remove(oldValue);
 			}
 			break;
@@ -254,17 +215,14 @@ public class NotifyChangedToViewerRefresh
 		}
 	}
 
-	public void refreshStructuredViewer
-		(StructuredViewer viewer,
-			Object object,
-			int eventType,
-			Object feature,
-			Object oldValue,
-			Object newValue,
-			int index)
-	{
-		switch (eventType)
-		{
+	public void refreshStructuredViewer(StructuredViewer viewer,
+		Object object,
+		int eventType,
+		Object feature,
+		Object oldValue,
+		Object newValue,
+		int index) {
+		switch (eventType) {
 		case Notification.ADD:
 		case Notification.ADD_MANY:
 		case Notification.REMOVE:
@@ -275,12 +233,9 @@ public class NotifyChangedToViewerRefresh
 		}
 		case Notification.UNSET:
 		case Notification.SET: {
-			if (feature instanceof EReference)
-			{
+			if (feature instanceof EReference) {
 				viewer.refresh(object);
-			}
-			else
-			{
+			} else {
 				viewer.update(object,
 					feature instanceof ENamedElement ? new String[] { ((ENamedElement) feature).getName() } : null);
 			}
@@ -294,17 +249,14 @@ public class NotifyChangedToViewerRefresh
 		}
 	}
 
-	public void refreshViewer
-		(Viewer viewer,
-			Object object,
-			int eventType,
-			Object feature,
-			Object oldValue,
-			Object newValue,
-			int index)
-	{
-		switch (eventType)
-		{
+	public void refreshViewer(Viewer viewer,
+		Object object,
+		int eventType,
+		Object feature,
+		Object oldValue,
+		Object newValue,
+		int index) {
+		switch (eventType) {
 		case Notification.RESOLVE: {
 			// We ignore non-changes for now.
 			//

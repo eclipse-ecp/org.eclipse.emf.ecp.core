@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -29,14 +31,14 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass simpleTestObjectEClass = null;
@@ -44,7 +46,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EEnum testEnumEEnum = null;
@@ -52,7 +54,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EDataType xmlDateEDataType = null;
@@ -65,7 +67,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
 	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage#eNS_URI
 	 * @see #init()
@@ -78,7 +80,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -87,10 +89,11 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 *
 	 * <p>
-	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed. Clients should not
-	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -102,8 +105,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new TestPackageImpl());
+		final Object registeredTestPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		final TestPackageImpl theTestPackage = registeredTestPackage instanceof TestPackageImpl
+			? (TestPackageImpl) registeredTestPackage
+			: new TestPackageImpl();
 
 		isInited = true;
 
@@ -124,7 +129,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -135,7 +140,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -146,7 +151,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -157,7 +162,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -168,7 +173,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -179,7 +184,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -190,7 +195,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -201,7 +206,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -211,7 +216,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents() {
@@ -236,7 +241,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -246,7 +251,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents() {
@@ -267,33 +272,48 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		// Add supertypes to classes
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(simpleTestObjectEClass, SimpleTestObject.class,
-			"SimpleTestObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getSimpleTestObject_Date(),
-			ecorePackage.getEDate(),
-			"date", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getSimpleTestObject_XmlDate(),
-			getXMLDate(),
-			"xmlDate", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getSimpleTestObject_MyEnum(),
-			getTestEnum(),
-			"myEnum", null, 0, 1, SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(simpleTestObjectEClass, SimpleTestObject.class, "SimpleTestObject", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSimpleTestObject_Date(), ecorePackage.getEDate(), "date", null, 0, 1, SimpleTestObject.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSimpleTestObject_XmlDate(), getXMLDate(), "xmlDate", null, 0, 1, SimpleTestObject.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSimpleTestObject_MyEnum(), getTestEnum(), "myEnum", null, 0, 1, SimpleTestObject.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(testEnumEEnum, TestEnum.class, "TestEnum"); //$NON-NLS-1$
 		addEEnumLiteral(testEnumEEnum, TestEnum.A);
 		addEEnumLiteral(testEnumEEnum, TestEnum.B);
 		addEEnumLiteral(testEnumEEnum, TestEnum.C);
+		addEEnumLiteral(testEnumEEnum, TestEnum.D);
 
 		// Initialize data types
-		initEDataType(xmlDateEDataType, XMLGregorianCalendar.class,
-			"XMLDate", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(xmlDateEDataType, XMLGregorianCalendar.class, "XMLDate", IS_SERIALIZABLE, //$NON-NLS-1$
+			!IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://org/eclipse/emf/ecp/view/model/170
+		create_170Annotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://org/eclipse/emf/ecp/view/model/170</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void create_170Annotations() {
+		final String source = "http://org/eclipse/emf/ecp/view/model/170"; //$NON-NLS-1$
+		addAnnotation(testEnumEEnum.getELiterals().get(0),
+			source,
+			new String[] {
+				"isInputtable", "false" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 	}
 
 } // TestPackageImpl

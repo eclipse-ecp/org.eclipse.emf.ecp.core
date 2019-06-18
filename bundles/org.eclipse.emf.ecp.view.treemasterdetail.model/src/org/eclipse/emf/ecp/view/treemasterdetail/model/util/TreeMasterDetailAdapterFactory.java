@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -29,8 +31,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage;
  * @see org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage
  * @generated
  */
-public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
-{
+public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -47,10 +48,8 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public TreeMasterDetailAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public TreeMasterDetailAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VTreeMasterDetailPackage.eINSTANCE;
 		}
 	}
@@ -66,14 +65,11 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -86,33 +82,27 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected TreeMasterDetailSwitch<Adapter> modelSwitch =
-		new TreeMasterDetailSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseTreeMasterDetail(VTreeMasterDetail object)
-			{
-				return createTreeMasterDetailAdapter();
-			}
+	protected TreeMasterDetailSwitch<Adapter> modelSwitch = new TreeMasterDetailSwitch<Adapter>() {
+		@Override
+		public Adapter caseTreeMasterDetail(VTreeMasterDetail object) {
+			return createTreeMasterDetailAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -124,8 +114,7 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -141,8 +130,7 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail
 	 * @generated
 	 */
-	public Adapter createTreeMasterDetailAdapter()
-	{
+	public Adapter createTreeMasterDetailAdapter() {
 		return null;
 	}
 
@@ -158,8 +146,7 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -175,8 +162,7 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -189,8 +175,7 @@ public class TreeMasterDetailAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

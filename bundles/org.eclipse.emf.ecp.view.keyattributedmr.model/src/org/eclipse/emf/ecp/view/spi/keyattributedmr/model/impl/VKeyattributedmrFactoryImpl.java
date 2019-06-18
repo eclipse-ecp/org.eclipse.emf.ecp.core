@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -36,16 +38,13 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 	 * @generated
 	 */
 	public static VKeyattributedmrFactory init() {
-		try
-		{
+		try {
 			final VKeyattributedmrFactory theKeyattributedmrFactory = (VKeyattributedmrFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VKeyattributedmrPackage.eNS_URI);
-			if (theKeyattributedmrFactory != null)
-			{
+			if (theKeyattributedmrFactory != null) {
 				return theKeyattributedmrFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VKeyattributedmrFactoryImpl();
@@ -69,8 +68,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 	 */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID())
-		{
+		switch (eClass.getClassifierID()) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE:
 			return createKeyAttributeDomainModelReference();
 		default:

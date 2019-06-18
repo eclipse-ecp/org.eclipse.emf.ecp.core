@@ -1,37 +1,42 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
- * Christian W. Damus - bug 529138
+ * Christian W. Damus - bugs 529138, 546974
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
+import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
+import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emfforms.bazaar.Bazaar;
+import org.eclipse.emfforms.bazaar.BazaarContext;
+import org.eclipse.emfforms.core.services.datatemplate.TemplateLoaderService;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.datatemplate.Template;
 import org.eclipse.emfforms.datatemplate.TemplateCollection;
+import org.eclipse.emfforms.spi.bazaar.BazaarUtil;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.service.component.annotations.Activate;
@@ -50,8 +55,12 @@ public class XmiTemplateProvider implements TemplateProvider {
 	private static final String FILE_ATTRIBUTE = "file"; //$NON-NLS-1$
 	private static final String EXTENSION_POINT = "org.eclipse.emfforms.core.services.datatemplate.xmi"; //$NON-NLS-1$
 
+	private final Bazaar<TemplateLoaderService> templateLoaderBazaar = BazaarUtil.createBazaar(
+		TemplateLoaderService.DEFAULT);
+
 	private final Map<EClass, LinkedHashSet<Template>> templates = new LinkedHashMap<EClass, LinkedHashSet<Template>>();
 	private ReportService reportService;
+	private IExtensionRegistry extensionRegistry;
 
 	/**
 	 * Sets the {@link ReportService}.
@@ -64,6 +73,16 @@ public class XmiTemplateProvider implements TemplateProvider {
 	}
 
 	/**
+	 * Sets the extension registry dependency.
+	 *
+	 * @param extensionRegistry the extension registry
+	 */
+	@Reference
+	void setExtensionRegistry(IExtensionRegistry extensionRegistry) {
+		this.extensionRegistry = extensionRegistry;
+	}
+
+	/**
 	 * Reads the extension point on service activation.
 	 */
 	@Activate
@@ -72,27 +91,43 @@ public class XmiTemplateProvider implements TemplateProvider {
 	}
 
 	/**
+	 * Add a template loader service provider.
+	 *
+	 * @param provider the provider to add
+	 *
+	 * @since 1.21
+	 */
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
+	public void addLoaderServiceProvider(TemplateLoaderService.Provider provider) {
+		templateLoaderBazaar.addVendor(provider);
+	}
+
+	/**
+	 * Remove a template loader service provider.
+	 *
+	 * @param provider the provider to remove
+	 */
+	void removeLoaderServiceProvider(TemplateLoaderService.Provider provider) {
+		templateLoaderBazaar.removeVendor(provider);
+	}
+
+	/**
 	 * Reads in the registered templates from the extension point.
 	 */
 	void readExtensionPoint() {
-		final IConfigurationElement[] configurationElements = Platform.getExtensionRegistry()
+		final IConfigurationElement[] configurationElements = extensionRegistry
 			.getConfigurationElementsFor(EXTENSION_POINT);
 
 		for (final IConfigurationElement configurationElement : configurationElements) {
 			try {
-				final URL resourceURL = Platform.getBundle(configurationElement.getContributor().getName())
-					.getResource(configurationElement.getAttribute(FILE_ATTRIBUTE));
-				final ResourceSet resourceSet = new ResourceSetImpl();
-				// resourceSet.getLoadOptions().putAll(LOAD_OPTIONS);
-				final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
-				final InputStream inputStream = resourceURL.openStream();
-				try {
-					resource.load(inputStream, null);
-					final TemplateCollection templateCollection = (TemplateCollection) resource.getContents().get(0);
-					registerTemplateCollection(templateCollection);
-				} finally {
-					inputStream.close();
-				}
+				final String contributor = configurationElement.getContributor().getName();
+				final String path = configurationElement.getAttribute(FILE_ATTRIBUTE).replaceFirst("^/*", ""); //$NON-NLS-1$//$NON-NLS-2$
+				final URI resourceURI = URI.createPlatformPluginURI(
+					String.format("%s/%s", contributor, path), true); //$NON-NLS-1$
+
+				final TemplateLoaderService loader = getLoader(resourceURI, contributor);
+				final Collection<? extends TemplateCollection> collections = loader.loadTemplates(resourceURI);
+				collections.forEach(this::registerTemplateCollection);
 			} catch (final IOException ex) {
 				reportService.report(new AbstractReport(ex, "An Exception occured while reading in a data template.")); //$NON-NLS-1$
 			}
@@ -129,6 +164,14 @@ public class XmiTemplateProvider implements TemplateProvider {
 			matchingTemplates.addAll(templates.get(type));
 		}
 		return matchingTemplates;
+	}
+
+	private TemplateLoaderService getLoader(URI uri, String contributorID) {
+		final BazaarContext context = BazaarContext.Builder.empty()
+			.put(URI.class, uri)
+			.put(TemplateLoaderService.Provider.CONTRIBUTOR_ID, contributorID)
+			.build();
+		return templateLoaderBazaar.createProduct(context);
 	}
 
 	private void addToTemplateMap(EClass type, Template template) {

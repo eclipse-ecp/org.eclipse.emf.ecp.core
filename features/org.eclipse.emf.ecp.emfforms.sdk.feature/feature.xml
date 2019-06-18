@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.sdk.feature"
       label="EMF Forms SDK"
-      version="1.20.0.qualifier"
+      version="1.21.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.20.0.qualifier">
+      license-feature-version="1.21.0.qualifier">
 
    <description>
       %description
@@ -28,26 +28,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.cdo.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.demo.e3.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.e3.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.emfstore.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.license.feature"
          version="0.0.0"/>
 
@@ -57,10 +37,6 @@
 
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.workspace.feature"
          version="0.0.0"/>
 
    <includes
@@ -80,35 +56,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.cdo.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.demo.e3.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.e3.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.emfstore.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.feature.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.view.model.controls.feature.source"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.workspace.feature.source"
          version="0.0.0"/>
 
    <includes

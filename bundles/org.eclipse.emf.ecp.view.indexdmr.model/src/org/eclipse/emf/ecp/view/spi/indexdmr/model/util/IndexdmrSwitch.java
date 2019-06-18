@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -33,8 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage
  * @generated
  */
-public class IndexdmrSwitch<T> extends Switch<T>
-{
+public class IndexdmrSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -51,10 +52,8 @@ public class IndexdmrSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public IndexdmrSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public IndexdmrSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VIndexdmrPackage.eINSTANCE;
 		}
 	}
@@ -69,8 +68,7 @@ public class IndexdmrSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -84,10 +82,8 @@ public class IndexdmrSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE: {
 			final VIndexDomainModelReference indexDomainModelReference = (VIndexDomainModelReference) theEObject;
 			T result = caseIndexDomainModelReference(indexDomainModelReference);
@@ -119,8 +115,7 @@ public class IndexdmrSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseIndexDomainModelReference(VIndexDomainModelReference object)
-	{
+	public T caseIndexDomainModelReference(VIndexDomainModelReference object) {
 		return null;
 	}
 
@@ -136,8 +131,7 @@ public class IndexdmrSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDomainModelReference(VDomainModelReference object)
-	{
+	public T caseDomainModelReference(VDomainModelReference object) {
 		return null;
 	}
 
@@ -153,8 +147,7 @@ public class IndexdmrSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-	{
+	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
 		return null;
 	}
 
@@ -171,8 +164,7 @@ public class IndexdmrSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

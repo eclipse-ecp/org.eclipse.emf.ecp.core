@@ -1,18 +1,21 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bugs 534829, 530314
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -35,9 +38,10 @@ import org.eclipse.swt.graphics.Image;
  * @author Mat Hansen <mhansen@eclipsesource.com>
  *
  */
+@SuppressWarnings("deprecation")
 public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilder<ColumnConfigurationBuilder> {
 
-	private final Set<Feature> features = new LinkedHashSet<Feature>();
+	private final Set<Feature> features;
 
 	private boolean resizeable = true;
 	private boolean moveable; // not movable
@@ -61,7 +65,18 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 	 * The default constructor.
 	 */
 	private ColumnConfigurationBuilder() {
+		this(new LinkedHashSet<Feature>());
+	}
+
+	/**
+	 * Initializes me with enabled {@code features}.
+	 *
+	 * @param features initially enabled features
+	 */
+	private ColumnConfigurationBuilder(Set<Feature> features) {
 		super();
+
+		this.features = features;
 	}
 
 	/**
@@ -71,6 +86,19 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 	 */
 	public static ColumnConfigurationBuilder usingDefaults() {
 		return new ColumnConfigurationBuilder();
+	}
+
+	/**
+	 * Returns a new {@link TableConfigurationBuilder} initialized using default values
+	 * with inherited {@code features}.
+	 *
+	 * @param features initially enabled features
+	 * @return a new builder initialized with the inherited {@code features}
+	 *
+	 * @since 1.21
+	 */
+	static ColumnConfigurationBuilder withFeatures(Collection<Feature> features) {
+		return new ColumnConfigurationBuilder(Feature.inherit(features, ColumnConfiguration.ALL_FEATURES::contains));
 	}
 
 	/**
@@ -84,12 +112,25 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 	}
 
 	/**
+	 * Returns a new {@link TableConfigurationBuilder} initialized using an existing viewer builder.
+	 *
+	 * @param viewerBuilder a {@link TableViewerSWTBuilder} to transform to a configuration builder
+	 * @return the new configuration builder
+	 *
+	 * @since 1.21
+	 */
+	public static ColumnConfigurationBuilder from(TableViewerSWTBuilder viewerBuilder) {
+		return withFeatures(viewerBuilder.getEnabledFeatures());
+	}
+
+	/**
 	 * Constructor which allows to inherit an existing configuration.
 	 *
 	 * @param columnConfiguration the {@link ColumnConfiguration} to inherit.
 	 */
 	private ColumnConfigurationBuilder(ColumnConfiguration columnConfiguration) {
-		super();
+		this();
+
 		final ColumnConfigurationImpl config = (ColumnConfigurationImpl) columnConfiguration;
 		resizable(config.isResizeable());
 		moveable(config.isMoveable());
@@ -105,14 +146,71 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 		configurationCallbacks = config.getConfigurationCallbacks();
 	}
 
+	/**
+	 * @deprecated Since 1.21, use the {@link #showHide(boolean)} and similar
+	 *             builder methods, instead
+	 * @see #showHide(boolean)
+	 * @see #substringFilter(boolean)
+	 * @see #regexFilter(boolean)
+	 */
 	@Override
+	@Deprecated
 	public Set<Feature> getSupportedFeatures() {
-		return new LinkedHashSet<Feature>(Arrays.asList(ColumnConfiguration.FEATURES));
+		return new LinkedHashSet<Feature>(ColumnConfiguration.ALL_FEATURES);
 	}
 
+	/**
+	 * @deprecated Since 1.21, use the {@link #showHide(boolean)} and similar
+	 *             builder methods, instead
+	 * @see #showHide(boolean)
+	 * @see #substringFilter(boolean)
+	 * @see #regexFilter(boolean)
+	 */
 	@Override
+	@Deprecated
 	protected Set<Feature> getEnabledFeatures() {
 		return features;
+	}
+
+	/**
+	 * Set whether support for users to show and hide the column is installed.
+	 *
+	 * @param showHide {@code true} to enable showing and hiding; {@code false} to disable it
+	 * @return this builder, for fluent chaining
+	 *
+	 * @since 1.21
+	 */
+	public ColumnConfigurationBuilder showHide(boolean showHide) {
+		return showHide ? enableFeature(ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW)
+			: disableFeature(ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW);
+	}
+
+	/**
+	 * Set whether support for users to show a simple substring-matching filter
+	 * is installed.
+	 *
+	 * @param substringFilter {@code true} to enable the substring filter; {@code false} to disable it
+	 * @return this builder, for fluent chaining
+	 *
+	 * @since 1.21
+	 */
+	public ColumnConfigurationBuilder substringFilter(boolean substringFilter) {
+		return substringFilter ? enableFeature(ColumnConfiguration.FEATURE_COLUMN_FILTER)
+			: disableFeature(ColumnConfiguration.FEATURE_COLUMN_FILTER);
+	}
+
+	/**
+	 * Set whether support for users to show a regular expression filter
+	 * is installed.
+	 *
+	 * @param regexFilter {@code true} to enable the regex filter; {@code false} to disable it
+	 * @return this builder, for fluent chaining
+	 *
+	 * @since 1.21
+	 */
+	public ColumnConfigurationBuilder regexFilter(boolean regexFilter) {
+		return regexFilter ? enableFeature(ColumnConfiguration.FEATURE_COLUMN_REGEX_FILTER)
+			: disableFeature(ColumnConfiguration.FEATURE_COLUMN_REGEX_FILTER);
 	}
 
 	/**

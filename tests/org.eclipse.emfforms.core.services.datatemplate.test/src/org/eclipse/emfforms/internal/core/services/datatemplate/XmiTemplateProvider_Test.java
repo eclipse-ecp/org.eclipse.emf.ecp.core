@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 546974
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.datatemplate;
 
@@ -15,9 +18,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.Set;
 
+import javax.inject.Named;
+
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IContributor;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emfforms.bazaar.Bid;
+import org.eclipse.emfforms.bazaar.Create;
+import org.eclipse.emfforms.core.services.datatemplate.TemplateLoaderService;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AdminUser;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditFactory;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPackage;
@@ -118,4 +134,45 @@ public class XmiTemplateProvider_Test {
 		final Set<Template> userGroupSet = provider.provideTemplates(user, AuditPackage.Literals.USER__SUB_USERS);
 		assertEquals(0, userGroupSet.size());
 	}
+
+	@SuppressWarnings("nls")
+	@Test
+	public void testTemplateLoaders() throws IOException {
+		final IExtensionRegistry reg = mock(IExtensionRegistry.class);
+		final URI uri = URI.createPlatformPluginURI("datatemplate.test/templates/whatever.xmi", true);
+		final String contributorID = "datatemplate.test";
+		final IConfigurationElement config = mock(IConfigurationElement.class);
+		final IContributor contributor = mock(IContributor.class);
+		when(contributor.getName()).thenReturn(contributorID);
+		when(config.getContributor()).thenReturn(contributor);
+		when(config.getAttribute("file")).thenReturn("/templates/whatever.xmi");
+		final IConfigurationElement[] configs = { config };
+		when(reg.getConfigurationElementsFor("org.eclipse.emfforms.core.services.datatemplate.xmi"))
+			.thenReturn(configs);
+
+		provider.setExtensionRegistry(reg);
+
+		final TemplateLoaderService loader = mock(TemplateLoaderService.class);
+
+		class LoaderProvider implements TemplateLoaderService.Provider {
+
+			@Bid
+			public double bid(@Named(CONTRIBUTOR_ID) String contributor, URI uri) {
+				return Double.POSITIVE_INFINITY;
+			}
+
+			@Create
+			public TemplateLoaderService create() {
+				return loader;
+			}
+		}
+		final LoaderProvider loaderProvider = spy(new LoaderProvider());
+		provider.addLoaderServiceProvider(loaderProvider);
+
+		provider.activate();
+
+		verify(loaderProvider).bid(contributorID, uri);
+		verify(loader).loadTemplates(uri);
+	}
+
 }

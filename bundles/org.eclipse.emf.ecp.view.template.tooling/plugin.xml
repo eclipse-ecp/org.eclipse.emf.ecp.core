@@ -28,8 +28,9 @@
    <extension
          name=""
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
-	  <file 
-	  		filePath="viewmodel/MultiStyleSelectorContainer.view"/>
+      <file
+            filePath="viewmodel/MultiStyleSelectorContainer.view">
+      </file>
       <file
             filePath="viewmodel/KeyBindings.view">
       </file>
@@ -86,8 +87,12 @@
          </dynamicTest>
       </renderer>
    </extension>
+   <extension
+         name=""
+         point="org.eclipse.emf.ecp.view.template">
+      <viewTemplate
+            xmi="viewmodel/templateEditor.template">
+      </viewTemplate>
+   </extension>
 
-   <extension point="org.eclipse.emf.ecp.view.template">
-      <viewTemplate xmi="viewmodel/templateEditor.template"/>
-    </extension>
 </plugin>

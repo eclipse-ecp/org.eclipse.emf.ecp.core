@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
@@ -43,8 +45,7 @@ public class TestElementItemProvider
 	 *
 	 * @generated
 	 */
-	public TestElementItemProvider(AdapterFactory adapterFactory)
-	{
+	public TestElementItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,8 +57,7 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -75,11 +75,9 @@ public class TestElementItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TestElement_id_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_TestElement_id_feature", "_UI_TestElement_type"),
@@ -99,11 +97,9 @@ public class TestElementItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addParentIdPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addParentIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TestElement_parentId_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_TestElement_parentId_feature",
@@ -126,9 +122,7 @@ public class TestElementItemProvider
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TestElement_name_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_TestElement_name_feature", "_UI_TestElement_type"),
@@ -151,8 +145,7 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.TEST_ELEMENT__ELEMENTS);
@@ -167,8 +160,7 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -183,8 +175,7 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/TestElement"));
 	}
 
@@ -196,12 +187,10 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final String label = ((TestElement) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_TestElement_type") :
-			getString("_UI_TestElement_type") + " " + label;
+		return label == null || label.length() == 0 ? getString("_UI_TestElement_type")
+			: getString("_UI_TestElement_type") + " " + label;
 	}
 
 	/**
@@ -213,8 +202,7 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(TestElement.class)) {
@@ -239,14 +227,11 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.TEST_ELEMENT__ELEMENTS,
-				ModelFactory.eINSTANCE.createTestElement()));
+		newChildDescriptors.add(createChildParameter(ModelPackage.Literals.TEST_ELEMENT__ELEMENTS,
+			ModelFactory.eINSTANCE.createTestElement()));
 	}
 
 	/**
@@ -257,8 +242,7 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return DynamicTreeEditPlugin.INSTANCE;
 	}
 

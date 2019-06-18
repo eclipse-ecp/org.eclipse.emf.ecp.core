@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila- initial API and implementation
@@ -60,8 +62,8 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator;
-import org.eclipse.emf.ecp.view.model.presentation.SelectEClassWizardPage;
-import org.eclipse.emf.ecp.view.model.presentation.SelectEcorePage;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SelectEcorePage;
+import org.eclipse.emf.ecp.view.model.presentation.SelectEClassForViewWizardPage;
 import org.eclipse.emf.ecp.view.model.presentation.ViewEditorPlugin;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -83,7 +85,7 @@ import org.xml.sax.SAXException;
  */
 public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.internal.project.installer"; //$NON-NLS-1$
-	private SelectEClassWizardPage selectEClassPage;
+	private SelectEClassForViewWizardPage selectEClassPage;
 	private List<EClass> selectedEClasses;
 	private Object selectedContainer;
 	/**
@@ -210,7 +212,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 		firstPage.setInitialProjectName(getInitialProjectName());
 		addPage(firstPage);
 
-		selectEClassPage = new SelectEClassWizardPage();
+		selectEClassPage = new SelectEClassForViewWizardPage();
 		selectEClassPage.setSelectedEPackage(getEPackage());
 		addPage(selectEClassPage);
 		selectEClassPage.setPageComplete(true);
@@ -305,14 +307,14 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 				addPage(selectEcorePage);
 				return selectEcorePage;
 			}
-			selectEClassPage = new SelectEClassWizardPage();
+			selectEClassPage = new SelectEClassForViewWizardPage();
 			selectEClassPage.setSelectedEPackage(getEPackage());
 			addPage(selectEClassPage);
 			selectEClassPage.setPageComplete(true);
 			return selectEClassPage;
 		} else if (page == selectEcorePage) {
 			selectedContainer = selectEcorePage.getSelectedContainer();
-			selectEClassPage = new SelectEClassWizardPage();
+			selectEClassPage = new SelectEClassForViewWizardPage();
 			selectEClassPage.setSelectedEPackage(getEPackage());
 			addPage(selectEClassPage);
 			selectEClassPage.setPageComplete(true);

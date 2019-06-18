@@ -142,7 +142,7 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 		manufacturer = newManufacturer;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					CarPackage.CAR__MANUFACTURER, oldManufacturer, manufacturer));
+				CarPackage.CAR__MANUFACTURER, oldManufacturer, manufacturer));
 	}
 
 	/**
@@ -166,8 +166,8 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 		licensePlate = newLicensePlate;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					CarPackage.CAR__LICENSE_PLATE, oldLicensePlate,
-					licensePlate));
+				CarPackage.CAR__LICENSE_PLATE, oldLicensePlate,
+				licensePlate));
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 		seatCount = newSeatCount;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					CarPackage.CAR__SEAT_COUNT, oldSeatCount, seatCount));
+				CarPackage.CAR__SEAT_COUNT, oldSeatCount, seatCount));
 	}
 
 	/**
@@ -210,13 +210,13 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	 * @generated
 	 */
 	public NotificationChain basicSetDriver(Driver newDriver,
-			NotificationChain msgs) {
+		NotificationChain msgs) {
 		Driver oldDriver = driver;
 		driver = newDriver;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this,
-					Notification.SET, CarPackage.CAR__DRIVER, oldDriver,
-					newDriver);
+				Notification.SET, CarPackage.CAR__DRIVER, oldDriver,
+				newDriver);
 			if (msgs == null)
 				msgs = notification;
 			else
@@ -236,18 +236,18 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 			NotificationChain msgs = null;
 			if (driver != null)
 				msgs = ((InternalEObject) driver).eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null,
-						msgs);
+					EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null,
+					msgs);
 			if (newDriver != null)
 				msgs = ((InternalEObject) newDriver).eInverseAdd(this,
-						EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null,
-						msgs);
+					EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null,
+					msgs);
 			msgs = basicSetDriver(newDriver, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					CarPackage.CAR__DRIVER, newDriver, newDriver));
+				CarPackage.CAR__DRIVER, newDriver, newDriver));
 	}
 
 	/**
@@ -257,7 +257,7 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
-			int featureID, NotificationChain msgs) {
+		int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case CarPackage.CAR__DRIVER:
 			return basicSetDriver(null, msgs);
@@ -343,10 +343,10 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 		switch (featureID) {
 		case CarPackage.CAR__MANUFACTURER:
 			return MANUFACTURER_EDEFAULT == null ? manufacturer != null
-					: !MANUFACTURER_EDEFAULT.equals(manufacturer);
+				: !MANUFACTURER_EDEFAULT.equals(manufacturer);
 		case CarPackage.CAR__LICENSE_PLATE:
 			return LICENSE_PLATE_EDEFAULT == null ? licensePlate != null
-					: !LICENSE_PLATE_EDEFAULT.equals(licensePlate);
+				: !LICENSE_PLATE_EDEFAULT.equals(licensePlate);
 		case CarPackage.CAR__SEAT_COUNT:
 			return seatCount != SEAT_COUNT_EDEFAULT;
 		case CarPackage.CAR__DRIVER:

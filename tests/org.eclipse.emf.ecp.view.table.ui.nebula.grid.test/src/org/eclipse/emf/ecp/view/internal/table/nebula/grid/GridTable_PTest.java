@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
@@ -83,6 +85,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridItem;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
@@ -587,6 +590,52 @@ public class GridTable_PTest {
 			sortItem.getBounds(1).y, greaterThan(grid.getHeaderHeight()));
 
 		shell.close();
+	}
+
+	/** Tests that the sort indicator of a column is removed when another column is used for sorting. */
+	@Test
+	public void gridSorting_sortIndicatorReset()
+		throws EMFFormsNoRendererException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// domain
+		((EClass) domainElement).getESuperTypes().clear();
+		final EClass class1 = createEClass("a", "b");
+		final EClass class2 = createEClass("b", "c");
+		((EClass) domainElement).getESuperTypes().add(class1);
+		((EClass) domainElement).getESuperTypes().add(class2);
+
+		// table control
+		final VTableControl tableControl = TableTestUtil.createTableControl();
+		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		tableDMR.getColumnDomainModelReferences().add(
+			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
+
+		// render
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(tableControl,
+			new ViewModelContextWithoutServices(tableControl));
+		tableRenderer.getGridDescription(new SWTGridDescription());
+		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		final Grid table = SWTTestUtil.findControl(control, 0, Grid.class);
+		assertEquals(SWT.NONE, table.getColumn(1).getSort());
+		assertEquals(SWT.NONE, table.getColumn(2).getSort());
+
+		// column 0 is validation column
+
+		// select column 1
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertEquals(SWT.DOWN, table.getColumn(1).getSort());
+		assertEquals(SWT.NONE, table.getColumn(2).getSort());
+
+		// select column 2 -> column 1 indicator should be reset
+		SWTTestUtil.selectWidget(table.getColumn(2));
+		SWTTestUtil.waitForUIThread();
+		assertEquals(SWT.NONE, table.getColumn(1).getSort());
+		assertEquals(SWT.DOWN, table.getColumn(2).getSort());
 	}
 
 	private GridControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -197,6 +199,17 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	@Override
 	public EReference getA_B() {
 		return (EReference) aEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getA_BList() {
+		return (EReference) aEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -554,6 +567,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		// Create classes and their features
 		aEClass = createEClass(A);
 		createEReference(aEClass, A__B);
+		createEReference(aEClass, A__BLIST);
 
 		bEClass = createEClass(B);
 		createEReference(bEClass, B__C);
@@ -635,6 +649,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getA_B(), getB(), null, "b", null, 0, 1, //$NON-NLS-1$
 			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, !IS_TRANSIENT, !IS_VOLATILE,
 			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getA_BList(), getB(), null, "bList", null, 0, -1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(bEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, "B", //$NON-NLS-1$
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

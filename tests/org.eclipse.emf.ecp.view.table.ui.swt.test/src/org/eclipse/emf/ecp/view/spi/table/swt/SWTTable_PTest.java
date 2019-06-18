@@ -2,13 +2,15 @@
  * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier
- * Christian W. Damus - bugs 527740, 544116
+ * Christian W. Damus - bugs 527740, 544116, 545686
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
@@ -32,13 +34,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -1056,7 +1058,7 @@ public class SWTTable_PTest {
 
 		// render
 		final ViewModelContext context = new ViewModelContextImpl(tableControl, domainElement);
-		final List<String> requestedCells = new ArrayList<>();
+		final Set<String> requestedCells = new HashSet<>(); // Cell updates are unordered
 		final TableControlSWTRenderer tableRenderer = new TableControlSWTRenderer(tableControl, context,
 			context.getService(ReportService.class),
 			context.getService(EMFFormsDatabindingEMF.class),
@@ -1112,10 +1114,10 @@ public class SWTTable_PTest {
 		vdiag.getDiagnostics().add(diag);
 		tableControl.setDiagnostic(vdiag);
 
-		SWTTestUtil.waitForUIThread();
+		waitFor(tableRenderer);
 
 		// Notably, we updated these two rows in order and *neither* "a" nor "d"
-		assertThat(requestedCells, equalTo(Arrays.asList("b", "c")));
+		assertThat(requestedCells, equalTo(set("b", "c")));
 	}
 
 	@Test
@@ -1145,6 +1147,27 @@ public class SWTTable_PTest {
 
 		// Unregister test renderer
 		registration.unregister();
+	}
+
+	@SafeVarargs
+	static <T> Set<T> set(T... elements) {
+		return new HashSet<>(Arrays.asList(elements));
+	}
+
+	/**
+	 * Wait for any pending updates in a table renderer to be completed.
+	 *
+	 * @param tableRenderer a table renderer to wait for
+	 */
+	final void waitFor(TableControlSWTRenderer tableRenderer) {
+		try {
+			if (!tableRenderer.getRunnableManager().waitForIdle(1L, TimeUnit.SECONDS)) {
+				fail("Timed out waiting for table updates");
+			}
+		} catch (final InterruptedException e) {
+			fail("Interrupted waiting for table updates");
+		}
+
 	}
 
 	private static class ColumnImageTableRenderer extends TableControlSWTRenderer {

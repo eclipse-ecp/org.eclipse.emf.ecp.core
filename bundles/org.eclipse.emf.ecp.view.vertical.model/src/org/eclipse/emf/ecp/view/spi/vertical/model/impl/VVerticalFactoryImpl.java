@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -29,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  *
  * @generated
  */
-public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFactory
-{
+public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -38,18 +39,14 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 *
 	 * @generated
 	 */
-	public static VVerticalFactory init()
-	{
-		try
-		{
+	public static VVerticalFactory init() {
+		try {
 			final VVerticalFactory theVerticalFactory = (VVerticalFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VVerticalPackage.eNS_URI);
-			if (theVerticalFactory != null)
-			{
+			if (theVerticalFactory != null) {
 				return theVerticalFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VVerticalFactoryImpl();
@@ -62,8 +59,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 *
 	 * @generated
 	 */
-	public VVerticalFactoryImpl()
-	{
+	public VVerticalFactoryImpl() {
 		super();
 	}
 
@@ -74,10 +70,8 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VVerticalPackage.VERTICAL_LAYOUT:
 			return createVerticalLayout();
 		default:
@@ -92,8 +86,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * @generated
 	 */
 	@Override
-	public VVerticalLayout createVerticalLayout()
-	{
+	public VVerticalLayout createVerticalLayout() {
 		final VVerticalLayoutImpl verticalLayout = new VVerticalLayoutImpl();
 		return verticalLayout;
 	}
@@ -105,8 +98,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * @generated
 	 */
 	@Override
-	public VVerticalPackage getVerticalPackage()
-	{
+	public VVerticalPackage getVerticalPackage() {
 		return (VVerticalPackage) getEPackage();
 	}
 
@@ -118,8 +110,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * @generated
 	 */
 	@Deprecated
-	public static VVerticalPackage getPackage()
-	{
+	public static VVerticalPackage getPackage() {
 		return VVerticalPackage.eINSTANCE;
 	}
 

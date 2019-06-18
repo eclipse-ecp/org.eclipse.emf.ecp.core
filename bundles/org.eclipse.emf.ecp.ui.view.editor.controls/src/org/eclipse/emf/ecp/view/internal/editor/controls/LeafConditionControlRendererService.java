@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -15,6 +17,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
@@ -59,14 +62,11 @@ public class LeafConditionControlRendererService implements EMFFormsDIRendererSe
 		this.reportService = reportService;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
+		if (ToolingModeUtil.isSegmentToolingEnabled()) {
+			return NOT_APPLICABLE;
+		}
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}

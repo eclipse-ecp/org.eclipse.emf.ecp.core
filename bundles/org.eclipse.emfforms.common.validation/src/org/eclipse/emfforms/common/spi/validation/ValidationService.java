@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
@@ -18,6 +20,9 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emfforms.common.spi.validation.exception.ValidationCanceledException;
+import org.eclipse.emfforms.common.spi.validation.filter.DiagnosticFilter;
+import org.eclipse.emfforms.common.spi.validation.filter.ObjectFilter;
+import org.eclipse.emfforms.common.spi.validation.filter.SubTreeFilter;
 import org.eclipse.emfforms.common.spi.validation.filter.ValidationFilter;
 
 /**
@@ -48,7 +53,9 @@ public interface ValidationService {
 	 *
 	 * @param <Filter> an {@link ValidationFilter} implementation
 	 * @param filter the {@link ValidationFilter} to register
+	 * @deprecated Use addSubTreeFilter, addObjectFilter and addDiagnosticFilter instead
 	 */
+	@Deprecated
 	<Filter extends ValidationFilter> void registerValidationFilter(Filter filter);
 
 	/**
@@ -56,7 +63,9 @@ public interface ValidationService {
 	 *
 	 * @param <Filter> an {@link ValidationFilter} implementation
 	 * @param filter the {@link ValidationFilter} to unregister
+	 * @deprecated Use removeSubTreeFilter, removeObjectFilter and removeDiagnosticFilter instead
 	 */
+	@Deprecated
 	<Filter extends ValidationFilter> void unregisterValidationFilter(Filter filter);
 
 	/**
@@ -113,5 +122,50 @@ public interface ValidationService {
 	 * Not applicable for single validation runs with {@link #validate(EObject)}.
 	 */
 	void cancel();
+
+	/**
+	 * Adds a {@link SubTreeFilter} to skip specific sub trees during the validation. <code>null</code>
+	 * is ignored.
+	 *
+	 * @param subTreeFilter {@link SubTreeFilter}
+	 */
+	void addSubTreeFilter(SubTreeFilter subTreeFilter);
+
+	/**
+	 * Adds an {@link ObjectFilter} to skip specific EObjects during the validation. <code>null</code> is
+	 * ignored.
+	 *
+	 * @param objectFilter {@link ObjectFilter}
+	 */
+	void addObjectFilter(ObjectFilter objectFilter);
+
+	/**
+	 * Adds a {@link DiagnosticFilter} to remove specific {@link Diagnostic} from the result of a
+	 * validation. <code>null</code> is ignored.
+	 *
+	 * @param diagnosticFilter {@link DiagnosticFilter}
+	 */
+	void addDiagnosticFilter(DiagnosticFilter diagnosticFilter);
+
+	/**
+	 * Removes a {@link SubTreeFilter}.
+	 *
+	 * @param subTreeFilter {@link SubTreeFilter}
+	 */
+	void removeSubTreeFilter(SubTreeFilter subTreeFilter);
+
+	/**
+	 * Removes an {@link ObjectFilter}.
+	 *
+	 * @param objectFilter {@link ObjectFilter}
+	 */
+	void removeObjectFilter(ObjectFilter objectFilter);
+
+	/**
+	 * Removes a {@link DiagnosticFilter}.
+	 *
+	 * @param diagnosticFilter {@link DiagnosticFilter}
+	 */
+	void removeDiagnosticFilter(DiagnosticFilter diagnosticFilter);
 
 }

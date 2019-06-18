@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
@@ -49,8 +51,7 @@ public class ViewProxyItemProvider extends ContainedElementItemProvider {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
@@ -65,11 +66,9 @@ public class ViewProxyItemProvider extends ContainedElementItemProvider {
 	 *
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addIdPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ViewProxy_id_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_ViewProxy_id_feature", "_UI_ViewProxy_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -103,8 +102,7 @@ public class ViewProxyItemProvider extends ContainedElementItemProvider {
 	@Override
 	public String getText(Object object) {
 		final String label = ((VViewProxy) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_ViewProxy_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_ViewProxy_type") : //$NON-NLS-1$
 			getString("_UI_ViewProxy_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -120,8 +118,7 @@ public class ViewProxyItemProvider extends ContainedElementItemProvider {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VViewProxy.class))
-		{
+		switch (notification.getFeatureID(VViewProxy.class)) {
 		case VViewproxyPackage.VIEW_PROXY__ID:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

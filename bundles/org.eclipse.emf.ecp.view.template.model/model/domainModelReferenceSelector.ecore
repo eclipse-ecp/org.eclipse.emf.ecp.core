@@ -6,5 +6,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
         eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rootEClass" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The root EClass of the selector's domain model reference. The selector's DMR is resolved against this EClass."/>
+        <details key="propertyDescription" value="The root EClass of the selector's domain model reference. The reference is resolved against this EClass."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

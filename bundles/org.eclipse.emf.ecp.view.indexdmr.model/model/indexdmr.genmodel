@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.ecp.view.indexdmr.model/src" modelPluginID="org.eclipse.emf.ecp.view.indexdmr.model"
     modelName="Indexdmr" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true"
     cleanup="true">
   <foreignModel>indexdmr.ecore</foreignModel>
@@ -14,9 +14,9 @@
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="indexdmr.ecore#/">
     <genClasses ecoreClass="indexdmr.ecore#//IndexDomainModelReference">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute indexdmr.ecore#//IndexDomainModelReference/index"/>
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

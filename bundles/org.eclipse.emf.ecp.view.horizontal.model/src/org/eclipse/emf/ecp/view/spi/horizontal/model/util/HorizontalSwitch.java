@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -37,8 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated
  */
-public class HorizontalSwitch<T> extends Switch<T>
-{
+public class HorizontalSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -55,10 +56,8 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public HorizontalSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public HorizontalSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VHorizontalPackage.eINSTANCE;
 		}
 	}
@@ -73,8 +72,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -88,10 +86,8 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VHorizontalPackage.HORIZONTAL_LAYOUT: {
 			final VHorizontalLayout horizontalLayout = (VHorizontalLayout) theEObject;
 			T result = caseHorizontalLayout(horizontalLayout);
@@ -129,8 +125,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseHorizontalLayout(VHorizontalLayout object)
-	{
+	public T caseHorizontalLayout(VHorizontalLayout object) {
 		return null;
 	}
 
@@ -146,8 +141,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -163,8 +157,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 
@@ -180,8 +173,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainer(VContainer object)
-	{
+	public T caseContainer(VContainer object) {
 		return null;
 	}
 
@@ -200,8 +192,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @generated
 	 * @since 1.4
 	 */
-	public T caseContainedContainer(VContainedContainer object)
-	{
+	public T caseContainedContainer(VContainedContainer object) {
 		return null;
 	}
 
@@ -218,8 +209,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

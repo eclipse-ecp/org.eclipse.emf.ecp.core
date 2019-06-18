@@ -30,7 +30,7 @@ public class CarFactoryImpl extends EFactoryImpl implements CarFactory {
 	public static CarFactory init() {
 		try {
 			CarFactory theCarFactory = (CarFactory) EPackage.Registry.INSTANCE
-					.getEFactory(CarPackage.eNS_URI);
+				.getEFactory(CarPackage.eNS_URI);
 			if (theCarFactory != null) {
 				return theCarFactory;
 			}
@@ -66,7 +66,7 @@ public class CarFactoryImpl extends EFactoryImpl implements CarFactory {
 			return createCar();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName()
-					+ "' is not a valid classifier");
+				+ "' is not a valid classifier");
 		}
 	}
 

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
@@ -13,19 +15,10 @@
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver;
 import org.eclipse.emf.ecp.edit.internal.swt.ImageDescriptorToImage;
-import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager;
-import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.jface.action.Action;
@@ -163,27 +156,6 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		/**
-		 * Listen to changes in file projects. If a view is affected, reload the view models provided over file
-		 * extension point.
-		 */
-		ECPUtil.getECPObserverBus().register(new ECPProjectContentChangedObserver() {
-
-			@Override
-			public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) {
-				if (project.getProvider().getName().equals(WorkspaceProvider.NAME)) {
-					final EList<Object> contents = project.getContents();
-					for (final Object object : contents) {
-						if (object instanceof VView) {
-							ViewModelFileExtensionsManager.dispose();
-						}
-					}
-				}
-				return new ArrayList<Object>();
-
-			}
-
-		});
 	}
 
 	/*

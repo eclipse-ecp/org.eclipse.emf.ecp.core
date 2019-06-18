@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
@@ -50,7 +52,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	private final Set<Validator> validators = new LinkedHashSet<Validator>();
 
-	private final Set<ObjectFilter> objectFilter = new LinkedHashSet<ObjectFilter>();
+	private final Set<ObjectFilter> objectFilters = new LinkedHashSet<ObjectFilter>();
 	private final Set<SubTreeFilter> subTreeFilters = new LinkedHashSet<SubTreeFilter>();
 	private final Set<DiagnosticFilter> diagnosticFilters = new LinkedHashSet<DiagnosticFilter>();
 
@@ -72,10 +74,10 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	private boolean isFiltered(EObject object) {
-		if (objectFilter.isEmpty()) {
+		if (getObjectFilters().isEmpty()) {
 			return false;
 		}
-		for (final ObjectFilter filter : objectFilter) {
+		for (final ObjectFilter filter : getObjectFilters()) {
 			if (filter.skipValidation(object)) {
 				return true;
 			}
@@ -84,10 +86,10 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	private boolean isSkipSubtree(EObject object, Optional<Diagnostic> diagnostic) {
-		if (subTreeFilters.isEmpty()) {
+		if (getSubTreeFilters().isEmpty()) {
 			return false;
 		}
-		for (final SubTreeFilter filter : subTreeFilters) {
+		for (final SubTreeFilter filter : getSubTreeFilters()) {
 			if (filter.skipSubtree(object, diagnostic)) {
 				return true;
 			}
@@ -96,10 +98,10 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	private boolean isIgnored(EObject object, Diagnostic diagnostic) {
-		if (diagnosticFilters.isEmpty()) {
+		if (getDiagnosticFilters().isEmpty()) {
 			return false;
 		}
-		for (final DiagnosticFilter filter : diagnosticFilters) {
+		for (final DiagnosticFilter filter : getDiagnosticFilters()) {
 			if (filter.ignoreDiagnostic(object, diagnostic)) {
 				return true;
 			}
@@ -284,21 +286,21 @@ public class ValidationServiceImpl implements ValidationService {
 	@Override
 	public void registerValidationFilter(ValidationFilter filter) {
 		if (filter instanceof ObjectFilter) {
-			objectFilter.add((ObjectFilter) filter);
+			getObjectFilters().add((ObjectFilter) filter);
 		}
 		if (filter instanceof SubTreeFilter) {
-			subTreeFilters.add((SubTreeFilter) filter);
+			getSubTreeFilters().add((SubTreeFilter) filter);
 		}
 		if (filter instanceof DiagnosticFilter) {
-			diagnosticFilters.add((DiagnosticFilter) filter);
+			getDiagnosticFilters().add((DiagnosticFilter) filter);
 		}
 	}
 
 	@Override
 	public void unregisterValidationFilter(ValidationFilter filter) {
-		objectFilter.remove(filter);
-		subTreeFilters.remove(filter);
-		diagnosticFilters.remove(filter);
+		getObjectFilters().remove(filter);
+		getSubTreeFilters().remove(filter);
+		getDiagnosticFilters().remove(filter);
 	}
 
 	@Override
@@ -389,5 +391,68 @@ public class ValidationServiceImpl implements ValidationService {
 			return validate(eObject.eClass(), eObject, diagnostics, context);
 		}
 
+	}
+
+	@Override
+	public void addSubTreeFilter(SubTreeFilter subTreeFilter) {
+		if (subTreeFilter != null) {
+			getSubTreeFilters().add(subTreeFilter);
+		}
+
+	}
+
+	@Override
+	public void addObjectFilter(ObjectFilter objectFilter) {
+		if (objectFilter != null) {
+			getObjectFilters().add(objectFilter);
+		}
+
+	}
+
+	@Override
+	public void addDiagnosticFilter(DiagnosticFilter diagnosticFilter) {
+		if (diagnosticFilter != null) {
+			getDiagnosticFilters().add(diagnosticFilter);
+		}
+
+	}
+
+	@Override
+	public void removeSubTreeFilter(SubTreeFilter subTreeFilter) {
+		getSubTreeFilters().remove(subTreeFilter);
+
+	}
+
+	@Override
+	public void removeObjectFilter(ObjectFilter objectFilter) {
+		getObjectFilters().remove(objectFilter);
+
+	}
+
+	@Override
+	public void removeDiagnosticFilter(DiagnosticFilter diagnosticFilter) {
+		getDiagnosticFilters().remove(diagnosticFilter);
+
+	}
+
+	/**
+	 * @return the objectFilters
+	 */
+	Set<ObjectFilter> getObjectFilters() {
+		return objectFilters;
+	}
+
+	/**
+	 * @return the subTreeFilters
+	 */
+	Set<SubTreeFilter> getSubTreeFilters() {
+		return subTreeFilters;
+	}
+
+	/**
+	 * @return the diagnosticFilters
+	 */
+	Set<DiagnosticFilter> getDiagnosticFilters() {
+		return diagnosticFilters;
 	}
 }

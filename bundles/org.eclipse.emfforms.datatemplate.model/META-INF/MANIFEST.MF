@@ -2,20 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emfforms.datatemplate.model;singleton:=true
-Bundle-Version: 1.20.0.qualifier
+Bundle-Version: 1.21.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emfforms.datatemplate;version="1.20.0";
-  uses:="org.eclipse.emf.ecore,
-   org.eclipse.emf.common.util",
- org.eclipse.emfforms.datatemplate.impl;version="1.20.0";
+Export-Package: org.eclipse.emfforms.datatemplate;version="1.21.0";uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
+ org.eclipse.emfforms.datatemplate.impl;version="1.21.0";x-internal:=true;
   uses:="org.eclipse.emf.ecore,
    org.eclipse.emf.ecore.impl,
    org.eclipse.emf.common.util,
    org.eclipse.emf.common.notify,
-   org.eclipse.emfforms.datatemplate";x-internal:=true,
- org.eclipse.emfforms.datatemplate.util;version="1.20.0";
+   org.eclipse.emfforms.datatemplate",
+ org.eclipse.emfforms.datatemplate.util;version="1.21.0";
   uses:="org.eclipse.emf.ecore,
    org.eclipse.emf.common.notify,
    org.eclipse.emf.common.notify.impl,

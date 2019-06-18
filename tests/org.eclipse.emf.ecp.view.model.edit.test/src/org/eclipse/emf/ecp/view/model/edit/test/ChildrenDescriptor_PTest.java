@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Jonas - initial API and implementation
@@ -36,7 +38,11 @@ public class ChildrenDescriptor_PTest {
 
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
 
-	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
+	/*
+	 * Besides attachments, there is no element in the core model that should be creatable as a child because DMRs are
+	 * created via the detail view in the view model tooling.
+	 */
+	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
 		ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());

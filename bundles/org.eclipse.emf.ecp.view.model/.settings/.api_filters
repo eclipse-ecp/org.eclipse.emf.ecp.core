@@ -716,6 +716,13 @@
                 <message_argument value="http://org/eclipse/emf/ecp/view/model/1170"/>
             </message_arguments>
         </filter>
+        <filter comment="Make VDMR concrete" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="eNS_URI"/>
+                <message_argument value="http://org/eclipse/emf/ecp/view/model/1180"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change 1.17.0" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>

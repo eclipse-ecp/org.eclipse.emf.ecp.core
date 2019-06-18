@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -26,7 +28,8 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.spi.diffmerge.model.impl.VDiffAttachmentImpl#getTotalNumberOfDiffs <em>Total Number Of
  * Diffs</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.spi.diffmerge.model.impl.VDiffAttachmentImpl#getMergedDiffs <em>Merged Diffs</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.spi.diffmerge.model.impl.VDiffAttachmentImpl#getMergedDiffs <em>Merged
+ * Diffs</em>}</li>
  * </ul>
  * </p>
  *
@@ -101,8 +104,7 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public int getTotalNumberOfDiffs()
-	{
+	public int getTotalNumberOfDiffs() {
 		return totalNumberOfDiffs;
 	}
 
@@ -113,8 +115,7 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public void setTotalNumberOfDiffs(int newTotalNumberOfDiffs)
-	{
+	public void setTotalNumberOfDiffs(int newTotalNumberOfDiffs) {
 		final int oldTotalNumberOfDiffs = totalNumberOfDiffs;
 		totalNumberOfDiffs = newTotalNumberOfDiffs;
 		if (eNotificationRequired()) {
@@ -130,8 +131,7 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public int getMergedDiffs()
-	{
+	public int getMergedDiffs() {
 		return mergedDiffs;
 	}
 
@@ -142,8 +142,7 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public void setMergedDiffs(int newMergedDiffs)
-	{
+	public void setMergedDiffs(int newMergedDiffs) {
 		final int oldMergedDiffs = mergedDiffs;
 		mergedDiffs = newMergedDiffs;
 		if (eNotificationRequired()) {
@@ -159,10 +158,8 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VDiffmergePackage.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS:
 			return getTotalNumberOfDiffs();
 		case VDiffmergePackage.DIFF_ATTACHMENT__MERGED_DIFFS:
@@ -178,10 +175,8 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VDiffmergePackage.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS:
 			setTotalNumberOfDiffs((Integer) newValue);
 			return;
@@ -199,10 +194,8 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VDiffmergePackage.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS:
 			setTotalNumberOfDiffs(TOTAL_NUMBER_OF_DIFFS_EDEFAULT);
 			return;
@@ -220,10 +213,8 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VDiffmergePackage.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS:
 			return totalNumberOfDiffs != TOTAL_NUMBER_OF_DIFFS_EDEFAULT;
 		case VDiffmergePackage.DIFF_ATTACHMENT__MERGED_DIFFS:
@@ -239,8 +230,7 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

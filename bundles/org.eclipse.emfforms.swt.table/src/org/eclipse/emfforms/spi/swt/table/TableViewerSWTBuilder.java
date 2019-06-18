@@ -1,19 +1,21 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
  * Mat Hansen - builder refactoring
+ * Christian W. Damus - bugs 534829, 530314
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -36,6 +38,7 @@ import org.eclipse.swt.widgets.Composite;
  * @author Mat Hansen
  *
  */
+@SuppressWarnings("deprecation")
 public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableViewerSWTBuilder> {
 
 	private boolean tableConfigured;
@@ -47,7 +50,6 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	/** The input object. */
 	private final Object input;
 	/** The table control customization. */
-	@SuppressWarnings("rawtypes")
 	private final DefaultTableControlSWTCustomization customization;
 	/** The title. */
 	private final IObservableValue title;
@@ -66,6 +68,7 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	@SuppressWarnings("rawtypes")
 	protected TableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input, IObservableValue title,
 		IObservableValue tooltip) {
+
 		this.composite = composite;
 		this.swtStyleBits = swtStyleBits;
 		this.input = input;
@@ -77,9 +80,7 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 			public TableConfiguration getTableConfiguration() {
 				// if the table hasn't been configured, do it now (using defaults)
 				if (!tableConfigured) {
-					configureTable(TableConfigurationBuilder.usingDefaults()
-						.inheritFeatures(features)
-						.build());
+					configureTable(TableConfigurationBuilder.withFeatures(features).build());
 				}
 				return super.getTableConfiguration();
 			}
@@ -160,6 +161,7 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	 * @param creator the {@link TableViewerCreator}
 	 * @return self
 	 */
+	@SuppressWarnings("unchecked")
 	public TableViewerSWTBuilder customizeTableViewerCreation(
 		TableViewerCreator<? extends AbstractTableViewer> creator) {
 		customization.setTableViewerCreator(creator);
@@ -271,14 +273,71 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 		return this;
 	}
 
+	/**
+	 * @deprecated Since 1.21, use the {@link #showHideColumns(boolean)} and similar
+	 *             builder methods, instead
+	 * @see #showHideColumns(boolean)
+	 * @see #columnSubstringFilter(boolean)
+	 * @see #columnRegexFilter(boolean)
+	 */
 	@Override
+	@Deprecated
 	public Set<Feature> getSupportedFeatures() {
-		return new LinkedHashSet<Feature>(Arrays.asList(TableConfiguration.FEATURES));
+		return new LinkedHashSet<Feature>(TableConfiguration.ALL_FEATURES);
 	}
 
+	/**
+	 * @deprecated Since 1.21, use the {@link #showHideColumns(boolean)} and similar
+	 *             builder methods, instead
+	 * @see #showHideColumns(boolean)
+	 * @see #columnSubstringFilter(boolean)
+	 * @see #columnRegexFilter(boolean)
+	 */
 	@Override
+	@Deprecated
 	public Set<Feature> getEnabledFeatures() {
 		return features;
+	}
+
+	/**
+	 * Set whether support for users to show and hide columns is installed.
+	 *
+	 * @param showHideColumns {@code true} to enable showing and hiding of columns; {@code false} to disable it
+	 * @return this builder, for fluent chaining
+	 *
+	 * @since 1.21
+	 */
+	public TableViewerSWTBuilder showHideColumns(boolean showHideColumns) {
+		return showHideColumns ? enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
+			: disableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW);
+	}
+
+	/**
+	 * Set whether support for users to show a simple substring-matching filter on columns
+	 * is installed.
+	 *
+	 * @param columnSubstringFilter {@code true} to enable the substring filter; {@code false} to disable it
+	 * @return this builder, for fluent chaining
+	 *
+	 * @since 1.21
+	 */
+	public TableViewerSWTBuilder columnSubstringFilter(boolean columnSubstringFilter) {
+		return columnSubstringFilter ? enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER)
+			: disableFeature(TableConfiguration.FEATURE_COLUMN_FILTER);
+	}
+
+	/**
+	 * Set whether support for users to show a regular expression filter on columns
+	 * is installed.
+	 *
+	 * @param columnRegexFilter {@code true} to enable the regex filter; {@code false} to disable it
+	 * @return this builder, for fluent chaining
+	 *
+	 * @since 1.21
+	 */
+	public TableViewerSWTBuilder columnRegexFilter(boolean columnRegexFilter) {
+		return columnRegexFilter ? enableFeature(TableConfiguration.FEATURE_COLUMN_REGEX_FILTER)
+			: disableFeature(TableConfiguration.FEATURE_COLUMN_REGEX_FILTER);
 	}
 
 	/**

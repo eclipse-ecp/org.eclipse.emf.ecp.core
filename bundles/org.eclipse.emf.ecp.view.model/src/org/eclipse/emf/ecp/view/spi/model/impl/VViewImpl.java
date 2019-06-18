@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -78,11 +80,9 @@ public class VViewImpl extends VElementImpl implements VView {
 	 *
 	 * @since 1.17
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getEcorePaths()
 	 * @generated
 	 * @ordered
-	 *
 	 */
 	protected EList<String> ecorePaths;
 
@@ -175,7 +175,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null) {
-			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
+			children = new EObjectContainmentEList<>(VContainedElement.class, this,
 				VViewPackage.VIEW__CHILDREN);
 		}
 		return children;
@@ -190,7 +190,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	@Override
 	public EList<String> getEcorePaths() {
 		if (ecorePaths == null) {
-			ecorePaths = new EDataTypeUniqueEList<String>(String.class, this, VViewPackage.VIEW__ECORE_PATHS);
+			ecorePaths = new EDataTypeUniqueEList<>(String.class, this, VViewPackage.VIEW__ECORE_PATHS);
 		}
 		return ecorePaths;
 	}
@@ -386,7 +386,7 @@ public class VViewImpl extends VElementImpl implements VView {
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		final StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (ecorePaths: "); //$NON-NLS-1$
 		result.append(ecorePaths);
 		result.append(')');

@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -83,43 +85,42 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected ExampleSwitch<Adapter> modelSwitch =
-		new ExampleSwitch<Adapter>() {
-			@Override
-			public Adapter caseRoot(Root object) {
-				return createRootAdapter();
-			}
+	protected ExampleSwitch<Adapter> modelSwitch = new ExampleSwitch<Adapter>() {
+		@Override
+		public Adapter caseRoot(Root object) {
+			return createRootAdapter();
+		}
 
-			@Override
-			public Adapter caseIntermediate(Intermediate object) {
-				return createIntermediateAdapter();
-			}
+		@Override
+		public Adapter caseIntermediate(Intermediate object) {
+			return createIntermediateAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(Container object) {
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(Container object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter caseChild(Child object) {
-				return createChildAdapter();
-			}
+		@Override
+		public Adapter caseChild(Child object) {
+			return createChildAdapter();
+		}
 
-			@Override
-			public Adapter caseIntermediateTarget(IntermediateTarget object) {
-				return createIntermediateTargetAdapter();
-			}
+		@Override
+		public Adapter caseIntermediateTarget(IntermediateTarget object) {
+			return createIntermediateTargetAdapter();
+		}
 
-			@Override
-			public Adapter caseTarget(Target object) {
-				return createTargetAdapter();
-			}
+		@Override
+		public Adapter caseTarget(Target object) {
+			return createTargetAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

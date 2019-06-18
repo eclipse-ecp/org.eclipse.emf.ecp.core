@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
@@ -115,6 +117,16 @@ public interface TestPackage extends EPackage {
 	int A__B = E_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>BList</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int A__BLIST = E_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>A</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,7 +134,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int A_FEATURE_COUNT = E_FEATURE_COUNT + 1;
+	int A_FEATURE_COUNT = E_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl
@@ -550,6 +562,19 @@ public interface TestPackage extends EPackage {
 	EReference getA_B();
 
 	/**
+	 * Returns the meta object for the reference list
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getBList <em>BList</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the reference list '<em>BList</em>'.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getBList()
+	 * @see #getA()
+	 * @generated
+	 */
+	EReference getA_BList();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B
 	 * <em>B</em>}'.
 	 * <!-- begin-user-doc -->
@@ -961,6 +986,15 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference A__B = eINSTANCE.getA_B();
+
+		/**
+		 * The meta object literal for the '<em><b>BList</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference A__BLIST = eINSTANCE.getA_BList();
 
 		/**
 		 * The meta object literal for the

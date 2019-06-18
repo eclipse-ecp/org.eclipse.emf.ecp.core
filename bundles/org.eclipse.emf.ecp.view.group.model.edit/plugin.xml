@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
-
-<!--
--->
-
 <plugin>
 
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://org/eclipse/emf/ecp/view/group/model"
             class="org.eclipse.emf.ecp.view.spi.group.model.provider.GroupItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource">
+      </factory>
    </extension>
-
-   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+   <extension
+         name=""
+         point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/model/1180"
-            class="org.eclipse.emf.ecp.view.spi.group.model.provider.GroupItemProviderAdapterFactory$ViewChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.spi.group.model.provider.GroupItemProviderAdapterFactory$ViewChildCreationExtender">
+      </extender>
    </extension>
 
 </plugin>

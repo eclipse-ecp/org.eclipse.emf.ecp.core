@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
+ * Lucas Koehler - Also support DMR segments (Bug 542669)
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
@@ -25,30 +28,34 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
+import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -59,6 +66,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
@@ -86,11 +94,10 @@ import org.eclipse.swt.widgets.Label;
  * @author Alexandra Buzila
  *
  */
-// needed because we use the Messages class from ecp.ui.
-@SuppressWarnings("restriction")
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private final EMFFormsEditSupport emfFormsEditSupport;
+	private final EMFFormsDatabindingEMF emfFormsDatabindingEMF;
 
 	/**
 	 * Default constructor.
@@ -98,17 +105,19 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsDatabindingEMF The {@link EMFFormsDatabinding}
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
 	@Inject
 	public DomainModelReferenceControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService, EMFFormsDatabinding emfFormsDatabinding,
+		ReportService reportService, EMFFormsDatabindingEMF emfFormsDatabindingEMF,
 		EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider,
 		EMFFormsEditSupport emfFormsEditSupport) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		super(vElement, viewContext, reportService, emfFormsDatabindingEMF, emfFormsLabelProvider,
+			vtViewTemplateProvider);
+		this.emfFormsDatabindingEMF = emfFormsDatabindingEMF;
 		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
@@ -126,12 +135,6 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private Label imageLabel;
 	private Composite contentSetComposite;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
-	 */
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
@@ -198,7 +201,12 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	// TODO this whole method is ugly as it has to many dependencies, the generating of the text should be delegated to
 	// some service
+	// BEGIN COMPLEX CODE
 	private Object getText(Object object) {
+		if (ToolingModeUtil.isSegmentToolingEnabled()) {
+			return getTextForSegments((VDomainModelReference) object);
+		}
+
 		VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) object;
 		if (VTableDomainModelReference.class.isInstance(modelReference)) {
 			VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
@@ -234,6 +242,45 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		}
 		return linkText;
 	}
+	// END COMPLEX CODE
+
+	/**
+	 * Provides a label text for a segment based DMR.
+	 */
+	private String getTextForSegments(VDomainModelReference dmr) {
+		final EList<VDomainModelReferenceSegment> segments = dmr.getSegments();
+		if (segments.isEmpty()) {
+			return adapterFactoryItemDelegator.getText(dmr);
+		}
+
+		String attributeType = null;
+		final EClass rootEClass = getDmrRootEClass();
+		try {
+			final IEMFValueProperty valueProperty = emfFormsDatabindingEMF.getValueProperty(
+				dmr, rootEClass);
+			attributeType = valueProperty.getStructuralFeature().getEType().getName();
+		} catch (final DatabindingFailedException ex) {
+			// TODO handle?
+		}
+
+		final String className = rootEClass.getName();
+		String attributeName = " -> " + adapterFactoryItemDelegator.getText(segments.get(segments.size() - 1)); //$NON-NLS-1$
+		if (attributeType != null && !attributeType.isEmpty()) {
+			attributeName += " : " + attributeType; //$NON-NLS-1$
+		}
+		String referencePath = ""; //$NON-NLS-1$
+
+		for (int i = 0; i < segments.size() - 1; i++) {
+			referencePath = referencePath + " -> " //$NON-NLS-1$
+				+ adapterFactoryItemDelegator.getText(segments.get(i));
+		}
+
+		final String linkText = className + referencePath + attributeName;
+		if (linkText.equals(" -> ")) { //$NON-NLS-1$
+			return null;
+		}
+		return linkText;
+	}
 
 	private void updateChangeListener(final EObject value) {
 		if (modelElementChangeListener != null) {
@@ -260,23 +307,12 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 				@Override
 				public void onChange(Notification notification) {
-					Display.getDefault().syncExec(new Runnable() {
-
-						@Override
-						public void run() {
-							getDataBindingContext().updateTargets();
-						}
-					});
+					Display.getDefault().syncExec(() -> getDataBindingContext().updateTargets());
 				}
 			};
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
 		final IObservableValue observableValue = getEMFFormsDatabinding()
@@ -365,7 +401,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				.getDomainModelReference(),
 			getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
 		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(), getViewModelContext(),
-			getDataBindingContext(), structuralFeature));
+			getDataBindingContext(), (EReference) structuralFeature));
 
 	}
 
@@ -384,55 +420,95 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		return selectButton;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
-	 */
 	@Override
 	protected String getUnsetText() {
 		return LocalizationServiceHelper.getString(getClass(), "LinkControl_NoLinkSetClickToSetLink"); //$NON-NLS-1$
 	}
 
+	/**
+	 * Create a new segment based domain model reference and set it in the <code>reference</code> of the given
+	 * <code>container</code> object.
+	 *
+	 * @param container The EObject which will contain the new domain model reference
+	 * @param reference The EReference which the new domain model reference will be set in
+	 */
+	protected void addNewSegmentDmr(EObject container, EReference reference) {
+		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		referenceService.addNewModelElements(eObject, (EReference) structuralFeature, false);
+	}
+
+	/**
+	 * Edits the existing DMR set in the <code>reference</code> of the given
+	 * <code>container</code> object.
+	 *
+	 * @param container The EObject which will contain the new domain model reference
+	 * @param reference The EReference which contains the current new domain model reference
+	 * @param dmr The domain model reference to edit
+	 */
+	protected void editSegmentDmr(EObject container, EReference reference, VDomainModelReference dmr) {
+		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		referenceService.openInNewContext(dmr);
+	}
+
+	/**
+	 * Returns the root EClass of the domain model reference.
+	 *
+	 * @return the DMR's root EClass.
+	 */
+	protected EClass getDmrRootEClass() {
+		return Helper.getRootEClass(getViewModelContext().getDomainModel());
+	}
+
 	/** SelectionAdapter for the set button. */
 	private class SelectionAdapterExtension extends SelectionAdapter {
 
-		private final EStructuralFeature eStructuralFeature;
+		private final EReference eReference;
 
-		SelectionAdapterExtension(Label label, IObservableValue modelValue, ViewModelContext viewModelContext,
-			DataBindingContext dataBindingContext,
-			EStructuralFeature eStructuralFeature) {
-			this.eStructuralFeature = eStructuralFeature;
+		SelectionAdapterExtension(Label label, IObservableValue<?> modelValue, ViewModelContext viewModelContext,
+			DataBindingContext dataBindingContext, EReference eReference) {
+			this.eReference = eReference;
 		}
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Collection<EClass> classes = EMFUtils.getSubClasses(((EReferenceImpl) eStructuralFeature)
-				.getEReferenceType());
+			final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
 
-			final EClass eclass = Helper.getRootEClass(getViewModelContext().getDomainModel());
+			final EClass eclass = getDmrRootEClass();
 
 			VDomainModelReference reference = null;
 			if (VControl.class.isInstance(eObject)) {
 				reference = VControl.class.cast(eObject).getDomainModelReference();
 			} else if (VLabel.class.isInstance(eObject)) {
 				reference = VLabel.class.cast(eObject).getDomainModelReference();
+			} else if (eObject instanceof LeafCondition) {
+				reference = LeafCondition.class.cast(eObject).getDomainModelReference();
 			}
 
-			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
-				eObject, structuralFeature, getEditingDomain(eObject), eclass,
-				reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
-				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageDescription_AddModelElement, reference);
+			if (ToolingModeUtil.isSegmentToolingEnabled()) {
+				if (reference == null) {
+					addNewSegmentDmr(eObject, eReference);
+				} else {
+					editSegmentDmr(eObject, eReference, reference);
+				}
+			} else {
+				final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
+					eObject, structuralFeature, getEditingDomain(eObject), eclass,
+					reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
+					LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class,
+						"NewModelElementWizard_WizardTitle_AddModelElement"), //$NON-NLS-1$
+					LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class,
+						"NewModelElementWizard_PageTitle_AddModelElement"), //$NON-NLS-1$
+					LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class,
+						"NewModelElementWizard_PageDescription_AddModelElement"), //$NON-NLS-1$
+					reference);
 
-			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-				new HashSet<EPackage>(),
-				new HashSet<EPackage>(), classes);
-			wizard.setCompositeProvider(helper);
+				final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
+					new HashSet<EPackage>(),
+					new HashSet<EPackage>(), classes);
+				wizard.setCompositeProvider(helper);
+				new WizardDialog(Display.getDefault().getActiveShell(), wizard).open();
+			}
 
-			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
-			wd.open();
 		}
 	}
 }

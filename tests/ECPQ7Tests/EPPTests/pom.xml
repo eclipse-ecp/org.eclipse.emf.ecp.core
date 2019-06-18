@@ -94,19 +94,21 @@
 								</features>
 							</injection>
 							<injection>
-								<site>http://download.eclipse.org/releases/oxygen</site>
+								<site>http://download.eclipse.org/releases/${eclipse-name}</site>
 								<features>
 									<feature>org.eclipse.net4j.sdk.feature.group</feature>
+									<feature>org.eclipse.emf.cdo.epp.feature.group</feature>
+									<feature>org.eclipse.equinox.core.feature.feature.group</feature>
 									<feature>org.eclipse.ocl.all.sdk.feature.group</feature>
 									<feature>org.eclipse.emf.feature.group</feature>
+									<feature>org.eclipse.xtend.sdk.feature.group</feature>
+									<feature>org.eclipse.xtext.runtime.feature.group</feature>
 								</features>
 							</injection>
 						</injections>
 						<args>
 							<arg>-nosplash</arg>
 							<arg>-consoleLog</arg>
-							<arg>--launcher.GTK_version</arg>
-							<arg>2</arg>
 						</args>
 						<vmArgs>
 							<vmArg>-Xmx2g</vmArg>

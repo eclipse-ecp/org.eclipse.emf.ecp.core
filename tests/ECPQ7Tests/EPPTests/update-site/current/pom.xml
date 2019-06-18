@@ -12,7 +12,7 @@
   <packaging>rcpttTest</packaging>
 
 	<properties>
-    <eclipse-name>photon</eclipse-name>
+    <eclipse-name>2019-03</eclipse-name>
 	<eclipse-sr>R</eclipse-sr>
   </properties>
   <build>

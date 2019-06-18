@@ -2,29 +2,39 @@
  * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bugs 533522, 543160
+ * Christian W. Damus - bugs 533522, 543160, 545686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
+
+import static org.eclipse.emf.ecp.view.spi.validation.ValidationServiceConstants.PROPAGATION_LIMIT_KEY;
+import static org.eclipse.emf.ecp.view.spi.validation.ValidationServiceConstants.PROPAGATION_UNLIMITED_VALUE;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -62,6 +72,7 @@ import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
 import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.validation.DiagnosticFrequencyMap;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -70,6 +81,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -114,7 +127,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			case Notification.REMOVE:
 			case Notification.REMOVE_MANY:
 				final Map<VElement, VDiagnostic> map = Collections.emptyMap();
-				reevaluateToTop(notification.getNotifier(), map);
+				reevaluateToTop((VElement) notification.getNotifier(), map);
 				break;
 			default:
 				break;
@@ -331,11 +344,18 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	private ComposedAdapterFactory adapterFactory;
 	private ReportService reportService;
+	private EMFFormsLocalizationService l10n;
+	private ThresholdDiagnostic.Factory placeholderFactory;
+
+	// Maximal number of problems to propagate up the view hierarchy, or negative for no limit
+	private int propagationThreshold;
 
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 		reportService = context.getService(ReportService.class);
+		l10n = context.getService(EMFFormsLocalizationService.class);
+		placeholderFactory = new ThresholdDiagnostic.Factory(l10n);
 		mappingProviderManager = context.getService(EMFFormsMappingProviderManager.class);
 		controlMapper = context.getService(EMFFormsSettingToControlMapper.class);
 		final VElement renderable = context.getViewModel();
@@ -349,6 +369,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		if (domainModel == null) {
 			throw new IllegalStateException("Domain model must not be null"); //$NON-NLS-1$
 		}
+
+		propagationThreshold = getPropagationThreshold();
 
 		validationService = new org.eclipse.emfforms.common.internal.validation.ValidationServiceImpl();
 		validationService.registerValidationFilter(new AbstractSimpleFilter() {
@@ -618,41 +640,206 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		return controlMapper.hasControlsFor(diagnosticEobject);
 	}
 
+	/**
+	 * Update the diagnostics attached to the given mapped view-model elements and propagate
+	 * roll-ups of those diagnostics up the view model hierarchy.
+	 *
+	 * @param controlDiagnosticMap the mapping of source diagnostics by (leaf) control
+	 */
 	private void updateAndPropagate(Map<VElement, VDiagnostic> controlDiagnosticMap) {
-		for (final Map.Entry<VElement, VDiagnostic> next : controlDiagnosticMap.entrySet()) {
-			next.getKey().setDiagnostic(next.getValue());
-			reevaluateToTop(next.getKey().eContainer(), controlDiagnosticMap);
+		// First, set every control's diagnostics
+		controlDiagnosticMap.forEach(VElement::setDiagnostic);
+
+		// Breadth-first climb to the top of the view model tree, layer by layer. First,
+		// partition the controls into layers by depth. This map is sorted by decreasing
+		// depth (deepest first, to start there)
+		final NavigableMap<Integer, Set<VElement>> depthMap = mapByDepth(controlDiagnosticMap.keySet());
+		reevaluateToTop(depthMap, controlDiagnosticMap);
+	}
+
+	/**
+	 * Compute a partitioning of view-model {@code elements} by their depth in the model.
+	 * This is effectively the set of layers of the tree, collecting all elements at the same
+	 * depth into subsets (these being the layers at each depth).
+	 *
+	 * @param elements the elements of the view model to partition
+	 * @return the partition into layers, in decreasing order of depth; so, ordered from deepest,
+	 *         the bottom layer, to shallowest, the root
+	 */
+	private NavigableMap<Integer, Set<VElement>> mapByDepth(Collection<? extends VElement> elements) {
+		final Function<Integer, Set<VElement>> factory = __ -> new LinkedHashSet<>();
+		final NavigableMap<Integer, Set<VElement>> result = new TreeMap<>(
+			Comparator.<Integer> naturalOrder().reversed());
+
+		for (final VElement next : elements) {
+			result.computeIfAbsent(depth(next), factory).add(next);
+		}
+
+		return result;
+	}
+
+	/**
+	 * Compute the depth of an {@code object} in its containing tree.
+	 *
+	 * @param object an object
+	 * @return its depth (zero-based at the root)
+	 */
+	private int depth(EObject object) {
+		int result = 0;
+		for (EObject container = object.eContainer(); container != null; container = container.eContainer()) {
+			result = result + 1;
+		}
+		return result;
+	}
+
+	/**
+	 * Obtain the unique set of containers of a bunch of {@code elements} view model.
+	 *
+	 * @param elements elements in the view model
+	 * @return the complete set of view-model elements covering the containers of the {@code elements}
+	 */
+	private Set<VElement> uniqueContainers(Collection<? extends VElement> elements) {
+		return elements.stream().map(EObject::eContainer)
+			.filter(VElement.class::isInstance).map(VElement.class::cast)
+			.collect(Collectors.toCollection(LinkedHashSet::new));
+	}
+
+	/**
+	 * Perform a breadth-first climb to the top of the view model tree, layer by layer,
+	 * recalculating roll-ups of diagnostics for every container element to aggregate
+	 * all of the diagnostics reported in its sub-tree.
+	 *
+	 * @param depthMap a mapping of layers of elements in the view model by depth, in
+	 *            order from bottom (deepest layer) to top (shallowest layer)
+	 * @param controlDiagnosticMap the mapping of source diagnostics by (leaf) control
+	 */
+	private void reevaluateToTop(NavigableMap<Integer, Set<VElement>> depthMap,
+		Map<VElement, VDiagnostic> controlDiagnosticMap) {
+		Map.Entry<Integer, Set<VElement>> layer;
+
+		for (layer = depthMap.pollFirstEntry(); layer != null; layer = depthMap.pollFirstEntry()) {
+			final int depth = layer.getKey();
+
+			final Set<VElement> containers = uniqueContainers(layer.getValue());
+			containers.forEach(container -> reevaluate(container, controlDiagnosticMap));
+
+			// These containers are elements at the next layer up, so we need to iterate over them
+			final int depthUp = depth - 1;
+			if (depthUp >= 0) {
+				final Set<VElement> layerUp = depthMap.get(depthUp);
+				if (layerUp != null) {
+					layerUp.addAll(containers);
+				} else {
+					depthMap.put(depthUp, containers);
+				}
+			}
 		}
 	}
 
-	private void reevaluateToTop(EObject parent, Map<VElement, VDiagnostic> controlDiagnosticMap) {
+	/**
+	 * Recalculate the roll-up of diagnostics fo a given element in the view model tree.
+	 *
+	 * @param vElement an element in the view model tree
+	 * @param controlDiagnosticMap the mapping of source diagnostics by (leaf) control
+	 */
+	private void reevaluate(VElement vElement, Map<VElement, VDiagnostic> controlDiagnosticMap) {
+		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+		if (controlDiagnosticMap.containsKey(vElement)) {
+			vDiagnostic.getDiagnostics().addAll(controlDiagnosticMap.get(vElement).getDiagnostics());
+		}
 
-		while (parent != null) {
-			final EObject newParent = parent.eContainer();
-			if (!VElement.class.isInstance(parent)) {
-				parent = newParent;
+		// Propagate problems from children
+		final DiagnosticFrequencyMap freq = getFrequencyMap(vElement);
+		for (final Iterator<EObject> iter = vElement.eContents().iterator(); iter.hasNext();) {
+			final EObject eObject = iter.next();
+			if (!VElement.class.isInstance(eObject)) {
 				continue;
 			}
-			final VElement vElement = (VElement) parent;
 
-			final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
-			if (controlDiagnosticMap.containsKey(vElement)) {
-				vDiagnostic.getDiagnostics().addAll(controlDiagnosticMap.get(vElement).getDiagnostics());
-			}
+			final VElement childElement = (VElement) eObject;
+			// check that the child is visible and enabled
+			if (childElement.getDiagnostic() != null && childElement.isEffectivelyEnabled()
+				&& childElement.isVisible()) {
 
-			for (final EObject eObject : vElement.eContents()) {
-				if (!VElement.class.isInstance(eObject)) {
-					continue;
-				}
-				final VElement childElement = (VElement) eObject;
-				// check that the child is visible and enabled
-				if (childElement.getDiagnostic() != null && childElement.isEffectivelyEnabled()
-					&& childElement.isVisible()) {
-					vDiagnostic.getDiagnostics().addAll(childElement.getDiagnostic().getDiagnostics());
+				final List<?> childDiagnostics = childElement.getDiagnostic().getDiagnostics();
+
+				// Note that we cannot fill up if we didn't add something
+				if (freq.addAll(childDiagnostics) && freq.isFull()
+					&& freq.getDiscardedSeverity() > Diagnostic.WARNING) {
+
+					// No need to scan further children because it can't get more
+					// full than this with a greater discarded severity
+					break;
 				}
 			}
-			vElement.setDiagnostic(vDiagnostic);
-			parent = newParent;
+		}
+		if (!freq.isEmpty()) {
+			freq.appendTo(vDiagnostic.getDiagnostics());
+			appendPlaceholder(freq, vDiagnostic.getDiagnostics());
+		}
+		vElement.setDiagnostic(vDiagnostic);
+	}
+
+	/**
+	 * Perform a breadth-first climb to the top of the view model tree, layer by layer,
+	 * recalculating roll-ups of diagnostics for every container element starting from the
+	 * given {@code element}. It is assumed unnecessary to recompute diagnostics for
+	 * layers deeper than the {@code element} because only the {@code element} has changed.
+	 * But the changes to its diagnostics necessarily can affect roll-ups for all elements
+	 * above it in the tree.
+	 *
+	 * @param element an element in the view model for which to calculate its roll-up of
+	 *            diagnostics and, consequently, the roll-ups for all elements above it
+	 * @param controlDiagnosticMap the mapping of source diagnostics by (leaf) control
+	 */
+	private void reevaluateToTop(VElement element, Map<VElement, VDiagnostic> controlDiagnosticMap) {
+		// Breadth-first climb to the top of the view model tree, layer by layer. First,
+		// partition the controls into layers by depth. This map is sorted by decreasing
+		// depth (deepest first, to start there)
+		final NavigableMap<Integer, Set<VElement>> depthMap = mapByDepth(controlDiagnosticMap.keySet());
+
+		// The initial set of containers to process is just the 'element'
+		final Set<VElement> containers = Collections.singleton(element);
+
+		// Everything below this element doesn't need to be re-evaluated: their diagnostics
+		// are assumed unchanged
+		final int cutoff = depth(element);
+		depthMap.navigableKeySet().headSet(cutoff, true).clear();
+		depthMap.put(cutoff, containers); // Start here
+
+		// Re-evaluate this element
+		reevaluate(element, controlDiagnosticMap);
+
+		// And then the rest
+		reevaluateToTop(depthMap, controlDiagnosticMap);
+	}
+
+	/**
+	 * Get a frequency map appropriate for collecting the most severe (and throttled)
+	 * diagnostics for a view model element.
+	 *
+	 * @param vElement the view model element
+	 * @return its diagnostic frequency map
+	 */
+	DiagnosticFrequencyMap getFrequencyMap(VElement vElement) {
+		final DiagnosticFrequencyMap result = propagationThreshold < 0 ? DiagnosticFrequencyMap.unlimited()
+			: DiagnosticFrequencyMap.limitedTo(propagationThreshold);
+
+		result.addDiagnosticFilter(placeholderFactory.notThresholdDiagnostic());
+
+		return result;
+	}
+
+	/**
+	 * If the {@code freq}uency map is {@link DiagnosticFrequencyMap#isFull() full}, then
+	 * append one more diagnostic covering all those that were discarded (if any).
+	 *
+	 * @param freq a frequency map
+	 * @param diagnostics diagnostics being collected
+	 */
+	private void appendPlaceholder(DiagnosticFrequencyMap freq, List<? super Diagnostic> diagnostics) {
+		if (freq.getDiscardedSeverity() > Diagnostic.OK) {
+			diagnostics.add(placeholderFactory.get(freq.getDiscardedSeverity()));
 		}
 	}
 
@@ -776,8 +963,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	@Override
 	public void childContextDisposed(EMFFormsViewContext childContext) {
-		// TODO Auto-generated method stub
-
+		// do nothing
 	}
 
 	@Override
@@ -802,6 +988,46 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			return context.getService(ViewSubstitutionLabelProviderFactory.class);
 		}
 		return null;
+	}
+
+	/**
+	 * Get the problems propagation limit from the annotation view model context.
+	 *
+	 * @return the propagation limit, or {@code -1} if unlimited
+	 *
+	 * @precondition the {@link ViewModelContext} is already set
+	 * @precondition the {@link ReportService} is available
+	 * @precondition the {@link EMFFormsLocalizationService} is available
+	 */
+	private int getPropagationThreshold() {
+		int result = -1; // Internal code for unlimited
+
+		final Object value = context.getContextValue(PROPAGATION_LIMIT_KEY);
+		if (value instanceof Integer) {
+			final int intValue = (Integer) value;
+			if (intValue < 0) {
+				warn("ValidationServiceImpl_limitNegative", value); //$NON-NLS-1$
+			} else {
+				result = intValue;
+			}
+		} else if (value == null || PROPAGATION_UNLIMITED_VALUE.equals(value)) {
+			return result;
+		} else {
+			warn("ValidationServiceImpl_limitUnknown", value); //$NON-NLS-1$
+		}
+
+		return result;
+	}
+
+	/**
+	 * Issue a warning composed of the indicated localized string with positional {@code arguments}.
+	 *
+	 * @param messageKey key to look up in the host bundle's localizations
+	 * @param arguments zero-indexed arguments to substitute, if any, in the string
+	 */
+	protected void warn(String messageKey, Object... arguments) {
+		final String report = NLS.bind(l10n.getString(ValidationServiceImpl.class, messageKey), arguments);
+		reportService.report(new AbstractReport(report, IStatus.WARNING));
 	}
 
 }

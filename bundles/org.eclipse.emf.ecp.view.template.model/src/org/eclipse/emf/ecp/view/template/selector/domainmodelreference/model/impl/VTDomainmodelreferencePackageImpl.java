@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -14,6 +16,7 @@ package org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.im
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
@@ -28,8 +31,7 @@ import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTD
  *
  * @generated
  */
-public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements VTDomainmodelreferencePackage
-{
+public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements VTDomainmodelreferencePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -52,8 +54,7 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 	 * @see #init()
 	 * @generated
 	 */
-	private VTDomainmodelreferencePackageImpl()
-	{
+	private VTDomainmodelreferencePackageImpl() {
 		super(eNS_URI, VTDomainmodelreferenceFactory.eINSTANCE);
 	}
 
@@ -78,21 +79,22 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VTDomainmodelreferencePackage init()
-	{
+	public static VTDomainmodelreferencePackage init() {
 		if (isInited) {
 			return (VTDomainmodelreferencePackage) EPackage.Registry.INSTANCE
 				.getEPackage(VTDomainmodelreferencePackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final VTDomainmodelreferencePackageImpl theDomainmodelreferencePackage = (VTDomainmodelreferencePackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof VTDomainmodelreferencePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTDomainmodelreferencePackageImpl());
+		final Object registeredDomainmodelreferencePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		final VTDomainmodelreferencePackageImpl theDomainmodelreferencePackage = registeredDomainmodelreferencePackage instanceof VTDomainmodelreferencePackageImpl
+			? (VTDomainmodelreferencePackageImpl) registeredDomainmodelreferencePackage
+			: new VTDomainmodelreferencePackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
+		EcorePackage.eINSTANCE.eClass();
 		VTTemplatePackage.eINSTANCE.eClass();
 		VViewPackage.eINSTANCE.eClass();
 
@@ -117,8 +119,7 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 	 * @generated
 	 */
 	@Override
-	public EClass getDomainModelReferenceSelector()
-	{
+	public EClass getDomainModelReferenceSelector() {
 		return domainModelReferenceSelectorEClass;
 	}
 
@@ -129,8 +130,7 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 	 * @generated
 	 */
 	@Override
-	public EReference getDomainModelReferenceSelector_DomainModelReference()
-	{
+	public EReference getDomainModelReferenceSelector_DomainModelReference() {
 		return (EReference) domainModelReferenceSelectorEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -141,8 +141,18 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 	 * @generated
 	 */
 	@Override
-	public VTDomainmodelreferenceFactory getDomainmodelreferenceFactory()
-	{
+	public EReference getDomainModelReferenceSelector_RootEClass() {
+		return (EReference) domainModelReferenceSelectorEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VTDomainmodelreferenceFactory getDomainmodelreferenceFactory() {
 		return (VTDomainmodelreferenceFactory) getEFactoryInstance();
 	}
 
@@ -162,8 +172,7 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -172,6 +181,7 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 		// Create classes and their features
 		domainModelReferenceSelectorEClass = createEClass(DOMAIN_MODEL_REFERENCE_SELECTOR);
 		createEReference(domainModelReferenceSelectorEClass, DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE);
+		createEReference(domainModelReferenceSelectorEClass, DOMAIN_MODEL_REFERENCE_SELECTOR__ROOT_ECLASS);
 	}
 
 	/**
@@ -190,8 +200,7 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -206,6 +215,8 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 		final VTTemplatePackage theTemplatePackage = (VTTemplatePackage) EPackage.Registry.INSTANCE
 			.getEPackage(VTTemplatePackage.eNS_URI);
 		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -217,11 +228,12 @@ public class VTDomainmodelreferencePackageImpl extends EPackageImpl implements V
 		// Initialize classes, features, and operations; add parameters
 		initEClass(domainModelReferenceSelectorEClass, VTDomainModelReferenceSelector.class,
 			"DomainModelReferenceSelector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getDomainModelReferenceSelector_DomainModelReference(),
-			theViewPackage.getDomainModelReference(),
-			null,
-			"domainModelReference", null, 1, 1, VTDomainModelReferenceSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDomainModelReferenceSelector_DomainModelReference(), theViewPackage.getDomainModelReference(),
+			null, "domainModelReference", null, 1, 1, VTDomainModelReferenceSelector.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDomainModelReferenceSelector_RootEClass(), theEcorePackage.getEClass(), null, "rootEClass", //$NON-NLS-1$
+			null, 0, 1, VTDomainModelReferenceSelector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

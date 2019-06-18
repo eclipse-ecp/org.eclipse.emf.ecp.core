@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Neil Mackenzie - initial implementation
@@ -43,10 +45,8 @@ public class RAPFactories_PTest extends TestCase {
 	 */
 	@Test
 	public void testRetrieveMock() {
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<SessionProvider> ref =
-			bundleContext.getServiceReference(SessionProvider.class);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<SessionProvider> ref = bundleContext.getServiceReference(SessionProvider.class);
 		final SessionProvider provider = bundleContext.getService(ref);
 		assertNotNull(provider);
 		bundleContext.ungetService(ref);
@@ -61,27 +61,20 @@ public class RAPFactories_PTest extends TestCase {
 	@Test
 	public final void testServices() throws ECPProjectWithNameExistsException {
 		MockSessionProvider.getInstance();
-		MockSessionProvider.
-		setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPProjectManager> serviceReference =
-			bundleContext.getServiceReference(ECPProjectManager.class);
+		MockSessionProvider.setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPProjectManager> serviceReference = bundleContext
+			.getServiceReference(ECPProjectManager.class);
 
-		final ECPProjectManager service1 =
-			bundleContext.getService(serviceReference);
-		final ECPProject project1 =
-			service1.createProject(new EMFStoreProvider(), "Test10"); //$NON-NLS-1$
-		final ECPProject project2 =
-			service1.createProject(EMFStoreProvider.INSTANCE, "Test2"); //$NON-NLS-1$
+		final ECPProjectManager service1 = bundleContext.getService(serviceReference);
+		final ECPProject project1 = service1.createProject(new EMFStoreProvider(), "Test10"); //$NON-NLS-1$
+		final ECPProject project2 = service1.createProject(EMFStoreProvider.INSTANCE, "Test2"); //$NON-NLS-1$
 
 		bundleContext.ungetService(serviceReference);
-		final ECPProjectManager service2 =
-			bundleContext.getService(serviceReference);
+		final ECPProjectManager service2 = bundleContext.getService(serviceReference);
 		assertNotSame(service1, service2);
 
-		final ECPProject project3 =
-			service2.createProject(EMFStoreProvider.INSTANCE, "Test3"); //$NON-NLS-1$
+		final ECPProject project3 = service2.createProject(EMFStoreProvider.INSTANCE, "Test3"); //$NON-NLS-1$
 
 		final Collection<ECPProject> projects1 = service1.getProjects();
 		assertEquals(2, projects1.size());
@@ -102,21 +95,16 @@ public class RAPFactories_PTest extends TestCase {
 	@Test
 	public void testDifferentSessionIdsECPProjectManager() {
 		MockSessionProvider.getInstance();
-		MockSessionProvider.
-		setSessionProvider(
+		MockSessionProvider.setSessionProvider(
 			SessionProviderType.DIFFERENT_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPProjectManager> serviceReference =
-			bundleContext.
-				getServiceReference(ECPProjectManager.class);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPProjectManager> serviceReference = bundleContext
+			.getServiceReference(ECPProjectManager.class);
 
-		final ECPProjectManager service1 =
-			bundleContext.getService(serviceReference);
+		final ECPProjectManager service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPProjectManager service2 =
-			bundleContext.getService(serviceReference);
+		final ECPProjectManager service2 = bundleContext.getService(serviceReference);
 		assertNotSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}
@@ -129,20 +117,15 @@ public class RAPFactories_PTest extends TestCase {
 	@Test
 	public void testSameSessionIdsECPProjectManager() {
 		MockSessionProvider.getInstance();
-		MockSessionProvider.
-		setSessionProvider(SessionProviderType.SAME_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPProjectManager> serviceReference =
-			bundleContext.
-			getServiceReference(ECPProjectManager.class);
+		MockSessionProvider.setSessionProvider(SessionProviderType.SAME_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPProjectManager> serviceReference = bundleContext
+			.getServiceReference(ECPProjectManager.class);
 
-		final ECPProjectManager service1 =
-			bundleContext.getService(serviceReference);
+		final ECPProjectManager service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPProjectManager service2 =
-			bundleContext.getService(serviceReference);
+		final ECPProjectManager service2 = bundleContext.getService(serviceReference);
 		assertSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}
@@ -154,21 +137,16 @@ public class RAPFactories_PTest extends TestCase {
 	 */
 	@Test
 	public final void testDifferentSessionIdsECPObserverBus() {
-		MockSessionProvider.
-		getInstance();
-		MockSessionProvider.
-			setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPObserverBus> serviceReference =
-			bundleContext.getServiceReference(ECPObserverBus.class);
+		MockSessionProvider.getInstance();
+		MockSessionProvider.setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPObserverBus> serviceReference = bundleContext
+			.getServiceReference(ECPObserverBus.class);
 
-		final ECPObserverBus service1 =
-			bundleContext.getService(serviceReference);
+		final ECPObserverBus service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPObserverBus service2 =
-			bundleContext.getService(serviceReference);
+		final ECPObserverBus service2 = bundleContext.getService(serviceReference);
 		assertNotSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}
@@ -180,21 +158,16 @@ public class RAPFactories_PTest extends TestCase {
 	 */
 	@Test
 	public final void testSameSessionIdsECPObserverBus() {
-		MockSessionProvider.
-		getInstance();
-		MockSessionProvider.
-			setSessionProvider(SessionProviderType.SAME_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPObserverBus> serviceReference =
-			bundleContext.getServiceReference(ECPObserverBus.class);
+		MockSessionProvider.getInstance();
+		MockSessionProvider.setSessionProvider(SessionProviderType.SAME_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPObserverBus> serviceReference = bundleContext
+			.getServiceReference(ECPObserverBus.class);
 
-		final ECPObserverBus service1 =
-			bundleContext.getService(serviceReference);
+		final ECPObserverBus service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPObserverBus service2 =
-			bundleContext.getService(serviceReference);
+		final ECPObserverBus service2 = bundleContext.getService(serviceReference);
 		assertSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}
@@ -206,22 +179,16 @@ public class RAPFactories_PTest extends TestCase {
 	 */
 	@Test
 	public final void testDifferentSessionIdsECPProviderRegistry() {
-		MockSessionProvider.
-		getInstance();
-		MockSessionProvider.
-			setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPProviderRegistry> serviceReference =
-			bundleContext.
-			getServiceReference(ECPProviderRegistry.class);
+		MockSessionProvider.getInstance();
+		MockSessionProvider.setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPProviderRegistry> serviceReference = bundleContext
+			.getServiceReference(ECPProviderRegistry.class);
 
-		final ECPProviderRegistry service1 = bundleContext.
-			getService(serviceReference);
+		final ECPProviderRegistry service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPProviderRegistry service2 =
-			bundleContext.getService(serviceReference);
+		final ECPProviderRegistry service2 = bundleContext.getService(serviceReference);
 		assertNotSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}
@@ -233,21 +200,16 @@ public class RAPFactories_PTest extends TestCase {
 	 */
 	@Test
 	public final void testSameSessionIdsECPProviderRegistry() {
-		MockSessionProvider.
-		getInstance();
-		MockSessionProvider.
-			setSessionProvider(SessionProviderType.SAME_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPProviderRegistry> serviceReference =
-			bundleContext.getServiceReference(ECPProviderRegistry.class);
+		MockSessionProvider.getInstance();
+		MockSessionProvider.setSessionProvider(SessionProviderType.SAME_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPProviderRegistry> serviceReference = bundleContext
+			.getServiceReference(ECPProviderRegistry.class);
 
-		final ECPProviderRegistry service1 =
-			bundleContext.getService(serviceReference);
+		final ECPProviderRegistry service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPProviderRegistry service2 =
-			bundleContext.getService(serviceReference);
+		final ECPProviderRegistry service2 = bundleContext.getService(serviceReference);
 		assertSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}
@@ -259,21 +221,16 @@ public class RAPFactories_PTest extends TestCase {
 	 */
 	@Test
 	public final void testDifferentSessionIdsECPRepositoryManager() {
-		MockSessionProvider.
-		getInstance();
-		MockSessionProvider.
-			setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPRepositoryManager> serviceReference =
-			bundleContext.getServiceReference(ECPRepositoryManager.class);
+		MockSessionProvider.getInstance();
+		MockSessionProvider.setSessionProvider(SessionProviderType.DIFFERENT_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPRepositoryManager> serviceReference = bundleContext
+			.getServiceReference(ECPRepositoryManager.class);
 
-		final ECPRepositoryManager service1 =
-			bundleContext.getService(serviceReference);
+		final ECPRepositoryManager service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPRepositoryManager service2 =
-			bundleContext.getService(serviceReference);
+		final ECPRepositoryManager service2 = bundleContext.getService(serviceReference);
 		assertNotSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}
@@ -285,22 +242,16 @@ public class RAPFactories_PTest extends TestCase {
 	 */
 	@Test
 	public final void testSameSessionIdsECPRepositoryManager() {
-		MockSessionProvider.
-		getInstance();
-		MockSessionProvider.
-			setSessionProvider(SessionProviderType.SAME_SESSION_ID);
-		final BundleContext bundleContext =
-			FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ECPRepositoryManager> serviceReference =
-			bundleContext.
-			getServiceReference(ECPRepositoryManager.class);
+		MockSessionProvider.getInstance();
+		MockSessionProvider.setSessionProvider(SessionProviderType.SAME_SESSION_ID);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ECPRepositoryManager> serviceReference = bundleContext
+			.getServiceReference(ECPRepositoryManager.class);
 
-		final ECPRepositoryManager service1 =
-			bundleContext.getService(serviceReference);
+		final ECPRepositoryManager service1 = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 
-		final ECPRepositoryManager service2 =
-			bundleContext.getService(serviceReference);
+		final ECPRepositoryManager service2 = bundleContext.getService(serviceReference);
 		assertSame(service1, service2);
 		bundleContext.ungetService(serviceReference);
 	}

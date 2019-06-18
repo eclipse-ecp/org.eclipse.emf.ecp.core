@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
@@ -28,8 +30,7 @@ import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTD
  * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage
  * @generated
  */
-public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
-{
+public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -46,10 +47,8 @@ public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public DomainmodelreferenceAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public DomainmodelreferenceAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VTDomainmodelreferencePackage.eINSTANCE;
 		}
 	}
@@ -65,14 +64,11 @@ public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -85,27 +81,22 @@ public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected DomainmodelreferenceSwitch<Adapter> modelSwitch =
-		new DomainmodelreferenceSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseDomainModelReferenceSelector(VTDomainModelReferenceSelector object)
-			{
-				return createDomainModelReferenceSelectorAdapter();
-			}
+	protected DomainmodelreferenceSwitch<Adapter> modelSwitch = new DomainmodelreferenceSwitch<Adapter>() {
+		@Override
+		public Adapter caseDomainModelReferenceSelector(VTDomainModelReferenceSelector object) {
+			return createDomainModelReferenceSelectorAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleSelector(VTStyleSelector object)
-			{
-				return createStyleSelectorAdapter();
-			}
+		@Override
+		public Adapter caseStyleSelector(VTStyleSelector object) {
+			return createStyleSelectorAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -117,14 +108,13 @@ public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector
 	 * <em>Domain Model Reference Selector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -135,8 +125,7 @@ public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector
 	 * @generated
 	 */
-	public Adapter createDomainModelReferenceSelectorAdapter()
-	{
+	public Adapter createDomainModelReferenceSelectorAdapter() {
 		return null;
 	}
 
@@ -152,8 +141,7 @@ public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelector
 	 * @generated
 	 */
-	public Adapter createStyleSelectorAdapter()
-	{
+	public Adapter createStyleSelectorAdapter() {
 		return null;
 	}
 
@@ -166,8 +154,7 @@ public class DomainmodelreferenceAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

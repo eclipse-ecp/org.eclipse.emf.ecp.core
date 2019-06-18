@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen - initial API and implementation
@@ -38,7 +40,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
@@ -70,6 +71,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -99,7 +101,6 @@ import org.eclipse.swt.widgets.TableColumn;
  * @author Eugen
  *
  */
-@SuppressWarnings("restriction")
 public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 	private final EMFDataBindingContext viewModelDBC;
@@ -444,9 +445,12 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 				eObject, structuralFeature, getEditingDomain(eObject), eclass, "New Reference Element", //$NON-NLS-1$
-				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageDescription_AddModelElement,
+				LocalizationServiceHelper.getString(TableColumnsDMRTableControl.class,
+					"NewModelElementWizard_WizardTitle_AddModelElement"), //$NON-NLS-1$
+				LocalizationServiceHelper.getString(TableColumnsDMRTableControl.class,
+					"NewModelElementWizard_PageTitle_AddModelElement"), //$NON-NLS-1$
+				LocalizationServiceHelper.getString(TableColumnsDMRTableControl.class,
+					"NewModelElementWizard_PageDescription_AddModelElement"), //$NON-NLS-1$
 				(VDomainModelReference) IStructuredSelection.class.cast(viewer.getSelection()).getFirstElement());
 
 			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(

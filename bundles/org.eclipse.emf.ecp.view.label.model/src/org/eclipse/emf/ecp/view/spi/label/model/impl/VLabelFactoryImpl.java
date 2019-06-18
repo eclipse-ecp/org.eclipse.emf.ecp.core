@@ -2,9 +2,11 @@
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
@@ -29,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
  *
  * @generated
  */
-public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
-{
+public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -38,18 +39,14 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 *
 	 * @generated
 	 */
-	public static VLabelFactory init()
-	{
-		try
-		{
+	public static VLabelFactory init() {
+		try {
 			final VLabelFactory theLabelFactory = (VLabelFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VLabelPackage.eNS_URI);
-			if (theLabelFactory != null)
-			{
+			if (theLabelFactory != null) {
 				return theLabelFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VLabelFactoryImpl();
@@ -62,8 +59,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 *
 	 * @generated
 	 */
-	public VLabelFactoryImpl()
-	{
+	public VLabelFactoryImpl() {
 		super();
 	}
 
@@ -74,10 +70,8 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VLabelPackage.LABEL:
 			return createLabel();
 		default:
@@ -92,10 +86,8 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * @generated
 	 */
 	@Override
-	public Object createFromString(EDataType eDataType, String initialValue)
-	{
-		switch (eDataType.getClassifierID())
-		{
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
 		case VLabelPackage.VLABEL_STYLE:
 			return createVLabelStyleFromString(eDataType, initialValue);
 		default:
@@ -110,10 +102,8 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * @generated
 	 */
 	@Override
-	public String convertToString(EDataType eDataType, Object instanceValue)
-	{
-		switch (eDataType.getClassifierID())
-		{
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
 		case VLabelPackage.VLABEL_STYLE:
 			return convertVLabelStyleToString(eDataType, instanceValue);
 		default:
@@ -128,8 +118,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * @generated
 	 */
 	@Override
-	public VLabel createLabel()
-	{
+	public VLabel createLabel() {
 		final VLabelImpl label = new VLabelImpl();
 		return label;
 	}
@@ -140,11 +129,9 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 *
 	 * @generated
 	 */
-	public VLabelStyle createVLabelStyleFromString(EDataType eDataType, String initialValue)
-	{
+	public VLabelStyle createVLabelStyleFromString(EDataType eDataType, String initialValue) {
 		final VLabelStyle result = VLabelStyle.get(initialValue);
-		if (result == null)
-		{
+		if (result == null) {
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
@@ -157,8 +144,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 *
 	 * @generated
 	 */
-	public String convertVLabelStyleToString(EDataType eDataType, Object instanceValue)
-	{
+	public String convertVLabelStyleToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -169,8 +155,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * @generated
 	 */
 	@Override
-	public VLabelPackage getLabelPackage()
-	{
+	public VLabelPackage getLabelPackage() {
 		return (VLabelPackage) getEPackage();
 	}
 
@@ -182,8 +167,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * @generated
 	 */
 	@Deprecated
-	public static VLabelPackage getPackage()
-	{
+	public static VLabelPackage getPackage() {
 		return VLabelPackage.eINSTANCE;
 	}
 

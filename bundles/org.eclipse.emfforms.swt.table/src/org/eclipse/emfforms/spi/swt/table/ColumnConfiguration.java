@@ -1,16 +1,22 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 534829
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,12 +56,28 @@ public interface ColumnConfiguration {
 	Feature FEATURE_COLUMN_FILTER = TableConfiguration.FEATURE_COLUMN_FILTER;
 
 	/**
-	 * All configurable features.
+	 * Feature toggle for column filter support.
 	 */
-	Feature[] FEATURES = {
-		FEATURE_COLUMN_HIDE_SHOW,
-		FEATURE_COLUMN_FILTER
-	};
+	Feature FEATURE_COLUMN_REGEX_FILTER = TableConfiguration.FEATURE_COLUMN_REGEX_FILTER;
+
+	/**
+	 * All configurable features.
+	 *
+	 * @since 1.21
+	 */
+	Set<Feature> ALL_FEATURES = Collections.unmodifiableSet(new LinkedHashSet<>(
+		Arrays.asList(FEATURE_COLUMN_HIDE_SHOW,
+			FEATURE_COLUMN_FILTER,
+			FEATURE_COLUMN_REGEX_FILTER)));
+
+	/**
+	 * All configurable features.
+	 *
+	 * @deprecated Since 1.21, use the immutable {@link #ALL_FEATURES} set instead of this,
+	 *             which can be modified in place.
+	 */
+	@Deprecated
+	Feature[] FEATURES = ALL_FEATURES.toArray(new Feature[0]);
 
 	/**
 	 * Column data configuration key.

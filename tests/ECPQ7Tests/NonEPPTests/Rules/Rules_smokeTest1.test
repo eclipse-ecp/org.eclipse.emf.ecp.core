@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _PyfLgGtLEeWukfCGOpNfzw
-Runtime-Version: 2.1.0.201606221726
-Save-Time: 9/5/16 1:57 PM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 5/7/19 3:05 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -16,71 +16,80 @@ Entry-Name: .content
 
 // and or enable rule
 try {
-	with [get-view "Model Explorer" | get-tree] {
-	    select "Project/View/Control dateOfBirth" | get-menu "Enable Rule" | click
-	    select "Project/View/Control dateOfBirth/Enable Rule false" | get-menu "Or Condition" | click
-	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "And Condition" | click
-	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" | get-menu "Leaf Condition" 
-	        | click
-	}
 	with [get-editor View] {
 	    with [get-tree] {
-	        select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition" 
-	            | get-menu "Feature Path Domain Model Reference (Default)" | click
-	        select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition/Feature Path Domain Model Reference (Default)"
-	    }
+		    select "View/Control dateOfBirth" | get-menu "Enable Rule" | click
+		    select "View/Control dateOfBirth/Enable Rule false" | get-menu "Or Condition" | click
+		    select "View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "And Condition" | click
+		    select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" | get-menu "Leaf Condition" | click
+		    select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition"
+		}
+		get-button "Create and link new Domain Model Reference" | click
+	}
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
 	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "name : EString"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
 	}
-	with [get-window "Select a EStructuralFeature"] {
-	    get-tree | select "name : EString"
-	    get-button OK | click
-	}
-	get-editor "Leaf Condition" | get-button "Select Object" | click
+	get-editor View | get-button "Select Object" | click
 	with [get-window "Insert the value"] {
 	    get-editbox 
 	        -after [get-label "The value must be parseable by the String class. For a double value please use the #.# format. For boolean values \'true\' or \'false\'."] 
 	        | set-text test
 	    get-button OK | click
 	}
-	get-editor "Leaf Condition test" | close
-	get-editor "And Condition" | close
-	get-editor "Or Condition" | close
-	get-editor "Enable Rule false" | close
-	get-editor Player | close
-	get-editor View | close
-	with [get-view "Model Explorer" | get-tree] {
-	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" | get-menu "Leaf Condition" 
-	        | click
-	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition" 
-    		| get-menu "Feature Path Domain Model Reference (Default)" | click
+	
+	get-view "Model Explorer" | get-tree | select "Project/View" | double-click
+	with [get-editor View] {
+	    with [get-tree] {
+			select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" 
+	                | get-menu -path "Leaf Condition" | click
+	        select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition"
+	    }
+	    get-button "Create and link new Domain Model Reference" | click
+    }
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "isProfessional : EBoolean"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
 	}
-	get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
-	with [get-window "Select a EStructuralFeature"] {
-	    get-tree | select "isProfessional : EBoolean"
-	    get-button OK | click
-	}
-	get-editor "Leaf Condition" | get-button "Select Object" | click
+	get-editor View | get-button "Select Object" | click
 	with [get-window "Insert the value"] {
 	    get-editbox 
 	        -after [get-label "The value must be parseable by the Boolean class. For a double value please use the #.# format. For boolean values \'true\' or \'false\'."] 
 	        | set-text true
 	    get-button OK | click
 	}
-	get-editor "Leaf Condition true" | close
-	with [get-view "Model Explorer" | get-tree] {
-	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "And Condition" | click
-	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
-	        -index 1] | get-menu "Leaf Condition" | click
-	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
-	        -index 1 | get-item "Leaf Condition"] | get-menu "Feature Path Domain Model Reference (Default)" | click
+	with [get-editor View] {
+	    with [get-tree] {
+			select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" 
+	                | get-menu -path "Leaf Condition" | click
+	        select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition"
+	    }
+	    get-button "Create and link new Domain Model Reference" | click
+    }
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "height : EDouble"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
 	}
-	get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
-	with [get-window "Select a EStructuralFeature"] {
-	    get-tree | select "height : EDouble"
-	    get-button OK | click
-	}
-	get-editor "height" | close
-	get-editor "Leaf Condition" | get-button "Select Object" | click
+	
+	get-editor View | get-button "Select Object" | click
 	with [get-window "Insert the value"] {
 	    with [get-editbox 
 	        -after [get-label "The value must be parseable by the Double class. For a double value please use the #.# format. For boolean values \'true\' or \'false\'."]] {
@@ -88,28 +97,34 @@ try {
 	    }
 	    get-button OK | click
 	}
-	get-editor "Leaf Condition 5.5" | close
-	get-editor "And Condition" | close
-	with [get-view "Model Explorer" | get-tree] {
-	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
-	        -index 1] | get-menu "Leaf Condition" | click
-	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
-	        -index 1 | get-item "Leaf Condition"] | get-menu "Feature Path Domain Model Reference (Default)" | click
+	
+	with [get-editor View] {
+	    with [get-tree] {
+			select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" 
+	                | get-menu -path "Leaf Condition" | click
+	        select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition"
+	    }
+	    get-button "Create and link new Domain Model Reference" | click
+    }
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "numberOfVictories : EInt"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
 	}
-	get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
-	with [get-window "Select a EStructuralFeature"] {
-	    get-tree | select "numberOfVictories : EInt"
-	    get-button OK | click
-	}
-	get-editor "numberOfVictories" | close
-	get-editor "Leaf Condition" | get-button "Select Object" | click
+	
+	get-editor View | get-button "Select Object" | click
 	with [get-window "Insert the value"] {
 	    get-editbox 
 	        -after [get-label "The value must be parseable by the Integer class. For a double value please use the #.# format. For boolean values \'true\' or \'false\'."] 
 	        | set-text 6
 	    get-button OK | click
 	}
-	get-editor "Leaf Condition 6" | close
+	
 	with [get-view "Model Explorer"] {
 	   try {
 			get-tree | select "Project"
@@ -125,8 +140,11 @@ try {
 	    		get-button "Save Project" | click
 	    	}
 	    }
-	    get-tree | select "Model/Player" | double-click
 	}
+	invoke-static -pluginId org.eclipse.emf.ecp.view.model.provider.xmi -className org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager -methodName dispose
+	
+	get-view "Model Explorer" | get-tree | select "Model/Player" | double-click
+	
 	with [get-editor Player] {
 		get-label "No date set! Click button to set date." | get-property enablement | equals false | verify-true
 	    get-button -after [get-label "No date set! Click button to set date."] | get-property enablement | equals false | verify-true 
