@@ -32,4 +32,11 @@
             class="org.eclipse.emfforms.spi.view.mappingsegment.model.util.VMappingsegmentResourceFactoryImpl"/>
    </extension>
 
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/mappingsegment.history">
+      </migrator>
+   </extension>
+
 </plugin>
