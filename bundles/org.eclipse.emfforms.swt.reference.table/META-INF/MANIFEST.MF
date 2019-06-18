@@ -29,9 +29,6 @@ Import-Package: org.eclipse.emf.ecp.spi.common.ui.composites;version="[1.22.0,1.
  org.eclipse.swt.widgets;version="0.0.0",
  org.osgi.service.component.annotations;version="1.3.0"
 Automatic-Module-Name: org.eclipse.emfforms.swt.reference.table
-Service-Component: OSGI-INF/tableDetailDialogRendererService.xml,
- OSGI-INF/tableDetailPanelRendererService.xml,
- OSGI-INF/tableRendererService.xml,
- OSGI-INF/selectionTableCompositeStrategyProvider.xml
+Service-Component: OSGI-INF/selectionTableCompositeStrategyProvider.xml
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
