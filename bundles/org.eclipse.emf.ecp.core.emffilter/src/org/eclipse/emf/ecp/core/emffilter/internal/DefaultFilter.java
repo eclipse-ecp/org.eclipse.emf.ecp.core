@@ -132,6 +132,9 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emfforms/view/multisegment/model/1190"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emfforms/view/mappingsegment/model/1190"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emfforms/view/indexsegment/model/1190"); //$NON-NLS-1$
+
+		// reference service
+		packages.add("http://www.eclipse.org/emf/ecp/view/reference/table/selection"); //$NON-NLS-1$
 	}
 
 	private void addQ7Models1(Set<String> packages) {
