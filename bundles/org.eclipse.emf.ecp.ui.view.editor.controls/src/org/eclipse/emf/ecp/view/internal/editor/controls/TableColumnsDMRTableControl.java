@@ -442,6 +442,8 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 			final Collection<EClass> classes = EMFUtils.getSubClasses(VViewPackage.eINSTANCE
 				.getDomainModelReference());
+			// Don't allow to create a plain DMR legacy mode
+			classes.remove(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE);
 
 			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 				eObject, structuralFeature, getEditingDomain(eObject), eclass, "New Reference Element", //$NON-NLS-1$

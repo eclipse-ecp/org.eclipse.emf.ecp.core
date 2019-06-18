@@ -54,6 +54,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -485,8 +486,6 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
-
 			final EClass eclass = getDmrRootEClass();
 
 			VDomainModelReference reference = null;
@@ -505,6 +504,10 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 					editSegmentDmr(eObject, eReference, reference);
 				}
 			} else {
+				final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
+				// Don't allow to create a plain DMR legacy mode
+				classes.remove(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE);
+
 				final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 					eObject, structuralFeature, getEditingDomain(eObject), eclass,
 					reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$

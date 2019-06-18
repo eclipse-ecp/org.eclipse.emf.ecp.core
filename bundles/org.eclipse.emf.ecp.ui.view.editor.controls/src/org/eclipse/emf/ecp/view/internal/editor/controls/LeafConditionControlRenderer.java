@@ -101,6 +101,8 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 			final EClass referenceType = reference.getEReferenceType();
 			final Collection<EClass> dmrEClasses = EMFUtils.getSubClasses(VViewPackage.eINSTANCE
 				.getDomainModelReference());
+			// Don't allow to create a plain DMR legacy mode
+			dmrEClasses.remove(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE);
 			final Setting valueDMRSeting = ((LeafConditionImpl) condition).eSetting(RulePackage.eINSTANCE
 				.getLeafCondition_ValueDomainModelReference());
 			final CreateDomainModelReferenceWizard dmrWizard = new CreateDomainModelReferenceWizard(valueDMRSeting,
