@@ -22,9 +22,11 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.ui.view.swt.reference.SelectionCompositeStrategy;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
@@ -36,6 +38,8 @@ import org.eclipse.emfforms.bazaar.Bid;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.view.spi.multisegment.model.MultiSegmentUtil;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -182,7 +186,7 @@ public class SelectionTableCompositeStrategyProvider implements SelectionComposi
 					continue;
 				}
 
-				if (dmr instanceof VTableDomainModelReference) {
+				if (dmr.getSegments().isEmpty() && dmr instanceof VTableDomainModelReference) {
 					// The TableDMRConverter ignores single-valued references, but we
 					// have to let them be specified anyways because it's the only
 					// thing that can provide the column DMRs
@@ -191,6 +195,22 @@ public class SelectionTableCompositeStrategyProvider implements SelectionComposi
 						|| resolvesTo(tdmr.getDomainModelReference(), owner, feature)) {
 
 						// That's the one
+						result = table;
+					}
+				} else if (!dmr.getSegments().isEmpty() && MultiSegmentUtil.getMultiSegment(dmr).isPresent()) {
+					// The MultiSegmentConverter does not handle single-value reference, but we have to let them be
+					// specified anyways because it's the only thing that can provide the column DMRs.
+					// Copy the dmr and replace the multi segment with a feature segment in the copied version. See if
+					// this can be resolved to our target feature.
+					final VDomainModelReference copiedDmr = EcoreUtil.copy(dmr);
+					final VMultiDomainModelReferenceSegment multiSegment = MultiSegmentUtil.getMultiSegment(copiedDmr)
+						.get();
+					copiedDmr.getSegments().remove(multiSegment);
+					final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
+						.createFeatureDomainModelReferenceSegment();
+					segment.setDomainModelFeature(multiSegment.getDomainModelFeature());
+					copiedDmr.getSegments().add(segment);
+					if (resolvesTo(copiedDmr, owner, feature)) {
 						result = table;
 					}
 				} else if (resolvesTo(dmr, owner, feature)) {

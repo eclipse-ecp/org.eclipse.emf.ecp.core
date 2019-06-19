@@ -51,7 +51,6 @@ import org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService;
 import org.eclipse.emf.ecp.view.spi.provider.IFilteredViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
-import org.eclipse.emfforms.swt.internal.reference.table.SelectionTableCompositeStrategyProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -61,13 +60,22 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Black-box tests for the {@link SelectionTableCompositeStrategyProvider} class.
  */
+@RunWith(Parameterized.class)
 public class SelectionTableCompositeStrategyProvider_PTest {
 
 	private static final EReference REFERENCE = EcorePackage.Literals.ETYPED_ELEMENT__ETYPE;
+
+	/** Parameterized name of the "outer" view. */
+	private final String mainView;
+	/** Parameterized name of the view containing the table control for the table composite. */
+	private final String tableCompositeView;
 
 	private DefaultRealm realm;
 
@@ -86,8 +94,18 @@ public class SelectionTableCompositeStrategyProvider_PTest {
 	/**
 	 * Initializes me.
 	 */
-	public SelectionTableCompositeStrategyProvider_PTest() {
+	public SelectionTableCompositeStrategyProvider_PTest(String name, String mainView, String tableComposite) {
 		super();
+		this.mainView = mainView;
+		tableCompositeView = tableComposite;
+	}
+
+	@Parameters(name = "{0}")
+	public static Object[] parameters() {
+		return new Object[][] {
+			{ "legacy", "legacy_EParameter.view", "legacy_ETypedElement_eType.view" },
+			{ "segments", "segments_EParameter.view", "segments_ETypedElement_eType.view" }
+		};
 	}
 
 	@Test
@@ -201,9 +219,9 @@ public class SelectionTableCompositeStrategyProvider_PTest {
 
 	public void loadViewModels() {
 		final ResourceSet rset = new ResourceSetImpl();
-		Resource res = rset.getResource(getURI("EParameter.view"), true);
+		Resource res = rset.getResource(getURI(mainView), true);
 		eParameterView = (VView) EcoreUtil.getObjectByType(res.getContents(), VViewPackage.Literals.VIEW);
-		res = rset.getResource(getURI("ETypedElement_eType.view"), true);
+		res = rset.getResource(getURI(tableCompositeView), true);
 		eTypedElementETypeView = (VView) EcoreUtil.getObjectByType(res.getContents(), VViewPackage.Literals.VIEW);
 	}
 

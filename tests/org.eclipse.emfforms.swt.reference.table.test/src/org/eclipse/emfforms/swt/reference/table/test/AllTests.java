@@ -14,6 +14,7 @@
 
 package org.eclipse.emfforms.swt.reference.table.test;
 
+import org.eclipse.emfforms.swt.internal.reference.table.DelegatingDmrSegmentConverter_PTest;
 import org.eclipse.emfforms.swt.internal.reference.table.DelegatingDomainModelReferenceConverter_PTest;
 import org.eclipse.emfforms.swt.internal.reference.table.SelectionTableCompositeStrategyProvider_PTest;
 import org.junit.runner.RunWith;
@@ -26,6 +27,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({ //
 	DelegatingDomainModelReferenceConverter_PTest.class,
 	SelectionTableCompositeStrategyProvider_PTest.class,
+	DelegatingDmrSegmentConverter_PTest.class
 })
 public class AllTests {
 	// Nothing more to specify

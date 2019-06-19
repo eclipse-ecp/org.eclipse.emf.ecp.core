@@ -41,7 +41,6 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.swt.internal.reference.table.DelegatingDomainModelReferenceConverter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

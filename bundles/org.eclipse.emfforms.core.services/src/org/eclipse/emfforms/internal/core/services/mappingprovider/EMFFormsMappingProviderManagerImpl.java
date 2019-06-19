@@ -43,6 +43,7 @@ public class EMFFormsMappingProviderManagerImpl implements EMFFormsMappingProvid
 	private static final RankingHelper<EMFFormsMappingProvider> RANKING_HELPER = //
 		new RankingHelper<EMFFormsMappingProvider>(
 			EMFFormsMappingProvider.class,
+			EMFFormsMappingProvider.NOT_APPLICABLE,
 			EMFFormsMappingProvider.NOT_APPLICABLE);
 
 	/**

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmi:id="_MBvG0ILhEemgFOUufSg2Sw" name="EParameter">
+  <rootEClass href="http://www.eclipse.org/emf/2002/Ecore#//EParameter"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_MB6F8oLhEemgFOUufSg2Sw" name="Control name">
+    <domainModelReference xmi:id="_dzQNsJKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_dzQNsZKlEemopf5v_LanBA" domainModelFeature="name"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_MB6GAILhEemgFOUufSg2Sw" name="Control eType">
+    <domainModelReference xmi:id="_dzQ0wJKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_dzQ0wZKlEemopf5v_LanBA" domainModelFeature="eType"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_MB6F-ILhEemgFOUufSg2Sw" name="Control lowerBound">
+    <domainModelReference xmi:id="_dzQ0wpKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_dzQ0w5KlEemopf5v_LanBA" domainModelFeature="lowerBound"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_MB6F-oLhEemgFOUufSg2Sw" name="Control upperBound">
+    <domainModelReference xmi:id="_dzQ0xJKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_dzQ0xZKlEemopf5v_LanBA" domainModelFeature="upperBound"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_MB6F9ILhEemgFOUufSg2Sw" name="Control ordered">
+    <domainModelReference xmi:id="_dzQ0xpKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_dzQ0x5KlEemopf5v_LanBA" domainModelFeature="ordered"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_MB6F9oLhEemgFOUufSg2Sw" name="Control unique">
+    <domainModelReference xmi:id="_dzQ0yJKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_dzQ0yZKlEemopf5v_LanBA" domainModelFeature="unique"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_MB6F8ILhEemgFOUufSg2Sw" name="Control eAnnotations">
+    <domainModelReference xmi:id="_dzQ0ypKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_dzQ0y5KlEemopf5v_LanBA" domainModelFeature="eAnnotations"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>
