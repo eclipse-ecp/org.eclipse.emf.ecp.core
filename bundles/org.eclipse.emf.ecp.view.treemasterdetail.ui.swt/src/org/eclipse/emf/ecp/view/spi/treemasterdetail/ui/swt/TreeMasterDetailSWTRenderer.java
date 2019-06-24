@@ -13,14 +13,17 @@
  * Eugen Neufeld - Refactoring
  * Alexandra Buzila - Refactoring
  * Johannes Faltermeier - integration with validation service
- * Christian W. Damus - bugs 543376, 545460, 527686
+ * Christian W. Damus - bugs 543376, 545460, 527686, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -105,6 +108,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -1059,6 +1064,106 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		rightPanelContainerComposite.layout();
 		final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		rightPanel.setMinSize(point);
+	}
+
+	/**
+	 * Reveal the given {@code object} in my tree.
+	 *
+	 * @param object an object to reveal
+	 * @return whether I succeeded in revealing it
+	 *
+	 * @since 1.22
+	 */
+	public boolean reveal(Object object) {
+		final TreePath treePath = getTreePathFor(object);
+		return reveal(treePath);
+	}
+
+	/**
+	 * Get a path to an {@object} in my tree.
+	 *
+	 * @param object an object in my tree
+	 * @return a path to it
+	 *
+	 * @since 1.22
+	 */
+	public TreePath getTreePathFor(Object object) {
+		final ITreeContentProvider content = (ITreeContentProvider) treeViewer.getContentProvider();
+		final Collection<?> roots = Arrays.asList(content.getElements(treeViewer.getInput()));
+
+		final List<Object> path = new LinkedList<Object>();
+		path.add(object);
+		for (Object parent = content.getParent(object); parent != null; parent = content.getParent(parent)) {
+			path.add(0, parent);
+
+			// Don't go above the root element
+			if (roots.contains(parent)) {
+				break;
+			}
+		}
+
+		return new TreePath(path.toArray());
+	}
+
+	/**
+	 * Reveal the given {@code path} in my tree.
+	 *
+	 * @param path a tree path to reveal
+	 * @return whether I succeeded in revealing it
+	 *
+	 * @since 1.22
+	 */
+	public boolean reveal(TreePath path) {
+		final ISelection newSelection = new TreeSelection(path);
+		if (!newSelection.equals(treeViewer.getSelection())) {
+			treeViewer.setSelection(new TreeSelection(path), true);
+		}
+		treeViewer.reveal(path);
+
+		return treeViewer.getStructuredSelection().getFirstElement() == path.getLastSegment();
+	}
+
+	/**
+	 * Query whether the given {@code path} exists in my tree.
+	 *
+	 * @param path a tree path
+	 * @return whether the path locates an element that exists in my tree
+	 *
+	 * @since 1.22
+	 */
+	public boolean hasPath(TreePath path) {
+		if (path.equals(TreePath.EMPTY)) {
+			return true;
+		}
+
+		final TreePath parentPath = path.getParentPath();
+		if (!hasPath(parentPath)) {
+			return false;
+		}
+
+		final ITreeContentProvider content = (ITreeContentProvider) treeViewer.getContentProvider();
+		Collection<?> children;
+		if (parentPath.equals(TreePath.EMPTY)) {
+			children = Arrays.asList(content.getElements(treeViewer.getInput()));
+		} else if (content.hasChildren(parentPath.getLastSegment())) {
+			children = Arrays.asList(content.getChildren(parentPath.getLastSegment()));
+		} else {
+			children = Collections.EMPTY_SET;
+		}
+
+		return children.contains(path.getLastSegment());
+	}
+
+	/**
+	 * Obtain the current detail context, if any.
+	 *
+	 * @return the view-model context of the details currently being presented,
+	 *         or {@code null} if none (usually because there is no selection in the tree)
+	 *
+	 * @since 1.22
+	 */
+	public ViewModelContext getDetailContext() {
+		return childContext;
 	}
 
 	/**

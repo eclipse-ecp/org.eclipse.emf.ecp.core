@@ -6,12 +6,12 @@
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/1180#//Element/notAFeature"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyA" name="Control name">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPLkUWAEeWfKJaajyNdyA">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyB" name="Control name">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPLkUWAEeWfKJaajyNdyB">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="wrongREF"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyA" name="No DMR"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyC" name="No DMR"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_SQXGkBs2EemWJdWNOROymw" name="AnnotationFail">
     <attachments xsi:type="org.eclipse.emfforms.view.annotation.model:Annotation" xmi:id="_ZE-1ABs2EemWJdWNOROymw"/>
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_Yk0HMBs2EemWJdWNOROymw">

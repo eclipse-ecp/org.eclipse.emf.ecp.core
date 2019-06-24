@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test;
 
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
@@ -33,7 +35,9 @@ import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 /**
  * @author Alexandra Buzila
@@ -47,6 +51,9 @@ public class TreeMasterDetailContextMenuViewModelService_PTest {
 	private VView detailView;
 	private Player player;
 	private CountDownLatch latch;
+
+	@Rule
+	public final TestRule realm = DefaultRealm.rule();
 
 	@Before
 	public void createDomainObject() {

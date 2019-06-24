@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  * Johannes Faltermeier - sorting + drag&drop
+ * Christian W. Damus - bug 548592
  *
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
@@ -81,6 +82,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -295,6 +297,21 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			getViewModelContext().getDomainModel());
 		// addRelayoutListenerIfNeeded(list, composite);
 		viewer.setInput(list);
+	}
+
+	/**
+	 * Select and reveal an {@code object} in my table.
+	 *
+	 * @param object an object to reveal
+	 *
+	 * @since 1.22
+	 */
+	void reveal(Object object) {
+		checkRenderer();
+
+		if (viewer != null) {
+			viewer.setSelection(new StructuredSelection(object), true);
+		}
 	}
 
 	/**

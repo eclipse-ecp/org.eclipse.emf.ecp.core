@@ -11,7 +11,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bugs 533568, 545460, 527686
+ * Christian W. Damus - bugs 533568, 545460, 527686, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
@@ -20,9 +20,9 @@ import static org.eclipse.emfforms.spi.localization.LocalizationServiceHelper.ge
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
-import org.eclipse.core.databinding.observable.ChangeEvent;
-import org.eclipse.core.databinding.observable.IChangeListener;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.internal.databinding.observable.DelayedObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -30,8 +30,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.common.callback.ViewModelPropertiesUpdateCallback;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -49,9 +52,9 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emfforms.spi.core.services.reveal.EMFFormsRevealService;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.DetailPanelRenderingFinishedCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
-import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -59,6 +62,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -191,27 +195,17 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		detailManager.setNoDetailMessage(selectNodeMessage);
 		detailManager.layoutDetailParent(detailParent);
 
-		/* enable delayed update mechanism */
-		final IViewerObservableValue treeViewerSelectionObservable = ViewersObservables
+		/* enable optional delayed update mechanism */
+		IObservableValue<?> treeViewerSelectionObservable = ViewersObservables
 			.observeSingleSelection(treeViewer);
-		@SuppressWarnings("unchecked")
-		final DelayedObservableValue<?> delayedObservableValue = new DelayedObservableValue<>(renderDelay,
-			treeViewerSelectionObservable);
-		delayedObservableValue.addChangeListener(new IChangeListener() {
+		if (renderDelay > 0) {
+			treeViewerSelectionObservable = new DelayedObservableValue<>(renderDelay,
+				treeViewerSelectionObservable);
+		}
+		treeViewerSelectionObservable.addChangeListener(__ -> doUpdateDetailPanel(false));
 
-			@Override
-			public void handleChange(ChangeEvent event) {
-				doUpdateDetailPanel(false);
-			}
-		});
-
-		treeComposite.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				treeViewerSelectionObservable.dispose();
-				delayedObservableValue.dispose();
-			}
-		});
+		final IObservableValue<?> observableToDispose = treeViewerSelectionObservable;
+		treeComposite.addDisposeListener(__ -> observableToDispose.dispose());
 
 		/* add key listener to switch focus on enter */
 		treeViewer.getTree().addKeyListener(new KeyAdapter() {
@@ -434,7 +428,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 *
 	 * @return the tree viewer (which is a selection provider)
 	 *
-	 * @deprecated Use the {@link #getMasterDetailSelectionProvider() master-detail selection provider}, instead}
+	 * @deprecated Use the {@link #getMasterDetailSelectionProvider() master-detail selection provider}, instead},
+	 *             or {@link #refresh()} to force a refresh of the tree, or {@link #selectAndReveal(Object)}
+	 *             to select and reveal some object in my tree
 	 * @see #getMasterDetailSelectionProvider()
 	 */
 	@Deprecated
@@ -451,6 +447,115 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 */
 	public ISelectionProvider getMasterDetailSelectionProvider() {
 		return selectionProvider;
+	}
+
+	/**
+	 * Request a refresh of my tree.
+	 *
+	 * @since 1.22
+	 */
+	public void refresh() {
+		if (treeViewer != null) {
+			treeViewer.refresh();
+		}
+	}
+
+	/**
+	 * Select and reveal a {@code selection} in my tree. If the argument is an {@link UniqueSetting},
+	 * then the {@linkplain UniqueSetting#getEObject() owner} of the setting will be revealed and the
+	 * control that edits the {@linkplain UniqueSetting#getEStructuralFeature() setting} will be
+	 * revealed and focused (if possible) in the object's detail view.
+	 *
+	 * @param selection the objet to select and reveal
+	 * @return {@code true} if the {@code selection} was revealed; {@code false}, otherwise, including
+	 *         the case where the nearest parent object up the tree was revealed instead
+	 * @since 1.22
+	 */
+	public boolean selectAndReveal(final Object selection) {
+		boolean result = false;
+
+		Object toReveal = selection;
+		final EStructuralFeature feature;
+
+		if (selection instanceof UniqueSetting) {
+			final UniqueSetting setting = (UniqueSetting) selection;
+			toReveal = setting.getEObject();
+			feature = setting.getEStructuralFeature();
+		} else if (selection instanceof EStructuralFeature.Setting) {
+			final EStructuralFeature.Setting setting = (EStructuralFeature.Setting) selection;
+			toReveal = setting.getEObject();
+			feature = setting.getEStructuralFeature();
+		} else {
+			feature = null;
+		}
+
+		if (feature != null) {
+			final CompletableFuture<ECPSWTView> renderedDetail = new CompletableFuture<>();
+			final DetailPanelRenderingFinishedCallback detailReady = __ -> renderedDetail
+				.complete(detailManager.getCurrentDetail());
+			registerDetailPanelRenderingFinishedCallback(detailReady);
+
+			final EObject owner = (EObject) toReveal;
+			result = selectAndRevealInTree(owner);
+			if (result) {
+				renderedDetail.whenComplete((view, e) -> {
+					unregisterDetailPanelRenderingFinishedCallback(detailReady);
+					revealInDetail(view, owner, feature);
+				});
+			} else {
+				// Won't need the call-back so remove it now
+				renderedDetail.cancel(false);
+				unregisterDetailPanelRenderingFinishedCallback(detailReady);
+			}
+
+			// Do we already have the detail?
+			final ECPSWTView currentDetail = detailManager.getCurrentDetail();
+			if (currentDetail != null && currentDetail.getViewModelContext().getDomainModel() == owner) {
+				// There won't be an asynchronous rendering to wait for
+				renderedDetail.complete(currentDetail);
+			}
+		} else {
+			result = selectAndRevealInTree(toReveal);
+		}
+
+		return result;
+	}
+
+	private boolean selectAndRevealInTree(final Object selection) {
+		if (treeViewer == null) {
+			return false;
+		}
+
+		boolean result = false;
+
+		// Try to reveal the 'selection' in the tree. If it isn't in the
+		// tree, then search up the content provider to find the nearest
+		// object that can be revealed and select that, or give up
+		for (Object objectToReveal = selection; objectToReveal != null;) {
+			treeViewer.reveal(objectToReveal);
+			if (treeViewer.testFindItem(objectToReveal) != null) {
+				// Select it and we're done
+				treeViewer.setSelection(new StructuredSelection(objectToReveal));
+				result = objectToReveal == selection;
+				break;
+			}
+
+			// Look up the content tree for an object to reveal
+			objectToReveal = ((ITreeContentProvider) treeViewer.getContentProvider()).getParent(objectToReveal);
+		}
+
+		return result;
+	}
+
+	private void revealInDetail(ECPSWTView detail, EObject object, EStructuralFeature feature) {
+		final ViewModelContext context = detail.getViewModelContext();
+		if (!context.hasService(EMFFormsRevealService.class)) {
+			// Nothing to do
+			return;
+		}
+
+		final EMFFormsRevealService reveal = context.getService(EMFFormsRevealService.class);
+		reveal.reveal(object, feature);
 	}
 
 	/**

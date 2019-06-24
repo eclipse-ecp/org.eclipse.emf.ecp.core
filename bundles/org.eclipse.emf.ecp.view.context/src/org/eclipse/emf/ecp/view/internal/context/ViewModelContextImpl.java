@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bugs 527740, 533522, 545686, 527686
+ * Christian W. Damus - bugs 527740, 533522, 545686, 527686, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
@@ -378,12 +378,16 @@ public class ViewModelContextImpl implements ViewModelContext {
 			domainObject.eAdapters().add(domainModelContentAdapter);
 		}
 
+		// Generate local view services from our provider. Do this before loading
+		// contributed immediate services because these may create child contexts
+		// even before we are ready and these provided services need to be instantiated
+		// in me before that (otherwise, an array "once" provider may be consumed by
+		// a child context before I can get to it)
+		viewServices.addAll(viewServiceProvider.getViewModelServices(view, domainObject));
+
 		loadImmediateServices();
 
 		view.eAdapters().add(viewModelContentAdapter);
-
-		// Generate local view services from our provider
-		viewServices.addAll(viewServiceProvider.getViewModelServices(view, domainObject));
 
 		for (final ViewModelService viewService : viewServices) {
 			viewService.instantiate(this);

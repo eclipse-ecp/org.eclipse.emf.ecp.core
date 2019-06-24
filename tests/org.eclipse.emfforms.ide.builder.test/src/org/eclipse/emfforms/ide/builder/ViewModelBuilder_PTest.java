@@ -10,13 +10,16 @@
  *
  * Contributors:
  * EclipseSource - initial API and implementation
- * Christian W. Damus - bugs 544499, 545418
+ * Christian W. Damus - bugs 544499, 545418, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.ide.builder;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.both;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasItemInArray;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +31,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emfforms.ide.internal.builder.ProjectNature;
 import org.eclipse.emfforms.ide.internal.builder.ValidationNature;
 import org.eclipse.emfforms.ide.internal.builder.ViewModelBuilder;
@@ -185,6 +189,38 @@ public class ViewModelBuilder_PTest extends AbstractBuilderTest {
 		markers = findMarkersOnResource(project);
 		// Problems solved
 		assertThat("Should not have error markers", markers, is(new IMarker[0]));
+	}
+
+	@Test
+	public void validationMarkerAttributes() throws CoreException, IOException {
+		final String projectName = "ValidationErrors";//$NON-NLS-1$
+		final IProgressMonitor monitor = new NullProgressMonitor();
+		final IProject project = createAndPopulateProject(projectName, monitor);
+		IMarker[] markers = findMarkersOnResource(project);
+		// No build yet => no markers
+		assertThat("Should not have any markers", markers.length, is(0));
+
+		// trigger builder by adding nature to the project and auto-build is on
+		setAutoBuild(true);
+		ProjectNature.toggleNature(project, ViewModelNature.NATURE_ID);
+		waitForAutoBuild();
+
+		// final state
+		markers = findMarkersOnResource(project);
+
+		// at least 4 errors:
+		// 2 unresolved DMR and one missing DMR as ECP pure validation errros
+		// an annotation with a missing key as a simple EMF error
+		assertThat("Too few markers", markers.length, greaterThan(3));
+		assertThat("No marker on DMR unresolved structural feature", markers,
+			hasItemInArray(both(hasAttributeThat(EValidator.URI_ATTRIBUTE, endsWith("#_mfPLkEWAEeWfKJaajyNdyA"))).and(
+				hasAttributeThat(EValidator.RELATED_URIS_ATTRIBUTE, endsWith("/domainModelReference")))));
+		assertThat("No marker on control that has no DMR", markers,
+			hasItemInArray(both(hasAttributeThat(EValidator.URI_ATTRIBUTE, endsWith("#_mfPLkEWAEeWfKJaajyNdyC"))).and(
+				hasAttributeThat(EValidator.RELATED_URIS_ATTRIBUTE, endsWith("/domainModelReference")))));
+		assertThat("No marker on keyless annotation", markers,
+			hasItemInArray(both(hasAttributeThat(EValidator.URI_ATTRIBUTE, endsWith("#_ZE-1ABs2EemWJdWNOROymw"))).and(
+				hasAttributeThat(EValidator.RELATED_URIS_ATTRIBUTE, endsWith("/key")))));
 	}
 
 }

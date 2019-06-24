@@ -21,8 +21,10 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emfforms.swt.core.di;bundle-version="[1.22.0,1.23.0)"
 Import-Package: javax.inject;version="1.0.0",
  org.eclipse.core.commands;version="0.0.0",
+ org.eclipse.emf.ecp.view.model.common.di.annotations;version="[1.22.0,1.23.0)",
  org.eclipse.emf.edit.ui.dnd;version="0.0.0",
  org.eclipse.emf.edit.ui.provider;version="0.0.0",
+ org.eclipse.emfforms.bazaar;version="[1.22.0,1.23.0)",
  org.eclipse.emfforms.spi.common.report;version="[1.22.0,1.23.0)",
  org.eclipse.emfforms.spi.core.services.view;version="[1.22.0,1.23.0)",
  org.eclipse.emfforms.spi.swt.core;version="[1.22.0,1.23.0)",
@@ -37,9 +39,10 @@ Import-Package: javax.inject;version="1.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0",
- org.eclipse.ui.views.properties;resolution:=optional,
+ org.eclipse.ui.views.properties;version="0.0.0";resolution:=optional,
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
 Automatic-Module-Name: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt
-Service-Component: OSGI-INF/TreeMasterDetailSWTRendererService.xml
+Service-Component: OSGI-INF/TreeMasterDetailSWTRendererService.xml,
+ OSGI-INF/treeRevealProvider.xml
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -12,7 +12,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - use data binding services
  * Martin Fleck - bug 487101
- * Christian W. Damus - bug 527736
+ * Christian W. Damus - bugs 527736, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
@@ -91,9 +91,11 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
@@ -1064,7 +1066,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	/**
 	 * Override to customize linking and creation of EObjects in this renderer's EReference.
-	 * 
+	 *
 	 * @return The {@link ReferenceService} used to link and create new EObjects in this renderer's reference.
 	 */
 	protected ReferenceService getReferenceService() {
@@ -1284,4 +1286,25 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected ILabelProvider getLabelProvider() {
 		return labelProvider;
 	}
+
+	/**
+	 * Select and reveal an {@code object} in my table.
+	 *
+	 * @param object an object to reveal
+	 *
+	 * @since 1.22
+	 */
+	void reveal(Object object) {
+		checkRenderer();
+
+		if (tableViewer != null) {
+			final ISelection newSelection = new StructuredSelection(object);
+			if (!newSelection.equals(tableViewer.getSelection())) {
+				tableViewer.setSelection(newSelection, true);
+			} else {
+				tableViewer.reveal(object);
+			}
+		}
+	}
+
 }

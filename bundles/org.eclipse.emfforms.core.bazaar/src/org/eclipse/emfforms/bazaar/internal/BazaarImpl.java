@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * jonas - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emfforms.bazaar.internal;
 
@@ -115,17 +116,28 @@ public class BazaarImpl<T> implements Bazaar<T> {
 	}
 
 	/**
-	 * Creates an {@link IEclipseContext} from a {@link BazaarContext}.
+	 * Creates an {@link IEclipseContext} from a {@link BazaarContext}. If the
+	 * bazaar context contains an Eclipse context, then it is used and will have
+	 * all other values set into it from the bazaar context.
 	 *
 	 * @param bazaarContext the {@link BazaarContext} to get key / values from
 	 * @return a {@link IEclipseContext} containign all key / values provided by the {@link BazaarContext}
 	 */
 	public IEclipseContext createEclipseContext(BazaarContext bazaarContext) {
-		final IEclipseContext context = EclipseContextFactory.create();
+		final Map<String, Object> contextMap = bazaarContext.getContextMap();
+
+		// Let the client inject its own e4 context
+		final String contextKey = IEclipseContext.class.getName();
+		final IEclipseContext context = (IEclipseContext) contextMap.getOrDefault(contextKey,
+			EclipseContextFactory.create());
+
 		final Set<String> keySet = bazaarContext.getContextMap().keySet();
 		for (final String string : keySet) {
-			context.set(string, bazaarContext.getContextMap().get(string));
+			if (!contextKey.equals(string)) { // Don't put the context into itself
+				context.set(string, contextMap.get(string));
+			}
 		}
+
 		return context;
 	}
 

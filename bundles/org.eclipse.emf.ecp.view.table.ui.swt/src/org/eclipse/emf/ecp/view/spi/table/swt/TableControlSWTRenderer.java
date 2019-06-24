@@ -11,7 +11,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -192,6 +192,7 @@ import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -1959,6 +1960,31 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				getReportService());
 		}
 		return enumeratorComparator;
+	}
+
+	/**
+	 * Reeveal the given {@code object} in my table.
+	 *
+	 * @param object an object to reveal
+	 * @return whether I succeeded in revealing it
+	 *
+	 * @since 1.22
+	 */
+	public boolean reveal(Object object) {
+		final AbstractTableViewer viewer = getTableViewer();
+		final IObservableList<?> list = (IObservableList<?>) viewer.getInput();
+		final boolean result = list.contains(object);
+
+		if (result) {
+			final IStructuredSelection selection = new StructuredSelection(object);
+			if (!selection.equals(viewer.getSelection())) {
+				viewer.setSelection(selection, true);
+			}
+		} else {
+			viewer.reveal(object);
+		}
+
+		return result;
 	}
 
 	/**

@@ -11,7 +11,7 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  * Mat Hansen - modifications for Nebula Grid
- * Christian W. Damus - bug 527686
+ * Christian W. Damus - bugs 527686, 548592
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
@@ -769,6 +769,7 @@ public class GridTable_PTest {
 		ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
 			contextProvider = new org.eclipse.emfforms.internal.swt.core.di.EMFFormsContextProviderImpl();
+			contextProvider.instantiate(this);
 		}
 
 		/**

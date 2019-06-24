@@ -10,13 +10,18 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
- * Christian W. Damus - bug 527686
+ * Christian W. Damus - bugs 527686, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.swt.treemasterdetail.test;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withText;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget;
+import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeThat;
@@ -36,6 +41,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.view.spi.common.callback.ViewModelPropertiesUpdateCallback;
@@ -47,6 +53,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.bowling.Area;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Matchup;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -937,6 +944,51 @@ public class TreeMasterDetail_PTest {
 		// limbo shell is diposed -> no increase in
 		// count of shells
 		assertEquals(shellsBefore, Display.getCurrent().getShells().length);
+	}
+
+	@Test
+	public void selectAndReveal() throws InterruptedException {
+
+		// arrange
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		final Player alice = BowlingFactory.eINSTANCE.createPlayer();
+		final Player bob = BowlingFactory.eINSTANCE.createPlayer();
+		alice.setName(ALICE);
+		bob.setName(BOB);
+		league.getPlayers().add(alice);
+		league.getPlayers().add(bob);
+
+		Display.getDefault().syncExec(() -> {
+			composite = TreeMasterDetailSWTFactory
+				.fillDefaults(shell, SWT.NONE, league)
+				.customizeInitialSelection(new InitialSelectionProvider() {
+					@Override
+					public EObject getInitialSelection(Object input) {
+						return alice;
+					}
+				})
+				// Display.timerExec doesn't work in the tests on some platforms
+				.customizeUpdateDelay(0)
+				.create();
+			GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+			shell.open();
+		});
+
+		SWTTestUtil.waitForUIThread();
+
+		/* act */
+		Display.getDefault().syncExec(() -> {
+			composite
+				.selectAndReveal(UniqueSetting.createSetting(bob, BowlingPackage.Literals.PLAYER__IS_PROFESSIONAL));
+		});
+
+		SWTTestUtil.waitForUIThread();
+
+		// wait for the selection change
+		bot.waitUntil(waitForWidget(both(widgetOfType(Text.class)).and(withText(BOB))));
+
+		// assert the reveal part
+		assertThat("Feature not revealed", bot.checkBox().isActive(), is(true));
 	}
 
 	// TODO test set selection programmatically

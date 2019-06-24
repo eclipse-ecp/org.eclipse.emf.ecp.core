@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -12,6 +12,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  * Johannes Faltermeier - Refactoring
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
@@ -110,6 +111,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	}
 
 	private SWTGridDescription gridDescription;
+	private TreeViewer treeViewer;
 	private AbstractJFaceTreeRenderer<VELEMENT>.TreeSelectionChangedListener treeSelectionChangedListener;
 
 	@Override
@@ -142,7 +144,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		TreeViewer treeViewer;
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 
 		if (categorizations.size() == 1 && categorizations.get(0) instanceof VCategory) {
@@ -389,6 +390,9 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 				if (maxActions < abstractCategorization.getActions().size()) {
 					maxActions = abstractCategorization.getActions().size();
 				}
+
+				// I render this view-model element
+				register(abstractCategorization);
 			}
 		}
 		if (maxActions == 0) {
@@ -473,6 +477,23 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			action.init(treeViewer, treeSelection, editor);
 			action.execute();
 		}
+	}
+
+	/**
+	 * Reveal the control that renders the given {@code categorization}.
+	 *
+	 * @param categorization a categorization to reveal
+	 * @return whether the {@code categorization} was successfully revealed
+	 *
+	 * @since 1.22
+	 */
+	public boolean showCategorization(VAbstractCategorization categorization) {
+		// If there's only one categorization, we won't have a tree viewer. But then
+		// the categorization is always revealed, so we would have nothing to do
+		if (treeViewer != null) {
+			treeViewer.setSelection(new StructuredSelection(categorization));
+		}
+		return true;
 	}
 
 	/**

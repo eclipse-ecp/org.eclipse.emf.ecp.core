@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,8 +10,11 @@
  *
  * Contributors:
  * Jonas Helming - initial API and implementation
+ * Christian W. Damus - bug 548592
  */
 package org.eclipse.emf.ecp.view.test.common.swt.spi;
+
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,15 +146,35 @@ public final class SWTViewTestHelper {
 	 * @throws EMFFormsNoRendererException If the renderer for the given {@link VElement} is not found
 	 */
 	public static RendererResult renderControl(VElement renderable, EObject input, Shell shell)
-		throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
+		return renderControl(viewContext, shell);
+	}
+
+	/**
+	 * Render the given {@code context} on the given {@code composite}.
+	 *
+	 * @param context view-model context to render
+	 * @param composite the composite to render on
+	 * @return a {@link RendererResult}
+	 *
+	 * @throws NoRendererFoundException If a required sub renderer is not found
+	 * @throws NoPropertyDescriptorFoundExeption If no PropertyDescriptor was found for the domain model instance
+	 * @throws EMFFormsNoRendererException If the renderer for the given {@link VElement} is not found
+	 *
+	 * @since 1.22
+	 */
+	public static RendererResult renderControl(ViewModelContext context, Composite composite)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+
 		final AbstractSWTRenderer<VElement> renderer = factory
-			.getRendererInstance(renderable, viewContext);
+			.getRendererInstance(context.getViewModel(), context);
 		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
-		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1), shell);
-		renderer.finalizeRendering(shell);
+		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1),
+			composite);
+		renderer.finalizeRendering(composite);
 
 		return new RendererResult() {
 			@Override
@@ -164,6 +187,28 @@ public final class SWTViewTestHelper {
 				return Optional.ofNullable(control);
 			}
 		};
+	}
+
+	/**
+	 * Render the given {@code context} on the given {@code composite}.
+	 *
+	 * @param context view-model context to render
+	 * @param composite the composite to render on
+	 * @return the rendered SWT control
+	 *
+	 * @since 1.22
+	 */
+	public static Control render(ViewModelContext context, Composite composite) {
+		try {
+			final Optional<Control> result = renderControl(context, composite).getControl();
+			return result.isPresent()
+				? result.get()
+				: null;
+		} catch (NoRendererFoundException | NoPropertyDescriptorFoundExeption | EMFFormsNoRendererException e) {
+			e.printStackTrace();
+			fail("Failed to render: " + e.getMessage());
+			return null; // Unreachable
+		}
 	}
 
 	/**

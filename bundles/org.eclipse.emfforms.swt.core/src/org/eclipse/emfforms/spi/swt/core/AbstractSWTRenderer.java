@@ -11,16 +11,20 @@
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
- * Christian W. Damus - bug 527686
+ * Christian W. Damus - bugs 527686, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.core;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -34,6 +38,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
@@ -356,6 +361,77 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 */
 	protected String getDefaultFontName(Control control) {
 		return control.getDisplay().getSystemFont().getFontData()[0].getName();
+	}
+
+	/**
+	 * If my control is rendered within a scrolled composite, scroll that composite to reveal me.
+	 *
+	 * @since 1.22
+	 */
+	public void scrollToReveal() {
+		if (controls != null && !controls.isEmpty()) {
+			@SuppressWarnings("serial")
+			final Iterator<Control> iter = new AbstractTreeIterator<Control>(controls.values(), false) {
+				@Override
+				protected Iterator<? extends Control> getChildren(Object object) {
+					if (object instanceof Composite) {
+						return Arrays.asList(((Composite) object).getChildren()).iterator();
+					}
+					if (object instanceof Collection<?>) {
+						@SuppressWarnings("unchecked")
+						final Collection<? extends Control> collection = (Collection<? extends Control>) object;
+						return collection.iterator();
+					}
+					return Collections.emptyIterator();
+				}
+			};
+
+			while (iter.hasNext()) {
+				final Control next = iter.next();
+				if (next instanceof Composite) {
+					// Don't attempt to reveal composites
+					continue;
+				}
+
+				if (scrollToReveal(next)) {
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Scroll composites as necessary to reveal the given {@code control} and
+	 * then request focus.
+	 *
+	 * @param control the control to reveal and focus
+	 * @return whether the focus was successfully set (usually because the control
+	 *         is one that can receive input focus)
+	 *
+	 * @since 1.22
+	 */
+	protected boolean scrollToReveal(final Control control) {
+		for (Composite parent = control.getParent(); parent != null; parent = parent.getParent()) {
+			if (parent instanceof ScrolledComposite) {
+				final ScrolledComposite scrolled = (ScrolledComposite) parent;
+				scrolled.showControl(control);
+			}
+		}
+
+		// Try to request focus
+		return control.setFocus();
+	}
+
+	/**
+	 * Query whether a given {@code control} can plausibly be revealed.
+	 *
+	 * @param control a control to be revealed
+	 * @return whether it reasonably can be revealed
+	 *
+	 * @since 1.22
+	 */
+	protected boolean canReveal(Control control) {
+		return control != null && !control.isDisposed() && control.isVisible();
 	}
 
 	//

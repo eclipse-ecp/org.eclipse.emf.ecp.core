@@ -10,14 +10,17 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 543376
+ * Christian W. Damus - bugs 543376, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.ide.editor.view;
+
+import static org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory.provide;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,6 +40,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -76,6 +80,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
+import org.eclipse.emfforms.spi.editor.GotoMarkerAdapter;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrationException;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator;
 import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
@@ -99,6 +104,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
+import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.EditorPart;
@@ -249,6 +255,9 @@ public class ViewEditorPart extends EditorPart implements
 	public <T> T getAdapter(Class<T> adapter) {
 		if (adapter == ViewModelContext.class) {
 			return adapter.cast(render.getViewModelContext());
+		}
+		if (adapter == IGotoMarker.class) {
+			return adapter.cast(new GotoMarkerAdapter(render.getViewModelContext(), getEditingDomain()));
 		}
 		return super.getAdapter(adapter);
 	}
@@ -696,9 +705,13 @@ public class ViewEditorPart extends EditorPart implements
 		}
 
 		try {
+			final Map<String, Object> contextValues = Collections.singletonMap(
+				IEclipseContext.class.getName(),
+				getSite().getService(IEclipseContext.class));
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE
-				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService(),
-					new EMFDeleteServiceImpl());
+				.createViewModelContext(ViewProviderHelper.getView(view, null), view,
+					provide(new DefaultReferenceService(), new EMFDeleteServiceImpl()),
+					contextValues);
 			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE); //$NON-NLS-1$
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, viewModelContext);
 			getSite().setSelectionProvider(

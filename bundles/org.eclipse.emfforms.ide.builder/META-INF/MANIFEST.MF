@@ -25,4 +25,4 @@ Import-Package: org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";r
 Automatic-Module-Name: org.eclipse.emfforms.ide.builder
 Service-Component: OSGI-INF/org.eclipse.emfforms.ide.internal.builder.ViewModelValidationDelegate$Provider.xml,OSGI-INF/org.eclipse.emfforms.ide.internal.builder.ViewModelMarkerHelper$Provider.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

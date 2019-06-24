@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
@@ -588,6 +589,17 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 					});
 				}
 			};
+		}
+	}
+
+	@Override
+	public void scrollToReveal() {
+		if (canReveal(addReferenceBtn) && addReferenceBtn.isEnabled()) {
+			scrollToReveal(addReferenceBtn);
+		} else if (canReveal(newReferenceBtn) && newReferenceBtn.isEnabled()) {
+			scrollToReveal(newReferenceBtn);
+		} else {
+			super.scrollToReveal();
 		}
 	}
 

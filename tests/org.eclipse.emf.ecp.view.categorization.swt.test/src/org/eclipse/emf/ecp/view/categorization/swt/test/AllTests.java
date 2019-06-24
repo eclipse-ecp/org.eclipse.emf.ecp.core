@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,10 +10,12 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.categorization.swt.test;
 
 import org.eclipse.emf.ecp.view.spi.categorization.swt.CategorizationRenderer_PTest;
+import org.eclipse.emf.ecp.view.spi.categorization.swt.CategorizationRevealProvider_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -21,7 +23,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ Categorization_PTest.class, CategorizationCorrectTester_PTest.class,
 	CategorizationTreeContentRefresh_PTest.class, CategorizationTreeRefresh_PTest.class,
-	CategorizationRenderer_PTest.class })
+	CategorizationRenderer_PTest.class,
+	CategorizationRevealProvider_PTest.class,
+})
 public class AllTests {
 
 }

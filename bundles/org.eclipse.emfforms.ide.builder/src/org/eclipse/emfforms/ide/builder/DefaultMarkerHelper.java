@@ -14,11 +14,14 @@
 package org.eclipse.emfforms.ide.builder;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emfforms.ide.internal.builder.ValidationBuilder;
@@ -63,4 +66,44 @@ public class DefaultMarkerHelper extends EditUIMarkerHelper {
 			}
 		}
 	}
+
+	/**
+	 * Add attributes to store the URIs of the problematic object and the feature (if any).
+	 * Match exactly the specification or main and related URIs attributes expected by EMF's
+	 * marker utility.
+	 */
+	@Override
+	protected void adjustMarker(IMarker marker, Diagnostic diagnostic, Diagnostic parentDiagnostic)
+		throws CoreException {
+
+		// The first URI is not encoded because there is only one, so spaces in the string don't
+		// matter. But the related URIs are a list separated by spaces, so they are encoded and
+		// will be decoded by the MarkerUtil as needed
+		String uri = null;
+		final StringBuilder relatedURIs = new StringBuilder();
+
+		for (final Object next : diagnostic.getData()) {
+			if (next instanceof EObject) {
+				final EObject eObject = (EObject) next;
+				if (uri == null) {
+					uri = EcoreUtil.getURI(eObject).toString();
+				} else {
+					if (relatedURIs.length() > 0) {
+						relatedURIs.append(' '); // Space to separate encoded URIs
+					}
+					relatedURIs.append(URI.encodeFragment(EcoreUtil.getURI(eObject).toString(), false));
+				}
+			}
+		}
+
+		if (uri != null) {
+			marker.setAttribute(EValidator.URI_ATTRIBUTE, uri);
+		}
+		if (relatedURIs.length() > 0) {
+			marker.setAttribute(EValidator.RELATED_URIS_ATTRIBUTE, relatedURIs.toString());
+		}
+
+		super.adjustMarker(marker, diagnostic, parentDiagnostic);
+	}
+
 }

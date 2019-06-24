@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Johannes Faltermeier
- * Christian W. Damus - bugs 527740, 544116, 545686, 527686, 547787
+ * Christian W. Damus - bugs 527740, 544116, 545686, 527686, 547787, 548592
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
@@ -1490,6 +1490,7 @@ public class SWTTable_PTest {
 		ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
 			contextProvider = new org.eclipse.emfforms.internal.swt.core.di.EMFFormsContextProviderImpl();
+			contextProvider.instantiate(this);
 		}
 
 		/**

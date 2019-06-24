@@ -11,7 +11,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Lucas Koehler - Also support DMR segments (Bug 542669)
- * Christian W. Damus - bug 527686
+ * Christian W. Damus - bugs 527686, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
@@ -136,6 +136,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private Label setLabel;
 	private Label imageLabel;
 	private Composite contentSetComposite;
+	private Button setBtn;
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
@@ -398,7 +399,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 		});
 
-		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
+		setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
 			structuralFeature, emfFormsEditSupport, getEMFFormsLabelProvider(), null, getReportService(), getVElement()
 				.getDomainModelReference(),
 			getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
@@ -472,6 +473,15 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		}
 
 		super.rootDomainModelChanged();
+	}
+
+	@Override
+	public void scrollToReveal() {
+		if (canReveal(setBtn) && setBtn.isEnabled()) {
+			scrollToReveal(setBtn);
+		} else {
+			super.scrollToReveal();
+		}
 	}
 
 	/** SelectionAdapter for the set button. */

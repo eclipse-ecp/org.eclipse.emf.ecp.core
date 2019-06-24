@@ -65,7 +65,7 @@ public final class ViewModelContextFactory {
 	 */
 	public ViewModelContext createViewModelContext(VElement view, EObject domainObject,
 		ViewModelService... modelServices) {
-		return createViewModelContext(view, domainObject, new ArrayOnceViewModelServiceProvider(modelServices));
+		return createViewModelContext(view, domainObject, provide(modelServices));
 	}
 
 	/**
@@ -127,6 +127,18 @@ public final class ViewModelContextFactory {
 		ViewModelServiceProvider serviceProvider, Map<String, ?> contextValues) {
 
 		return new ViewModelContextImpl(view, domainObject, serviceProvider, contextValues);
+	}
+
+	/**
+	 * Obtain a view-model service provider that statically provides a set of services.
+	 *
+	 * @param modelServices model services to provider
+	 * @return the static provider of those services
+	 *
+	 * @since 1.22
+	 */
+	public static ViewModelServiceProvider provide(ViewModelService... modelServices) {
+		return new ArrayOnceViewModelServiceProvider(modelServices);
 	}
 
 }
