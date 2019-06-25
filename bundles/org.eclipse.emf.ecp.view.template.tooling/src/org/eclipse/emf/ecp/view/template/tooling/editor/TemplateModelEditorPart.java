@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.view.template.tooling.editor;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigrationException;
 import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigratorUtil;
@@ -89,6 +91,10 @@ public class TemplateModelEditorPart extends GenericEditor {
 
 		// resourceURI must be a platform resource URI
 		try {
+			// Register the referenced ecores before the migrations because the legacy dmr to segment dmr migration only
+			// works if all referenced ecores are registered
+			registerReferencedEcores(URI.createURI(fei.getURI().toURL().toExternalForm()));
+
 			if (!ViewNsMigrationUtil.checkMigration(fei.getPath().toFile())) {
 				final boolean migrate = MessageDialog.openQuestion(site.getShell(),
 					Messages.TemplateModelEditorPart_MigrationQuestion,
@@ -103,20 +109,6 @@ public class TemplateModelEditorPart extends GenericEditor {
 			} else if (ToolingModeUtil.isSegmentToolingEnabled()) {
 				migrateLegacyDmrs(site.getShell(), fei.getPath());
 			}
-
-			final ResourceSet resourceSet = new ResourceSetImpl();
-			final Resource resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
-			resource.load(null);
-			final EList<EObject> resourceContents = resource.getContents();
-			if (resourceContents.size() > 0 && VTViewTemplate.class.isInstance(resourceContents.get(0))) {
-				final VTViewTemplate template = (VTViewTemplate) resourceContents.get(0);
-				for (final String ecorePath : template.getReferencedEcores()) {
-					EcoreHelper.registerEcore(ecorePath);
-				}
-			} else {
-				throw new PartInitException(Messages.TemplateModelEditorPart_initError);
-			}
-
 		} catch (final IOException e) {
 			Activator.log(e);
 			throw new PartInitException(Messages.TemplateModelEditorPart_initError, e);
@@ -126,6 +118,21 @@ public class TemplateModelEditorPart extends GenericEditor {
 		// ecores before the resource is finally loaded in GenericEditor#init
 		super.init(site, input);
 		super.setPartName(input.getName());
+	}
+
+	private void registerReferencedEcores(URI resourceUri) throws IOException, PartInitException {
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		final Resource resource = resourceSet.createResource(resourceUri);
+		resource.load(Collections.singletonMap(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE));
+		final EList<EObject> resourceContents = resource.getContents();
+		if (resourceContents.size() > 0 && VTViewTemplate.class.isInstance(resourceContents.get(0))) {
+			final VTViewTemplate template = (VTViewTemplate) resourceContents.get(0);
+			for (final String ecorePath : template.getReferencedEcores()) {
+				EcoreHelper.registerEcore(ecorePath);
+			}
+		} else {
+			throw new PartInitException(Messages.TemplateModelEditorPart_initError);
+		}
 	}
 
 	@Override
