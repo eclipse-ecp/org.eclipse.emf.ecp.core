@@ -3147,6 +3147,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * Returns the current sort column feature.
 	 *
 	 * @return an {@link java.util.Optional} containing the feature used for sorting
+	 * @since 1.22
 	 */
 	protected java.util.Optional<EStructuralFeature> getSortColumnFeature() {
 		return sortColumnFeature;
@@ -3156,6 +3157,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * Set the column to use for sorting.
 	 *
 	 * @param sortColumnFeature an optional containing the feature to use for sorting
+	 * @since 1.22
 	 */
 	protected void setSortColumnFeature(EStructuralFeature sortColumnFeature) {
 		this.sortColumnFeature = java.util.Optional.ofNullable(sortColumnFeature);
@@ -3166,6 +3168,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 * @param propertyIndex The index to find the feature for
 	 * @return The {@link EStructuralFeature} for the provided index
+	 * @since 1.22
 	 */
 	protected EStructuralFeature getColumnFeature(int propertyIndex) {
 		return columnFeatures[propertyIndex - regularColumnsStartIndex];
