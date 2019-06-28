@@ -167,7 +167,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 		private IStructuredSelection lastSelection;
 		private EObject masterObject;
 		private final PreSetValidationService preSetValidationService;
-		private boolean copyDragActive = false;
+		private boolean copyDragActive;
 		private GridItem startDragItem;
 
 		CopyDragListener() {
@@ -185,10 +185,16 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			return (e.stateMask & SWT.MOD2) != 0;
 		}
 
+		private boolean canCopy() {
+			return getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly();
+		}
+
 		@Override
 		public void mouseMove(MouseEvent e) {
-			copyDragActive = isCopyModifierPressed(e) && lastSelection != null && lastSelection.size() > 1
-				&& masterObject != null;
+			if (canCopy()) {
+				copyDragActive = isCopyModifierPressed(e) && lastSelection != null && lastSelection.size() > 1
+					&& masterObject != null;
+			}
 		}
 
 		@Override
@@ -197,7 +203,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 		@Override
 		public void mouseDown(MouseEvent e) {
-			if (isCopyModifierPressed(e)) {
+			if (isCopyModifierPressed(e) && canCopy()) {
 				final Grid grid = (Grid) e.widget;
 				startDragItem = grid.getItem(new Point(e.x, e.y));
 			}
@@ -205,7 +211,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 		@Override
 		public void mouseUp(MouseEvent e) {
-			if (e.button == 1) {
+			if (e.button == 1 && canCopy()) {
 
 				final Grid grid = (Grid) e.widget;
 				final GridItem currentItem = grid.getItem(new Point(e.x, e.y));
