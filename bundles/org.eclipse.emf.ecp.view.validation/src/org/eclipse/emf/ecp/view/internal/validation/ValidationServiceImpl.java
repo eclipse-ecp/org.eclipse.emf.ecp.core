@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bugs 533522, 543160, 545686, 527686
+ * Christian W. Damus - bugs 533522, 543160, 545686, 527686, 548761
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
@@ -43,6 +43,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -63,8 +64,10 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.validation.IncrementalValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
+import org.eclipse.emf.ecp.view.spi.validation.ValidationUpdateListener;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -92,7 +95,7 @@ import org.eclipse.osgi.util.NLS;
  * @author Eugen Neufeld
  *
  */
-public class ValidationServiceImpl implements ValidationService {
+public class ValidationServiceImpl implements ValidationService, IncrementalValidationService {
 
 	/**
 	 * The {@link ValidationDomainModelChangeListener} for the view model.
@@ -380,6 +383,8 @@ public class ValidationServiceImpl implements ValidationService {
 	// Maximal number of problems to propagate up the view hierarchy, or negative for no limit
 	private int propagationThreshold;
 
+	private final Set<ValidationUpdateListener> validationUpdateListeners = new LinkedHashSet<>();
+
 	@Override
 	public void instantiate(ViewModelContext context) {
 		rootContext = context;
@@ -599,6 +604,7 @@ public class ValidationServiceImpl implements ValidationService {
 		}
 		update();
 		notifyListeners();
+		notifyUpdateListeners();
 		currentUpdates.clear();
 		validated.clear();
 		validationRunning.compareAndSet(true, false);
@@ -1077,6 +1083,49 @@ public class ValidationServiceImpl implements ValidationService {
 	protected void warn(String messageKey, Object... arguments) {
 		final String report = NLS.bind(l10n.getString(ValidationServiceImpl.class, messageKey), arguments);
 		reportService.report(new AbstractReport(report, IStatus.WARNING));
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	public void registerValidationUpdateListener(ValidationUpdateListener listener) {
+		validationUpdateListeners.add(listener);
+	}
+
+	/**
+	 * @since 1.22
+	 */
+	@Override
+	public void deregisterValidationUpdateListener(ValidationUpdateListener listener) {
+		validationUpdateListeners.remove(listener);
+	}
+
+	private void notifyUpdateListeners() {
+		if (validationUpdateListeners.isEmpty()) {
+			return;
+		}
+
+		// Build the validation state
+		final Collection<Diagnostic> diagnostics = Collections.unmodifiableCollection(
+			currentUpdates.entrySet().stream()
+				.map(entry -> summarize(entry.getKey(), entry.getValue()))
+				.collect(Collectors.toList()));
+
+		validationUpdateListeners.forEach(l -> l.validationUpdated(diagnostics));
+	}
+
+	private Diagnostic summarize(UniqueSetting setting, List<Diagnostic> diagnostics) {
+		switch (diagnostics.size()) {
+		case 0:
+			return new BasicDiagnostic(Diagnostic.OK, Activator.PLUGIN_ID, 0, Diagnostic.OK_INSTANCE.getMessage(),
+				new Object[] { setting.getEObject(), setting.getEStructuralFeature() });
+		case 1:
+			return diagnostics.get(0);
+		default:
+			return new BasicDiagnostic(Activator.PLUGIN_ID, 0, diagnostics, "", //$NON-NLS-1$
+				new Object[] { setting.getEObject(), setting.getEStructuralFeature() });
+		}
 	}
 
 }
