@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _jOkp0CpNEem3i-Gw7uP7Ew
-Runtime-Version: 2.4.0.201902270059
-Save-Time: 2/27/19 10:31 AM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 7/1/19 3:31 PM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
@@ -56,7 +56,7 @@ with [get-editor "User.view" | get-tree] {
     select "View/VerticalLayout" | get-menu -path HorizontalLayout | click
     select "View/VerticalLayout/HorizontalLayout" | get-menu -path "Generate Controls" | click
 }
-with [get-window -class SelectAttributesDialog] {
+with [get-window -class WizardDialog] {
     get-tree | select User
     get-button "Next >" | click
     with [get-table] {
@@ -72,7 +72,7 @@ with [get-window -class SelectAttributesDialog] {
 }
 get-editor "User.view" | get-tree | select [get-item -path View | get-item -path VerticalLayout -index 1] | get-menu 
     -path "Generate Controls" | click
-with [get-window -class SelectAttributesDialog] {
+with [get-window -class WizardDialog] {
     get-tree | select User
     get-button "Next >" | click
     get-button "Select All" | click

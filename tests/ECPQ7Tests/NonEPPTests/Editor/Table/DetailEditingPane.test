@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _50-KoCeuEeSaN-fwc2C_0w
 Runtime-Version: 2.4.2.201905052359
-Save-Time: 5/7/19 12:53 PM
+Save-Time: 7/1/19 3:31 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -144,7 +144,7 @@ try {
 //	    get-button OK | click
 //	}
 //	get-view "Model Explorer" | get-tree | select "Project/View/TableControl/View" | get-menu "Generate Controls" | click
-//	with [get-window -class SelectAttributesDialog] {
+//	with [get-window -class WizardDialog] {
 //	    get-tree | select "Merchandise \\[org.eclipse.emf.emfstore.bowling.Merchandise\\]"
 //	    get-button "Next >" | click
 //	    get-table | get-item "name : EString" | check
