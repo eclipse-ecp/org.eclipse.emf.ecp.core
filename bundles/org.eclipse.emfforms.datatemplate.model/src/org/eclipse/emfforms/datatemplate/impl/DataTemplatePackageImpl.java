@@ -28,14 +28,14 @@ import org.eclipse.emfforms.datatemplate.TemplateCollection;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplatePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass templateEClass = null;
@@ -43,7 +43,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass templateCollectionEClass = null;
@@ -59,7 +59,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	 * if one already exists.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emfforms.datatemplate.DataTemplatePackage#eNS_URI
 	 * @see #init()
@@ -72,7 +72,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -85,7 +85,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -97,9 +97,10 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 		}
 
 		// Obtain or create and register package
-		final DataTemplatePackageImpl theDataTemplatePackage = (DataTemplatePackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof DataTemplatePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new DataTemplatePackageImpl());
+		final Object registeredDataTemplatePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		final DataTemplatePackageImpl theDataTemplatePackage = registeredDataTemplatePackage instanceof DataTemplatePackageImpl
+			? (DataTemplatePackageImpl) registeredDataTemplatePackage
+			: new DataTemplatePackageImpl();
 
 		isInited = true;
 
@@ -123,7 +124,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -134,7 +135,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -145,7 +146,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -156,7 +157,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -167,7 +168,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -178,7 +179,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -189,7 +190,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -199,7 +200,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents() {
@@ -220,7 +221,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -230,7 +231,7 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents() {
@@ -255,17 +256,17 @@ public class DataTemplatePackageImpl extends EPackageImpl implements DataTemplat
 		// Add supertypes to classes
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(templateEClass, Template.class, "Template", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(templateEClass, Template.class, "Template", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTemplate_Name(), ecorePackage.getEString(), "name", null, 0, 1, Template.class, !IS_TRANSIENT,
+		initEAttribute(getTemplate_Name(), ecorePackage.getEString(), "name", null, 0, 1, Template.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTemplate_Instance(), theEcorePackage.getEObject(), null, "instance", null, 0, 1,
+		initEReference(getTemplate_Instance(), theEcorePackage.getEObject(), null, "instance", null, 1, 1, //$NON-NLS-1$
 			Template.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(templateCollectionEClass, TemplateCollection.class, "TemplateCollection", !IS_ABSTRACT,
+		initEClass(templateCollectionEClass, TemplateCollection.class, "TemplateCollection", !IS_ABSTRACT, //$NON-NLS-1$
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTemplateCollection_Templates(), getTemplate(), null, "templates", null, 0, -1,
+		initEReference(getTemplateCollection_Templates(), getTemplate(), null, "templates", null, 0, -1, //$NON-NLS-1$
 			TemplateCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

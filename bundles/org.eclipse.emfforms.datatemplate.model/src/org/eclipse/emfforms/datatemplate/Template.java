@@ -41,7 +41,7 @@ public interface Template extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.emfforms.datatemplate.DataTemplatePackage#getTemplate_Name()
@@ -54,7 +54,7 @@ public interface Template extends EObject {
 	 * Sets the value of the '{@link org.eclipse.emfforms.datatemplate.Template#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
@@ -69,11 +69,11 @@ public interface Template extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Instance</em>' containment reference.
 	 * @see #setInstance(EObject)
 	 * @see org.eclipse.emfforms.datatemplate.DataTemplatePackage#getTemplate_Instance()
-	 * @model containment="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
 	EObject getInstance();
@@ -83,7 +83,7 @@ public interface Template extends EObject {
 	 * containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Instance</em>' containment reference.
 	 * @see #getInstance()
 	 * @generated

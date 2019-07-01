@@ -42,7 +42,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	 * The cached value of the '{@link #getInstance() <em>Instance</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInstance()
 	 * @generated
 	 * @ordered
@@ -74,7 +74,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected TemplateImpl() {
@@ -84,7 +84,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,7 +95,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -106,7 +106,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -121,7 +121,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -132,7 +132,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetInstance(EObject newInstance, NotificationChain msgs) {
@@ -153,7 +153,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -181,7 +181,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -196,7 +196,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -213,7 +213,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -232,7 +232,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -251,7 +251,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -268,7 +268,7 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -277,8 +277,8 @@ public class TemplateImpl extends MinimalEObjectImpl.Container implements Templa
 			return super.toString();
 		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		final StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');
 		return result.toString();

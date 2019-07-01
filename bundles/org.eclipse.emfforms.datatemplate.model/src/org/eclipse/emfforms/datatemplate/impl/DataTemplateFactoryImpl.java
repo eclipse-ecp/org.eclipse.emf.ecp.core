@@ -27,7 +27,7 @@ import org.eclipse.emfforms.datatemplate.TemplateCollection;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplateFactory {
@@ -35,7 +35,7 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static DataTemplateFactory init() {
@@ -55,7 +55,7 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public DataTemplateFactoryImpl() {
@@ -65,7 +65,7 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -76,14 +76,14 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 		case DataTemplatePackage.TEMPLATE_COLLECTION:
 			return createTemplateCollection();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,7 +95,7 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -107,7 +107,7 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -118,7 +118,7 @@ public class DataTemplateFactoryImpl extends EFactoryImpl implements DataTemplat
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */
