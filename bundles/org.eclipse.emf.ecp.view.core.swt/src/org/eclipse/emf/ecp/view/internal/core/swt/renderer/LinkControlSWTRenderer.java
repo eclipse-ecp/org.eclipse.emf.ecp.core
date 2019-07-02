@@ -20,6 +20,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -37,6 +39,8 @@ import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceFactor
 import org.eclipse.emf.ecp.view.template.style.reference.model.VTReferenceStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -87,7 +91,8 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	private final ImageRegistryService imageRegistryService;
 	private final EMFFormsLabelProvider emfFormsLabelProvider;
 	private ECPModelElementChangeListener modelElementChangeListener;
-	private final EMFFormsEditSupport emfFormsEditSuppport;
+	private ComposedAdapterFactory composedAdapterFactory;
+	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
 	/**
 	 * @param vElement the element to render
@@ -98,20 +103,43 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @param vtViewTemplateProvider the view template provider
 	 * @param localizationService the localization service
 	 * @param imageRegistryService the image registry service
-	 * @param emfFormsEditSuppport the edit support
+	 * @param emfFormsEditSupport the EMFFormsEditSupport
+	 *
+	 * @deprecated with 1.22
+	 */
+	@Deprecated
+	@Inject
+	// CHECKSTYLE.OFF: ParameterNumber
+	public LinkControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsLocalizationService localizationService,
+		ImageRegistryService imageRegistryService, EMFFormsEditSupport emfFormsEditSupport) {
+		// CHECKSTYLE.ON: ParameterNumber
+		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
+			localizationService, imageRegistryService);
+	}
+
+	/**
+	 * @param vElement the element to render
+	 * @param viewContext the view model context
+	 * @param reportService the report service
+	 * @param emfFormsDatabinding the data binding service
+	 * @param emfFormsLabelProvider the label provider
+	 * @param vtViewTemplateProvider the view template provider
+	 * @param localizationService the localization service
+	 * @param imageRegistryService the image registry service
 	 */
 	@Inject
 	// CHECKSTYLE.OFF: ParameterNumber
 	public LinkControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsLocalizationService localizationService,
-		ImageRegistryService imageRegistryService, EMFFormsEditSupport emfFormsEditSuppport) {
+		ImageRegistryService imageRegistryService) {
 		// CHECKSTYLE.ON: ParameterNumber
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.localizationService = localizationService;
 		this.imageRegistryService = imageRegistryService;
 		this.emfFormsLabelProvider = emfFormsLabelProvider;
-		this.emfFormsEditSuppport = emfFormsEditSuppport;
 	}
 
 	@Override
@@ -416,8 +444,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @throws NoLabelFoundException
 	 */
 	protected String getText(Object value) {
-		final String linkName = emfFormsEditSuppport.getText(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel(), value);
+		final String linkName = adapterFactoryItemDelegator.getText(value);
 		return linkName == null ? "" : linkName; //$NON-NLS-1$
 	}
 
@@ -431,8 +458,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (value == null) {
 			return null;
 		}
-		final Object imageDescription = emfFormsEditSuppport.getImage(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel(), value);
+		final Object imageDescription = adapterFactoryItemDelegator.getImage(value);
 		if (imageDescription == null) {
 			return null;
 		}
@@ -509,9 +535,21 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	@Override
+	protected void postInit() {
+		super.postInit();
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new CustomReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
+	}
+
+	@Override
 	protected void dispose() {
 		if (modelElementChangeListener != null) {
 			modelElementChangeListener.remove();
+		}
+		if (composedAdapterFactory != null) {
+			composedAdapterFactory.dispose();
 		}
 		super.dispose();
 	}
