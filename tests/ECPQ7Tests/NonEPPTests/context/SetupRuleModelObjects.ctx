@@ -6,7 +6,7 @@ Element-Type: context
 Element-Version: 2.0
 Id: _ElgmoHlIEeO9Ja8zvRhhOQ
 Runtime-Version: 2.4.2.201905052359
-Save-Time: 7/1/19 3:31 PM
+Save-Time: 7/3/19 10:56 AM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -29,8 +29,6 @@ with [get-window "Select an EClass."] {
 }
 get-view "Model Explorer" | get-tree | select "Project/View" | get-menu "Generate Controls" | click
 with [get-window -class WizardDialog] {
-    get-tree | select "Player \\[org.eclipse.emf.emfstore.bowling.Player\\]"
-    get-button "Next >" | click
     with [get-table] {
         get-item "name : EString" | check
         get-item "dateOfBirth : EDate" | check
