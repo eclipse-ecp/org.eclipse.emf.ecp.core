@@ -18,6 +18,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 
@@ -88,6 +89,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseInnerObject(InnerObject object) {
+			return createInnerObjectAdapter();
+		}
+
+		@Override
 		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
@@ -120,6 +126,22 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSimpleTestObjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject
+	 * <em>Inner Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject
+	 * @generated
+	 */
+	public Adapter createInnerObjectAdapter() {
 		return null;
 	}
 

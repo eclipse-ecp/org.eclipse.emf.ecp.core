@@ -97,12 +97,14 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 		editSupport = mock(EMFFormsEditSupport.class);
 
 		domainObject = TestFactory.eINSTANCE.createSimpleTestObject();
+		domainObject.setInner(TestFactory.eINSTANCE.createInnerObject());
 
 		setup();
 
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(domainObject);
 		observableValue = EMFEditProperties
-			.value(editingDomain, TestPackage.Literals.SIMPLE_TEST_OBJECT__MY_ENUM).observe(domainObject);
+			.value(editingDomain, TestPackage.Literals.INNER_OBJECT__MY_ENUM)
+			.observe(domainObject.getInner());
 
 		setRenderer(new EnumComboViewerSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
 			getLabelProvider(),
@@ -118,7 +120,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 
 	@Override
 	protected void mockControl() throws DatabindingFailedException {
-		super.mockControl(domainObject, TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+		super.mockControl(domainObject, TestPackage.eINSTANCE.getInnerObject_MyEnum());
 	}
 
 	@Test
@@ -166,7 +168,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum changedValue = TestEnum.C;
 
-		domainObject.setMyEnum(TestEnum.B);
+		domainObject.getInner().setMyEnum(TestEnum.B);
 		final Combo combo = setUpDatabindingTest(observableValue);
 		combo.select(1); // TestEnum.C
 		combo.notifyListeners(SWT.Selection, new Event());
@@ -269,7 +271,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 
 				// A is filtered by annotation and D is filtered by the property descriptor,
 				// so we can only use B and C for testing
-				domainObject.setMyEnum(TestEnum.B);
+				domainObject.getInner().setMyEnum(TestEnum.B);
 				renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 				final EnumComboViewerSWTRenderer enumRenderer = (EnumComboViewerSWTRenderer) getRenderer();
@@ -284,7 +286,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 				final List<Throwable> thrown = new ArrayList<>(valuesToSet.length);
 				for (final TestEnum valueToSet : valuesToSet) {
 					final CompletableFuture<?> asyncUpdate = CompletableFuture.runAsync(
-						() -> domainObject.setMyEnum(valueToSet))
+						() -> domainObject.getInner().setMyEnum(valueToSet))
 						.exceptionally(x -> {
 							thrown.add(x);
 							return null;

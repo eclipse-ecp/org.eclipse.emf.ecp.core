@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -117,6 +118,16 @@ public interface TestPackage extends EPackage {
 	int SIMPLE_TEST_OBJECT__MY_ENUM = 2;
 
 	/**
+	 * The feature id for the '<em><b>Inner</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_TEST_OBJECT__INNER = 3;
+
+	/**
 	 * The number of structural features of the '<em>Simple Test Object</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -124,7 +135,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SIMPLE_TEST_OBJECT_FEATURE_COUNT = 3;
+	int SIMPLE_TEST_OBJECT_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Simple Test Object</em>' class.
@@ -137,6 +148,48 @@ public interface TestPackage extends EPackage {
 	int SIMPLE_TEST_OBJECT_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.InnerObjectImpl <em>Inner
+	 * Object</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.impl.InnerObjectImpl
+	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.impl.TestPackageImpl#getInnerObject()
+	 * @generated
+	 */
+	int INNER_OBJECT = 1;
+
+	/**
+	 * The feature id for the '<em><b>My Enum</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_OBJECT__MY_ENUM = 0;
+
+	/**
+	 * The number of structural features of the '<em>Inner Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_OBJECT_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Inner Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int INNER_OBJECT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum <em>Enum</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -145,7 +198,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.impl.TestPackageImpl#getTestEnum()
 	 * @generated
 	 */
-	int TEST_ENUM = 1;
+	int TEST_ENUM = 2;
 
 	/**
 	 * The meta object id for the '<em>XML Date</em>' data type.
@@ -156,7 +209,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.impl.TestPackageImpl#getXMLDate()
 	 * @generated
 	 */
-	int XML_DATE = 2;
+	int XML_DATE = 3;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject
@@ -208,6 +261,44 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSimpleTestObject_MyEnum();
+
+	/**
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject#getInner <em>Inner</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Inner</em>'.
+	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject#getInner()
+	 * @see #getSimpleTestObject()
+	 * @generated
+	 */
+	EReference getSimpleTestObject_Inner();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject <em>Inner
+	 * Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Inner Object</em>'.
+	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject
+	 * @generated
+	 */
+	EClass getInnerObject();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject#getMyEnum <em>My Enum</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>My Enum</em>'.
+	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject#getMyEnum()
+	 * @see #getInnerObject()
+	 * @generated
+	 */
+	EAttribute getInnerObject_MyEnum();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum <em>Enum</em>}'.
@@ -296,6 +387,36 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SIMPLE_TEST_OBJECT__MY_ENUM = eINSTANCE.getSimpleTestObject_MyEnum();
+
+		/**
+		 * The meta object literal for the '<em><b>Inner</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference SIMPLE_TEST_OBJECT__INNER = eINSTANCE.getSimpleTestObject_Inner();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.InnerObjectImpl
+		 * <em>Inner Object</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.core.swt.test.model.impl.InnerObjectImpl
+		 * @see org.eclipse.emf.ecp.view.core.swt.test.model.impl.TestPackageImpl#getInnerObject()
+		 * @generated
+		 */
+		EClass INNER_OBJECT = eINSTANCE.getInnerObject();
+
+		/**
+		 * The meta object literal for the '<em><b>My Enum</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute INNER_OBJECT__MY_ENUM = eINSTANCE.getInnerObject_MyEnum();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum <em>Enum</em>}'

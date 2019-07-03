@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.ecp.view.core.swt.tests/src" editDirectory="/org.eclipse.emf.ecp.view.core.swt.tests/src"
     modelPluginID="org.eclipse.emf.ecp.view.core.swt.tests" modelName="Test" nonNLSMarkers="true"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     editPluginID="org.eclipse.emf.ecp.view.core.swt.tests" operationReflection="true"
     importOrganizing="true" cleanup="true">
   <foreignModel>test.ecore</foreignModel>
@@ -23,6 +23,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/date"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/xmlDate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/myEnum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//SimpleTestObject/inner"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//InnerObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//InnerObject/myEnum"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

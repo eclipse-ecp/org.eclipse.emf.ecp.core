@@ -194,22 +194,24 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	 */
 	protected IObservableValue<Collection<?>> getAvailableChoicesValue() throws DatabindingFailedException {
 		if (availableChoicesValue == null) {
-			final EObject domainObject = getViewModelContext().getDomainModel();
-
 			// It makes no sense to use this renderer with a different kind of property than this
 			final IEMFObservable emfObservable = (IEMFObservable) getModelValue();
+
+			// the domain object must be the same as the object of the feature
+			final EObject domainObject = (EObject) emfObservable.getObserved();
+
 			final EStructuralFeature feature = emfObservable.getStructuralFeature();
 
 			final Optional<IItemPropertySource> propertySource = EMFUtils.adapt(domainObject,
 				IItemPropertySource.class);
 			final Optional<IItemPropertyDescriptor> propertyDescriptor = propertySource
-				.map(source -> source.getPropertyDescriptor(domainObject, feature.getName()));
+				.map(source -> source.getPropertyDescriptor(domainObject, feature));
 
 			availableChoicesValue = new ComputedValue<Collection<?>>(Collection.class) {
+				// maybe better subscribe to all changes in the current context and update?
 				private final Optional<IChangeNotifier> changeNotifier = propertySource
 					.filter(IChangeNotifier.class::isInstance).map(IChangeNotifier.class::cast);
 				private final INotifyChangedListener listener = __ -> getRealm().exec(this::makeDirty);
-
 				{
 					changeNotifier.ifPresent(cn -> cn.addListener(listener));
 				}

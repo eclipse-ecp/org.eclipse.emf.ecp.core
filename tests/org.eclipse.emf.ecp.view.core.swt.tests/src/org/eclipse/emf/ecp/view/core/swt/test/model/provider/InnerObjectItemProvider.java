@@ -15,7 +15,6 @@
 package org.eclipse.emf.ecp.view.core.swt.test.model.provider;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,10 +24,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
+import org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
-import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -42,16 +39,19 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class SimpleTestObjectItemProvider
+public class InnerObjectItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
 	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -60,7 +60,7 @@ public class SimpleTestObjectItemProvider
 	 *
 	 * @generated
 	 */
-	public SimpleTestObjectItemProvider(AdapterFactory adapterFactory) {
+	public InnerObjectItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -76,57 +76,9 @@ public class SimpleTestObjectItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addDatePropertyDescriptor(object);
-			addXmlDatePropertyDescriptor(object);
 			addMyEnumPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Date feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	protected void addDatePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_SimpleTestObject_date_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_SimpleTestObject_date_feature", //$NON-NLS-1$//$NON-NLS-2$
-					"_UI_SimpleTestObject_type"), //$NON-NLS-1$
-				TestPackage.Literals.SIMPLE_TEST_OBJECT__DATE,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Xml Date feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	protected void addXmlDatePropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_SimpleTestObject_xmlDate_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_SimpleTestObject_xmlDate_feature", //$NON-NLS-1$//$NON-NLS-2$
-					"_UI_SimpleTestObject_type"), //$NON-NLS-1$
-				TestPackage.Literals.SIMPLE_TEST_OBJECT__XML_DATE,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
 	}
 
 	/**
@@ -140,17 +92,16 @@ public class SimpleTestObjectItemProvider
 		itemPropertyDescriptors
 			.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_SimpleTestObject_myEnum_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_SimpleTestObject_myEnum_feature", //$NON-NLS-1$//$NON-NLS-2$
-					"_UI_SimpleTestObject_type"), //$NON-NLS-1$
-				TestPackage.Literals.SIMPLE_TEST_OBJECT__MY_ENUM,
+				getString("_UI_InnerObject_myEnum_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_InnerObject_myEnum_feature", //$NON-NLS-1$//$NON-NLS-2$
+					"_UI_InnerObject_type"), //$NON-NLS-1$
+				TestPackage.Literals.INNER_OBJECT__MY_ENUM,
 				true,
 				false,
 				false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				null,
 				null) {
-
 				@Override
 				public Collection<?> getChoiceOfValues(Object object) {
 					final Set<Enumerator> set = TestPackage.Literals.TEST_ENUM.getELiterals().stream()
@@ -162,39 +113,7 @@ public class SimpleTestObjectItemProvider
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(TestPackage.Literals.SIMPLE_TEST_OBJECT__INNER);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns SimpleTestObject.gif.
+	 * This returns InnerObject.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -202,7 +121,7 @@ public class SimpleTestObjectItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SimpleTestObject")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/InnerObject")); //$NON-NLS-1$
 	}
 
 	/**
@@ -214,10 +133,10 @@ public class SimpleTestObjectItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final Date labelValue = ((SimpleTestObject) object).getDate();
+		final TestEnum labelValue = ((InnerObject) object).getMyEnum();
 		final String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ? getString("_UI_SimpleTestObject_type") : //$NON-NLS-1$
-			getString("_UI_SimpleTestObject_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_InnerObject_type") : //$NON-NLS-1$
+			getString("_UI_InnerObject_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -232,14 +151,9 @@ public class SimpleTestObjectItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(SimpleTestObject.class)) {
-		case TestPackage.SIMPLE_TEST_OBJECT__DATE:
-		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
-		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
+		switch (notification.getFeatureID(InnerObject.class)) {
+		case TestPackage.INNER_OBJECT__MY_ENUM:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
-		case TestPackage.SIMPLE_TEST_OBJECT__INNER:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -256,9 +170,6 @@ public class SimpleTestObjectItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add(createChildParameter(TestPackage.Literals.SIMPLE_TEST_OBJECT__INNER,
-			TestFactory.eINSTANCE.createInnerObject()));
 	}
 
 	/**
