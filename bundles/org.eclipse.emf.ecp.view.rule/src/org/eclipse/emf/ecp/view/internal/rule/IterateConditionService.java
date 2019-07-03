@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 Christian W. Damus and others.
+ * Copyright (c) 2017-2019 Christian W. Damus and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -20,6 +20,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.rule.ConditionService;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition;
@@ -92,6 +93,14 @@ public class IterateConditionService extends CompositeConditionService<IterateCo
 			return Collections.emptyList();
 		}
 		return Collections.singletonList(result);
+	}
+
+	@Override
+	public Set<VDomainModelReference> getDomainModelReferences(IterateCondition condition) {
+		final Set<VDomainModelReference> domainModelReferences = super.getDomainModelReferences(condition);
+		// Also need to add our reference
+		domainModelReferences.add(condition.getItemReference());
+		return domainModelReferences;
 	}
 
 	@Override

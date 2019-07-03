@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -132,7 +133,10 @@ public class IterateCondition_PTest extends AbstractConditionTest<IterateConditi
 
 	@Test
 	public void references() {
-		assertThat(getDomainModelReferences(), is(getDomainModelReferences(inner)));
+		final Set<VDomainModelReference> expected = new LinkedHashSet<>();
+		expected.addAll(getDomainModelReferences(inner));
+		expected.add(getFixture().getItemReference());
+		assertThat(getDomainModelReferences(), is(expected));
 	}
 
 	/**

@@ -60,7 +60,7 @@ public class RuleConditionDmrNewModelElementStrategyProvider
 	 * @param databinding The {@link EMFFormsDatabindingEMF}
 	 */
 	@Reference(unbind = "-")
-	void setEMFFormsDatabindingEMF(EMFFormsDatabindingEMF databinding) {
+	protected void setEMFFormsDatabindingEMF(EMFFormsDatabindingEMF databinding) {
 		this.databinding = databinding;
 	}
 
@@ -70,7 +70,7 @@ public class RuleConditionDmrNewModelElementStrategyProvider
 	 * @param reportService The {@link ReportService}
 	 */
 	@Reference(unbind = "-")
-	void setReportService(ReportService reportService) {
+	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
 

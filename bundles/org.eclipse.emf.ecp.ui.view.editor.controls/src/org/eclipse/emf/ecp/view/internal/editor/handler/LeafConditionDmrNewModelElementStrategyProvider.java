@@ -21,7 +21,10 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy.P
 import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * This provider registers a {@link CreateNewModelElementStrategy} to create <strong>segment based</strong> domain model
@@ -33,6 +36,18 @@ import org.osgi.service.component.annotations.Component;
 	Provider.class })
 public class LeafConditionDmrNewModelElementStrategyProvider
 	extends RuleConditionDmrNewModelElementStrategyProvider {
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setEMFFormsDatabindingEMF(EMFFormsDatabindingEMF databinding) {
+		super.setEMFFormsDatabindingEMF(databinding);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setReportService(ReportService reportService) {
+		super.setReportService(reportService);
+	}
 
 	@Override
 	protected boolean handles(EObject owner, EReference reference) {

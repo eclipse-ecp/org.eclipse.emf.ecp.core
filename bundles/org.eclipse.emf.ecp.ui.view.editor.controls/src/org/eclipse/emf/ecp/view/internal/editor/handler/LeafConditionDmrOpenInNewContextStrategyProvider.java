@@ -20,7 +20,10 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy.Provid
 import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * This provider registers a {@link org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy
@@ -32,6 +35,18 @@ import org.osgi.service.component.annotations.Component;
 @Component(name = "LeafConditionDmrOpenInNewContextStrategyProvider", property = "service.ranking:Integer=50", service = {
 	Provider.class })
 public class LeafConditionDmrOpenInNewContextStrategyProvider extends RuleConditionDmrOpenInNewContextStrategyProvider {
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setEMFFormsDatabindingEMF(EMFFormsDatabindingEMF databinding) {
+		super.setEMFFormsDatabindingEMF(databinding);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setReportService(ReportService reportService) {
+		super.setReportService(reportService);
+	}
 
 	@Override
 	protected boolean handles(EObject owner, EReference reference) {
