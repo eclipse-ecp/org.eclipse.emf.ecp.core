@@ -243,6 +243,13 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	}
 
 	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		availableChoicesValue.dispose();
+		availableChoicesValue = null;
+		super.rootDomainModelChanged();
+	}
+
+	@Override
 	protected void dispose() {
 		super.dispose();
 		pushValue.dispose();
