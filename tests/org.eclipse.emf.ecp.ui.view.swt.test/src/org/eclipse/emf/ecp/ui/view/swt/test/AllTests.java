@@ -16,6 +16,7 @@
 
 package org.eclipse.emf.ecp.ui.view.swt.test;
 
+import org.eclipse.emf.ecp.ui.view.internal.swt.ECPSWTViewImpl_PTest;
 import org.eclipse.emf.ecp.ui.view.spi.swt.layout.PageLayout_PTest;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService_PTest;
 import org.junit.runner.RunWith;
@@ -30,6 +31,7 @@ import org.junit.runners.Suite;
 	DefaultReferenceService_PTest.class,
 	DefaultCreateNewModelElementStrategyProvider_PTest.class,
 	PageLayout_PTest.class,
+	ECPSWTViewImpl_PTest.class,
 })
 public class AllTests {
 

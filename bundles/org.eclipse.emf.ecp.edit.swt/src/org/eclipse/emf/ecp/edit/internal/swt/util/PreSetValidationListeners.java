@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
@@ -31,15 +32,18 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationServiceRunnable;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Utility class for setting up a {@link VerifyListener}
@@ -51,14 +55,24 @@ public final class PreSetValidationListeners {
 	/**
 	 * Singleton instance.
 	 */
+	@Deprecated
 	private static PreSetValidationListeners validationListeners;
-	private static PreSetValidationService preSetValidationService;
+	@Deprecated
+	private static ServiceTracker<PreSetValidationService, PreSetValidationService> serviceTracker;
 
+	private final ViewModelContext context;
+	private PreSetValidationService preSetValidationService;
+
+	@Deprecated
 	private PreSetValidationListeners() {
-		init();
+		this(null);
 	}
 
 	private PreSetValidationListeners(ViewModelContext context) {
+		super();
+
+		this.context = context;
+
 		init(context);
 	}
 
@@ -83,29 +97,33 @@ public final class PreSetValidationListeners {
 	 * @return the factory that can be used to create and attach listeners
 	 */
 	public static PreSetValidationListeners create(ViewModelContext context) {
-		if (validationListeners == null) {
-			validationListeners = new PreSetValidationListeners(context);
+		final String key = PreSetValidationListeners.class.getName();
+		PreSetValidationListeners result = (PreSetValidationListeners) context.getContextValue(key);
+		if (result == null) {
+			result = new PreSetValidationListeners(context);
+			context.putContextValue(key, result);
 		}
-		return validationListeners;
+
+		return result;
 	}
 
-	private void init() {
-		if (preSetValidationService == null) {
+	@Deprecated
+	private static PreSetValidationService getPreSetValidationService() {
+		if (serviceTracker == null) {
 			final BundleContext bundleContext = FrameworkUtil
-				.getBundle(getClass())
+				.getBundle(PreSetValidationListeners.class)
 				.getBundleContext();
-
-			final ServiceReference<PreSetValidationService> serviceReference = bundleContext
-				.getServiceReference(PreSetValidationService.class);
-
-			preSetValidationService = serviceReference != null
-				? bundleContext.getService(serviceReference)
-				: null;
+			serviceTracker = new ServiceTracker<>(bundleContext, PreSetValidationService.class, null);
+			serviceTracker.open();
 		}
+
+		return serviceTracker.getService();
 	}
 
 	private void init(ViewModelContext context) {
-		if (preSetValidationService == null && context.hasService(PreSetValidationService.class)) {
+		if (context == null) {
+			preSetValidationService = getPreSetValidationService();
+		} else if (context.hasService(PreSetValidationService.class)) {
 			preSetValidationService = context.getService(PreSetValidationService.class);
 		}
 	}
@@ -151,8 +169,9 @@ public final class PreSetValidationListeners {
 		final EAttribute attribute = (EAttribute) feature;
 
 		if (preSetValidationService != null) {
-			final VerifyListener verifyListener = new PreSetVerifyListener(vElement, attribute);
-			text.addVerifyListener(verifyListener);
+			final PreSetVerifyListener verifyListener = new PreSetVerifyListener(vElement, attribute,
+				this, preSetValidationService);
+			verifyListener.register(text);
 		}
 	}
 
@@ -175,8 +194,9 @@ public final class PreSetValidationListeners {
 		final EAttribute attribute = (EAttribute) feature;
 
 		if (preSetValidationService != null) {
-			final VerifyListener verifyListener = new PreSetVerifyListener(vElement, attribute);
-			combo.addVerifyListener(verifyListener);
+			final PreSetVerifyListener verifyListener = new PreSetVerifyListener(vElement, attribute,
+				this, preSetValidationService);
+			verifyListener.register(combo);
 		}
 	}
 
@@ -246,28 +266,48 @@ public final class PreSetValidationListeners {
 	 *
 	 */
 	public static class PreSetVerifyListener implements VerifyListener {
-
 		private final EAttribute attribute;
 		private final VElement vElement;
+		private final PreSetValidationListeners validationListeners;
+		private final PreSetValidationService preSetValidationService;
+
+		private Control control;
 
 		/**
 		 * Constructor.
 		 *
 		 * @param vElement the {@link VElement} any {@link VDiagnostic} will be attached to
 		 * @param attribute the {@link EAttribute} to be validated
+		 * @deprecated This constructor uses the deprecated singleton instances that reference the wrong view-model
+		 *             context. As of the 1.22 release, use the
+		 *             {@link PreSetValidationListeners#verify(Text, EStructuralFeature)} API and its
+		 *             variants, and do not manage these listeners directly
 		 */
+		@Deprecated
 		public PreSetVerifyListener(VElement vElement, EAttribute attribute) {
+			this(vElement, attribute, PreSetValidationListeners.validationListeners, getPreSetValidationService());
+		}
+
+		/**
+		 * Constructor.
+		 *
+		 * @param vElement the {@link VElement} any {@link VDiagnostic} will be attached to
+		 * @param attribute the {@link EAttribute} to be validated
+		 * @param validationListeners the validation listeners that I support
+		 * @param preSetValidationService the validation service to delegate to
+		 */
+		PreSetVerifyListener(VElement vElement, EAttribute attribute, PreSetValidationListeners validationListeners,
+			PreSetValidationService preSetValidationService) {
+
 			this.vElement = vElement;
 			this.attribute = attribute;
+			this.validationListeners = validationListeners;
+			this.preSetValidationService = preSetValidationService;
+
+			validationListeners.context.registerEMFFormsContextListener(createContextListener());
 		}
 
 		@Override
-		/**
-		 *
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.swt.events.VerifyListener#verifyText(org.eclipse.swt.events.VerifyEvent)
-		 */
 		public void verifyText(VerifyEvent e) {
 			final String changedText = obtainText(e);
 
@@ -334,5 +374,67 @@ public final class PreSetValidationListeners {
 			return classifier.getInstanceTypeName().equals(Integer.class.getCanonicalName());
 		}
 
+		private void register(Control control) {
+			// while the renderer is setting up, or while the context is (re-)initializing from
+			// a root domain model change, we should not perform pre-set validation
+			this.control = control;
+
+			control.getDisplay().asyncExec(this::start);
+		}
+
+		private void start() {
+			if (control instanceof Text) {
+				((Text) control).addVerifyListener(this);
+			} else if (control instanceof Combo) {
+				((Combo) control).addVerifyListener(this);
+			}
+		}
+
+		private Control stop() {
+			final Control result = control;
+
+			if (control != null && !control.isDisposed()) {
+				if (control instanceof Text) {
+					((Text) control).removeVerifyListener(this);
+				} else if (control instanceof Combo) {
+					((Combo) control).removeVerifyListener(this);
+				}
+			}
+
+			control = null;
+			return result;
+		}
+
+		private EMFFormsContextListener createContextListener() {
+			return new EMFFormsContextListener() {
+
+				private Control control;
+
+				@Override
+				public void contextInitialised() {
+					if (control != null && !control.isDisposed()) {
+						register(control);
+					}
+				}
+
+				@Override
+				public void contextDispose() {
+					control = stop();
+				}
+
+				@Override
+				public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+					// Not interesting
+				}
+
+				@Override
+				public void childContextDisposed(EMFFormsViewContext childContext) {
+					// Not interesting
+				}
+
+			};
+		}
+
 	}
+
 }
