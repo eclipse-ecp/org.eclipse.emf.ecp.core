@@ -4,33 +4,32 @@ Element-Name: Editor
 Element-Type: testsuite
 Element-Version: 2.0
 Id: _r0qowHHTEeKndsdNMEr_UQ
-Runtime-Version: 2.1.0.201606221726
-Save-Time: 9/5/16 2:59 PM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 7/11/19 5:16 PM
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
 Content-Type: text/testcase
 Entry-Name: testcase-items
 
-_tM_gQDy7EeO8kN1jLMK8wg	// kind: 'test' name: 'BigDecimal' path: 'BigDecimal.test'
-_nU15wDy-EeO8kN1jLMK8wg	// kind: 'test' name: 'BigInteger' path: 'BigInteger.test'
-_aw0FMHHeEeKndsdNMEr_UQ	// kind: 'test' name: 'Boolean' path: 'Boolean.test'
-_2jgNMHHXEeKndsdNMEr_UQ	// kind: 'test' name: 'Date' path: 'Date.test'
-_k5jCAHHZEeKndsdNMEr_UQ	// kind: 'test' name: 'Double' path: 'Double.test'
-_MhtJ4HHYEeKndsdNMEr_UQ	// kind: 'test' name: 'Enum' path: 'Enum.test'
-_1mLz4HHYEeKndsdNMEr_UQ	// kind: 'test' name: 'Int' path: 'Int.test'
-_yMGr8HHTEeKndsdNMEr_UQ	// kind: 'test' name: 'Link' path: 'Link.test'
-_LsZZEDyoEeOyfvx0Xny3Ig	// kind: 'test' name: 'NewDate' path: 'NewDate.test'
-_axAiYDyVEeOk_dMIOzb4CA	// kind: 'test' name: 'NewDouble' path: 'NewDouble.test'
-_QSZfMHHWEeKndsdNMEr_UQ	// kind: 'test' name: 'String' path: 'String.test'
-_6xi7QQpDEeOJrN9cdzAxHQ	// kind: 'test' name: 'ValidationDecoratorInEditor' path: 'ValidationDecoratorInEditor.test'
-__Gg_AIpgEeK80-dAVHg-DA	// kind: 'suite' name: 'TableSuite' path: 'Table/TableSuite.suite'
-_7xT6QXXGEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiBoolean' path: 'Multicontrols/MultiBoolean.test'
-_fytq8HXSEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiDouble' path: 'Multicontrols/MultiDouble.test'
-_YAH8kHXLEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiEnum' path: 'Multicontrols/MultiEnum.test'
-_YJbUcHXJEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiInt' path: 'Multicontrols/MultiInt.test'
-_7fNEUHXLEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiReference' path: 'Multicontrols/MultiReference.test'
-_l3nLwHHkEeKndsdNMEr_UQ	// kind: 'test' name: 'MultiString' path: 'Multicontrols/MultiString.test'
-_HzFpMGs4EeSUs_kOwABuHQ	// kind: 'test' name: 'TreeMasterDetailContextMenuFeatureMap' path: 'TreeMasterDetailContextMenuFeatureMap.test'
-_GYZaMHlAEeO9Ja8zvRhhOQ	// kind: 'test' name: 'XMLDate' path: 'XMLDate.test'
+_tM_gQDy7EeO8kN1jLMK8wg	//
+_nU15wDy-EeO8kN1jLMK8wg	//
+_aw0FMHHeEeKndsdNMEr_UQ	//
+_2jgNMHHXEeKndsdNMEr_UQ	//
+_k5jCAHHZEeKndsdNMEr_UQ	//
+_MhtJ4HHYEeKndsdNMEr_UQ	//
+_1mLz4HHYEeKndsdNMEr_UQ	//
+_yMGr8HHTEeKndsdNMEr_UQ	//
+_LsZZEDyoEeOyfvx0Xny3Ig	//
+_axAiYDyVEeOk_dMIOzb4CA	//
+_QSZfMHHWEeKndsdNMEr_UQ	//
+__Gg_AIpgEeK80-dAVHg-DA	//
+_7xT6QXXGEeK2tZkPdpUavQ	//
+_fytq8HXSEeK2tZkPdpUavQ	//
+_YAH8kHXLEeK2tZkPdpUavQ	//
+_YJbUcHXJEeK2tZkPdpUavQ	//
+_7fNEUHXLEeK2tZkPdpUavQ	//
+_l3nLwHHkEeKndsdNMEr_UQ	//
+_HzFpMGs4EeSUs_kOwABuHQ	//
+_GYZaMHlAEeO9Ja8zvRhhOQ	//
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--
