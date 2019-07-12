@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.ui.view.internal.swt;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -59,8 +60,17 @@ public class ECPSWTViewImpl_PTest {
 		swtView.dispose();
 
 		assertThat("Shell not disposed", shell.isDisposed(), is(true));
-		verify(context).removeContextUser(swtView);
+		verify(context, atLeastOnce()).removeContextUser(swtView);
 		verify(context, never()).dispose();
+	}
+
+	@Test
+	public void dispose_control() {
+		final ECPSWTViewImpl swtView = new ECPSWTViewImpl(shell, context);
+
+		shell.dispose();
+
+		verify(context).removeContextUser(swtView);
 	}
 
 	//

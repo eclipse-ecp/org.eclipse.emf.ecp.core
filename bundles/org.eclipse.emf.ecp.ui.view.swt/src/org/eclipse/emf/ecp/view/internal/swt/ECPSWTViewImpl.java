@@ -36,6 +36,8 @@ public class ECPSWTViewImpl implements ECPSWTView {
 		this.composite = composite;
 		this.viewContext = viewContext;
 
+		composite.addDisposeListener(__ -> dispose());
+
 		// I don't own this context so I cannot dispose it, but I need it while I am active
 		viewContext.addContextUser(this);
 	}
