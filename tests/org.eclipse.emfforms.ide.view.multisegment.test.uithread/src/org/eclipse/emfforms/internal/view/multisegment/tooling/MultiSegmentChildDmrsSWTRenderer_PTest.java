@@ -396,7 +396,7 @@ public class MultiSegmentChildDmrsSWTRenderer_PTest {
 
 		final Control render = renderer.render(new SWTGridCell(0, 2, renderer), shell);
 		renderer.finalizeRendering(shell);
-
+		shell.layout(true, true);
 		final Table dmrTable = SWTTestUtil.findControl(render, 0, Table.class);
 		assertEquals("Table column count", 1, dmrTable.getColumnCount()); //$NON-NLS-1$
 
