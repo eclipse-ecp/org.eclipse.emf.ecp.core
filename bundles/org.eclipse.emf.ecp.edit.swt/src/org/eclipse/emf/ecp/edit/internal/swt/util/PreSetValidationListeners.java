@@ -383,10 +383,12 @@ public final class PreSetValidationListeners {
 		}
 
 		private void start() {
-			if (control instanceof Text) {
-				((Text) control).addVerifyListener(this);
-			} else if (control instanceof Combo) {
-				((Combo) control).addVerifyListener(this);
+			if (control != null && !control.isDisposed()) {
+				if (control instanceof Text) {
+					((Text) control).addVerifyListener(this);
+				} else if (control instanceof Combo) {
+					((Combo) control).addVerifyListener(this);
+				}
 			}
 		}
 
