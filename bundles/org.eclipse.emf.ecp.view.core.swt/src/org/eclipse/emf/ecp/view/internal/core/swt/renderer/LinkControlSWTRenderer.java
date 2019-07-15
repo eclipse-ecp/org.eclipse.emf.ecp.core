@@ -603,6 +603,30 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		}
 	}
 
+	@Override
+	protected void applyReadOnly() {
+		updateButtonVisibility();
+	}
+
+	/**
+	 * Updates the visibility of 'add reference', 'new reference', and 'delete reference' buttons according to the bound
+	 * input.
+	 */
+	protected void updateButtonVisibility() {
+		final boolean isVisible = !getVElement().isEffectivelyReadonly();
+
+		// Check for null because not all buttons might have been created
+		if (addReferenceBtn != null) {
+			addReferenceBtn.setVisible(isVisible);
+		}
+		if (newReferenceBtn != null) {
+			newReferenceBtn.setVisible(isVisible);
+		}
+		if (deleteReferenceButton != null) {
+			deleteReferenceButton.setVisible(isVisible);
+		}
+	}
+
 	/** Selection listener for the delete reference button. */
 	class DeleteSelectionAdapter extends SelectionAdapter {
 		@SuppressWarnings("unused")

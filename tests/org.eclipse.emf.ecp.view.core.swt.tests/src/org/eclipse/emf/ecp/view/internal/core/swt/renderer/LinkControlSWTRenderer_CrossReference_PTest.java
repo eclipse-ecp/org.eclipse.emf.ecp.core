@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -14,6 +14,7 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -44,7 +45,6 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
@@ -75,22 +75,21 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
-		when(localizationService.getString(any(Class.class), any(String.class))).thenReturn("TEST");
+		when(localizationService.getString(any(Class.class), any(String.class))).thenReturn("TEST"); //$NON-NLS-1$
 		when(localizationService.getString(any(Class.class), eq(MessageKeys.LinkControl_AddReference)))
-			.thenReturn("Link ");
+			.thenReturn("Link "); //$NON-NLS-1$
 		when(localizationService.getString(any(Class.class), eq(MessageKeys.LinkControl_NewReference)))
-			.thenReturn("Create and link new ");
+			.thenReturn("Create and link new "); //$NON-NLS-1$
 		when(localizationService.getString(any(Class.class), eq(MessageKeys.LinkControl_DeleteReference)))
-			.thenReturn("Delete");
+			.thenReturn("Delete"); //$NON-NLS-1$
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
-		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setDatabindingService(mock(EMFFormsDatabinding.class));
 		setLabelProvider(mock(EMFFormsLabelProvider.class));
 		templateProvider = mock(VTViewTemplateProvider.class);
 		setTemplateProvider(templateProvider);
 		setup();
 		setRenderer(new LinkControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
-			getLabelProvider(), getTemplateProvider(), localizationService, imageRegistryService, editSupport));
+			getLabelProvider(), getTemplateProvider(), localizationService, imageRegistryService));
 		getRenderer().init();
 
 		final TestObservableValue observableValue = mock(TestObservableValue.class);
@@ -101,7 +100,7 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 			.thenReturn(observableValue);
 
 		final TestObservableValue labelObservable = mock(TestObservableValue.class);
-		when(labelObservable.getValue()).thenReturn("Player");
+		when(labelObservable.getValue()).thenReturn("Player"); //$NON-NLS-1$
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(labelObservable);
 
@@ -113,11 +112,6 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		dispose();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.swt.common.test.AbstractControl_PTest#mockControl()
-	 */
 	@Override
 	protected void mockControl() throws DatabindingFailedException {
 		eObject = BowlingFactory.eINSTANCE.createFan();
@@ -136,11 +130,11 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		getRenderer().finalizeRendering(getShell());
 
 		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
-		assertEquals("Link Player", linkButton.getToolTipText());
+		assertEquals("Link Player", linkButton.getToolTipText()); //$NON-NLS-1$
 		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
-		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText());
+		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText()); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
-		assertEquals("Delete", deleteButton.getToolTipText());
+		assertEquals("Delete", deleteButton.getToolTipText()); //$NON-NLS-1$
 	}
 
 	@Test
@@ -156,11 +150,11 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		getRenderer().finalizeRendering(getShell());
 
 		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
-		assertEquals("Link Player", linkButton.getToolTipText());
+		assertEquals("Link Player", linkButton.getToolTipText()); //$NON-NLS-1$
 		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
-		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText());
+		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText()); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
-		assertEquals("Delete", deleteButton.getToolTipText());
+		assertEquals("Delete", deleteButton.getToolTipText()); //$NON-NLS-1$
 	}
 
 	@Test
@@ -175,10 +169,45 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
 
+		// Readonly => Buttons should be present but invisible
 		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
-		assertEquals("Link Player", linkButton.getToolTipText());
+		assertEquals("Link Player", linkButton.getToolTipText()); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
-		assertEquals("Delete", deleteButton.getToolTipText());
+		assertEquals("Delete", deleteButton.getToolTipText()); //$NON-NLS-1$
+		try {
+			SWTTestUtil.findControl(renderControl, 2, Button.class);
+			fail(
+				"There must not be a third button for a non-containment reference with disabled 'create and link' button."); //$NON-NLS-1$
+		} catch (final NoSuchElementException ex) {
+			// This is what we expect => Test is successful
+			// Cannot use expected in @Test annotation because the test must not succeed if the link or the delete
+			// button are not found.
+		}
+	}
+
+	/**
+	 * Test that buttons are still created but invisible when the VControl is set to readonly.
+	 * This also implicitly tests that no null pointer exception is thrown if not all buttons are rendered.
+	 */
+	@Test
+	public void createAndLinkButton_referenceStylePropertyFalse_readOnly()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowCreateAndLinkButtonForCrossReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+
+		// Readonly => Buttons should be present but invisible
+		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
+		assertEquals("Link Player", linkButton.getToolTipText()); //$NON-NLS-1$
+		assertFalse("Button visibility for readonly VControl.", linkButton.isVisible()); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
+		assertEquals("Delete", deleteButton.getToolTipText()); //$NON-NLS-1$
+		assertFalse("Button visibility for readonly VControl.", deleteButton.isVisible()); //$NON-NLS-1$
 		try {
 			SWTTestUtil.findControl(renderControl, 2, Button.class);
 			fail(
@@ -198,11 +227,11 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		getRenderer().finalizeRendering(getShell());
 
 		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
-		assertEquals("Link Player", linkButton.getToolTipText());
+		assertEquals("Link Player", linkButton.getToolTipText()); //$NON-NLS-1$
 		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
-		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText());
+		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText()); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
-		assertEquals("Delete", deleteButton.getToolTipText());
+		assertEquals("Delete", deleteButton.getToolTipText()); //$NON-NLS-1$
 	}
 
 	/**
@@ -222,10 +251,31 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		getRenderer().finalizeRendering(getShell());
 
 		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
-		assertEquals("Link Player", linkButton.getToolTipText());
+		assertEquals("Link Player", linkButton.getToolTipText()); //$NON-NLS-1$
 		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
-		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText());
+		assertEquals("Create and link new Player", createAndLinkButton.getToolTipText()); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
-		assertEquals("Delete", deleteButton.getToolTipText());
+		assertEquals("Delete", deleteButton.getToolTipText()); //$NON-NLS-1$
+	}
+
+	@Test
+	public void linkButton_referenceStyleFalse_readonly()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		final VTReferenceStyleProperty property = VTReferenceFactory.eINSTANCE.createReferenceStyleProperty();
+		property.setShowLinkButtonForContainmentReferences(false);
+		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
+			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+		getvControl().setReadonly(true);
+
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+
+		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
+		assertFalse("Button visibility for readonly VControl.", linkButton.isVisible()); //$NON-NLS-1$
+		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
+		assertFalse("Button visibility for readonly VControl.", createAndLinkButton.isVisible()); //$NON-NLS-1$
+		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
+		assertFalse("Button visibility for readonly VControl.", deleteButton.isVisible()); //$NON-NLS-1$
 	}
 }
