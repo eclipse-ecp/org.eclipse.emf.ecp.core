@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -50,6 +51,7 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.junit.After;
@@ -197,6 +199,7 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		property.setShowCreateAndLinkButtonForCrossReferences(false);
 		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
 			.thenReturn(Collections.<VTStyleProperty> singleton(property));
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
@@ -205,9 +208,11 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
 		assertEquals("Link Player", linkButton.getToolTipText()); //$NON-NLS-1$
 		assertFalse("Button visibility for readonly VControl.", linkButton.isVisible()); //$NON-NLS-1$
+		assertTrue("Button excluded from layout", GridData.class.cast(linkButton.getLayoutData()).exclude); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
 		assertEquals("Delete", deleteButton.getToolTipText()); //$NON-NLS-1$
 		assertFalse("Button visibility for readonly VControl.", deleteButton.isVisible()); //$NON-NLS-1$
+		assertTrue("Button excluded from layout", GridData.class.cast(deleteButton.getLayoutData()).exclude); //$NON-NLS-1$
 		try {
 			SWTTestUtil.findControl(renderControl, 2, Button.class);
 			fail(
@@ -266,16 +271,18 @@ public class LinkControlSWTRenderer_CrossReference_PTest extends AbstractControl
 		property.setShowLinkButtonForContainmentReferences(false);
 		when(templateProvider.getStyleProperties(any(VElement.class), any(ViewModelContext.class)))
 			.thenReturn(Collections.<VTStyleProperty> singleton(property));
-		getvControl().setReadonly(true);
-
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
 
 		final Button linkButton = SWTTestUtil.findControl(renderControl, 0, Button.class);
 		assertFalse("Button visibility for readonly VControl.", linkButton.isVisible()); //$NON-NLS-1$
+		assertTrue("Button excluded from layout", GridData.class.cast(linkButton.getLayoutData()).exclude); //$NON-NLS-1$
 		final Button createAndLinkButton = SWTTestUtil.findControl(renderControl, 1, Button.class);
 		assertFalse("Button visibility for readonly VControl.", createAndLinkButton.isVisible()); //$NON-NLS-1$
+		assertTrue("Button excluded from layout", GridData.class.cast(createAndLinkButton.getLayoutData()).exclude); //$NON-NLS-1$
 		final Button deleteButton = SWTTestUtil.findControl(renderControl, 2, Button.class);
 		assertFalse("Button visibility for readonly VControl.", deleteButton.isVisible()); //$NON-NLS-1$
+		assertTrue("Button excluded from layout", GridData.class.cast(deleteButton.getLayoutData()).exclude); //$NON-NLS-1$
 	}
 }

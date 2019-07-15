@@ -14,12 +14,17 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -28,10 +33,14 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelwidthFactory;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -39,6 +48,8 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -134,7 +145,30 @@ public class SimpleControlSWTRenderer_PTest extends AbstractControl_PTest<VContr
 		assertNull(labelCell.getPreferredSize());
 	}
 
+	@Test
+	public void unsettable_readOnly()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		TestSimpleControlSWTRenderer.class.cast(getRenderer()).setUnsettable(true);
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
+
+		Mockito.when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+
+		final Button unset = SWTTestUtil.findControl(renderControl, 0, Button.class);
+		assertFalse(unset.isVisible());
+		assertTrue(GridData.class.cast(unset.getLayoutData()).exclude);
+	}
+
 	private class TestSimpleControlSWTRenderer extends SimpleControlSWTRenderer {
+		private Boolean unsettable;
 
 		TestSimpleControlSWTRenderer(
 			VControl vElement,
@@ -162,6 +196,17 @@ public class SimpleControlSWTRenderer_PTest extends AbstractControl_PTest<VContr
 			return new Label(parent, SWT.NONE);
 		}
 
+		@Override
+		protected boolean isUnsettable() throws DatabindingFailedException {
+			if (unsettable == null) {
+				return super.isUnsettable();
+			}
+			return unsettable;
+		}
+
+		void setUnsettable(boolean unsettable) {
+			this.unsettable = unsettable;
+		}
 	}
 
 }

@@ -61,6 +61,7 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -605,7 +606,11 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	@Override
 	protected void applyReadOnly() {
+		super.applyReadOnly();
 		updateButtonVisibility();
+		if (isRenderingFinished()) {
+			mainComposite.getParent().layout();
+		}
 	}
 
 	/**
@@ -618,12 +623,15 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		// Check for null because not all buttons might have been created
 		if (addReferenceBtn != null) {
 			addReferenceBtn.setVisible(isVisible);
+			GridData.class.cast(addReferenceBtn.getLayoutData()).exclude = !isVisible;
 		}
 		if (newReferenceBtn != null) {
 			newReferenceBtn.setVisible(isVisible);
+			GridData.class.cast(newReferenceBtn.getLayoutData()).exclude = !isVisible;
 		}
 		if (deleteReferenceButton != null) {
 			deleteReferenceButton.setVisible(isVisible);
+			GridData.class.cast(deleteReferenceButton.getLayoutData()).exclude = !isVisible;
 		}
 	}
 

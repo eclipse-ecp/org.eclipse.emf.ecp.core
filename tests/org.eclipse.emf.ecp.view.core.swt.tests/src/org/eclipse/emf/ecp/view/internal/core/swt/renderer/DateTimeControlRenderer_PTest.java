@@ -63,6 +63,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -487,7 +488,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 	}
 
 	@Test
-	public void testEffectivelyReadOnlyDeactivatesControl()
+	public void testEffectivelyReadOnly()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		final EObject mockedEObject = mock(EObject.class);
@@ -506,6 +507,10 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		assertFalse(renderControl.getEnabled());
 		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class);
 		assertFalse(unset.getVisible());
+		assertTrue(GridData.class.cast(unset.getLayoutData()).exclude);
+		final Button setButton = getSetButton(renderControl);
+		assertFalse(setButton.getVisible());
+		assertTrue(GridData.class.cast(setButton.getLayoutData()).exclude);
 	}
 
 	@Test

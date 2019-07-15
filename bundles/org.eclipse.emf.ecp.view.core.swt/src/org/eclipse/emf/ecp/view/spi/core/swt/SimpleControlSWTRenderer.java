@@ -58,6 +58,7 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -248,6 +249,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	private Label validationIcon;
 	private Control editControl;
+	private Button unsetButton;
 
 	/**
 	 * {@inheritDoc}
@@ -398,7 +400,6 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 		final ButtonPlacementType buttonPlacement = getUnsettableStyleProperty().getButtonPlacement();
 		final Composite controlComposite;
-		final Button unsetButton;
 		if (buttonPlacement == ButtonPlacementType.RIGHT_OF_LABEL) {
 			controlComposite = new Composite(composite, SWT.NONE);
 			unsetButton = new Button(composite, SWT.PUSH);
@@ -634,5 +635,17 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			styleProperty = createDefaultUnsettableStyleProperty();
 		}
 		return styleProperty;
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		super.applyReadOnly();
+		if (unsetButton != null) {
+			final boolean readonly = getVElement().isEffectivelyReadonly();
+			unsetButton.setVisible(!readonly);
+			final GridData data = (GridData) unsetButton.getLayoutData();
+			data.exclude = readonly;
+			unsetButton.getParent().layout();
+		}
 	}
 }

@@ -284,6 +284,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		if (bUnset != null) {
 			bUnset.setVisible(isVisible);
+			GridData.class.cast(bUnset.getLayoutData()).exclude = !isVisible;
 		}
 
 		if (setBtn != null) {
@@ -296,12 +297,17 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 					} else {
 						setBtn.setVisible(isVisible);
 					}
+					GridData.class.cast(setBtn.getLayoutData()).exclude = !setBtn.isVisible();
 				}
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new DatabindingFailedReport(ex));
 			}
 		}
 
+		// Null check to avoid NPE during postInit
+		if (composite != null) {
+			composite.layout();
+		}
 	}
 
 	private void updateStack() throws DatabindingFailedException {
