@@ -49,6 +49,7 @@ public class EcoreEditor extends GenericEditor {
 		final EcoreEditorTMDCustomization buildBehaviour = new EcoreEditorTMDCustomization(createElementCallback,
 			(Notifier) editorInput, (EcoreDiagnosticCache) getDiagnosticCache());
 		buildBehaviour.setTree(createTreeViewerBuilder());
+		buildBehaviour.setReadOnly(!isEditable(getEditorInput()));
 
 		final TreeMasterDetailComposite result = TreeMasterDetailSWTFactory.createTreeMasterDetail(composite, SWT.NONE,
 			editorInput,

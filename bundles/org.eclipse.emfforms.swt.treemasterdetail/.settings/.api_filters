@@ -91,6 +91,13 @@
                 <message_argument value="getLabelDecorator(TreeViewer)"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.22.0: Added TreeReadOnlyProvider to TreeViewerCustomization" id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTCustomization"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeReadOnlyProvider"/>
+                <message_argument value="isReadOnly()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/TreeViewerCustomization.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerCustomization">
         <filter comment="SPI Change 1.9.0" id="403984517">
@@ -105,6 +112,13 @@
                 <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerCustomization"/>
                 <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.LabelDecoratorProvider"/>
                 <message_argument value="getLabelDecorator(TreeViewer)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.22.0: Added TreeReadOnlyProvider to TreeViewerCustomization" id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerCustomization"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeReadOnlyProvider"/>
+                <message_argument value="isReadOnly()"/>
             </message_arguments>
         </filter>
     </resource>

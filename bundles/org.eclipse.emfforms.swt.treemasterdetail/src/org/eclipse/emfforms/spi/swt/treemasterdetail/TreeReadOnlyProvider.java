@@ -9,20 +9,21 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- * Johannes Faltermeier - initial API and implementation
- * Lucas Koehler - Add read-only configuration for Bug 541190
+ * Lucas Koehler - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
 /**
- * The TreeViewerCustomization is used to influence the way a {@link org.eclipse.jface.viewers.TreeViewer TreeViewer} is
- * rendered and how it behaves.
- *
- * @author Johannes Faltermeier
- * @since 1.8
+ * @author Lucas Koehler
+ * @since 1.22
  *
  */
-public interface TreeViewerCustomization extends TreeViewerBuilder, ContentProviderProvider, DNDProvider,
-	InitialSelectionProvider, LabelProviderProvider, ViewerFilterProvider, MenuProvider, LabelDecoratorProvider,
-	TreeReadOnlyProvider {
+public interface TreeReadOnlyProvider {
+
+	/**
+	 * Returns whether the tree should be read-only.
+	 * 
+	 * @return <code>true</code> if the tree is read-only
+	 */
+	boolean isReadOnly();
 }

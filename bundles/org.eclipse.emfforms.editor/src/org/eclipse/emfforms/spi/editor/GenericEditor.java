@@ -511,7 +511,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 				}
 			})
-			.customizeTree(createTreeViewerBuilder());
+			.customizeTree(createTreeViewerBuilder())
+			.customizeReadOnly(!isEditable(getEditorInput()));
 
 		if (enableValidation()) {
 			builder.customizeLabelDecorator(
@@ -569,9 +570,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @throws PartInitException if the resource could not be loaded
 	 */
 	protected ResourceSet loadResource(IEditorInput editorInput) throws PartInitException {
-		final URI resourceURI = EditUIUtil.getURI(editorInput, null);
-
 		ResourceSet resourceSet = ResourceSetHelpers.createResourceSet(getCommandStack());
+		final URI resourceURI = EditUIUtil.getURI(editorInput, resourceSet.getURIConverter());
+
 		try {
 			resourceSet = ResourceSetHelpers.loadResourceWithProxies(resourceURI, resourceSet,
 				getResourceLoadOptions());
@@ -582,6 +583,18 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			throw new PartInitException(e.getLocalizedMessage(), e);
 		}
 		// CHECKSTYLE.ON: IllegalCatch
+	}
+
+	/**
+	 * Returns whether the editor input allows editing of its contents.
+	 *
+	 * @param editorInput the editor's {@link IEditorInput}
+	 * @return <code>true</code> if the input source allows editing, <code>false</code> otherwise
+	 * @since 1.22
+	 */
+	protected boolean isEditable(IEditorInput editorInput) {
+		// Only allow editing data if it can be persisted
+		return editorInput.getPersistable() != null;
 	}
 
 	/**
@@ -683,6 +696,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 */
 	protected List<Action> getToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
+		if (!isEditable(getEditorInput())) {
+			// If the input isn't editable, toolbar actions are disabled
+			return result;
+		}
 
 		result.add(new LoadEcoreAction(resourceSet));
 

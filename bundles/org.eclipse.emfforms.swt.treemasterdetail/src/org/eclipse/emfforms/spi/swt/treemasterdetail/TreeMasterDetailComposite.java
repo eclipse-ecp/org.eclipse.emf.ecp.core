@@ -318,9 +318,13 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				final VView view = detailManager.getDetailView(eObject);
 				if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
 					// Yes, we need to render this node differently
-					final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
+					final VView treeDetailView = VTreeMasterDetail.class.cast(view.getChildren().get(0))
+						.getDetailView();
+					// Even if the TMD composite is not configured as read-only honor the effective read-only
+					// configuration of the loaded detail view
+					treeDetailView.setReadonly(treeDetailView.isEffectivelyReadonly() || customization.isReadOnly());
 					final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
-						vTreeMasterDetail.getDetailView(), eObject);
+						treeDetailView, eObject);
 					detailManager.render(context, ECPSWTViewRenderer.INSTANCE::render);
 				} else {
 					// No, everything is fine
@@ -614,6 +618,17 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	}
 
 	/**
+	 * Returns whether I am read-only.
+	 *
+	 * @return <code>true</code> if read-only
+	 * @since 1.22
+	 * @see TreeMasterDetailSWTBuilder#customizeReadOnly(boolean)
+	 */
+	public boolean isReadOnly() {
+		return customization.isReadOnly();
+	}
+
+	/**
 	 * Adapter which listens to changes and delegates the notification to other EObjects.
 	 *
 	 * @author Eugen Neufeld
@@ -687,6 +702,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				viewModelPropertiesUpdateCallback.updateViewModelProperties(detailManager.getDetailProperties());
 			}
 			final VView view = detailManager.getDetailView(eObject);
+			// Even if the TMD is not configured as read-only honor the effective read-only
+			// configuration of the loaded view
+			view.setReadonly(view.isEffectivelyReadonly() || customization.isReadOnly());
 			final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE
 				.createViewModelContext(
 					view, eObject, customization.getViewModelServices(view, eObject));

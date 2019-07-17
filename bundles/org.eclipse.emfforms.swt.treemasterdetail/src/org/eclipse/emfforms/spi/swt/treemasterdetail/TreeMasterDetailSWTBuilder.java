@@ -339,6 +339,25 @@ public final class TreeMasterDetailSWTBuilder {
 	}
 
 	/**
+	 * Use this method to specify whether the tree and its details should be rendered as read-only. The default is
+	 * false. Setting the tree master detail as read-only has the following implications:
+	 * <ul>
+	 * <li>Set all detail views as read-only</li>
+	 * <li>Disable the tree's context menu</li>
+	 * <li>Deactivate drag and drop in the tree</li>
+	 * </ul>
+	 * <strong>Note:</strong> Setting this to true voids all menu and DND customizations.
+	 *
+	 * @param readOnly <code>true</code> to make the tree master detail read-only.
+	 * @return self
+	 * @since 1.22
+	 */
+	public TreeMasterDetailSWTBuilder customizeReadOnly(boolean readOnly) {
+		behaviour.setReadOnly(readOnly);
+		return this;
+	}
+
+	/**
 	 * Call this method after all desired customizations have been passed to the builder. The will create a new
 	 * {@link TreeMasterDetailComposite} with the desired customizations.
 	 *
