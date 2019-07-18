@@ -11,20 +11,26 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - add migration of view ecore namespace URI
+ * Lucas Koehler - add support to open file from history revision (bug 541191)
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.template.tooling.editor;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -33,7 +39,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.spi.view.migrator.TemplateModelMigrationException;
@@ -48,6 +53,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector;
 import org.eclipse.emfforms.spi.core.services.segments.LegacyDmrToRootEClass;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
+import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrationException;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator.PreReplaceProcessor;
@@ -65,10 +71,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IPathEditorInput;
+import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
-import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * EditorPart for the Template Model Editor.
@@ -80,34 +88,35 @@ public class TemplateModelEditorPart extends GenericEditor {
 
 	private VTViewTemplate template;
 	private TreeMasterDetailComposite treeMasterDetail;
+	private File inputFile;
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		super.setSite(site);
-		if (!(input instanceof FileEditorInput)) {
+		final Optional<File> inputFileOptional = getInputFile(input);
+		if (!inputFileOptional.isPresent()) {
 			throw new PartInitException(Messages.TemplateModelEditorPart_invalidEditorInput);
 		}
-		final FileEditorInput fei = (FileEditorInput) input;
 
-		// resourceURI must be a platform resource URI
+		inputFile = inputFileOptional.get();
 		try {
 			// Register the referenced ecores before the migrations because the legacy dmr to segment dmr migration only
 			// works if all referenced ecores are registered
-			registerReferencedEcores(URI.createURI(fei.getURI().toURL().toExternalForm()));
+			registerReferencedEcores(URI.createFileURI(inputFile.getAbsolutePath()));
 
-			if (!ViewNsMigrationUtil.checkMigration(fei.getPath().toFile())) {
+			if (!ViewNsMigrationUtil.checkMigration(inputFile)) {
 				final boolean migrate = MessageDialog.openQuestion(site.getShell(),
 					Messages.TemplateModelEditorPart_MigrationQuestion,
 					Messages.TemplateModelEditorPart_MigrationDescription);
 				if (migrate) {
-					ViewNsMigrationUtil.migrateViewEcoreNsUri(fei.getPath().toFile());
+					ViewNsMigrationUtil.migrateViewEcoreNsUri(inputFile);
 					migrateWorkspaceModels(site.getShell());
 					if (ToolingModeUtil.isSegmentToolingEnabled()) {
-						migrateLegacyDmrs(site.getShell(), fei.getPath());
+						migrateLegacyDmrs(site.getShell(), Path.fromOSString(inputFile.getAbsolutePath()));
 					}
 				}
 			} else if (ToolingModeUtil.isSegmentToolingEnabled()) {
-				migrateLegacyDmrs(site.getShell(), fei.getPath());
+				migrateLegacyDmrs(site.getShell(), Path.fromOSString(inputFile.getAbsolutePath()));
 			}
 		} catch (final IOException e) {
 			Activator.log(e);
@@ -118,6 +127,45 @@ public class TemplateModelEditorPart extends GenericEditor {
 		// ecores before the resource is finally loaded in GenericEditor#init
 		super.init(site, input);
 		super.setPartName(input.getName());
+	}
+
+	/**
+	 * Gets a file from the given {@link IEditorInput}. If the editor input is a {@link IPathEditorInput} or a
+	 * {@link IStorageEditorInput} whose {@link IStorage} has a path, the {@link File} is directly derived from the
+	 * path. In case of a {@link IStorageEditorInput} without a path, a temporary file is created which contains the
+	 * storage's contents.
+	 * In any other case, an empty Optional is returned.
+	 *
+	 * @param editorInput The editor's input
+	 * @return The File containing the editor inputs contents if possible, nothing otherwise
+	 */
+	private Optional<File> getInputFile(IEditorInput editorInput) {
+		if (isEditable(editorInput)) {
+			// Normal file that can be edited on the hard drive
+			if (editorInput instanceof IPathEditorInput) {
+				return Optional.of(IPathEditorInput.class.cast(editorInput).getPath().toFile());
+			}
+			if (editorInput instanceof IFileEditorInput) {
+				return Optional.of(IFileEditorInput.class.cast(editorInput).getFile().getFullPath().toFile());
+			}
+		} else if (editorInput instanceof IStorageEditorInput) {
+			try {
+				final IStorage storage = IStorageEditorInput.class.cast(editorInput).getStorage();
+				// Create a temporary file and copy the storage's content to it.
+				final File tempFile = File.createTempFile("template-", ".tmp.template"); //$NON-NLS-1$ //$NON-NLS-2$
+				tempFile.delete();
+				tempFile.deleteOnExit();
+				try (InputStream contents = storage.getContents()) {
+					Files.copy(contents, tempFile.toPath());
+					return Optional.of(tempFile);
+				}
+			} catch (final CoreException | IOException ex) {
+				Activator.log(ex);
+				return Optional.empty();
+			}
+
+		}
+		return Optional.empty();
 	}
 
 	private void registerReferencedEcores(URI resourceUri) throws IOException, PartInitException {
@@ -136,14 +184,33 @@ public class TemplateModelEditorPart extends GenericEditor {
 	}
 
 	@Override
-	protected Object modifyEditorInput(ResourceSet resourceSet) {
-		// Make sure all proxies are resolved before showing the editor
-		int rsSize = getResourceSet().getResources().size();
-		EcoreUtil.resolveAll(getResourceSet());
-		while (rsSize != getResourceSet().getResources().size()) {
-			EcoreUtil.resolveAll(getResourceSet());
-			rsSize = getResourceSet().getResources().size();
+	protected ResourceSet loadResource(IEditorInput editorInput) throws PartInitException {
+		ResourceSet resourceSet = ResourceSetHelpers.createResourceSet(getCommandStack());
+		// Load resource from input file that we determined or created during initialization
+		final URI resourceURI = URI.createFileURI(inputFile.getAbsolutePath());
+
+		try {
+			resourceSet = ResourceSetHelpers.loadResourceWithProxies(resourceURI, resourceSet,
+				getResourceLoadOptions());
+			verifyEditorResource(resourceURI, resourceSet);
+			return resourceSet;
+			// CHECKSTYLE.OFF: IllegalCatch
+		} catch (final Exception e) {
+			// CHECKSTYLE.ON: IllegalCatch
+			throw new PartInitException(e.getLocalizedMessage(), e);
 		}
+	}
+
+	@Override
+	protected void refreshTreeAfterResourceChange() {
+		// Need to reset the resource after a resource change because the resource is unloaded and reloaded and we wrap
+		// the template model in our own root object. Without explicitly resetting the input again, all objects in the
+		// editor are proxies.
+		getRootView().setInput(modifyEditorInput(getResourceSet()));
+	}
+
+	@Override
+	protected Object modifyEditorInput(ResourceSet resourceSet) {
 		/* this access is save, otherwise we would have thrown a part init exception in init */
 		template = VTViewTemplate.class.cast(resourceSet.getResources().get(0).getContents().get(0));
 		return new RootObject(template);

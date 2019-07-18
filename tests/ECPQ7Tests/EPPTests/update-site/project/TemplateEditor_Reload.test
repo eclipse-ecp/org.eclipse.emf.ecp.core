@@ -1,0 +1,71 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihvnUC3mEeSwhO5Nwx0hPg,_D4Pj4C3lEeSwhO5Nwx0hPg,_2bS8sTNtEeSiS7b7ptZeHw,_DD4ysDmlEeiV5MMKft7xVA
+Element-Name: TemplateEditor_Reload
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _6KV0MKoAEeminf0o9fO9mA
+Runtime-Version: 2.5.0.201907120000
+Save-Time: 7/19/19 2:44 PM
+Testcase-Type: ecl
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Tests that the View Template editor correctly reloads the model  if it is changed in the background while the editor is open.
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "new_file.template"] {
+    get-tree | select "View Template" | get-menu -path Style | click
+    get-button "Create and link new Style Property" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select "mandatory/MandatoryStyleProperty"
+    get-button Finish | click
+}
+with [get-window MandatoryStyleProperty] {
+    get-editbox -after [get-label "Mandatory Marker"] | set-text x
+    get-button OK | click
+}
+get-button "Save (M1+S)" | click
+// Edit template file in a text editor while the template editor is open and verify its reloaded correctly
+get-view "Project Explorer" | get-tree | select "com.eclipsesource.makeithappen.model/new_file.template" 
+    | select "com.eclipsesource.makeithappen.model/new_file.template" | get-menu -path "Open With/Text Editor" | click
+with [get-editor "new_file.template" -type "Text Editor" | get-text-viewer] {
+    select-range 4 124 4 125
+    type-text y
+}
+get-button "Save (M1+S)" | click
+with [get-editor "new_file.template" -type "Template Model Editor"] {
+    click
+    get-tree | select "View Template/Style/Mandatory Style true"
+	get-editbox -after [get-label "Mandatory Marker"] | get-property text | equals y | verify-true
+}
+
+// Make template editor dirty and then edit the file in the background in the text editor
+with [get-editor "new_file.template" -type "Template Model Editor" | get-editbox 
+    -after [get-label "Mandatory Marker"]] {
+    set-text xy
+    key-type "TRAVERSE_TAB_NEXT"
+}
+with [get-editor "new_file.template" -type "Text Editor"] {
+    click
+    with [get-text-viewer] {
+        key-type BackSpace
+        type-text z
+        key-type "M1+s"
+    }
+}
+// discard changes in template editor and verify that editor content is correctly reloaded
+get-editor "new_file.template" -type "Text Editor" | close
+get-window "File Changed" | get-button Yes | click
+with [get-editor "new_file.template" -type "Template Model Editor"] {
+    get-tree | select "View Template/Style/Mandatory Style true"
+	get-editbox -after [get-label "Mandatory Marker"] | get-property text | equals z | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

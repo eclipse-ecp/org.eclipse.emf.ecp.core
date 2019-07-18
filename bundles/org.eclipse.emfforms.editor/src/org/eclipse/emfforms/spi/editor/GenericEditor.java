@@ -25,7 +25,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -209,39 +211,58 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	protected void handleResourceChange(final Collection<Resource> changedResources,
 		final Collection<Resource> removedResources) {
 		if (!isDirty()) {
-			getSite().getShell().getDisplay().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					if (resourceSet == null || rootView.isDisposed()) {
-						return;
-					}
-					reloading = true;
-					removeResources(removedResources);
-					for (final Resource changed : changedResources) {
-						// We need to get the resource by its URI from the resource set because otherwise proxies will
-						// not be able to resolve after the reload. This is the case because the given resources are not
-						// part of this editor's resource set.
-						final Resource toReload = resourceSet.getResource(changed.getURI(), false);
-						if (toReload == null) {
-							continue;
-						}
-						toReload.unload();
-						try {
-							toReload.load(null);
-						} catch (final IOException ex) {
-						}
-					}
-
-					rootView.refresh();
-
-					reloading = false;
-					getCommandStack().flush();
-					initMarkers();
+			getSite().getShell().getDisplay().asyncExec(() -> {
+				if (resourceSet == null || rootView.isDisposed()) {
+					return;
 				}
+				reloading = true;
+				removeResources(removedResources);
+
+				// We need to get every changed resource by its URI from the resource set because otherwise proxies will
+				// not be able to resolve after the reload. This is the case because the given resources are not
+				// part of this editor's resource set.
+				final List<Resource> toReload = changedResources.stream()
+					.map(changed -> resourceSet.getResource(changed.getURI(), false))
+					.filter(Objects::nonNull)
+					.collect(Collectors.toList());
+
+				reloadResources(toReload);
+				reloading = false;
+				getCommandStack().flush();
+				initMarkers();
 			});
 		} else {
 			filesChangedWithConflict = true;
 		}
+	}
+
+	/**
+	 * Reloads the given resources and refreshes the tree accordingly.
+	 *
+	 * @param resources The {@link Resource Resources} to reload
+	 * @since 1.22
+	 */
+	protected void reloadResources(Collection<Resource> resources) {
+		for (final Resource r : resources) {
+			r.unload();
+			try {
+				r.load(getResourceLoadOptions());
+			} catch (final IOException e) {
+			}
+		}
+		ResourceSetHelpers.resolveAllProxies(resourceSet);
+		refreshTreeAfterResourceChange();
+	}
+
+	/**
+	 * Called after a resource change to refresh the tree master detail of the editor. By default only the tree is
+	 * refreshed. If the tree's input is not this editor's resource but only derived from it, this method should be
+	 * overridden to reset the tree's input.
+	 *
+	 * @since 1.22
+	 */
+	protected void refreshTreeAfterResourceChange() {
+		rootView.refresh();
 	}
 
 	private boolean discardChanges() {
@@ -763,7 +784,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	private Optional<IFile> getFile() {
 		final IEditorInput input = GenericEditor.this.getEditorInput();
-		if (IFileEditorInput.class.isInstance(input)) {
+		if (isEditable(getEditorInput()) && IFileEditorInput.class.isInstance(input)) {
 			return Optional.of(IFileEditorInput.class.cast(input).getFile());
 		}
 		return Optional.empty();
@@ -958,14 +979,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			if (!isClosing() && part == GenericEditor.this && isDirty() && filesChangedWithConflict
 				&& discardChanges()) {
 				reloading = true;
-				for (final Resource r : resourceSet.getResources()) {
-					r.unload();
-					try {
-						r.load(null);
-					} catch (final IOException e) {
-					}
-				}
-				rootView.refresh();
+				reloadResources(resourceSet.getResources());
 				reloading = false;
 				getCommandStack().flush();
 				initMarkers();
