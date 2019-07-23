@@ -18,6 +18,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.swt.SWT;
@@ -61,33 +62,16 @@ public class StringCellEditor extends StringBasedCellEditor {
 		super(parent, style);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
-	 */
 	@Override
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
 		eStructuralFeature = feature;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
-	 */
 	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
@@ -96,47 +80,34 @@ public class StringCellEditor extends StringBasedCellEditor {
 		return String.valueOf(value);
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
-	 */
 	@Override
 	public int getColumnWidthWeight() {
 		return 100;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 * @since 1.6
-	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
-		return withPreSetValidation(eStructuralFeature, new UpdateValueStrategy());
+		return withPreSetValidation(eStructuralFeature, new UpdateValueStrategy() {
+
+			@Override
+			public Object convert(Object value) {
+				if ("".equals(value)) { //$NON-NLS-1$
+					value = null;
+				}
+				if (value == null && eStructuralFeature.isUnsettable()) {
+					return SetCommand.UNSET_VALUE;
+				}
+				return super.convert(value);
+			}
+
+		});
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 * @since 1.6
-	 */
 	@Override
 	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		return null;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
-	 */
 	@Override
 	public void setEditable(boolean editable) {
 		if (text != null) {
@@ -144,22 +115,11 @@ public class StringCellEditor extends StringBasedCellEditor {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
-	 */
 	@Override
 	public Image getImage(Object value) {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
-	 * @since 1.6
-	 */
 	@Override
 	public int getMinWidth() {
 		return 0;
