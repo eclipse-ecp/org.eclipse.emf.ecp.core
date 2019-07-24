@@ -37,8 +37,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.eclipse.core.databinding.observable.IObserving;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -81,7 +79,6 @@ import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToCon
 import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextTracker;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
@@ -98,7 +95,7 @@ import org.eclipse.osgi.util.NLS;
 public class ValidationServiceImpl implements ValidationService, IncrementalValidationService {
 
 	/**
-	 * The {@link ValidationDomainModelChangeListener} for the view model.
+	 * The model change listener for the view model.
 	 *
 	 */
 	private class ViewModelChangeListener implements ModelChangeAddRemoveListener {
@@ -154,12 +151,6 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 			}
 		}
 
-		/**
-		 * @param notification
-		 * @param control
-		 * @param domainModelReference
-		 * @throws DatabindingFailedException
-		 */
 		private void handleControlNotification(ModelChangeNotification notification, VControl control,
 			VDomainModelReference domainModelReference) throws DatabindingFailedException {
 			if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification().getFeature()) {
@@ -185,13 +176,14 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 			if (VDomainModelReference.class.isInstance(notifier)
 				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())
 				&& !VDomainModelReferenceSegment.class.isInstance(EObject.class.cast(notifier).eContainer())) {
-				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
-				if (domainModelReference == null) {
-					return;
-				}
 
-				final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
+				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
+				/*
+				 * We only need to validate something if the new DMR belongs to a VControl. Only in this case there can
+				 * be a rendered UI control which needs to show validation results for the DMR's settings.
+				 */
 				if (VControl.class.isInstance(domainModelReference.eContainer())) {
+					final Set<EObject> eObjectsToValidate = new LinkedHashSet<>();
 					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(domainModelReference,
 						context.getDomainModel());
 					for (final UniqueSetting setting : settings) {
@@ -200,25 +192,8 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 							eObjectsToValidate.add(object);
 						}
 					}
-				} else {
-					@SuppressWarnings("rawtypes")
-					IObservableValue observableValue;
-					try {
-						observableValue = context.getService(EMFFormsDatabinding.class)
-							.getObservableValue(domainModelReference, context.getDomainModel());
-					} catch (final DatabindingFailedException ex) {
-						reportService.report(new DatabindingFailedReport(ex));
-						return;
-					}
-					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
-					observableValue.dispose();
-					if (observed != null) {
-						eObjectsToValidate.add(observed);
-					}
-
+					validate(eObjectsToValidate);
 				}
-				validate(eObjectsToValidate);
-
 			}
 		}
 
