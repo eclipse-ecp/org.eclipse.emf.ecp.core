@@ -78,6 +78,21 @@
          </iterate>
       </definition>
    </extension>
-
-
+   <extension
+         point="org.eclipse.ltk.core.refactoring.deleteParticipants">
+      <deleteParticipant
+            class="org.eclipse.emf.ecp.view.model.refactoring.ViewModelDeleteParticipant"
+            id="org.eclipse.emf.ecp.view.model.editor.deleteParticipant"
+            name="ViewModelDeleteParticipant">
+         <enablement>
+            <adapt
+                  type="org.eclipse.core.resources.IFile">
+               <test
+                     property="org.eclipse.core.resources.name"
+                     value="*.view">
+               </test>
+            </adapt>
+         </enablement>
+      </deleteParticipant>
+   </extension>
 </plugin>
