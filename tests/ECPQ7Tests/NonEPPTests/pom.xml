@@ -47,8 +47,8 @@
 						</args>
 						<vmArgs>
 	                        <vmArg>${failsafeArgline}</vmArg>
-	                        <vmArg>-Xmx1024m</vmArg>
-							<vmArg>-XX:MaxPermSize=256m</vmArg>
+	                        <vmArg>-Xmx2048m</vmArg>
+							<vmArg>-XX:MaxPermSize=512m</vmArg>
 	                    </vmArgs>
 					</aut>
 					<testOptions>
