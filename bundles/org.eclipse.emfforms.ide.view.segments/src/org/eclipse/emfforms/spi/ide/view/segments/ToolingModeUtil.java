@@ -13,15 +13,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.ide.view.segments;
 
-import java.util.Arrays;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
+import org.eclipse.emfforms.spi.ide.preferences.EmfFormsPreferences;
 
 /**
  * Utility class that allows to query whether segment or dmr based tooling is used.
@@ -34,9 +26,12 @@ public final class ToolingModeUtil {
 
 	/**
 	 * This flag enables the automatic generation of segments from existing DMRs.
+	 *
+	 * @deprecated The tooling mode is no longer defined via runtime parameter but by a workspace preference. See
+	 *             {@link EmfFormsPreferences#isSegmentTooling()}
 	 */
+	@Deprecated
 	public static final String ENABLE_SEGMENT_TOOLING = "-enableSegmentTooling"; //$NON-NLS-1$
-	private static Boolean isSegmentToolingEnabled;
 
 	// Utility classes should not be instantiated
 	private ToolingModeUtil() {
@@ -49,24 +44,6 @@ public final class ToolingModeUtil {
 	 *         created
 	 */
 	public static boolean isSegmentToolingEnabled() {
-		if (isSegmentToolingEnabled == null) {
-			final String[] applicationArgs = Platform.getApplicationArgs();
-			isSegmentToolingEnabled = false;
-			Arrays.stream(applicationArgs).filter(ENABLE_SEGMENT_TOOLING::equals).findFirst()
-				.ifPresent(s -> isSegmentToolingEnabled = true);
-			if (isSegmentToolingEnabled) {
-				report(new AbstractReport("Segment based view model tooling is enabled.", IStatus.INFO)); //$NON-NLS-1$
-			}
-		}
-		return isSegmentToolingEnabled;
-	}
-
-	private static void report(AbstractReport report) {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(ToolingModeUtil.class).getBundleContext();
-		final ServiceReference<ReportService> serviceReference = bundleContext
-			.getServiceReference(ReportService.class);
-		final ReportService reportService = bundleContext.getService(serviceReference);
-		reportService.report(report);
-		bundleContext.ungetService(serviceReference);
+		return EmfFormsPreferences.isSegmentTooling();
 	}
 }

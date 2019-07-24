@@ -188,6 +188,7 @@
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emfforms.ide.builder</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.ecore.builder</module>
+		<module>../../bundles/org.eclipse.emfforms.ide.preferences</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.viewtemplate.builder</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.datatemplate.builder</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
