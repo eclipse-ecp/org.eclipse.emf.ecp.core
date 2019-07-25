@@ -78,6 +78,12 @@ public interface DetailViewCache {
 	boolean cacheView(ECPSWTView ecpView);
 
 	/**
+	 * Dispose all cached views, emptying the cache. The cache must still be in
+	 * a state to be used (this is not a "dispose" operation).
+	 */
+	void clear();
+
+	/**
 	 * Create a standard cache as indicated by the {@link #DETAIL_VIEW_CACHE_SIZE} value
 	 * in the given {@code context}.
 	 *

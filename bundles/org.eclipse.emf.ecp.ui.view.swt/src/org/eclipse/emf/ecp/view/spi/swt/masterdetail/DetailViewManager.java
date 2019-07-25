@@ -16,7 +16,10 @@ package org.eclipse.emf.ecp.view.spi.swt.masterdetail;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -79,8 +82,14 @@ public class DetailViewManager implements DetailViewCache {
 	/** The currently presented detail view. */
 	private ECPSWTView currentDetailView;
 
-	/** Whether the currently presented detail view is intrinsically read-only. */
-	private boolean currentDetailViewReadOnly;
+	/** Remember intrinsic read-only state of detail views (as specified in the model). */
+	private final Map<VElement, Boolean> originalDetailViewReadOnly = new WeakHashMap<>();
+
+	/**
+	 * Encapsulation of the mechanism of the last rendering performed.
+	 * Inputs are the detail context and whether the rendering should be read-only.
+	 */
+	private BiFunction<ViewModelContext, Boolean, ECPSWTView> currentRenderer;
 
 	/** View-model properties for the detail view. */
 	private final VViewModelLoadingProperties detailProperties = VViewFactory.eINSTANCE
@@ -130,15 +139,10 @@ public class DetailViewManager implements DetailViewCache {
 	public void dispose() {
 		disposed = true;
 
-		disposeViews();
+		clear();
 
 		if (renderedNoDetails != null) {
 			renderedNoDetails.dispose();
-		}
-
-		if (currentDetailView != null) {
-			currentDetailView.dispose();
-			setCurrentDetail(null, false);
 		}
 
 		detailStack.dispose();
@@ -209,9 +213,9 @@ public class DetailViewManager implements DetailViewCache {
 		}
 
 		// the "renderer" function in this case shouldn't be invoked
-		final ECPSWTView result = render(context, (p, c) -> {
+		final ECPSWTView result = doRender(context, (p, c) -> {
 			throw new IllegalStateException("not cached"); //$NON-NLS-1$
-		});
+		}, context.getViewModel().isReadonly());
 
 		return result;
 	}
@@ -227,6 +231,11 @@ public class DetailViewManager implements DetailViewCache {
 	 * @return the rendered view
 	 */
 	public ECPSWTView render(ViewModelContext context, DetailRenderingFunction renderer) {
+		currentRenderer = (detail, readOnly) -> doRender(detail, renderer, readOnly);
+		return currentRenderer.apply(context, context.getViewModel().isReadonly());
+	}
+
+	private ECPSWTView doRender(ViewModelContext context, DetailRenderingFunction renderer, boolean readOnly) {
 		cacheCurrentDetail(false);
 
 		final EObject domainModel = context.getDomainModel();
@@ -235,6 +244,7 @@ public class DetailViewManager implements DetailViewCache {
 		if (result == null) {
 			try {
 				result = renderer.render(detailStack, context);
+				initializeOriginalReadOnly(result.getViewModelContext().getViewModel());
 			} catch (final ECPRendererException e) {
 				final ReportService reportService = context.getService(ReportService.class);
 				reportService.report(new RenderingFailedReport(e));
@@ -255,11 +265,8 @@ public class DetailViewManager implements DetailViewCache {
 			}
 		}
 
+		setCurrentDetail(result);
 		showDetail(result.getSWTControl());
-
-		final VElement detailVView = result.getViewModelContext().getViewModel();
-		setCurrentDetail(result,
-			detailVView.isEffectivelyReadonly() || !detailVView.isEffectivelyEnabled());
 
 		// It's currently showing, so don't track it for disposal on flushing the cache
 		views.remove(result);
@@ -267,13 +274,12 @@ public class DetailViewManager implements DetailViewCache {
 		return result;
 	}
 
-	private void setCurrentDetail(ECPSWTView ecpView, boolean readOnly) {
+	private void setCurrentDetail(ECPSWTView ecpView) {
 		if (currentDetailView == ecpView) {
 			return; // Nothing to change
 		}
 
 		currentDetailView = ecpView;
-		currentDetailViewReadOnly = readOnly;
 	}
 
 	private void showDetail(Control control) {
@@ -317,9 +323,6 @@ public class DetailViewManager implements DetailViewCache {
 			result = render(childContext, ECPSWTViewRenderer.INSTANCE::render);
 		}
 
-		// The delegated render() call would have set this to the new read-only state
-		currentDetailViewReadOnly = detailReadOnly;
-
 		return result;
 	}
 
@@ -342,7 +345,7 @@ public class DetailViewManager implements DetailViewCache {
 	private void cacheCurrentDetail(boolean showEmpty) {
 		if (currentDetailView != null) {
 			final ECPSWTView ecpView = currentDetailView;
-			setCurrentDetail(null, false);
+			setCurrentDetail(null);
 
 			if (isDisposed()) {
 				// Just dispose the detail, then, because we can't cache it
@@ -443,9 +446,32 @@ public class DetailViewManager implements DetailViewCache {
 	 */
 	public void setDetailReadOnly(boolean readOnly) {
 		if (currentDetailView != null && !currentDetailView.getSWTControl().isDisposed()) {
-			final VElement currentDetailVView = currentDetailView.getViewModelContext().getViewModel();
-			currentDetailVView.setReadonly(readOnly || currentDetailViewReadOnly);
+			final ViewModelContext detailContext = currentDetailView.getViewModelContext();
+			final VElement currentDetailVView = detailContext.getViewModel();
+
+			if (readOnly != currentDetailVView.isReadonly()) {
+				currentDetailVView.setReadonly(readOnly || wasOriginallyReadOnly(currentDetailVView));
+
+				// Need to rebuild the details because they can be rendered quite
+				// differently in read-only mode as in writable mode. The
+				// renderer operation will compute the new read-only state
+				if (currentRenderer != null) {
+					// Don't let this detail context be disposed by zero reference count
+					detailContext.addContextUser(currentRenderer);
+					try {
+						clear();
+						currentRenderer.apply(detailContext, readOnly);
+					} finally {
+						detailContext.removeContextUser(currentRenderer);
+					}
+				}
+			}
+
 		}
+	}
+
+	private boolean wasOriginallyReadOnly(VElement detailView) {
+		return originalDetailViewReadOnly.getOrDefault(detailView, false);
 	}
 
 	/**
@@ -471,7 +497,20 @@ public class DetailViewManager implements DetailViewCache {
 			}
 		}
 
+		initializeOriginalReadOnly(result);
+
 		return result;
+	}
+
+	/**
+	 * Store the original intrinsic read-only state if this is the first we see of
+	 * the given detail view.
+	 *
+	 * @param detailView a detail view that was or will be rendered
+	 */
+	private void initializeOriginalReadOnly(VElement detailView) {
+		final boolean readOnly = detailView.isEffectivelyReadonly() || !detailView.isEffectivelyEnabled();
+		originalDetailViewReadOnly.putIfAbsent(detailView, readOnly);
 	}
 
 	/**
@@ -609,6 +648,13 @@ public class DetailViewManager implements DetailViewCache {
 		}
 
 		return result;
+	}
+
+	@Override
+	public void clear() {
+		cacheCurrentDetail();
+		disposeViews();
+		cache.clear();
 	}
 
 	//

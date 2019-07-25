@@ -10,11 +10,13 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 527686
+ * Christian W. Damus - bugs 527686, 549565
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -62,34 +64,26 @@ public class DefaultTreeMasterDetailCache implements TreeMasterDetailCache {
 		};
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache#isChached(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public boolean isChached(EObject selection) {
 		return cache.containsKey(selection.eClass());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache#getCachedView(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public ECPSWTView getCachedView(EObject selection) {
 		return cache.get(selection.eClass());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache#cache(org.eclipse.emf.ecp.ui.view.swt.ECPSWTView)
-	 */
 	@Override
 	public void cache(ECPSWTView ecpView) {
 		cache.put(ecpView.getViewModelContext().getDomainModel().eClass(), ecpView);
+	}
+
+	@Override
+	public void clear() {
+		final List<ECPSWTView> records = new ArrayList<>(cache.values());
+		cache.clear();
+		records.forEach(ECPSWTView::dispose);
 	}
 
 }

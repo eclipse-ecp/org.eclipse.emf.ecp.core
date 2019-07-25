@@ -14,7 +14,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.masterdetail;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -96,6 +98,13 @@ public class BasicDetailViewCache implements DetailViewCache {
 		} // Otherwise we already have cached exactly this view
 
 		return true;
+	}
+
+	@Override
+	public void clear() {
+		final List<Record> records = new ArrayList<>(cache.values());
+		cache.clear();
+		records.forEach(Record::dispose);
 	}
 
 	//

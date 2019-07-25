@@ -47,4 +47,9 @@ class EmptyDetailViewCache implements DetailViewCache {
 		return false;
 	}
 
+	@Override
+	public void clear() {
+		// I have nothing to clear
+	}
+
 }

@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
- * Christian W. Damus - bugs 527686, 548592
+ * Christian W. Damus - bugs 527686, 548592, 549565
  ******************************************************************************/
 package org.eclipse.emfforms.swt.treemasterdetail.test;
 
@@ -611,6 +611,11 @@ public class TreeMasterDetail_PTest {
 			@Override
 			public void cache(ECPSWTView ecpView) {
 			}
+
+			@Override
+			public void clear() {
+				// Nothing cached, nothing to clear
+			}
 		});
 
 		/* act select something */
@@ -688,6 +693,11 @@ public class TreeMasterDetail_PTest {
 					fail();
 				}
 				this.ecpView = ecpView;
+			}
+
+			@Override
+			public void clear() {
+				ecpView = null;
 			}
 		});
 
