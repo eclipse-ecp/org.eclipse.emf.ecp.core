@@ -16,8 +16,11 @@ package org.eclipse.emf.ecp.ide.editor.view;
 
 import static org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory.provide;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +30,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -35,6 +39,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -80,7 +85,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.editor.GotoMarkerAdapter;
+import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrationException;
 import org.eclipse.emfforms.spi.ide.view.segments.DmrToSegmentsMigrator;
 import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
@@ -96,6 +103,8 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPathEditorInput;
+import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
@@ -119,6 +128,7 @@ import org.eclipse.ui.part.FileEditorInput;
 public class ViewEditorPart extends EditorPart implements
 	ViewModelEditorCallback, IEditingDomainProvider {
 
+	private URI inputUri;
 	private Resource resource;
 	private BasicCommandStack basicCommandStack;
 	private Composite parent;
@@ -321,8 +331,12 @@ public class ViewEditorPart extends EditorPart implements
 	 */
 	private void loadView(boolean migrate, boolean resolve) throws IOException, PartInitException {
 
-		// resourceURI must be a platform resource URI
-		final URI resourceURI = EditUIUtil.getURI(getEditorInput(), editingDomain.getResourceSet().getURIConverter());
+		if (inputUri == null) {
+			inputUri = getInputUri(getEditorInput())
+				.orElseThrow(() -> new PartInitException("Invalid editor input.")); //$NON-NLS-1$
+		}
+
+		final URI resourceURI = inputUri;
 		if (migrate) {
 			checkMigration(resourceURI);
 		}
@@ -334,13 +348,53 @@ public class ViewEditorPart extends EditorPart implements
 		if (resolve) {
 			// resolve all proxies
 			final ResourceSet resourceSet = editingDomain.getResourceSet();
-			int rsSize = resourceSet.getResources().size();
-			EcoreUtil.resolveAll(resourceSet);
-			while (rsSize != resourceSet.getResources().size()) {
-				EcoreUtil.resolveAll(resourceSet);
-				rsSize = resourceSet.getResources().size();
-			}
+			ResourceSetHelpers.resolveAllProxies(resourceSet);
 		}
+	}
+
+	/**
+	 * Gets a uri from the given {@link IEditorInput}. If the editor input is a {@link IPathEditorInput} or a
+	 * {@link IStorageEditorInput} whose {@link IStorage} has a path, the uri is directly derived from the
+	 * input. In case of a {@link IStorageEditorInput} without a path, a temporary file is created which contains the
+	 * storage's contents.
+	 * In any other case, an empty Optional is returned.
+	 *
+	 * @param editorInput The editor's input
+	 * @return The File containing the editor inputs contents if possible, nothing otherwise
+	 */
+	private Optional<URI> getInputUri(IEditorInput editorInput) {
+		if (isEditable(editorInput)) {
+			// Normal file that can be edited on the hard drive
+			return Optional.of(EditUIUtil.getURI(getEditorInput()));
+		} else if (editorInput instanceof IStorageEditorInput) {
+			try {
+				final IStorage storage = IStorageEditorInput.class.cast(editorInput).getStorage();
+				// Create a temporary file and copy the storage's content to it.
+				final File tempFile = File.createTempFile("view-", ".tmp.view"); //$NON-NLS-1$ //$NON-NLS-2$
+				tempFile.delete();
+				tempFile.deleteOnExit();
+				try (InputStream contents = storage.getContents()) {
+					Files.copy(contents, tempFile.toPath());
+					return Optional.of(URI.createFileURI(tempFile.getAbsolutePath()));
+				}
+			} catch (final CoreException | IOException ex) {
+				Activator.getDefault().getReportService().report(new AbstractReport(ex));
+				return Optional.empty();
+			}
+
+		}
+		return Optional.empty();
+	}
+
+	/**
+	 * Returns whether the editor input allows editing of its contents.
+	 *
+	 * @param editorInput the editor's {@link IEditorInput}
+	 * @return <code>true</code> if the input source allows editing, <code>false</code> otherwise
+	 */
+	private boolean isEditable(IEditorInput editorInput) {
+		// Only allow editing data if it can be persisted
+		return editorInput.getPersistable() != null;
 	}
 
 	private void checkMigration(final URI resourceURI) {
@@ -712,6 +766,11 @@ public class ViewEditorPart extends EditorPart implements
 				.createViewModelContext(ViewProviderHelper.getView(view, null), view,
 					provide(new DefaultReferenceService(), new EMFDeleteServiceImpl()),
 					contextValues);
+
+			if (!isEditable(getEditorInput())) {
+				viewModelContext.getViewModel().setReadonly(true);
+			}
+
 			viewModelContext.putContextValue("enableMultiEdit", Boolean.TRUE); //$NON-NLS-1$
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, viewModelContext);
 			getSite().setSelectionProvider(

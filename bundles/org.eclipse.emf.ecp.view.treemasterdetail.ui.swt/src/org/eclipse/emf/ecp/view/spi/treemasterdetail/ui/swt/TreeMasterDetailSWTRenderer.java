@@ -505,7 +505,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @return true if a context menu should be shown, false otherwise
 	 */
 	protected boolean hasContextMenu() {
-		return true;
+		return !getVElement().isEffectivelyReadonly();
 	}
 
 	/**
@@ -514,7 +514,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @return true if DnD should be supported , false otherwise
 	 */
 	protected boolean hasDnDSupport() {
-		return true;
+		return !getVElement().isEffectivelyReadonly();
 	}
 
 	/**

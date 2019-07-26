@@ -266,7 +266,8 @@ public class TreeMasterDetailRenderer_PTest {
 		final Control[] content = getDetailContent(detail);
 		assertFalse(content[2].isEnabled());
 
-		assertContextMenu(tree, 0);
+		// Read-only tree should not have any context menu
+		assertNull(tree.getMenu());
 	}
 
 	@Test
