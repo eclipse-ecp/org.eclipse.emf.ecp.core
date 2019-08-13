@@ -323,7 +323,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			tableViewer.getGrid().setFooterVisible(false);
 
 			addKeyListener(tableViewer);
-			if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE) {
+			if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE) { //$NON-NLS-1$
 				final CopyDragListener mdl = new CopyDragListener();
 				tableViewer.addSelectionChangedListener(mdl);
 				tableViewer.getGrid().addMouseMoveListener(mdl);
@@ -400,7 +400,8 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	@Override
 	// CHECKSTYLE.OFF: ParameterNumber
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
-		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
+		IObservableValue<String> labelText, IObservableValue<String> labelTooltipText,
+		TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber

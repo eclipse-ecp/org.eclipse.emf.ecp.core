@@ -8,3 +8,4 @@ Fragment-Host: org.eclipse.emf.ecp.view.table.ui.swt;bundle-version="[1.22.0,1.2
 Bundle-Localization: OSGI-INF/l10n/bundle
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Automatic-Module-Name: org.eclipse.emf.ecp.view.table.ui.swt.nl_de
+Export-Package: org.eclipse.emf.ecp.view.spi.table.swt;version="1.22.0"

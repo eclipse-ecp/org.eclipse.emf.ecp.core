@@ -188,7 +188,7 @@ public class SimpleControlSWTRenderer_PTest extends AbstractControl_PTest<VContr
 
 		@Override
 		protected String getUnsetText() {
-			return "I am unset text";
+			return "I am unset text"; //$NON-NLS-1$
 		}
 
 		@Override

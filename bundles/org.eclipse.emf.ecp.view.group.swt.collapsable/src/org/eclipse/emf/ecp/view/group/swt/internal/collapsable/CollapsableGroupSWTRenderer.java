@@ -32,7 +32,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
@@ -88,12 +88,6 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		return rendererGridDescription;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
-	 *      org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
@@ -110,7 +104,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		final Font boldFont = boldDescriptor.createFont(bar.getDisplay());
 		bar.setFont(boldFont);
 
-		final ISWTObservableValue target = WidgetProperties.text().observe(item0);
+		final ISWTObservableValue<String> target = WidgetProperties.text().observe(item0);
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
 			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());

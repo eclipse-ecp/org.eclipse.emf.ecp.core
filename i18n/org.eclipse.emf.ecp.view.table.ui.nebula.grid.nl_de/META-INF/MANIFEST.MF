@@ -7,3 +7,4 @@ Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emf.ecp.view.table.ui.nebula.grid;bundle-version="[1.22.0,1.23.0)"
 Automatic-Module-Name: org.eclipse.emf.ecp.view.table.ui.nebula.grid.nl_de
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages;version="1.22.0"

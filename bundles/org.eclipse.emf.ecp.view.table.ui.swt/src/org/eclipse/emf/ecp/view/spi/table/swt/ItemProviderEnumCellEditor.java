@@ -55,7 +55,7 @@ import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.jface.databinding.viewers.ViewerProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -431,9 +431,8 @@ public class ItemProviderEnumCellEditor extends ECPEnumCellEditor {
 			ItemProviderEnumCellEditor.this.doSetValue(value);
 		}
 
-		@SuppressWarnings("rawtypes")
 		@Override
-		public IObservableValue observe(Object source) {
+		public IObservableValue<Object> observe(Object source) {
 			if (source != ItemProviderEnumCellEditor.this) {
 				return Observables.constantObservableValue(null);
 			}

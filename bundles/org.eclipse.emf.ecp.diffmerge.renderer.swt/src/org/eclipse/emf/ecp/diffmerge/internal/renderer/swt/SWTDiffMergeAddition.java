@@ -58,11 +58,6 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 		super(vElement, viewContext, reportService);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
-	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		final SWTGridDescription addGridDescription = gridDescription.copy();
@@ -71,12 +66,6 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 		return addGridDescription;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
-	 *      org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
@@ -98,11 +87,6 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 		// diffButton.setLayoutData(SWTRenderingHelper.INSTANCE.getLayoutHelper().getLeftColumnLayoutData());
 		diffButton.addSelectionListener(new SelectionAdapter() {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
@@ -114,11 +98,6 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 			if (VDiffAttachment.class.isInstance(attachment)) {
 				final Adapter adapter = new AdapterImpl() {
 
-					/**
-					 * {@inheritDoc}
-					 *
-					 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-					 */
 					@Override
 					public void notifyChanged(Notification msg) {
 						super.notifyChanged(msg);
@@ -155,7 +134,7 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 		String label;
 		try {
-			label = (String) getViewModelContext().getService(EMFFormsLabelProvider.class)
+			label = getViewModelContext().getService(EMFFormsLabelProvider.class)
 				.getDisplayName(vControl.getDomainModelReference(), diffModelContext.getDomainModel()).getValue();
 		} catch (final NoLabelFoundException ex) {
 			getViewModelContext().getService(ReportService.class).report(new AbstractReport(ex));

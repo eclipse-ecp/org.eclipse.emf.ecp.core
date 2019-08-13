@@ -51,7 +51,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -147,43 +147,44 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
-		final IObservableValue value = WidgetProperties.text().observe(hyperlink);
+		final IObservableValue<String> value = WidgetProperties.text().observe(hyperlink);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			withPreSetValidation(createValueExtractingUpdateStrategy()),
-			new UpdateValueStrategy() {
+			new UpdateValueStrategy<Object, String>() {
 				@Override
-				public Object convert(Object value) {
+				public String convert(Object value) {
 					updateChangeListener((EObject) value);
 					return "<a>" + getText(value) + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			});
 
-		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(hyperlink);
+		final IObservableValue<String> tooltipValue = WidgetProperties.tooltipText().observe(hyperlink);
 		final Binding tooltipBinding = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
 			withPreSetValidation(createValueExtractingUpdateStrategy()),
-			new UpdateValueStrategy() {
+			new UpdateValueStrategy<Object, String>() {
 				@Override
-				public Object convert(Object value) {
+				public String convert(Object value) {
 					return getText(value);
 				}
 			});
 
-		final IObservableValue imageValue = WidgetProperties.image().observe(imageHyperlink);
+		final IObservableValue<Image> imageValue = WidgetProperties.image().observe(imageHyperlink);
 		final Binding imageBinding = getDataBindingContext().bindValue(imageValue, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
-			new UpdateValueStrategy() {
+			new UpdateValueStrategy<Object, Image>() {
 				@Override
-				public Object convert(Object value) {
+				public Image convert(Object value) {
 					return getImage(value);
 				}
 			});
 
-		final IObservableValue deleteButtonEnablement = WidgetProperties.enabled().observe(deleteReferenceButton);
+		final IObservableValue<Boolean> deleteButtonEnablement = WidgetProperties.enabled()
+			.observe(deleteReferenceButton);
 		final Binding deleteBinding = getDataBindingContext().bindValue(deleteButtonEnablement, getModelValue(),
 			withPreSetValidation(createValueExtractingUpdateStrategy()),
-			new UpdateValueStrategy() {
+			new UpdateValueStrategy<Object, Boolean>() {
 				@Override
-				public Object convert(Object value) {
+				public Boolean convert(Object value) {
 					return value != null;
 				}
 			});
@@ -258,7 +259,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected void createButtons(Composite parent) {
 		String elementDisplayName = null;
 		try {
-			elementDisplayName = (String) emfFormsLabelProvider
+			elementDisplayName = emfFormsLabelProvider
 				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())
 				.getValue();
 		} catch (final NoLabelFoundException ex) {

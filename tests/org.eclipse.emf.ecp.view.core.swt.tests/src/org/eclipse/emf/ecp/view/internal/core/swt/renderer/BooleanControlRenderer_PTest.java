@@ -106,8 +106,8 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl
 		assertTrue(Button.class.isInstance(render));
 		assertEquals(SWT.CHECK, Button.class.cast(render).getStyle()
 			& SWT.CHECK);
-		assertEquals("org_eclipse_emf_ecp_control_boolean", Button.class.cast(render).getData(CUSTOM_VARIANT));
-		assertEquals(UUID + "#control", Button.class.cast(render).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("org_eclipse_emf_ecp_control_boolean", Button.class.cast(render).getData(CUSTOM_VARIANT)); //$NON-NLS-1$
+		assertEquals(UUID + "#control", Button.class.cast(render).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY)); //$NON-NLS-1$
 	}
 
 	@Override

@@ -45,8 +45,8 @@ public final class ColumnConfigurationImpl implements ColumnConfiguration {
 	private final int styleBits;
 	private final int weight;
 	private final int minWidth;
-	private final IObservableValue columnText;
-	private final IObservableValue tooltipText;
+	private final IObservableValue<String> columnText;
+	private final IObservableValue<String> tooltipText;
 	private final CellLabelProviderFactory labelProviderFactory;
 	private final Optional<EditingSupportCreator> editingSupportCreator;
 	private final Optional<Image> image;
@@ -80,8 +80,8 @@ public final class ColumnConfigurationImpl implements ColumnConfiguration {
 		int styleBits,
 		int weight,
 		int minWidth,
-		IObservableValue columnText,
-		IObservableValue tooltipText,
+		IObservableValue<String> columnText,
+		IObservableValue<String> tooltipText,
 		CellLabelProviderFactory labelProviderFactory,
 		EditingSupportCreator editingSupport,
 		Image image,
@@ -142,12 +142,12 @@ public final class ColumnConfigurationImpl implements ColumnConfiguration {
 	}
 
 	@Override
-	public IObservableValue getColumnText() {
+	public IObservableValue<String> getColumnText() {
 		return columnText;
 	}
 
 	@Override
-	public IObservableValue getColumnTooltip() {
+	public IObservableValue<String> getColumnTooltip() {
 		return tooltipText;
 	}
 

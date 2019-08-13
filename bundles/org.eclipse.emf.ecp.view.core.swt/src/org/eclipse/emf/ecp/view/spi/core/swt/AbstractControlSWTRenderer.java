@@ -52,7 +52,7 @@ import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -255,7 +255,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * </p>
 	 *
 	 * @return
-	 * 		{@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
+	 *         {@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
 	 *         {@code false} otherwise.
 	 * @since 1.8
 	 */
@@ -447,31 +447,30 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 			final EObject rootObject = getViewModelContext().getDomainModel();
 			try {
-				final IObservableValue textObservable = WidgetProperties.text().observe(label);
-				final IObservableValue displayNameObservable = labelProvider.getDisplayName(domainModelReference,
+				final IObservableValue<String> textObservable = WidgetProperties.text().observe(label);
+				final IObservableValue<String> displayNameObservable = labelProvider.getDisplayName(
+					domainModelReference,
 					rootObject);
-				viewModelDBC.bindValue(textObservable, displayNameObservable, null, new UpdateValueStrategy() {
+				viewModelDBC.bindValue(textObservable, displayNameObservable, null,
+					new UpdateValueStrategy<String, String>() {
 
-					/**
-					 * {@inheritDoc}
-					 *
-					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
-					 */
-					@Override
-					public Object convert(Object value) {
-						String extra = ""; //$NON-NLS-1$
-						final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle();
-						final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
-						if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
-							extra = mandatoryStyle.getMandatoryMarker();
+						@Override
+						public String convert(String value) {
+							String extra = ""; //$NON-NLS-1$
+							final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle();
+							final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty
+								.getValueType();
+							if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
+								extra = mandatoryStyle.getMandatoryMarker();
+							}
+							final String result = super.convert(value);
+							return result + extra;
 						}
-						final String result = (String) super.convert(value);
-						return result + extra;
-					}
 
-				});
-				final IObservableValue tooltipObservable = WidgetProperties.tooltipText().observe(label);
-				final IObservableValue descriptionObservable = labelProvider.getDescription(domainModelReference,
+					});
+				final IObservableValue<String> tooltipObservable = WidgetProperties.tooltipText().observe(label);
+				final IObservableValue<String> descriptionObservable = labelProvider.getDescription(
+					domainModelReference,
 					rootObject);
 				viewModelDBC.bindValue(tooltipObservable, descriptionObservable);
 			} catch (final NoLabelFoundException e) {

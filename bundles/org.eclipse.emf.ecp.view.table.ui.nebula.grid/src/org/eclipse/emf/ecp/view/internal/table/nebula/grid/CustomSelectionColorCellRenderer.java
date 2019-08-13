@@ -212,7 +212,7 @@ public class CustomSelectionColorCellRenderer extends GridCellRenderer {
 		}
 
 		if (!isWordWrap()) {
-			final String text = TextUtils.getShortString(gc, item.getText(getColumn()), width);
+			final String text = TextUtils.getShortStr(gc, item.getText(getColumn()), width);
 
 			if (getAlignment() == SWT.RIGHT) {
 				final int len = gc.stringExtent(text).x;

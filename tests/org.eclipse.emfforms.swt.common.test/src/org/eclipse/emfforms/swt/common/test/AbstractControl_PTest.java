@@ -205,8 +205,10 @@ public abstract class AbstractControl_PTest<C extends VControl> {
 	protected void labelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		NoLabelFoundException {
 		reset(getLabelProvider());
-		final IObservableValue testDescription = Observables.constantObservableValue("test-description", String.class);
-		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
+		final IObservableValue<String> testDescription = Observables.constantObservableValue("test-description",
+			String.class);
+		final IObservableValue<String> testDisplayName = Observables.constantObservableValue("test-displayname",
+			String.class);
 		when(getLabelProvider().getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDescription);
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

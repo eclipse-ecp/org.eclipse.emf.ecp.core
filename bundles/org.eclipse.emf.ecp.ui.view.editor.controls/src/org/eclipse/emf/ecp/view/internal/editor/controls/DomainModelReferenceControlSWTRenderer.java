@@ -74,7 +74,7 @@ import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -84,6 +84,7 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -142,7 +143,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
 		final Binding[] bindings = new Binding[3];
-		final IObservableValue value = WidgetProperties.text().observe(setLabel);
+		final IObservableValue<String> value = WidgetProperties.text().observe(setLabel);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy() {
@@ -164,7 +165,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				}
 			});
 
-		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
+		final IObservableValue<Image> imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
 			new UpdateValueStrategy() {
@@ -174,7 +175,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				}
 			});
 
-		final ISWTObservableValue setLabelTooltip = WidgetProperties.tooltipText().observe(setLabel);
+		final ISWTObservableValue<String> setLabelTooltip = WidgetProperties.tooltipText().observe(setLabel);
 		bindings[2] = getDataBindingContext().bindValue(
 			setLabelTooltip,
 			getModelValue(),

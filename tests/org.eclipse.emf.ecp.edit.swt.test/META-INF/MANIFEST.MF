@@ -27,4 +27,4 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
 Automatic-Module-Name: org.eclipse.emf.ecp.edit.swt.test
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.emf.ecp.view.test.common.swt.spi
+Import-Package: org.eclipse.emf.ecp.view.test.common.swt.spi;version="[1.22.0,1.23.0)"

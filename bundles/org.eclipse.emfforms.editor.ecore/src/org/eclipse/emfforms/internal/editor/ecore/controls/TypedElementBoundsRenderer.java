@@ -45,7 +45,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -211,57 +211,57 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 		return LocalizationServiceHelper.getString(TypedElementBoundsRenderer.class, string);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void createDataBindings(final Spinner lowerBound, final Spinner upperBound, Button unbounded) {
 		final EObject domainObject = getViewModelContext().getDomainModel();
 		final DataBindingContext dbc = getDataBindingContext();
 
-		final ISWTObservableValue lowerBoundSelectionTargetValue = WidgetProperties.selection().observe(lowerBound);
-		final IObservableValue lowerBoundModelValue = EMFEditObservables.observeValue(getEditingDomain(domainObject),
+		final ISWTObservableValue<Integer> lowerBoundSelectionTargetValue = WidgetProperties.spinnerSelection()
+			.observe(lowerBound);
+		final IObservableValue<Integer> lowerBoundModelValue = EMFEditObservables.observeValue(
+			getEditingDomain(domainObject),
 			domainObject, EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 		dbc.bindValue(lowerBoundSelectionTargetValue, lowerBoundModelValue);
 
-		final IObservableValue upperBoundModelValue = EMFEditObservables.observeValue(getEditingDomain(domainObject),
+		final IObservableValue<Integer> upperBoundModelValue = EMFEditObservables.observeValue(
+			getEditingDomain(domainObject),
 			domainObject, EcorePackage.eINSTANCE.getETypedElement_UpperBound());
-		final ISWTObservableValue upperBoundSelectionTargetValue = WidgetProperties.selection().observe(upperBound);
+		final ISWTObservableValue<Integer> upperBoundSelectionTargetValue = WidgetProperties.spinnerSelection()
+			.observe(upperBound);
 		dbc.bindValue(upperBoundSelectionTargetValue, upperBoundModelValue);
 
 		bindUpperAndLowerBounds(dbc, lowerBoundModelValue, upperBoundModelValue);
 
 		/* Disable the upperBound spinner when it's value is set to -1 */
-		final ISWTObservableValue upperBoundEnabledTargetValue = WidgetProperties.enabled().observe(upperBound);
+		final ISWTObservableValue<Boolean> upperBoundEnabledTargetValue = WidgetProperties.enabled()
+			.observe(upperBound);
 		dbc.bindValue(upperBoundEnabledTargetValue, upperBoundModelValue, null,
-			new UpdateValueStrategy() {
+			new UpdateValueStrategy<Integer, Boolean>() {
 				@Override
-				public Object convert(Object value) {
+				public Boolean convert(Integer value) {
 					// model to target
-					if (!Integer.class.isInstance(value)) {
-						return null;
-					}
-					return (Integer) value != -1;
+					return value != -1;
 				}
 			});
 
 		/* The unbounded checkbox is selected, when the upperBound value is -1 (and vice versa) */
-		final ISWTObservableValue unboundedSelectionTargetValue = WidgetProperties.selection().observe(unbounded);
+		final ISWTObservableValue<Boolean> unboundedSelectionTargetValue = WidgetProperties.buttonSelection()
+			.observe(unbounded);
 		dbc.bindValue(unboundedSelectionTargetValue, upperBoundModelValue,
-			new UpdateValueStrategy() {
+			new UpdateValueStrategy<Boolean, Integer>() {
 				@Override
-				public Object convert(Object value) {
+				public Integer convert(Boolean unbounded) {
 					// target to model
-					final Boolean unbounded = (Boolean) value;
 					if (!unbounded) {
 						return Math.max(1, lowerBound.getSelection());
 					}
 					return -1;
 				}
-			}, new UpdateValueStrategy() {
+			}, new UpdateValueStrategy<Integer, Boolean>() {
 				@Override
-				public Object convert(Object value) {
+				public Boolean convert(Integer value) {
 					// model to target
-					if (!Integer.class.isInstance(value)) {
-						return null;
-					}
-					return (Integer) value == -1;
+					return value == -1;
 				}
 			});
 	}
@@ -270,18 +270,16 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 	 * Make sure that the upperBound cannot be lower than the lowerBound and that the lowerBound cannot be higher
 	 * than the upperBound.
 	 */
-	private void bindUpperAndLowerBounds(final DataBindingContext dbc, final IObservableValue lowerBoundModelValue,
-		final IObservableValue upperBoundModelValue) {
+	private void bindUpperAndLowerBounds(final DataBindingContext dbc,
+		final IObservableValue<Integer> lowerBoundModelValue,
+		final IObservableValue<Integer> upperBoundModelValue) {
 		dbc.bindValue(upperBoundModelValue, lowerBoundModelValue,
-			new UpdateValueStrategy() {
+			new UpdateValueStrategy<Integer, Integer>() {
 				@Override
-				public Object convert(Object value) {
+				public Integer convert(Integer value) {
 					// upper value to lower value
-					if (!Integer.class.isInstance(value)) {
-						return null;
-					}
-					final Integer upperValue = (Integer) value;
-					final Integer lowerValue = (Integer) lowerBoundModelValue.getValue();
+					final Integer upperValue = value;
+					final Integer lowerValue = lowerBoundModelValue.getValue();
 					if (upperValue < lowerValue && upperValue != -1) {
 						return upperValue;
 					}
@@ -289,21 +287,18 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 				}
 
 				@Override
-				protected IStatus doSet(IObservableValue observableValue, Object value) {
+				protected IStatus doSet(IObservableValue<? super Integer> observableValue, Integer value) {
 					if (observableValue.getValue().equals(value)) {
 						return Status.OK_STATUS;
 					}
 					return super.doSet(observableValue, value);
 				}
-			}, new UpdateValueStrategy() {
+			}, new UpdateValueStrategy<Integer, Integer>() {
 				@Override
-				public Object convert(Object value) {
+				public Integer convert(Integer value) {
 					// lower value to upper value
-					if (!Integer.class.isInstance(value)) {
-						return null;
-					}
-					final Integer lowerValue = (Integer) value;
-					final Integer upperValue = (Integer) upperBoundModelValue.getValue();
+					final Integer lowerValue = value;
+					final Integer upperValue = upperBoundModelValue.getValue();
 					if (upperValue >= 0 && upperValue < lowerValue) {
 						return lowerValue;
 					}
@@ -311,7 +306,7 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 				}
 
 				@Override
-				protected IStatus doSet(IObservableValue observableValue, Object value) {
+				protected IStatus doSet(IObservableValue<? super Integer> observableValue, Integer value) {
 					if (observableValue.getValue().equals(value)) {
 						return Status.OK_STATUS;
 					}

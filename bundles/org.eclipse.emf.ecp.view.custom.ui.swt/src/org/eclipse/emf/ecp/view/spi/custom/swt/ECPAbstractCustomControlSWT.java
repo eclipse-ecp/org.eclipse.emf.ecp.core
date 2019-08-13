@@ -72,7 +72,7 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
@@ -364,16 +364,11 @@ public abstract class ECPAbstractCustomControlSWT {
 					getViewModelContext().getService(EMFFormsLabelProvider.class)
 						.getDisplayName(getCustomControl().getDomainModelReference(),
 							getViewModelContext().getDomainModel()),
-					null, new UpdateValueStrategy() {
+					null, new UpdateValueStrategy<String, String>() {
 
-						/**
-						 * {@inheritDoc}
-						 *
-						 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
-						 */
 						@Override
-						public Object convert(Object value) {
-							final String labelText = (String) super.convert(value);
+						public String convert(String value) {
+							final String labelText = super.convert(value);
 							String extra = ""; //$NON-NLS-1$
 							if (structuralFeature.getLowerBound() > 0) {
 								extra = "*"; //$NON-NLS-1$
@@ -834,7 +829,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * </p>
 	 *
 	 * @return
-	 * 		{@code true} if the custom control can handle the
+	 *         {@code true} if the custom control can handle the
 	 *         {@link org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService EMFFormsControlProcessorService}
 	 *         itself, {@code false} otherwise.
 	 * @since 1.8

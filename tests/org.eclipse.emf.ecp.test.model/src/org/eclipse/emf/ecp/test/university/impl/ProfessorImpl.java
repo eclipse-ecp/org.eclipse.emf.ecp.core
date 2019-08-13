@@ -102,6 +102,7 @@ public class ProfessorImpl extends MinimalEObjectImpl.Container implements Profe
 	 *
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -112,6 +113,7 @@ public class ProfessorImpl extends MinimalEObjectImpl.Container implements Profe
 	 *
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
@@ -126,9 +128,10 @@ public class ProfessorImpl extends MinimalEObjectImpl.Container implements Profe
 	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Address> getAddresses() {
 		if (addresses == null) {
-			addresses = new EObjectContainmentEList<Address>(Address.class, this,
+			addresses = new EObjectContainmentEList<>(Address.class, this,
 				UniversityPackage.PROFESSOR__ADDRESSES);
 		}
 		return addresses;

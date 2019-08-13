@@ -364,7 +364,6 @@ public class TableSelectionCompositeImpl extends SelectModelElementCompositeImpl
 					featureName.getValue()));
 		}
 
-		@SuppressWarnings("unchecked")
 		private IObservableValue<String> getRealDMRDisplayName() {
 			IObservableValue<String> result;
 			try {

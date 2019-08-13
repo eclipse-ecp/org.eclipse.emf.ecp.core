@@ -71,7 +71,6 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.common.internal.validation.DiagnosticHelper;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
-import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.validation.DiagnosticFrequencyMap;
@@ -383,17 +382,9 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 		propagationThreshold = getPropagationThreshold();
 
 		validationService = new org.eclipse.emfforms.common.internal.validation.ValidationServiceImpl();
-		validationService.registerValidationFilter(new AbstractSimpleFilter() {
-			@Override
-			public boolean skipValidation(EObject eObject) {
-				return validated.contains(eObject);
-			}
+		validationService.addDiagnosticFilter(this::ignoreDiagnostic);
+		validationService.addObjectFilter(this::skipValidation);
 
-			@Override
-			public boolean ignoreDiagnostic(EObject eObject, Diagnostic diagnostic) {
-				return !controlMapper.hasControlsFor(eObject);
-			}
-		});
 		validationService.registerValidationResultListener(new ValidationResultListener() {
 			@Override
 			public void onValidate(EObject eObject, Diagnostic diagnostic) {
@@ -433,6 +424,14 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 			.onChildContextAdded(this::childContextAdded)
 			.onChildContextRemoved(this::childContextRemoved)
 			.open();
+	}
+
+	private boolean skipValidation(EObject eObject) {
+		return validated.contains(eObject);
+	}
+
+	private boolean ignoreDiagnostic(EObject eObject, Diagnostic diagnostic) {
+		return !controlMapper.hasControlsFor(eObject);
 	}
 
 	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {

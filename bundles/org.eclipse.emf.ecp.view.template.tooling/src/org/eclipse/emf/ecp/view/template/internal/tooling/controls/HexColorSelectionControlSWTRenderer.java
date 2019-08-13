@@ -32,7 +32,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -87,30 +87,24 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 			VT_VIEW_TEMPLATEPROVIDER);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
-	 */
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
-		final IObservableValue value = WidgetProperties.background().observe(childControl);
+		final IObservableValue<Color> value = WidgetProperties.background().observe(childControl);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			withPreSetValidation(new UpdateValueStrategy() {
+			withPreSetValidation(new UpdateValueStrategy<Color, String>() {
 				@Override
-				public Object convert(Object value) {
+				public String convert(Color value) {
 					if (value == null) {
 						return null;
 					}
-					return getString(Color.class.cast(value).getRGB());
+					return getString(value.getRGB());
 				}
-			}), new UpdateValueStrategy() {
+			}), new UpdateValueStrategy<String, Color>() {
 				@Override
-				public Object convert(Object value) {
-					final String hexString = (String) value;
+				public Color convert(String value) {
+					final String hexString = value;
 					if (hexString == null) {
 						return null;
 					}
@@ -127,11 +121,6 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 		return new Binding[] { binding, textBinding };
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control createSWTControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -144,11 +133,6 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 		selectColorBtn.setText(Messages.HexColorSelectionControlSWTRenderer_SelectColorBtn);
 		selectColorBtn.addSelectionListener(new SelectionAdapter() {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
@@ -201,14 +185,8 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 		editingDomain.getCommandStack().execute(command);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
-	 */
 	@Override
 	protected String getUnsetText() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

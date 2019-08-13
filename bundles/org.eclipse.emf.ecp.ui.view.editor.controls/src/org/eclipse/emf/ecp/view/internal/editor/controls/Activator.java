@@ -145,23 +145,15 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the {@link ImageData}
 	 */
 	public static ImageData getImageData(URL url) {
-		return ImageDescriptor.createFromURL(url).getImageData();
+		return ImageDescriptor.createFromURL(url).getImageData(100);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		for (final ImageDescriptorToImage descriptorToImage : imageRegistry.values()) {

@@ -153,7 +153,7 @@ public class Activator extends Plugin {
 		if (!getDefault().imageRegistry.containsKey(url == null ? "NULL" : url.toExternalForm())) { //$NON-NLS-1$
 
 			final ImageDescriptor createFromURL = ImageDescriptor.createFromURL(url);
-			final ImageData imageData = createFromURL.getImageData();
+			final ImageData imageData = createFromURL.getImageData(100);
 			getDefault().imageRegistry.put(url == null ? "NULL" : url.toExternalForm(), new ImageDescriptorToImage( //$NON-NLS-1$
 				createFromURL));
 		}
@@ -183,7 +183,7 @@ public class Activator extends Plugin {
 	 * @return the {@link ImageData}
 	 */
 	public static ImageData getImageData(URL url) {
-		return ImageDescriptor.createFromURL(url).getImageData();
+		return ImageDescriptor.createFromURL(url).getImageData(100);
 	}
 
 	private ServiceReference<ECPControlFactory> controlFactoryReference;

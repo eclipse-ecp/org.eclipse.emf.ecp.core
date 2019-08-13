@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
-import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -30,7 +29,6 @@ public class Activator extends Plugin {
 
 	private static Activator instance;
 	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
-	private ServiceReference<ReportService> reportServiceReference;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override

@@ -90,11 +90,11 @@ import org.mockito.Mockito;
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class SWTTableDatabindingLabel_PTest {
-	private static final IObservableValue DISPLAYNAME = Observables.constantObservableValue("displayname");
-	private static final IObservableValue DISPLAYNAME_COLUMNS = Observables
+	private static final IObservableValue<String> DISPLAYNAME = Observables.constantObservableValue("displayname");
+	private static final IObservableValue<String> DISPLAYNAME_COLUMNS = Observables
 		.constantObservableValue("displayname-columns");
-	private static final IObservableValue DESCRIPTION = Observables.constantObservableValue("description");
-	private static final IObservableValue DESCRIPTION_COLUMNS = Observables
+	private static final IObservableValue<String> DESCRIPTION = Observables.constantObservableValue("description");
+	private static final IObservableValue<String> DESCRIPTION_COLUMNS = Observables
 		.constantObservableValue("description-columns");
 	private EMFFormsDatabindingEMF databindingService;
 	private TableControlSWTRenderer renderer;

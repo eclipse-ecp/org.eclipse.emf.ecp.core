@@ -205,8 +205,10 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 		when(getContext().getDomainModel()).thenReturn(mock(EObject.class));
 		setShell(new Shell(Display.getDefault(), SWT.NONE));
 
-		final IObservableValue testDescription = Observables.constantObservableValue("test-description", String.class);
-		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
+		final IObservableValue<String> testDescription = Observables.constantObservableValue("test-description",
+			String.class);
+		final IObservableValue<String> testDisplayName = Observables.constantObservableValue("test-displayname",
+			String.class);
 
 		try {
 

@@ -69,17 +69,16 @@ public class GridViewerColumnBuilder_ITest {
 		shell.dispose();
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void testConfigureDatabinding() {
 
-		final IObservableValue tooltipObservable = mock(IObservableValue.class);
+		final IObservableValue<String> tooltipObservable = mock(IObservableValue.class);
 		final String tooltip = "Foo";
 		when(tooltipObservable.getValue()).thenReturn(tooltip);
 		when(tooltipObservable.getRealm()).thenReturn(dataBindingContext.getValidationRealm());
 		when(config.getColumnTooltip()).thenReturn(tooltipObservable);
 
-		final IObservableValue textObservable = mock(IObservableValue.class);
+		final IObservableValue<String> textObservable = mock(IObservableValue.class);
 		when(textObservable.getValue()).thenReturn("Bar");
 		when(textObservable.getValueType()).thenReturn(String.class);
 		when(textObservable.getRealm()).thenReturn(dataBindingContext.getValidationRealm());

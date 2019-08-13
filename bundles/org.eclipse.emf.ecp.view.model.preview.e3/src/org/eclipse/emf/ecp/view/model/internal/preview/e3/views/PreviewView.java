@@ -384,7 +384,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(Activator.getDefault()
 			.getBundle()
 			.getResource("icons/preview.png")); //$NON-NLS-1$
-		titleImage.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData()));
+		titleImage.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData(100)));
 		final FormData titleImageData = new FormData();
 		final int imageOffset = -titleImage.computeSize(SWT.DEFAULT, SWT.DEFAULT).y / 2;
 		titleImageData.top = new FormAttachment(50, imageOffset);

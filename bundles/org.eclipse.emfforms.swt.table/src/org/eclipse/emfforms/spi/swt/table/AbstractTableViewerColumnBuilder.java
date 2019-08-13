@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.jface.databinding.swt.IWidgetValueProperty;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.widgets.Item;
@@ -148,7 +148,8 @@ public abstract class AbstractTableViewerColumnBuilder<V extends AbstractTableVi
 	 * @param valueProperty the value property to bind to
 	 * @param observable the value to bind to
 	 */
-	protected void bindValue(Widget column, IWidgetValueProperty valueProperty, IObservableValue observable) {
+	protected void bindValue(Widget column, IWidgetValueProperty<Widget, String> valueProperty,
+		IObservableValue<String> observable) {
 		if (dataBindingContext == null) {
 			return;
 		}

@@ -65,6 +65,7 @@ import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -631,12 +632,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final CellEditor cellEditor = createCellEditor(tempInstance, attribute, tableViewer.getTable());
 
-		@SuppressWarnings("deprecation")
-		final IObservableValue textObservableValue = org.eclipse.jface.databinding.swt.SWTObservables
-			.observeText(column.getColumn());
-		@SuppressWarnings("deprecation")
-		final IObservableValue tooltipObservableValue = org.eclipse.jface.databinding.swt.SWTObservables
-			.observeTooltipText(column.getColumn());
+		final IObservableValue<String> textObservableValue = WidgetProperties.text().observe(column.getColumn());
+		final IObservableValue<String> tooltipObservableValue = WidgetProperties.tooltipText()
+			.observe(column.getColumn());
 		try {
 			viewModelDBC.bindValue(textObservableValue, labelService
 				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel()));

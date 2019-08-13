@@ -33,6 +33,7 @@ import org.eclipse.e4.core.di.suppliers.PrimaryObjectSupplier;
  *
  * @param <A> my qualifier annotation type
  * @param <T> my value type
+ * @since 1.22
  */
 public abstract class ContextBasedObjectSupplier<A extends Annotation, T> extends ExtendedObjectSupplier {
 

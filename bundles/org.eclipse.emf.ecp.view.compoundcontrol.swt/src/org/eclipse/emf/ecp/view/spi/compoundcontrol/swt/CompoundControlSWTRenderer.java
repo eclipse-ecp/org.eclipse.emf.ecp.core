@@ -60,7 +60,7 @@ import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -246,20 +246,20 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 			.setElementIdDataWithSubId(label, getVElement(), "control_label", getViewModelContext()); //$NON-NLS-1$
 		label.setBackground(parent.getBackground());
 
-		final IObservableValue textObservable = WidgetProperties.text().observe(label);
-		final Map<IObservableValue, Map.Entry<VControl, EStructuralFeature>> displayNameObservables = getLabelDisplayNameObservables();
+		final IObservableValue<String> textObservable = WidgetProperties.text().observe(label);
+		final Map<IObservableValue<String>, Map.Entry<VControl, EStructuralFeature>> displayNameObservables = getLabelDisplayNameObservables();
 
-		for (final IObservableValue displayNameObservable : displayNameObservables.keySet()) {
+		for (final IObservableValue<String> displayNameObservable : displayNameObservables.keySet()) {
 			getDataBindingContext().bindValue(
 				textObservable,
 				displayNameObservable,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+				new UpdateValueStrategy<String, String>(UpdateValueStrategy.POLICY_NEVER),
 				new CompoundControlDisplayNameUpdateValueStrategy(displayNameObservables));
 		}
 
-		final IObservableValue tooltipObservable = WidgetProperties.tooltipText().observe(label);
-		final List<IObservableValue> labelDescriptionObservables = getLabelDescriptionObservables();
-		for (final IObservableValue descriptionObservable : labelDescriptionObservables) {
+		final IObservableValue<String> tooltipObservable = WidgetProperties.tooltipText().observe(label);
+		final List<IObservableValue<String>> labelDescriptionObservables = getLabelDescriptionObservables();
+		for (final IObservableValue<String> descriptionObservable : labelDescriptionObservables) {
 			getDataBindingContext().bindValue(
 				tooltipObservable,
 				descriptionObservable,
@@ -283,12 +283,12 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		return label;
 	}
 
-	private Map<IObservableValue, Map.Entry<VControl, EStructuralFeature>> getLabelDisplayNameObservables() {
-		final LinkedHashMap<IObservableValue, Entry<VControl, EStructuralFeature>> displayNames = new LinkedHashMap<IObservableValue, Map.Entry<VControl, EStructuralFeature>>();
+	private Map<IObservableValue<String>, Map.Entry<VControl, EStructuralFeature>> getLabelDisplayNameObservables() {
+		final LinkedHashMap<IObservableValue<String>, Entry<VControl, EStructuralFeature>> displayNames = new LinkedHashMap<IObservableValue<String>, Map.Entry<VControl, EStructuralFeature>>();
 
 		for (final VControl control : getVElement().getControls()) {
 			try {
-				final IObservableValue displayName = labelProvider
+				final IObservableValue<String> displayName = labelProvider
 					.getDisplayName(control.getDomainModelReference(), getViewModelContext().getDomainModel());
 
 				final EStructuralFeature feature = getDatabindingService()
@@ -307,8 +307,8 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		return displayNames;
 	}
 
-	private List<IObservableValue> getLabelDescriptionObservables() {
-		final List<IObservableValue> labelDescriptionObservables = new ArrayList<IObservableValue>();
+	private List<IObservableValue<String>> getLabelDescriptionObservables() {
+		final List<IObservableValue<String>> labelDescriptionObservables = new ArrayList<IObservableValue<String>>();
 		for (final VControl control : getVElement().getControls()) {
 			try {
 				labelDescriptionObservables.add(labelProvider.getDescription(control.getDomainModelReference(),
@@ -551,13 +551,13 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 *
 	 */
 	private final class CompoundControlDisplayNameUpdateValueStrategy extends EMFUpdateValueStrategy {
-		private final Map<IObservableValue, Entry<VControl, EStructuralFeature>> displayNameObservables;
+		private final Map<IObservableValue<String>, Entry<VControl, EStructuralFeature>> displayNameObservables;
 
 		/**
 		 * @param displayNameObservables
 		 */
 		private CompoundControlDisplayNameUpdateValueStrategy(
-			Map<IObservableValue, Entry<VControl, EStructuralFeature>> displayNameObservables) {
+			Map<IObservableValue<String>, Entry<VControl, EStructuralFeature>> displayNameObservables) {
 			this.displayNameObservables = displayNameObservables;
 		}
 
@@ -565,7 +565,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		public Object convert(Object value) {
 			final StringBuilder stringBuilder = new StringBuilder();
 
-			for (final Entry<IObservableValue, Map.Entry<VControl, EStructuralFeature>> obs : displayNameObservables
+			for (final Entry<IObservableValue<String>, Map.Entry<VControl, EStructuralFeature>> obs : displayNameObservables
 				.entrySet()) {
 				if (stringBuilder.length() > 0) {
 					stringBuilder.append(SEPARATOR);

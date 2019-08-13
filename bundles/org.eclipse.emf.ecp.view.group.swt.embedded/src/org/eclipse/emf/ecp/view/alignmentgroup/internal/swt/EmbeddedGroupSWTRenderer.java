@@ -44,7 +44,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -148,12 +148,6 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 		return currentGridDescription;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.GridCell,
-	 *      org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
@@ -195,7 +189,7 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 
 	/** Creates a binding that synchronizes the value of the target {@link Label} with the model value. */
 	private void bindValue(Control target) {
-		final ISWTObservableValue targetValue = WidgetProperties.text().observe(target);
+		final ISWTObservableValue<String> targetValue = WidgetProperties.text().observe(target);
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
 			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());

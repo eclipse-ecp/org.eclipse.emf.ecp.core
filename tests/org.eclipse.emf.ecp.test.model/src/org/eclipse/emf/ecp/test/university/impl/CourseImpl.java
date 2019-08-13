@@ -129,6 +129,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course {
 	 *
 	 * @generated
 	 */
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -139,6 +140,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course {
 	 *
 	 * @generated
 	 */
+	@Override
 	public void setId(String newId) {
 		final String oldId = id;
 		id = newId;
@@ -153,6 +155,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course {
 	 *
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -163,6 +166,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course {
 	 *
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
@@ -177,6 +181,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course {
 	 *
 	 * @generated
 	 */
+	@Override
 	public int getEtcs() {
 		return etcs;
 	}
@@ -187,6 +192,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course {
 	 *
 	 * @generated
 	 */
+	@Override
 	public void setEtcs(int newEtcs) {
 		final int oldEtcs = etcs;
 		etcs = newEtcs;

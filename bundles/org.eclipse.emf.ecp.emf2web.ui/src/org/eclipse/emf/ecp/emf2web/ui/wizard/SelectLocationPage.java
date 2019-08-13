@@ -17,7 +17,7 @@ import java.io.File;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.beans.typed.PojoProperties;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -32,7 +32,7 @@ import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
@@ -194,7 +194,7 @@ public class SelectLocationPage extends WizardPage {
 	 * Indicates if this page was already shown to the user.
 	 *
 	 * @return
-	 * 		{@code true} if this page was already shown to the user, {@code false} if this page was never shown to
+	 *         {@code true} if this page was already shown to the user, {@code false} if this page was never shown to
 	 *         the user.
 	 */
 	public boolean wasAlreadyVisible() {
@@ -277,32 +277,29 @@ public class SelectLocationPage extends WizardPage {
 	/**
 	 * Validates the given location.
 	 */
-	private class LocationValidator implements IValidator {
+	private class LocationValidator implements IValidator<URI> {
 		@Override
-		public IStatus validate(Object value) {
-			if (value == null) {
+		public IStatus validate(URI uri) {
+			if (uri == null) {
 				requiredLocationDecoration.show();
 				return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationError")); //$NON-NLS-1$
 			}
-			if (URI.class.isInstance(value)) {
-				final URI uri = URI.class.cast(value);
-				if (uri.isPlatform()) {
-					final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-					final IResource resource = root.findMember(uri.toPlatformString(true));
-					if (IContainer.class.isInstance(resource)) {
-						requiredLocationDecoration.show();
-						return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationDirectoryError")); //$NON-NLS-1$
-					}
-				} else {
-					if (uri.toFileString() == null) {
-						requiredLocationDecoration.show();
-						return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationValidError")); //$NON-NLS-1$
-					}
-					final File file = new File(uri.toFileString());
-					if (file.isDirectory()) {
-						requiredLocationDecoration.show();
-						return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationDirectoryError")); //$NON-NLS-1$
-					}
+			if (uri.isPlatform()) {
+				final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+				final IResource resource = root.findMember(uri.toPlatformString(true));
+				if (IContainer.class.isInstance(resource)) {
+					requiredLocationDecoration.show();
+					return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationDirectoryError")); //$NON-NLS-1$
+				}
+			} else {
+				if (uri.toFileString() == null) {
+					requiredLocationDecoration.show();
+					return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationValidError")); //$NON-NLS-1$
+				}
+				final File file = new File(uri.toFileString());
+				if (file.isDirectory()) {
+					requiredLocationDecoration.show();
+					return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationDirectoryError")); //$NON-NLS-1$
 				}
 			}
 			requiredLocationDecoration.hide();
@@ -313,7 +310,7 @@ public class SelectLocationPage extends WizardPage {
 	/**
 	 * Converts a manually entered string to an {@link URI}.
 	 */
-	private class StringToURIConverter implements IConverter {
+	private class StringToURIConverter implements IConverter<String, URI> {
 		@Override
 		public Object getToType() {
 			return URI.class;
@@ -325,11 +322,10 @@ public class SelectLocationPage extends WizardPage {
 		}
 
 		@Override
-		public Object convert(Object fromObject) {
-			if (fromObject == null || "".equals(fromObject)) { //$NON-NLS-1$
+		public URI convert(String path) {
+			if (path == null || "".equals(path)) { //$NON-NLS-1$
 				return null;
 			}
-			final String path = (String) fromObject;
 			if (path.startsWith("platform:") || path.startsWith("file:")) { //$NON-NLS-1$ //$NON-NLS-2$
 				return URI.createURI(path, false);
 			}
@@ -340,7 +336,7 @@ public class SelectLocationPage extends WizardPage {
 	/**
 	 * Converts an URI to a String.
 	 */
-	private class URItoStringConverter implements IConverter {
+	private class URItoStringConverter implements IConverter<URI, String> {
 		@Override
 		public Object getToType() {
 			return String.class;
@@ -352,11 +348,10 @@ public class SelectLocationPage extends WizardPage {
 		}
 
 		@Override
-		public Object convert(Object fromObject) {
-			if (fromObject == null) {
+		public String convert(URI path) {
+			if (path == null) {
 				return ""; //$NON-NLS-1$
 			}
-			final URI path = (URI) fromObject;
 			if (path.isFile()) {
 				return path.toFileString();
 			}
@@ -372,25 +367,28 @@ public class SelectLocationPage extends WizardPage {
 	protected DataBindingContext initDataBindings() {
 		final DataBindingContext bindingContext = new DataBindingContext();
 
-		final IObservableValue observeTextLocationTextObserveWidget = WidgetProperties.text(SWT.Modify)
+		final IObservableValue<String> observeTextLocationTextObserveWidget = WidgetProperties.text(SWT.Modify)
 			.observe(locationText);
-		final IObservableValue locationGenerationInfoObserveValue = PojoProperties.value("location") //$NON-NLS-1$
+		final IObservableValue<URI> locationGenerationInfoObserveValue = PojoProperties.value("location", URI.class) //$NON-NLS-1$
 			.observe(generationInfo);
 		bindingContext.bindValue(
-			observeTextLocationTextObserveWidget, locationGenerationInfoObserveValue, new UpdateValueStrategy()
+			observeTextLocationTextObserveWidget, locationGenerationInfoObserveValue,
+			new UpdateValueStrategy<String, URI>()
 				.setConverter(new StringToURIConverter()).setAfterConvertValidator(new LocationValidator()),
-			new UpdateValueStrategy().setConverter(new URItoStringConverter()));
+			new UpdateValueStrategy<URI, String>().setConverter(new URItoStringConverter()));
 
-		final IObservableValue observeTextGeneratedTextObserveWidget = WidgetProperties.text(SWT.Modify)
+		final IObservableValue<String> observeTextGeneratedTextObserveWidget = WidgetProperties.text(SWT.Modify)
 			.observe(generatedText);
-		final IObservableValue generatedStringGenerationInfoObserveValue = PojoProperties.value("generatedString") //$NON-NLS-1$
+		final IObservableValue<String> generatedStringGenerationInfoObserveValue = PojoProperties
+			.value("generatedString", String.class) //$NON-NLS-1$
 			.observe(generationInfo);
 		bindingContext.bindValue(observeTextGeneratedTextObserveWidget, generatedStringGenerationInfoObserveValue, null,
 			null);
 
 		if (generationInfo.getWrapper() != null) {
-			final IObservableValue observeSelectionBtnWrapObserveWidget = WidgetProperties.selection().observe(btnWrap);
-			final IObservableValue wrapGenerationInfoObserveValue = PojoProperties.value("wrap") //$NON-NLS-1$
+			final IObservableValue<Boolean> observeSelectionBtnWrapObserveWidget = WidgetProperties.buttonSelection()
+				.observe(btnWrap);
+			final IObservableValue<Boolean> wrapGenerationInfoObserveValue = PojoProperties.value("wrap", boolean.class) //$NON-NLS-1$
 				.observe(generationInfo);
 			bindingContext.bindValue(observeSelectionBtnWrapObserveWidget, wrapGenerationInfoObserveValue, null, null);
 		}

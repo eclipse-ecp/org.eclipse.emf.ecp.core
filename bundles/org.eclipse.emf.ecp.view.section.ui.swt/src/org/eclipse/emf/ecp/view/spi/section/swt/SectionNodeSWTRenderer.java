@@ -21,9 +21,8 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.beans.typed.PojoProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -264,24 +263,24 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		getExpandableComposite().setExpanded(!getVElement().isCollapsed());
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
 
-		final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
+		final IObservableValue<String> modelLabelValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());
 		final String text = "text"; //$NON-NLS-1$
-		final WritableValue value = new WritableValue(text, String.class);
-		final IObservableValue textObservable = PojoProperties.value(ExpandableComposite.class, text, String.class)
+		final IObservableValue<String> textObservable = PojoProperties
+			.value(ExpandableComposite.class, text, String.class)
 			.observe(expandableComposite);
 
 		getDataBindingContext().bindValue(textObservable, modelLabelValue);
 
 		initExpandableComposite(getExpandableComposite());
 
-		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
+		final IObservableValue<String> modelTooltipValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),
 			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
-		final IObservableValue targetTooltipValue = new ExpandableCompositeTooltipProperty()
+		final IObservableValue<String> targetTooltipValue = new ExpandableCompositeTooltipProperty()
 			.observe(getExpandableComposite());
 		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 

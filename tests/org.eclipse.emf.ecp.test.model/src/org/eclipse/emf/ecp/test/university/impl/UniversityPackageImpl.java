@@ -155,6 +155,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 		// Register package validator
 		EValidator.Registry.INSTANCE.put(theUniversityPackage,
 			new EValidator.Descriptor() {
+				@Override
 				public EValidator getEValidator() {
 					return UniversityValidator.INSTANCE;
 				}
@@ -174,6 +175,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getCourseCatalog() {
 		return courseCatalogEClass;
 	}
@@ -184,6 +186,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EReference getCourseCatalog_Courses() {
 		return (EReference) courseCatalogEClass.getEStructuralFeatures().get(0);
 	}
@@ -194,6 +197,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getCourse() {
 		return courseEClass;
 	}
@@ -204,6 +208,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCourse_Id() {
 		return (EAttribute) courseEClass.getEStructuralFeatures().get(0);
 	}
@@ -214,6 +219,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCourse_Name() {
 		return (EAttribute) courseEClass.getEStructuralFeatures().get(1);
 	}
@@ -224,6 +230,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCourse_Etcs() {
 		return (EAttribute) courseEClass.getEStructuralFeatures().get(2);
 	}
@@ -234,6 +241,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getStaff() {
 		return staffEClass;
 	}
@@ -244,6 +252,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EReference getStaff_Professors() {
 		return (EReference) staffEClass.getEStructuralFeatures().get(0);
 	}
@@ -254,6 +263,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EReference getStaff_Assistants() {
 		return (EReference) staffEClass.getEStructuralFeatures().get(1);
 	}
@@ -264,6 +274,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getStaff_Staff() {
 		return (EAttribute) staffEClass.getEStructuralFeatures().get(2);
 	}
@@ -274,6 +285,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getProfessor() {
 		return professorEClass;
 	}
@@ -284,6 +296,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getAssistant() {
 		return assistantEClass;
 	}
@@ -294,6 +307,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getPerson() {
 		return personEClass;
 	}
@@ -304,6 +318,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPerson_Name() {
 		return (EAttribute) personEClass.getEStructuralFeatures().get(0);
 	}
@@ -314,6 +329,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EReference getPerson_Addresses() {
 		return (EReference) personEClass.getEStructuralFeatures().get(1);
 	}
@@ -324,6 +340,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getAddress() {
 		return addressEClass;
 	}
@@ -334,6 +351,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 *
 	 * @generated
 	 */
+	@Override
 	public UniversityFactory getUniversityFactory() {
 		return (UniversityFactory) getEFactoryInstance();
 	}

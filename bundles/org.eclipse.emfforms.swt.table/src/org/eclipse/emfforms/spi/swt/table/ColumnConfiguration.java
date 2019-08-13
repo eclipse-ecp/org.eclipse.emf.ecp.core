@@ -149,16 +149,14 @@ public interface ColumnConfiguration {
 	 *
 	 * @return the column header text
 	 */
-	@SuppressWarnings("rawtypes")
-	IObservableValue getColumnText();
+	IObservableValue<String> getColumnText();
 
 	/**
 	 * The column header tooltip text.
 	 *
 	 * @return the column header tooltip
 	 */
-	@SuppressWarnings("rawtypes")
-	IObservableValue getColumnTooltip();
+	IObservableValue<String> getColumnTooltip();
 
 	/**
 	 * The cell label provider which will be set on the column.

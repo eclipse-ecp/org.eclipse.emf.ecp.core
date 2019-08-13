@@ -58,7 +58,7 @@ public final class GridTableViewerFactory extends TableViewerFactory {
 	 * @return the builder
 	 */
 	public static GridTableViewerSWTBuilder fillDefaults(Composite composite, int swtStyleBits, Object input,
-		IObservableValue title, IObservableValue tooltip) {
+		IObservableValue<String> title, IObservableValue<String> tooltip) {
 		return new GridTableViewerSWTBuilder(composite, swtStyleBits, input, title, tooltip);
 	}
 

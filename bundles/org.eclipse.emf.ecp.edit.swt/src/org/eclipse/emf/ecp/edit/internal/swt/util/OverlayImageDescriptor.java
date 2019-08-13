@@ -101,7 +101,7 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 		}
 
 		// draw the overlay image
-		final ImageData overlayData = overlayDesc.getImageData();
+		final ImageData overlayData = overlayDesc.getImageData(100);
 		if (overlayData != null) {
 			Point pos = null;
 			switch (overlayPos) {

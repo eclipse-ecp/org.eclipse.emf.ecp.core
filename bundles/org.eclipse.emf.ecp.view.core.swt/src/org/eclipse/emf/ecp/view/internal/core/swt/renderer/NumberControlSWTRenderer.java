@@ -97,10 +97,6 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		return SWT.RIGHT;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.AbstractTextControl#getTextVariantID()
-	 */
 	@Override
 	protected String getTextVariantID() {
 		return "org_eclipse_emf_ecp_control_numerical"; //$NON-NLS-1$

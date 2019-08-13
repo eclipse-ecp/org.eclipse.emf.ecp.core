@@ -41,7 +41,6 @@ import org.eclipse.ui.dialogs.ListDialog;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class AttributeSelectControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
 
 	/**

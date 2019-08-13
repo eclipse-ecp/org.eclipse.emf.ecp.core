@@ -16,9 +16,7 @@ package org.eclipse.emf.ecp.internal.view.template.model;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * The Class Activator.
@@ -34,7 +32,6 @@ public class Activator extends Plugin {
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.model"; //$NON-NLS-1$
 
 	private static Activator plugin;
-	private ServiceReference<ReportService> reportServiceReference;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	/**
