@@ -35,7 +35,6 @@ import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.nebula.widgets.grid.IInternalWidget;
 import org.eclipse.nebula.widgets.grid.internal.BranchRenderer;
 import org.eclipse.nebula.widgets.grid.internal.CheckBoxRenderer;
-import org.eclipse.nebula.widgets.grid.internal.TextUtils;
 import org.eclipse.nebula.widgets.grid.internal.ToggleRenderer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
