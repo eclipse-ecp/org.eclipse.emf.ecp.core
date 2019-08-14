@@ -54,8 +54,9 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ViewerProperties;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -99,15 +100,14 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	protected Binding[] createBindings(Viewer viewer) throws DatabindingFailedException {
 		// This binding needs to fire before the value binding so that the value
 		// to be selected exists in the combo's items
-		final IObservableValue<Object> viewerInput = org.eclipse.jface.databinding.viewers.ViewerProperties.input()
-			.observe(viewer);
+		final IObservableValue<?> viewerInput = ViewerProperties.input().observe(viewer);
 		final Binding inputBinding = getDataBindingContext().bindValue(
 			viewerInput,
 			getAvailableChoicesValue());
 
 		final IObservableValue<?> modelValue = getModelValue();
 
-		final Binding binding = getDataBindingContext().bindValue(ViewerProperties.singleSelection().observe(viewer),
+		final Binding binding = getDataBindingContext().bindValue(ViewersObservables.observeSingleSelection(viewer),
 			modelValue);
 
 		pushValue = ISideEffect.create(viewerInput::getValue, input -> {

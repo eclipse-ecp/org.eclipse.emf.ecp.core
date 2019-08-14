@@ -78,7 +78,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	 * @param structuralFeature The {@link EStructuralFeature}
 	 * @return The localized feature name
 	 */
-	public IObservableValue<String> getDisplayName(EStructuralFeature structuralFeature) {
+	public IObservableValue getDisplayName(EStructuralFeature structuralFeature) {
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
 		if (eContainingClass.isAbstract() || eContainingClass.isInterface()
 			|| eContainingClass.getInstanceClass() == null) {
@@ -90,7 +90,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 
 	@Deprecated
 	@Override
-	public IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference) {
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference) {
 		Assert.create(domainModelReference).notNull();
 
 		IValueProperty valueProperty;
@@ -125,7 +125,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	}
 
 	@Override
-	public IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass) {
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass) {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootEClass).notNull();
 
@@ -142,7 +142,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	}
 
 	@Override
-	public IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference, EObject rootObject) {
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EObject rootObject) {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
 
@@ -161,7 +161,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 		return getDisplayNameObservableValue(value, structuralFeature);
 	}
 
-	private IObservableValue<String> getDisplayNameObservableValue(EObject containingEObject,
+	private IObservableValue getDisplayNameObservableValue(EObject containingEObject,
 		EStructuralFeature structuralFeature) {
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
 			containingEObject, structuralFeature);
@@ -175,7 +175,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 
 	@Deprecated
 	@Override
-	public IObservableValue<String> getDescription(VDomainModelReference domainModelReference) {
+	public IObservableValue getDescription(VDomainModelReference domainModelReference) {
 		Assert.create(domainModelReference).notNull();
 
 		IValueProperty valueProperty;
@@ -196,7 +196,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	}
 
 	@Override
-	public IObservableValue<String> getDescription(VDomainModelReference domainModelReference, EClass rootEClass) {
+	public IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass) {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootEClass).notNull();
 
@@ -218,7 +218,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	}
 
 	@Override
-	public IObservableValue<String> getDescription(VDomainModelReference domainModelReference, EObject rootObject) {
+	public IObservableValue getDescription(VDomainModelReference domainModelReference, EObject rootObject) {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
 
@@ -237,8 +237,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 		return getDescriptionObservable(value, structuralFeature);
 	}
 
-	private IObservableValue<String> getDescriptionObservable(EObject containingEObject,
-		EStructuralFeature structuralFeature) {
+	private IObservableValue getDescriptionObservable(EObject containingEObject, EStructuralFeature structuralFeature) {
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
 			containingEObject, structuralFeature);
 		if (itemPropertyDescriptor == null) {
@@ -249,7 +248,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 		return getConstantObservableValue(itemPropertyDescriptor.getDescription(containingEObject));
 	}
 
-	private IObservableValue<String> getConstantObservableValue(String value) {
+	private IObservableValue getConstantObservableValue(String value) {
 		return Observables.constantObservableValue(value, String.class);
 	}
 

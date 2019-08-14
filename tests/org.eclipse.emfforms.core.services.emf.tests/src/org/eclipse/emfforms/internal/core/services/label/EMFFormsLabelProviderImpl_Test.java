@@ -24,6 +24,7 @@ import static org.mockito.Mockito.when;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
@@ -49,6 +50,15 @@ import org.osgi.framework.Bundle;
 
 @SuppressWarnings("deprecation")
 public class EMFFormsLabelProviderImpl_Test {
+
+	/**
+	 * Helper Interface for mocking.
+	 *
+	 * @author Eugen Neufeld
+	 *
+	 */
+	public interface TestObservableValue extends IObservableValue, IObserving {
+	}
 
 	private EMFFormsLabelProviderImpl labelProvider;
 	private EMFFormsDatabindingEMF databinding;
@@ -130,7 +140,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final String value = "My Value"; //$NON-NLS-1$
 		when(localizationService.getString(mockedBundle, key)).thenReturn(value);
 
-		final IObservableValue<String> displayName = labelProvider.getDisplayName(domainModelReference);
+		final IObservableValue displayName = labelProvider.getDisplayName(domainModelReference);
 		assertEquals(value, displayName.getValue());
 	}
 
@@ -189,7 +199,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final String value = "My Value"; //$NON-NLS-1$
 		when(localizationService.getString(mockedBundle, key)).thenReturn(value);
 
-		final IObservableValue<String> displayName = labelProvider.getDisplayName(domainModelReference, eObject);
+		final IObservableValue displayName = labelProvider.getDisplayName(domainModelReference, eObject);
 		assertEquals(value, displayName.getValue());
 
 	}
@@ -247,7 +257,7 @@ public class EMFFormsLabelProviderImpl_Test {
 			localizationService.getString(mockedBundle,
 				String.format("_UI_%1$s_type", EcorePackage.eINSTANCE.getEObject().getName()))).thenReturn(eObjectText); //$NON-NLS-1$
 
-		final IObservableValue<String> description = labelProvider.getDescription(domainModelReference);
+		final IObservableValue description = labelProvider.getDescription(domainModelReference);
 		assertEquals(MessageFormat.format(descriptionPlaceHolder, featureText, eObjectText), description.getValue());
 	}
 
@@ -313,7 +323,7 @@ public class EMFFormsLabelProviderImpl_Test {
 			localizationService.getString(mockedBundle,
 				String.format("_UI_%1$s_type", EcorePackage.eINSTANCE.getEObject().getName()))).thenReturn(eObjectText); //$NON-NLS-1$
 
-		final IObservableValue<String> description = labelProvider.getDescription(domainModelReference, eObject);
+		final IObservableValue description = labelProvider.getDescription(domainModelReference, eObject);
 		assertEquals(MessageFormat.format(descriptionPlaceHolder, featureText, eObjectText), description.getValue());
 	}
 
@@ -364,10 +374,8 @@ public class EMFFormsLabelProviderImpl_Test {
 		when(localizationService.getString(mockedBundle, keyDisplayName)).thenReturn(valueDisplayName,
 			valueDisplayNameNew);
 
-		final IObservableValue<String> labelObservableValue = labelProvider.getDisplayName(domainModelReference,
-			eObject);
-		final IObservableValue<String> descriptionObservableValue = labelProvider.getDescription(domainModelReference,
-			eObject);
+		final IObservableValue labelObservableValue = labelProvider.getDisplayName(domainModelReference, eObject);
+		final IObservableValue descriptionObservableValue = labelProvider.getDescription(domainModelReference, eObject);
 		assertEquals(valueDisplayName, labelObservableValue.getValue());
 		assertEquals(valueDescription, descriptionObservableValue.getValue());
 

@@ -29,7 +29,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.util.PopupWindow;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -233,7 +233,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	@Override
 	protected Binding bindValue(Control text, IObservableValue modelValue, DataBindingContext dataBindingContext,
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue<String> value = WidgetProperties.text(SWT.NONE).observe(this.text);
+		final IObservableValue value = WidgetProperties.text(SWT.NONE).observe(this.text);
 		binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
 		return binding;
 	}

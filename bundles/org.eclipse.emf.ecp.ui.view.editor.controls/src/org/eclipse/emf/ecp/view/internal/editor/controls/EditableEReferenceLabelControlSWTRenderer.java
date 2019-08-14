@@ -27,7 +27,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -59,6 +59,11 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		viewModelDBC = new EMFDataBindingContext();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override
 	protected Control createSWTControl(final Composite parent2) throws DatabindingFailedException {
 		final Composite composite = (Composite) super.createSWTControl(parent2);
@@ -68,28 +73,37 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
 		final Button selectClass = new Button(composite, SWT.PUSH);
 		try {
-			final IObservableValue<String> labelText = labelProvider.getDisplayName(
-				getVElement().getDomainModelReference(),
+			final IObservableValue labelText = labelProvider.getDisplayName(getVElement().getDomainModelReference(),
 				getViewModelContext().getDomainModel());
-			final IObservableValue<String> tooltip = labelProvider.getDescription(
-				getVElement().getDomainModelReference(),
+			final IObservableValue tooltip = labelProvider.getDescription(getVElement().getDomainModelReference(),
 				getViewModelContext().getDomainModel());
 
 			viewModelDBC.bindValue(WidgetProperties.text().observe(selectClass), labelText, null,
-				new UpdateValueStrategy<String, String>() {
+				new UpdateValueStrategy() {
+
+					/**
+					 * {@inheritDoc}
+					 *
+					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+					 */
 					@Override
-					public String convert(String value) {
-						final String result = super.convert(value);
+					public Object convert(Object value) {
+						final String result = (String) super.convert(value);
 						return "Link " + result; //$NON-NLS-1$
 					}
 
 				});
 			viewModelDBC.bindValue(WidgetProperties.tooltipText().observe(selectClass), tooltip, null,
-				new UpdateValueStrategy<String, String>() {
+				new UpdateValueStrategy() {
 
+					/**
+					 * {@inheritDoc}
+					 *
+					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+					 */
 					@Override
-					public String convert(String value) {
-						final String result = super.convert(value);
+					public Object convert(Object value) {
+						final String result = (String) super.convert(value);
 						return "Link " + result; //$NON-NLS-1$
 					}
 
@@ -102,6 +116,11 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		}
 		selectClass.addSelectionListener(new SelectionAdapter() {
 
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
@@ -122,6 +141,11 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 
 		unset.addSelectionListener(new SelectionAdapter() {
 
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
@@ -162,6 +186,11 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		}.execute();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.EReferenceLabelControlSWTRenderer#dispose()
+	 */
 	@Override
 	public void dispose() {
 		viewModelDBC.dispose();

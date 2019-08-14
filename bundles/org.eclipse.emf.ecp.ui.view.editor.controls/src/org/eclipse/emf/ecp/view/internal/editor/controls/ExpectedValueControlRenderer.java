@@ -42,7 +42,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -127,13 +126,19 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		return text;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
+	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 */
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label text = (Label) control;
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 
-		final IObservableValue<String> value = WidgetProperties.text().observe(text);
+		final IObservableValue value = org.eclipse.jface.databinding.swt.WidgetProperties.text().observe(text);
 
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			withPreSetValidation(targetToModelUpdateStrategy), modelToTargetUpdateStrategy);
@@ -152,7 +157,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 */
 	protected Binding createTooltipBinding(Control text, IObservableValue modelValue,
 		DataBindingContext dataBindingContext, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue<String> toolTip = WidgetProperties.tooltipText().observe(text);
+		final IObservableValue toolTip = org.eclipse.jface.databinding.swt.WidgetProperties.tooltipText().observe(text);
 		return dataBindingContext.bindValue(toolTip, modelValue, targetToModel, modelToTarget);
 	}
 
@@ -317,6 +322,11 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 */
 	@Override
 	protected String getUnsetText() {
 		// TODO Auto-generated method stub
@@ -369,6 +379,9 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		public TargetToModelUpdateStrategy() {
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public Object convert(Object value) {
 			return value;

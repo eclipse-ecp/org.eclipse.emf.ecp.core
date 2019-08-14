@@ -75,7 +75,7 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -134,6 +134,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	private TableViewer viewer;
 	private SWTGridDescription rendererGridDescription;
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#createControl(org.eclipse.swt.widgets.Composite)
+	 */
 	// BEGIN COMPLEX CODE
 	@Override
 	protected Control createControl(final Composite parent) throws DatabindingFailedException {
@@ -191,9 +196,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		final TableColumn tableColumn = column.getColumn();
 		final EMFFormsLabelProvider emfFormsLabelProvider = getEMFFormsLabelProvider();// TODO
 		try {
-			final IObservableValue<String> labelText = emfFormsLabelProvider.getDisplayName(
+			final IObservableValue labelText = emfFormsLabelProvider.getDisplayName(
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-			final IObservableValue<String> tooltip = emfFormsLabelProvider.getDescription(
+			final IObservableValue tooltip = emfFormsLabelProvider.getDescription(
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			viewModelDBC.bindValue(WidgetProperties.text().observe(tableColumn), labelText);
 			viewModelDBC.bindValue(WidgetProperties.tooltipText().observe(tableColumn), tooltip);
@@ -240,6 +245,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		viewer.addDropSupport(dndOperations, transfers, editingDomainViewerDropAdapter);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#postInit()
+	 */
 	@Override
 	protected void postInit() {
 		super.postInit();
@@ -249,6 +259,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		labelProvider = new TableColumnsLabelProvider(composedAdapterFactory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#dispose()
+	 */
 	@Override
 	protected void dispose() {
 		labelProvider.dispose();
@@ -258,11 +273,21 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		super.dispose();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 */
 	@Override
 	protected String getUnsetText() {
 		return "No columns set"; //$NON-NLS-1$
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		final IObservableList oldList = (IObservableList) viewer.getInput();
@@ -370,6 +395,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			this.viewer = viewer;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+		 */
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			super.widgetSelected(e);
@@ -398,6 +428,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			this.viewer = viewer;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+		 */
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			super.widgetSelected(e);
@@ -457,6 +492,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	private final class SortSelectionAdapter extends SelectionAdapter {
 		private boolean down;
 
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+		 */
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			super.widgetSelected(e);

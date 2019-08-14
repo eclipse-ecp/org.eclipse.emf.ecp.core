@@ -49,8 +49,10 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 	private int weight = ColumnConfiguration.NO_WEIGHT;
 	private int minWidth;
 
-	private IObservableValue<String> textObservable;
-	private IObservableValue<String> tooltipObservable;
+	@SuppressWarnings("rawtypes")
+	private IObservableValue textObservable;
+	@SuppressWarnings("rawtypes")
+	private IObservableValue tooltipObservable;
 
 	private CellLabelProviderFactory labelProviderFactory;
 	private EditingSupportCreator editingSupportCreator;
@@ -272,7 +274,8 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 	 * @param textObservable the column text observable
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder text(IObservableValue<String> textObservable) {
+	@SuppressWarnings("rawtypes")
+	public ColumnConfigurationBuilder text(IObservableValue textObservable) {
 		this.textObservable = textObservable;
 		return this;
 	}
@@ -293,7 +296,8 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 	 * @param tooltipObservable the tooltip observable
 	 * @return self
 	 */
-	public ColumnConfigurationBuilder tooltip(IObservableValue<String> tooltipObservable) {
+	@SuppressWarnings("rawtypes")
+	public ColumnConfigurationBuilder tooltip(IObservableValue tooltipObservable) {
 		this.tooltipObservable = tooltipObservable;
 		return this;
 	}

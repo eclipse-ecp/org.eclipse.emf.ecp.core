@@ -15,8 +15,10 @@ package org.eclipse.emf.ecp.view.template.internal.tooling;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -27,6 +29,8 @@ public class Activator extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.tooling"; //$NON-NLS-1$
 
 	private static Activator plugin;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -43,6 +47,9 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;

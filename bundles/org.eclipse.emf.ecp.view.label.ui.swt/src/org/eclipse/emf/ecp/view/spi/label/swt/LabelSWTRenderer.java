@@ -44,7 +44,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -94,6 +94,11 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	private Composite parent;
 	private EMFDataBindingContext dataBindingContext;
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
+	 */
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
@@ -111,6 +116,11 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 		super.dispose();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
@@ -145,7 +155,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 				final IObservableValue observableValue = emfFormsDatabinding
 					.getObservableValue(getVElement().getDomainModelReference(),
 						getViewModelContext().getDomainModel());
-				final ISWTObservableValue<String> observeText = WidgetProperties.text().observe(label);
+				final ISWTObservableValue observeText = WidgetProperties.text().observe(label);
 				final Binding binding = getDataBindingContext().bindValue(observeText, observableValue);
 
 				label.addDisposeListener(new DisposeListener() {
@@ -162,7 +172,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
 				AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
 				VViewPackage.eINSTANCE.getElement_Label());
-			final IObservableValue<String> targetValue = WidgetProperties.text().observe(label);
+			final IObservableValue targetValue = WidgetProperties.text().observe(label);
 
 			dbc.bindValue(targetValue, modelValue);
 		}

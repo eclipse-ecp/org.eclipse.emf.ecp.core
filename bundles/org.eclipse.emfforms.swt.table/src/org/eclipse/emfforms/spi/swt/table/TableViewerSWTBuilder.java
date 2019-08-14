@@ -52,9 +52,9 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	/** The table control customization. */
 	private final DefaultTableControlSWTCustomization customization;
 	/** The title. */
-	private final IObservableValue<String> title;
+	private final IObservableValue title;
 	/** The tooltip. */
-	private final IObservableValue<String> tooltip;
+	private final IObservableValue tooltip;
 
 	private final Set<Feature> features = new LinkedHashSet<Feature>();
 
@@ -66,8 +66,8 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	 * @param tooltip the tooltip
 	 */
 	@SuppressWarnings("rawtypes")
-	protected TableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input, IObservableValue<String> title,
-		IObservableValue<String> tooltip) {
+	protected TableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input, IObservableValue title,
+		IObservableValue tooltip) {
 
 		this.composite = composite;
 		this.swtStyleBits = swtStyleBits;
@@ -119,14 +119,14 @@ public class TableViewerSWTBuilder extends AbstractFeatureAwareBuilder<TableView
 	/**
 	 * @return the title
 	 */
-	protected IObservableValue<String> getTitle() {
+	protected IObservableValue getTitle() {
 		return title;
 	}
 
 	/**
 	 * @return the tooltip
 	 */
-	protected IObservableValue<String> getTooltip() {
+	protected IObservableValue getTooltip() {
 		return tooltip;
 	}
 

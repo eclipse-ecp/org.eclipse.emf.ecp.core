@@ -35,7 +35,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.control.text.autocomplete.viewservice.AutocompleteViewModelService;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.fieldassist.AutoCompleteField;
 import org.eclipse.jface.fieldassist.ComboContentAdapter;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -81,7 +81,7 @@ public class AutocompleteTextControlSWTRenderer extends SimpleControlJFaceViewer
 	 */
 	@Override
 	protected Binding[] createBindings(Viewer viewer) throws DatabindingFailedException {
-		final ISWTObservableValue<String> targetObservable = WidgetProperties.text()
+		final ISWTObservableValue targetObservable = WidgetProperties.text()
 			.observe(ComboViewer.class.cast(viewer).getCombo());
 		final IObservableValue modelObservable = getModelValue();
 		final Binding binding = getDataBindingContext().bindValue(targetObservable, modelObservable);

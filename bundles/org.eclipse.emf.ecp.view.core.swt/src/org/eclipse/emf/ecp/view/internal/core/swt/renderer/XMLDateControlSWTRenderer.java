@@ -55,7 +55,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -155,7 +155,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			}
 			calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-			final IObservableValue<Date> dateObserver = WidgetProperties.dateTimeSelection().observe(calendar);
+			final IObservableValue dateObserver = WidgetProperties.selection().observe(calendar);
 			final Binding binding = getDataBindingContext().bindValue(dateObserver, modelValue,
 				new DateTargetToModelUpdateStrategy(eStructuralFeature, text),
 				new DateModelToTargetUpdateStrategy(false, true));
@@ -165,6 +165,11 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			okButton.setText(JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY));
 			GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).grab(false, false).applyTo(okButton);
 			okButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					binding.updateTargetToModel();
@@ -386,7 +391,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final Text text = (Text) Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0];
 
-		final IObservableValue<String> value = WidgetProperties.text(SWT.FocusOut).observe(text);
+		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
 
 		final UpdateValueStrategy targetToModelUpdateStrategy = withPreSetValidation(
 			new DateTargetToModelUpdateStrategy(structuralFeature, text));
@@ -401,6 +406,11 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		emfFormsLocaleChangeListener = new EMFFormsLocaleChangeListener() {
 
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
+			 */
 			@Override
 			public void notifyLocaleChange() {
 				text.setMessage(getTextMessage());
@@ -423,6 +433,12 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		return df;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
+	 *      org.eclipse.swt.graphics.Color)
+	 */
 	@Override
 	protected void setValidationColor(Control control, Color validationColor) {
 		super.setValidationColor(getControlCompositeFromControl(control), validationColor);
@@ -449,12 +465,22 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer#getUnsetText()
+	 */
 	@Override
 	protected String getUnsetText() {
 		return localizationService
 			.getString(getClass(), MessageKeys.XmlDateControlText_NoDateSetClickToSetDate);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#dispose()
+	 */
 	@Override
 	protected void dispose() {
 		if (dialog != null && !dialog.isDisposed()) {

@@ -36,11 +36,10 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -86,7 +85,7 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
 		final Binding[] bindings = new Binding[3];
-		final IObservableValue<String> value = WidgetProperties.text().observe(label);
+		final IObservableValue value = WidgetProperties.text().observe(label);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy() {
@@ -107,7 +106,7 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 					return getText(value);
 				}
 			});
-		final IObservableValue<String> tooltipValue = WidgetProperties.tooltipText().observe(label);
+		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
 		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy() {
 
@@ -127,7 +126,7 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 				}
 			});
 
-		final IObservableValue<Image> imageValue = WidgetProperties.image().observe(imageLabel);
+		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy() {
 

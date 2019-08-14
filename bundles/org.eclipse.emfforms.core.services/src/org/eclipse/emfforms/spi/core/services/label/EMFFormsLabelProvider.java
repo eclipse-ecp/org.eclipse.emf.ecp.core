@@ -46,7 +46,7 @@ public interface EMFFormsLabelProvider {
 	 *             {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment segments}.
 	 */
 	@Deprecated
-	IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference) throws NoLabelFoundException;
+	IObservableValue getDisplayName(VDomainModelReference domainModelReference) throws NoLabelFoundException;
 
 	/**
 	 * Returns the display name of the referenced domain object resolved for the given root {@link EClass}.
@@ -57,7 +57,7 @@ public interface EMFFormsLabelProvider {
 	 * @throws NoLabelFoundException if the display name cannot be retrieved
 	 * @since 1.19
 	 */
-	IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
+	IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws NoLabelFoundException;
 
 	/**
@@ -68,7 +68,7 @@ public interface EMFFormsLabelProvider {
 	 * @return The display name as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the display name cannot be retrieved
 	 */
-	IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference, EObject rootObject)
+	IObservableValue getDisplayName(VDomainModelReference domainModelReference, EObject rootObject)
 		throws NoLabelFoundException;
 
 	/**
@@ -78,7 +78,7 @@ public interface EMFFormsLabelProvider {
 	 * <p>
 	 * <strong>Important:</strong> Does not work with DMRs which use segments
 	 * </p>
-	 *
+	 * 
 	 * @param domainModelReference The {@link VDomainModelReference} referencing the model object
 	 * @return The description as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the description cannot be retrieved
@@ -86,7 +86,7 @@ public interface EMFFormsLabelProvider {
 	 *             {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment segments}.
 	 */
 	@Deprecated
-	IObservableValue<String> getDescription(VDomainModelReference domainModelReference) throws NoLabelFoundException;
+	IObservableValue getDescription(VDomainModelReference domainModelReference) throws NoLabelFoundException;
 
 	/**
 	 * Returns the description of the referenced domain object resolved for the given root {@link EClass}.
@@ -97,7 +97,7 @@ public interface EMFFormsLabelProvider {
 	 * @throws NoLabelFoundException if the description cannot be retrieved
 	 * @since 1.19
 	 */
-	IObservableValue<String> getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
+	IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws NoLabelFoundException;
 
 	/**
@@ -108,6 +108,6 @@ public interface EMFFormsLabelProvider {
 	 * @return The description as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the description cannot be retrieved
 	 */
-	IObservableValue<String> getDescription(VDomainModelReference domainModelReference, EObject rootObject)
+	IObservableValue getDescription(VDomainModelReference domainModelReference, EObject rootObject)
 		throws NoLabelFoundException;
 }

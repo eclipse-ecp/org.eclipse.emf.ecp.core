@@ -48,7 +48,7 @@ import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -147,18 +147,18 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			itemToCompositeMap.put(item, composite);
 
 			final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(categorization);
-			final IObservableValue<String> modelLabelValue = EMFEditObservables.observeValue(
+			final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
 				editingDomain,
 				categorization,
 				VViewPackage.eINSTANCE.getElement_Label());
-			final IObservableValue<String> targetLabelValue = WidgetProperties.text().observe(item);
+			final IObservableValue targetLabelValue = WidgetProperties.text().observe(item);
 			dataBindingContext.bindValue(targetLabelValue, modelLabelValue);
 
-			final IObservableValue<String> modelTooltipValue = EMFEditObservables.observeValue(
+			final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
 				editingDomain,
 				categorization,
 				VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
-			final IObservableValue<String> targetTooltipValue = WidgetProperties.tooltipText().observe(item);
+			final IObservableValue targetTooltipValue = WidgetProperties.tooltipText().observe(item);
 			dataBindingContext.bindValue(targetTooltipValue, modelTooltipValue);
 
 			if (!renderLazy()) {

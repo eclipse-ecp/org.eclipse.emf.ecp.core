@@ -61,7 +61,7 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -199,7 +199,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected String getTextMessage() {
 		try {
-			return getEMFFormsLabelProvider()
+			return (String) getEMFFormsLabelProvider()
 				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())
 				.getValue();
 		} catch (final NoLabelFoundException ex) {
@@ -223,7 +223,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
 		final Control controlToObserve = Composite.class.cast(text).getChildren()[0];
 		final boolean useOnModifyDatabinding = useOnModifyDatabinding();
-		final IObservableValue<String> value;
+		final IObservableValue value;
 		if (useOnModifyDatabinding) {
 			value = WidgetProperties.text(SWT.Modify).observeDelayed(250, controlToObserve);
 		} else {
@@ -264,7 +264,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected Binding createTooltipBinding(Control text, IObservableValue modelValue,
 		DataBindingContext dataBindingContext, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue<String> toolTip = WidgetProperties.tooltipText().observe(text);
+		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(text);
 		return dataBindingContext.bindValue(toolTip, modelValue, targetToModel, modelToTarget);
 	}
 
@@ -407,6 +407,10 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	class EMFUpdateConvertValueStrategy extends EMFUpdateValueStrategy {
 
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+		 */
 		@Override
 		public Object convert(Object value) {
 			return convertValue(value);
@@ -488,6 +492,9 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public Object convert(Object value) {
 			try {
@@ -506,6 +513,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 */
 	@Override
 	protected String getUnsetText() {
 		return LocalizationServiceHelper

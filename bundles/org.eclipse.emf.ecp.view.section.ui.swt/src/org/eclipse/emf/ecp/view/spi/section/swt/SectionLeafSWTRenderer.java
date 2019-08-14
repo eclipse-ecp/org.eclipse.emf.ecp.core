@@ -28,7 +28,7 @@ import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -85,22 +85,22 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
 		final Label label = new Label(composite, getLabelStyleBits());
 
-		final IObservableValue<String> modelLabelValue = EMFEditObservables.observeValue(
+		final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());
 
-		final IObservableValue<String> textObservable = WidgetProperties.text().observe(label);
+		final IObservableValue textObservable = WidgetProperties.text().observe(label);
 
 		getDataBindingContext().bindValue(textObservable, modelLabelValue);
 
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(label);
 
-		final IObservableValue<String> modelTooltipValue = EMFEditObservables.observeValue(
+		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),
 			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
-		final IObservableValue<String> targetTooltipValue = WidgetProperties.tooltipText().observe(label);
+		final IObservableValue targetTooltipValue = WidgetProperties.tooltipText().observe(label);
 		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 
 		return composite;
@@ -118,6 +118,12 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 			getViewModelContext());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.section.swt.AbstractSectionSWTRenderer#initCollapseState()
+	 * @since 1.6
+	 */
 	@Override
 	protected void initCollapseState() {
 		// no children -> empty

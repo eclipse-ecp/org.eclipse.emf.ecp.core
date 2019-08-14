@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -104,7 +104,7 @@ public class DMREditingSupport extends EditingSupport {
 	@Override
 	protected void initializeCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
 		final EMFDataBindingContext bindingContext = new EMFDataBindingContext();
-		final IObservableValue<String> target = doCreateCellEditorObservable(cellEditor);
+		final IObservableValue target = doCreateCellEditorObservable(cellEditor);
 		final IObservableValue model = valueProperty.observe(cell.getElement());
 		final Binding binding = bindingContext.bindValue(target, model);
 		editingState = new EditingState(bindingContext, binding, target, model);
@@ -116,7 +116,7 @@ public class DMREditingSupport extends EditingSupport {
 		return cellEditor;
 	}
 
-	private IObservableValue<String> doCreateCellEditorObservable(CellEditor cellEditor) {
+	private IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
 		return WidgetProperties.text(SWT.FocusOut).observe(cellEditor.getControl());
 	}
 
@@ -179,13 +179,13 @@ public class DMREditingSupport extends EditingSupport {
 	private class EditingState {
 		private final EMFDataBindingContext bindingContext;
 
-		private final IObservableValue<String> target;
+		private final IObservableValue target;
 
 		private final IObservableValue model;
 
 		private final Binding binding;
 
-		EditingState(EMFDataBindingContext bindingContext, Binding binding, IObservableValue<String> target,
+		EditingState(EMFDataBindingContext bindingContext, Binding binding, IObservableValue target,
 			IObservableValue model) {
 			this.binding = binding;
 			this.target = target;

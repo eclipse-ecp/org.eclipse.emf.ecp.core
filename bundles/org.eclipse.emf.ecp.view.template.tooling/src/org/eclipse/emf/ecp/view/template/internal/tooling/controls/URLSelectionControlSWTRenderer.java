@@ -38,7 +38,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -98,20 +98,31 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 			VT_VIEW_TEMPLATEPROVIDER);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
+	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 */
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
-		final IObservableValue<String> value = WidgetProperties.text().observe(childControl);
+		final IObservableValue value = WidgetProperties.text().observe(childControl);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy()), null);
 
-		final IObservableValue<String> toolTip = WidgetProperties.tooltipText().observe(childControl);
+		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(childControl);
 		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy()), null);
 		return new Binding[] { binding, tooltipBinding };
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override
 	protected Control createSWTControl(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -125,6 +136,11 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		selectExternFileButton.setText(Messages.URLSelectionControlSWTRenderer_SelectExternalFileBtn);
 		selectExternFileButton.addSelectionListener(new SelectionAdapter() {
 
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
@@ -151,6 +167,11 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		selectWorkspaceFileButton.setText(Messages.URLSelectionControlSWTRenderer_SelectWorkspaceFileBtn);
 		selectWorkspaceFileButton.addSelectionListener(new SelectionAdapter() {
 
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
@@ -192,6 +213,11 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		editingDomain.getCommandStack().execute(command);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 */
 	@Override
 	protected String getUnsetText() {
 		return Messages.URLSelectionControlSWTRenderer_UnsetText;

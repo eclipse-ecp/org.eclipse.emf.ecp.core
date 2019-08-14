@@ -63,7 +63,7 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 	 * @param reference
 	 *            The {@link VDomainModelReference} for which the {@link EStructuralFeature} is to be determined.
 	 * @return
-	 *         The determined {@link EStructuralFeature}.
+	 * 		The determined {@link EStructuralFeature}.
 	 */
 	protected EStructuralFeature getEStructuralFeature(VDomainModelReference reference) {
 		try {
@@ -118,9 +118,9 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 				final ServiceReference<EMFFormsLabelProvider> serviceReference = bundleContext
 					.getServiceReference(EMFFormsLabelProvider.class);
 				final EMFFormsLabelProvider labelProvider = bundleContext.getService(serviceReference);
-				final IObservableValue<String> observableValue = labelProvider.getDisplayName(reference,
+				final IObservableValue<?> observableValue = labelProvider.getDisplayName(reference,
 					getRootEClass(reference));
-				final String result = observableValue.getValue();
+				final String result = (String) observableValue.getValue();
 				observableValue.dispose();
 				bundleContext.ungetService(serviceReference);
 				return result;

@@ -168,7 +168,7 @@ import org.eclipse.emfforms.spi.swt.table.action.TableActionBar;
 import org.eclipse.emfforms.spi.swt.table.action.ViewerActionContext;
 import org.eclipse.emfforms.view.spi.multisegment.model.MultiSegmentUtil;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -390,6 +390,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return renderTableControl(gridCell, parent);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Control createLabel(final Composite parent) {
 		final VDomainModelReference dmrToCheck = getDMRToMultiReference();
@@ -445,8 +446,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				actionConfiguration);
 
 			/* get the label text/tooltip */
-			final IObservableValue<String> labelText = getLabelText(dmrToCheck);
-			final IObservableValue<String> labelTooltipText = getLabelTooltipText(dmrToCheck);
+			final IObservableValue<?> labelText = getLabelText(dmrToCheck);
+			final IObservableValue<?> labelTooltipText = getLabelTooltipText(dmrToCheck);
 
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
@@ -736,8 +737,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	// CHECKSTYLE.OFF: ParameterNumber
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent,
 		@SuppressWarnings("rawtypes") IObservableList list,
-		IObservableValue<String> labelText, IObservableValue<String> labelTooltipText,
-		TableViewerCompositeBuilder compositeBuilder,
+		@SuppressWarnings("rawtypes") IObservableValue labelText,
+		@SuppressWarnings("rawtypes") IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
@@ -766,8 +767,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	// CHECKSTYLE.OFF: ParameterNumber
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent,
 		@SuppressWarnings("rawtypes") IObservableList list,
-		IObservableValue<String> labelText,
-		IObservableValue<String> labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
+		@SuppressWarnings("rawtypes") IObservableValue labelText,
+		@SuppressWarnings("rawtypes") IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
@@ -924,8 +925,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		for (int i = 0; i < columns.size(); i++) {
 			try {
 				final VDomainModelReference dmr = columns.get(i);
-				final IObservableValue<String> text = getLabelTextForColumn(dmr, clazz);
-				final IObservableValue<String> tooltip = getLabelTooltipTextForColumn(dmr, clazz);
+				final IObservableValue<?> text = getLabelTextForColumn(dmr, clazz);
+				final IObservableValue<?> tooltip = getLabelTooltipTextForColumn(dmr, clazz);
 
 				// Use the same editing domain for the columns as for the view's domain object
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
@@ -1014,7 +1015,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewerComposite.setComparator(comparator, sortableColumns);
 	}
 
-	private IObservableValue<String> getLabelText(VDomainModelReference dmrToCheck) {
+	private IObservableValue<?> getLabelText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
@@ -1029,8 +1030,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private IObservableValue<String> getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
+	private IObservableValue<?> getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
 			// See whether the view model specifies a label for the column
 			final Optional<VEnablementConfiguration> config = TableConfigurationHelper
@@ -1038,6 +1038,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (config.isPresent()) {
 				final String label = config.get().getLabel();
 				if (label != null && !label.isEmpty()) {
+					@SuppressWarnings("unchecked")
 					final IValueProperty<VElement, String> labelProperty = EMFProperties
 						.value(VViewPackage.Literals.ELEMENT__LABEL);
 					return labelProperty.observe(config.get());
@@ -1051,7 +1052,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue<String> getLabelTooltipText(VDomainModelReference dmrToCheck) {
+	private IObservableValue<?> getLabelTooltipText(VDomainModelReference dmrToCheck) {
 		switch (getVElement().getLabelAlignment()) {
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
@@ -1066,8 +1067,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue<String> getLabelTooltipTextForColumn(VDomainModelReference dmrToCheck,
-		EClass dmrRootEClass) {
+	private IObservableValue<?> getLabelTooltipTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
 			return getEMFFormsLabelProvider().getDescription(dmrToCheck, dmrRootEClass);
 		} catch (final NoLabelFoundException e) {

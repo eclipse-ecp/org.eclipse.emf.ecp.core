@@ -49,14 +49,13 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -169,7 +168,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Binding[] bindings = new Binding[3];
-		final IObservableValue<String> value = WidgetProperties.text().observe(label);
+		final IObservableValue value = WidgetProperties.text().observe(label);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy() {
@@ -190,7 +189,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 				}
 			});
 
-		final IObservableValue<String> tooltipValue = WidgetProperties.tooltipText().observe(label);
+		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
 		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy() {
 
@@ -210,7 +209,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 				}
 			});
 
-		final IObservableValue<Image> imageValue = WidgetProperties.image().observe(imageLabel);
+		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy() {
 
@@ -245,6 +244,11 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		return Activator.getImage((URL) adapterFactoryItemDelegator.getImage(value));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override
 	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
 		final IObservableValue observableValue = getEMFFormsDatabinding()
@@ -320,6 +324,11 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		return selectButton;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#dispose()
+	 */
 	@Override
 	protected void dispose() {
 		composedAdapterFactory.dispose();
@@ -331,6 +340,11 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		super.dispose();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 */
 	@Override
 	protected String getUnsetText() {
 		return ""; //$NON-NLS-1$

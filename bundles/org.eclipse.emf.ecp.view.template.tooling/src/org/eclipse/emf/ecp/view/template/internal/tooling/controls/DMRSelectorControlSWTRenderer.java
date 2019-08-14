@@ -46,6 +46,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author Eugen Neufeld
  *
  */
+@SuppressWarnings("restriction")
 public class DMRSelectorControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
 
 	/**

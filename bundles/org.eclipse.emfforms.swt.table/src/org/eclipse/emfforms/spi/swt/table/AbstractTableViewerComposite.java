@@ -26,7 +26,7 @@ import org.eclipse.emfforms.internal.swt.table.action.KeyBindingManager;
 import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
 import org.eclipse.emfforms.spi.swt.table.action.ActionBarProvider;
 import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.ColumnPixelData;
@@ -73,8 +73,8 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		int style,
 		Object inputObject,
 		TableViewerSWTCustomization<V> customization,
-		IObservableValue<String> title,
-		IObservableValue<String> tooltip) {
+		IObservableValue title,
+		IObservableValue tooltip) {
 		super(parent, style);
 
 		emfDatabindingContext = new EMFDataBindingContext();
@@ -151,8 +151,8 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 	}
 
 	private void renderControl(Composite parent, TableViewerSWTCustomization<V> customization,
-		Object inputObject, EMFDataBindingContext emfDataBindingContext, IObservableValue<String> title,
-		IObservableValue<String> tooltip) {
+		Object inputObject, EMFDataBindingContext emfDataBindingContext, IObservableValue title,
+		IObservableValue tooltip) {
 		customization.createCompositeLayout(parent);
 
 		final Optional<Label> titleLabel = customization.getTitleLabel();
@@ -342,7 +342,7 @@ public abstract class AbstractTableViewerComposite<V extends AbstractTableViewer
 		}
 	}
 
-	private static void initTitleLabel(Label label, IObservableValue<String> title, IObservableValue<String> tooltip,
+	private static void initTitleLabel(Label label, IObservableValue title, IObservableValue tooltip,
 		EMFDataBindingContext emfDatabindingContext) {
 		emfDatabindingContext.bindValue(
 			WidgetProperties.text().observe(label),

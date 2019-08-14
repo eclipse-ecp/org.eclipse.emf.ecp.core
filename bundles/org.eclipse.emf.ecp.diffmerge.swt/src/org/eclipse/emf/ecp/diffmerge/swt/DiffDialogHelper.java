@@ -86,7 +86,7 @@ public final class DiffDialogHelper {
 
 	private static String getControlLabel(VControl control, DiffMergeModelContext diffModelContext) {
 		try {
-			return Activator.getInstance().getEMFFormsLabelProvider()
+			return (String) Activator.getInstance().getEMFFormsLabelProvider()
 				.getDisplayName(control.getDomainModelReference(), diffModelContext.getDomainModel()).getValue();
 		} catch (final NoLabelFoundException e) {
 			return e.getMessage();

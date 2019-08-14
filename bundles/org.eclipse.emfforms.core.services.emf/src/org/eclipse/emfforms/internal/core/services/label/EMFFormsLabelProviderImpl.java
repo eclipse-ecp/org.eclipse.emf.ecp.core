@@ -139,8 +139,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private ReportService reportService;
 	private BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
 
-	private final Map<WritableValue<String>, BundleKeyWrapper> displayKeyObservableMap = new WeakHashMap<WritableValue<String>, BundleKeyWrapper>();
-	private final Map<WritableValue<String>, DescriptionKey> descriptionKeyObservableMap = new WeakHashMap<WritableValue<String>, DescriptionKey>();
+	private final Map<WritableValue, BundleKeyWrapper> displayKeyObservableMap = new WeakHashMap<WritableValue, BundleKeyWrapper>();
+	private final Map<WritableValue, DescriptionKey> descriptionKeyObservableMap = new WeakHashMap<WritableValue, DescriptionKey>();
 	private EMFFormsLocaleProvider localeProvider;
 	private EMFFormsLabelProviderDefaultImpl labelProviderDefault;
 
@@ -219,14 +219,13 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			return getDisplayBundleKeyResultWrapper(structuralFeature).getResult();
 		} catch (final NoBundleFoundException ex) {
-			return labelProviderDefault.getDisplayName(structuralFeature).getValue();
+			return (String) labelProviderDefault.getDisplayName(structuralFeature).getValue();
 		}
 	}
 
 	@Deprecated
 	@Override
-	public IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference)
-		throws NoLabelFoundException {
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference) throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 
 		IValueProperty valueProperty;
@@ -244,13 +243,13 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 			return labelProviderDefault.getDisplayName(domainModelReference);
 		}
 
-		final WritableValue<String> value = getObservableValue(bundleKeyResultWrapper.getResult());
+		final WritableValue value = getObservableValue(bundleKeyResultWrapper.getResult());
 		displayKeyObservableMap.put(value, bundleKeyResultWrapper.getBundleKeyWrapper());
 		return value;
 	}
 
 	@Override
-	public IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootEClass).notNull();
@@ -271,13 +270,13 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 			return labelProviderDefault.getDisplayName(domainModelReference, rootEClass);
 		}
 
-		final WritableValue<String> displayObserveValue = getObservableValue(displayBundleKeyResultWrapper.getResult());
+		final WritableValue displayObserveValue = getObservableValue(displayBundleKeyResultWrapper.getResult());
 		displayKeyObservableMap.put(displayObserveValue, displayBundleKeyResultWrapper.getBundleKeyWrapper());
 		return displayObserveValue;
 	}
 
 	@Override
-	public IObservableValue<String> getDisplayName(VDomainModelReference domainModelReference, EObject rootObject)
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EObject rootObject)
 		throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
@@ -287,8 +286,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 
 	@Deprecated
 	@Override
-	public IObservableValue<String> getDescription(VDomainModelReference domainModelReference)
-		throws NoLabelFoundException {
+	public IObservableValue getDescription(VDomainModelReference domainModelReference) throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 
 		IValueProperty valueProperty;
@@ -306,7 +304,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		} catch (final NoBundleFoundException ex) {
 			return labelProviderDefault.getDescription(domainModelReference);
 		}
-		final WritableValue<String> writableValue = getObservableValue(getDescription(eContainingClass
+		final WritableValue writableValue = getObservableValue(getDescription(eContainingClass
 			.getName(),
 			structuralFeature.getName(), bundle));
 		descriptionKeyObservableMap.put(writableValue, new DescriptionKey(eContainingClass.getName(),
@@ -315,7 +313,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	@Override
-	public IObservableValue<String> getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
+	public IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
 		throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootEClass).notNull();
@@ -338,7 +336,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	@Override
-	public IObservableValue<String> getDescription(VDomainModelReference domainModelReference, EObject rootObject)
+	public IObservableValue getDescription(VDomainModelReference domainModelReference, EObject rootObject)
 		throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
@@ -360,19 +358,18 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		return createDescriptionObservableValue(structuralFeature, bundle);
 	}
 
-	private IObservableValue<String> createDescriptionObservableValue(final EStructuralFeature structuralFeature,
+	private IObservableValue createDescriptionObservableValue(final EStructuralFeature structuralFeature,
 		Bundle bundle) {
-		final WritableValue<String> writableValue = getObservableValue(
-			getDescription(structuralFeature.getEContainingClass()
-				.getName(), structuralFeature.getName(), bundle));
+		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
+			.getName(), structuralFeature.getName(), bundle));
 		descriptionKeyObservableMap.put(writableValue,
 			new DescriptionKey(structuralFeature.getEContainingClass().getName(),
 				structuralFeature.getName(), bundle));
 		return writableValue;
 	}
 
-	private WritableValue<String> getObservableValue(String value) {
-		return new WritableValue<String>(value, String.class);
+	private WritableValue getObservableValue(String value) {
+		return new WritableValue(value, String.class);
 	}
 
 	private String getDisplayName(Bundle bundle, String key) {
@@ -401,16 +398,16 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 */
 	@Override
 	public void notifyLocaleChange() {
-		for (final Entry<WritableValue<String>, BundleKeyWrapper> entry : displayKeyObservableMap.entrySet()) {
-			final WritableValue<String> writableValue = entry.getKey();
+		for (final Entry<WritableValue, BundleKeyWrapper> entry : displayKeyObservableMap.entrySet()) {
+			final WritableValue writableValue = entry.getKey();
 			if (writableValue.isDisposed()) {
 				continue;
 			}
 			final BundleKeyWrapper displayNameKey = entry.getValue();
 			writableValue.setValue(getDisplayName(displayNameKey.getBundle(), displayNameKey.getKey()));
 		}
-		for (final Entry<WritableValue<String>, DescriptionKey> entry : descriptionKeyObservableMap.entrySet()) {
-			final WritableValue<String> writableValue = entry.getKey();
+		for (final Entry<WritableValue, DescriptionKey> entry : descriptionKeyObservableMap.entrySet()) {
+			final WritableValue writableValue = entry.getKey();
 			if (writableValue.isDisposed()) {
 				continue;
 			}

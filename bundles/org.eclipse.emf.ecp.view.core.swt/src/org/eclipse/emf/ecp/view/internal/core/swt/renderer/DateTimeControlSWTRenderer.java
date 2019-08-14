@@ -52,7 +52,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -152,8 +152,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
-		final ISWTObservableValue<Date> dateObserver = WidgetProperties.dateTimeSelection().observe(dateWidget);
-		final ISWTObservableValue<Date> timeObserver = WidgetProperties.dateTimeSelection().observe(timeWidget);
+		final ISWTObservableValue dateObserver = WidgetProperties.selection().observe(dateWidget);
+		final ISWTObservableValue timeObserver = WidgetProperties.selection().observe(timeWidget);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
 		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy()),
@@ -181,6 +181,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		return new Binding[] { binding };
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#dispose()
+	 */
 	@Override
 	protected void dispose() {
 		if (dialog != null && !dialog.isDisposed()) {
@@ -357,12 +362,23 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
+	 *      org.eclipse.swt.graphics.Color)
+	 */
 	@Override
 	protected void setValidationColor(Control control, Color validationColor) {
 		((Composite) control).getChildren()[0].setBackground(validationColor);
 		((Composite) control).getChildren()[1].setBackground(validationColor);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 */
 	@Override
 	protected String getUnsetText() {
 		final String text = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY
@@ -415,7 +431,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			dialog = new Shell(btn.getShell(), SWT.NONE);
 			dialog.setLayout(new GridLayout(1, false));
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
-			final IObservableValue<Date> calendarObserver = WidgetProperties.dateTimeSelection().observe(calendar);
+			final IObservableValue calendarObserver = WidgetProperties.selection().observe(calendar);
 			final UpdateValueStrategy modelToTarget = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
 
 			final Binding binding = getDataBindingContext().bindValue(calendarObserver, modelValue, modelToTarget,
@@ -432,6 +448,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			okButton.setText(JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY));
 			GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).grab(false, false).applyTo(okButton);
 			okButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					binding.updateTargetToModel();
@@ -527,6 +548,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		return DateTimeDisplayType.TIME_AND_DATE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#rootDomainModelChanged()
+	 */
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		super.rootDomainModelChanged();

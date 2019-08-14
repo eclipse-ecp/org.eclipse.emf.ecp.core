@@ -48,6 +48,7 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
  * @author Eugen Neufeld
  *
  */
+@SuppressWarnings("restriction")
 public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
 
 	/**
@@ -64,6 +65,11 @@ public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelCo
 
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.tooling"; //$NON-NLS-1$
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer#linkValue(org.eclipse.swt.widgets.Shell)
+	 */
 	@Override
 	protected void linkValue(Shell shell) {
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {

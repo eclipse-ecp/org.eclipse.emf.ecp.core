@@ -57,7 +57,7 @@ public class TableViewerFactory {
 	 * @return the builder
 	 */
 	public static TableViewerSWTBuilder fillDefaults(Composite composite, int swtStyleBits, Object input,
-		IObservableValue<String> title, IObservableValue<String> tooltip) {
+		IObservableValue title, IObservableValue tooltip) {
 		return new TableViewerSWTBuilder(composite, swtStyleBits, input, title, tooltip);
 	}
 

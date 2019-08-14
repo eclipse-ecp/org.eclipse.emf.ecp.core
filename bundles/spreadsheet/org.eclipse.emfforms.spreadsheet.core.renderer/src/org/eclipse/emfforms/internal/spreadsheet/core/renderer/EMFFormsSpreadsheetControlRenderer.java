@@ -249,7 +249,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	private void writeLabel(VControl vControl, ViewModelContext viewModelContext, final Cell labelCell,
 		final EMFFormsExportTableParent exportTableParent, VDomainModelReference dmrToResolve,
 		final EStructuralFeature structuralFeature) throws NoLabelFoundException {
-		IObservableValue<String> displayName;
+		IObservableValue displayName;
 		if (viewModelContext.getDomainModel() != null) {
 			displayName = emfformsLabelProvider.getDisplayName(dmrToResolve, viewModelContext.getDomainModel());
 		} else {
@@ -274,7 +274,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 	private void writeDescription(ViewModelContext viewModelContext, final Cell descriptionCell,
 		VDomainModelReference dmrToResolve) throws NoLabelFoundException {
-		IObservableValue<String> description;
+		IObservableValue description;
 		if (viewModelContext.getDomainModel() != null) {
 			description = emfformsLabelProvider.getDescription(dmrToResolve, viewModelContext.getDomainModel());
 		} else {

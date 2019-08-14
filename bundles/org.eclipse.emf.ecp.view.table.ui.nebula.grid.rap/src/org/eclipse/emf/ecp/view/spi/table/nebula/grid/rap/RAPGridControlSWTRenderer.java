@@ -183,8 +183,7 @@ public class RAPGridControlSWTRenderer extends TableControlSWTRenderer {
 	@Override
 	// CHECKSTYLE.OFF: ParameterNumber
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
-		IObservableValue<String> labelText, IObservableValue<String> labelTooltipText,
-		TableViewerCompositeBuilder compositeBuilder,
+		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber

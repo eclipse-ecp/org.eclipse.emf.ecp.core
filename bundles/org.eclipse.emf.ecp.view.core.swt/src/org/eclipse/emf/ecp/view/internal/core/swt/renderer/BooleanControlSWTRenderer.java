@@ -28,7 +28,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -58,6 +58,11 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#createControlCell(int)
+	 */
 	@Override
 	protected SWTGridCell createControlCell(int column) {
 		// checkbox button representing Boolean value can not grow
@@ -69,8 +74,7 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
-		final Binding binding = getDataBindingContext().bindValue(
-			WidgetProperties.buttonSelection().observe((Button) control),
+		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.selection().observe(control),
 			getModelValue(), withPreSetValidation(new UpdateValueStrategy()), null);
 		return new Binding[] { binding };
 	}

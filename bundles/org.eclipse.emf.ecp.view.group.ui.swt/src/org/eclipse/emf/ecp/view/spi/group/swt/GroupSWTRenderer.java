@@ -28,13 +28,14 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.internal.group.swt.GroupTextProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -69,32 +70,50 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private final EMFDataBindingContext dbc;
 	private SWTGridDescription rendererGridDescription;
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
+	 */
 	@Override
 	protected String getCustomVariant() {
 		return CONTROL_GROUP;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
+	 */
 
 	@Override
 	protected Collection<VContainedElement> getChildren() {
 		return getVElement().getChildren();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getComposite(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override
 	protected Composite getComposite(Composite parent) {
 		final Group group = new Group(parent, SWT.TITLE);
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
-		final IObservableValue<String> modelLabelValue = EMFEditObservables.observeValue(
+		final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());
-		final IObservableValue<String> targetLabelValue = WidgetProperties.text().observe(group);
+		final IObservableValue targetLabelValue = new GroupTextProperty().observe(group);
+		// FIXME fixed with JFace-Databinding 4.5
+		// final IObservableValue targetValue = SWTObservables.observeText(group);
 		dbc.bindValue(targetLabelValue, modelLabelValue);
 
-		final IObservableValue<String> modelTooltipValue = EMFEditObservables.observeValue(
+		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
 			editingDomain,
 			getVElement(),
 			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
-		final ISWTObservableValue<String> targetTooltipValue = WidgetProperties.tooltipText().observe(group);
+		final ISWTObservableValue targetTooltipValue = WidgetProperties.tooltipText().observe(group);
 		dbc.bindValue(targetTooltipValue, modelTooltipValue);
 
 		return group;
@@ -116,6 +135,11 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		return rendererGridDescription;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#dispose()
+	 */
 	@Override
 	protected void dispose() {
 		dbc.dispose();
