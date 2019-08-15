@@ -82,28 +82,12 @@ public class NumberCellEditor extends StringBasedCellEditor {
 						boolean maxValue = false;
 						final Class<?> instanceClass = getInstanceClass();
 						String formatedValue = ""; //$NON-NLS-1$
-						try {
-							if (Integer.class.isAssignableFrom(instanceClass)
-								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (Integer.MAX_VALUE == number.intValue()) {
-									maxValue = true;
-									formatedValue = format.format(Integer.MAX_VALUE);
-								}
-							} else if (Long.class.isAssignableFrom(instanceClass)
-								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (Long.MAX_VALUE == number.longValue()) {
-									maxValue = true;
-									formatedValue = format.format(Long.MAX_VALUE);
-								}
-							}
-						} catch (final IllegalArgumentException ex) {
-							Activator.logException(ex);
-						} catch (final SecurityException ex) {
-							Activator.logException(ex);
-						} catch (final IllegalAccessException ex) {
-							Activator.logException(ex);
-						} catch (final NoSuchFieldException ex) {
-							Activator.logException(ex);
+						if (isOfClass(Integer.class, instanceClass) && Integer.MAX_VALUE == number.intValue()) {
+							maxValue = true;
+							formatedValue = format.format(Integer.MAX_VALUE);
+						} else if (isOfClass(Long.class, instanceClass) && Long.MAX_VALUE == number.longValue()) {
+							maxValue = true;
+							formatedValue = format.format(Long.MAX_VALUE);
 						}
 
 						if (maxValue) {
@@ -129,6 +113,16 @@ public class NumberCellEditor extends StringBasedCellEditor {
 				return NumericalHelper.numberToInstanceClass(format.parse(formatedNumber), getInstanceClass());
 			} catch (final ParseException ex) {
 				return revertToOldValue(value);
+			}
+		}
+
+		private <T extends Number> boolean isOfClass(Class<T> clazz, Class<?> toCheck) {
+			try {
+				return clazz.isAssignableFrom(toCheck)
+					|| clazz.getField("TYPE").get(null).equals(toCheck); //$NON-NLS-1$
+			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ex) {
+				Activator.logException(ex);
+				return false;
 			}
 		}
 

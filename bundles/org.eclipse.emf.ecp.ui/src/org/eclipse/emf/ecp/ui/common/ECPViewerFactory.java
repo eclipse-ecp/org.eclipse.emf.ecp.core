@@ -44,11 +44,24 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * @author Eugen
+ * Utility class to create components for ECP.
+ *
+ * @author Eugen Neufeld
  *
  */
-public class ECPViewerFactory {
+public final class ECPViewerFactory {
 
+	private ECPViewerFactory() {
+	}
+
+	/**
+	 * Create the ECP ModelExplorer View which is based on the {@link TreeViewer}.
+	 *
+	 * @param parent The {@link Composite} to create onto
+	 * @param hasDnD Whether dnd should be enabled
+	 * @param labelDecorator The {@link ILabelDecorator} to use on labels.
+	 * @return The created {@link TreeViewer}
+	 */
 	public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD,
 		ILabelDecorator labelDecorator) {
 		final ModelContentProvider contentProvider = new ModelContentProvider();
@@ -90,20 +103,15 @@ public class ECPViewerFactory {
 		return viewer;
 	}
 
-	/**
-	 * @param contentProvider
-	 * @param viewer
-	 * @return
-	 */
 	private static ECPDropAdapter getDropAdapter(ModelContentProvider contentProvider, TreeViewer viewer) {
 		ECPDropAdapter dropAdapter = null;
 		// read extensionpoint, if no defined take default
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-			"org.eclipse.emf.ecp.ui.dropAdapter");
+			"org.eclipse.emf.ecp.ui.dropAdapter"); //$NON-NLS-1$
 		for (final IExtension extension : extensionPoint.getExtensions()) {
 			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
-				dropAdapter = (ECPDropAdapter) configurationElement.createExecutableExtension("class");
+				dropAdapter = (ECPDropAdapter) configurationElement.createExecutableExtension("class"); //$NON-NLS-1$
 				dropAdapter.setViewer(viewer);
 				break;
 			} catch (final CoreException ex) {
@@ -116,20 +124,15 @@ public class ECPViewerFactory {
 		return dropAdapter;
 	}
 
-	/**
-	 * @param contentProvider
-	 * @param viewer
-	 * @return
-	 */
 	private static ILabelProvider getLabelProvider(ModelContentProvider contentProvider) {
 		IECPLabelProvider labelProvider = null;
 		// read extensionpoint, if no defined take default
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-			"org.eclipse.emf.ecp.ui.labelProvider");
+			"org.eclipse.emf.ecp.ui.labelProvider"); //$NON-NLS-1$
 		for (final IExtension extension : extensionPoint.getExtensions()) {
 			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
-				labelProvider = (IECPLabelProvider) configurationElement.createExecutableExtension("class");
+				labelProvider = (IECPLabelProvider) configurationElement.createExecutableExtension("class"); //$NON-NLS-1$
 				labelProvider.setModelContextProvider(contentProvider);
 				return labelProvider;
 			} catch (final CoreException ex) {
@@ -141,6 +144,13 @@ public class ECPViewerFactory {
 		return labelProvider;
 	}
 
+	/**
+	 * Create the ECP RepositoryExplorer View which is based on the {@link TreeViewer}.
+	 * 
+	 * @param parent The {@link Composite} to create onto
+	 * @param labelDecorator The {@link ILabelDecorator} to use on labels
+	 * @return The create {@link TreeViewer}
+	 */
 	public static TreeViewer createRepositoryExplorerViewer(Composite parent, ILabelDecorator labelDecorator) {
 		final RepositoriesContentProvider contentProvider = new RepositoriesContentProvider();
 		final TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new RepositoriesLabelProvider(

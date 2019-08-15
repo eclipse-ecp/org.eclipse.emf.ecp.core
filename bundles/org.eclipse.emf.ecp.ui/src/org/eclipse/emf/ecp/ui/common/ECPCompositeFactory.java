@@ -70,6 +70,7 @@ public final class ECPCompositeFactory {
 	}
 
 	/**
+	 * Util method to create a composite which allows to ceate an ECP project.
 	 *
 	 * @param providers the providers to be considered to create a new project
 	 * @return A {@link CreateProjectComposite} allowing to create a new project
@@ -78,16 +79,38 @@ public final class ECPCompositeFactory {
 		return new CreateProjectCompositeImpl(providers);
 	}
 
+	/**
+	 * Util method to create a composite which allows to select Classes from {@link EPackage}s with a checkbox.
+	 *
+	 * @param ePackages The {@link EPackage}s to select from.
+	 * @return The {@link CheckedModelClassComposite}
+	 */
 	public static CheckedModelClassComposite getCheckedModelClassComposite(Collection<EPackage> ePackages) {
 		return new CheckedSelectModelClassCompositeImpl(new HashSet<EPackage>(), ePackages, new HashSet<EClass>());
 	}
 
+	/**
+	 * Util method to create a composite which allows to select an {@link EClass} based on all known {@link EPackage}s
+	 * in the registry by applying the provided filters.
+	 *
+	 * @param unsupportedEPackages The {@link EPackage}s that should not be available (blacklist)
+	 * @param filteredEPackages The {@link EPackage}s that should be available (whitelist)
+	 * @param filteredEClasses The {@link EClass}es that should be available (whitelist)
+	 * @return The {@link SelectionComposite} based on a {@link TreeViewer}
+	 */
 	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(
 		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
 		Collection<EClass> filteredEClasses) {
 		return new SelectModelClassCompositeImpl(unsupportedEPackages, filteredEPackages, filteredEClasses);
 	}
 
+	/**
+	 * Util method to create a composite which allows to select an {@link EClass} based on all known {@link EPackage}s
+	 * in the registry by applying the filters in the provided project.
+	 * 
+	 * @param project The {@link ECPProject} to use as a filter
+	 * @return The {@link SelectionComposite} based on a {@link TreeViewer}
+	 */
 	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(ECPProject project) {
 		return new ECPProjectSelectionModelClassCompositeImpl(project);
 	}
