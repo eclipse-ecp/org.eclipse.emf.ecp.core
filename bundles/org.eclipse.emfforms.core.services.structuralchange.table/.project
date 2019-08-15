@@ -40,6 +40,5 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
-		<nature>com.wuetherich.osgi.ds.annotations.dsAnnotationNature</nature>
 	</natures>
 </projectDescription>
