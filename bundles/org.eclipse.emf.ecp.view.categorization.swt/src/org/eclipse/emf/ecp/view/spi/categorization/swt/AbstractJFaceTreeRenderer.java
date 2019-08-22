@@ -575,7 +575,9 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
 						.minSize(SWT.DEFAULT, 200)
 						.applyTo(render);
-					vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
+					if (VCategorizableElement.class.isInstance(child)) {
+						vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
+					}
 				} catch (final NoRendererFoundException e) {
 					getReportService().report(new RenderingFailedReport(e));
 				} catch (final NoPropertyDescriptorFoundExeption e) {
@@ -601,7 +603,19 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		public void notifyChange(ModelChangeNotification notification) {
 			if (notification.getNotifier() instanceof VCategorizationElement
 				&& notification.getStructuralFeature() == Literals.CATEGORIZATION_ELEMENT__CURRENT_SELECTION) {
-				onSelectionChanged((VElement) notification.getNotifier());
+				/* call on selection changed if the new child is part of our subtree */
+				final Object currentSelection = notification.getRawNotification().getNewValue();
+				if (VElement.class.isInstance(currentSelection)) {
+					final VElement child = VElement.class.cast(currentSelection);
+					EObject parent = child;
+					while (EObject.class.isInstance(parent)) {
+						if (parent == getVElement()) {
+							onSelectionChanged(child);
+							break;
+						}
+						parent = parent.eContainer();
+					}
+				}
 			}
 
 		}
