@@ -322,9 +322,16 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 					if (o1 == o2) {
 						return 0;
 					}
-					return o1.getData().get(0).hashCode() - o2.getData().get(0).hashCode();
+					return getHashCode(o1) - getHashCode(o2);
 				}
 				return -1 * Integer.class.cast(o1.getSeverity()).compareTo(o2.getSeverity());
+			}
+
+			private int getHashCode(Diagnostic o) {
+				if (o.getData().isEmpty()) {
+					return 0;
+				}
+				return o.getData().hashCode();
 			}
 
 		});
