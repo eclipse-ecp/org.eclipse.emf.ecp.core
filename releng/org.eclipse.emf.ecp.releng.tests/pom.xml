@@ -234,7 +234,9 @@
 
         <!-- EMF2Web -->
 		<module>../../tests/org.eclipse.emf.ecp.emf2web.json.test</module>
-		
+
+        <!-- Data Templates -->
+		<module>../../tests/org.eclipse.emfforms.datatemplate.model.tests</module>
 		<module>../../tests/org.eclipse.emfforms.datatemplate.tooling.tests</module>
 		
 		<module>../../tests/org.eclipse.emfforms.editor.test</module>
