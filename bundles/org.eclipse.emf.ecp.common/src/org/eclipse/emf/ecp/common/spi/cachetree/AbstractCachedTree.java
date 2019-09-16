@@ -194,6 +194,9 @@ public abstract class AbstractCachedTree<T> {
 		}
 
 		CachedTreeNode<T> node = nodes.get(eObject);
+		if (node == null) {
+			return;
+		}
 		final Object parentObject = node.getParent();
 		final CachedTreeNode<T> parentNode = parentObject == null ? null : nodes.get(parentObject);
 
