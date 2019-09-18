@@ -46,9 +46,9 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class DynamicDMR_PTest {
 
-	private static final String EMPTY = "";
-	private static final String NAME_INIT = "name";
-	private static final String NAME_OTHER = "other";
+	private static final String EMPTY = ""; //$NON-NLS-1$
+	private static final String NAME_INIT = "name"; //$NON-NLS-1$
+	private static final String NAME_OTHER = "other"; //$NON-NLS-1$
 
 	private Shell shell;
 	private VView view;
@@ -142,10 +142,10 @@ public class DynamicDMR_PTest {
 		waitForUIThread();
 		assertText(NAME_INIT, true);
 
-		changeDomain(merchandise(NAME_INIT + "2"), null);
+		changeDomain(merchandise(NAME_INIT + "2"), null); //$NON-NLS-1$
 		// assert
 		waitForUIThread();
-		assertText(NAME_INIT + "2", true);
+		assertText(NAME_INIT + "2", true); //$NON-NLS-1$
 	}
 
 	@Test
@@ -215,11 +215,11 @@ public class DynamicDMR_PTest {
 		try {
 			control = SWTViewTestHelper.render(view, domain, shell);
 		} catch (final NoRendererFoundException e) {
-			fail("Could not render view: " + e.getMessage());
+			fail("Could not render view: " + e.getMessage()); //$NON-NLS-1$
 		} catch (final NoPropertyDescriptorFoundExeption e) {
-			fail("Could not render view: " + e.getMessage());
+			fail("Could not render view: " + e.getMessage()); //$NON-NLS-1$
 		} catch (final EMFFormsNoRendererException e) {
-			fail("Could not render view: " + e.getMessage());
+			fail("Could not render view: " + e.getMessage()); //$NON-NLS-1$
 		}
 	}
 
@@ -234,7 +234,7 @@ public class DynamicDMR_PTest {
 		final long maxTime = System.currentTimeMillis() + 5000;
 		while (Display.getDefault().readAndDispatch()) {
 			if (System.currentTimeMillis() > maxTime) {
-				fail("Timeout");
+				fail("Timeout"); //$NON-NLS-1$
 			}
 		}
 	}
@@ -278,8 +278,8 @@ public class DynamicDMR_PTest {
 
 	private void assertText(String message, boolean enabled) {
 		final Text text = getText();
-		assertEquals("Enablement of text control: ", enabled, text.isEnabled() && text.getEditable());
-		assertEquals("Text of text control: ", message, text.getText());
+		assertEquals("Enablement of text control: ", enabled, text.isEnabled() && text.getEditable()); //$NON-NLS-1$
+		assertEquals("Text of text control: ", message, text.getText()); //$NON-NLS-1$
 	}
 
 }

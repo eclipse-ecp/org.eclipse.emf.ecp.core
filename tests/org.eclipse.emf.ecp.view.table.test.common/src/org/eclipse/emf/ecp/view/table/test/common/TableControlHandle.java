@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,10 +10,14 @@
  *
  * Contributors:
  * Jonas - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.test.common;
 
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
@@ -27,6 +31,11 @@ public class TableControlHandle {
 		setTableControl(tableControl);
 	}
 
+	/**
+	 * Some services expect everything to be in a view, such as the
+	 * {@code EMFFormsMappingProviderTable}.
+	 */
+	private VView view;
 	private VTableControl tableControl;
 	private VDomainModelReference tableColumn1;
 	private VDomainModelReference tableColumn2;
@@ -93,4 +102,35 @@ public class TableControlHandle {
 		this.tableColumn2 = tableColumn2;
 	}
 
+	/**
+	 * Obtain a view containing the table, for tests that need it.
+	 *
+	 * @return a view containing the table
+	 *
+	 * @since 1.22
+	 */
+	public VView getView() {
+		if (view == null && getTableControl() != null) {
+			view = VViewFactory.eINSTANCE.createView();
+
+			// Infer the root EClass from the table's DMR
+			final VTableDomainModelReference tdmr = (VTableDomainModelReference) getTableControl()
+				.getDomainModelReference();
+			if (tdmr.getDomainModelEFeature() != null) {
+				view.setRootEClass(tdmr.getDomainModelEFeature().getEContainingClass());
+			} else if (tdmr.getDomainModelReference() instanceof VFeaturePathDomainModelReference) {
+				final VFeaturePathDomainModelReference fpdmr = (VFeaturePathDomainModelReference) tdmr
+					.getDomainModelReference();
+				if (!fpdmr.getDomainModelEReferencePath().isEmpty()) {
+					view.setRootEClass(fpdmr.getDomainModelEReferencePath().get(0).getEContainingClass());
+				} else {
+					view.setRootEClass(fpdmr.getDomainModelEFeature().getEContainingClass());
+				}
+			}
+
+			view.getChildren().add(getTableControl());
+		}
+
+		return view;
+	}
 }

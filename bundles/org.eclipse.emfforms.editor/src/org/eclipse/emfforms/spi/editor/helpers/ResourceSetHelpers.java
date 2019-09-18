@@ -237,6 +237,18 @@ public final class ResourceSetHelpers {
 		resourceSet.createResource(resourceURI).load(loadOptions);
 
 		// resolve all proxies
+		resolveAllProxies(resourceSet);
+		return true;
+	}
+
+	/**
+	 * Visits all proxies in the resource set and tries to resolve them. Recursively also resolves all resources added
+	 * during the resolvement of the initial resources.
+	 *
+	 * @param resourceSet The {@link ResourceSet} containing the {@link Resource Resources} to resolve
+	 * @since 1.22
+	 */
+	public static void resolveAllProxies(ResourceSet resourceSet) {
 		int rsSize = resourceSet.getResources().size();
 
 		EcoreUtil.resolveAll(resourceSet);
@@ -244,7 +256,6 @@ public final class ResourceSetHelpers {
 			EcoreUtil.resolveAll(resourceSet);
 			rsSize = resourceSet.getResources().size();
 		}
-		return true;
 	}
 
 	/**

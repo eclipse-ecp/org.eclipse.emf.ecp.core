@@ -78,9 +78,10 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Course> getCourses() {
 		if (courses == null) {
-			courses = new EObjectContainmentEList<Course>(Course.class, this,
+			courses = new EObjectContainmentEList<>(Course.class, this,
 				UniversityPackage.COURSE_CATALOG__COURSES);
 		}
 		return courses;

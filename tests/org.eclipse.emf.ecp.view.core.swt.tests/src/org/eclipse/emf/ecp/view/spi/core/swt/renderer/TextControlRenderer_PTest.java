@@ -85,7 +85,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
 		NoLabelFoundException {
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			Observables.constantObservableValue("antiException", String.class));
+			Observables.constantObservableValue("antiException", String.class)); //$NON-NLS-1$
 		setMockLabelAlignment(LabelAlignment.NONE);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
@@ -106,7 +106,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
 		NoLabelFoundException {
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			Observables.constantObservableValue("antiException", String.class));
+			Observables.constantObservableValue("antiException", String.class)); //$NON-NLS-1$
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
@@ -143,9 +143,9 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 		assertTrue(Text.class.isInstance(textRender));
 		assertEquals(SWT.LEFT, Text.class.cast(textRender).getStyle()
 			& SWT.LEFT);
-		assertEquals("org_eclipse_emf_ecp_control_string", Text.class.cast(textRender).getData(CUSTOM_VARIANT));
-		assertEquals(UUID + "#control", textRender.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals(UUID + "#control", render.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("org_eclipse_emf_ecp_control_string", Text.class.cast(textRender).getData(CUSTOM_VARIANT)); //$NON-NLS-1$
+		assertEquals(UUID + "#control", textRender.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY)); //$NON-NLS-1$
+		assertEquals(UUID + "#control", render.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY)); //$NON-NLS-1$
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
-		final String initialValue = "initial";
+		final String initialValue = "initial"; //$NON-NLS-1$
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getENamedElement_Name());
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -171,8 +171,8 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 	@SuppressWarnings("unchecked")
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
-		final String initialValue = "initial";
-		final String changedValue = "changed";
+		final String initialValue = "initial"; //$NON-NLS-1$
+		final String changedValue = "changed"; //$NON-NLS-1$
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getENamedElement_Name());
 
@@ -186,8 +186,8 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
-		final String initialValue = "initial";
-		final String changedValue = "changed";
+		final String initialValue = "initial"; //$NON-NLS-1$
+		final String changedValue = "changed"; //$NON-NLS-1$
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getENamedElement_Name());
 
@@ -211,7 +211,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			Observables.constantObservableValue("antiException"));
+			Observables.constantObservableValue("antiException")); //$NON-NLS-1$
 		Mockito.reset(getDatabindingService());
 		mockDatabindingIsSettableAndChangeable();
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
@@ -237,7 +237,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 	@SuppressWarnings({ "rawtypes" })
 	public void testLabelServiceUsageTextField() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		DatabindingFailedException, NoLabelFoundException {
-		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
+		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class); //$NON-NLS-1$
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDisplayName);
 
@@ -266,10 +266,10 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 	public void testEffectivelyReadOnlyDeactivatesControl()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
 		NoLabelFoundException {
-		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, "",
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, "", //$NON-NLS-1$
 			EcorePackage.eINSTANCE.getENamedElement_Name());
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			Observables.constantObservableValue("antiException"));
+			Observables.constantObservableValue("antiException")); //$NON-NLS-1$
 		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
 			.thenReturn(mockedObservable, new ObservingWritableValue(mockedObservable));
 		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

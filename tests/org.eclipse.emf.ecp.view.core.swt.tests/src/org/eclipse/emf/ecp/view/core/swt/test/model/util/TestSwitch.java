@@ -17,6 +17,7 @@ package org.eclipse.emf.ecp.view.core.swt.test.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 
@@ -91,6 +92,14 @@ public class TestSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
+		case TestPackage.INNER_OBJECT: {
+			final InnerObject innerObject = (InnerObject) theEObject;
+			T result = caseInnerObject(innerObject);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -109,6 +118,22 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseSimpleTestObject(SimpleTestObject object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Inner Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Inner Object</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInnerObject(InnerObject object) {
 		return null;
 	}
 

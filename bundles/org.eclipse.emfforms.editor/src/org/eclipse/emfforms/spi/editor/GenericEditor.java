@@ -11,7 +11,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bug 545460
+ * Christian W. Damus - bugs 545460, 548592
  ******************************************************************************/
 
 package org.eclipse.emfforms.spi.editor;
@@ -25,7 +25,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -44,7 +46,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobFunction;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
@@ -53,10 +54,13 @@ import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -124,6 +128,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	private static final String RESOURCE_URI = "RESOURCE_URI"; //$NON-NLS-1$
 
+	private static final String FEATURE_URI = "FEATURE_URI"; //$NON-NLS-1$
+
 	private static final String ITOOLBAR_ACTIONS_ID = "org.eclipse.emfforms.editor.toolbarActions"; //$NON-NLS-1$
 
 	/** The Resource loaded from the provided EditorInput. */
@@ -139,7 +145,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * True, if there were changes in the filesystem while the editor was in the background and the changes could not be
 	 * applied to current view.
 	 */
-
 	private boolean filesChangedWithConflict;
 
 	private final IPartListener partListener = new GenericEditorActivationListener();
@@ -148,7 +153,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	private final MarkerHelper markerHelper = new GenericEditorMarkerHelper();
 
-	private final List<Job> markerJobs = new CopyOnWriteArrayList<Job>();
+	private final AtomicReference<Job> markerJob = new AtomicReference<>();
 
 	private DiagnosticCache cache;
 
@@ -206,39 +211,58 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	protected void handleResourceChange(final Collection<Resource> changedResources,
 		final Collection<Resource> removedResources) {
 		if (!isDirty()) {
-			getSite().getShell().getDisplay().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					if (resourceSet == null || rootView.isDisposed()) {
-						return;
-					}
-					reloading = true;
-					removeResources(removedResources);
-					for (final Resource changed : changedResources) {
-						// We need to get the resource by its URI from the resource set because otherwise proxies will
-						// not be able to resolve after the reload. This is the case because the given resources are not
-						// part of this editor's resource set.
-						final Resource toReload = resourceSet.getResource(changed.getURI(), false);
-						if (toReload == null) {
-							continue;
-						}
-						toReload.unload();
-						try {
-							toReload.load(null);
-						} catch (final IOException ex) {
-						}
-					}
-
-					rootView.getSelectionProvider().refresh();
-
-					reloading = false;
-					getCommandStack().flush();
-					initMarkers();
+			getSite().getShell().getDisplay().asyncExec(() -> {
+				if (resourceSet == null || rootView.isDisposed()) {
+					return;
 				}
+				reloading = true;
+				removeResources(removedResources);
+
+				// We need to get every changed resource by its URI from the resource set because otherwise proxies will
+				// not be able to resolve after the reload. This is the case because the given resources are not
+				// part of this editor's resource set.
+				final List<Resource> toReload = changedResources.stream()
+					.map(changed -> resourceSet.getResource(changed.getURI(), false))
+					.filter(Objects::nonNull)
+					.collect(Collectors.toList());
+
+				reloadResources(toReload);
+				reloading = false;
+				getCommandStack().flush();
+				initMarkers();
 			});
 		} else {
 			filesChangedWithConflict = true;
 		}
+	}
+
+	/**
+	 * Reloads the given resources and refreshes the tree accordingly.
+	 *
+	 * @param resources The {@link Resource Resources} to reload
+	 * @since 1.22
+	 */
+	protected void reloadResources(Collection<Resource> resources) {
+		for (final Resource r : resources) {
+			r.unload();
+			try {
+				r.load(getResourceLoadOptions());
+			} catch (final IOException e) {
+			}
+		}
+		ResourceSetHelpers.resolveAllProxies(resourceSet);
+		refreshTreeAfterResourceChange();
+	}
+
+	/**
+	 * Called after a resource change to refresh the tree master detail of the editor. By default only the tree is
+	 * refreshed. If the tree's input is not this editor's resource but only derived from it, this method should be
+	 * overridden to reset the tree's input.
+	 *
+	 * @since 1.22
+	 */
+	protected void refreshTreeAfterResourceChange() {
+		rootView.refresh();
 	}
 
 	private boolean discardChanges() {
@@ -325,30 +349,25 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	}
 
 	private synchronized void initMarkers() {
-		if (getDiagnosticCache() == null || reloading) {
+		if (getDiagnosticCache() == null || reloading || markerJob.get() != null) {
 			return;
 		}
-		if (markerJobs.size() > 1) {
-			/* we already enqueued an update job which is not running yet */
-			return;
-		}
-		final Job job = Job.create(Messages.GenericEditor_ValidationMarkersJobName, new IJobFunction() {
 
-			@Override
-			public IStatus run(IProgressMonitor monitor) {
-				try {
-					adjustMarkers(monitor);
-					return Status.OK_STATUS;
-				} catch (final CoreException ex) {
-					return new Status(IStatus.ERROR, "org.eclipse.emfforms.editor", ex.getMessage(), ex); //$NON-NLS-1$
-				} finally {
-					markerJobs.remove(0);
-				}
+		final Job job = Job.create(Messages.GenericEditor_ValidationMarkersJobName, monitor -> {
+			try {
+				adjustMarkers(monitor);
+				return Status.OK_STATUS;
+			} catch (final CoreException ex) {
+				return ex.getStatus();
+			} finally {
+				markerJob.compareAndSet(Job.getJobManager().currentJob(), null);
 			}
 		});
 		job.setPriority(Job.SHORT);
-		markerJobs.add(job);
-		job.schedule();
+
+		if (markerJob.compareAndSet(null, job)) {
+			job.schedule();
+		}
 	}
 
 	private synchronized void adjustMarkers(IProgressMonitor monitor) throws CoreException {
@@ -513,7 +532,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 				}
 			})
-			.customizeTree(createTreeViewerBuilder());
+			.customizeTree(createTreeViewerBuilder())
+			.customizeReadOnly(!isEditable(getEditorInput()));
 
 		if (enableValidation()) {
 			builder.customizeLabelDecorator(
@@ -571,9 +591,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @throws PartInitException if the resource could not be loaded
 	 */
 	protected ResourceSet loadResource(IEditorInput editorInput) throws PartInitException {
-		final URI resourceURI = EditUIUtil.getURI(editorInput, null);
-
 		ResourceSet resourceSet = ResourceSetHelpers.createResourceSet(getCommandStack());
+		final URI resourceURI = EditUIUtil.getURI(editorInput, resourceSet.getURIConverter());
+
 		try {
 			resourceSet = ResourceSetHelpers.loadResourceWithProxies(resourceURI, resourceSet,
 				getResourceLoadOptions());
@@ -584,6 +604,18 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			throw new PartInitException(e.getLocalizedMessage(), e);
 		}
 		// CHECKSTYLE.ON: IllegalCatch
+	}
+
+	/**
+	 * Returns whether the editor input allows editing of its contents.
+	 *
+	 * @param editorInput the editor's {@link IEditorInput}
+	 * @return <code>true</code> if the input source allows editing, <code>false</code> otherwise
+	 * @since 1.22
+	 */
+	protected boolean isEditable(IEditorInput editorInput) {
+		// Only allow editing data if it can be persisted
+		return editorInput.getPersistable() != null;
 	}
 
 	/**
@@ -685,6 +717,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 */
 	protected List<Action> getToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
+		if (!isEditable(getEditorInput())) {
+			// If the input isn't editable, toolbar actions are disabled
+			return result;
+		}
 
 		result.add(new LoadEcoreAction(resourceSet));
 
@@ -748,7 +784,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	private Optional<IFile> getFile() {
 		final IEditorInput input = GenericEditor.this.getEditorInput();
-		if (IFileEditorInput.class.isInstance(input)) {
+		if (isEditable(getEditorInput()) && IFileEditorInput.class.isInstance(input)) {
 			return Optional.of(IFileEditorInput.class.cast(input).getFile());
 		}
 		return Optional.empty();
@@ -764,17 +800,51 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	@Override
 	public void gotoMarker(IMarker marker) {
 		try {
+			EObject eObject = null;
+			EStructuralFeature feature = null;
+
 			final String resourceURI = (String) marker.getAttribute(RESOURCE_URI);
 			final String fragmentURI = (String) marker.getAttribute(FRAGMENT_URI);
-			if (resourceURI == null || fragmentURI == null) {
-				return;
+			if (resourceURI != null && fragmentURI != null) {
+				final Resource resource = getEditingDomain().getResourceSet().getResource(URI.createURI(resourceURI),
+					true);
+				eObject = resource.getEObject(fragmentURI);
+
+				final String featureURI = marker.getAttribute(FEATURE_URI, null);
+				if (featureURI != null) {
+					// Don't load on demand because this should be a delegated look-up in the package registry
+					// or else find the Ecore resource already loaded to resolve our model's schema
+					final EObject featureObject = getEditingDomain().getResourceSet().getEObject(
+						URI.createURI(featureURI),
+						false);
+					if (featureObject instanceof EStructuralFeature) {
+						feature = (EStructuralFeature) featureObject;
+					}
+				}
+			} else {
+				// Maybe it's an EMF-standard marker?
+				final List<?> targets = markerHelper.getTargetObjects(getEditingDomain(), marker, false);
+				for (final Object next : targets) {
+					if (next instanceof EObject) {
+						if (eObject == null) {
+							eObject = (EObject) next;
+						} else if (feature == null && next instanceof EStructuralFeature) {
+							feature = (EStructuralFeature) next;
+						}
+					}
+				}
 			}
-			final Resource resource = getEditingDomain().getResourceSet().getResource(URI.createURI(resourceURI), true);
-			final EObject eObject = resource.getEObject(fragmentURI);
+
 			if (eObject == null) {
+				// Nothing to navigate to
 				return;
 			}
-			reveal(eObject);
+
+			if (feature == null) {
+				reveal(eObject);
+			} else {
+				reveal(UniqueSetting.createSetting(eObject, feature));
+			}
 		} catch (final CoreException ex) {
 			// silent
 		}
@@ -787,25 +857,24 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @since 1.10
 	 */
 	public void reveal(EObject objectToReveal) {
-		rootView.getSelectionProvider().refresh();
+		rootView.refresh();
+		rootView.selectAndReveal(objectToReveal);
+	}
 
-		while (objectToReveal != null) {
-			rootView.getSelectionProvider().reveal(objectToReveal);
-			if (rootView.getSelectionProvider().testFindItem(objectToReveal) != null) {
-				break;
-			}
-			objectToReveal = objectToReveal.eContainer();
-		}
-		if (objectToReveal == null) {
-			return;
-		}
-
-		rootView.setSelection(new StructuredSelection(objectToReveal));
+	/**
+	 * Reveal the control that edits a {@code setting} of some object.
+	 *
+	 * @param setting the feature setting to reveal of object
+	 * @since 1.22
+	 */
+	public void reveal(UniqueSetting setting) {
+		rootView.refresh();
+		rootView.selectAndReveal(setting);
 	}
 
 	/**
 	 * @return the commandStack the {@link
-	 * 		import org.eclipse.emf.common.command.CommandStack;}
+	 *         import org.eclipse.emf.common.command.CommandStack;}
 	 * @since 1.10
 	 */
 	protected BasicCommandStack getCommandStack() {
@@ -834,10 +903,16 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			/* possible when job still running but getting closed */
 			return false;
 		}
+		final EStructuralFeature feature = data.subList(1, data.size()).stream()
+			.filter(EStructuralFeature.class::isInstance).map(EStructuralFeature.class::cast)
+			.findFirst().orElse(null);
 		final String uri = eObject.eResource().getURI().toString();
 		final String uriFragment = eObject.eResource().getURIFragment(eObject);
 		marker.setAttribute(RESOURCE_URI, uri);
 		marker.setAttribute(FRAGMENT_URI, uriFragment);
+		if (feature != null) {
+			marker.setAttribute(FEATURE_URI, String.valueOf(EcoreUtil.getURI(feature)));
+		}
 		return true;
 	}
 
@@ -904,14 +979,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			if (!isClosing() && part == GenericEditor.this && isDirty() && filesChangedWithConflict
 				&& discardChanges()) {
 				reloading = true;
-				for (final Resource r : resourceSet.getResources()) {
-					r.unload();
-					try {
-						r.load(null);
-					} catch (final IOException e) {
-					}
-				}
-				rootView.getSelectionProvider().refresh();
+				reloadResources(resourceSet.getResources());
 				reloading = false;
 				getCommandStack().flush();
 				initMarkers();
@@ -1044,7 +1112,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			if (rootView == null) {
 				return;
 			}
-			rootView.getSelectionProvider().setSelection(selection);
+			rootView.getMasterDetailSelectionProvider().setSelection(selection);
 		}
 
 		@Override
@@ -1052,7 +1120,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			if (rootView == null) {
 				return;
 			}
-			rootView.getSelectionProvider().removeSelectionChangedListener(listener);
+			rootView.getMasterDetailSelectionProvider().removeSelectionChangedListener(listener);
 		}
 
 		@Override
@@ -1060,7 +1128,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			if (rootView == null) {
 				return StructuredSelection.EMPTY;
 			}
-			return rootView.getSelectionProvider().getSelection();
+			return rootView.getMasterDetailSelectionProvider().getSelection();
 		}
 
 		@Override
@@ -1068,7 +1136,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			if (rootView == null) {
 				return;
 			}
-			rootView.getSelectionProvider().addSelectionChangedListener(listener);
+			rootView.getMasterDetailSelectionProvider().addSelectionChangedListener(listener);
 		}
 	}
 }

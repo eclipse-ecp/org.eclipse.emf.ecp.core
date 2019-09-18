@@ -10,21 +10,29 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bugs 527740, 545686
+ * Christian W. Damus - bugs 527740, 545686, 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
+import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -36,23 +44,35 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceScope;
+import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -879,6 +899,7 @@ public class ViewModelContextImpl_ITest {
 		context.dispose();
 	}
 
+	@SuppressWarnings("nls")
 	@Test
 	public void testContextDispose() {
 		final EObject model = EcoreFactory.eINSTANCE.createEObject();
@@ -903,6 +924,12 @@ public class ViewModelContextImpl_ITest {
 
 		assertSame(childContext1, childContextToRemove1);
 		assertSame(childContext2, childContextToRemove2);
+
+		context.dispose();
+
+		assertThat("Context not disposed", view.eAdapters(), not(hasItem(anything())));
+		assertThat("Child context not disposed", childView1.eAdapters(), not(hasItem(anything())));
+		assertThat("Second child context not disposed", childView2.eAdapters(), not(hasItem(anything())));
 	}
 
 	/**
@@ -1003,6 +1030,118 @@ public class ViewModelContextImpl_ITest {
 		} finally {
 			context.dispose();
 		}
+	}
+
+	/**
+	 * Verify that we can change the domain model of a child context and not lose track of it.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public void testChangeDomainModelOfChildContext() {
+		final EMFFormsContextListener rootListener = mock(EMFFormsContextListener.class);
+		final EMFFormsContextListener childListener = mock(EMFFormsContextListener.class);
+		final ViewModelContextDisposeListener disposeListener = mock(ViewModelContextDisposeListener.class);
+		final RootDomainModelChangeListener changeListener = mock(RootDomainModelChangeListener.class);
+
+		final EObject root = EcoreFactory.eINSTANCE.createEObject();
+		final EObject object1 = EcoreFactory.eINSTANCE.createEObject();
+		final EObject object2 = EcoreFactory.eINSTANCE.createEObject();
+		final VView rootView = VViewFactory.eINSTANCE.createView();
+		final VElement parentView = VViewFactory.eINSTANCE.createControl();
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			rootView, root);
+		context.registerEMFFormsContextListener(rootListener);
+
+		final ViewModelContext child = context.getChildContext(object1, parentView, view);
+		child.registerEMFFormsContextListener(childListener);
+		child.registerRootDomainModelChangeListener(changeListener);
+		child.registerDisposeListener(disposeListener);
+
+		assumeThat("Wrong domain model", child.getDomainModel(), is(object1));
+
+		final List<Adapter> viewAdapters = view.eAdapters();
+		final List<Adapter> domainAdapters = object1.eAdapters();
+
+		child.changeDomainModel(object2);
+
+		assertThat("Wrong domain model", child.getDomainModel(), is(object2));
+
+		// We don't actually ViewModelContext-ly dispose and drop the child context,
+		// but only EMFFormsViewContext-ly
+		verify(rootListener).childContextDisposed(child);
+		verify(disposeListener, never()).contextDisposed(any());
+
+		final InOrder inOrder = inOrder(rootListener, childListener, changeListener);
+		inOrder.verify(rootListener).childContextAdded(parentView, child);
+		inOrder.verify(childListener).contextDispose();
+		inOrder.verify(rootListener).childContextDisposed(child);
+		inOrder.verify(rootListener).childContextAdded(parentView, child);
+		inOrder.verify(childListener).contextInitialised();
+		inOrder.verify(changeListener).notifyChange();
+
+		assertThat("Parent created new child context", context.getChildContext(object2, parentView, view),
+			sameInstance(child));
+		assertThat("View model adapters changed", view.eAdapters(), is(viewAdapters));
+		assertThat("Wrong domain model adapters", object2.eAdapters(),
+			hasItems(domainAdapters.toArray(new Adapter[0])));
+	}
+
+	/**
+	 * Verify that we can change the domain model of a child context and not lose track of it.
+	 */
+	@SuppressWarnings("nls")
+	@Test
+	public void testChildContextDomainModelListeners() {
+		final EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		ePackage.setName("foo");
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.setName("Foo");
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		eAttribute.setName("a");
+		eClass.getEStructuralFeatures().add(eAttribute);
+		ePackage.getEClassifiers().add(eClass);
+
+		final VView rootView = VViewFactory.eINSTANCE.createView();
+		final VElement parentView = VViewFactory.eINSTANCE.createControl();
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			rootView, ePackage);
+		final ViewModelContext childContext = context.getChildContext(eAttribute, parentView, view);
+
+		final ModelChangeAddRemoveListener domainListener = mock(ModelChangeAddRemoveListener.class);
+		childContext.registerDomainChangeListener(domainListener);
+
+		// This is the correct usage pattern, and necessary for removal of the listener
+		childContext.registerDisposeListener(ctx -> ctx.unregisterDomainChangeListener(domainListener));
+
+		verify(domainListener).notifyAdd(eAttribute);
+		verify(domainListener).notifyAdd(ePackage);
+
+		childContext.dispose();
+
+		verify(domainListener).notifyRemove(eAttribute);
+		verify(domainListener).notifyRemove(ePackage);
+
+		ePackage.setName("bar");
+
+		verify(domainListener, never()).notifyChange(argThat(notificationFrom(ePackage)));
+	}
+
+	//
+	// Test framework
+	//
+
+	Matcher<ModelChangeNotification> notificationFrom(EObject notifier) {
+		return new FeatureMatcher<ModelChangeNotification, EObject>(is(notifier), "notifier", "notifier") { //$NON-NLS-1$//$NON-NLS-2$
+
+			@Override
+			protected EObject featureValueOf(ModelChangeNotification actual) {
+				return actual.getNotifier();
+			}
+		};
 	}
 
 	//

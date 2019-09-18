@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_f4-XAILhEemgFOUufSg2Sw" name="ETypedElement">
+  <rootEClass href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_jP52kILhEemgFOUufSg2Sw" name="eType">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_xbucEILhEemgFOUufSg2Sw">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_2JOtAILhEemgFOUufSg2Sw">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_2JOtBILhEemgFOUufSg2Sw">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/instanceTypeName"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_-7nIoILhEemgFOUufSg2Sw">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name"/>
+        <domainModelEReferencePath href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_xbucEYLhEemgFOUufSg2Sw">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+      </domainModelReference>
+    </domainModelReference>
+    <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:EnablementConfiguration" xmi:id="_MkD7UILiEemgFOUufSg2Sw" name="EPackage" columnDomainReference="_-7nIoILhEemgFOUufSg2Sw"/>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

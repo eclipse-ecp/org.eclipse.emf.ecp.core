@@ -15,6 +15,7 @@ package org.eclipse.emfforms.core.services.segments.index.test;
 
 import org.eclipse.emfforms.internal.core.services.segments.index.EMFIndexedValueProperty_Test;
 import org.eclipse.emfforms.internal.core.services.segments.index.IndexDmrSegmentGenerator_Test;
+import org.eclipse.emfforms.internal.core.services.segments.index.IndexDmrToRootEClassConverter_Test;
 import org.eclipse.emfforms.internal.core.services.segments.index.IndexSegmentConverter_Test;
 import org.eclipse.emfforms.internal.core.services.segments.index.IndexSegmentStructuralChangeTester_Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ EMFIndexedValueProperty_Test.class, IndexDmrSegmentGenerator_Test.class,
-	IndexSegmentConverter_Test.class, IndexSegmentStructuralChangeTester_Test.class })
+	IndexSegmentConverter_Test.class, IndexSegmentStructuralChangeTester_Test.class,
+	IndexDmrToRootEClassConverter_Test.class })
 public class AllTests {
 }

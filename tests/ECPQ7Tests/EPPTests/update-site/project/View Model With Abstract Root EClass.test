@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _W4UMAPMcEeik6oWCgIASMQ
-Runtime-Version: 2.4.0.201810292311
-Save-Time: 11/28/18 4:04 PM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 7/3/19 9:59 AM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
@@ -41,14 +41,8 @@ get-editor "Abstract.view" | get-label Abstract | get-property caption | equals 
 
 // Generate Controls
 get-editor "Abstract.view" | get-tree | select Abstract | get-menu -path "Generate Controls" | click
-get-window -class SelectAttributesDialog | get-tree | select Abstract
-get-window -class SelectAttributesDialog | get-tree | get-property itemCount | equals 1 | verify-true
-with [get-window -class SelectAttributesDialog] {
-    get-tree | select Abstract
-    get-button "Next >" | click
-}
-get-window -class SelectAttributesDialog | get-table | get-property itemCount | equals 2 | verify-true
-with [get-window -class SelectAttributesDialog] {
+get-window -class WizardDialog | get-table | get-property itemCount | equals 2 | verify-true
+with [get-window -class WizardDialog] {
     get-button "Select All" | click
     get-button Finish | click
 }

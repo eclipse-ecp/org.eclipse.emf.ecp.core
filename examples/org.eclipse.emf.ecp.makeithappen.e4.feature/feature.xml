@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.makeithappen.e4"
       label="The Make it happen e4 Feature"
-      version="1.21.0.qualifier"
+      version="1.22.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.makeithappen.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.21.0.qualifier">
+      license-feature-version="1.22.0.qualifier">
 
    <description>
       %description
@@ -45,7 +45,8 @@
          id="org.eclipse.emf.ecp.makeithappen.model.viewmodel"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.ui"
@@ -84,6 +85,20 @@
 
    <plugin
          id="org.eclipse.core.filesystem"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jface.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.text"
          download-size="0"
          install-size="0"
          version="0.0.0"

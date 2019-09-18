@@ -17,7 +17,6 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -61,7 +59,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -72,7 +69,6 @@ import org.osgi.framework.ServiceReference;
  */
 public class ViewModelWizard extends Wizard implements INewWizard {
 
-	private static final String MANIFEST_PATH = "META-INF/MANIFEST.MF"; //$NON-NLS-1$
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.presentation"; //$NON-NLS-1$
 	private Object selectedContainer;
 	private List<EClass> selectedEClasses;
@@ -382,7 +378,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			return false;
 		}
 		final IProject project = page.getModelFile().getProject();
-		return isPluginProject(project);
+		return ContributionUtil.isPluginProject(project);
 	}
 
 	/**
@@ -430,7 +426,9 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 							page.openEditor(new FileEditorInput(modelFile),
 								workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString())
 									.getId());
+							modelFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, progressMonitor);
 						}
+
 					} catch (final Exception exception) {
 						ViewEditorPlugin.INSTANCE.log(exception);
 					} finally {
@@ -466,6 +464,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		final IProject project = modelFile.getProject();
 		final String projectRelPath = modelFile.getProjectRelativePath().toString();
 		final int lastPathDelimiter = projectRelPath.lastIndexOf("/"); //$NON-NLS-1$
+		final String pluginXml = "plugin.xml"; //$NON-NLS-1$
 		final String path;
 		if (lastPathDelimiter == -1) {
 			path = projectRelPath;
@@ -484,18 +483,21 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			while ((line = in.readLine()) != null) {
 				if (line.contains(includes)) {
 					boolean found = false;
+					boolean foundPlugin = false;
 					while (line.contains(",\\")) //$NON-NLS-1$
 					{
 						// entry start
-						int start = line.indexOf("="); //$NON-NLS-1$
-						if (start == -1) {
-							start = 0;
-						}
+						final int start = line.indexOf("="); //$NON-NLS-1$
 
 						final String entry = line.substring(start + 1, line.indexOf(",\\")).trim(); //$NON-NLS-1$
 
 						if (entry.equals(path)) {
 							found = true;
+						}
+						if (entry.equals(pluginXml)) {
+							foundPlugin = true;
+						}
+						if (found && foundPlugin) {
 							break;
 						}
 						contents.append(line + "\n"); //$NON-NLS-1$
@@ -510,7 +512,18 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 						}
 						final String entry = line.substring(start).trim();
 						if (!entry.equals(path)) {
-							contents.append(path + ",\\\n"); //$NON-NLS-1$
+							contents.append("               " + path + ",\\\n"); //$NON-NLS-1$ //$NON-NLS-2$
+						}
+					}
+					if (!foundPlugin) {
+						// check last line
+						int start = line.indexOf("="); //$NON-NLS-1$
+						if (start == -1) {
+							start = 0;
+						}
+						final String entry = line.substring(start).trim();
+						if (!entry.equals(pluginXml)) {
+							contents.append("               " + pluginXml + ",\\\n"); //$NON-NLS-1$ //$NON-NLS-2$
 						}
 					}
 				}
@@ -540,10 +553,10 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 */
 	protected void addContribution(IFile modelFile) {
 		final IProject project = modelFile.getProject();
-		if (!isPluginProject(project)) {
+		if (!ContributionUtil.isPluginProject(project)) {
 			return;
 		}
-		final boolean isFragmentProject = isFragmentProject(project);
+		final boolean isFragmentProject = ContributionUtil.isFragmentProject(project);
 		final String contributionFileName = isFragmentProject ? "fragment.xml" : "plugin.xml"; //$NON-NLS-1$ //$NON-NLS-2$
 		final IFile pluginFile = project.getFile(contributionFileName);
 		try {
@@ -552,7 +565,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?eclipse version=\"3.4\"?>\n<{0}>\n</{0}>", //$NON-NLS-1$
 					isFragmentProject ? "fragment" : "plugin"); //$NON-NLS-1$//$NON-NLS-2$
 				pluginFile.create(new ByteArrayInputStream(xmlContents.getBytes()), true, null);
-				project.refreshLocal(IResource.DEPTH_INFINITE, null);
 			}
 			final BufferedReader in = new BufferedReader(new InputStreamReader(pluginFile.getContents()));
 			final String extension = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
@@ -591,46 +603,10 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			out.flush();
 			out.close();
 
-			project.refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final CoreException e) {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		} catch (final IOException e) {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
-		}
-	}
-
-	/**
-	 * Checks whether the project is a plugin project.
-	 *
-	 * @param project the project to checks
-	 * @return true if the project has the plugin nature
-	 */
-	private boolean isPluginProject(IProject project) {
-		try {
-			return project.hasNature("org.eclipse.pde.PluginNature"); //$NON-NLS-1$
-		} catch (final CoreException ex) {
-			// not interested in handling the exception
-			return false;
-		}
-	}
-
-	private boolean isFragmentProject(IProject project) {
-		try {
-			final IResource manifest = project.findMember(MANIFEST_PATH);
-			if (manifest == null || !IFile.class.isInstance(manifest)) {
-				/* no osgi project at all */
-				return false;
-			}
-			final InputStream inputStream = IFile.class.cast(manifest).getContents(true);
-			final Scanner scanner = new Scanner(inputStream, "UTF-8"); //$NON-NLS-1$
-			/* read file as one string */
-			final String content = scanner.useDelimiter("\\A").next(); //$NON-NLS-1$
-			scanner.close();
-			/* Every fragment has a fragment host header in the manifest */
-			final int index = content.indexOf(Constants.FRAGMENT_HOST);
-			return index != -1;
-		} catch (final CoreException ex) {
-			return false;
 		}
 	}
 

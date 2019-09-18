@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,9 +10,11 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.test.common;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -55,10 +57,20 @@ public final class TableTestUtil {
 	 * @return The initialized {@link TableControlHandle}
 	 */
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
+		return createInitializedTableWithoutTableColumns(EcorePackage.Literals.ECLASS__ESUPER_TYPES);
+	}
+
+	/**
+	 * Create a {@link TableControlHandle} which contains an initialized table control.
+	 *
+	 * @param reference the reference from which to get the rows of the table
+	 * @return The initialized {@link TableControlHandle}
+	 */
+	public static TableControlHandle createInitializedTableWithoutTableColumns(EReference reference) {
 		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
 		final VFeaturePathDomainModelReference domainModelReference = VTableFactory.eINSTANCE
 			.createTableDomainModelReference();
-		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		domainModelReference.setDomainModelEFeature(reference);
 		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
 
 		return tableControlHandle;

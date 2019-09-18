@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.21.0-SNAPSHOT</version>
+		<version>1.22.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emfforms.swt.treemasterdetail.test</artifactId>
-	<version>1.21.0-SNAPSHOT</version>
+	<version>1.22.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
@@ -39,38 +39,6 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<configuration>
-				
-					<filters>
-						<filter>
-							<type>eclipse-plugin</type>
-							<id>org.eclipse.core.databinding.beans</id>
-							<restrictTo>
-								<versionRange>[1.3.0,1.4.0)</versionRange>
-							</restrictTo>
-						</filter>
-						<filter>
-							<type>eclipse-plugin</type>
-							<id>org.eclipse.core.databinding.observable</id>
-							<restrictTo>
-								<versionRange>[1.5.0,1.6.0)</versionRange>
-							</restrictTo>
-						</filter>
-						<filter>
-							<type>eclipse-plugin</type>
-							<id>org.eclipse.core.databinding.property</id>
-							<restrictTo>
-								<versionRange>[1.5.0,1.6.0)</versionRange>
-							</restrictTo>
-						</filter>
-						<filter>
-							<type>eclipse-plugin</type>
-							<id>org.eclipse.core.databinding</id>
-							<restrictTo>
-								<versionRange>[1.5.0,1.6.0)</versionRange>
-							</restrictTo>
-						</filter>
-					</filters>
-					
 					<dependency-resolution>
 						<extraRequirements>
 							<requirement>

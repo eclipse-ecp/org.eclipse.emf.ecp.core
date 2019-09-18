@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
@@ -158,22 +159,24 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			withPreSetValidation(new UpdateValueStrategy()),
 			new DateModelToTargetUpdateStrategy());
 
-		domainModelChangeListener = new ModelChangeListener() {
-			@Override
-			public void notifyChange(ModelChangeNotification notification) {
-				EStructuralFeature structuralFeature;
-				try {
-					structuralFeature = (EStructuralFeature) getModelValue().getValueType();
-				} catch (final DatabindingFailedException ex) {
-					getReportService().report(new DatabindingFailedReport(ex));
-					return;
+		if (domainModelChangeListener == null) {
+			domainModelChangeListener = new ModelChangeListener() {
+				@Override
+				public void notifyChange(ModelChangeNotification notification) {
+					EStructuralFeature structuralFeature;
+					try {
+						structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+					} catch (final DatabindingFailedException ex) {
+						getReportService().report(new DatabindingFailedReport(ex));
+						return;
+					}
+					if (structuralFeature.equals(notification.getStructuralFeature())) {
+						updateChangeListener(notification.getRawNotification().getNewValue());
+					}
 				}
-				if (structuralFeature.equals(notification.getStructuralFeature())) {
-					updateChangeListener(notification.getRawNotification().getNewValue());
-				}
-			}
-		};
-		getViewModelContext().registerDomainChangeListener(domainModelChangeListener);
+			};
+			getViewModelContext().registerDomainChangeListener(domainModelChangeListener);
+		}
 
 		return new Binding[] { binding };
 	}
@@ -281,6 +284,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		if (bUnset != null) {
 			bUnset.setVisible(isVisible);
+			GridData.class.cast(bUnset.getLayoutData()).exclude = !isVisible;
 		}
 
 		if (setBtn != null) {
@@ -293,12 +297,17 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 					} else {
 						setBtn.setVisible(isVisible);
 					}
+					GridData.class.cast(setBtn.getLayoutData()).exclude = !setBtn.isVisible();
 				}
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new DatabindingFailedReport(ex));
 			}
 		}
 
+		// Null check to avoid NPE during postInit
+		if (composite != null) {
+			composite.layout();
+		}
 	}
 
 	private void updateStack() throws DatabindingFailedException {

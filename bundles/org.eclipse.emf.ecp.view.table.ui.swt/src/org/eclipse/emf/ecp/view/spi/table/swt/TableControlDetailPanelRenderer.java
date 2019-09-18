@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -26,17 +27,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewManager;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -54,9 +49,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * Render for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl VTableControl} with a detail editing
@@ -103,18 +96,20 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			emfFormsEditSupport);
 	}
 
-	private ECPSWTView ecpView;
 	private Composite detailPanel;
 	private Composite border;
 	private ScrolledComposite scrolledComposite;
-	private VView currentDetailView;
-	private boolean currentDetailViewOriginalReadonly;
+	private DetailViewManager detailManager;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#createControlComposite(org.eclipse.swt.widgets.Composite)
-	 */
+	@Override
+	protected void dispose() {
+		if (detailManager != null) {
+			detailManager.dispose();
+		}
+
+		super.dispose();
+	}
+
 	@Override
 	protected Composite createControlComposite(Composite composite) {
 		/* border */
@@ -143,10 +138,24 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(detailPanel);
 		scrolledComposite.setContent(detailPanel);
 
+		createDetailManager(detailPanel);
+		detailManager.cacheCurrentDetail();
+
 		scrolledComposite.addListener(SWT.Resize,
 			(Event event) -> scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT)));
 
 		return tableComposite;
+	}
+
+	/**
+	 * Create the detail manager in the given {@code parent}.
+	 *
+	 * @param parent the parent composite in which to present details
+	 */
+	void createDetailManager(Composite parent) {
+		detailManager = new DetailViewManager(parent, __ -> getVElement().getDetailView());
+		detailManager.setCache(DetailViewCache.createCache(getViewModelContext()));
+		detailManager.layoutDetailParent(parent);
 	}
 
 	/**
@@ -177,7 +186,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 */
 	@Deprecated
 	protected VView getView() {
-		IValueProperty valueProperty;
+		IValueProperty<?, ?> valueProperty;
 		try {
 			valueProperty = getEMFFormsDatabinding()
 				.getValueProperty(getVElement().getDomainModelReference(),
@@ -197,38 +206,24 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @return the view
 	 */
 	protected VView getView(EObject selectedEObject) {
-		VView detailView = getVElement().getDetailView();
-		if (detailView == null) {
-
-			final VElement viewModel = getViewModelContext().getViewModel();
-			final VViewModelProperties properties = ViewModelPropertiesHelper
-				.getInhertitedPropertiesOrEmpty(viewModel);
-			detailView = ViewProviderHelper.getView(selectedEObject, properties);
-		}
-
-		currentDetailViewOriginalReadonly = detailView.isReadonly();
-		return detailView;
+		return detailManager.getDetailView(selectedEObject);
 	}
 
 	@Override
 	protected void applyEnable() {
 		super.applyEnable();
-		if (currentDetailView != null) {
-			// Set the detail view to read only if this table is disabled or read only. Use the detail view's original
-			// read only state if this table is enabled and not read only.
-			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
-				|| currentDetailViewOriginalReadonly);
+		if (detailManager != null) {
+			detailManager
+				.setDetailReadOnly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly());
 		}
 	}
 
 	@Override
 	protected void applyReadOnly() {
 		super.applyReadOnly();
-		if (currentDetailView != null) {
-			// Set the detail view to read only if this table is disabled or read only. Use the detail view's original
-			// read only state if this table is enabled and not read only.
-			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
-				|| currentDetailViewOriginalReadonly);
+		if (detailManager != null) {
+			detailManager
+				.setDetailReadOnly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly());
 		}
 	}
 
@@ -256,12 +251,8 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 */
 	protected void handleSingleSelection(IStructuredSelection selection) {
 		disposeDetail();
-		final Composite compositeToRenderOn = new Composite(detailPanel, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(compositeToRenderOn);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(compositeToRenderOn);
-
 		final EObject object = (EObject) selection.getFirstElement();
-		renderSelectedObject(compositeToRenderOn, object);
+		renderSelectedObject((Composite) detailManager.getDetailContainer(), object);
 		border.layout(true, true);
 		scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
@@ -274,27 +265,11 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @since 1.9
 	 */
 	protected void renderSelectedObject(final Composite composite, final EObject eObject) {
-		currentDetailView = getView(eObject);
-		if (currentDetailView == null) {
-
-			final Label label = new Label(composite, SWT.NONE);
-			label.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_RED));
-			label.setText("No Detail View found."); //$NON-NLS-1$
-
-		} else {
-			final ViewModelContext childContext = getViewModelContext().getChildContext(eObject, getVElement(),
-				currentDetailView);
-			currentDetailView = (VView) childContext.getViewModel();
-			// Set the detail view to read only if this table is read only or disabled
-			currentDetailView.setReadonly(
-				!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
-					|| currentDetailViewOriginalReadonly);
-			try {
-				ecpView = ECPSWTViewRenderer.INSTANCE.render(composite, childContext);
-			} catch (final ECPRendererException ex) {
-				getReportService().report(new RenderingFailedReport(ex));
-			}
+		if (detailManager == null) {
+			// For testability only
+			createDetailManager(composite);
 		}
+		detailManager.render(getViewModelContext(), getVElement(), eObject);
 	}
 
 	/**
@@ -314,13 +289,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	}
 
 	private void disposeDetail() {
-		if (ecpView != null) {
-			ecpView.getSWTControl().dispose();
-			ecpView = null;
-		}
-		for (final Control control : detailPanel.getChildren()) {
-			control.dispose();
-		}
+		detailManager.cacheCurrentDetail();
 	}
 
 	/**

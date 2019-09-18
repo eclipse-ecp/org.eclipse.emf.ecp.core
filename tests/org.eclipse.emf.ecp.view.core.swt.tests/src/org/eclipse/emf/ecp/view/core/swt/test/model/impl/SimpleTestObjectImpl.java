@@ -19,9 +19,12 @@ import java.util.Date;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
@@ -37,6 +40,7 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getDate <em>Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getXmlDate <em>Xml Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getMyEnum <em>My Enum</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getInner <em>Inner</em>}</li>
  * </ul>
  *
  * @generated
@@ -96,6 +100,17 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * @ordered
 	 */
 	protected TestEnum myEnum;
+
+	/**
+	 * The cached value of the '{@link #getInner() <em>Inner</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getInner()
+	 * @generated
+	 * @ordered
+	 */
+	protected InnerObject inner;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -205,6 +220,81 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * @generated
 	 */
 	@Override
+	public InnerObject getInner() {
+		return inner;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public NotificationChain basicSetInner(InnerObject newInner, NotificationChain msgs) {
+		final InnerObject oldInner = inner;
+		inner = newInner;
+		if (eNotificationRequired()) {
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				TestPackage.SIMPLE_TEST_OBJECT__INNER, oldInner, newInner);
+			if (msgs == null) {
+				msgs = notification;
+			} else {
+				msgs.add(notification);
+			}
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setInner(InnerObject newInner) {
+		if (newInner != inner) {
+			NotificationChain msgs = null;
+			if (inner != null) {
+				msgs = ((InternalEObject) inner).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.SIMPLE_TEST_OBJECT__INNER, null, msgs);
+			}
+			if (newInner != null) {
+				msgs = ((InternalEObject) newInner).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.SIMPLE_TEST_OBJECT__INNER, null, msgs);
+			}
+			msgs = basicSetInner(newInner, msgs);
+			if (msgs != null) {
+				msgs.dispatch();
+			}
+		} else if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.SIMPLE_TEST_OBJECT__INNER, newInner,
+				newInner));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case TestPackage.SIMPLE_TEST_OBJECT__INNER:
+			return basicSetInner(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case TestPackage.SIMPLE_TEST_OBJECT__DATE:
@@ -213,6 +303,8 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 			return getXmlDate();
 		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
 			return getMyEnum();
+		case TestPackage.SIMPLE_TEST_OBJECT__INNER:
+			return getInner();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -234,6 +326,9 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 			return;
 		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
 			setMyEnum((TestEnum) newValue);
+			return;
+		case TestPackage.SIMPLE_TEST_OBJECT__INNER:
+			setInner((InnerObject) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -257,6 +352,9 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
 			setMyEnum((TestEnum) null);
 			return;
+		case TestPackage.SIMPLE_TEST_OBJECT__INNER:
+			setInner((InnerObject) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -276,6 +374,8 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 			return XML_DATE_EDEFAULT == null ? xmlDate != null : !XML_DATE_EDEFAULT.equals(xmlDate);
 		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
 			return myEnum != null;
+		case TestPackage.SIMPLE_TEST_OBJECT__INNER:
+			return inner != null;
 		}
 		return super.eIsSet(featureID);
 	}

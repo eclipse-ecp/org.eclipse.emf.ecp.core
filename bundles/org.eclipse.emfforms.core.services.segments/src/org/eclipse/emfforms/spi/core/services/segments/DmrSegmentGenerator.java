@@ -46,6 +46,9 @@ public interface DmrSegmentGenerator {
 	 * Takes a {@link VDomainModelReference} and generates the list of equivalent {@link VDomainModelReferenceSegment
 	 * DMR Segments}. Equivalent means that a DMR using the generated segments resolves exactly the same as the given
 	 * DMR.
+	 * <p>
+	 * The segment generation is <strong>side-effect free</strong>. This means neither the given DMR nor any of its
+	 * contained or referenced elements is changed.
 	 *
 	 * @param reference The {@link VDomainModelReference} to generate the {@link VDomainModelReferenceSegment
 	 *            segments} for

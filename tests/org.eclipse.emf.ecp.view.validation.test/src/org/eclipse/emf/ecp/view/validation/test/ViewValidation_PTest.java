@@ -10,25 +10,32 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 545686
+ * Christian W. Damus - bugs 545686, 548761
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static java.util.stream.Collectors.toList;
 import static org.eclipse.emf.ecp.view.spi.validation.ValidationServiceConstants.PROPAGATION_LIMIT_KEY;
+import static org.hamcrest.CoreMatchers.everyItem;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -51,6 +58,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
+import org.eclipse.emf.ecp.view.spi.validation.ValidationUpdateListener;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
@@ -68,6 +76,8 @@ import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceScope;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -94,6 +104,24 @@ public class ViewValidation_PTest extends CommonValidationTest {
 	@After
 	public void tearDown() {
 		defaultRealm.dispose();
+	}
+
+	static Matcher<Diagnostic> isOK() {
+		return new CustomTypeSafeMatcher<Diagnostic>("is OK") {
+			@Override
+			protected boolean matchesSafely(Diagnostic item) {
+				return item.getSeverity() == Diagnostic.OK;
+			}
+		};
+	}
+
+	static Matcher<Diagnostic> isError() {
+		return new CustomTypeSafeMatcher<Diagnostic>("is error") {
+			@Override
+			protected boolean matchesSafely(Diagnostic item) {
+				return item.getSeverity() == Diagnostic.ERROR;
+			}
+		};
 	}
 
 	//
@@ -1739,6 +1767,76 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		latch.get(0).await(1, TimeUnit.SECONDS);
 		assertEquals("One Diagnostic expected", 1, lastResult.size());
 		assertEquals("Severity of control must be Error", Diagnostic.ERROR, lastResult.iterator().next().getSeverity());
+	}
+
+	@Test
+	public void testIncrementalUpdateListener() throws InterruptedException {
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control
+			.setDomainModelReference(
+				getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
+
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(control, writer);
+
+		final BlockingQueue<Collection<Diagnostic>> update = new ArrayBlockingQueue<>(1);
+
+		final ValidationUpdateListener listener = diagnostics -> {
+			try {
+				update.offer(diagnostics, 1L, TimeUnit.SECONDS);
+			} catch (final InterruptedException e) {
+				e.printStackTrace();
+				fail("Interrupted");
+			}
+		};
+
+		final ValidationService service = vmc.getService(ValidationService.class);
+		ValidationUpdateListener.register(service, listener);
+
+		// Initial validation
+		service.validate(Collections.singleton(writer));
+
+		Collection<Diagnostic> diagnostics = update.poll(1L, TimeUnit.SECONDS);
+		assertThat("No error found", diagnostics, hasItem(isError()));
+		assertThat("No OKs found", diagnostics, hasItem(isOK()));
+
+		writer.setFirstName("Hans");
+		diagnostics = update.poll(1L, TimeUnit.SECONDS);
+		assertThat("Nothing reported", diagnostics.isEmpty(), is(false));
+		assertThat("Previously reported problems not cleared", diagnostics, everyItem(isOK()));
+
+		writer.setFirstName("");
+		diagnostics = update.poll(1L, TimeUnit.SECONDS);
+		assertThat("No error found", diagnostics, hasItem(isError()));
+		assertThat("No OKs found", diagnostics, hasItem(isOK()));
+	}
+
+	@Test
+	public void incrementalUpdateUnmodifiable() throws InterruptedException {
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control
+			.setDomainModelReference(
+				getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
+
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(control, writer);
+
+		final ValidationUpdateListener listener = diagnostics -> {
+			try {
+				final Iterator<?> iter = diagnostics.iterator();
+				iter.next();
+				iter.remove();
+				fail("Should have thrown on attempt to remove from entry set");
+			} catch (final UnsupportedOperationException e) {
+				// Success
+			}
+		};
+
+		final ValidationService service = vmc.getService(ValidationService.class);
+		ValidationUpdateListener.register(service, listener);
+
+		// validate
+		service.validate(Collections.singleton(writer));
 	}
 
 	//

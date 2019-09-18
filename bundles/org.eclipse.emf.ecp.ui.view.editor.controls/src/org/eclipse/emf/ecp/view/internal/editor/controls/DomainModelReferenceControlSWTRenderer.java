@@ -11,6 +11,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  * Lucas Koehler - Also support DMR segments (Bug 542669)
+ * Christian W. Damus - bugs 527686, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
@@ -48,12 +49,12 @@ import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferen
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -69,6 +70,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
@@ -134,6 +136,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private Label setLabel;
 	private Label imageLabel;
 	private Composite contentSetComposite;
+	private Button setBtn;
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
@@ -315,7 +318,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	@Override
 	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
-		final IObservableValue observableValue = getEMFFormsDatabinding()
+		final IObservableValue<?> observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		eObject = (EObject) ((IObserving) observableValue).getObserved();
 		structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -396,7 +399,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 		});
 
-		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
+		setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
 			structuralFeature, emfFormsEditSupport, getEMFFormsLabelProvider(), null, getReportService(), getVElement()
 				.getDomainModelReference(),
 			getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
@@ -459,6 +462,28 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		return Helper.getRootEClass(getViewModelContext().getDomainModel());
 	}
 
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		final IObservableValue<?> observableValue = getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		try {
+			eObject = (EObject) ((IObserving) observableValue).getObserved();
+		} finally {
+			observableValue.dispose();
+		}
+
+		super.rootDomainModelChanged();
+	}
+
+	@Override
+	public void scrollToReveal() {
+		if (canReveal(setBtn) && setBtn.isEnabled()) {
+			scrollToReveal(setBtn);
+		} else {
+			super.scrollToReveal();
+		}
+	}
+
 	/** SelectionAdapter for the set button. */
 	private class SelectionAdapterExtension extends SelectionAdapter {
 
@@ -471,8 +496,6 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
-
 			final EClass eclass = getDmrRootEClass();
 
 			VDomainModelReference reference = null;
@@ -491,6 +514,10 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 					editSegmentDmr(eObject, eReference, reference);
 				}
 			} else {
+				final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
+				// Don't allow to create a plain DMR legacy mode
+				classes.remove(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE);
+
 				final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 					eObject, structuralFeature, getEditingDomain(eObject), eclass,
 					reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$

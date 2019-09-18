@@ -128,12 +128,16 @@ public class TableDmrSegmentGenerator implements DmrSegmentGenerator {
 			return result;
 		}
 
-		// Convert the last segment to a multi segment and add all column dmrs as child dmrs.
+		// Convert the last segment to a multi segment and generate a child dmr for every column dmr.
 		final VMultiDomainModelReferenceSegment multiSegment = VMultisegmentFactory.eINSTANCE
 			.createMultiDomainModelReferenceSegment();
 		multiSegment
 			.setDomainModelFeature(VFeatureDomainModelReferenceSegment.class.cast(lastSegment).getDomainModelFeature());
-		multiSegment.getChildDomainModelReferences().addAll(tableDmr.getColumnDomainModelReferences());
+		for (final VDomainModelReference columnDmr : tableDmr.getColumnDomainModelReferences()) {
+			final VDomainModelReference childDmr = VViewFactory.eINSTANCE.createDomainModelReference();
+			childDmr.getSegments().addAll(getEMFFormsSegmentGenerator().generateSegments(columnDmr));
+			multiSegment.getChildDomainModelReferences().add(childDmr);
+		}
 
 		// Build the result by using the generated segments for the path and the multi segment as the final segment.
 		for (int i = 0; i < subDmrSegments.size() - 1; i++) {

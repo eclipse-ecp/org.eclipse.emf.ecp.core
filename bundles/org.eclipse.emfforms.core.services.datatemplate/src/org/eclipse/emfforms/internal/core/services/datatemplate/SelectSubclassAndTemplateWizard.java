@@ -26,13 +26,14 @@ import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.datatemplate.Template;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
@@ -80,11 +81,6 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		allTemplates = templates;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
-	 */
 	@Override
 	public boolean performFinish() {
 		finished = true;
@@ -228,16 +224,33 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 				final TreeViewer tv = (TreeViewer) getSelectionComposite().getViewer();
 				tv.expandToLevel(2);
 			}
-			getSelectionComposite().getViewer().addSelectionChangedListener(getSelectionChangedListener());
+			getSelectionComposite().getViewer().addSelectionChangedListener(this::handleSelectionChanged);
+			getSelectionComposite().getViewer().addDoubleClickListener(this::handleDoubleClick);
 			setPageComplete(false);
 			setControl(composite);
 
 		}
 
 		/**
-		 * @return The selection listener that is called when the selection composite's selection changes
+		 * Handle double click in the selection composite viewer. If the selection triggered by the double click allows
+		 * to flip to the next page or finish the wizard, automatically do this.
+		 *
+		 * @param event The double click event
 		 */
-		protected abstract ISelectionChangedListener getSelectionChangedListener();
+		protected void handleDoubleClick(DoubleClickEvent event) {
+			if (canFlipToNextPage()) {
+				getContainer().showPage(getNextPage());
+			} else if (canFinish() && performFinish()) {
+				((WizardDialog) getContainer()).close();
+			}
+		}
+
+		/**
+		 * Handles the composite's selection changes.
+		 *
+		 * @param event The {@link SelectionChangedEvent}
+		 */
+		protected abstract void handleSelectionChanged(SelectionChangedEvent event);
 
 		/**
 		 * @return The {@link SelectionComposite} that provides the selection viewer
@@ -286,26 +299,20 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		}
 
 		@Override
-		protected ISelectionChangedListener getSelectionChangedListener() {
-			return new ISelectionChangedListener() {
+		public void handleSelectionChanged(SelectionChangedEvent event) {
+			final IStructuredSelection sel = (IStructuredSelection) getSelectionComposite().getViewer()
+				.getSelection();
 
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					final IStructuredSelection sel = (IStructuredSelection) getSelectionComposite().getViewer()
-						.getSelection();
-
-					if (sel != null && !sel.isEmpty() && EClass.class.isInstance(sel.getFirstElement())) {
-						setErrorMessage(null);
-						setSubClass((EClass) sel.getFirstElement());
-						setPageComplete(true);
-					} else {
-						setErrorMessage(localizationService.getString(SelectSubclassAndTemplateWizard.class,
-							MessageKeys.SelectSubclassAndTemplateWizard_selectEClass));
-						setSubClass(null);
-						setPageComplete(false);
-					}
-				}
-			};
+			if (sel != null && !sel.isEmpty() && EClass.class.isInstance(sel.getFirstElement())) {
+				setErrorMessage(null);
+				setSubClass((EClass) sel.getFirstElement());
+				setPageComplete(true);
+			} else {
+				setErrorMessage(localizationService.getString(SelectSubclassAndTemplateWizard.class,
+					MessageKeys.SelectSubclassAndTemplateWizard_selectEClass));
+				setSubClass(null);
+				setPageComplete(false);
+			}
 		}
 	}
 
@@ -349,21 +356,15 @@ public class SelectSubclassAndTemplateWizard extends Wizard {
 		}
 
 		@Override
-		protected ISelectionChangedListener getSelectionChangedListener() {
-			return new ISelectionChangedListener() {
+		public void handleSelectionChanged(SelectionChangedEvent event) {
+			final IStructuredSelection sel = (IStructuredSelection) getSelectionComposite().getViewer()
+				.getSelection();
 
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					final IStructuredSelection sel = (IStructuredSelection) getSelectionComposite().getViewer()
-						.getSelection();
-
-					if (sel != null && !sel.isEmpty()) {
-						setPageComplete(true);
-					} else {
-						setPageComplete(false);
-					}
-				}
-			};
+			if (sel != null && !sel.isEmpty()) {
+				setPageComplete(true);
+			} else {
+				setPageComplete(false);
+			}
 		}
 	}
 }

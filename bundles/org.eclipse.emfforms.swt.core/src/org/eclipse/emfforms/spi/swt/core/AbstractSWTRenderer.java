@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,15 +11,20 @@
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
+ * Christian W. Damus - bugs 527686, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.core;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -33,6 +38,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
@@ -100,37 +106,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		preInit();
 		controls = new LinkedHashMap<SWTGridCell, Control>();
 		if (getViewModelContext() != null) {
-			listener = new ModelChangeListener() {
-				@Override
-				public void notifyChange(ModelChangeNotification notification) {
-					if (!renderingFinished) {
-						return;
-					}
-					if (notification.getRawNotification().isTouch()) {
-						return;
-					}
-					// Always apply enable and read-only if it changed because it might have changed for a parent
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
-						if (!ignoreEnableOnReadOnly()) {
-							applyEnable();
-						}
-					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Readonly()) {
-						applyReadOnly();
-					}
-					if (notification.getNotifier() != getVElement()) {
-						return;
-					}
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
-						applyVisible();
-					} else if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Diagnostic()) {
-						final VDiagnostic newDia = (VDiagnostic) notification.getRawNotification().getNewValue();
-						final VDiagnostic oldDia = (VDiagnostic) notification.getRawNotification().getOldValue();
-						applyValidation(oldDia, newDia);
-						applyValidation();
-					}
-				}
-
-			};
+			listener = new ViewChangeListener();
 			getViewModelContext().registerViewChangeListener(listener);
 		}
 		getViewModelContext().addContextUser(this);
@@ -237,6 +213,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			return;
 		}
 		renderingFinished = true;
+
+		// Apply visibility, enablement, and validation decorations
 		if (!getVElement().isVisible()) {
 			/* convention is to render visible, so only call apply if we are invisible */
 			applyVisible();
@@ -246,13 +224,30 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			applyEnable();
 		}
 		applyValidation();
-		parent.addDisposeListener(new DisposeListener() {
 
-			@Override
-			public void widgetDisposed(DisposeEvent event) {
-				dispose();
-			}
-		});
+		// When some control is disposed, dispose me. Don't worry about
+		// my parent composite because I could be a detail view that is cached
+		// independently of it in a master-detail situation
+		if (!controls.isEmpty()) {
+			controls.values().iterator().next().addDisposeListener(new DisposeListener() {
+
+				@Override
+				public void widgetDisposed(DisposeEvent event) {
+					dispose();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Query whether rendering has completed and I am ready for user interaction.
+	 *
+	 * @return whether rendering has finished
+	 *
+	 * @since 1.22
+	 */
+	protected boolean isRenderingFinished() {
+		return renderingFinished;
 	}
 
 	/**
@@ -366,6 +361,120 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 */
 	protected String getDefaultFontName(Control control) {
 		return control.getDisplay().getSystemFont().getFontData()[0].getName();
+	}
+
+	/**
+	 * If my control is rendered within a scrolled composite, scroll that composite to reveal me.
+	 *
+	 * @since 1.22
+	 */
+	public void scrollToReveal() {
+		if (controls != null && !controls.isEmpty()) {
+			@SuppressWarnings("serial")
+			final Iterator<Control> iter = new AbstractTreeIterator<Control>(controls.values(), false) {
+				@Override
+				protected Iterator<? extends Control> getChildren(Object object) {
+					if (object instanceof Composite) {
+						return Arrays.asList(((Composite) object).getChildren()).iterator();
+					}
+					if (object instanceof Collection<?>) {
+						@SuppressWarnings("unchecked")
+						final Collection<? extends Control> collection = (Collection<? extends Control>) object;
+						return collection.iterator();
+					}
+					return Collections.emptyIterator();
+				}
+			};
+
+			while (iter.hasNext()) {
+				final Control next = iter.next();
+				if (next instanceof Composite) {
+					// Don't attempt to reveal composites
+					continue;
+				}
+
+				if (scrollToReveal(next)) {
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Scroll composites as necessary to reveal the given {@code control} and
+	 * then request focus.
+	 *
+	 * @param control the control to reveal and focus
+	 * @return whether the focus was successfully set (usually because the control
+	 *         is one that can receive input focus)
+	 *
+	 * @since 1.22
+	 */
+	protected boolean scrollToReveal(final Control control) {
+		for (Composite parent = control.getParent(); parent != null; parent = parent.getParent()) {
+			if (parent instanceof ScrolledComposite) {
+				final ScrolledComposite scrolled = (ScrolledComposite) parent;
+				scrolled.showControl(control);
+			}
+		}
+
+		// Try to request focus
+		return control.setFocus();
+	}
+
+	/**
+	 * Query whether a given {@code control} can plausibly be revealed.
+	 *
+	 * @param control a control to be revealed
+	 * @return whether it reasonably can be revealed
+	 *
+	 * @since 1.22
+	 */
+	protected boolean canReveal(Control control) {
+		return control != null && !control.isDisposed() && control.isVisible();
+	}
+
+	//
+	// Nested types
+	//
+
+	/**
+	 * A listener that reacts to view-model changes to update the UI accordingly.
+	 * Examples include updating enablement/visibility state and diagnostic decorations.
+	 */
+	private final class ViewChangeListener implements ModelChangeListener {
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (!renderingFinished) {
+				return;
+			}
+
+			// We ned to handle touch events for the diagnostic if in the case of
+			// re-use of the view model we update diagnostics in situ
+			if (notification.getRawNotification().isTouch() &&
+				notification.getStructuralFeature() != VViewPackage.Literals.ELEMENT__DIAGNOSTIC) {
+				return;
+			}
+			// Always apply enable and read-only if it changed because it might have changed for a parent
+			if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__ENABLED) {
+				if (!ignoreEnableOnReadOnly()) {
+					applyEnable();
+				}
+			} else if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__READONLY) {
+				applyReadOnly();
+			}
+			if (notification.getNotifier() != getVElement()) {
+				return;
+			}
+			if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__VISIBLE) {
+				applyVisible();
+			} else if (notification.getStructuralFeature() == VViewPackage.Literals.ELEMENT__DIAGNOSTIC) {
+				final VDiagnostic newDia = (VDiagnostic) notification.getRawNotification().getNewValue();
+				final VDiagnostic oldDia = (VDiagnostic) notification.getRawNotification().getOldValue();
+				applyValidation(oldDia, newDia);
+				applyValidation();
+			}
+		}
 	}
 
 }

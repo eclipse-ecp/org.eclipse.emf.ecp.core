@@ -18,9 +18,9 @@ import java.util.Enumeration;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver.NoBundleFoundException;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -32,7 +32,6 @@ import org.osgi.framework.Bundle;
  * are in the Ecore model editor, but instead using their EMF.Edit localized names
  * and icons.
  */
-@SuppressWarnings("restriction") // for BundleResolver API
 final class EClassLabelProvider implements ILabelProvider {
 	private final EMFFormsLocalizationService l10nService;
 	private final BundleResolver bundleResolver;
@@ -47,7 +46,7 @@ final class EClassLabelProvider implements ILabelProvider {
 		super();
 
 		this.l10nService = l10nService;
-		bundleResolver = new BundleResolverImpl();
+		bundleResolver = BundleResolverFactory.createBundleResolver();
 	}
 
 	@Override

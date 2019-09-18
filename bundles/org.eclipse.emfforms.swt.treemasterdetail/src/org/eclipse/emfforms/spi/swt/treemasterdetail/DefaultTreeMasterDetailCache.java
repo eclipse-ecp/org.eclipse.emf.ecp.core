@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,23 +10,28 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bugs 527686, 549565
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.BasicDetailViewCache;
 
 /**
  * A default implementation of the TreeMasterDetailCache which uses the EClass as the key.
  *
  * @author Eugen Neufeld
  * @since 1.9
- *
+ * @deprecated Since 1.22, use the {@link BasicDetailViewCache} API, instead.
  */
+@Deprecated
 public class DefaultTreeMasterDetailCache implements TreeMasterDetailCache {
 
 	private final Map<EClass, ECPSWTView> cache;
@@ -59,34 +64,26 @@ public class DefaultTreeMasterDetailCache implements TreeMasterDetailCache {
 		};
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache#isChached(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public boolean isChached(EObject selection) {
 		return cache.containsKey(selection.eClass());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache#getCachedView(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public ECPSWTView getCachedView(EObject selection) {
 		return cache.get(selection.eClass());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache#cache(org.eclipse.emf.ecp.ui.view.swt.ECPSWTView)
-	 */
 	@Override
 	public void cache(ECPSWTView ecpView) {
 		cache.put(ecpView.getViewModelContext().getDomainModel().eClass(), ecpView);
+	}
+
+	@Override
+	public void clear() {
+		final List<ECPSWTView> records = new ArrayList<>(cache.values());
+		cache.clear();
+		records.forEach(ECPSWTView::dispose);
 	}
 
 }

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.swt.widgets.Composite;
@@ -48,16 +47,15 @@ public class TemplateInstanceRenderer extends LinkControlSWTRenderer {
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param localizationService The {@link EMFFormsLocalizationService}
 	 * @param imageRegistryService The {@link ImageRegistryService}
-	 * @param emfFormsEditSuppport The {@link EMFFormsEditSupport}
 	 */
 	@Inject
 	// CHECKSTYLE:OFF: ParameterNumber
 	public TemplateInstanceRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsLocalizationService localizationService,
-		ImageRegistryService imageRegistryService, EMFFormsEditSupport emfFormsEditSuppport) {
+		ImageRegistryService imageRegistryService) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
-			localizationService, imageRegistryService, emfFormsEditSuppport);
+			localizationService, imageRegistryService);
 	}
 
 	// CHECKSTYLE:ON

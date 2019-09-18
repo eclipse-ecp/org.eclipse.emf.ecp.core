@@ -96,7 +96,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends VDomainModel
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -257,7 +257,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends VDomainModel
 	 *
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {

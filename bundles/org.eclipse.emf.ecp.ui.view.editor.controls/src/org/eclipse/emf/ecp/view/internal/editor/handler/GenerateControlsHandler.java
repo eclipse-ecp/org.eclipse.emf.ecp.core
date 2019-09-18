@@ -15,32 +15,22 @@
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.ILog;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
-import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -54,45 +44,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class GenerateControlsHandler extends MasterDetailAction {
 
-	private Set<EStructuralFeature> getFeaturesToCreate(final SelectAttributesDialog sad) {
-		final Set<EStructuralFeature> features = sad.getSelectedFeatures();
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new CustomReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
-		IItemPropertyDescriptor propertyDescriptor = null;
-		final EClass rootClass = sad.getRootClass();
-		for (final EStructuralFeature feature : features) {
-			if (rootClass.isAbstract() || rootClass.isInterface()) {
-				featuresToAdd.add(feature);
-				continue;
-			}
-			propertyDescriptor = adapterFactoryItemDelegator
-				.getPropertyDescriptor(EcoreUtil.create(rootClass), feature);
-			if (propertyDescriptor != null) {
-				featuresToAdd.add(feature);
-			} else {
-				logInvalidFeature(feature.getName(), sad.getRootClass().getName());
-			}
-		}
-		composedAdapterFactory.dispose();
-		return featuresToAdd;
-	}
-
-	private void logInvalidFeature(String featureName, String eClassName) {
-		final String infoMessage = "Feature " + featureName //$NON-NLS-1$
-			+ " of the class " + eClassName + "could not be rendered because it has no property descriptor."; //$NON-NLS-1$ //$NON-NLS-2$
-		final ILog log = Activator
-			.getDefault()
-			.getLog();
-		log.log(
-			new Status(
-				IStatus.INFO,
-				Activator.PLUGIN_ID, infoMessage));
-	}
-
 	@Override
 	public void execute(final EObject object) {
 		final CallbackFeatureSupplier callBack = new CallbackFeatureSupplier() {
@@ -100,12 +51,11 @@ public class GenerateControlsHandler extends MasterDetailAction {
 			@Override
 			public Set<EStructuralFeature> get(VView view) {
 				final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-				final SelectAttributesDialog sad = new SelectAttributesDialog(new SelectAttributesWizard(), view,
-					view.getRootEClass(),
-					shell);
+				final SelectAttributesWizard selectAttributesWizard = new SelectAttributesWizard(view);
+				final WizardDialog sad = new WizardDialog(shell, selectAttributesWizard);
 				final int result = sad.open();
 				if (result == Window.OK) {
-					return getFeaturesToCreate(sad);
+					return selectAttributesWizard.getSelectedFeatures();
 				}
 				return Collections.emptySet();
 			}

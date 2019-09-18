@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,13 +10,21 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Christian W. Damus - bugs 527686, 548592, 549565
  ******************************************************************************/
 package org.eclipse.emfforms.swt.treemasterdetail.test;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withText;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget;
+import static org.hamcrest.CoreMatchers.both;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 
 import java.math.BigInteger;
 import java.util.Map;
@@ -33,6 +41,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.view.spi.common.callback.ViewModelPropertiesUpdateCallback;
@@ -44,13 +53,13 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.bowling.Area;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Matchup;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emf.emfstore.bowling.Tournament;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.InitialSelectionProvider;
-import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
@@ -377,6 +386,7 @@ public class TreeMasterDetail_PTest {
 		/* unchanged after click */
 		SWTTestUtil.waitForUIThread();
 		assertEquals(text, bot.text().getText());
+		assumeThat("Selection not changed in tree", bot.tree().selection().get(0, 0), is("Player Bob"));
 
 		/* changed after delay */
 		bot.waitUntil(new ICondition() {
@@ -496,10 +506,12 @@ public class TreeMasterDetail_PTest {
 		/* detail unchanged after down, but selection changed already */
 		SWTTestUtil.waitForUIThread();
 		assertEquals(text, bot.text().getText());
+		assumeThat("Selection not changed in tree", bot.tree().selection().get(0, 0), is("Player Bob"));
 		bot.waitUntil(new DefaultCondition() {
 
 			@Override
 			public boolean test() throws Exception {
+				SWTTestUtil.waitForUIThread();
 				return "Player Bob".equals(bot.tree().selection().get(0, 0));
 			}
 
@@ -547,6 +559,7 @@ public class TreeMasterDetail_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void cacheNotCached() {
 		/* setup render */
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -576,7 +589,7 @@ public class TreeMasterDetail_PTest {
 
 		/* setup cache */
 		final AtomicReference<EObject> isCachedCalledWith = new AtomicReference<EObject>();
-		tmdComposite.get().setCache(new TreeMasterDetailCache() {
+		tmdComposite.get().setCache(new org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache() {
 
 			@Override
 			public boolean isChached(EObject selection) {
@@ -598,6 +611,11 @@ public class TreeMasterDetail_PTest {
 			@Override
 			public void cache(ECPSWTView ecpView) {
 			}
+
+			@Override
+			public void clear() {
+				// Nothing cached, nothing to clear
+			}
 		});
 
 		/* act select something */
@@ -613,6 +631,7 @@ public class TreeMasterDetail_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void cacheCacheAndRerender() {
 		/* setup render and select something */
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -651,19 +670,19 @@ public class TreeMasterDetail_PTest {
 		final Text nameWidget = bot.text().widget;
 
 		/* setup cache */
-		tmdComposite.get().setCache(new TreeMasterDetailCache() {
+		tmdComposite.get().setCache(new org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailCache() {
 
 			private ECPSWTView ecpView;
 
 			@Override
 			public boolean isChached(EObject selection) {
-				assertSame(alice, selection);
+				assertSame(alice.eClass(), selection.eClass());
 				return true;
 			}
 
 			@Override
 			public ECPSWTView getCachedView(EObject selection) {
-				assertSame(alice, selection);
+				assertSame(alice.eClass(), selection.eClass());
 				return ecpView;
 			}
 
@@ -674,6 +693,11 @@ public class TreeMasterDetail_PTest {
 					fail();
 				}
 				this.ecpView = ecpView;
+			}
+
+			@Override
+			public void clear() {
+				ecpView = null;
 			}
 		});
 
@@ -930,6 +954,51 @@ public class TreeMasterDetail_PTest {
 		// limbo shell is diposed -> no increase in
 		// count of shells
 		assertEquals(shellsBefore, Display.getCurrent().getShells().length);
+	}
+
+	@Test
+	public void selectAndReveal() throws InterruptedException {
+
+		// arrange
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		final Player alice = BowlingFactory.eINSTANCE.createPlayer();
+		final Player bob = BowlingFactory.eINSTANCE.createPlayer();
+		alice.setName(ALICE);
+		bob.setName(BOB);
+		league.getPlayers().add(alice);
+		league.getPlayers().add(bob);
+
+		Display.getDefault().syncExec(() -> {
+			composite = TreeMasterDetailSWTFactory
+				.fillDefaults(shell, SWT.NONE, league)
+				.customizeInitialSelection(new InitialSelectionProvider() {
+					@Override
+					public EObject getInitialSelection(Object input) {
+						return alice;
+					}
+				})
+				// Display.timerExec doesn't work in the tests on some platforms
+				.customizeUpdateDelay(0)
+				.create();
+			GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+			shell.open();
+		});
+
+		SWTTestUtil.waitForUIThread();
+
+		/* act */
+		Display.getDefault().syncExec(() -> {
+			composite
+				.selectAndReveal(UniqueSetting.createSetting(bob, BowlingPackage.Literals.PLAYER__IS_PROFESSIONAL));
+		});
+
+		SWTTestUtil.waitForUIThread();
+
+		// wait for the selection change
+		bot.waitUntil(waitForWidget(both(widgetOfType(Text.class)).and(withText(BOB))));
+
+		// assert the reveal part
+		assertThat("Feature not revealed", bot.checkBox().isActive(), is(true));
 	}
 
 	// TODO test set selection programmatically

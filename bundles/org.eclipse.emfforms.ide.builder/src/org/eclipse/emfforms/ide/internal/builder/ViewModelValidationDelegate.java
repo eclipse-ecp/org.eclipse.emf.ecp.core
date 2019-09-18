@@ -21,7 +21,9 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
@@ -61,6 +63,7 @@ public class ViewModelValidationDelegate extends ValidationServiceDelegate {
 
 		// load file thanks to ECP helpers to avoid missing Properties
 		final VView view = ViewModelHelper.loadView(file, ecores);
+
 		final ViewAdapter adapter = new ViewAdapter(view, ecores);
 
 		if (view == null) {
@@ -68,7 +71,12 @@ public class ViewModelValidationDelegate extends ValidationServiceDelegate {
 		} else {
 			view.eAdapters().add(adapter);
 
-			result = view.eResource().getResourceSet();
+			// the ViewModelHelper forces file: scheme URI, which is bad
+			// for marker navigation
+			final Resource resource = view.eResource();
+			resource.setURI(URI.createPlatformResourceURI(file.getFullPath().toString(), true));
+
+			result = resource.getResourceSet();
 			result.eAdapters().add(adapter);
 		}
 

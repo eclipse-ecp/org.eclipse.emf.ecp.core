@@ -208,8 +208,8 @@ public class UniversityValidator extends EObjectValidator {
 		}
 
 		final EList<Course> existingCourses = courseCatalog.getCourses();
-		final Map<String, Set<Course>> contentMap = new LinkedHashMap<String, Set<Course>>();
-		final List<Course> duplicates = new ArrayList<Course>();
+		final Map<String, Set<Course>> contentMap = new LinkedHashMap<>();
+		final List<Course> duplicates = new ArrayList<>();
 
 		for (final Course courseToCheck : existingCourses) {
 			final String id = courseToCheck.getId();

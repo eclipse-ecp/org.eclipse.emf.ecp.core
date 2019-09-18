@@ -118,11 +118,11 @@ public class AbstractControlSWTRenderer_PTest {
 		Mockito.when(emfFormsLabelProvider.getDisplayName(
 			any(VDomainModelReference.class),
 			any(EObject.class)))
-			.thenReturn(Observables.constantObservableValue("I am display name", String.class));
+			.thenReturn(Observables.constantObservableValue("I am display name", String.class)); //$NON-NLS-1$
 		Mockito.when(emfFormsLabelProvider.getDescription(
 			any(VDomainModelReference.class),
 			any(EObject.class)))
-			.thenReturn(Observables.constantObservableValue("I am description", String.class));
+			.thenReturn(Observables.constantObservableValue("I am description", String.class)); //$NON-NLS-1$
 
 		viewTemplateProvider = Mockito.mock(VTViewTemplateProvider.class);
 
@@ -218,7 +218,7 @@ public class AbstractControlSWTRenderer_PTest {
 		final VTLabelWrapStyleProperty labelWrapStyleProperty = VTWrapFactory.eINSTANCE.createLabelWrapStyleProperty();
 		labelWrapStyleProperty.setWrapLabel(true);
 
-		final Set<VTStyleProperty> properties = new LinkedHashSet<VTStyleProperty>();
+		final Set<VTStyleProperty> properties = new LinkedHashSet<>();
 		properties.add(alignProperty);
 		properties.add(labelWrapStyleProperty);
 		Mockito.when(viewTemplateProvider.getStyleProperties(vControl, viewModelContext)).thenReturn(properties);
@@ -366,7 +366,7 @@ public class AbstractControlSWTRenderer_PTest {
 	 * @return
 	 */
 	private List<Image> createIconList(int index, List<Integer> severityList) {
-		final List<Image> imageList = new ArrayList<Image>();
+		final List<Image> imageList = new ArrayList<>();
 		for (final Integer severity : severityList) {
 			// Shifting index by 1, as 0 size images are not allowed
 			imageList.add(new Image(Display.getCurrent(), index + 1, severity + 1));
@@ -433,7 +433,7 @@ public class AbstractControlSWTRenderer_PTest {
 	 * @return
 	 */
 	private List<Color> createColorList(int index, List<Integer> severityList) {
-		final List<Color> colorList = new ArrayList<Color>();
+		final List<Color> colorList = new ArrayList<>();
 		for (final Integer severity : severityList) {
 			colorList.add(new Color(Display.getCurrent(), 0, index, severity));
 		}
@@ -444,7 +444,7 @@ public class AbstractControlSWTRenderer_PTest {
 	 * @return
 	 */
 	private List<Integer> createListOfSeverities() {
-		final List<Integer> listOfSeverties = new ArrayList<Integer>();
+		final List<Integer> listOfSeverties = new ArrayList<>();
 		listOfSeverties.add(Diagnostic.OK);
 		listOfSeverties.add(Diagnostic.WARNING);
 		listOfSeverties.add(Diagnostic.ERROR);

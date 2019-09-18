@@ -17,6 +17,7 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -54,6 +55,10 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Gender;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -97,12 +102,14 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 		editSupport = mock(EMFFormsEditSupport.class);
 
 		domainObject = TestFactory.eINSTANCE.createSimpleTestObject();
+		domainObject.setInner(TestFactory.eINSTANCE.createInnerObject());
 
 		setup();
 
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(domainObject);
 		observableValue = EMFEditProperties
-			.value(editingDomain, TestPackage.Literals.SIMPLE_TEST_OBJECT__MY_ENUM).observe(domainObject);
+			.value(editingDomain, TestPackage.Literals.INNER_OBJECT__MY_ENUM)
+			.observe(domainObject.getInner());
 
 		setRenderer(new EnumComboViewerSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
 			getLabelProvider(),
@@ -118,7 +125,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 
 	@Override
 	protected void mockControl() throws DatabindingFailedException {
-		super.mockControl(domainObject, TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+		super.mockControl(domainObject, TestPackage.eINSTANCE.getInnerObject_MyEnum());
 	}
 
 	@Test
@@ -166,7 +173,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum changedValue = TestEnum.C;
 
-		domainObject.setMyEnum(TestEnum.B);
+		domainObject.getInner().setMyEnum(TestEnum.B);
 		final Combo combo = setUpDatabindingTest(observableValue);
 		combo.select(1); // TestEnum.C
 		combo.notifyListeners(SWT.Selection, new Event());
@@ -269,7 +276,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 
 				// A is filtered by annotation and D is filtered by the property descriptor,
 				// so we can only use B and C for testing
-				domainObject.setMyEnum(TestEnum.B);
+				domainObject.getInner().setMyEnum(TestEnum.B);
 				renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 				final EnumComboViewerSWTRenderer enumRenderer = (EnumComboViewerSWTRenderer) getRenderer();
@@ -284,7 +291,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 				final List<Throwable> thrown = new ArrayList<>(valuesToSet.length);
 				for (final TestEnum valueToSet : valuesToSet) {
 					final CompletableFuture<?> asyncUpdate = CompletableFuture.runAsync(
-						() -> domainObject.setMyEnum(valueToSet))
+						() -> domainObject.getInner().setMyEnum(valueToSet))
 						.exceptionally(x -> {
 							thrown.add(x);
 							return null;
@@ -307,6 +314,31 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VContro
 
 	private static <X extends Exception> void sneakyThrow(Exception x) throws X {
 		throw (X) x;
+	}
+
+	@Test
+	public void testRootDomainModelChanged()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// assert we have the old values
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(observableValue);
+		renderControl(new SWTGridCell(0, 2, getRenderer()));
+		final EnumComboViewerSWTRenderer enumRenderer = (EnumComboViewerSWTRenderer) getRenderer();
+		assertArrayEquals(new Object[] { TestEnum.B, TestEnum.C },
+			enumRenderer.getAvailableChoicesValue().getValue().toArray());
+
+		// prepare a new domain model
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(player);
+		final IObservableValue playerGenderObservable = EMFEditProperties
+			.value(editingDomain, BowlingPackage.Literals.PLAYER__GENDER)
+			.observe(player);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(playerGenderObservable);
+		// this triggers the reevaluation of the modelObservable
+		enumRenderer.notifyChange();
+		// we should now have new values
+		assertArrayEquals(Gender.VALUES.toArray(), enumRenderer.getAvailableChoicesValue().getValue().toArray());
 	}
 
 }

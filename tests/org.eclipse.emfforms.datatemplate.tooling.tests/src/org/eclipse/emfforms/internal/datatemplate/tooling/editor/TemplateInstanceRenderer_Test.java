@@ -34,7 +34,7 @@ public class TemplateInstanceRenderer_Test {
 	@Before
 	public void setUp() throws Exception {
 		renderer = new TemplateInstanceRenderer(mock(VControl.class), mock(ViewModelContext.class),
-			mock(ReportService.class), null, null, null, null, null, null);
+			mock(ReportService.class), null, null, null, null, null);
 	}
 
 	@Test

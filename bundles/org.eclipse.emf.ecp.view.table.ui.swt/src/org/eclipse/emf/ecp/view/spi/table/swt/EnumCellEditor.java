@@ -18,7 +18,10 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Diffs;
 import org.eclipse.core.databinding.observable.value.AbstractObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.INativePropertyListener;
+import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EAttribute;
@@ -31,7 +34,6 @@ import org.eclipse.emf.ecp.view.internal.core.swt.MatchItemComboViewer;
 import org.eclipse.emf.ecp.view.internal.table.swt.FigureUtilities;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -52,7 +54,9 @@ import org.eclipse.swt.widgets.Control;
  * applicable for all {@link EAttribute EAttributes} with a Single {@link EEnum} data type.
  *
  * @since 1.13
+ * @deprecated Use {@link ItemProviderEnumCellEditor} instead
  */
+@Deprecated
 public class EnumCellEditor extends ECPEnumCellEditor {
 
 	private static final String EMPTY = ""; //$NON-NLS-1$
@@ -425,7 +429,7 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 	 * Value property working on the combo.
 	 *
 	 */
-	private class ComboValueProperty extends WidgetValueProperty {
+	private class ComboValueProperty extends SimpleValueProperty {
 
 		@Override
 		public Object getValueType() {
@@ -446,6 +450,11 @@ public class EnumCellEditor extends ECPEnumCellEditor {
 		@Override
 		public IObservableValue observe(Object source) {
 			return new ComboObservableValue();
+		}
+
+		@Override
+		public INativePropertyListener adaptListener(ISimplePropertyListener listener) {
+			return null;
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Jonas - initial API and implementation
+ * Christian W. Damus - bug 547787
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
@@ -20,6 +21,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -349,19 +353,21 @@ public final class ViewModelFileExtensionsManager {
 	/**
 	 * @param eObject the object to be rendered
 	 * @param properties the {@link VViewModelProperties properties}
+	 * @param requiredKeys the filter keys that are required to match
 	 * @return if there is a xmi file registered containing a view model for the given type
 	 */
-	public boolean hasViewModelFor(EObject eObject, VViewModelProperties properties) {
-		return !findBestFittingViews(eObject, properties).isEmpty();
+	public boolean hasViewModelFor(EObject eObject, VViewModelProperties properties, Collection<String> requiredKeys) {
+		return !findBestFittingViews(eObject, properties, requiredKeys).isEmpty();
 	}
 
 	/**
 	 * @param eObject The {@link EObject} to create a view for
 	 * @param properties the {@link VViewModelProperties properties}
+	 * @param requiredKeys the filter keys that are required to match
 	 * @return a view model for the given eObject
 	 */
-	public VView createView(EObject eObject, VViewModelProperties properties) {
-		final Map<VView, ExtensionDescription> bestFitting = findBestFittingViews(eObject, properties);
+	public VView createView(EObject eObject, VViewModelProperties properties, Collection<String> requiredKeys) {
+		final Map<VView, ExtensionDescription> bestFitting = findBestFittingViews(eObject, properties, requiredKeys);
 
 		if (bestFitting.isEmpty()) {
 			final ReportService reportService = Activator.getReportService();
@@ -401,7 +407,8 @@ public final class ViewModelFileExtensionsManager {
 	private static final int FILTER_NOT_MATCHED = Integer.MIN_VALUE;
 
 	private Map<VView, ExtensionDescription> findBestFittingViews(EObject eObject,
-		final VViewModelProperties properties) {
+		final VViewModelProperties properties, Collection<String> requiredKeys) {
+
 		final Map<VView, Set<ExtensionDescription>> viewMap = new LinkedHashMap<VView, Set<ExtensionDescription>>();
 		final Set<EClass> allEClass = new LinkedHashSet<EClass>();
 		allEClass.add(eObject.eClass());
@@ -421,23 +428,7 @@ public final class ViewModelFileExtensionsManager {
 		}
 		for (final VView view : viewMap.keySet()) {
 			for (final ExtensionDescription description : viewMap.get(view)) {
-				int currentFittingKeyValues = 0;
-				final Map<String, String> viewFilter = description.getKeyValuPairs();
-				for (final String viewFilterKey : viewFilter.keySet()) {
-					if (propertiesToCheck.containsKey(viewFilterKey)) {
-						final Object contextValue = propertiesToCheck.get(viewFilterKey);
-						final String viewFilterValue = viewFilter.get(viewFilterKey);
-						if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
-							currentFittingKeyValues++;
-						} else {
-							currentFittingKeyValues = FILTER_NOT_MATCHED;
-							break;
-						}
-					} else {
-						currentFittingKeyValues = FILTER_NOT_MATCHED;
-						break;
-					}
-				}
+				final int currentFittingKeyValues = computeFit(description, propertiesToCheck, requiredKeys);
 				if (currentFittingKeyValues == FILTER_NOT_MATCHED) {
 					continue;
 				}
@@ -451,6 +442,37 @@ public final class ViewModelFileExtensionsManager {
 			}
 		}
 		return getViewMap(bestFitting, eObject.eClass());
+	}
+
+	private int computeFit(final ExtensionDescription description, VViewModelProperties properties,
+		Collection<String> requiredKeys) {
+
+		int currentFittingKeyValues = 0;
+		final Set<String> unmatchedKeys = requiredKeys == null || requiredKeys.isEmpty()
+			? Collections.emptySet()
+			: new HashSet<>(requiredKeys);
+
+		final Map<String, String> viewFilter = description.getKeyValuPairs();
+		for (final String viewFilterKey : viewFilter.keySet()) {
+			if (properties.containsKey(viewFilterKey)) {
+				final Object contextValue = properties.get(viewFilterKey);
+				final String viewFilterValue = viewFilter.get(viewFilterKey);
+				if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
+					currentFittingKeyValues++;
+					unmatchedKeys.remove(viewFilterKey);
+				} else {
+					currentFittingKeyValues = FILTER_NOT_MATCHED;
+					break;
+				}
+			} else {
+				currentFittingKeyValues = FILTER_NOT_MATCHED;
+				break;
+			}
+		}
+		if (!unmatchedKeys.isEmpty()) {
+			currentFittingKeyValues = FILTER_NOT_MATCHED;
+		}
+		return currentFittingKeyValues;
 	}
 
 	private Map<VView, ExtensionDescription> getViewMap(Map<VView, ExtensionDescription> fullMap, EClass viewModelFor) {

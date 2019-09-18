@@ -63,6 +63,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -79,12 +80,12 @@ import org.mockito.stubbing.Answer;
 public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 
 	private DefaultRealm realm;
-	private static final String NOTIME = "No time set! Click to set time.";
-	private static final String NODATE = "No date set! Click to set date.";
-	private static final String CLEANDATE = "Clean Date";
-	private static final String SELECTDATE = "Select Date";
-	private static final String CLEANTIME = "Clean Time";
-	private static final String SELECTTIME = "Select Time";
+	private static final String NOTIME = "No time set! Click to set time."; //$NON-NLS-1$
+	private static final String NODATE = "No date set! Click to set date."; //$NON-NLS-1$
+	private static final String CLEANDATE = "Clean Date"; //$NON-NLS-1$
+	private static final String SELECTDATE = "Select Date"; //$NON-NLS-1$
+	private static final String CLEANTIME = "Clean Time"; //$NON-NLS-1$
+	private static final String SELECTTIME = "Select Time"; //$NON-NLS-1$
 
 	@Before
 	public void before() throws DatabindingFailedException {
@@ -187,13 +188,13 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		assertEquals(timeWidgetVisible, dateTime.getChildren()[1].isVisible());
 		assertTrue(Button.class.isInstance(dateTime.getChildren()[2]));
 
-		assertEquals(UUID + "#unset",
+		assertEquals(UUID + "#unset", //$NON-NLS-1$
 			SWTTestUtil.findControl(render, 0, Button.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals(UUID + "#set",
+		assertEquals(UUID + "#set", //$NON-NLS-1$
 			SWTTestUtil.findControl(render, 1, Button.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals(UUID + "#date",
+		assertEquals(UUID + "#date", //$NON-NLS-1$
 			SWTTestUtil.findControl(render, 0, DateTime.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals(UUID + "#time",
+		assertEquals(UUID + "#time", //$NON-NLS-1$
 			SWTTestUtil.findControl(render, 1, DateTime.class).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
 	}
 
@@ -247,7 +248,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final Date initialValue = new Date();
 		final Date changedValue = new Date(System.currentTimeMillis() * 2);
-		final Set<IValueChangeListener> listeners = new LinkedHashSet<IValueChangeListener>();
+		final Set<IValueChangeListener> listeners = new LinkedHashSet<>();
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(mockedEStructuralFeature)).thenReturn(true);
@@ -487,7 +488,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 	}
 
 	@Test
-	public void testEffectivelyReadOnlyDeactivatesControl()
+	public void testEffectivelyReadOnly()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		final EObject mockedEObject = mock(EObject.class);
@@ -504,8 +505,12 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
 		assertFalse(renderControl.getEnabled());
-		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class);
+		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class); //$NON-NLS-1$
 		assertFalse(unset.getVisible());
+		assertTrue(GridData.class.cast(unset.getLayoutData()).exclude);
+		final Button setButton = getSetButton(renderControl);
+		assertFalse(setButton.getVisible());
+		assertTrue(GridData.class.cast(setButton.getLayoutData()).exclude);
 	}
 
 	@Test
@@ -527,7 +532,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
 		assertFalse(renderControl.getEnabled());
-		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class);
+		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class); //$NON-NLS-1$
 		assertTrue(unset.getVisible());
 		assertFalse(unset.getEnabled());
 	}
@@ -551,14 +556,14 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VContro
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
 		assertTrue(renderControl.getEnabled());
-		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class);
+		final Button unset = SWTTestUtil.findControlById(renderControl, UUID + "#unset", Button.class); //$NON-NLS-1$
 		assertTrue(unset.getVisible());
 		assertTrue(unset.getEnabled());
 
 	}
 
 	private void setMockDateTimeDisplayAttachment(DateTimeDisplayType displayType) {
-		final EList<VAttachment> attachments = new BasicEList<VAttachment>();
+		final EList<VAttachment> attachments = new BasicEList<>();
 		final VDateTimeDisplayAttachment displayAttachment = VViewFactory.eINSTANCE.createDateTimeDisplayAttachment();
 		displayAttachment.setDisplayType(displayType);
 		attachments.add(displayAttachment);

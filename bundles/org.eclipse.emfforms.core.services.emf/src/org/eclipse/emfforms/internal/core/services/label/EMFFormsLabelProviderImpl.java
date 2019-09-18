@@ -26,7 +26,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver.NoBundleFoundException;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -135,7 +137,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private EMFFormsLocalizationService localizationService;
 	private ReportService reportService;
-	private BundleResolver bundleResolver = new BundleResolverImpl();
+	private BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
 
 	private final Map<WritableValue, BundleKeyWrapper> displayKeyObservableMap = new WeakHashMap<WritableValue, BundleKeyWrapper>();
 	private final Map<WritableValue, DescriptionKey> descriptionKeyObservableMap = new WeakHashMap<WritableValue, DescriptionKey>();

@@ -42,7 +42,7 @@ public interface TemplateCollection extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Templates</em>' containment reference list.
 	 * @see org.eclipse.emfforms.datatemplate.DataTemplatePackage#getTemplateCollection_Templates()
 	 * @model containment="true"

@@ -69,6 +69,7 @@ public class EcoreGenModelLinkerImpl implements IEcoreGenModelLinker {
 	 * @param modelProjectPath The path (relative) of the model project
 	 * @throws EcoreGenException in case generating the genmodel fails
 	 */
+	@Override
 	public void generateGenModel(String ecorePath, String genModelPathParam,
 		String modelProjectPath) throws EcoreGenException {
 

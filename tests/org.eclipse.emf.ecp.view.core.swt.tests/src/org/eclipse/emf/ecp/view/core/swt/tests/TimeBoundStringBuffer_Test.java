@@ -41,7 +41,7 @@ public class TimeBoundStringBuffer_Test {
 		buffer.addLast('a');
 		buffer.addLast('b');
 		buffer.addLast('c');
-		assertEquals("abc", buffer.asString());
+		assertEquals("abc", buffer.asString()); //$NON-NLS-1$
 	}
 
 	@Test

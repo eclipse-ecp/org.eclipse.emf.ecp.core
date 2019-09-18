@@ -77,6 +77,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -618,6 +619,8 @@ public class MultiAttributeSWTRenderer_ITest {
 			Matchers.any(EObject.class)))
 				.thenReturn(list);
 		when(viewContext.getDomainModel()).thenReturn(object);
+		when(viewContext.getService(EMFFormsLocalizationService.class))
+			.thenReturn(mock(EMFFormsLocalizationService.class));
 
 		/* setup rendering */
 		final MultiAttributeSWTRenderer renderer = createRenderer();

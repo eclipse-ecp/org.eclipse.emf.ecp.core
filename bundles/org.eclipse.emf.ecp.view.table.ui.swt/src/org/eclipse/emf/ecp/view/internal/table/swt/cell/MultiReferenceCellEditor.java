@@ -16,7 +16,10 @@ package org.eclipse.emf.ecp.view.internal.table.swt.cell;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.INativePropertyListener;
+import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -29,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.graphics.Image;
@@ -74,7 +76,7 @@ public class MultiReferenceCellEditor extends CellEditor implements ECPCellEdito
 
 	@Override
 	public IValueProperty getValueProperty() {
-		return new WidgetValueProperty() {
+		return new SimpleValueProperty() {
 
 			@Override
 			public Object getValueType() {
@@ -93,6 +95,11 @@ public class MultiReferenceCellEditor extends CellEditor implements ECPCellEdito
 			@Override
 			public IObservableValue observe(Object source) {
 				return super.observe(parent);
+			}
+
+			@Override
+			public INativePropertyListener adaptListener(ISimplePropertyListener listener) {
+				return null;
 			}
 		};
 	}

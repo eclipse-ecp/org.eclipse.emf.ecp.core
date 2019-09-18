@@ -158,7 +158,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest<VControl
 		assertTrue(Button.class.isInstance(top.getChildren()[1]));
 		final Text text = Text.class.cast(textRender);
 		assertEquals(SWT.LEFT, text.getStyle() & SWT.LEFT);
-		assertEquals("org_eclipse_emf_ecp_control_xmldate", text.getData(CUSTOM_VARIANT));
+		assertEquals("org_eclipse_emf_ecp_control_xmldate", text.getData(CUSTOM_VARIANT)); //$NON-NLS-1$
 	}
 
 	@Override

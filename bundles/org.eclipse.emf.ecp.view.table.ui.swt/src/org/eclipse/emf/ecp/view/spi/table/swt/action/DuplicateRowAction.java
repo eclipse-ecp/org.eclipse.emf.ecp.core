@@ -13,15 +13,17 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt.action;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.swt.table.action.ViewerActionContext;
@@ -67,18 +69,19 @@ public class DuplicateRowAction extends TableRendererAction {
 		final EObject eObject = setting.getEObject();
 		final EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
 
-		final List<?> toDuplicate = Arrays.asList(
-			((IStructuredSelection) getTableViewer().getSelection()).toArray());
+		@SuppressWarnings("unchecked")
+		final List<EObject> toDuplicate = ((IStructuredSelection) getTableViewer().getSelection()).toList();
 
-		final Collection<Object> copies = copyElements(
+		final Collection<EObject> copies = copyElements(
 			eObject, eStructuralFeature, getEditingDomainForContainment(), toDuplicate);
 
 		getTableViewer().setSelection(new StructuredSelection(copies.iterator().next()), true);
 	}
 
-	private Collection<Object> copyElements(EObject eObject, EStructuralFeature structuralFeature,
-		EditingDomain editingDomain, Collection<?> elementsToCopy) {
-		final Collection<Object> copies = EcoreUtil.copyAll(elementsToCopy);
+	private Collection<EObject> copyElements(EObject eObject, EStructuralFeature structuralFeature,
+		EditingDomain editingDomain, Collection<EObject> elementsToCopy) {
+
+		final Collection<EObject> copies = copy(elementsToCopy);
 		final Command createCommand = AddCommand.create(editingDomain, eObject, structuralFeature, copies);
 		if (createCommand.canExecute()) {
 			if (editingDomain.getCommandStack() == null) {
@@ -88,6 +91,35 @@ public class DuplicateRowAction extends TableRendererAction {
 			}
 		}
 		return copies;
+	}
+
+	/**
+	 * Copies the collection of {@link EObject}.
+	 *
+	 * @param elementsToCopy The {@link Collection} to copy
+	 * @return The copied {@link Collection}
+	 */
+	Collection<EObject> copy(Collection<EObject> elementsToCopy) {
+		final Copier copier = new Copier();
+		final Collection<EObject> copies = copier.copyAll(elementsToCopy);
+		copier.copyReferences();
+		copier.forEach(this::copyBidirectionalReferences);
+		return copies;
+	}
+
+	private void copyBidirectionalReferences(final EObject original, final EObject copy) {
+		final Map<EObject, Collection<Setting>> find = EcoreUtil.ExternalCrossReferencer.find(original);
+		// find all bidirectional references and manually set them on the copy
+		find.forEach((referenced, settings) -> {
+			settings.forEach(setting -> {
+				final EStructuralFeature feat = setting.getEStructuralFeature();
+				final EReference opp = ((EReference) feat).getEOpposite();
+				// if the opposite is a singleton, then we would change its reference, so ignore
+				if (opp != null && opp.isMany() && setting.getEObject() == original) {
+					copy.eSet(feat, setting.get(true));
+				}
+			});
+		});
 	}
 
 	@Override

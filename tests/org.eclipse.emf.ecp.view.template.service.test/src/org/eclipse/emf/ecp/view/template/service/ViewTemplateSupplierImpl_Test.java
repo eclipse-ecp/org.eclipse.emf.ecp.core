@@ -33,9 +33,12 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -54,6 +57,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferenceFactory;
 import org.eclipse.emfforms.spi.core.services.segments.EMFFormsSegmentGenerator;
+import org.eclipse.emfforms.spi.core.services.segments.LegacyDmrToRootEClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -66,10 +70,13 @@ import org.junit.Test;
 public class ViewTemplateSupplierImpl_Test {
 
 	private ViewTemplateSupplierImpl templateSupplier;
+	private LegacyDmrToRootEClass dmrToRootEClass;
 
 	@Before
 	public void setup() {
 		templateSupplier = new ViewTemplateSupplierImpl();
+		dmrToRootEClass = mock(LegacyDmrToRootEClass.class);
+		templateSupplier.setLegacyDmrToRootEClass(dmrToRootEClass);
 	}
 
 	@Test
@@ -188,12 +195,8 @@ public class ViewTemplateSupplierImpl_Test {
 		final VTStyle style = VTTemplateFactory.eINSTANCE.createStyle();
 		final VTDomainModelReferenceSelector dmrSelector = VTDomainmodelreferenceFactory.eINSTANCE
 			.createDomainModelReferenceSelector();
-		final VFeaturePathDomainModelReference featureDmr = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		featureDmr.getDomainModelEReferencePath().add(EcorePackage.Literals.EREFERENCE__EREFERENCE_TYPE);
-		featureDmr.getDomainModelEReferencePath().add(EcorePackage.Literals.ECLASSIFIER__EPACKAGE);
-		featureDmr.setDomainModelEFeature(EcorePackage.Literals.ENAMED_ELEMENT__NAME);
-		dmrSelector.setDomainModelReference(featureDmr);
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		dmrSelector.setDomainModelReference(dmr);
 		style.setSelector(dmrSelector);
 		template.getStyles().add(style);
 
@@ -210,27 +213,28 @@ public class ViewTemplateSupplierImpl_Test {
 		segmentList.add(segment1);
 		segmentList.add(segment2);
 
-		when(segmentGenerator.generateSegments(featureDmr)).thenReturn(segmentList);
+		final EClass rootEClass = EcoreFactory.eINSTANCE.createEClass();
+		when(dmrToRootEClass.getRootEClass(dmr)).thenReturn(Optional.of(rootEClass));
+		when(segmentGenerator.generateSegments(dmr)).thenReturn(segmentList);
 
 		templateSupplier.generateSegments(template);
 
-		assertEquals("Wrong number of generated segments", 3, featureDmr.getSegments().size()); //$NON-NLS-1$
-		assertSame("Wrong order of segments", segment0, featureDmr.getSegments().get(0)); //$NON-NLS-1$
-		assertSame("Wrong order of segments", segment1, featureDmr.getSegments().get(1)); //$NON-NLS-1$
-		assertSame("Wrong order of segments", segment2, featureDmr.getSegments().get(2)); //$NON-NLS-1$
-		assertSame("Incorrect root EClass set", EcorePackage.Literals.EREFERENCE, dmrSelector.getRootEClass()); //$NON-NLS-1$
+		assertEquals("Wrong number of generated segments", 3, dmr.getSegments().size()); //$NON-NLS-1$
+		assertSame("Wrong order of segments", segment0, dmr.getSegments().get(0)); //$NON-NLS-1$
+		assertSame("Wrong order of segments", segment1, dmr.getSegments().get(1)); //$NON-NLS-1$
+		assertSame("Wrong order of segments", segment2, dmr.getSegments().get(2)); //$NON-NLS-1$
+		assertSame("Incorrect root EClass set", rootEClass, dmrSelector.getRootEClass()); //$NON-NLS-1$
 	}
 
+	/** Segments are generated but root EClass cannot be determined. */
 	@Test
-	public void generateSegments_noRefPath() {
+	public void generateSegments_noRootEClass() {
 		final VTViewTemplate template = VTTemplateFactory.eINSTANCE.createViewTemplate();
 		final VTStyle style = VTTemplateFactory.eINSTANCE.createStyle();
 		final VTDomainModelReferenceSelector dmrSelector = VTDomainmodelreferenceFactory.eINSTANCE
 			.createDomainModelReferenceSelector();
-		final VFeaturePathDomainModelReference featureDmr = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		featureDmr.setDomainModelEFeature(EcorePackage.Literals.ENAMED_ELEMENT__NAME);
-		dmrSelector.setDomainModelReference(featureDmr);
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		dmrSelector.setDomainModelReference(dmr);
 		style.setSelector(dmrSelector);
 		template.getStyles().add(style);
 
@@ -241,15 +245,16 @@ public class ViewTemplateSupplierImpl_Test {
 			.createFeatureDomainModelReferenceSegment();
 		segmentList.add(segment);
 
-		when(segmentGenerator.generateSegments(featureDmr)).thenReturn(segmentList);
+		when(dmrToRootEClass.getRootEClass(dmr)).thenReturn(Optional.empty());
+		when(segmentGenerator.generateSegments(dmr)).thenReturn(segmentList);
 
 		templateSupplier.generateSegments(template);
 
-		assertEquals("Wrong number of generated segments", 1, featureDmr.getSegments().size()); //$NON-NLS-1$
-		assertSame("Wrong order of segments", segment, featureDmr.getSegments().get(0)); //$NON-NLS-1$
-		assertSame("Incorrect root EClass set", EcorePackage.Literals.ENAMED_ELEMENT, dmrSelector.getRootEClass()); //$NON-NLS-1$
+		assertEquals("No segments should be set", 0, dmr.getSegments().size()); //$NON-NLS-1$
+		assertNull("No root EClass should be set", dmrSelector.getRootEClass()); //$NON-NLS-1$
 	}
 
+	/** Root EClass can be determined but no segments are generated. */
 	@Test
 	public void generateSegments_noSegmentsGenerated() {
 		final VTViewTemplate template = VTTemplateFactory.eINSTANCE.createViewTemplate();
@@ -263,6 +268,7 @@ public class ViewTemplateSupplierImpl_Test {
 		style.setSelector(dmrSelector);
 		template.getStyles().add(style);
 
+		when(dmrToRootEClass.getRootEClass(any())).thenReturn(Optional.of(mock(EClass.class)));
 		final EMFFormsSegmentGenerator segmentGenerator = mock(EMFFormsSegmentGenerator.class);
 		when(segmentGenerator.generateSegments(featureDmr)).thenReturn(Collections.emptyList());
 		templateSupplier.setEMFFormsSegmentGenerator(segmentGenerator);
@@ -271,28 +277,6 @@ public class ViewTemplateSupplierImpl_Test {
 
 		assertEquals("Wrong number of generated segments", 0, featureDmr.getSegments().size()); //$NON-NLS-1$
 		assertNull("No root EClass should be set if no segments could be generated", dmrSelector.getRootEClass()); //$NON-NLS-1$
-	}
-
-	@Test
-	public void generateSegments_featureDmrWithoutFeatures() {
-		final VTViewTemplate template = VTTemplateFactory.eINSTANCE.createViewTemplate();
-		final VTStyle style = VTTemplateFactory.eINSTANCE.createStyle();
-		final VTDomainModelReferenceSelector dmrSelector = VTDomainmodelreferenceFactory.eINSTANCE
-			.createDomainModelReferenceSelector();
-		final VFeaturePathDomainModelReference featureDmr = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		dmrSelector.setDomainModelReference(featureDmr);
-		style.setSelector(dmrSelector);
-		template.getStyles().add(style);
-
-		final EMFFormsSegmentGenerator segmentGenerator = mock(EMFFormsSegmentGenerator.class);
-		when(segmentGenerator.generateSegments(featureDmr)).thenReturn(Collections.emptyList());
-		templateSupplier.setEMFFormsSegmentGenerator(segmentGenerator);
-
-		templateSupplier.generateSegments(template);
-
-		assertEquals("No segments should be set", 0, featureDmr.getSegments().size()); //$NON-NLS-1$
-		assertNull("No root EClass should be set if the dmr doesn't have any features", dmrSelector.getRootEClass()); //$NON-NLS-1$
 	}
 
 	@Test
@@ -321,27 +305,6 @@ public class ViewTemplateSupplierImpl_Test {
 		assertEquals("Wrong number of segments", 1, featureDmr.getSegments().size()); //$NON-NLS-1$
 		assertSame("Wrong segment", existingSegment, featureDmr.getSegments().get(0)); //$NON-NLS-1$
 		assertSame("Incorrect root EClass set", EcorePackage.Literals.ENAMED_ELEMENT, dmrSelector.getRootEClass()); //$NON-NLS-1$
-	}
-
-	@Test
-	public void generateSegments_noFeatureDmr() {
-		final VTViewTemplate template = VTTemplateFactory.eINSTANCE.createViewTemplate();
-		final VTStyle style = VTTemplateFactory.eINSTANCE.createStyle();
-		final VTDomainModelReferenceSelector dmrSelector = VTDomainmodelreferenceFactory.eINSTANCE
-			.createDomainModelReferenceSelector();
-		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
-		dmrSelector.setDomainModelReference(dmr);
-		style.setSelector(dmrSelector);
-		template.getStyles().add(style);
-
-		final EMFFormsSegmentGenerator segmentGenerator = mock(EMFFormsSegmentGenerator.class);
-		templateSupplier.setEMFFormsSegmentGenerator(segmentGenerator);
-
-		templateSupplier.generateSegments(template);
-
-		verify(segmentGenerator, never()).generateSegments(any(VDomainModelReference.class));
-		assertEquals("Wrong number of segments", 0, dmr.getSegments().size()); //$NON-NLS-1$
-		assertNull("No root EClass should be set", dmrSelector.getRootEClass()); //$NON-NLS-1$
 	}
 
 	private static VTStyle mockStyle(double specificity) {

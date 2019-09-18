@@ -104,7 +104,7 @@ public class ViewRenderer_PTest {
 	@Test
 	public void testMultipleSimpleCompositeView() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
-		final BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
+		final BasicEList<VContainedElement> basicEList = new BasicEList<>();
 		final VContainedElement control1 = mock(VContainedElement.class);
 		final VContainedElement control2 = mock(VContainedElement.class);
 		basicEList.add(control1);
@@ -132,7 +132,7 @@ public class ViewRenderer_PTest {
 	@Test
 	public void testMultipleComplexGridDescriptionView() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
-		final BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
+		final BasicEList<VContainedElement> basicEList = new BasicEList<>();
 		final VContainedElement control1 = mock(VContainedElement.class);
 		final VContainedElement control2 = mock(VContainedElement.class);
 		final VContainedElement control3 = mock(VContainedElement.class);

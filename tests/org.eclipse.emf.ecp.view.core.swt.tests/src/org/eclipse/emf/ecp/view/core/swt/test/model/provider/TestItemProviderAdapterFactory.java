@@ -115,6 +115,32 @@ public class TestItemProviderAdapterFactory extends TestAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected InnerObjectItemProvider innerObjectItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createInnerObjectAdapter() {
+		if (innerObjectItemProvider == null) {
+			innerObjectItemProvider = new InnerObjectItemProvider(this);
+		}
+
+		return innerObjectItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -230,6 +256,9 @@ public class TestItemProviderAdapterFactory extends TestAdapterFactory
 	public void dispose() {
 		if (simpleTestObjectItemProvider != null) {
 			simpleTestObjectItemProvider.dispose();
+		}
+		if (innerObjectItemProvider != null) {
+			innerObjectItemProvider.dispose();
 		}
 	}
 

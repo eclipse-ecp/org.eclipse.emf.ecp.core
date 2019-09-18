@@ -10,7 +10,7 @@
  *
  * Contributors:
  * EclipseSource - initial API and implementation
- * Christian W. Damus - bug 544499
+ * Christian W. Damus - bugs 544499, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.ide.internal.builder;
 
@@ -24,13 +24,14 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emfforms.bazaar.Bid;
 import org.eclipse.emfforms.bazaar.Create;
+import org.eclipse.emfforms.ide.builder.DefaultMarkerHelper;
 import org.eclipse.emfforms.ide.builder.MarkerHelperProvider;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * Specific Marker Helper that directly knows the file.
  */
-public class ViewModelMarkerHelper extends MarkerHelper {
+public class ViewModelMarkerHelper extends DefaultMarkerHelper {
 	private final IFile file;
 
 	/** identifier of the marker, similar to plugin.xml value. */
@@ -137,7 +138,7 @@ public class ViewModelMarkerHelper extends MarkerHelper {
 
 		/**
 		 * Create the view model marker helper.
-		 * 
+		 *
 		 * @param file a view model file
 		 * @return its marker helper
 		 */

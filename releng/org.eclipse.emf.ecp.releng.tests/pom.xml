@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-tests-parent</artifactId>
-	<version>1.21.0-SNAPSHOT</version>
+	<version>1.22.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.21.0-SNAPSHOT</version>
+		<version>1.22.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	
@@ -102,6 +102,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.editor.controls.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
+		<module>../../tests/org.eclipse.emfforms.swt.reference.table.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
@@ -206,6 +207,7 @@
 		<module>../../tests/org.eclipse.emfforms.ide.view.mappingsegment.test</module>
 		<module>../../tests/org.eclipse.emfforms.ide.view.multisegment.test</module>
 		<module>../../tests/org.eclipse.emfforms.ide.view.multisegment.test.uithread</module>
+		<module>../../tests/org.eclipse.emfforms.ide.view.segments.test</module>
 
 		<!-- Bazaar -->
 		<module>../../tests/org.eclipse.emfforms.core.bazaar.tests</module>
@@ -238,6 +240,8 @@
 		<module>../../tests/org.eclipse.emfforms.editor.test</module>
 		
 		<module>../../tests/org.eclipse.emfforms.sdk.integration.test</module>
+
+		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.test</module>
 		
 	</modules>
 	

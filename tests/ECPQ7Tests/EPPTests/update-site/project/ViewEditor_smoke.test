@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _foqG8GzgEeWQGtcwdcx-qw
-Runtime-Version: 2.4.0.201901180020
-Save-Time: 1/18/19 3:24 PM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 7/1/19 3:31 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -294,7 +294,7 @@ with [get-editor "User.view" | get-tree] {
 
 // Check that the generate controls action exists and opens a dialog
 get-editor "User.view" | get-tree | select View | get-menu -path "Generate Controls" | click
-get-window -class SelectAttributesDialog | get-button Cancel | click
+get-window -class WizardDialog | get-button Cancel | click
 
 get-editor "User.view" | get-tree | select View | get-menu -path Control | click
 with [get-editor "User.view" | get-tree] {

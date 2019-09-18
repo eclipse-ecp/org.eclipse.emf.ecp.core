@@ -49,7 +49,11 @@ public class RuleRepositoryEditor extends GenericEditor {
 	 */
 	@Override
 	protected List<Action> getToolbarActions() {
-		final List<Action> result = new LinkedList<Action>();
+		final List<Action> result = new LinkedList<>();
+		if (!isEditable(getEditorInput())) {
+			// If the input isn't editable, toolbar actions shouldn't be available
+			return result;
+		}
 
 		result.add(new LoadEcoreAction(getResourceSet(), "Load ViewModel")); //$NON-NLS-1$
 

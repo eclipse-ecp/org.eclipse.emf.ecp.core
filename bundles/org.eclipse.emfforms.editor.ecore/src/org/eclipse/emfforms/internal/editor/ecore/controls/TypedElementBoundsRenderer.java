@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Alexandra Buzila - refactoring
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore.controls;
 
@@ -26,6 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
@@ -63,6 +65,10 @@ import org.eclipse.swt.widgets.Spinner;
  * @author Clemens Elflein
  */
 public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VControl> {
+
+	private Spinner lowerBound;
+	private Spinner upperBound;
+	private Button unbounded;
 
 	/**
 	 * Default constructor.
@@ -183,16 +189,16 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 		GridDataFactory.fillDefaults().grab(true, false)
 			.align(SWT.FILL, SWT.BEGINNING).applyTo(main);
 
-		final Spinner lowerBound = new Spinner(main, SWT.BORDER);
+		lowerBound = new Spinner(main, SWT.BORDER);
 		lowerBound.setMaximum(Integer.MAX_VALUE);
 		lowerBound.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, true));
 
-		final Spinner upperBound = new Spinner(main, SWT.BORDER);
+		upperBound = new Spinner(main, SWT.BORDER);
 		upperBound.setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, true));
 		upperBound.setMinimum(-1);
 		upperBound.setMaximum(Integer.MAX_VALUE);
 
-		final Button unbounded = new Button(main, SWT.CHECK);
+		unbounded = new Button(main, SWT.CHECK);
 		unbounded.setText(getLocalizedString(Messages.TypedElementBoundsRenderer_Unbounded));
 
 		createDataBindings(lowerBound, upperBound, unbounded);
@@ -375,4 +381,26 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		// TODO change implementation to use databinding
 	}
+
+	/**
+	 * Reveal the given {@code feature} in my controls.
+	 *
+	 * @param feature the feature to reveal (either the upper or the lower bound)
+	 *
+	 * @since 1.22
+	 */
+	public void reveal(EStructuralFeature feature) {
+		if (feature == EcorePackage.Literals.ETYPED_ELEMENT__UPPER_BOUND) {
+			if (upperBound != null && upperBound.isEnabled()) {
+				scrollToReveal(upperBound);
+			} else if (unbounded != null && unbounded.isEnabled()) {
+				scrollToReveal(unbounded);
+			}
+		} else if (feature == EcorePackage.Literals.ETYPED_ELEMENT__LOWER_BOUND) {
+			if (lowerBound != null && lowerBound.isEnabled()) {
+				scrollToReveal(lowerBound);
+			}
+		}
+	}
+
 }

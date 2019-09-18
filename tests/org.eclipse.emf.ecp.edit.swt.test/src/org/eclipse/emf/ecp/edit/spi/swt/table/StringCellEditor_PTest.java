@@ -40,19 +40,24 @@ public class StringCellEditor_PTest {
 	@Parameters(name = "Feature:{0} Expected Value:{2} isValid:{3}")
 	public static Object[] parameters() {
 		return new Object[][] {
-			{ TestDataPackage.eINSTANCE.getTestData_String(), TestDataFactory.eINSTANCE.createTestData(), "foo", true //$NON-NLS-1$
+			{ TestDataPackage.eINSTANCE.getTestData_String(), TestDataFactory.eINSTANCE.createTestData(), "foo", "foo", //$NON-NLS-1$ //$NON-NLS-2$
+				true
+			},
+			{ TestDataPackage.eINSTANCE.getTestData_String(), TestDataFactory.eINSTANCE.createTestData(), "", null, true //$NON-NLS-1$
 			},
 			{ TestDataPackage.eINSTANCE.getTestData_Boolean(), TestDataFactory.eINSTANCE.createTestData(),
-				Boolean.TRUE,
+				Boolean.TRUE, Boolean.TRUE,
 				true },
-			{ TestDataPackage.eINSTANCE.getTestData_Integer(), TestDataFactory.eINSTANCE.createTestData(), 2, true },
-			{ TestDataPackage.eINSTANCE.getTestData_Long(), TestDataFactory.eINSTANCE.createTestData(), 2L, true },
-			{ TestDataPackage.eINSTANCE.getTestData_Double(), TestDataFactory.eINSTANCE.createTestData(), 85.5d, true
+			{ TestDataPackage.eINSTANCE.getTestData_Integer(), TestDataFactory.eINSTANCE.createTestData(), 2, 2, true },
+			{ TestDataPackage.eINSTANCE.getTestData_Long(), TestDataFactory.eINSTANCE.createTestData(), 2L, 2L, true },
+			{ TestDataPackage.eINSTANCE.getTestData_Double(), TestDataFactory.eINSTANCE.createTestData(), 85.5d, 85.5d,
+				true
 			},
-			{ TestDataPackage.eINSTANCE.getTestData_Float(), TestDataFactory.eINSTANCE.createTestData(), 85.5f, true
+			{ TestDataPackage.eINSTANCE.getTestData_Float(), TestDataFactory.eINSTANCE.createTestData(), 85.5f, 85.5f,
+				true
 			},
 			{ TestDataPackage.eINSTANCE.getTestData_StringMax8(), TestDataFactory.eINSTANCE.createTestData(),
-				"extra long invalid string", false }, //$NON-NLS-1$
+				"extra long invalid string", "extra long invalid string", false }, //$NON-NLS-1$ //$NON-NLS-2$
 		};
 	}
 
@@ -64,11 +69,14 @@ public class StringCellEditor_PTest {
 	private final Object newValue;
 	private final EObject eObject;
 	private final boolean valid;
+	private final Object expectedValue;
 
-	public StringCellEditor_PTest(EStructuralFeature feature, EObject eObject, Object newValue, boolean valid) {
+	public StringCellEditor_PTest(EStructuralFeature feature, EObject eObject, Object newValue, Object expectedValue,
+		boolean valid) {
 		this.feature = feature;
 		this.eObject = eObject;
 		this.newValue = newValue;
+		this.expectedValue = expectedValue;
 		this.valid = valid;
 
 	}
@@ -98,8 +106,8 @@ public class StringCellEditor_PTest {
 		target.setValue(newValue.toString());
 		assertEquals(newValue.toString(), ((Text) editor.getControl()).getText());
 		if (valid) {
-			assertEquals(newValue, model.getValue());
-			assertEquals(target.getValue(), model.getValue().toString());
+			assertEquals(expectedValue, model.getValue());
+			assertEquals(target.getValue(), expectedValue == null ? "" : model.getValue().toString()); //$NON-NLS-1$
 		} else {
 			assertNull(model.getValue());
 		}

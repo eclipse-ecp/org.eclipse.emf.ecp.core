@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
@@ -323,6 +324,26 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	protected void dispose() {
 		dataBindingContext.dispose();
 		super.dispose();
+	}
+
+	/**
+	 * Reveal the control that renders the given {@code categorization}.
+	 *
+	 * @param categorization a categorization to reveal
+	 * @return whether the {@code categorization} was successfully revealed
+	 *
+	 * @since 1.22
+	 */
+	public boolean showCategorization(VAbstractCategorization categorization) {
+		final CTabItem item = categorizationToItemMap.get(categorization);
+		final boolean result = item != null;
+
+		if (result) {
+			item.getParent().setSelection(item);
+			itemSelected(item);
+		}
+
+		return result;
 	}
 
 }

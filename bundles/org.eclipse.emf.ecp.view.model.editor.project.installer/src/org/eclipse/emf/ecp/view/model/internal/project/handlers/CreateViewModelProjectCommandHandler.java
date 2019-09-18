@@ -24,22 +24,14 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * @author Alexandra Buzila
- *
- */
-
-/**
  *
  * Handler for creating a new project for a view model.
  *
+ * @author Alexandra Buzila
  */
 public class CreateViewModelProjectCommandHandler extends AbstractHandler {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// get selected ecore
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);

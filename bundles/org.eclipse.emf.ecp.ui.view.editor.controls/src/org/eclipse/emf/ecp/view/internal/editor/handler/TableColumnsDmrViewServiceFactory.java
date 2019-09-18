@@ -13,11 +13,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
-import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceScope;
+import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**

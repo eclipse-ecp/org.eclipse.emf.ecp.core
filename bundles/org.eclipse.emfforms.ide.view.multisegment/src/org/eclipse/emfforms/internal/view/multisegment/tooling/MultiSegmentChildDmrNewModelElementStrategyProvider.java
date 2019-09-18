@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceServiceCustomizationVe
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateSegmentDmrWizard;
 import org.eclipse.emf.ecp.view.internal.editor.handler.FeatureSegmentGenerator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.bazaar.Create;
 import org.eclipse.emfforms.common.Optional;
@@ -31,6 +30,7 @@ import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentPackage;
 import org.eclipse.jface.wizard.WizardDialog;

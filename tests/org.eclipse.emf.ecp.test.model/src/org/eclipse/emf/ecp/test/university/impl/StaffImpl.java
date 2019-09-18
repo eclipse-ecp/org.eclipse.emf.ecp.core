@@ -82,6 +82,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff {
 	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Professor> getProfessors() {
 		return getStaff().list(UniversityPackage.Literals.STAFF__PROFESSORS);
 	}
@@ -92,6 +93,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff {
 	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Assistant> getAssistants() {
 		return getStaff().list(UniversityPackage.Literals.STAFF__ASSISTANTS);
 	}
@@ -102,6 +104,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff {
 	 *
 	 * @generated
 	 */
+	@Override
 	public FeatureMap getStaff() {
 		if (staff == null) {
 			staff = new BasicFeatureMap(this, UniversityPackage.STAFF__STAFF);

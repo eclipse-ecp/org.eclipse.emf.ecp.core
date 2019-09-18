@@ -21,7 +21,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
@@ -42,6 +44,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	private EClass simpleTestObjectEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass innerObjectEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -177,6 +187,39 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getSimpleTestObject_Inner() {
+		return (EReference) simpleTestObjectEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getInnerObject() {
+		return innerObjectEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getInnerObject_MyEnum() {
+		return (EAttribute) innerObjectEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EEnum getTestEnum() {
 		return testEnumEEnum;
 	}
@@ -230,6 +273,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEAttribute(simpleTestObjectEClass, SIMPLE_TEST_OBJECT__DATE);
 		createEAttribute(simpleTestObjectEClass, SIMPLE_TEST_OBJECT__XML_DATE);
 		createEAttribute(simpleTestObjectEClass, SIMPLE_TEST_OBJECT__MY_ENUM);
+		createEReference(simpleTestObjectEClass, SIMPLE_TEST_OBJECT__INNER);
+
+		innerObjectEClass = createEClass(INNER_OBJECT);
+		createEAttribute(innerObjectEClass, INNER_OBJECT__MY_ENUM);
 
 		// Create enums
 		testEnumEEnum = createEEnum(TEST_ENUM);
@@ -279,6 +326,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEAttribute(getSimpleTestObject_XmlDate(), getXMLDate(), "xmlDate", null, 0, 1, SimpleTestObject.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSimpleTestObject_MyEnum(), getTestEnum(), "myEnum", null, 0, 1, SimpleTestObject.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSimpleTestObject_Inner(), getInnerObject(), null, "inner", null, 0, 1, //$NON-NLS-1$
+			SimpleTestObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(innerObjectEClass, InnerObject.class, "InnerObject", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getInnerObject_MyEnum(), getTestEnum(), "myEnum", null, 0, 1, InnerObject.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals

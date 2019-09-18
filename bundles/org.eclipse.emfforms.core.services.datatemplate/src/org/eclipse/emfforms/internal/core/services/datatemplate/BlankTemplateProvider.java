@@ -31,9 +31,9 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy;
 import org.eclipse.emfforms.core.services.datatemplate.TemplateProvider;
 import org.eclipse.emfforms.datatemplate.DataTemplateFactory;
 import org.eclipse.emfforms.datatemplate.Template;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver.NoBundleFoundException;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Bundle;
@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("restriction")
 @Component(name = "BlankTemplateProvider")
 public class BlankTemplateProvider implements TemplateProvider {
 	private BundleResolver bundleResolver;
@@ -59,7 +58,7 @@ public class BlankTemplateProvider implements TemplateProvider {
 	 * Creates a new {@link BlankTemplateProvider} instance.
 	 */
 	public BlankTemplateProvider() {
-		setBundleResolver(new BundleResolverImpl());
+		setBundleResolver(BundleResolverFactory.createBundleResolver());
 	}
 
 	/**

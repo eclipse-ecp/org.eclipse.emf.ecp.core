@@ -69,6 +69,7 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 	private ContentProviderProvider contentProvider;
 	private ComposedAdapterFactory adapterFactory;
 	private AdapterFactoryContentProvider adapterFactoryContentProvider;
+	private boolean readOnly;
 
 	/**
 	 * Default constructor.
@@ -133,6 +134,9 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 
 	@Override
 	public boolean hasDND() {
+		if (readOnly) {
+			return false;
+		}
 		return dnd.hasDND();
 	}
 
@@ -193,6 +197,9 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 
 	@Override
 	public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
+		if (readOnly) {
+			return null;
+		}
 		return menu.getMenu(treeViewer, editingDomain);
 	}
 
@@ -318,6 +325,24 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 	 */
 	public void setViewerFilters(ViewerFilterProvider filters) {
 		this.filters = filters;
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	/**
+	 * Allows to set the tree as read-only. Default is false. Setting the tree as read-only has two consequences:
+	 * <ol>
+	 * <li>The tree's context menu is disabled
+	 * <li>Drag and drop is disabled</li>
+	 * </ol>
+	 *
+	 * @param readOnly <code>true</code> to set as read-only
+	 */
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 	/**

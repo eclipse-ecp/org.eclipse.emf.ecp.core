@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerRender
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.LinkControlSWTRenderer_Containment_PTest;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.LinkControlSWTRenderer_CrossReference_PTest;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.NumberControlRenderer_PTest;
+import org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewRenderer_PTest;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.XMLDateControlRenderer_PTest;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer_PTest;
@@ -38,7 +39,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	TextControlRendererUnsettable_PTest.class, NumberControlRenderer_PTest.class, XMLDateControlRenderer_PTest.class,
 	TextControlRenderer_PTest.class, DateTimeControlRenderer_PTest.class, AbstractControlSWTRenderer_PTest.class,
 	LinkControlSWTRenderer_CrossReference_PTest.class, LinkControlSWTRenderer_Containment_PTest.class,
-	EnumComboViewerRenderer_PTest.class })
+	EnumComboViewerRenderer_PTest.class, SimpleControlSWTRenderer_PTest.class })
 public class AllPluginTests {
 
 }

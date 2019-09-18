@@ -12,7 +12,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - use data binding services
  * Martin Fleck - bug 487101
- * Christian W. Damus - bug 527736
+ * Christian W. Damus - bugs 527736, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
@@ -60,9 +60,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver.NoBundleFoundException;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
@@ -91,9 +91,11 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
@@ -127,7 +129,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
 	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
 
-	private final BundleResolver bundleResolver = new BundleResolverImpl();
+	private final BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
 	private final ImageRegistryService imageRegistryService;
 	private EMFFormsLocalizationService l10n;
 
@@ -1034,7 +1036,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param selectedObject the selected {@link EObject}
 	 */
 	protected void handleDoubleClick(EObject selectedObject) {
-		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		final ReferenceService referenceService = getReferenceService();
 		referenceService.openInNewContext(selectedObject);
 	}
 
@@ -1046,7 +1048,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
 	protected void handleAddExisting(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
-		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		final ReferenceService referenceService = getReferenceService();
 		referenceService.addExistingModelElements(eObject, (EReference) structuralFeature);
 	}
 
@@ -1058,8 +1060,17 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
 	protected void handleAddNew(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
-		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
+		final ReferenceService referenceService = getReferenceService();
 		referenceService.addNewModelElements(eObject, (EReference) structuralFeature, true);
+	}
+
+	/**
+	 * Override to customize linking and creation of EObjects in this renderer's EReference.
+	 *
+	 * @return The {@link ReferenceService} used to link and create new EObjects in this renderer's reference.
+	 */
+	protected ReferenceService getReferenceService() {
+		return getViewModelContext().getService(ReferenceService.class);
 	}
 
 	/**
@@ -1275,4 +1286,25 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected ILabelProvider getLabelProvider() {
 		return labelProvider;
 	}
+
+	/**
+	 * Select and reveal an {@code object} in my table.
+	 *
+	 * @param object an object to reveal
+	 *
+	 * @since 1.22
+	 */
+	void reveal(Object object) {
+		checkRenderer();
+
+		if (tableViewer != null) {
+			final ISelection newSelection = new StructuredSelection(object);
+			if (!newSelection.equals(tableViewer.getSelection())) {
+				tableViewer.setSelection(newSelection, true);
+			} else {
+				tableViewer.reveal(object);
+			}
+		}
+	}
+
 }

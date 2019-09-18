@@ -453,7 +453,6 @@ public class DefaultReferenceService_PTest {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private void registerReferenceCustomizations() {
 
 		registrations = Arrays.asList(

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,9 +10,12 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emfforms.swt.core.tests;
 
+import org.eclipse.emfforms.internal.swt.core.ContainerRevealProvider_ITest;
+import org.eclipse.emfforms.internal.swt.core.ControlRevealProvider_ITest;
 import org.eclipse.emfforms.internal.swt.core.EMFFormsRendererFactory_ITest;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer_PTest;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper_ITest;
@@ -30,7 +33,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	AbstractSWTRenderer_PTest.class,
 	EMFFormsRendererFactory_ITest.class,
-	SWTDataElementIdHelper_ITest.class
+	SWTDataElementIdHelper_ITest.class,
+	ContainerRevealProvider_ITest.class,
+	ControlRevealProvider_ITest.class,
 })
 public class AllIntegrationTests {
 

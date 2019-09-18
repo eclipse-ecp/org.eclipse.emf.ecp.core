@@ -32,4 +32,11 @@
             class="org.eclipse.emfforms.spi.view.indexsegment.model.util.VIndexsegmentResourceFactoryImpl"/>
    </extension>
 
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/indexsegment.history">
+      </migrator>
+   </extension>
+
 </plugin>

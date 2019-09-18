@@ -25,7 +25,6 @@ import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy.Provid
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceServiceCustomizationVendor;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateSegmentDmrWizard;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.spi.editor.controls.ToolingModeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
@@ -33,6 +32,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.bazaar.Create;
+import org.eclipse.emfforms.spi.ide.view.segments.ToolingModeUtil;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentPackage;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;

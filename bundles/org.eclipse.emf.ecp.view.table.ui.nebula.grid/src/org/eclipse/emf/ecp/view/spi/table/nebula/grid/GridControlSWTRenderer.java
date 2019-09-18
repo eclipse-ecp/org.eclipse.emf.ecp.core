@@ -68,6 +68,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerEditor;
@@ -166,7 +167,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 		private IStructuredSelection lastSelection;
 		private EObject masterObject;
 		private final PreSetValidationService preSetValidationService;
-		private boolean copyDragActive = false;
+		private boolean copyDragActive;
 		private GridItem startDragItem;
 
 		CopyDragListener() {
@@ -184,10 +185,16 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			return (e.stateMask & SWT.MOD2) != 0;
 		}
 
+		private boolean canCopy() {
+			return getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly();
+		}
+
 		@Override
 		public void mouseMove(MouseEvent e) {
-			copyDragActive = isCopyModifierPressed(e) && lastSelection != null && lastSelection.size() > 1
-				&& masterObject != null;
+			if (canCopy()) {
+				copyDragActive = isCopyModifierPressed(e) && lastSelection != null && lastSelection.size() > 1
+					&& masterObject != null;
+			}
 		}
 
 		@Override
@@ -196,7 +203,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 		@Override
 		public void mouseDown(MouseEvent e) {
-			if (isCopyModifierPressed(e)) {
+			if (isCopyModifierPressed(e) && canCopy()) {
 				final Grid grid = (Grid) e.widget;
 				startDragItem = grid.getItem(new Point(e.x, e.y));
 			}
@@ -204,7 +211,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 		@Override
 		public void mouseUp(MouseEvent e) {
-			if (e.button == 1) {
+			if (e.button == 1 && canCopy()) {
 
 				final Grid grid = (Grid) e.widget;
 				final GridItem currentItem = grid.getItem(new Point(e.x, e.y));
@@ -394,7 +401,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	// CHECKSTYLE.OFF: ParameterNumber
 	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
 		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
-		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
+		ObservableListContentProvider cp, ViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
 		return GridTableViewerFactory.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)

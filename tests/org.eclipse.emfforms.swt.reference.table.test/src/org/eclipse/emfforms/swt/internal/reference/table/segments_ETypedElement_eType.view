@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmlns:org.eclipse.emfforms.view.multisegment.model="http://org/eclipse/emfforms/view/multisegment/model/1190" xmi:id="_f4-XAILhEemgFOUufSg2Sw" name="ETypedElement">
+  <rootEClass href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_jP52kILhEemgFOUufSg2Sw" name="eType">
+    <domainModelReference xmi:id="_efC8sJKlEemopf5v_LanBA">
+      <segments xsi:type="org.eclipse.emfforms.view.multisegment.model:MultiDomainModelReferenceSegment" xmi:id="_efC8sZKlEemopf5v_LanBA" domainModelFeature="eType">
+        <childDomainModelReferences xmi:id="_efC8spKlEemopf5v_LanBA">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_efC8s5KlEemopf5v_LanBA" domainModelFeature="name"/>
+        </childDomainModelReferences>
+        <childDomainModelReferences xmi:id="_efC8tJKlEemopf5v_LanBA">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_efC8tZKlEemopf5v_LanBA" domainModelFeature="instanceTypeName"/>
+        </childDomainModelReferences>
+        <childDomainModelReferences xmi:id="_efC8tpKlEemopf5v_LanBA">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_efC8t5KlEemopf5v_LanBA" domainModelFeature="ePackage"/>
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_efC8uJKlEemopf5v_LanBA" domainModelFeature="name"/>
+        </childDomainModelReferences>
+      </segments>
+    </domainModelReference>
+    <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:EnablementConfiguration" xmi:id="_MkD7UILiEemgFOUufSg2Sw" name="EPackage" columnDomainReference="_efC8tpKlEemopf5v_LanBA"/>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

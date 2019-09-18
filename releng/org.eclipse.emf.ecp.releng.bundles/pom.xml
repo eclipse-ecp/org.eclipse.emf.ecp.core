@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.21.0-SNAPSHOT</version>
+		<version>1.22.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.21.0-SNAPSHOT</version>
+	<version>1.22.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -169,6 +169,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.table</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt.persistedstate</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.reference.table</module>
 		
 		<!--  Stack Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
@@ -187,6 +188,7 @@
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emfforms.ide.builder</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.ecore.builder</module>
+		<module>../../bundles/org.eclipse.emfforms.ide.preferences</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.viewtemplate.builder</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.datatemplate.builder</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
@@ -201,7 +203,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.util.swt.rap</module>	
 		<module>../../bundles/org.eclipse.emf.ecp.rap</module>	
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.rap</module>		
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.rap</module>	
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.nebula.grid.rap</module>	
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui.rap</module>
 		
 		
@@ -330,6 +333,7 @@
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
 
 		<!-- Segment IDE Tooling -->
+		<module>../../bundles/org.eclipse.emfforms.ide.view.segments</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.view.indexsegment</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.view.mappingsegment</module>
 		<module>../../bundles/org.eclipse.emfforms.ide.view.multisegment</module>

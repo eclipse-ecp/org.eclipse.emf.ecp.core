@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 
 /**
- * Tester for the {@link EnumCellEditor}.
+ * Tester for the {@link ItemProviderEnumCellEditor}.
  *
  * @since 1.13
  */

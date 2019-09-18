@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,13 +10,21 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Christian W. Damus - bug 548761
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.validation;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
+import org.eclipse.emf.ecp.view.internal.validation.ECPSubstitutionLabelProvider;
+import org.eclipse.emf.ecp.view.internal.validation.ViewSubstitutionLabelProviderFactory;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
  * @author Eugen
@@ -83,4 +91,37 @@ public interface ValidationService extends GlobalViewModelService {
 	 */
 	// TODO this should be refactored to use an iterator rather than a collection
 	void validate(Collection<EObject> eObjects);
+
+	/**
+	 * Obtain a substitution label provider suitable for rendering model elements as they
+	 * are presented in diagnostics produced by the {@link ValidationService}.
+	 *
+	 * @param context the view model context
+	 * @param adapterFactory an adapter factory to use to get item providers for model elements
+	 *
+	 * @return the substitution label provider
+	 *
+	 * @since 1.22
+	 */
+	static SubstitutionLabelProvider getSubstitutionLabelProvider(EMFFormsViewContext context,
+		AdapterFactory adapterFactory) {
+
+		SubstitutionLabelProvider result = null;
+
+		// FIXME: This should not have to be a ComposedAdapterFactory
+		if (adapterFactory instanceof ComposedAdapterFactory
+			&& context instanceof ViewModelContext
+			&& ((ViewModelContext) context).hasService(ViewSubstitutionLabelProviderFactory.class)) {
+
+			result = context.getService(ViewSubstitutionLabelProviderFactory.class)
+				.createSubstitutionLabelProvider((ComposedAdapterFactory) adapterFactory);
+		}
+
+		if (result == null) {
+			result = new ECPSubstitutionLabelProvider(adapterFactory);
+		}
+
+		return result;
+	}
+
 }

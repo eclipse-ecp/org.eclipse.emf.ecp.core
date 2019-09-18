@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bug 545686
+ * Christian W. Damus - bugs 545686, 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
@@ -24,17 +24,12 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewManager;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -53,9 +48,7 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * Render for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl VTableControl} with a detail editing
@@ -93,20 +86,23 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		// CHECKSTYLE.ON: ParameterNumber
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			imageRegistryService, emfFormsEditSupport, converterService, localizationService);
+
 	}
 
-	private ECPSWTView ecpView;
 	private Composite detailPanel;
 	private Composite border;
 	private ScrolledComposite scrolledComposite;
-	private VView currentDetailView;
-	private boolean currentDetailViewOriginalReadonly;
+	private DetailViewManager detailManager;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#createControlComposite(org.eclipse.swt.widgets.Composite)
-	 */
+	@Override
+	protected void dispose() {
+		if (detailManager != null) {
+			detailManager.dispose();
+		}
+
+		super.dispose();
+	}
+
 	@Override
 	protected Composite createControlComposite(Composite composite) {
 
@@ -200,7 +196,21 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(detailPanel);
 		scrolledComposite.setContent(detailPanel);
 
+		createDetailManager(detailPanel);
+		detailManager.cacheCurrentDetail();
+
 		return scrolledComposite;
+	}
+
+	/**
+	 * Create the detail manager in the given {@code parent}.
+	 *
+	 * @param parent the parent composite in which to present details
+	 */
+	void createDetailManager(Composite parent) {
+		detailManager = new DetailViewManager(parent, __ -> getVElement().getDetailView());
+		detailManager.setCache(DetailViewCache.createCache(getViewModelContext()));
+		detailManager.layoutDetailParent(parent);
 	}
 
 	/**
@@ -231,38 +241,24 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @return the view
 	 */
 	protected VView getView(EObject selectedEObject) {
-		VView detailView = getVElement().getDetailView();
-		if (detailView == null) {
-
-			final VElement viewModel = getViewModelContext().getViewModel();
-			final VViewModelProperties properties = ViewModelPropertiesHelper
-				.getInhertitedPropertiesOrEmpty(viewModel);
-			detailView = ViewProviderHelper.getView(selectedEObject, properties);
-		}
-
-		currentDetailViewOriginalReadonly = detailView.isReadonly();
-		return detailView;
+		return detailManager.getDetailView(selectedEObject);
 	}
 
 	@Override
 	protected void applyEnable() {
 		super.applyEnable();
-		if (currentDetailView != null) {
-			// Set the detail view to read only if this grid is disabled or read only. Use the detail view's original
-			// read only state if this grid is enabled and not read only.
-			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
-				|| currentDetailViewOriginalReadonly);
+		if (detailManager != null) {
+			detailManager
+				.setDetailReadOnly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly());
 		}
 	}
 
 	@Override
 	protected void applyReadOnly() {
 		super.applyReadOnly();
-		if (currentDetailView != null) {
-			// Set the detail view to read only if this grid is disabled or read only. Use the detail view's original
-			// read only state if this grid is enabled and not read only.
-			currentDetailView.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
-				|| currentDetailViewOriginalReadonly);
+		if (detailManager != null) {
+			detailManager
+				.setDetailReadOnly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly());
 		}
 	}
 
@@ -291,16 +287,14 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	protected void handleSingleSelection(IStructuredSelection selection) {
 		// Did the selection actionally change? We may have stepped sideways in a row
 		final EObject object = (EObject) selection.getFirstElement();
-		if (ecpView != null && ecpView.getViewModelContext().getDomainModel() == object) {
+		final ECPSWTView currentDetail = detailManager.getCurrentDetail();
+		if (currentDetail != null && currentDetail.getViewModelContext().getDomainModel() == object) {
 			return;
 		}
 
 		disposeDetail();
-		final Composite compositeToRenderOn = new Composite(detailPanel, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(compositeToRenderOn);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(compositeToRenderOn);
 
-		renderSelectedObject(compositeToRenderOn, object);
+		renderSelectedObject((Composite) detailManager.getDetailContainer(), object);
 		border.layout(true, true);
 		scrolledComposite.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
@@ -313,27 +307,11 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	 * @since 1.9
 	 */
 	protected void renderSelectedObject(final Composite composite, final EObject eObject) {
-		currentDetailView = getView(eObject);
-		if (currentDetailView == null) {
-
-			final Label label = new Label(composite, SWT.NONE);
-			label.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_RED));
-			label.setText("No Detail View found."); //$NON-NLS-1$
-
-		} else {
-			final ViewModelContext childContext = getViewModelContext().getChildContext(eObject, getVElement(),
-				currentDetailView);
-			currentDetailView = (VView) childContext.getViewModel();
-			// Set the detail view to read only if this grid is read only or disabled
-			currentDetailView.setReadonly(
-				!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
-					|| currentDetailViewOriginalReadonly);
-			try {
-				ecpView = ECPSWTViewRenderer.INSTANCE.render(composite, childContext);
-			} catch (final ECPRendererException ex) {
-				getReportService().report(new RenderingFailedReport(ex));
-			}
+		if (detailManager == null) {
+			// For testability only
+			createDetailManager(composite);
 		}
+		detailManager.render(getViewModelContext(), getVElement(), eObject);
 	}
 
 	/**
@@ -353,13 +331,7 @@ public class GridControlDetailPanelRenderer extends GridControlSWTRenderer {
 	}
 
 	private void disposeDetail() {
-		if (ecpView != null) {
-			ecpView.getSWTControl().dispose();
-			ecpView = null;
-		}
-		for (final Control control : detailPanel.getChildren()) {
-			control.dispose();
-		}
+		detailManager.cacheCurrentDetail();
 	}
 
 	@Override

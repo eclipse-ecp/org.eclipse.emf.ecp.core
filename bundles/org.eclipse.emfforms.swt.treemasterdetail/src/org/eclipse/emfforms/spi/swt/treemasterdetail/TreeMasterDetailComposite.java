@@ -11,16 +11,18 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bugs 533568, 545460
+ * Christian W. Damus - bugs 533568, 545460, 527686, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
+
+import static org.eclipse.emfforms.spi.localization.LocalizationServiceHelper.getString;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
-import org.eclipse.core.databinding.observable.ChangeEvent;
-import org.eclipse.core.databinding.observable.IChangeListener;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.internal.databinding.observable.DelayedObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -28,18 +30,18 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.common.callback.ViewModelPropertiesUpdateCallback;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewManager;
 import org.eclipse.emf.ecp.view.spi.swt.selection.IMasterDetailSelectionProvider;
 import org.eclipse.emf.ecp.view.spi.swt.selection.MasterDetailFocusAdapter;
 import org.eclipse.emf.ecp.view.spi.swt.selection.MasterDetailSelectionProvider;
@@ -50,18 +52,17 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emfforms.spi.core.services.reveal.EMFFormsRevealService;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.DetailPanelRenderingFinishedCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
-import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -70,22 +71,15 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
-import org.eclipse.swt.widgets.Shell;
 
 /**
  * The Class MasterDetailRenderer.
@@ -122,51 +116,21 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	/** The detail scrollable composite. */
 	private Composite detailComposite;
 
-	/** The detail panel. */
-	private Composite detailPanel;
+	/** Manager of the currently rendered ECPSWTView with caching. */
+	private DetailViewManager detailManager;
 
-	/** The currently rendered ECPSWTView. */
-	private ECPSWTView renderedView;
-	private final Shell limbo;
+	private final String selectNodeMessage = getString(getClass(), "selectNodeMessage"); //$NON-NLS-1$
+	private final String loadingMessage = getString(getClass(), "loadingMessage"); //$NON-NLS-1$
 
 	private Object lastRenderedObject;
 
 	private final TreeMasterDetailSWTCustomization customization;
-	private TreeMasterDetailCache cache = new TreeMasterDetailCache() {
-
-		@Override
-		public boolean isChached(EObject selection) {
-			return false;
-		}
-
-		@Override
-		public ECPSWTView getCachedView(EObject selection) {
-			return null;
-		}
-
-		@Override
-		public void cache(ECPSWTView ecpView) {
-			ecpView.dispose();
-		}
-	};
 
 	/** the delay between a selection change and the start of the rendering. */
 	private final int renderDelay;
 
 	private ViewModelPropertiesUpdateCallback viewModelPropertiesUpdateCallback;
 	private final Set<DetailPanelRenderingFinishedCallback> detailPanelRenderingFinishedCallbacks = new LinkedHashSet<DetailPanelRenderingFinishedCallback>();
-
-	/** The CreateElementCallback to allow modifications to the newly created element. */
-
-	/**
-	 * The context. It is used in the same way as in TreeMasterDetail.
-	 * It allows custom viewmodels for the detail panel
-	 */
-	private static VViewModelProperties context = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
-
-	static {
-		context.addNonInheritableProperty("detail", true);
-	}
 
 	/**
 	 * Default constructor.
@@ -190,11 +154,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		}
 		this.renderDelay = renderDelay;
 		this.customization = customization;
-		limbo = new Shell(Display.getCurrent(), SWT.NONE);
-		// Place the limbo shell 'off screen'
-		limbo.setLocation(0, 10000);
-		limbo.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
-		limbo.setBackgroundMode(SWT.INHERIT_FORCE);
+
 		renderControl(customization);
 
 		parent.addDisposeListener(new DisposeListener() {
@@ -219,33 +179,33 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(treeComposite);
 		treeViewer = TreeViewerSWTFactory.createTreeViewer(treeComposite, input, customization);
 		selectionProvider = new MasterDetailSelectionProvider(treeViewer);
-		treeViewer.getControl().addFocusListener(new MasterDetailFocusAdapter(selectionProvider, () -> detailPanel));
+		treeViewer.getControl().addFocusListener(
+			new MasterDetailFocusAdapter(selectionProvider, () -> detailManager.getDetailContainer()));
 
 		// Create detail composite
 		detailComposite = buildBehaviour.createDetailComposite(this);
 		addDetailCompositeLayoutData(detailComposite, verticalSash);
+		Composite detailParent = detailComposite;
+		if (detailParent instanceof ScrolledComposite) {
+			final Composite detailPanel = new Composite(detailParent, SWT.BORDER);
+			((ScrolledComposite) detailParent).setContent(detailPanel);
+			detailParent = detailPanel;
+		}
+		detailManager = new DetailViewManager(detailParent);
+		detailManager.setNoDetailMessage(selectNodeMessage);
+		detailManager.layoutDetailParent(detailParent);
 
-		/* enable delayed update mechanism */
-		final IViewerObservableValue treeViewerSelectionObservable = ViewersObservables
+		/* enable optional delayed update mechanism */
+		IObservableValue<?> treeViewerSelectionObservable = ViewersObservables
 			.observeSingleSelection(treeViewer);
-		@SuppressWarnings("unchecked")
-		final DelayedObservableValue<?> delayedObservableValue = new DelayedObservableValue<>(renderDelay,
-			treeViewerSelectionObservable);
-		delayedObservableValue.addChangeListener(new IChangeListener() {
+		if (renderDelay > 0) {
+			treeViewerSelectionObservable = new DelayedObservableValue<>(renderDelay,
+				treeViewerSelectionObservable);
+		}
+		treeViewerSelectionObservable.addChangeListener(__ -> doUpdateDetailPanel(false));
 
-			@Override
-			public void handleChange(ChangeEvent event) {
-				doUpdateDetailPanel(false);
-			}
-		});
-
-		treeComposite.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				treeViewerSelectionObservable.dispose();
-				delayedObservableValue.dispose();
-			}
-		});
+		final IObservableValue<?> observableToDispose = treeViewerSelectionObservable;
+		treeComposite.addDisposeListener(__ -> observableToDispose.dispose());
 
 		/* add key listener to switch focus on enter */
 		treeViewer.getTree().addKeyListener(new KeyAdapter() {
@@ -274,10 +234,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	}
 
 	private void setFocusToDetail() {
-		if (renderedView == null || renderedView.getSWTControl().isDisposed()) {
-			return;
-		}
-		renderedView.getSWTControl().setFocus();
+		detailManager.setFocus();
 	}
 
 	private void addDetailCompositeLayoutData(Composite detailComposite, Sash verticalSash) {
@@ -340,51 +297,40 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		// TODO create detail panel at the right location
 		final IStructuredSelection selection = (StructuredSelection) treeViewer.getSelection();
 		final Object selectedObject = getSelectedObject(selection);
+		detailManager.cacheCurrentDetail();
 
 		boolean asyncRendering = false;
 		if (selectedObject instanceof EObject) {
 			lastRenderedObject = selectedObject;
 			final EObject eObject = EObject.class.cast(selectedObject);
-			if (renderedView != null && !renderedView.getSWTControl().isDisposed()) {
-				renderedView.getSWTControl().setParent(limbo);
-				cache.cache(renderedView);
-			}
-			createDetailPanel();
-			if (cache.isChached(eObject)) {
-				renderedView = cache.getCachedView(eObject);
-				renderedView.getSWTControl().setParent(detailPanel);
-				/*
-				 * layout detail, since the size of the window might have changed (e.g. made smaller). layout is
-				 * required to make sure that scrollbars, etc. are updated
-				 */
-				detailPanel.layout();
-				renderedView.getViewModelContext().changeDomainModel(eObject);
+
+			if (detailManager.isCached(eObject)) {
+				// It's ready to present (no async needed)
+				detailManager.activate(eObject);
+
 				updateScrolledComposite();
 			} else {
 				if (viewModelPropertiesUpdateCallback != null) {
-					viewModelPropertiesUpdateCallback.updateViewModelProperties(context);
+					viewModelPropertiesUpdateCallback.updateViewModelProperties(detailManager.getDetailProperties());
 				}
 				// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
 				// detail view.
-				final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
+				final VView view = detailManager.getDetailView(eObject);
 				if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
 					// Yes, we need to render this node differently
-					final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
-					try {
-						renderedView = ECPSWTViewRenderer.INSTANCE.render(detailPanel, (EObject) selectedObject,
-							vTreeMasterDetail.getDetailView());
-						detailPanel.layout(true, true);
-					} catch (final ECPRendererException e) {
-					}
-
+					final VView treeDetailView = VTreeMasterDetail.class.cast(view.getChildren().get(0))
+						.getDetailView();
+					// Even if the TMD composite is not configured as read-only honor the effective read-only
+					// configuration of the loaded detail view
+					treeDetailView.setReadonly(treeDetailView.isEffectivelyReadonly() || customization.isReadOnly());
+					final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+						treeDetailView, eObject);
+					detailManager.render(context, ECPSWTViewRenderer.INSTANCE::render);
 				} else {
 					// No, everything is fine
-					final Label label = new Label(detailPanel, SWT.NONE);
-					label.setText("loading...");
-					GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(true, true).applyTo(label);
-					detailPanel.layout(true, true);
+					detailManager.setNoDetailMessage(loadingMessage);
 					asyncRendering = true;
-					Display.getDefault().asyncExec(new UpdateDetailRunnable(setFocusToDetail, eObject, label));
+					Display.getDefault().asyncExec(new UpdateDetailRunnable(setFocusToDetail, eObject));
 				}
 				// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
 				updateScrolledComposite();
@@ -441,65 +387,20 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	private void updateScrolledComposite() {
 		if (ScrolledComposite.class.isInstance(detailComposite)) {
 			ScrolledComposite.class.cast(detailComposite)
-				.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				.setMinSize(detailManager.getDetailContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		}
 	}
 
 	private void renderEmptyDetailPanel() {
 		lastRenderedObject = null;
-		if (renderedView != null && !renderedView.getSWTControl().isDisposed()) {
-			renderedView.getSWTControl().setParent(limbo);
-			cache.cache(renderedView);
-			/* set renderedView to null so that it is not offered to the cache further times */
-			renderedView = null;
-		}
-		createDetailPanel();
-		final Label hint = new Label(detailPanel, SWT.CENTER);
-		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
-			.setStyle(SWT.BOLD);
-		final Font boldFont = boldDescriptor.createFont(hint.getDisplay());
-		hint.setFont(boldFont);
-		hint.setForeground(new Color(hint.getDisplay(), 190, 190, 190));
-		hint.setText("Select a node in the tree to edit it");
-		final GridData hintLayoutData = new GridData();
-		hintLayoutData.grabExcessVerticalSpace = true;
-		hintLayoutData.grabExcessHorizontalSpace = true;
-		hintLayoutData.horizontalAlignment = SWT.CENTER;
-		hintLayoutData.verticalAlignment = SWT.CENTER;
-		hint.setLayoutData(hintLayoutData);
-
-		detailPanel.pack();
-		detailPanel.layout(true, true);
+		detailManager.cacheCurrentDetail();
 
 		updateScrolledComposite();
 	}
 
-	/**
-	 * Creates the detail panel.
-	 *
-	 * @return the control
-	 */
-	private Control createDetailPanel() {
-		// Dispose old panels to avoid memory leaks
-		if (detailPanel != null) {
-			detailPanel.dispose();
-		}
-
-		detailPanel = new Composite(detailComposite, SWT.BORDER);
-		detailPanel.setLayout(new GridLayout());
-		detailPanel.setBackground(new Color(Display.getDefault(), new RGB(255, 255, 255)));
-		detailPanel.setBackgroundMode(SWT.INHERIT_FORCE);
-		if (ScrolledComposite.class.isInstance(detailComposite)) {
-			ScrolledComposite.class.cast(detailComposite).setContent(detailPanel);
-		}
-
-		detailComposite.layout(true, true);
-		return detailPanel;
-	}
-
 	@Override
 	public void dispose() {
-		limbo.dispose();
+		detailManager.dispose();
 		customization.dispose();
 		super.dispose();
 	}
@@ -531,7 +432,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 *
 	 * @return the tree viewer (which is a selection provider)
 	 *
-	 * @deprecated Use the {@link #getMasterDetailSelectionProvider() master-detail selection provider}, instead}
+	 * @deprecated Use the {@link #getMasterDetailSelectionProvider() master-detail selection provider}, instead},
+	 *             or {@link #refresh()} to force a refresh of the tree, or {@link #selectAndReveal(Object)}
+	 *             to select and reveal some object in my tree
 	 * @see #getMasterDetailSelectionProvider()
 	 */
 	@Deprecated
@@ -548,6 +451,115 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 */
 	public ISelectionProvider getMasterDetailSelectionProvider() {
 		return selectionProvider;
+	}
+
+	/**
+	 * Request a refresh of my tree.
+	 *
+	 * @since 1.22
+	 */
+	public void refresh() {
+		if (treeViewer != null) {
+			treeViewer.refresh();
+		}
+	}
+
+	/**
+	 * Select and reveal a {@code selection} in my tree. If the argument is an {@link UniqueSetting},
+	 * then the {@linkplain UniqueSetting#getEObject() owner} of the setting will be revealed and the
+	 * control that edits the {@linkplain UniqueSetting#getEStructuralFeature() setting} will be
+	 * revealed and focused (if possible) in the object's detail view.
+	 *
+	 * @param selection the objet to select and reveal
+	 * @return {@code true} if the {@code selection} was revealed; {@code false}, otherwise, including
+	 *         the case where the nearest parent object up the tree was revealed instead
+	 * @since 1.22
+	 */
+	public boolean selectAndReveal(final Object selection) {
+		boolean result = false;
+
+		Object toReveal = selection;
+		final EStructuralFeature feature;
+
+		if (selection instanceof UniqueSetting) {
+			final UniqueSetting setting = (UniqueSetting) selection;
+			toReveal = setting.getEObject();
+			feature = setting.getEStructuralFeature();
+		} else if (selection instanceof EStructuralFeature.Setting) {
+			final EStructuralFeature.Setting setting = (EStructuralFeature.Setting) selection;
+			toReveal = setting.getEObject();
+			feature = setting.getEStructuralFeature();
+		} else {
+			feature = null;
+		}
+
+		if (feature != null) {
+			final CompletableFuture<ECPSWTView> renderedDetail = new CompletableFuture<>();
+			final DetailPanelRenderingFinishedCallback detailReady = __ -> renderedDetail
+				.complete(detailManager.getCurrentDetail());
+			registerDetailPanelRenderingFinishedCallback(detailReady);
+
+			final EObject owner = (EObject) toReveal;
+			result = selectAndRevealInTree(owner);
+			if (result) {
+				renderedDetail.whenComplete((view, e) -> {
+					unregisterDetailPanelRenderingFinishedCallback(detailReady);
+					revealInDetail(view, owner, feature);
+				});
+			} else {
+				// Won't need the call-back so remove it now
+				renderedDetail.cancel(false);
+				unregisterDetailPanelRenderingFinishedCallback(detailReady);
+			}
+
+			// Do we already have the detail?
+			final ECPSWTView currentDetail = detailManager.getCurrentDetail();
+			if (currentDetail != null && currentDetail.getViewModelContext().getDomainModel() == owner) {
+				// There won't be an asynchronous rendering to wait for
+				renderedDetail.complete(currentDetail);
+			}
+		} else {
+			result = selectAndRevealInTree(toReveal);
+		}
+
+		return result;
+	}
+
+	private boolean selectAndRevealInTree(final Object selection) {
+		if (treeViewer == null) {
+			return false;
+		}
+
+		boolean result = false;
+
+		// Try to reveal the 'selection' in the tree. If it isn't in the
+		// tree, then search up the content provider to find the nearest
+		// object that can be revealed and select that, or give up
+		for (Object objectToReveal = selection; objectToReveal != null;) {
+			treeViewer.reveal(objectToReveal);
+			if (treeViewer.testFindItem(objectToReveal) != null) {
+				// Select it and we're done
+				treeViewer.setSelection(new StructuredSelection(objectToReveal));
+				result = objectToReveal == selection;
+				break;
+			}
+
+			// Look up the content tree for an object to reveal
+			objectToReveal = ((ITreeContentProvider) treeViewer.getContentProvider()).getParent(objectToReveal);
+		}
+
+		return result;
+	}
+
+	private void revealInDetail(ECPSWTView detail, EObject object, EStructuralFeature feature) {
+		final ViewModelContext context = detail.getViewModelContext();
+		if (!context.hasService(EMFFormsRevealService.class)) {
+			// Nothing to do
+			return;
+		}
+
+		final EMFFormsRevealService reveal = context.getService(EMFFormsRevealService.class);
+		reveal.reveal(object, feature);
 	}
 
 	/**
@@ -574,11 +586,22 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 *
 	 * @param cache The {@link TreeMasterDetailCache} to use.
 	 * @since 1.9
+	 *
+	 * @deprecated As of 1.22, use the {@link #setCache(DetailViewCache)} API, instead
 	 */
+	@Deprecated
 	public void setCache(TreeMasterDetailCache cache) {
-		if (cache != null) {
-			this.cache = cache;
-		}
+		setCache((DetailViewCache) cache);
+	}
+
+	/**
+	 * Override the default cache implementation.
+	 *
+	 * @param cache the {@link DetailViewCache} to use, or {@code null} to use no cache
+	 * @since 1.22
+	 */
+	public void setCache(DetailViewCache cache) {
+		detailManager.setCache(cache);
 	}
 
 	private void doUpdateDetailPanel(boolean setFocusToDetail) {
@@ -592,6 +615,17 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			return;
 		}
 		updateDetailPanel(setFocusToDetail);
+	}
+
+	/**
+	 * Returns whether I am read-only.
+	 *
+	 * @return <code>true</code> if read-only
+	 * @since 1.22
+	 * @see TreeMasterDetailSWTBuilder#customizeReadOnly(boolean)
+	 */
+	public boolean isReadOnly() {
+		return customization.isReadOnly();
 	}
 
 	/**
@@ -649,47 +683,44 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	private final class UpdateDetailRunnable implements Runnable {
 		private final boolean setFocusToDetail;
 		private final EObject eObject;
-		private final Label label;
 
-		UpdateDetailRunnable(boolean setFocusToDetail, EObject eObject, Label label) {
+		UpdateDetailRunnable(boolean setFocusToDetail, EObject eObject) {
+			super();
+
 			this.setFocusToDetail = setFocusToDetail;
 			this.eObject = eObject;
-			this.label = label;
 		}
 
 		@Override
 		public void run() {
-			try {
-				if (viewModelPropertiesUpdateCallback != null) {
-					viewModelPropertiesUpdateCallback.updateViewModelProperties(context);
-				}
-				final VView view = ViewProviderHelper.getView(eObject, context);
-				final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE
-					.createViewModelContext(
-						view, eObject, customization.getViewModelServices(view, eObject));
-				if (limbo.isDisposed()) {
-					return;
-				}
-				renderedView = ECPSWTViewRenderer.INSTANCE.render(limbo, modelContext);
+			if (detailManager.isDisposed()) {
+				// We've been disposed. Nothing to do
+				return;
+			}
 
-				label.dispose();
-				if (detailPanel.isDisposed()) {
-					return;
-				}
-				renderedView.getSWTControl().setParent(detailPanel);
-				detailPanel.layout(true, true);
-				if (ScrolledComposite.class.isInstance(detailComposite)) {
-					ScrolledComposite.class.cast(detailComposite)
-						.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				}
-				if (setFocusToDetail) {
-					setFocusToDetail();
-				}
-				// notify callbacks that the rendering was finished
-				for (final DetailPanelRenderingFinishedCallback callback : detailPanelRenderingFinishedCallbacks) {
-					callback.renderingFinished(eObject);
-				}
-			} catch (final ECPRendererException e) {
+			if (viewModelPropertiesUpdateCallback != null) {
+				viewModelPropertiesUpdateCallback.updateViewModelProperties(detailManager.getDetailProperties());
+			}
+			final VView view = detailManager.getDetailView(eObject);
+			// Even if the TMD is not configured as read-only honor the effective read-only
+			// configuration of the loaded view
+			view.setReadonly(view.isEffectivelyReadonly() || customization.isReadOnly());
+			final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE
+				.createViewModelContext(
+					view, eObject, customization.getViewModelServices(view, eObject));
+
+			detailManager.setNoDetailMessage(selectNodeMessage);
+			if (detailManager.isDisposed()) {
+				return;
+			}
+			detailManager.render(modelContext, ECPSWTViewRenderer.INSTANCE::render);
+			updateScrolledComposite();
+			if (setFocusToDetail) {
+				setFocusToDetail();
+			}
+			// notify callbacks that the rendering was finished
+			for (final DetailPanelRenderingFinishedCallback callback : detailPanelRenderingFinishedCallbacks) {
+				callback.renderingFinished(eObject);
 			}
 		}
 	}

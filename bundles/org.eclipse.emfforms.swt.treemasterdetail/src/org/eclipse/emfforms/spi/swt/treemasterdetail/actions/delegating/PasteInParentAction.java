@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Jonas Helming - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating;
 
@@ -31,7 +32,7 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
  */
 public class PasteInParentAction extends CommandActionHandler {
 	private static final String PASTE_IN_PARENT = LocalizationServiceHelper.getString(PasteInParentAction.class,
-		"PasteInParent");
+		"PasteInParent"); //$NON-NLS-1$
 
 	/**
 	 * Default constructor.

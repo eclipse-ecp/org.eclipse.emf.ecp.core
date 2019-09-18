@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bug 529542
+ * Christian W. Damus - bugs 529542, 547787
  * Lucas Koehler - refactored common bazaar functionality out
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
@@ -25,20 +25,24 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategyUtil;
+import org.eclipse.emf.ecp.ui.view.swt.reference.SelectionCompositeStrategy;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emfforms.bazaar.Bazaar;
+import org.eclipse.emfforms.bazaar.BazaarContext;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.bazaar.BazaarUtil;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceScope;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -67,6 +71,8 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 		.createBazaar(ReferenceStrategy.DEFAULT);
 	private final Bazaar<OpenInNewContextStrategy> openInNewContextStrategyBazaar = BazaarUtil.createBazaar(
 		OpenInNewContextStrategy.DEFAULT);
+	private final Bazaar<SelectionCompositeStrategy> selectionCompositeStrategyBazaar = BazaarUtil.createBazaar(
+		SelectionCompositeStrategy.DEFAULT);
 
 	/**
 	 * Initializes me.
@@ -191,6 +197,25 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 	}
 
 	/**
+	 * Add a selection composite strategy provider.
+	 *
+	 * @param provider the provider to add
+	 */
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC)
+	void addReferenceTableColumnStrategyProvider(SelectionCompositeStrategy.Provider provider) {
+		selectionCompositeStrategyBazaar.addVendor(provider);
+	}
+
+	/**
+	 * Remove a selection composite strategy provider.
+	 *
+	 * @param provider the provider to remove
+	 */
+	void removeReferenceTableColumnStrategyProvider(SelectionCompositeStrategy.Provider provider) {
+		selectionCompositeStrategyBazaar.removeVendor(provider);
+	}
+
+	/**
 	 * Activates me.
 	 *
 	 * @param context my component context
@@ -223,6 +248,7 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 			drs.setEObjectSelectionStrategy(createDynamicEObjectSelectionStrategy());
 			drs.setOpenStrategy(createDynamicOpenInNewContextStrategy());
 			drs.setReferenceStrategy(createDynamicReferenceStrategy());
+			drs.setSelectionCompositeStrategyy(createDynamicSelectionCompositeStrategy());
 
 			drs.instantiate((ViewModelContext) emfFormsViewContext);
 
@@ -307,6 +333,26 @@ public class DefaultReferenceServiceFactory implements EMFFormsViewServiceFactor
 					return false;
 				}
 				return delegate.openInNewContext(owner, reference, object);
+			}
+		};
+	}
+
+	private SelectionCompositeStrategy createDynamicSelectionCompositeStrategy() {
+		return new SelectionCompositeStrategy() {
+
+			@Override
+			public SelectionComposite<? extends StructuredViewer> getSelectionViewer(EObject owner,
+				EReference reference, Collection<? extends EObject> extent) {
+
+				final BazaarContext bctx = ReferenceStrategyUtil.bazaarContextBuilder(context, owner, reference)
+					.put(EXTENT, extent)
+					.build();
+
+				final SelectionCompositeStrategy delegate = selectionCompositeStrategyBazaar.createProduct(bctx);
+				if (delegate == null) {
+					return null; // Shouldn't happen
+				}
+				return delegate.getSelectionViewer(owner, reference, extent);
 			}
 		};
 	}

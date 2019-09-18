@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bug 529542
+ * Christian W. Damus - bugs 529542, 547787
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
@@ -25,15 +25,18 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy;
 import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.SelectionCompositeStrategy;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -83,6 +86,7 @@ public class DefaultReferenceService implements ReferenceService {
 	private AttachmentStrategy attachmentStrategy = AttachmentStrategy.DEFAULT;
 	private ReferenceStrategy referenceStrategy = ReferenceStrategy.DEFAULT;
 	private OpenInNewContextStrategy openInNewContextStrategy = OpenInNewContextStrategy.DEFAULT;
+	private SelectionCompositeStrategy selectionCompositeStrategy = SelectionCompositeStrategy.DEFAULT;
 
 	@Override
 	public void instantiate(ViewModelContext context) {
@@ -159,8 +163,15 @@ public class DefaultReferenceService implements ReferenceService {
 			eobjectSelectionStrategy.collectExistingObjects(eObject, eReference, elements));
 		ECPControlHelper.removeExistingReferences(eObject, eReference, elements);
 
-		final Set<EObject> addedElements = SelectModelElementWizardFactory
-			.openModelElementSelectionDialog(elements, eReference.isMany());
+		final SelectionComposite<? extends StructuredViewer> selectionComposite = selectionCompositeStrategy
+			.getSelectionViewer(eObject, eReference, elements);
+		final Set<EObject> addedElements;
+		if (selectionComposite == null) {
+			addedElements = SelectModelElementWizardFactory
+				.openModelElementSelectionDialog(elements, eReference.isMany());
+		} else {
+			addedElements = SelectModelElementWizardFactory.openModelElementSelectionDialog(selectionComposite);
+		}
 
 		// Don't invoke the Bazaar machinery to find a strategy just to add no elements
 		if (!addedElements.isEmpty()) {
@@ -240,6 +251,21 @@ public class DefaultReferenceService implements ReferenceService {
 		}
 
 		openInNewContextStrategy = strategy;
+	}
+
+	/**
+	 * Set the strategy for creation of the table composite to present in the selection dialog.
+	 *
+	 * @param strategy a table column strategy to set
+	 *
+	 * @since 1.22
+	 */
+	void setSelectionCompositeStrategyy(SelectionCompositeStrategy strategy) {
+		if (strategy == null) {
+			strategy = SelectionCompositeStrategy.DEFAULT;
+		}
+
+		selectionCompositeStrategy = strategy;
 	}
 
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Lucas Koehler- initial API and implementation
- * Christian W. Damus - bug 533522
+ * Christian W. Damus - bugs 533522, 527686
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.controlmapper;
 
@@ -40,7 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.controlmapper.SubControlMapper;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
-import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextTracker;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
@@ -50,7 +50,7 @@ import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
  *
  */
 public class SettingToControlMapperImpl
-	implements EMFFormsSettingToControlMapper, EMFFormsContextListener, SubControlMapper {
+	implements EMFFormsSettingToControlMapper, SubControlMapper {
 	/**
 	 * Used to get View model changes.
 	 *
@@ -107,6 +107,7 @@ public class SettingToControlMapperImpl
 	private final Map<EMFFormsViewContext, VElement> contextParentMap = new LinkedHashMap<EMFFormsViewContext, VElement>();
 	private final Map<EMFFormsViewContext, ViewModelListener> contextListenerMap = new LinkedHashMap<EMFFormsViewContext, ViewModelListener>();
 	private final ModelChangeAddRemoveListenerImplementation viewModelChangeListener;
+	private final EMFFormsContextTracker contextTracker;
 	private boolean disposed;
 
 	/**
@@ -119,10 +120,16 @@ public class SettingToControlMapperImpl
 		EMFFormsViewContext viewModelContext) {
 		this.mappingManager = mappingManager;
 		this.viewModelContext = viewModelContext;
-		viewModelContext.registerEMFFormsContextListener(this);
+
+		contextTracker = new EMFFormsContextTracker(viewModelContext);
+		contextTracker.onChildContextAdded(this::childContextAdded)
+			.onChildContextRemoved(this::childContextRemoved)
+			.onContextDisposed(this::contextDisposed)
+			.open();
+
 		viewModelChangeListener = new ModelChangeAddRemoveListenerImplementation();
-		viewModelContext.registerViewChangeListener(viewModelChangeListener);
 		dataModelListener = new ViewModelListener(viewModelContext, this);
+		viewModelContext.registerViewChangeListener(viewModelChangeListener);
 	}
 
 	/**
@@ -309,41 +316,27 @@ public class SettingToControlMapperImpl
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
-	 */
-	@Override
-	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
-		childContext.registerViewChangeListener(viewModelChangeListener);
+	private void childContextAdded(EMFFormsViewContext parentContext, VElement parentElement,
+		EMFFormsViewContext childContext) {
+
 		contextParentMap.put(childContext, parentElement);
-		contextListenerMap.put(childContext, new ViewModelListener(childContext, this));
 		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();
 			if (VControl.class.isInstance(next)) {
 				controlContextMap.put((VControl) next, childContext);
-				vControlAdded((VControl) next);
 			}
 		}
-		childContext.registerEMFFormsContextListener(this);
+		contextListenerMap.put(childContext, new ViewModelListener(childContext, this));
+		childContext.registerViewChangeListener(viewModelChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
-	 */
-	@Override
-	public void childContextDisposed(EMFFormsViewContext childContext) {
+	private void childContextRemoved(EMFFormsViewContext parentContext, VElement parentElement,
+		EMFFormsViewContext childContext) {
+
 		if (disposed) {
 			return;
 		}
-		childContext.unregisterViewChangeListener(viewModelChangeListener);
-		final ViewModelListener listener = contextListenerMap.remove(childContext);
-		listener.dispose();
 
 		final TreeIterator<EObject> eAllContents = childContext.getViewModel().eAllContents();
 		while (eAllContents.hasNext()) {
@@ -355,8 +348,11 @@ public class SettingToControlMapperImpl
 				controlContextMap.remove(controlToRemove);
 			}
 		}
+
+		childContext.unregisterViewChangeListener(viewModelChangeListener);
+		final ViewModelListener listener = contextListenerMap.remove(childContext);
+		listener.dispose();
 		contextParentMap.remove(childContext);
-		childContext.unregisterEMFFormsContextListener(this);
 	}
 
 	/**
@@ -386,30 +382,18 @@ public class SettingToControlMapperImpl
 		vControlParentsRemoved(parentContext, controlToRemove);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
-	 */
-	@Override
-	public void contextInitialised() {
-		// do nothing
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
-	 */
-	@Override
-	public void contextDispose() {
-		viewModelContext.unregisterEMFFormsContextListener(this);
-		dataModelListener.dispose();
-		settingToControlMap.clear();
-		controlContextMap.clear();
-		contextParentMap.clear();
-		contextListenerMap.clear();
-		disposed = true;
+	private void contextDisposed(EMFFormsViewContext context) {
+		if (contextTracker.isRoot(context)) {
+			context.unregisterViewChangeListener(viewModelChangeListener);
+			dataModelListener.dispose();
+			settingToControlMap.clear();
+			controlContextMap.clear();
+			contextParentMap.clear();
+			contextListenerMap.values().forEach(ViewModelListener::dispose);
+			contextListenerMap.clear();
+			contextTracker.close();
+			disposed = true;
+		}
 	}
 
 	@Override
@@ -450,6 +434,12 @@ public class SettingToControlMapperImpl
 			return Collections.emptySet();
 		}
 		return new SetView<UniqueSetting>(settings);
+	}
+
+	@Override
+	public boolean hasMapping(UniqueSetting setting, VElement control) {
+		final Collection<VElement> elements = settingToControlMap.get(setting);
+		return elements != null && elements.contains(control);
 	}
 
 	/**

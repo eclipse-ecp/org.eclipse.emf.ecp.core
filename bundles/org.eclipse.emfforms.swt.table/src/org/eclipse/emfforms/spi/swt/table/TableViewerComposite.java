@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Widget;
 public class TableViewerComposite extends AbstractTableViewerComposite<TableViewer> {
 
 	private TableViewer tableViewer;
+	private TableViewerComparator comparator;
 
 	/**
 	 * Default constructor.
@@ -138,6 +139,7 @@ public class TableViewerComposite extends AbstractTableViewerComposite<TableView
 
 	@Override
 	public void setComparator(final TableViewerComparator comparator, List<Integer> sortableColumns) {
+		this.comparator = comparator;
 		for (int i = 0; i < getTableViewer().getTable().getColumns().length; i++) {
 			if (!sortableColumns.contains(i)) {
 				continue;
@@ -147,11 +149,7 @@ public class TableViewerComposite extends AbstractTableViewerComposite<TableView
 			final SelectionAdapter selectionAdapter = new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					comparator.setColumn(j);
-					final int dir = comparator.getDirection();
-					tableViewer.getTable().setSortDirection(dir);
-					tableViewer.getTable().setSortColumn(tableColumn);
-					tableViewer.refresh();
+					setCompareColumn(j);
 				}
 			};
 			tableColumn.addSelectionListener(selectionAdapter);
@@ -164,6 +162,15 @@ public class TableViewerComposite extends AbstractTableViewerComposite<TableView
 		tableViewer.getControl().dispose();
 		tableViewer = null;
 		super.dispose();
+	}
+
+	@Override
+	public void setCompareColumn(int column) {
+		final TableColumn tableColumn = getTableViewer().getTable().getColumns()[column];
+		comparator.setColumn(column);
+		tableViewer.getTable().setSortDirection(comparator.getDirection());
+		tableViewer.getTable().setSortColumn(tableColumn);
+		tableViewer.refresh();
 	}
 
 }

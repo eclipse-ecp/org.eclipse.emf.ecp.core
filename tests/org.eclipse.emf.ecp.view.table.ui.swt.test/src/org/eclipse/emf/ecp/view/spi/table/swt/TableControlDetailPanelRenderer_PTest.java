@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 530314
+ * Christian W. Damus - bugs 530314, 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -49,6 +49,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -61,6 +62,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.stubbing.Answer;
+import org.osgi.framework.Bundle;
 
 /**
  * Unit tests for the {@link TableControlDetailPanelRenderer}.
@@ -96,6 +99,7 @@ public class TableControlDetailPanelRenderer_PTest {
 			mock(EMFFormsEditSupport.class));
 		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		final EReference eReference = EcoreFactory.eINSTANCE.createEReference();
+		renderer.createDetailManager(shell);
 		final VView viewAttribute1 = renderer.getView(eAttribute);
 		final VView viewReference = renderer.getView(eReference);
 		assertFalse(EcoreUtil.equals(viewAttribute1, viewReference));
@@ -311,13 +315,27 @@ public class TableControlDetailPanelRenderer_PTest {
 	}
 
 	private ViewModelContext mockViewModelContext(final VView detailView, final EObject domainObject) {
+		final ReportService reportService = mock(ReportService.class);
+
+		final EMFFormsLocalizationService l10nService = mock(EMFFormsLocalizationService.class);
+		final Answer<String> l10nAnwer = invocation -> String.format("String for key '%s'",
+			invocation.getArguments()[1]);
+		when(l10nService.getString(any(Bundle.class), any(String.class))).then(l10nAnwer);
+		when(l10nService.getString(any(Class.class), any(String.class))).then(l10nAnwer);
+
 		final ViewModelContext context = mock(ViewModelContext.class);
+		when(context.getService(ReportService.class)).thenReturn(reportService);
+		when(context.getService(EMFFormsLocalizationService.class)).thenReturn(l10nService);
+
 		final ViewModelContext childContext = mock(ViewModelContext.class);
 		when(childContext.getDomainModel()).thenReturn(domainObject);
 		when(childContext.getViewModel()).thenReturn(detailView);
+		when(childContext.getService(ReportService.class)).thenReturn(reportService);
+		when(childContext.getService(EMFFormsLocalizationService.class)).thenReturn(l10nService);
 
 		when(context.getChildContext(any(EObject.class), any(VElement.class), any(VView.class)))
 			.thenReturn(childContext);
+
 		return context;
 	}
 

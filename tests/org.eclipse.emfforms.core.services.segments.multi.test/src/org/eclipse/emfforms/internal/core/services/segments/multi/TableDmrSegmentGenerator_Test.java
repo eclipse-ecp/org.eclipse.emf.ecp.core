@@ -52,6 +52,7 @@ import org.junit.Test;
  */
 public class TableDmrSegmentGenerator_Test {
 
+	// FIXME adapt tests to child dmr generation
 	private TableDmrSegmentGenerator generator;
 	private EMFFormsSegmentGenerator emfFormsSegmentGenerator;
 
@@ -102,16 +103,25 @@ public class TableDmrSegmentGenerator_Test {
 		innerSegment2.setDomainModelFeature(TestPackage.Literals.B__CLIST.getName());
 		innerSegments.add(innerSegment1);
 		innerSegments.add(innerSegment2);
-		when(emfFormsSegmentGenerator.generateSegments(any(VDomainModelReference.class)))
+		when(emfFormsSegmentGenerator.generateSegments(innerDmr))
 			.thenReturn(innerSegments);
 		generator.setEMFFormsSegmentGenerator(emfFormsSegmentGenerator);
 
 		final VFeaturePathDomainModelReference columnDmr1 = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		columnDmr1.setDomainModelEFeature(TestPackage.Literals.C__A);
+		final VFeatureDomainModelReferenceSegment columnDmr1Segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		when(emfFormsSegmentGenerator.generateSegments(columnDmr1))
+			.thenReturn(Collections.singletonList(columnDmr1Segment));
+
 		final VFeaturePathDomainModelReference columnDmr2 = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		columnDmr2.setDomainModelEFeature(TestPackage.Literals.C__D);
+		final VFeatureDomainModelReferenceSegment columnDmr2Segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		when(emfFormsSegmentGenerator.generateSegments(columnDmr2))
+			.thenReturn(Collections.singletonList(columnDmr2Segment));
 
 		final VTableDomainModelReference tableDmr = VTableFactory.eINSTANCE.createTableDomainModelReference();
 		tableDmr.setDomainModelReference(innerDmr);
@@ -122,7 +132,8 @@ public class TableDmrSegmentGenerator_Test {
 
 		assertNotNull(result);
 		assertEquals(2, result.size());
-		verify(emfFormsSegmentGenerator, times(1)).generateSegments(isA(VFeaturePathDomainModelReference.class));
+		// 3 invocations: once for the table dmr and once for each of the two columns
+		verify(emfFormsSegmentGenerator, times(3)).generateSegments(isA(VFeaturePathDomainModelReference.class));
 
 		assertEquals(VViewPackage.Literals.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT, result.get(0).eClass());
 		final VFeatureDomainModelReferenceSegment segment1 = (VFeatureDomainModelReferenceSegment) result.get(0);
@@ -132,8 +143,18 @@ public class TableDmrSegmentGenerator_Test {
 		final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) result.get(1);
 		assertEquals(TestPackage.Literals.B__CLIST.getName(), multiSegment.getDomainModelFeature());
 		assertEquals(2, multiSegment.getChildDomainModelReferences().size());
-		assertSame(columnDmr1, multiSegment.getChildDomainModelReferences().get(0));
-		assertSame(columnDmr2, multiSegment.getChildDomainModelReferences().get(1));
+
+		// Verify child dmr generation
+		final VDomainModelReference childDmr1 = multiSegment.getChildDomainModelReferences().get(0);
+		final VDomainModelReference childDmr2 = multiSegment.getChildDomainModelReferences().get(1);
+		assertSame(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE, childDmr1.eClass());
+		assertSame(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE, childDmr2.eClass());
+		assertSame(columnDmr1Segment, childDmr1.getSegments().get(0));
+		assertSame(columnDmr2Segment, childDmr2.getSegments().get(0));
+
+		// Column dmrs must be re-generated and "stolen" from the table dmr
+		assertSame(tableDmr, columnDmr1.eContainer());
+		assertSame(tableDmr, columnDmr2.eContainer());
 	}
 
 	@Test
@@ -152,15 +173,24 @@ public class TableDmrSegmentGenerator_Test {
 		innerSegment2.setDomainModelFeature(TestPackage.Literals.B__CLIST.getName());
 		innerSegments.add(innerSegment1);
 		innerSegments.add(innerSegment2);
-		when(emfFormsSegmentGenerator.generateSegments(any(VDomainModelReference.class))).thenReturn(innerSegments);
+		when(emfFormsSegmentGenerator.generateSegments(any())).thenReturn(innerSegments);
 		generator.setEMFFormsSegmentGenerator(emfFormsSegmentGenerator);
 
 		final VFeaturePathDomainModelReference columnDmr1 = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		columnDmr1.setDomainModelEFeature(TestPackage.Literals.C__A);
+		final VFeatureDomainModelReferenceSegment columnDmr1Segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		when(emfFormsSegmentGenerator.generateSegments(columnDmr1))
+			.thenReturn(Collections.singletonList(columnDmr1Segment));
+
 		final VFeaturePathDomainModelReference columnDmr2 = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		columnDmr2.setDomainModelEFeature(TestPackage.Literals.C__D);
+		final VFeatureDomainModelReferenceSegment columnDmr2Segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		when(emfFormsSegmentGenerator.generateSegments(columnDmr2))
+			.thenReturn(Collections.singletonList(columnDmr2Segment));
 
 		tableDmr.getColumnDomainModelReferences().add(columnDmr1);
 		tableDmr.getColumnDomainModelReferences().add(columnDmr2);
@@ -169,7 +199,8 @@ public class TableDmrSegmentGenerator_Test {
 
 		assertNotNull(result);
 		assertEquals(2, result.size());
-		verify(emfFormsSegmentGenerator, times(1)).generateSegments(isA(VFeaturePathDomainModelReference.class));
+		// 3 invocations: once for the table dmr and once for each of the two columns
+		verify(emfFormsSegmentGenerator, times(3)).generateSegments(isA(VFeaturePathDomainModelReference.class));
 
 		assertEquals(VViewPackage.Literals.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT, result.get(0).eClass());
 		final VFeatureDomainModelReferenceSegment segment1 = (VFeatureDomainModelReferenceSegment) result.get(0);
@@ -179,8 +210,18 @@ public class TableDmrSegmentGenerator_Test {
 		final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) result.get(1);
 		assertEquals(TestPackage.Literals.B__CLIST.getName(), multiSegment.getDomainModelFeature());
 		assertEquals(2, multiSegment.getChildDomainModelReferences().size());
-		assertSame(columnDmr1, multiSegment.getChildDomainModelReferences().get(0));
-		assertSame(columnDmr2, multiSegment.getChildDomainModelReferences().get(1));
+
+		// Verify child dmr generation
+		final VDomainModelReference childDmr1 = multiSegment.getChildDomainModelReferences().get(0);
+		final VDomainModelReference childDmr2 = multiSegment.getChildDomainModelReferences().get(1);
+		assertSame(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE, childDmr1.eClass());
+		assertSame(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE, childDmr2.eClass());
+		assertSame(columnDmr1Segment, childDmr1.getSegments().get(0));
+		assertSame(columnDmr2Segment, childDmr2.getSegments().get(0));
+
+		// Column dmrs must be re-generated and "stolen" from the table dmr
+		assertSame(tableDmr, columnDmr1.eContainer());
+		assertSame(tableDmr, columnDmr2.eContainer());
 	}
 
 	@Test

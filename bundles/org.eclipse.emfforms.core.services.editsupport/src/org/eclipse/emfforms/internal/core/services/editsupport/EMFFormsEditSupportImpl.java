@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
+import org.eclipse.emfforms.spi.common.BundleResolver.NoBundleFoundException;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -44,12 +44,11 @@ import org.osgi.framework.Bundle;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("restriction")
 public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 	private EMFFormsDatabinding emfFormsDatabinding;
 	private EMFSpecificService emfSpecificService;
 	private ReportService reportService;
-	private final BundleResolver bundleResolver = new BundleResolverImpl();
+	private final BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
 	private EMFFormsLocalizationService emfFormsLocalizationService;
 
 	/**

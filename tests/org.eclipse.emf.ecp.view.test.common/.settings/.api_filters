@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.test.common" version="2">
+    <resource path="src/org/eclipse/emf/ecp/view/test/common/spi/EMFFormsRevealServiceFixture.java" type="org.eclipse.emf.ecp.view.test.common.swt.spi.EMFFormsRevealServiceFixture">
+        <filter comment="This is a test fixture, not production API" id="574619656">
+            <message_arguments>
+                <message_argument value="EMFFormsRevealService"/>
+                <message_argument value="EMFFormsRevealServiceFixture&lt;T&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

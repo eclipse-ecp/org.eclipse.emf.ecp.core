@@ -51,7 +51,6 @@ import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
@@ -143,8 +142,6 @@ public class CreateSegmentDmrWizard_PTest {
 		final TestWizard testWizard = new TestWizard(testClass, WINDOW_TITLE, null, selectionValidator,
 			segmentGenerator, null, true);
 		final WizardDialog wizardDialog = openWizard(testWizard);
-
-		assertEquals(WINDOW_TITLE, Display.getDefault().getActiveShell().getText());
 
 		final SWTBot bot = new SWTBot(wizardDialog.getShell());
 		assertFalse(bot.button(BACK).isEnabled());

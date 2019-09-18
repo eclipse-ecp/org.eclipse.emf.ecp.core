@@ -83,7 +83,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest<V
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
 
-		final HashSet<VTStyleProperty> styleProperties = new HashSet<VTStyleProperty>();
+		final HashSet<VTStyleProperty> styleProperties = new HashSet<>();
 		unsettableStyleProperty = VTUnsettableFactory.eINSTANCE.createUnsettableStyleProperty();
 		styleProperties.add(unsettableStyleProperty);
 		when(viewTemplateProvider.getStyleProperties(getvControl(), getContext())).thenReturn(styleProperties);
@@ -91,7 +91,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest<V
 			getLabelProvider(),
 			getTemplateProvider(), editSupport));
 
-		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
+		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class); //$NON-NLS-1$
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDisplayName);
 
@@ -165,7 +165,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest<V
 	@Test
 	public void unsetButtonAlignmentLeftSet() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.LEFT);
-		eObject.setName("TEST");
+		eObject.setName("TEST"); //$NON-NLS-1$
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Composite renderedComposite = (Composite) render;
 		final Composite controlComposite = (Composite) renderedComposite.getChildren()[0];
@@ -177,7 +177,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest<V
 	public void unsetButtonAlignmentLeftSetToUnsetToSet()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.LEFT);
-		eObject.setName("TEST");
+		eObject.setName("TEST"); //$NON-NLS-1$
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Composite renderedComposite = (Composite) render;
 		final Composite controlComposite = (Composite) renderedComposite.getChildren()[0];
@@ -227,7 +227,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest<V
 	@Test
 	public void unsetButtonAlignmentRightSet() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.RIGHT);
-		eObject.setName("TEST");
+		eObject.setName("TEST"); //$NON-NLS-1$
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Composite renderedComposite = (Composite) render;
 		final Composite controlComposite = (Composite) renderedComposite.getChildren()[0];
@@ -239,7 +239,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest<V
 	public void unsetButtonAlignmentRightSetToUnsetToSet()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		unsettableStyleProperty.setButtonAlignment(ButtonAlignmentType.RIGHT);
-		eObject.setName("TEST");
+		eObject.setName("TEST"); //$NON-NLS-1$
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Composite renderedComposite = (Composite) render;
 		final Composite controlComposite = (Composite) renderedComposite.getChildren()[0];

@@ -13,6 +13,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.core;
 
+import static org.eclipse.emf.ecp.view.test.common.spi.EMFMocking.eMock;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -111,7 +112,7 @@ public class EMFFormsRendererFactory_ITest {
 		final ServiceRegistration<EMFFormsRendererService> registerService = bundleContext.registerService(
 			EMFFormsRendererService.class, rendererService, null);
 		registerService.unregister();
-		rendererFactory.getRendererInstance(mock(VElement.class), mock(ViewModelContext.class));
+		rendererFactory.getRendererInstance(eMock(VElement.class), mock(ViewModelContext.class));
 	}
 
 	/**

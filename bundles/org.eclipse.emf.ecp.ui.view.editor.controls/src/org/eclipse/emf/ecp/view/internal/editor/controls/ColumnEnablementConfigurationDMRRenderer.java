@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.swt.widgets.Composite;
@@ -48,7 +47,6 @@ public class ColumnEnablementConfigurationDMRRenderer extends LinkControlSWTRend
 	 * @param vtViewTemplateProvider the view template provider
 	 * @param localizationService the localization service
 	 * @param imageRegistryService the image registry service
-	 * @param emfFormsEditSuppport the edit support
 	 */
 	@Inject
 	// CHECKSTYLE.OFF: ParameterNumber
@@ -60,8 +58,7 @@ public class ColumnEnablementConfigurationDMRRenderer extends LinkControlSWTRend
 		EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider,
 		EMFFormsLocalizationService localizationService,
-		ImageRegistryService imageRegistryService,
-		EMFFormsEditSupport emfFormsEditSuppport) {
+		ImageRegistryService imageRegistryService) {
 		// CHECKSTYLE.ON: ParameterNumber
 		super(
 			vElement,
@@ -71,8 +68,7 @@ public class ColumnEnablementConfigurationDMRRenderer extends LinkControlSWTRend
 			emfFormsLabelProvider,
 			vtViewTemplateProvider,
 			localizationService,
-			imageRegistryService,
-			emfFormsEditSuppport);
+			imageRegistryService);
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject#getDate <em>Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject#getXmlDate <em>Xml Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject#getMyEnum <em>My Enum</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject#getInner <em>Inner</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage#getSimpleTestObject()
@@ -127,5 +128,30 @@ public interface SimpleTestObject extends EObject {
 	 * @generated
 	 */
 	void setMyEnum(TestEnum value);
+
+	/**
+	 * Returns the value of the '<em><b>Inner</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Inner</em>' containment reference.
+	 * @see #setInner(InnerObject)
+	 * @see org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage#getSimpleTestObject_Inner()
+	 * @model containment="true"
+	 * @generated
+	 */
+	InnerObject getInner();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject#getInner
+	 * <em>Inner</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Inner</em>' containment reference.
+	 * @see #getInner()
+	 * @generated
+	 */
+	void setInner(InnerObject value);
 
 } // SimpleTestObject

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.core.swt.test.model.InnerObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
@@ -77,6 +78,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 		switch (eClass.getClassifierID()) {
 		case TestPackage.SIMPLE_TEST_OBJECT:
 			return createSimpleTestObject();
+		case TestPackage.INNER_OBJECT:
+			return createInnerObject();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -128,6 +131,18 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public SimpleTestObject createSimpleTestObject() {
 		final SimpleTestObjectImpl simpleTestObject = new SimpleTestObjectImpl();
 		return simpleTestObject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public InnerObject createInnerObject() {
+		final InnerObjectImpl innerObject = new InnerObjectImpl();
+		return innerObject;
 	}
 
 	/**

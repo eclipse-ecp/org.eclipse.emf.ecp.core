@@ -6,7 +6,7 @@
          name=""
          point="org.eclipse.emf.ecp.edit.swt.cellEditor">
       <cellEditor
-            class="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditor"
+            class="org.eclipse.emf.ecp.view.spi.table.swt.ItemProviderEnumCellEditor"
             id="org.eclipse.emf.ecp.view.table.ui.swt.enumCellEditor"
             tester="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditorTester">
       </cellEditor>
@@ -14,6 +14,11 @@
             class="org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceCellEditor"
             id="org.eclipse.emf.ecp.view.table.ui.swt.multireferenceCellEditor"
             tester="org.eclipse.emf.ecp.view.internal.table.swt.cell.MultiReferenceCellEditorTester">
+      </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.view.internal.table.swt.cell.SingleReferenceCellEditor"
+            id="org.eclipse.emf.ecp.view.table.ui.swt.singleReferenceCellEditor"
+            tester="org.eclipse.emf.ecp.view.internal.table.swt.cell.SingleReferenceCellEditorTester">
       </cellEditor>
    </extension>
    <extension

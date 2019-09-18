@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 527686
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
@@ -34,7 +35,7 @@ public final class GridTestsUtil {
 	private GridTestsUtil() {
 	}
 
-	public static GridTableViewer getTableViewerFromRenderer(AbstractSWTRenderer<VElement> renderer) {
+	public static GridTableViewer getTableViewerFromRenderer(AbstractSWTRenderer<? extends VElement> renderer) {
 		try {
 			final Method method = TableControlSWTRenderer.class.getDeclaredMethod("getTableViewer");
 			method.setAccessible(true);

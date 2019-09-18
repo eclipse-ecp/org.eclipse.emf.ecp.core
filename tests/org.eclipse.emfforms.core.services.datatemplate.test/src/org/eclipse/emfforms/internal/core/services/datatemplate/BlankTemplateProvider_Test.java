@@ -30,7 +30,7 @@ import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.AuditPac
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.User;
 import org.eclipse.emfforms.core.services.datatemplate.test.model.audit.UserGroup;
 import org.eclipse.emfforms.datatemplate.Template;
-import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +45,6 @@ import org.osgi.service.component.ComponentContext;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("restriction")
 public class BlankTemplateProvider_Test {
 
 	private BlankTemplateProvider provider;

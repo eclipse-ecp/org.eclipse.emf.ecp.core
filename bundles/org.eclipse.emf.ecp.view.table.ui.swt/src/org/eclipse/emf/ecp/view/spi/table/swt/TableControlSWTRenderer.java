@@ -11,7 +11,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -53,7 +53,9 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -85,6 +87,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -123,6 +126,8 @@ import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.sort.NumberAwareStringComparator;
@@ -133,6 +138,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindin
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
@@ -186,6 +192,7 @@ import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -272,9 +279,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/** The feature of the column which is currently used for sorting. */
 	private java.util.Optional<EStructuralFeature> sortColumnFeature = java.util.Optional.empty();
 	private ModelChangeListener autoSortModelChangeListener;
+	private final EMFFormsLocalizationService localizationService;
+	private final BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
+	/** DO NOT USE DIRECTLY! Use {@link #getEnumeratorComparator()} instead. */
+	private LocalizedEnumeratorComparator enumeratorComparator;
 
 	/**
-	 * Default constructor.
+	 * Legacy constructor for backwards compatibility.
 	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
@@ -286,7 +297,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @since 1.8
 	 */
-	@Inject
+	@Deprecated
 	// BEGIN COMPLEX CODE
 	public TableControlSWTRenderer(
 		VTableControl vElement,
@@ -299,9 +310,42 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		EMFFormsEditSupport emfFormsEditSupport) {
 		// END COMPLEX CODE
 
+		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
+			imageRegistryService, emfFormsEditSupport, viewContext.getService(EMFFormsLocalizationService.class));
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 * @since 1.22
+	 */
+	@Inject
+	// BEGIN COMPLEX CODE
+	public TableControlSWTRenderer(
+		VTableControl vElement,
+		ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabindingEMF emfFormsDatabinding,
+		EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider,
+		ImageRegistryService imageRegistryService,
+		EMFFormsEditSupport emfFormsEditSupport,
+		EMFFormsLocalizationService localizationService) {
+		// END COMPLEX CODE
+
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.imageRegistryService = imageRegistryService;
 		this.emfFormsEditSupport = emfFormsEditSupport;
+		this.localizationService = localizationService;
 		viewModelDBC = new EMFDataBindingContext();
 	}
 
@@ -408,8 +452,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-			final ECPTableViewerComparator comparator = getVElement().isMoveUpDownDisabled()
-				? new ECPTableViewerComparator()
+			final TableControlComparator comparator = getVElement().isMoveUpDownDisabled()
+				? createTableViewerComparator()
 				: null;
 
 			/* render */
@@ -480,6 +524,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 		}
+	}
+
+	/**
+	 * Creates a TableControlComparator.
+	 *
+	 * @return TableControlComparator
+	 * @since 1.22
+	 */
+	protected TableControlComparator createTableViewerComparator() {
+		return new ECPTableViewerComparator();
 	}
 
 	/**
@@ -675,6 +729,39 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param actionBar the {@link ActionBar}
 	 * @return the {@link TableViewerSWTBuilder}
 	 * @since 1.18
+	 * @deprecated Please use
+	 *             {@link #createTableViewerSWTBuilder(Composite, IObservableList, IObservableValue, IObservableValue, TableViewerCompositeBuilder, ObservableListContentProvider, ViewerComparator, TableActionBar)}
+	 *             instead
+	 */
+	@Deprecated
+	// CHECKSTYLE.OFF: ParameterNumber
+	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent,
+		@SuppressWarnings("rawtypes") IObservableList list,
+		@SuppressWarnings("rawtypes") IObservableValue labelText,
+		@SuppressWarnings("rawtypes") IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
+		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
+		TableActionBar<? extends AbstractTableViewer> actionBar) {
+		// CHECKSTYLE.ON: ParameterNumber
+
+		return createTableViewerSWTBuilder(parent, list, labelText, labelTooltipText, compositeBuilder, cp,
+			(ViewerComparator) comparator,
+			actionBar);
+	}
+
+	/**
+	 * Creates a new {@link TableViewerSWTBuilder}.
+	 *
+	 * @param parent the parent {@link Composite}
+	 * @param list the input object
+	 * @param labelText the title
+	 * @param labelTooltipText the tooltip
+	 * @param compositeBuilder the {@link TableViewerCompositeBuilder}
+	 * @param cp the content provider
+	 * @param comparator the {@link ViewerComparator}; has no effect if move up/down
+	 *            functionality is enabled
+	 * @param actionBar the {@link ActionBar}
+	 * @return the {@link TableViewerSWTBuilder}
+	 * @since 1.22
 	 *
 	 */
 	// CHECKSTYLE.OFF: ParameterNumber
@@ -682,7 +769,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@SuppressWarnings("rawtypes") IObservableList list,
 		@SuppressWarnings("rawtypes") IObservableValue labelText,
 		@SuppressWarnings("rawtypes") IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
-		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
+		ObservableListContentProvider cp, ViewerComparator comparator,
 		TableActionBar<? extends AbstractTableViewer> actionBar) {
 		// CHECKSTYLE.ON: ParameterNumber
 		return TableViewerFactory.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)
@@ -911,7 +998,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
+	private void setupSorting(final TableViewerComparator comparator, int regularColumnsStartIndex,
 		final AbstractTableViewerComposite<? extends AbstractTableViewer> tableViewerComposite) {
 
 		final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
@@ -945,6 +1032,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private IObservableValue<?> getLabelTextForColumn(VDomainModelReference dmrToCheck, EClass dmrRootEClass) {
 		try {
+			// See whether the view model specifies a label for the column
+			final Optional<VEnablementConfiguration> config = TableConfigurationHelper
+				.findEnablementConfiguration(getVElement(), dmrToCheck);
+			if (config.isPresent()) {
+				final String label = config.get().getLabel();
+				if (label != null && !label.isEmpty()) {
+					@SuppressWarnings("unchecked")
+					final IValueProperty<VElement, String> labelProperty = EMFProperties
+						.value(VViewPackage.Literals.ELEMENT__LABEL);
+					return labelProperty.observe(config.get());
+				}
+			}
 			return getEMFFormsLabelProvider().getDisplayName(dmrToCheck, dmrRootEClass);
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectation?
@@ -1699,7 +1798,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * Get called by the {@link ECPTableViewerComparator} in order to compare the given objects.
 	 *
-	 * @param viewer the tavle viewer
+	 * @param viewer the table viewer
 	 * @param left the first object of the comparison
 	 * @param right the second object of the comparison
 	 * @param propertyIndex index of the selection column. the index is aligned with the index of the associated column
@@ -1713,6 +1812,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *         element is greater than the second element
 	 * @since 1.8
 	 */
+	// BEGIN COMPLEX CODE
 	@SuppressWarnings("unchecked")
 	protected int compare(Viewer viewer, Object left, Object right, int direction, int propertyIndex) {
 		if (direction == 0) {
@@ -1721,6 +1821,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		// We might have ignored columns at the beginning
 		propertyIndex = propertyIndex - regularColumnsStartIndex;
+		if (propertyIndex < 0) {
+			return 0;
+		}
 		int rc = 0;
 
 		final VDomainModelReference dmr = getColumnDomainModelReferences().get(propertyIndex);
@@ -1744,7 +1847,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		} else if (rightValue == null) {
 			rc = -1;
 		} else {
-			if (!(leftValue instanceof String) && leftValue instanceof Comparable
+			if (leftValue instanceof Enumerator) {
+				final EStructuralFeature feature = leftSetting.get().getEStructuralFeature();
+				rc = getEnumeratorComparator().compare(feature, (Enumerator) leftValue, (Enumerator) rightValue);
+			} else if (!(leftValue instanceof String) && leftValue instanceof Comparable
 				&& leftValue.getClass().isInstance(rightValue)) {
 				rc = Comparable.class.cast(leftValue).compareTo(rightValue);
 			} else {
@@ -1757,6 +1863,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		return rc;
 	}
+	// END COMPLEX CODE
 
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
@@ -1841,6 +1948,43 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			getVElement(),
 			dmr,
 			table);
+	}
+
+	/**
+	 * @return The {@link FeatureAwareComparator} used to compare {@link Enumerator enum values} when sorting the table
+	 * @since 1.22
+	 */
+	protected FeatureAwareComparator<Enumerator> getEnumeratorComparator() {
+		if (enumeratorComparator == null) {
+			enumeratorComparator = new LocalizedEnumeratorComparator(localizationService, bundleResolver,
+				getReportService());
+		}
+		return enumeratorComparator;
+	}
+
+	/**
+	 * Reeveal the given {@code object} in my table.
+	 *
+	 * @param object an object to reveal
+	 * @return whether I succeeded in revealing it
+	 *
+	 * @since 1.22
+	 */
+	public boolean reveal(Object object) {
+		final AbstractTableViewer viewer = getTableViewer();
+		final IObservableList<?> list = (IObservableList<?>) viewer.getInput();
+		final boolean result = list.contains(object);
+
+		if (result) {
+			final IStructuredSelection selection = new StructuredSelection(object);
+			if (!selection.equals(viewer.getSelection())) {
+				viewer.setSelection(selection, true);
+			}
+		} else {
+			viewer.reveal(object);
+		}
+
+		return result;
 	}
 
 	/**
@@ -2430,6 +2574,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * This class combines the {@link ViewerComparator} with the {@link TableViewerComparator}.
+	 * This is needed to allow customizations.
+	 *
+	 * @author Eugen Neufeld
+	 * @since 1.22
+	 */
+	protected abstract class TableControlComparator extends ViewerComparator implements TableViewerComparator {
+	}
+
+	/**
 	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
 	 * none, up and down.
 	 *
@@ -2437,7 +2591,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.10
 	 *
 	 */
-	protected class ECPTableViewerComparator extends ViewerComparator implements TableViewerComparator {
+	protected class ECPTableViewerComparator extends TableControlComparator {
 		private int propertyIndex;
 		private static final int NONE = 0;
 		private int direction = NONE;
@@ -2475,10 +2629,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			// No sorting is the same as no column being selected for sorting
 			if (direction == NONE) {
-				sortColumnFeature = java.util.Optional.empty();
+				setSortColumnFeature(null);
 			} else {
 				// columnFeatures starts at index 0 with the first regular column
-				sortColumnFeature = java.util.Optional.of(columnFeatures[propertyIndex - regularColumnsStartIndex]);
+				setSortColumnFeature(getColumnFeature(propertyIndex));
 			}
 		}
 
@@ -2499,11 +2653,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		public void notifyChange(ModelChangeNotification notification) {
 			final int event = notification.getRawNotification().getEventType();
 			if (notification.getStructuralFeature() == tableEReference
-				&& sortColumnFeature.isPresent()
+				&& getSortColumnFeature().isPresent()
 				&& (event == Notification.ADD || event == Notification.ADD_MANY)) {
 				sortAndReveal(notification.getNewEObjects());
-			} else if (sortColumnFeature.isPresent()
-				&& notification.getStructuralFeature() == sortColumnFeature.get()) {
+			} else if (getSortColumnFeature().isPresent()
+				&& notification.getStructuralFeature() == getSortColumnFeature().get()) {
 				sortAndReveal(notification.getNotifier());
 			}
 		}
@@ -3013,6 +3167,37 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return String.format(LocalizationServiceHelper.getString(
 			TableControlSWTRenderer.class, messageKey),
 			instanceName);
+	}
+
+	/**
+	 * Returns the current sort column feature.
+	 *
+	 * @return an {@link java.util.Optional} containing the feature used for sorting
+	 * @since 1.22
+	 */
+	protected java.util.Optional<EStructuralFeature> getSortColumnFeature() {
+		return sortColumnFeature;
+	}
+
+	/**
+	 * Set the column to use for sorting.
+	 *
+	 * @param sortColumnFeature an optional containing the feature to use for sorting
+	 * @since 1.22
+	 */
+	protected void setSortColumnFeature(EStructuralFeature sortColumnFeature) {
+		this.sortColumnFeature = java.util.Optional.ofNullable(sortColumnFeature);
+	}
+
+	/**
+	 * Find the feature for a specific index.
+	 *
+	 * @param propertyIndex The index to find the feature for
+	 * @return The {@link EStructuralFeature} for the provided index
+	 * @since 1.22
+	 */
+	protected EStructuralFeature getColumnFeature(int propertyIndex) {
+		return columnFeatures[propertyIndex - regularColumnsStartIndex];
 	}
 
 }

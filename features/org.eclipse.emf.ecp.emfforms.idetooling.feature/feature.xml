@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.idetooling.feature"
       label="EMF Forms IDE Tooling"
-      version="1.21.0.qualifier"
+      version="1.22.0.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.21.0.qualifier">
+      license-feature-version="1.22.0.qualifier">
 
    <description>
       %description
@@ -63,7 +63,8 @@
          id="org.eclipse.emf.ecp.ide.editor.viewmodel"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.ecp.ide.editor.view"
@@ -76,7 +77,8 @@
          id="org.eclipse.emf.ecp.ide.view.service"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.ecp.makeithappen.wizards"
@@ -140,5 +142,32 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.ide.view.segments"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.ide.view.indexsegment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.ide.view.mappingsegment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.ide.preferences"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>

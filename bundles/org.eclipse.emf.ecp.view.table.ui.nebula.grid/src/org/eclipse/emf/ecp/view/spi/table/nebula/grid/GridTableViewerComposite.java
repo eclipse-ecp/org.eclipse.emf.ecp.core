@@ -88,6 +88,10 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 	private final IObservableValue<Feature> activeFilteringMode = new WritableValue<>();
 
+	private TableViewerComparator comparator;
+
+	private List<Integer> sortableColumns;
+
 	static {
 		FEATURE_MENU_LISTENERS.put(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW,
 			comp -> comp.new ColumnHideShowMenuListener());
@@ -236,6 +240,8 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 	@Override
 	public void setComparator(final TableViewerComparator comparator, List<Integer> sortableColumns) {
+		this.comparator = comparator;
+		this.sortableColumns = sortableColumns;
 		for (int i = 0; i < getTableViewer().getGrid().getColumns().length; i++) {
 			if (!sortableColumns.contains(i)) {
 				continue;
@@ -245,16 +251,7 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 			final SelectionAdapter selectionAdapter = new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// Reset other columns to avoid left over sort indicators
-					for (final int index : sortableColumns) {
-						final GridColumn column = getTableViewer().getGrid().getColumns()[index];
-						if (index != j && column.getSort() != SWT.NONE) {
-							column.setSort(SWT.NONE);
-						}
-					}
-					comparator.setColumn(j);
-					tableColumn.setSort(comparator.getDirection());
-					gridTableViewer.refresh();
+					setCompareColumn(j);
 				}
 			};
 			tableColumn.addSelectionListener(selectionAdapter);
@@ -678,6 +675,21 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite<GridT
 
 			return result;
 		}
+	}
+
+	@Override
+	public void setCompareColumn(int columnIndex) {
+		// Reset other columns to avoid left over sort indicators
+		for (final int index : sortableColumns) {
+			final GridColumn column = getTableViewer().getGrid().getColumns()[index];
+			if (index != columnIndex && column.getSort() != SWT.NONE) {
+				column.setSort(SWT.NONE);
+			}
+		}
+		comparator.setColumn(columnIndex);
+		final GridColumn tableColumn = getTableViewer().getGrid().getColumns()[columnIndex];
+		tableColumn.setSort(comparator.getDirection());
+		gridTableViewer.refresh();
 	}
 
 }

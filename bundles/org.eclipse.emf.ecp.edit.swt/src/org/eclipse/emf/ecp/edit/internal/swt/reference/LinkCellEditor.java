@@ -18,7 +18,10 @@ import java.text.MessageFormat;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.INativePropertyListener;
+import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
@@ -27,7 +30,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -78,7 +80,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public IValueProperty getValueProperty() {
-		return new WidgetValueProperty() {
+		return new SimpleValueProperty() {
 
 			@Override
 			public Object getValueType() {
@@ -101,6 +103,11 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 					return observe(link);
 				}
 				return super.observe(source);
+			}
+
+			@Override
+			public INativePropertyListener adaptListener(ISimplePropertyListener listener) {
+				return null;
 			}
 		};
 	}

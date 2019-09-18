@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,10 +10,13 @@
  *
  * Contributors:
  * Lucas - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.core.di.tests;
 
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextViewServiceFactory_PTest;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererFactory_PTest;
+import org.eclipse.emfforms.spi.swt.core.di.RendererSupplier_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -25,7 +28,11 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFFormsDIRendererFactory_PTest.class })
+@SuiteClasses({
+	EMFFormsDIRendererFactory_PTest.class,
+	RendererSupplier_PTest.class,
+	EMFFormsContextViewServiceFactory_PTest.class,
+})
 public class AllPluginTests {
 
 }

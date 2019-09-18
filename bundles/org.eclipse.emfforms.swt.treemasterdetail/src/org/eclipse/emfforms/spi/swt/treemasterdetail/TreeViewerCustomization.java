@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Lucas Koehler - Add read-only configuration for Bug 541190
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
@@ -22,5 +23,6 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
  *
  */
 public interface TreeViewerCustomization extends TreeViewerBuilder, ContentProviderProvider, DNDProvider,
-	InitialSelectionProvider, LabelProviderProvider, ViewerFilterProvider, MenuProvider, LabelDecoratorProvider {
+	InitialSelectionProvider, LabelProviderProvider, ViewerFilterProvider, MenuProvider, LabelDecoratorProvider,
+	TreeReadOnlyProvider {
 }

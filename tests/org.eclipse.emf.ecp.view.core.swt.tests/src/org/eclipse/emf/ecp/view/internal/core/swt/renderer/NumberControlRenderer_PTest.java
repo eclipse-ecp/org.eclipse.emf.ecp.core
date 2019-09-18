@@ -77,10 +77,10 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
 		when(
 			localizationService.getString(NumberControlSWTRenderer.class, MessageKeys.NumericalControl_FormatNumerical))
-				.thenReturn("#");
+				.thenReturn("#"); //$NON-NLS-1$
 		when(
 			localizationService.getString(NumberControlSWTRenderer.class,
-				MessageKeys.NumericalControl_FormatNumericalDecimal)).thenReturn("#.#");
+				MessageKeys.NumericalControl_FormatNumericalDecimal)).thenReturn("#.#"); //$NON-NLS-1$
 		final EMFFormsLocaleProvider localeProvider = mock(EMFFormsLocaleProvider.class);
 		when(localeProvider.getLocale()).thenReturn(Locale.getDefault());
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
@@ -171,9 +171,9 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 		assertEquals(SWT.RIGHT, Text.class.cast(textRender).getStyle()
 			& SWT.RIGHT);
 
-		assertEquals("org_eclipse_emf_ecp_control_numerical", Text.class.cast(textRender).getData(CUSTOM_VARIANT));
-		assertEquals(UUID + "#control", Text.class.cast(textRender).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
-		assertEquals(UUID + "#control", Composite.class.cast(render).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY));
+		assertEquals("org_eclipse_emf_ecp_control_numerical", Text.class.cast(textRender).getData(CUSTOM_VARIANT)); //$NON-NLS-1$
+		assertEquals(UUID + "#control", Text.class.cast(textRender).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY)); //$NON-NLS-1$
+		assertEquals(UUID + "#control", Composite.class.cast(render).getData(SWTDataElementIdHelper.ELEMENT_ID_KEY)); //$NON-NLS-1$
 	}
 
 	@Override
@@ -238,7 +238,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 		final double changedValue = 42.5;
 		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttribute.setEType(EcorePackage.eINSTANCE.getEDouble());
-		eAttribute.setName("doubleAttr");
+		eAttribute.setName("doubleAttr"); //$NON-NLS-1$
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			eAttribute);
 
@@ -258,7 +258,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 		when(getContext().getService(PreSetValidationService.class)).thenReturn(null);
 
 		final int initialValue = 0;
-		final String tooBig = "11111111111111111111111111111111";
+		final String tooBig = "11111111111111111111111111111111"; //$NON-NLS-1$
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 
@@ -278,7 +278,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest<VControl>
 		when(getContext().getService(PreSetValidationService.class)).thenReturn(null);
 
 		final int initialValue = 0;
-		final String tooSmall = "-11111111111111111111111111111111";
+		final String tooSmall = "-11111111111111111111111111111111"; //$NON-NLS-1$
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 

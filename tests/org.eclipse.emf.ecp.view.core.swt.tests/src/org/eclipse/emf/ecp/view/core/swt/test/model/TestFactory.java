@@ -46,6 +46,16 @@ public interface TestFactory extends EFactory {
 	SimpleTestObject createSimpleTestObject();
 
 	/**
+	 * Returns a new object of class '<em>Inner Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Inner Object</em>'.
+	 * @generated
+	 */
+	InnerObject createInnerObject();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -98,6 +98,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
+	@Override
 	public CourseCatalog createCourseCatalog() {
 		final CourseCatalogImpl courseCatalog = new CourseCatalogImpl();
 		return courseCatalog;
@@ -109,6 +110,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
+	@Override
 	public Course createCourse() {
 		final CourseImpl course = new CourseImpl();
 		return course;
@@ -120,6 +122,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
+	@Override
 	public Staff createStaff() {
 		final StaffImpl staff = new StaffImpl();
 		return staff;
@@ -131,6 +134,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
+	@Override
 	public Professor createProfessor() {
 		final ProfessorImpl professor = new ProfessorImpl();
 		return professor;
@@ -142,6 +146,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
+	@Override
 	public Assistant createAssistant() {
 		final AssistantImpl assistant = new AssistantImpl();
 		return assistant;
@@ -153,6 +158,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
+	@Override
 	public Address createAddress() {
 		final AddressImpl address = new AddressImpl();
 		return address;
@@ -164,6 +170,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
+	@Override
 	public UniversityPackage getUniversityPackage() {
 		return (UniversityPackage) getEPackage();
 	}

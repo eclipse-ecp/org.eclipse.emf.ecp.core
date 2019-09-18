@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,9 +10,11 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 548592
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.core;
 
+import static org.eclipse.emf.ecp.view.test.common.spi.EMFMocking.eMock;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -107,11 +109,12 @@ public class EMFFormsRendererFactory_Test {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testAddRendererService() throws EMFFormsNoRendererException {
-		final VElement vElement = mock(VElement.class);
+		final VElement vElement = eMock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final EMFFormsRendererService<VElement> rendererService = mock(EMFFormsRendererService.class);
-		when(rendererService.getRendererInstance(vElement, viewModelContext)).thenReturn(
-			new MockedAbstractSWTRenderer(vElement, viewModelContext, mock(ReportService.class)));
+		final AbstractSWTRenderer<VElement> mockRenderer = new MockedAbstractSWTRenderer(vElement, viewModelContext,
+			mock(ReportService.class));
+		when(rendererService.getRendererInstance(vElement, viewModelContext)).thenReturn(mockRenderer);
 		rendererFactory.addEMFFormsRendererService(rendererService);
 		rendererFactory.getRendererInstance(vElement, viewModelContext);
 		Mockito.verify(rendererService, Mockito.times(1)).isApplicable(vElement, viewModelContext);

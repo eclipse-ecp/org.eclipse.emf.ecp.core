@@ -76,7 +76,9 @@ public class LegacyAdditionalRendererService implements EMFFormsAdditionalRender
 	private void readAdditionalRenderer(BundleContext bundleContext) {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
 			.getExtensionPoint(ADDITIONAL_RENDER_EXTENSION);
-
+		if (extensionPoint == null) {
+			return;
+		}
 		for (final IExtension extension : extensionPoint.getExtensions()) {
 
 			for (final IConfigurationElement configurationElement : extension

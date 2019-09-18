@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
+ * Christian W. Damus - bug 547787
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.reference;
 
@@ -84,9 +85,26 @@ public final class ReferenceStrategyUtil {
 	 * @return The configured {@link BazaarContext}
 	 */
 	public static BazaarContext createBazaarContext(ComponentContext context, EObject owner, EReference reference) {
+		return bazaarContextBuilder(context, owner, reference).build();
+	}
+
+	/**
+	 * Creates a {@link BazaarContext} builder that seeds the context with the properties of the
+	 * {@link ComponentContext}, the <code>owner</code> as a context value for class {@link EObject},
+	 * and the <code>reference</code> for class {@link EReference}.
+	 *
+	 * @param context The {@link ComponentContext}
+	 * @param owner The {@link EObject} containing a reference
+	 * @param reference The {@link EReference}
+	 * @return The configured {@link BazaarContext}
+	 *
+	 * @since 1.22
+	 */
+	public static BazaarContext.Builder bazaarContextBuilder(ComponentContext context, EObject owner,
+		EReference reference) {
 		return BazaarUtil.createBaseContext(context.getProperties())
 			.put(EObject.class, owner)
-			.put(EReference.class, reference)
-			.build();
+			.put(EReference.class, reference);
 	}
+
 }

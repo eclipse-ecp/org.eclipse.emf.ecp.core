@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,9 +10,13 @@
  *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
+ * Christian W. Damus - bug 547787
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.provider;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -64,4 +68,48 @@ public final class ViewProviderHelper {
 		bundleContext.ungetService(serviceReference);
 		return view;
 	}
+
+	/**
+	 * Retrieve a {@link VView} for a domain model {@code object} from the most confident of my
+	 * {@linkplain EMFFormsViewService#addProvider(IViewProvider) registered view providers}.
+	 *
+	 * @param object the domain model object for which a view is to be requested
+	 * @param properties the {@link VViewModelProperties properties} for providing the view, that
+	 *            may or may not include matching filters
+	 * @param requiredKeys a subset (possibly empty) of the keys in the {@code properties} that
+	 *            must be matched by any view model that I would provide. If any of these keys does not match
+	 *            a view model, then that view model must not be provided. Otherwise, it may just be less
+	 *            preferred than some other view model that does match
+	 *
+	 * @return a view model for the given domain model {@code object} or {@code null} if no
+	 *         suitable provider could be found to provide one
+	 *
+	 * @since 1.22
+	 */
+	public static VView getView(EObject object, VViewModelProperties properties, Collection<String> requiredKeys) {
+		VView result = null;
+
+		if (bundleContext == null) {
+			return result;
+		}
+
+		final ServiceReference<EMFFormsFilteredViewService> serviceReference = bundleContext
+			.getServiceReference(EMFFormsFilteredViewService.class);
+		if (serviceReference == null) {
+			return result;
+		}
+
+		final EMFFormsFilteredViewService viewService = bundleContext.getService(serviceReference);
+		try {
+			if (requiredKeys == null) {
+				requiredKeys = Collections.emptySet();
+			}
+			result = viewService.getView(object, properties, requiredKeys);
+		} finally {
+			bundleContext.ungetService(serviceReference);
+		}
+
+		return result;
+	}
+
 }

@@ -22,7 +22,10 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Diffs;
 import org.eclipse.core.databinding.observable.value.AbstractObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.INativePropertyListener;
+import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -31,7 +34,6 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.table.celleditor.rcp.NativeWidgetHelper;
 import org.eclipse.emf.ecp.view.spi.table.celleditor.rcp.NativeWidgetHelper.CheckBoxState;
-import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ICellEditorListener;
@@ -70,7 +72,7 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPC
 	 */
 	@Override
 	public IValueProperty getValueProperty() {
-		return new WidgetValueProperty() {
+		return new SimpleValueProperty() {
 
 			@Override
 			public Object getValueType() {
@@ -90,6 +92,11 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPC
 			@Override
 			public IObservableValue observe(Object source) {
 				return new BooleanCellEditorObservableValue();
+			}
+
+			@Override
+			public INativePropertyListener adaptListener(ISimplePropertyListener listener) {
+				return null;
 			}
 		};
 	}
@@ -237,7 +244,7 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPC
 	@Override
 	public void updateCell(ViewerCell cell, Object value) {
 		if (!"".equals(cell.getText())) { //$NON-NLS-1$
-		cell.setText(""); //$NON-NLS-1$
+			cell.setText(""); //$NON-NLS-1$
 		}
 		final Image image = getImage(value);
 		if (cell.getImage() != image) {
@@ -248,7 +255,7 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPC
 
 	/**
 	 * Sets the copy text marker for the given {@code cell} and {@code value}.
-	 * 
+	 *
 	 * @param cell the {@link ViewerCell}.
 	 * @param value the {@link Object} value.
 	 */

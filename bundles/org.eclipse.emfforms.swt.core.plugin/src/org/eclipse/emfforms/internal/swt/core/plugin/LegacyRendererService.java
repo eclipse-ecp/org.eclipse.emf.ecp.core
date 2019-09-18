@@ -86,6 +86,9 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 	private void readRenderer(BundleContext bundleContext) {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
 			.getExtensionPoint(RENDER_EXTENSION);
+		if (extensionPoint == null) {
+			return;
+		}
 		for (final IExtension extension : extensionPoint.getExtensions()) {
 
 			for (final IConfigurationElement configurationElement : extension

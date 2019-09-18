@@ -5,6 +5,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlDate" eType="#//XMLDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" eType="#//TestEnum"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inner" eType="#//InnerObject"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TestEnum" instanceTypeName="TestEnum">
     <eLiterals name="a">
@@ -17,4 +19,7 @@
     <eLiterals name="d" value="3" literal="d"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="XMLDate" instanceClassName="javax.xml.datatype.XMLGregorianCalendar"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InnerObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" eType="#//TestEnum"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -13,14 +13,17 @@
  * Eugen Neufeld - Refactoring
  * Alexandra Buzila - Refactoring
  * Johannes Faltermeier - integration with validation service
- * Christian W. Damus - bugs 543376, 545460
+ * Christian W. Damus - bugs 543376, 545460, 527686, 548592
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -50,7 +53,6 @@ import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.swt.ContextMenuViewModelService;
 import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
@@ -61,14 +63,11 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
-import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewCache;
+import org.eclipse.emf.ecp.view.spi.swt.masterdetail.DetailViewManager;
 import org.eclipse.emf.ecp.view.spi.swt.selection.IMasterDetailSelectionProvider;
 import org.eclipse.emf.ecp.view.spi.swt.services.ECPSelectionProviderService;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
@@ -109,6 +108,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -158,18 +159,26 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	@Inject
 	public TreeMasterDetailSWTRenderer(final VTreeMasterDetail vElement, final ViewModelContext viewContext,
 		ReportService reportService) {
+
 		super(vElement, viewContext, reportService);
 	}
 
 	/**
 	 * The detail key passed to the view model context.
 	 */
-	public static final String DETAIL_KEY = "detail"; //$NON-NLS-1$
+	public static final String DETAIL_KEY = DetailViewManager.DETAIL_PROPERTY;
+
+	/**
+	 * Menu separator ID for the group to which additional menu contributions are added in the
+	 * tree's context menu.
+	 */
+	public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
 	/**
 	 * Context key for the root.
 	 */
 	public static final String ROOT_KEY = "root"; //$NON-NLS-1$
+
 	private SWTGridDescription rendererGridDescription;
 
 	private Font detailsFont;
@@ -177,11 +186,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private Font titleFont;
 	private Color headerBgColor;
 	private TreeViewer treeViewer;
-	/**
-	 * Static string.
-	 *
-	 */
-	public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
 	private ScrolledComposite rightPanel;
 
@@ -191,6 +195,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	private ModelChangeListener domainModelListener;
 	private ViewModelContext childContext;
+	private DetailViewManager detailManager;
 
 	/**
 	 * @author jfaltermeier
@@ -275,14 +280,13 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
-	 */
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		if (detailManager != null) {
+			detailManager.dispose();
+		}
+		childContext = null;
 		if (getViewModelContext() != null && domainModelListener != null) {
 			getViewModelContext().unregisterDomainChangeListener(domainModelListener);
 		}
@@ -435,7 +439,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			// the treeviewer doesn't autoexpand on refresh
 			@Override
 			public void notifyAdd(Notifier notifier) {
-				treeViewer.expandToLevel(notifier, 1);
+				if (isRenderingFinished()) {
+					treeViewer.expandToLevel(notifier, 1);
+				}
 			}
 
 			@Override
@@ -499,7 +505,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @return true if a context menu should be shown, false otherwise
 	 */
 	protected boolean hasContextMenu() {
-		return true;
+		return !getVElement().isEffectivelyReadonly();
 	}
 
 	/**
@@ -508,7 +514,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @return true if DnD should be supported , false otherwise
 	 */
 	protected boolean hasDnDSupport() {
-		return true;
+		return !getVElement().isEffectivelyReadonly();
 	}
 
 	/**
@@ -665,6 +671,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		rightPanel.setMinSize(point);
+
+		detailManager = new DetailViewManager(rightPanelContainerComposite);
+		detailManager.setCache(DetailViewCache.createCache(getViewModelContext()));
+		detailManager.layoutDetailParent(rightPanelContainerComposite);
 
 		return rightPanel;
 	}
@@ -927,76 +937,63 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			}
 		}
 
-		private Composite childComposite;
-		private boolean currentDetailViewOriginalReadonly;
-
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
 			final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 			final Object treeSelected = getSelection(selection);
 
-			final Object selected = treeSelected == null ? treeSelected : manipulateSelection(treeSelected);
-			if (selected instanceof EObject) {
-				try {
-					if (childComposite != null) {
-						childComposite.dispose();
-						cleanCustomOnSelectionChange();
-					}
-					childComposite = createComposite();
+			detailManager.cacheCurrentDetail();
+			cleanCustomOnSelectionChange();
 
-					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
-						.getRoot());
+			final Object selectedObject = treeSelected == null ? treeSelected : manipulateSelection(treeSelected);
+			if (selectedObject instanceof EObject) {
+				final EObject selected = (EObject) selectedObject;
+				final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
+					.getRoot());
 
-					final VElement viewModel = getViewModelContext().getViewModel();
-					final VViewModelProperties properties = ViewModelPropertiesHelper
-						.getInhertitedPropertiesOrEmpty(viewModel);
-					properties.addNonInheritableProperty(DETAIL_KEY, true);
+				final boolean rootSelected = selected == root;
+				VView view = null;
+				if (rootSelected) {
+					view = getVElement().getDetailView();
+				}
+				if (view == null || view.getChildren().isEmpty()) {
+					view = detailManager.getDetailView(getViewModelContext(), selected,
+						properties -> {
+							if (rootSelected) {
+								properties.addNonInheritableProperty(ROOT_KEY, true);
+							}
+						});
+				}
 
-					final boolean rootSelected = selected.equals(root);
-
-					if (rootSelected) {
-						properties.addNonInheritableProperty(ROOT_KEY, true);
-					}
-					VView view = null;
-					if (rootSelected) {
-						view = getVElement().getDetailView();
-					}
-					if (view == null || view.getChildren().isEmpty()) {
-						view = ViewProviderHelper.getView((EObject) selected, properties);
-					}
-					currentDetailViewOriginalReadonly = view.isReadonly();
-
+				if (detailManager.isCached(selected)) {
+					detailManager.activate(selected);
+				} else {
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
 					// we have a multi selection, the multi edit is enabled and the multi selection is valid
 					if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE
 						&& selection.size() > 1
 						&& selected != getSelection(new StructuredSelection(selection.getFirstElement()))) {
-						childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, (EObject) selected,
+						childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, selected,
 							new TreeMasterDetailReferenceService(referenceService));
 					} else {
-						childContext = getViewModelContext().getChildContext((EObject) selected,
-							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
+						childContext = getViewModelContext().getChildContext(selected, getVElement(), view,
+							new TreeMasterDetailReferenceService(referenceService));
 					}
-					childContext.getViewModel()
-						.setReadonly(!getVElement().isEffectivelyEnabled() || getVElement().isEffectivelyReadonly()
-							|| currentDetailViewOriginalReadonly);
-					// visible does not make any sense
 
 					manipulateViewContext(childContext);
-					ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 
-					relayoutDetail();
-				} catch (final ECPRendererException e) {
-					Activator
-						.getDefault()
-						.getReportService()
-						.report(new StatusReport(
-							new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
-								.getMessage(), e)));
+					detailManager.render(childContext, ECPSWTViewRenderer.INSTANCE::render);
 				}
+
+				detailManager.setDetailReadOnly(!getVElement().isEffectivelyEnabled()
+					|| getVElement().isEffectivelyReadonly());
+			} else {
+				// No selection
+				childContext = null;
 			}
 
+			relayoutDetail();
 		}
 
 		private Object getSelection(IStructuredSelection selection) {
@@ -1031,21 +1028,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				}
 			}
 			return treeSelected;
-		}
-
-		private Composite createComposite() {
-			final Composite parent = getDetailContainer();
-			final Composite composite = new Composite(parent, SWT.NONE);
-			composite.setBackground(parent.getBackground());
-
-			final GridLayout gridLayout = GridLayoutFactory.fillDefaults().create();
-			// gridLayout.marginTop = 7;
-			// gridLayout.marginLeft = 5;
-			composite.setLayout(gridLayout);
-			GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(composite);
-			// .indent(10, 10)
-			composite.layout(true, true);
-			return composite;
 		}
 	}
 
@@ -1082,6 +1064,106 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		rightPanelContainerComposite.layout();
 		final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		rightPanel.setMinSize(point);
+	}
+
+	/**
+	 * Reveal the given {@code object} in my tree.
+	 *
+	 * @param object an object to reveal
+	 * @return whether I succeeded in revealing it
+	 *
+	 * @since 1.22
+	 */
+	public boolean reveal(Object object) {
+		final TreePath treePath = getTreePathFor(object);
+		return reveal(treePath);
+	}
+
+	/**
+	 * Get a path to an {@object} in my tree.
+	 *
+	 * @param object an object in my tree
+	 * @return a path to it
+	 *
+	 * @since 1.22
+	 */
+	public TreePath getTreePathFor(Object object) {
+		final ITreeContentProvider content = (ITreeContentProvider) treeViewer.getContentProvider();
+		final Collection<?> roots = Arrays.asList(content.getElements(treeViewer.getInput()));
+
+		final List<Object> path = new LinkedList<Object>();
+		path.add(object);
+		for (Object parent = content.getParent(object); parent != null; parent = content.getParent(parent)) {
+			path.add(0, parent);
+
+			// Don't go above the root element
+			if (roots.contains(parent)) {
+				break;
+			}
+		}
+
+		return new TreePath(path.toArray());
+	}
+
+	/**
+	 * Reveal the given {@code path} in my tree.
+	 *
+	 * @param path a tree path to reveal
+	 * @return whether I succeeded in revealing it
+	 *
+	 * @since 1.22
+	 */
+	public boolean reveal(TreePath path) {
+		final ISelection newSelection = new TreeSelection(path);
+		if (!newSelection.equals(treeViewer.getSelection())) {
+			treeViewer.setSelection(new TreeSelection(path), true);
+		}
+		treeViewer.reveal(path);
+
+		return treeViewer.getStructuredSelection().getFirstElement() == path.getLastSegment();
+	}
+
+	/**
+	 * Query whether the given {@code path} exists in my tree.
+	 *
+	 * @param path a tree path
+	 * @return whether the path locates an element that exists in my tree
+	 *
+	 * @since 1.22
+	 */
+	public boolean hasPath(TreePath path) {
+		if (path.equals(TreePath.EMPTY)) {
+			return true;
+		}
+
+		final TreePath parentPath = path.getParentPath();
+		if (!hasPath(parentPath)) {
+			return false;
+		}
+
+		final ITreeContentProvider content = (ITreeContentProvider) treeViewer.getContentProvider();
+		Collection<?> children;
+		if (parentPath.equals(TreePath.EMPTY)) {
+			children = Arrays.asList(content.getElements(treeViewer.getInput()));
+		} else if (content.hasChildren(parentPath.getLastSegment())) {
+			children = Arrays.asList(content.getChildren(parentPath.getLastSegment()));
+		} else {
+			children = Collections.EMPTY_SET;
+		}
+
+		return children.contains(path.getLastSegment());
+	}
+
+	/**
+	 * Obtain the current detail context, if any.
+	 *
+	 * @return the view-model context of the details currently being presented,
+	 *         or {@code null} if none (usually because there is no selection in the tree)
+	 *
+	 * @since 1.22
+	 */
+	public ViewModelContext getDetailContext() {
+		return childContext;
 	}
 
 	/**

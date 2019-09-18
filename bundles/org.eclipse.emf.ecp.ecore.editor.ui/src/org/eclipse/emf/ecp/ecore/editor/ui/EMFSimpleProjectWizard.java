@@ -100,6 +100,7 @@ public class EMFSimpleProjectWizard extends Wizard implements INewWizard {
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
 	 *      org.eclipse.jface.viewers.IStructuredSelection)
 	 */
+	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
@@ -182,11 +183,8 @@ public class EMFSimpleProjectWizard extends Wizard implements INewWizard {
 			if (activePart instanceof ISetSelectionTarget) {
 				final ISelection targetSelection = new StructuredSelection(
 					project);
-				getShell().getDisplay().asyncExec(new Runnable() {
-					public void run() {
-						((ISetSelectionTarget) activePart)
-							.selectReveal(targetSelection);
-					}
+				getShell().getDisplay().asyncExec(() -> {
+					((ISetSelectionTarget) activePart).selectReveal(targetSelection);
 				});
 			}
 		}
@@ -220,6 +218,7 @@ public class EMFSimpleProjectWizard extends Wizard implements INewWizard {
 			final ISelection targetSelection = new StructuredSelection(
 				modelFile);
 			getShell().getDisplay().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					((ISetSelectionTarget) activePart)
 						.selectReveal(targetSelection);

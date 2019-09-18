@@ -10,7 +10,7 @@
  *
  * Contributors:
  * EclipseSource - initial API and implementation
- * Christian W. Damus - bugs 544499, 545418
+ * Christian W. Damus - bugs 544499, 545418, 548592
  ******************************************************************************/
 package org.eclipse.emfforms.ide.builder;
 
@@ -34,6 +34,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 
 /**
@@ -106,4 +108,22 @@ public abstract class AbstractBuilderTest {
 			fail("Test interrupted waiting for workspace build: " + e.getMessage()); //$NON-NLS-1$
 		}
 	}
+
+	/**
+	 * Obtain a matcher that asserts the value of an attribute of a marker.
+	 *
+	 * @param name the name of the attribute to verify
+	 * @param matcher a matcher to test the attribute value
+	 * @return the marker matcher
+	 */
+	protected static Matcher<IMarker> hasAttributeThat(String name, Matcher<String> matcher) {
+		return new FeatureMatcher<IMarker, String>(matcher, String.format("marker with attribute '%s' that", name),
+			name) {
+			@Override
+			protected String featureValueOf(IMarker actual) {
+				return actual.getAttribute(name, null);
+			}
+		};
+	}
+
 }
