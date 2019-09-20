@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms Multi Segment IDE Tooling Tests
 Bundle-SymbolicName: org.eclipse.emfforms.ide.view.multisegment.test
-Bundle-Version: 1.22.0.qualifier
-Fragment-Host: org.eclipse.emfforms.ide.view.multisegment;bundle-version="[1.22.0,1.23.0)"
-Export-Package: org.eclipse.emfforms.ide.view.multisegment.test;version="1.22.0";x-internal:=true,
- org.eclipse.emfforms.internal.view.multisegment.tooling;version="1.22.0";x-internal:=true
+Bundle-Version: 1.23.0.qualifier
+Fragment-Host: org.eclipse.emfforms.ide.view.multisegment;bundle-version="[1.23.0,1.24.0)"
+Export-Package: org.eclipse.emfforms.ide.view.multisegment.test;version="1.23.0";x-internal:=true,
+ org.eclipse.emfforms.internal.view.multisegment.tooling;version="1.23.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
  org.objenesis;bundle-version="[1.0.0,2.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
- org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.22.0,1.23.0)",
+ org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.23.0,1.24.0)",
  org.eclipse.swtbot.swt.finder;bundle-version="[2.7.0,3.0.0)",
  org.apache.log4j;bundle-version="[1.2.0,2.0.0)",
  org.eclipse.emf.databinding.edit;bundle-version="[1.3.0,2.0.0)",
  org.eclipse.swtbot.junit4_x;bundle-version="[2.7.0,3.0.0)",
- org.eclipse.emf.ecp.test.common;bundle-version="[1.22.0,1.23.0)"
+ org.eclipse.emf.ecp.test.common;bundle-version="[1.23.0,1.24.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emfforms.ide.view.multisegment.test
