@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 550799
  ******************************************************************************/
 package org.eclipse.emfforms.internal.datatemplate.tooling.editor;
 
@@ -84,11 +85,11 @@ public class DataTemplateEObjectSelectionStrategyProvider
 		}
 
 		private EObject getEnclosingTemplate(EObject eObject) {
-			EObject parent = eObject.eContainer();
-			while (!(parent instanceof Template)) {
-				parent = parent.eContainer();
+			EObject result = eObject;
+			while (result != null && !(result instanceof Template)) {
+				result = result.eContainer();
 			}
-			return parent;
+			return result;
 		}
 
 	}
