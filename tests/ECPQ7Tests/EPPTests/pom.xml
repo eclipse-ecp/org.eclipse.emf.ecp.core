@@ -24,7 +24,7 @@
 	</profiles>
 	<properties>
 		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_19</emfstore-update-site>
-		<aut-path>/home/data/httpd/download.eclipse.org/ecp</aut-path>
+		<aut-path>.</aut-path>
 	</properties>
 	<build>
 		<pluginManagement>
