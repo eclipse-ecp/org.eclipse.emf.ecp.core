@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _XogaUM-8EemDG-PUFK2qgQ
 Runtime-Version: 2.4.2.201905052359
-Save-Time: 9/5/19 12:32 PM
+Save-Time: 10/1/19 12:22 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -16,7 +16,10 @@ Entry-Name: .content
 
 get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel" | get-menu 
     -path "New/Other..." | click
-get-window New | get-button "Next >" | click
+with [get-window New] {
+    get-tree | select "EMF Forms/DataTemplate"
+    get-button "Next >" | click
+}
 with [get-window -class WizardDialog] {
     get-editbox -after [get-label "File name:"] | set-text "test.datatemplate"
     get-button Finish | click
@@ -25,7 +28,7 @@ with [get-editor "test.datatemplate"] {
     get-tree | select "Template Collection" | get-menu -path Template | click
     get-button "Create and link new Instance" | click
 }
-get-window "Select Sub Class and Template" | get-tree | select "template/ViewTemplate" | double-click
+get-window "New Reference Element" | get-tree | select "template/ViewTemplate" | double-click
 with [get-editor "test.datatemplate"] {
     get-tree | select "Template Collection/Template/View Template" | get-menu -path Style | click
     get-button "Link Style Property" | click
@@ -33,7 +36,7 @@ with [get-editor "test.datatemplate"] {
 get-window "Select Elements" | get-table | get-property itemCount | equals 0 | verify-true
 get-window "Select Elements" | get-button Cancel | click
 get-editor "test.datatemplate" | get-button "Create and link new Style Property" | click
-with [get-window "Select Sub Class and Template"] {
+with [get-window "New Reference Element"] {
     get-tree | select "fontProperties/FontPropertiesStyleProperty"
     get-button Finish | click
 }
@@ -45,7 +48,7 @@ with [get-editor "test.datatemplate"] {
 get-window "Select Elements" | get-table | get-property itemCount | equals 1 | verify-true
 get-window "Select Elements" | get-button Cancel | click
 get-editor "test.datatemplate" | get-button "Create and link new Style Property" | click
-with [get-window "Select Sub Class and Template"] {
+with [get-window "New Reference Element"] {
     get-tree | select "tableValidation/TableValidationStyleProperty"
     get-button Finish | click
 }
@@ -57,7 +60,7 @@ with [get-editor "test.datatemplate"] {
     get-tree | select "Template Collection" | get-menu -path Template | click
     get-button "Create and link new Instance" | click
 }
-with [get-window "Select Sub Class and Template"] {
+with [get-window "New Reference Element"] {
     get-tree | select "template/ViewTemplate"
     get-button Finish | click
 }
@@ -72,7 +75,7 @@ with [get-editor "test.datatemplate"] {
     get-tree | select "Template Collection" | get-menu -path Template | click
     get-button "Create and link new Instance" | click
 }
-get-window "Select Sub Class and Template" | get-tree | select "bowling/League" | double-click
+get-window "New Reference Element" | get-tree | select "bowling/League" | double-click
 with [get-editor "test.datatemplate"] {
     get-tree | select [get-item -path "Template Collection" | get-item -path Template -index 2 | get-item -path League]
     get-button "Add an instance of Player" | click
@@ -86,7 +89,7 @@ with [get-editor "test.datatemplate"] {
     get-tree | select [get-item -path "Template Collection" | get-item -path Template -index 2]
     get-button "Create and link new Instance" | click
 }
-with [get-window "Select Sub Class and Template"] {
+with [get-window "New Reference Element"] {
     get-tree | select "bowling/Fan"
     get-button Finish | click
 }
@@ -95,8 +98,8 @@ with [get-editor "test.datatemplate"] {
     get-button "Create and link new Tournament" | click
 }
 get-window "Cannot create element" 
-    | get-label "This is a template, you cannot add new objects to non containment references here." 
+    | get-label "Cannot add new objects to non-containment references in a template." 
     | get-property caption 
-    | equals "This is a template, you cannot add new objects to non containment references here." | verify-true
+    | equals "Cannot add new objects to non-containment references in a template." | verify-true
 get-window "Cannot create element" | get-button OK | click
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
