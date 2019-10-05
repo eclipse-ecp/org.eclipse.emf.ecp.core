@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _-p_yMKoHEeminf0o9fO9mA
-Runtime-Version: 2.5.0.201907120000
-Save-Time: 7/19/19 2:44 PM
+Runtime-Version: 2.4.2.201905052359
+Save-Time: 10/5/19 9:56 PM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
@@ -25,7 +25,7 @@ with [get-editor "new_file.template"] {
     get-tree | select "View Template" | get-menu -path Style | click
     get-button "Create and link new Style Property" | click
 }
-with [get-window "New Reference Element"] {
+with [get-window "Select Sub Class and Template"] {
     get-tree | select "mandatory/MandatoryStyleProperty"
     get-button Finish | click
 }
