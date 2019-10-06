@@ -20,6 +20,7 @@ import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -280,7 +281,8 @@ public class TemplateCreateNewModelElementStrategyProvider
 			if (availableTemplates.size() > 1) {
 				// Don't show classes for which we don't have templates (bug 543461)
 				final Set<EClass> templateClasses = availableTemplates.stream()
-					.map(Template::getInstance).filter(Objects::nonNull).map(EObject::eClass)
+					.map(Template::getInstance).filter(Objects::nonNull).map(ignoreException(EObject::eClass))
+					.filter(Objects::nonNull)
 					.collect(Collectors.toSet());
 				subClasses.retainAll(templateClasses);
 
@@ -317,4 +319,17 @@ public class TemplateCreateNewModelElementStrategyProvider
 			return wizard.getSelectedTemplate();
 		}
 	}
+
+	// CHECKSTYLE.OFF: IllegalCatch
+	private static <T, R> Function<T, R> ignoreException(Function<T, R> function) {
+		return t -> {
+			try {
+				return function.apply(t);
+			} catch (final Exception e) {
+				// ignore
+				return null;
+			}
+		};
+	}
+	// CHECKSTYLE.ON: IllegalCatch
 }
