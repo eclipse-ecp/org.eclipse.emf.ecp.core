@@ -81,6 +81,8 @@ import org.osgi.framework.ServiceRegistration;
 
 /**
  * Implementation of a table selection composite that is described by a view model.
+ * 
+ * @since 1.22
  */
 public class TableSelectionCompositeImpl extends SelectModelElementCompositeImpl {
 

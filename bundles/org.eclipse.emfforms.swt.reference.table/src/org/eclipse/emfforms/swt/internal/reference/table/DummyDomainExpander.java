@@ -22,8 +22,9 @@ import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFa
 
 /**
  * Dummy Domain expander doing nothing because we do not need to expand the extent segments.
- * 
+ *
  * @author Lucas Koehler
+ * @since 1.22
  *
  */
 public class DummyDomainExpander implements EMFFormsDMRSegmentExpander {
