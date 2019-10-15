@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,17 +10,24 @@
  *
  * Contributors:
  * Stefan Dirix - initial API and implementation
- * Christian W. Damus - bug 533522
+ * Christian W. Damus - bugs 533522, 552127
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -35,6 +42,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
+import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
@@ -387,6 +395,84 @@ public class ValidationService_PTest {
 		view.getChildren().add(vControl);
 
 		/* assert no NPE */
+	}
+
+	@Test
+	public void testValidate_Iterable() {
+		final AtomicReference<Collection<EObject>> validated = new AtomicReference<>();
+
+		// CHECKSTYLE.OFF: AnonInnerLength - it's a test
+		final ValidationService validationService = new ValidationService() {
+
+			@Override
+			public void validate(Collection<EObject> eObjects) {
+				validated.set(eObjects);
+			}
+
+			@Override
+			public void instantiate(ViewModelContext context) {
+				// Not interesting
+			}
+
+			@Override
+			public int getPriority() {
+				// Not interesting
+				return 0;
+			}
+
+			@Override
+			public void dispose() {
+				// Not interesting
+			}
+
+			@Override
+			public void childViewModelContextAdded(ViewModelContext childContext) {
+				// Not interesting
+			}
+
+			@Override
+			public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
+				// Not interesting
+			}
+
+			@Override
+			public void removeValidationProvider(ValidationProvider validationProvider) {
+				// Not interesting
+			}
+
+			@Override
+			public void registerValidationListener(ViewValidationListener listener) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void deregisterValidationListener(ViewValidationListener listener) {
+				// Not interesting
+			}
+
+			@Override
+			public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
+				// Not interesting
+			}
+
+			@Override
+			public void addValidationProvider(ValidationProvider validationProvider) {
+				// Not interesting
+			}
+		};
+		// CHECKSTYLE.ON: AnonInnerLength
+
+		final List<EObject> eObjects = Arrays.asList(
+			mock(EObject.class, "a"),
+			mock(EObject.class, "b"),
+			mock(EObject.class, "c"));
+
+		final Iterable<EObject> iterable = eObjects::iterator;
+		validationService.validate(iterable);
+
+		assertThat("No collection passed to validation service", validated.get(), notNullValue());
+		assertThat("Collection has wrong size", validated.get().size(), is(eObjects.size()));
+		assertThat("Collection has wrong elements", new ArrayList<>(validated.get()), equalTo(eObjects));
 	}
 
 }

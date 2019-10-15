@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bugs 533522, 543160, 545686, 527686, 548761
+ * Christian W. Damus - bugs 533522, 543160, 545686, 527686, 548761, 552127
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
@@ -543,7 +543,14 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 	}
 
 	@Override
+	public void validate(Iterable<? extends EObject> objects) {
+		objects.forEach(validationQueue::add);
+		processValidationQueue();
+	}
+
+	@Override
 	public void validate(Collection<EObject> eObjects) {
+		// Delegate the opposite direction to how the default interface method does
 		validationQueue.addAll(eObjects);
 		processValidationQueue();
 	}
