@@ -13,7 +13,7 @@
  * Eugen Neufeld - Refactoring
  * Alexandra Buzila - Refactoring
  * Johannes Faltermeier - integration with validation service
- * Christian W. Damus - bugs 543376, 545460, 527686, 548592
+ * Christian W. Damus - bugs 543376, 545460, 527686, 548592, 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.ConditionalDeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
@@ -866,6 +867,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			.getBundle()
 			.getResource(deleteImagePath)));
 		deleteAction.setText("Delete"); //$NON-NLS-1$
+		deleteAction.setEnabled(ConditionalDeleteService.getDeleteService(getViewModelContext()).canDelete(selection.toList()));
 		manager.add(deleteAction);
 	}
 

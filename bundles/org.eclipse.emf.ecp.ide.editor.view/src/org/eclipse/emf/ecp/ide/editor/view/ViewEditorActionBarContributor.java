@@ -14,10 +14,9 @@
 package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.util.Collection;
-import java.util.stream.Stream;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.ConditionalDeleteService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
@@ -92,16 +91,9 @@ public class ViewEditorActionBarContributor extends EditingDomainActionBarContri
 
 		@Override
 		public boolean updateSelection(IStructuredSelection selection) {
-			final DeleteService deleteService = getService(DeleteService.class);
-			if (deleteService == null) {
-				return super.updateSelection(selection);
-			}
+			final ConditionalDeleteService deleteService = ConditionalDeleteService.getDeleteService(getViewModelContext());
 
-			return !selection.isEmpty() && Stream.of(selection.toArray()).noneMatch(this::isRoot);
-		}
-
-		private boolean isRoot(Object object) {
-			return object instanceof EObject && ((EObject) object).eContainer() == null;
+			return !selection.isEmpty() && deleteService.canDelete(selection.toList());
 		}
 
 	}

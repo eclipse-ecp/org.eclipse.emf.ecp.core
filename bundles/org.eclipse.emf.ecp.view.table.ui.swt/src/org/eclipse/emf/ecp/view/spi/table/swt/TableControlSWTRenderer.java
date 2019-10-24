@@ -11,7 +11,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592, 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -63,6 +63,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.ConditionalDeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
@@ -632,6 +633,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					EStructuralFeature eStructuralFeature) {
 					deleteRowUserConfirmDialog(deletionList, eObject, eStructuralFeature, getAddButton(),
 						getRemoveButton());
+				}
+
+				@Override
+				public boolean canExecute() {
+					return super.canExecute() && ConditionalDeleteService.getDeleteService(getViewModelContext())
+						.canDelete(getActionContext().getViewer().getStructuredSelection().toList());
 				}
 			};
 

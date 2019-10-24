@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,9 +10,12 @@
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
+ * Christian W. Damus - bug 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -21,19 +24,25 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.ConditionalDeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.test.university.Address;
 import org.eclipse.emf.ecp.test.university.Professor;
 import org.eclipse.emf.ecp.test.university.UniversityFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.edit.command.OverrideableCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -48,10 +57,12 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
+@SuppressWarnings("nls")
 public class EMFDeleteSerivceImpl_PTest {
 
-	private DeleteService deleteService;
+	private ConditionalDeleteService deleteService;
 	private AdapterFactoryEditingDomain domain;
+	private ViewModelContext context;
 	private Resource resource;
 	private League league;
 	private Game game;
@@ -60,13 +71,25 @@ public class EMFDeleteSerivceImpl_PTest {
 	private Player player3;
 	private Tournament tournament;
 
+	private EObject denyDeletion;
+
 	@Before
 	public void setUp() {
 		final ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 		domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
-			new BasicCommandStack(), resourceSet);
+			new BasicCommandStack(), resourceSet) {
+
+			@Override
+			public Command createOverrideCommand(OverrideableCommand command) {
+				if (denyDeletion != null && command instanceof RemoveCommand
+					&& ((RemoveCommand) command).getCollection().contains(denyDeletion)) {
+					return UnexecutableCommand.INSTANCE;
+				}
+				return super.createOverrideCommand(command);
+			}
+		};
 		resourceSet.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
 
@@ -91,7 +114,7 @@ public class EMFDeleteSerivceImpl_PTest {
 		game.setPlayer(player1);
 
 		deleteService = new EMFDeleteServiceImpl();
-		final ViewModelContext context = mock(ViewModelContext.class);
+		context = mock(ViewModelContext.class);
 		when(context.getDomainModel()).thenReturn(league);
 		deleteService.instantiate(context);
 	}
@@ -141,6 +164,42 @@ public class EMFDeleteSerivceImpl_PTest {
 		// assert
 		assertEquals(1, professor.getAddresses().size());
 		assertSame(address1, professor.getAddresses().get(0));
+	}
+
+	@Test
+	public void testCanDeleteElement() {
+		assertThat("can delete returns false", deleteService.canDelete(player1), is(true));
+
+		denyDeletion = player1;
+		assertThat("can delete returns true", deleteService.canDelete(player1), is(false));
+	}
+
+	@Test
+	public void testCanDeleteElements() {
+		final Collection<?> objects = Arrays.asList(player1, player2);
+
+		assertThat("can delete returns false", deleteService.canDelete(objects), is(true));
+
+		denyDeletion = player2; // Not the first one
+		assertThat("can delete returns true", deleteService.canDelete(objects), is(false));
+	}
+
+	@Test
+	public void testCanDeleteNoEditingDomain() {
+		// Disconnect everything from the editing domain
+		resource.getContents().clear();
+		resource.getResourceSet().eAdapters().clear();
+		resource.getResourceSet().getResources().clear();
+		resource.unload();
+		resource.eAdapters().clear();
+
+		// Re-initialize to forget the editing domain
+		deleteService.dispose();
+		deleteService.instantiate(context);
+
+		assertThat("cannot delete a contained object", deleteService.canDelete(player1), is(true));
+
+		assertThat("can delete a root object", deleteService.canDelete(league), is(false));
 	}
 
 }

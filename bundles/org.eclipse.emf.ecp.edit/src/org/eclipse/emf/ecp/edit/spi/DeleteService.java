@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi;
 
@@ -18,7 +19,15 @@ import java.util.Collection;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 
 /**
+ * <p>
  * The DeleteService is used by renderers in order to delete objects from the containment tree.
+ * </p>
+ * <p>
+ * <strong>Note</strong> that since the 1.23 release, it is recommended to implement the
+ * {@link ConditionalDeleteService} interface to support conditional deletion, honouring the model's
+ * edit providers when they veto deletion by providing unexecutable commands.
+ * </p>
+ *
  *
  * @author jfaltermeier
  * @since 1.6
