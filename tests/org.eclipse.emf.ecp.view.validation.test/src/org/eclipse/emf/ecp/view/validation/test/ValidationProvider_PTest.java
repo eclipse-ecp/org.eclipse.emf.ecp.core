@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,9 +10,12 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 552715
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -252,4 +255,74 @@ public class ValidationProvider_PTest {
 		validationService.validate(Collections.singleton(EObject.class.cast(computer)));
 		assertEquals(Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
+
+	/**
+	 * @see <a href="http://eclip.se/552715">bug 552715</a>
+	 */
+	@Test
+	public void testValidationProviderInitializedWithContext() {
+		final ViewModelContext[] capturedContext = { null };
+
+		validationService.addValidationProvider(new ValidationProvider() {
+
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public void setContext(ViewModelContext context) {
+				capturedContext[0] = context;
+			}
+		});
+
+		assertThat("No view-model context captured", capturedContext[0], notNullValue());
+	}
+
+	/**
+	 * @see <a href="http://eclip.se/552715">bug 552715</a>
+	 */
+	@Test
+	public void testValidationProviderDisposedWithContext() {
+		final ViewModelContext[] capturedContext = { null };
+
+		final ValidationProvider provider = new ValidationProvider() {
+
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public void unsetContext(ViewModelContext context) {
+				capturedContext[0] = context;
+			}
+		};
+		validationService.addValidationProvider(provider);
+		validationService.removeValidationProvider(provider);
+
+		assertThat("No view-model context captured", capturedContext[0], notNullValue());
+	}
+
+	/**
+	 * @see <a href="http://eclip.se/552715">bug 552715</a>
+	 */
+	@Test
+	public void testValidationProviderInvokedWithContext() {
+		final ViewModelContext[] capturedContext = { null };
+
+		final ValidationProvider provider = new ValidationProvider.ContextSensitive() {
+
+			@Override
+			public Iterable<? extends Diagnostic> validate(ViewModelContext context, EObject object) {
+				capturedContext[0] = context;
+				return Collections.emptyList();
+			}
+		};
+
+		validationService.addValidationProvider(provider);
+
+		assertThat("No view-model context captured", capturedContext[0], notNullValue());
+	}
+
 }

@@ -18,3 +18,4 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)"
 Automatic-Module-Name: org.eclipse.emf.ecp.view.validation.bean.test
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[1.23.0,2.0.0)"
