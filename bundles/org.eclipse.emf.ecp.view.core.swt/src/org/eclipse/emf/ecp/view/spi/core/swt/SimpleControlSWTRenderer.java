@@ -19,7 +19,6 @@ import java.util.List;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
@@ -540,15 +539,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		if (validationIcon.isDisposed()) {
 			return;
 		}
-		int highestSeverity = Diagnostic.OK;
-		// no diagnostic set
-		if (getVElement().getDiagnostic() != null) {
-			highestSeverity = getVElement().getDiagnostic().getHighestSeverity();
-		}
 
-		validationIcon.setImage(getValidationIcon(highestSeverity));
-		setValidationColor(editControl, getValidationBackgroundColor(highestSeverity));
-		setValidationForegroundColor(editControl, getValidationForegroundColor(highestSeverity));
+		validationIcon.setImage(getValidationIcon());
+		setValidationColor(editControl, getValidationBackgroundColor());
+		setValidationForegroundColor(editControl, getValidationForegroundColor());
 		if (getVElement().getDiagnostic() == null) {
 			validationIcon.setToolTipText(null);
 		} else {

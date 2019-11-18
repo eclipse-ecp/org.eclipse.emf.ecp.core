@@ -365,11 +365,10 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 			return;
 		}
 
-		validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+		validationIcon.setImage(getValidationIcon());
 		validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
 
-		setValidationColor(editControl, getValidationBackgroundColor(getVElement().getDiagnostic()
-			.getHighestSeverity()));
+		setValidationColor(editControl, getValidationBackgroundColor());
 	}
 
 	/**

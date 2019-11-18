@@ -25,13 +25,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
@@ -52,6 +52,8 @@ import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationHelper;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationUiService;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -81,6 +83,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	private final Map<Integer, Color> severityBackgroundColorMap = new LinkedHashMap<Integer, Color>();
 	private final Map<Integer, Color> severityForegroundColorMap = new LinkedHashMap<Integer, Color>();
 	private final Map<Integer, Image> severityIconMap = new LinkedHashMap<Integer, Image>();
+	private final SWTValidationUiService validationUiService;
 
 	/**
 	 * Default constructor.
@@ -96,17 +99,12 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider) {
-		super(vElement, viewContext, reportService);
-		this.emfFormsDatabinding = emfFormsDatabinding;
-		this.emfFormsLabelProvider = emfFormsLabelProvider;
-		this.vtViewTemplateProvider = vtViewTemplateProvider;
-		viewModelDBC = new EMFDataBindingContext();
-		viewContext.registerRootDomainModelChangeListener(this);
-		isDisposed = false;
+		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
+			viewContext.getService(SWTValidationUiService.class));
 	}
 
 	/**
-	 * Default constructor.
+	 * Additional constructor allowing to specify a custom {@link SWTValidationHelper}.
 	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
@@ -122,6 +120,31 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		VTViewTemplateProvider vtViewTemplateProvider, SWTValidationHelper swtValidationHelper) {
 		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.swtValidationHelper = swtValidationHelper;
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param validationUiService The {@link SWTValidationUiService}
+	 * @since 1.23
+	 */
+	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, SWTValidationUiService validationUiService) {
+		super(vElement, viewContext, reportService);
+		this.emfFormsDatabinding = emfFormsDatabinding;
+		this.emfFormsLabelProvider = emfFormsLabelProvider;
+		this.vtViewTemplateProvider = vtViewTemplateProvider;
+		this.validationUiService = validationUiService;
+		viewModelDBC = new EMFDataBindingContext();
+		viewContext.registerRootDomainModelChangeListener(this);
+		isDisposed = false;
 	}
 
 	/**
@@ -320,7 +343,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 *
 	 * @param severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 * @deprecated use {@link #getValidationIcon()} for default behavior or use the
+	 *             {@link SWTValidationUiService} if you need to get the color for a specific diagnostic.
 	 */
+	@Deprecated
 	protected final Image getValidationIcon(int severity) {
 		if (!severityIconMap.containsKey(severity)) {
 			final Image validationIcon = swtValidationHelper.getValidationIcon(severity, getVElement(),
@@ -331,11 +357,24 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	/**
+	 * Returns the validation icon for the current validation result of this control's {@link VElement}.
+	 *
+	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 * @since 1.23
+	 */
+	protected final Image getValidationIcon() {
+		return validationUiService.getValidationIcon(getVElement(), getViewModelContext());
+	}
+
+	/**
 	 * Returns the background color for a control with the given validation severity.
 	 *
 	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the color to be used as a background color
+	 * @deprecated use {@link #getValidationBackgroundColor()} for default behavior or use the
+	 *             {@link SWTValidationUiService} if you need to get the color for a specific diagnostic.
 	 */
+	@Deprecated
 	protected final Color getValidationBackgroundColor(int severity) {
 		if (isDisposed) {
 			return null;
@@ -350,12 +389,28 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	/**
+	 * Returns the background color for the current validation result of this control's {@link VElement}.
+	 *
+	 * @return the color to be used as a background color
+	 * @since 1.23
+	 */
+	protected final Color getValidationBackgroundColor() {
+		if (isDisposed) {
+			return null;
+		}
+		return validationUiService.getValidationBackgroundColor(getVElement(), getViewModelContext());
+	}
+
+	/**
 	 * Returns the foreground color for a control with the given validation severity.
 	 *
 	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the color to be used as a foreground color
 	 * @since 1.10
+	 * @deprecated use {@link #getValidationForegroundColor()} for default behavior or use the
+	 *             {@link SWTValidationUiService} if you need to get the color for a specific diagnostic.
 	 */
+	@Deprecated
 	protected final Color getValidationForegroundColor(int severity) {
 		if (isDisposed) {
 			return null;
@@ -367,6 +422,20 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			severityForegroundColorMap.put(severity, validationForegroundColor);
 		}
 		return severityForegroundColorMap.get(severity);
+
+	}
+
+	/**
+	 * Returns the foreground color for the current validation result of this control's {@link VElement}.
+	 *
+	 * @return the color to be used as a foreground color
+	 * @since 1.23
+	 */
+	protected final Color getValidationForegroundColor() {
+		if (isDisposed) {
+			return null;
+		}
+		return validationUiService.getValidationForegroundColor(getVElement(), getViewModelContext());
 
 	}
 

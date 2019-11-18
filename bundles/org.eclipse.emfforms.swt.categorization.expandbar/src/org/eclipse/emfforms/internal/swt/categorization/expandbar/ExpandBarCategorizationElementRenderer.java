@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;

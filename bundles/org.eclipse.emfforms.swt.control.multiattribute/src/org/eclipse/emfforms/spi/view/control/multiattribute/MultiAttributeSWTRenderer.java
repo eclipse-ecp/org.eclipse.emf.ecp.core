@@ -717,7 +717,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				if (getVElement().getDiagnostic() == null) {
 					return;
 				}
-				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+				validationIcon.setImage(getValidationIcon());
 				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
 					.getMessage(), null));
 			}

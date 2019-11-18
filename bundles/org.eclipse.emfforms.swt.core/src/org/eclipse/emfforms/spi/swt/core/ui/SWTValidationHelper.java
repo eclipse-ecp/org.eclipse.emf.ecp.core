@@ -12,7 +12,7 @@
  * Johannes Faltermeier - initial API and implementation
  * Eugen Neufeld - VTViewTemplate implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.edit.spi.swt.util;
+package org.eclipse.emfforms.spi.swt.core.ui;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,13 +21,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationFactory;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty;
+import org.eclipse.emfforms.internal.swt.core.Activator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -37,11 +37,9 @@ import org.eclipse.swt.widgets.Display;
  * Helper class for accessing icons and colours for validations.
  *
  * @author jfaltermeier
- * @since 1.5
- * @deprecated use org.eclipse.emfforms.spi.swt.core.ui.SWTValidationHelper or
- *             org.eclipse.emfforms.spi.swt.core.ui.SWTValidationUiService instead
+ * @since 1.23
+ *
  */
-@Deprecated
 public class SWTValidationHelper {
 
 	/**

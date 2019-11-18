@@ -15,9 +15,11 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +33,6 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -54,6 +55,8 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationHelper;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationUiService;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest.TestObservableValue;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -232,8 +235,10 @@ public class AbstractControlSWTRenderer_PTest {
 		assertEquals(SWT.RIGHT, Label.class.cast(render).getAlignment());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testgetValidationBackgroundColor() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testgetValidationBackgroundColorLegacy()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		/* setup */
 		final SWTValidationHelper validationHelper = Mockito.mock(SWTValidationHelper.class);
 
@@ -275,8 +280,10 @@ public class AbstractControlSWTRenderer_PTest {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testgetValidationForeGroundColor() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testgetValidationForeGroundColorLegacy()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		/* setup */
 		final SWTValidationHelper validationHelper = Mockito.mock(SWTValidationHelper.class);
 
@@ -317,8 +324,9 @@ public class AbstractControlSWTRenderer_PTest {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
-	public void testgetValidationIcon() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testgetValidationIconLegacy() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		/* setup */
 		final SWTValidationHelper validationHelper = Mockito.mock(SWTValidationHelper.class);
 
@@ -469,6 +477,98 @@ public class AbstractControlSWTRenderer_PTest {
 		assertEquals(SWT.RIGHT, Label.class.cast(render).getAlignment());
 	}
 
+	/** Verify retrieving the validation icon for a VElement is forwarded to the {@link SWTValidationUiService}. */
+	@Test
+	public void getValidationIcon() {
+		final SWTValidationUiService validationUiService = mock(SWTValidationUiService.class);
+
+		renderer = new TestAbstractControlSWTRenderer(
+			vControl,
+			viewModelContext,
+			reportService,
+			emfFormsDatabinding,
+			emfFormsLabelProvider,
+			viewTemplateProvider, validationUiService);
+		renderer.init();
+
+		final Image expected = new Image(Display.getCurrent(), 1, 1);
+		when(validationUiService.getValidationIcon(vControl, viewModelContext)).thenReturn(expected);
+
+		final Image result = renderer.getValidationIcon();
+		assertSame(expected, result);
+	}
+
+	/**
+	 * Verify retrieving the validation foreground color for a VElement is forwarded to the
+	 * {@link SWTValidationUiService}.
+	 */
+	@Test
+	public void getValidationForegroundColor() {
+		final SWTValidationUiService validationUiService = mock(SWTValidationUiService.class);
+
+		renderer = new TestAbstractControlSWTRenderer(
+			vControl,
+			viewModelContext,
+			reportService,
+			emfFormsDatabinding,
+			emfFormsLabelProvider,
+			viewTemplateProvider, validationUiService);
+		renderer.init();
+
+		final Color expected = new Color(Display.getCurrent(), 1, 2, 3);
+		when(validationUiService.getValidationForegroundColor(vControl, viewModelContext)).thenReturn(expected);
+
+		final Color result = renderer.getValidationForegroundColor();
+		assertSame(expected, result);
+	}
+
+	/**
+	 * Verify retrieving the validation background color for a VElement is forwarded to the
+	 * {@link SWTValidationUiService}.
+	 */
+	@Test
+	public void getValidationBackgroundColor() {
+		final SWTValidationUiService validationUiService = mock(SWTValidationUiService.class);
+
+		renderer = new TestAbstractControlSWTRenderer(
+			vControl,
+			viewModelContext,
+			reportService,
+			emfFormsDatabinding,
+			emfFormsLabelProvider,
+			viewTemplateProvider, validationUiService);
+		renderer.init();
+
+		final Color expected = new Color(Display.getCurrent(), 1, 2, 3);
+		when(validationUiService.getValidationBackgroundColor(vControl, viewModelContext)).thenReturn(expected);
+
+		final Color result = renderer.getValidationBackgroundColor();
+		assertSame(expected, result);
+	}
+
+	/**
+	 * Test that the {@link SWTValidationUiService} implementation is retrieved from the view model context if it is not
+	 * given in the constructor.
+	 */
+	@Test
+	public void validationUiServiceRetrieval() {
+		final SWTValidationUiService customService = mock(SWTValidationUiService.class);
+		final Image expected = new Image(Display.getCurrent(), 1, 1);
+		when(customService.getValidationIcon(vControl, viewModelContext)).thenReturn(expected);
+		when(viewModelContext.getService(SWTValidationUiService.class)).thenReturn(customService);
+		renderer = new TestAbstractControlSWTRenderer(
+			vControl,
+			viewModelContext,
+			reportService,
+			emfFormsDatabinding,
+			emfFormsLabelProvider,
+			viewTemplateProvider);
+		renderer.init();
+		final Image result = renderer.getValidationIcon();
+		assertSame(expected, result);
+
+	}
+
 	private class TestAbstractControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 
 		TestAbstractControlSWTRenderer(
@@ -501,6 +601,22 @@ public class AbstractControlSWTRenderer_PTest {
 				emfFormsDatabinding,
 				emfFormsLabelProvider,
 				vtViewTemplateProvider, swtValidationHelper);
+		}
+
+		TestAbstractControlSWTRenderer(
+			VControl vElement,
+			ViewModelContext viewContext,
+			ReportService reportService,
+			EMFFormsDatabinding emfFormsDatabinding,
+			EMFFormsLabelProvider emfFormsLabelProvider,
+			VTViewTemplateProvider vtViewTemplateProvider, SWTValidationUiService validationUiService) {
+			super(
+				vElement,
+				viewContext,
+				reportService,
+				emfFormsDatabinding,
+				emfFormsLabelProvider,
+				vtViewTemplateProvider, validationUiService);
 		}
 
 		@Override
