@@ -348,22 +348,25 @@
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <test
-                        property="org.eclipse.emf.ecp.core.project.open"
-                        value="true">
-                  </test>
-                  <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
-                        value="true">
-                  </test>
-                  <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
-                        value="true">
-                  </test>
-               </iterate>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.open"
+                           value="true">
+                     </test>
+                     <test
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
+                           value="true">
+                     </test>
+                     <test
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
+                           value="true">
+                     </test>
+                  </iterate>
             </with>
          </enabledWhen>
       </handler>
@@ -373,18 +376,21 @@
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <test
-                        property="org.eclipse.emf.ecp.core.project.open"
-                        value="true">
-                  </test>
-                  <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
-                        value="false">
-                  </test>
-               </iterate>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.open"
+                           value="true">
+                     </test>
+                     <test
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
+                           value="false">
+                     </test>
+                  </iterate>
             </with>
          </enabledWhen>
       </handler>
@@ -419,18 +425,28 @@
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <test
-                        property="org.eclipse.emf.ecp.core.project.open"
-                        value="true">
-                  </test>
-                  <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
-                        value="true">
-                  </test>
-               </iterate>
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+               <and>
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.open"
+                           value="true">
+                     </test>
+               </and>
+               <and>
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
+                           value="true">
+                     </test>
+                     </and>
+                  </iterate>
             </with>
          </enabledWhen>
       </handler>
@@ -440,18 +456,28 @@
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <test
-                        property="org.eclipse.emf.ecp.core.project.open"
-                        value="true">
-                  </test>
-                  <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
-                        value="true">
-                  </test>
-               </iterate>
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+               <and>
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.open"
+                           value="true">
+                     </test>
+               </and>
+               <and>
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
+                           value="true">
+                     </test>
+                     </and>
+                  </iterate>
             </with>
          </enabledWhen>
       </handler>
@@ -549,18 +575,23 @@
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
-                  <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isLocalAndNotRunning"
-                        value="true">
-                  </test>
-               </iterate>
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+               <and>
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                  </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.repository.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+               </and>
+                     <test
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isLocalAndNotRunning"
+                           value="true">
+                     </test>
+                  </iterate>
             </with>
          </enabledWhen>
       </handler>

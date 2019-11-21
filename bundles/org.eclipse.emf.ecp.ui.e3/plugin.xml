@@ -558,9 +558,9 @@
                      <iterate
                            ifEmpty="false"
                            operator="and">
-                        <instanceof
-                              value="org.eclipse.emf.ecp.core.ECPProject">
-                        </instanceof>
+	                    <instanceof
+	                          value="org.eclipse.emf.ecp.core.ECPProject">
+	                    </instanceof>
                         <test
                               property="org.eclipse.emf.ecp.core.project.open"
                               value="true">
@@ -638,6 +638,9 @@
                   <iterate
                         ifEmpty="false"
                         operator="and">
+	                 <instanceof
+	                       value="org.eclipse.emf.ecp.core.ECPProject">
+	                 </instanceof>
                      <test
                            property="org.eclipse.emf.ecp.core.project.open"
                            value="true">
