@@ -147,6 +147,9 @@ public final class EcoreHelper {
 	 */
 	private static final Map<String, String> ECOREPATH_TO_WORKSPACEURI = new HashMap<String, String>();
 
+	/** Keeps track of how many times an ecore path was registered in order to not unregister it prematurely. */
+	private static final Map<String, Integer> ECOREPATH_TO_REGISTRATIONCOUNT = new HashMap<String, Integer>();
+
 	/**
 	 * Contains mapping between an platform resource URI and the URIs which reference it.
 	 */
@@ -184,6 +187,7 @@ public final class EcoreHelper {
 		initResourceSet(physicalResourceSet, true);
 		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
 		ECOREPATH_TO_WORKSPACEURI.put(ecorePath, uri.toString());
+		ECOREPATH_TO_REGISTRATIONCOUNT.put(ecorePath, ECOREPATH_TO_REGISTRATIONCOUNT.getOrDefault(ecorePath, 0) + 1);
 		final Resource r = physicalResourceSet.createResource(uri);
 
 		loadResource(ecorePath, r);
@@ -360,6 +364,14 @@ public final class EcoreHelper {
 		if (ecorePath == null || !ECOREPATH_TO_WORKSPACEURI.containsKey(ecorePath)) {
 			return;
 		}
+
+		ECOREPATH_TO_REGISTRATIONCOUNT.put(ecorePath, ECOREPATH_TO_REGISTRATIONCOUNT.getOrDefault(ecorePath, 1) - 1);
+		if (ECOREPATH_TO_REGISTRATIONCOUNT.get(ecorePath) == 0) {
+			ECOREPATH_TO_REGISTRATIONCOUNT.remove(ecorePath);
+		} else {
+			return;
+		}
+
 		final String uriToUnregister = ECOREPATH_TO_WORKSPACEURI.remove(ecorePath);
 
 		final Set<String> referencedBy = WORKSPACEURI_REFERENCEDBY.get(uriToUnregister);
