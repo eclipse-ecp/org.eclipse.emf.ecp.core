@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="api-baseline">
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+			<repository location="http://download.eclipse.org/ecp/releases/releases_target_122/"/>
+			<unit id="org.eclipse.emf.ecp.cdo.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.changebroker.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.demo.e3.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.demo.e4.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.diffmerge.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.e3.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.e4.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.ecore.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.emf2web.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.emfforms.idetooling.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.emfstore.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.i18n.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.ide.migration.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.makeithappen.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.rap.sdk.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.rap.util.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.sdk.e4.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.sdk.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.validation.view.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.categorization.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.compoundcontrol.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.custom.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.di.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.edapt.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.group.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.groupedgrid.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.horizontal.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.indexdmr.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.keyattributedmr.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.label.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.mappingdmr.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.model.controls.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.model.editor.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.rule.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.section.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.stack.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.table.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.table.ui.nebula.grid.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.table.ui.rcp.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.table.validation" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.template.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.treemasterdetail.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.unset.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.validation.bean.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.validation.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.validation.initial.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.vertical.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.view.viewproxy.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.viewmodel.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.ecp.workspace.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="1.4.0.201902190757"/>
+			<unit id="org.eclipse.emf.edapt.runtime.feature.source.feature.group" version="1.4.0.201902190757"/>
+			<unit id="org.eclipse.emfforms.coffee.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.common.prevalidation.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.datatemplate.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.datatemplate.ide.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.editor.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.editor.genmodel.util.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.i18n.feature.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.rulerepository.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.spreadsheet.feature.source.feature.group" version="1.0.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.swt.control.multiattribute.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.swt.control.text.autocomplete.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.swt.control.text.richtext.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.swt.controlgrid.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+			<unit id="org.eclipse.emfforms.view.annotation.feature.source.feature.group" version="1.22.0.20190903-1057"/>
+		</location>
+	</locations>
+</target>
