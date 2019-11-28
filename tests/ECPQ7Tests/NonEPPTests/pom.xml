@@ -43,7 +43,7 @@
 						</vmArgs>
 					</runner>
 					<aut>
-						<explicit>${currentBuild}/org.eclipse.emf.ecp.products/target/products/org.eclipse.emf.ecp.3x-linux.gtk.x86_64.zip</explicit>
+						<explicit>${currentBuild}/org.eclipse.emf.ecp.products/target/products/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
 
 						<args>
 							<arg>-nl</arg>
