@@ -38,8 +38,10 @@ import org.eclipse.swt.widgets.Display;
  *
  * @author jfaltermeier
  * @since 1.5
- *
+ * @deprecated use org.eclipse.emfforms.spi.swt.core.ui.SWTValidationHelper or
+ *             org.eclipse.emfforms.spi.swt.core.ui.SWTValidationUiService instead
  */
+@Deprecated
 public class SWTValidationHelper {
 
 	/**

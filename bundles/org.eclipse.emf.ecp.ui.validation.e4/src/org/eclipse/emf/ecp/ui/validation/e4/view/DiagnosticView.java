@@ -10,9 +10,11 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bug 546899
+ * Christian W. Damus - bugs 546899, 550971
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.validation.e4.view;
+
+import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -21,6 +23,7 @@ import javax.inject.Inject;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.internal.ui.validation.ValidationTreeViewerFactory;
 import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService;
 import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService.ECPValidationResultServiceListener;
@@ -49,6 +52,8 @@ public class DiagnosticView {
 
 	private ECPValidationResultServiceListener listener;
 	private TreeViewer diagnosticTree;
+
+	private Consumer<Object> diagnosticHandler = this::onDiagnostic;
 
 	/**
 	 * Creates the diagnostic view.
@@ -85,18 +90,14 @@ public class DiagnosticView {
 					}
 				}
 			});
-		listener = new ECPValidationResultServiceListener() {
-			@Override
-			public void resultChanged(Object diagnostic) {
-				diagnosticTree.setInput(diagnostic);
-				diagnosticTree.expandAll();
-			}
-		};
+
+		// Don't just use the diagnostic handler as is because it can be replaced
+		listener = diagnostic -> diagnosticHandler.accept(diagnostic);
 		service.register(listener);
 	}
 
 	/**
-	 * Return the Tree showing the diagnostic data..
+	 * Return the tree viewer showing the diagnostic data.
 	 *
 	 * @return The {@link TreeViewer} which contains the actual data
 	 */
@@ -132,6 +133,43 @@ public class DiagnosticView {
 	@PreDestroy
 	public void preDestroy() {
 		service.deregister(listener);
+	}
+
+	/**
+	 * Set a handler to receive new diagnostics from {@linkplain ECPValidationResultService validation result service}.
+	 * The handler is invoked with either a {@link Diagnostic} or a collection or array of diagnostics, hence the
+	 * {@link Object} signature.
+	 *
+	 * @param diagnosticHandler the new diagnostic handler, or {@code null} to install the
+	 *            {@linkplain #onDiagnostic(Object) default behaviour}
+	 *
+	 * @since 1.23
+	 *
+	 * @see #onDiagnostic(Object)
+	 */
+	public void setOnDiagnostic(Consumer<Object> diagnosticHandler) {
+		if (diagnosticHandler != null) {
+			this.diagnosticHandler = diagnosticHandler;
+		} else {
+			this.diagnosticHandler = this::onDiagnostic;
+		}
+	}
+
+	/**
+	 * The default strategy for handling a new {@code diagnostic} to present
+	 * in the tree. This performs two actions:
+	 * <ol>
+	 * <li>set the {@code diagnostic} into the {@linkplain #getDiagnosticTree() tree} as its input</li>
+	 * <li>expand all in the tree</li>
+	 * </ol>
+	 *
+	 * @param diagnostic the new diagnostic
+	 *
+	 * @since 1.23
+	 */
+	protected final void onDiagnostic(Object diagnostic) {
+		diagnosticTree.setInput(diagnostic);
+		diagnosticTree.expandAll();
 	}
 
 }

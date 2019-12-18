@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- * Eugen - initial API and implementation
+ * Eugen Nuefeld - initial API and implementation, bug 551103
  * Christian W. Damus - bug 529542
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.reference;
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -60,11 +61,6 @@ class EditNewObjectDialog extends Dialog {
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
@@ -85,6 +81,10 @@ class EditNewObjectDialog extends Dialog {
 		// which usually is the default
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
 			ViewProviderHelper.getView(eObject, null), eObject);
+
+		if (AdapterFactoryEditingDomain.getEditingDomainFor(eObject).isReadOnly(eObject.eResource())) {
+			vmc.getViewModel().setReadonly(true);
+		}
 		try {
 			ECPSWTViewRenderer.INSTANCE.render(content, vmc);
 		} catch (final ECPRendererException ex) {

@@ -19,7 +19,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationHelper;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache.ValidationListener;
 import org.eclipse.jface.resource.DeviceResourceManager;

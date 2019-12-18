@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bugs 533522, 543160, 545686, 527686, 548761
+ * Christian W. Damus - bugs 533522, 543160, 545686, 527686, 548761, 552127, 552715
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
@@ -358,6 +358,7 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 	private int propagationThreshold;
 
 	private final Set<ValidationUpdateListener> validationUpdateListeners = new LinkedHashSet<>();
+	private ValidationProviderHelper providerHelper;
 
 	@Override
 	public void instantiate(ViewModelContext context) {
@@ -367,6 +368,7 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 		placeholderFactory = new ThresholdDiagnostic.Factory(l10n);
 		mappingProviderManager = context.getService(EMFFormsMappingProviderManager.class);
 		controlMapper = context.getService(EMFFormsSettingToControlMapper.class);
+		providerHelper = new ValidationProviderHelper(context, this);
 		final VElement renderable = context.getViewModel();
 
 		if (renderable == null) {
@@ -413,7 +415,7 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 
 		validationService.setSubstitutionLabelProvider(substitutionLabelProvider);
 
-		registerValidationProviders();
+		providerHelper.initialize();
 
 		domainChangeListener = new ValidationDomainModelChangeListener(context);
 		context.registerDomainChangeListener(domainChangeListener);
@@ -461,18 +463,13 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 		}
 	}
 
-	private void registerValidationProviders() {
-		for (final ValidationProvider provider : ValidationProviderHelper.fetchValidationProviders()) {
-			validationService.addValidator(provider);
-		}
-	}
-
 	@Override
 	public void dispose() {
 		contextTracker.close();
 		viewModelChangeListeners.forEach((ctx, l) -> ctx.unregisterViewChangeListener(l));
 		viewModelChangeListeners.clear();
 		rootContext.unregisterDomainChangeListener(domainChangeListener);
+		providerHelper.dispose();
 		adapterFactory.dispose();
 	}
 
@@ -543,7 +540,14 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 	}
 
 	@Override
+	public void validate(Iterable<? extends EObject> objects) {
+		objects.forEach(validationQueue::add);
+		processValidationQueue();
+	}
+
+	@Override
 	public void validate(Collection<EObject> eObjects) {
+		// Delegate the opposite direction to how the default interface method does
 		validationQueue.addAll(eObjects);
 		processValidationQueue();
 	}
@@ -931,7 +935,9 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
-		validationService.addValidator(validationProvider);
+		final ValidationProvider provider = providerHelper.wrap(validationProvider);
+		provider.setContext(rootContext);
+		validationService.addValidator(provider);
 		if (revalidate && rootContext != null) {
 			validate(getAllEObjectsToValidate(rootContext));
 		}
@@ -944,7 +950,10 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
-		validationService.removeValidator(validationProvider);
+		// Get the wrapper that we made on adding this provider
+		final ValidationProvider provider = providerHelper.wrap(validationProvider);
+		validationService.removeValidator(provider);
+		provider.unsetContext(rootContext);
 		if (revalidate && rootContext != null) {
 			validate(getAllEObjectsToValidate(rootContext));
 		}

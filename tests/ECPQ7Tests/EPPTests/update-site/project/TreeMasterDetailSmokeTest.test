@@ -118,7 +118,7 @@ with [get-view "EMF Forms Preview"] {
     get-editbox -after [get-label "First Name"] | get-property "getText()" | equals "" | verify-true
     get-editbox -after [get-label "Last Name*"] | get-property "getText()" | equals "" | verify-true
     get-label "" -after [get-label "Last Name*"] | get-property "image.path" 
-        | equals "org.eclipse.emf.ecp.edit.swt/icons/validation_error.png" | verify-true
+        | equals "org.eclipse.emfforms.swt.core/icons/validation_error.png" | verify-true
     get-combo -after [get-label Gender] | get-property selection | equals Male | verify-true
 }
 //change user1 details

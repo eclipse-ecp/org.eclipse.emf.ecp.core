@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,11 +10,14 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
@@ -33,47 +36,26 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  * @since 1.6
  *
  */
-public class EMFDeleteServiceImpl implements DeleteService {
+public class EMFDeleteServiceImpl implements ConditionalDeleteService {
 
 	private EditingDomain editingDomain;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
 		editingDomain = AdapterFactoryEditingDomain
 			.getEditingDomainFor(context.getDomainModel());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
-	 */
 	@Override
 	public void dispose() {
 		// no op
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
-	 */
 	@Override
 	public int getPriority() {
 		return 1;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.DeleteService#deleteElements(java.util.Collection)
-	 */
 	@Override
 	public void deleteElements(final Collection<Object> toDelete) {
 		if (toDelete == null || toDelete.isEmpty()) {
@@ -127,12 +109,6 @@ public class EMFDeleteServiceImpl implements DeleteService {
 		}
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.DeleteService#deleteElement(java.lang.Object)
-	 */
 	@Override
 	public void deleteElement(Object toDelete) {
 		if (toDelete == null) {
@@ -140,6 +116,36 @@ public class EMFDeleteServiceImpl implements DeleteService {
 		}
 		/* delete command for collections/single object works the same */
 		deleteElements(Collections.singleton(toDelete));
+	}
+
+	@Override
+	public boolean canDelete(Iterable<?> objects) {
+		boolean result;
+
+		if (editingDomain != null) {
+			Collection<?> collection;
+			if (objects instanceof Collection<?>) {
+				collection = (Collection<?>) objects;
+			} else {
+				collection = StreamSupport.stream(objects.spliterator(), false).collect(Collectors.toList());
+			}
+
+			final Command deleteCommand = DeleteCommand.create(editingDomain, collection);
+			result = deleteCommand.canExecute();
+		} else {
+			// Just see whether any object is a root
+			result = true;
+
+			for (final Object next : objects) {
+				if (next instanceof EObject && ((EObject) next).eContainer() == null) {
+					// Cannot delete a root object
+					result = false;
+					break;
+				}
+			}
+		}
+
+		return result;
 	}
 
 }

@@ -12,7 +12,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - use data binding services
  * Martin Fleck - bug 487101
- * Christian W. Damus - bugs 527736, 548592
+ * Christian W. Damus - bugs 527736, 548592, 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
+import org.eclipse.emf.ecp.edit.spi.ConditionalDeleteService;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -779,7 +780,9 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	private void enableDeleteButton(boolean baseEnable, int listSize, int selectionIndex) {
 		if (btnDelete != null && showDeleteButton()) {
-			btnDelete.setEnabled(baseEnable && listSize > 0 && selectionIndex != -1);
+			btnDelete.setEnabled(baseEnable && listSize > 0 && selectionIndex != -1
+				&& ConditionalDeleteService.getDeleteService(getViewModelContext())
+					.canDelete(tableViewer.getStructuredSelection().toList()));
 		}
 	}
 
@@ -1231,7 +1234,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 				if (getVElement().getDiagnostic() == null) {
 					return;
 				}
-				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+				validationIcon.setImage(getValidationIcon());
 				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
 					.getMessage(), null));
 			}

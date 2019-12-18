@@ -28,6 +28,7 @@ public interface InternalElementRegistry<ELEMENT extends ECPElement> {
 
 	/**
 	 * @author Eike Stepper
+	 * @param <ELEMENT> The type of this listener, must extend an {@link ECPElement}
 	 */
 	public interface ResolveListener<ELEMENT extends ECPElement> {
 		void descriptorChanged(InternalDescriptor<ELEMENT> descriptor, boolean resolved) throws Exception;

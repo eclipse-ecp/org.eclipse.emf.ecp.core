@@ -130,7 +130,7 @@ with [get-view "EMF Forms Preview"] {
     get-editbox -after [get-label "Last Name*"] | get-property text | equals "" | verify-true
     with [get-label "" -after [get-label "Last Name*"]] {
         get-property backgroundColor | equals "#FFFFFF" | verify-true
-        get-property "image.path" | equals "org.eclipse.emf.ecp.edit.swt/icons/validation_error.png" | verify-true
+        get-property "image.path" | equals "org.eclipse.emfforms.swt.core/icons/validation_error.png" | verify-true
     }
 }
 with [get-view "EMF Forms Preview"] {

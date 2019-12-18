@@ -75,6 +75,8 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 			case IExtensionDelta.REMOVED:
 				removeExtension(extension, remove);
 				break;
+			default:
+				break;
 			}
 		}
 
@@ -130,6 +132,7 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 
 	/**
 	 * @author Eike Stepper
+	 * @param <ELEMENT> The type of this descriptor which must extend {@link InternalRegistryElement}
 	 */
 	public static class ExtensionDescriptor<ELEMENT extends InternalRegistryElement>
 		extends ElementDescriptor<ELEMENT> {

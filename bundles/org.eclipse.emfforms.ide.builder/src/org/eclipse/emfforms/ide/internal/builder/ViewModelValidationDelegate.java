@@ -20,7 +20,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,12 +31,9 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emfforms.bazaar.Bid;
 import org.eclipse.emfforms.bazaar.Create;
-import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.common.spi.validation.ValidationService;
-import org.eclipse.emfforms.common.spi.validation.filter.AbstractComplexFilter;
 import org.eclipse.emfforms.ide.builder.ValidationDelegate;
 import org.eclipse.emfforms.ide.builder.ValidationDelegateProvider;
 import org.eclipse.emfforms.ide.builder.ValidationServiceDelegate;
@@ -97,23 +93,11 @@ public class ViewModelValidationDelegate extends ValidationServiceDelegate {
 		final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(view);
 		view.setLoadingProperties(properties);
 
-		validationService.registerValidationFilter(new ViewValidatorDuplicateFilter());
+		validationService.addObjectFilter(this::skipValidation);
 	}
 
-	/**
-	 * Filter to avoid duplications in validation from {@link ViewValidator}.
-	 */
-	private class ViewValidatorDuplicateFilter extends AbstractComplexFilter {
-		@Override
-		public boolean skipSubtree(EObject eObject, Optional<Diagnostic> diagnostic) {
-			return false;
-		}
-
-		@Override
-		public boolean skipValidation(EObject eObject) {
-			return VDomainModelReference.class.isInstance(eObject);
-		}
-
+	private boolean skipValidation(EObject eObject) {
+		return VDomainModelReference.class.isInstance(eObject);
 	}
 
 	//

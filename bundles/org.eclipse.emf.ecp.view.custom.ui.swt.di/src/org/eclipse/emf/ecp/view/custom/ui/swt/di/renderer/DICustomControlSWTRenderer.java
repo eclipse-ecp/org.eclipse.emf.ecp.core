@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationUiService;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.osgi.framework.Bundle;
@@ -36,12 +37,27 @@ import org.osgi.framework.Bundle;
 public class DICustomControlSWTRenderer extends CustomControlSWTRenderer {
 
 	/**
+	 * Legacy constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param factory the {@link ReportService}
 	 */
 	public DICustomControlSWTRenderer(VCustomControl vElement, ViewModelContext viewContext, ReportService factory) {
 		super(vElement, viewContext, factory);
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link ReportService}
+	 * @param validationUiService the {@link SWTValidationUiService} to use
+	 */
+	public DICustomControlSWTRenderer(VCustomControl vElement, ViewModelContext viewContext, ReportService factory,
+		SWTValidationUiService validationUiService) {
+		super(vElement, viewContext, factory, validationUiService);
 	}
 
 	private IEclipseContext eclipseContext;

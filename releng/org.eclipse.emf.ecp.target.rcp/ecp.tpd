@@ -10,7 +10,7 @@ location "http://download.eclipse.org/technology/swtbot/releases/latest/" {
 	org.eclipse.swtbot.feature.group lazy
 }
 
-location "http://download.eclipse.org/eclipse/updates/4.12" {
+location "http://download.eclipse.org/eclipse/updates/4.13" {
 	org.eclipse.equinox.sdk.feature.group lazy
 	org.eclipse.platform.ide lazy
 }
@@ -31,8 +31,6 @@ location "http://build.eclipse.org/rt/rap/base-platforms/3.1/extra-dependencies/
 location "https://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository/" {
 	com.google.gson [2.2.4.v201311231704,2.2.4.v201311231704]
 	com.google.gson.source [2.2.4.v201311231704,2.2.4.v201311231704]
-	com.google.guava [21.0.0,22.0.0)
-	com.google.guava.source [21.0.0,22.0.0)
 	javax.validation [1.0.0.GA_v201205091237,1.0.0.GA_v201205091237]
 	javax.validation.source [1.0.0.GA_v201205091237,1.0.0.GA_v201205091237]
 	org.apache.log4j [1.2.15.v201012070815,1.2.15.v201012070815]
@@ -55,7 +53,7 @@ location "http://download.eclipse.org/nebula/releases/latest" {
 	org.eclipse.nebula.widgets.grid.feature.feature.group lazy
 }
 
-location "http://download.eclipse.org/releases/2019-06" {
+location "http://download.eclipse.org/releases/2019-09" {
 	org.eclipse.emf.cdo.sdk.feature.group lazy
 	org.eclipse.emf.sdk.feature.group lazy
 	org.eclipse.emf.transaction.sdk.feature.group lazy
@@ -70,6 +68,7 @@ location "http://download.eclipse.org/releases/2019-06" {
 	org.eclipse.xpand.sdk.feature.group lazy
 	org.eclipse.xtend.sdk.feature.group lazy
 	org.eclipse.xtext.sdk.feature.group lazy
+	com.google.guava [27.1.0,28.0.0)
 }
 
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,13 +10,27 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Christian W. Damus - bug 552852
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import static java.util.Collections.singleton;
+import static org.eclipse.emf.ecp.view.test.common.spi.EMFMocking.eMock;
+import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -42,6 +56,7 @@ import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.custom.CTabFolder;
@@ -52,7 +67,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,13 +76,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(DatabindingClassRunner.class)
 public class CategorizationRenderer_PTest {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void testCategorizationElementTreeRenderer() throws NoRendererFoundException,
@@ -98,22 +105,30 @@ public class CategorizationRenderer_PTest {
 
 	@Test
 	public void testCategorizationElementTabRenderer() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+
+		final Set<Object> contextUsers = new HashSet<>();
+
 		final ReportService reportService = mock(ReportService.class);
-		final EMFFormsRendererFactory emfFormsRendererFactory = mock(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory emfFormsRendererFactory = mockRendererFactory(reportService);
 
 		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
+		categorizations.add(eMock(VCategory.class));
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
-		final ViewModelContext vmc = mock(ViewModelContext.class);
+		final ViewModelContext vmc = mockViewModelContext(contextUsers);
 		final VTViewTemplateProvider viewTemplateProvider = mock(VTViewTemplateProvider.class);
 		final CategorizationElementTabbedSWTRenderer categorizatrionElementRenderer = new CategorizationElementTabbedSWTRenderer(
 			categorizationElement, vmc, reportService, emfFormsRendererFactory, viewTemplateProvider);
 		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
+		categorizatrionElementRenderer.finalizeRendering(shell);
 		assertTrue(CTabFolder.class.isInstance(render));
+
+		shell.dispose();
+		assertThat("Some context user remains", contextUsers, not(hasItem(anything())));
 	}
 
 	@Test
@@ -190,8 +205,11 @@ public class CategorizationRenderer_PTest {
 	@Test
 	public void testCompositeCategoryElementTabRenderer() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
+
+		final Set<Object> contextUsers = new HashSet<>();
+
 		final ReportService reportService = mock(ReportService.class);
-		final EMFFormsRendererFactory emfFormsRendererFactory = mock(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory emfFormsRendererFactory = mockRendererFactory(reportService);
 
 		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
@@ -199,15 +217,21 @@ public class CategorizationRenderer_PTest {
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
 		final VCategorization categorization = mock(VCategorization.class);
 		categorizations.add(categorization);
-		when(categorization.getCategorizations()).thenReturn(new BasicEList<VAbstractCategorization>());
+		final EList<VAbstractCategorization> tabs = new BasicEList<VAbstractCategorization>(
+			singleton(eMock(VCategory.class)));
+		when(categorization.getCategorizations()).thenReturn(tabs);
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
-		final ViewModelContext vmc = mock(ViewModelContext.class);
+		final ViewModelContext vmc = mockViewModelContext(contextUsers);
 		final VTViewTemplateProvider viewTemplateProvider = mock(VTViewTemplateProvider.class);
 		final CompositeCategorySWTTabRenderer categorizatrionElementRenderer = new CompositeCategorySWTTabRenderer(
 			categorization, vmc, reportService, emfFormsRendererFactory, viewTemplateProvider);
 		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
+		categorizatrionElementRenderer.finalizeRendering(shell);
 		assertTrue(CTabFolder.class.isInstance(render));
+
+		shell.dispose();
+		assertThat("Some context user remains", contextUsers, not(hasItem(anything())));
 	}
 
 	@Test
@@ -275,5 +299,35 @@ public class CategorizationRenderer_PTest {
 
 		assertTrue(tree.isEnabled());
 		assertTrue(detailComposite.isEnabled());
+	}
+
+	//
+	// Test framework
+	//
+
+	ViewModelContext mockViewModelContext(Set<Object> users) {
+		final ViewModelContext result = mock(ViewModelContext.class);
+		doAnswer(invocation -> users.add(invocation.getArguments()[0])).when(result).addContextUser(any());
+		doAnswer(invocation -> users.remove(invocation.getArguments()[0])).when(result).removeContextUser(any());
+		return result;
+	}
+
+	EMFFormsRendererFactory mockRendererFactory(ReportService reportService) {
+		final EMFFormsRendererFactory result = mock(EMFFormsRendererFactory.class);
+		try {
+			when(result.getRendererInstance(isA(VCategory.class), any()))
+				.thenAnswer(invocation -> {
+					final SWTCategoryRenderer renderer = new SWTCategoryRenderer(
+						(VCategory) invocation.getArguments()[0],
+						(ViewModelContext) invocation.getArguments()[1], reportService, result);
+					renderer.init();
+					return renderer;
+				});
+		} catch (final EMFFormsNoRendererException e) {
+			e.printStackTrace();
+			fail("Exception in mock set-up: " + e.getMessage());
+		}
+
+		return result;
 	}
 }

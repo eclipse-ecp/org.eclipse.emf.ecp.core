@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emfforms.swt.reference.table" version="2">
+    <resource path="src/org/eclipse/emfforms/swt/internal/reference/table/DummyDomainExpander.java" type="org.eclipse.emfforms.swt.internal.reference.table.DummyDomainExpander">
+        <filter comment="Fixed since tags that were missing" id="1108344834">
+            <message_arguments>
+                <message_argument value="1.22"/>
+                <message_argument value="1.23"/>
+                <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.DummyDomainExpander"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/swt/internal/reference/table/SelectionTableCompositeStrategyProvider.java" type="org.eclipse.emfforms.swt.internal.reference.table.SelectionTableCompositeStrategyProvider">
+        <filter comment="Fixed since tags that were missing" id="1108344834">
+            <message_arguments>
+                <message_argument value="1.22"/>
+                <message_argument value="1.23"/>
+                <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.SelectionTableCompositeStrategyProvider"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/swt/internal/reference/table/TableSelectionCompositeImpl.java" type="org.eclipse.emfforms.swt.internal.reference.table.TableSelectionCompositeImpl">
+        <filter comment="Fixed since tags that were missing" id="1108344834">
+            <message_arguments>
+                <message_argument value="1.22"/>
+                <message_argument value="1.23"/>
+                <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.TableSelectionCompositeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

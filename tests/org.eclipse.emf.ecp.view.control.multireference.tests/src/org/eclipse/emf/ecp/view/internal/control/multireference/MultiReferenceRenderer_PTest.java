@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Lucas Koehler - initial API and implementation
- * Christian W. Damus - bug 527736
+ * Christian W. Damus - bugs 527736, 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
@@ -56,6 +56,8 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.view.model.common.AbstractGridCell.Alignment;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -177,6 +179,8 @@ public class MultiReferenceRenderer_PTest {
 
 		when(viewContext.getDomainModel()).thenReturn(eObject);
 		when(viewContext.getViewModel()).thenReturn(vControl);
+		// Required for delete button enablement
+		when(viewContext.getService(DeleteService.class)).thenReturn(new EMFDeleteServiceImpl());
 
 		when(vControl.getDomainModelReference()).thenReturn(domainModelReference);
 

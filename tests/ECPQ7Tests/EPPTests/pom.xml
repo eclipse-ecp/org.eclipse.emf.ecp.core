@@ -24,7 +24,7 @@
 	</profiles>
 	<properties>
 		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_19</emfstore-update-site>
-		<aut-path>/home/data/httpd/download.eclipse.org/ecp</aut-path>
+		<aut-path>.</aut-path>
 	</properties>
 	<build>
 		<pluginManagement>
@@ -85,6 +85,8 @@
 									<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
 									<feature>org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group</feature>
 									<feature>org.eclipse.emfforms.view.annotation.feature.feature.group</feature>
+									<feature>org.eclipse.emfforms.datatemplate.ide.feature.feature.group</feature>
+									<feature>org.eclipse.emfforms.datatemplate.feature.feature.group</feature>
 								</features>
 							</injection>
 							<injection>

@@ -165,7 +165,7 @@
    <feature id="org.eclipse.emfforms.editor.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.emf2web.feature" version="0.0.0">
+   <feature id="org.eclipse.emf.ecp.emf2web.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.jsonforms"/>
    </feature>
    <feature id="org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature.source" version="0.0.0">
@@ -203,6 +203,12 @@
    </feature>
    <feature id="org.eclipse.emf.ecp.view.groupedgrid.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.ecore.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.ide"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.ecore.editor.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.ide"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">
       <description>

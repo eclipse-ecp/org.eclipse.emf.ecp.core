@@ -6,11 +6,10 @@
     editorPluginClass="org.eclipse.emfforms.datatemplate.presentation.DatatemplateEditorPlugin"
     nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0"
-    copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
-    operationReflection="true" importOrganizing="true" cleanup="true">
+    copyrightFields="false" operationReflection="true" importOrganizing="true" cleanup="true">
   <foreignModel>datatemplate.ecore</foreignModel>
   <genPackages prefix="DataTemplate" basePackage="org.eclipse.emfforms" disposableProviderFactory="true"
-      extensibleProviderFactory="true" contentTypeIdentifier="org.eclipse.emfforms.datatemplate.model"
+      generateExampleClass="false" extensibleProviderFactory="true" contentTypeIdentifier="org.eclipse.emfforms.datatemplate.model"
       ecorePackage="datatemplate.ecore#/">
     <genClasses ecoreClass="datatemplate.ecore#//Template">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute datatemplate.ecore#//Template/name"/>

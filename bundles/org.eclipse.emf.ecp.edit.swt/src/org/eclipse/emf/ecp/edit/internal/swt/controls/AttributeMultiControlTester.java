@@ -94,26 +94,24 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 
 		if (EAttribute.class.isInstance(feature)) {
 			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
-			if (instanceClass != null) {
-				if (instanceClass.isPrimitive()) {
-					try {
-						final Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
-						if (!primitive.equals(instanceClass)) {
-							return NOT_APPLICABLE;
-						}
-
-					} catch (final IllegalArgumentException e) {
-						return NOT_APPLICABLE;
-					} catch (final SecurityException e) {
-						return NOT_APPLICABLE;
-					} catch (final IllegalAccessException e) {
-						return NOT_APPLICABLE;
-					} catch (final NoSuchFieldException e) {
+			if (instanceClass != null && instanceClass.isPrimitive()) {
+				try {
+					final Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
+					if (!primitive.equals(instanceClass)) {
 						return NOT_APPLICABLE;
 					}
-				} else if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
+
+				} catch (final IllegalArgumentException e) {
+					return NOT_APPLICABLE;
+				} catch (final SecurityException e) {
+					return NOT_APPLICABLE;
+				} catch (final IllegalAccessException e) {
+					return NOT_APPLICABLE;
+				} catch (final NoSuchFieldException e) {
 					return NOT_APPLICABLE;
 				}
+			} else if (instanceClass != null && !tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
+				return NOT_APPLICABLE;
 			}
 		} else if (EReference.class.isInstance(feature)) {
 			return NOT_APPLICABLE;

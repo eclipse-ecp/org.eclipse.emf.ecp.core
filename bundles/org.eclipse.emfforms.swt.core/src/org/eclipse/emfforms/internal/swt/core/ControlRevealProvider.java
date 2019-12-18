@@ -17,8 +17,9 @@ import static org.eclipse.emf.ecp.common.spi.UniqueSetting.createSetting;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.common.di.annotations.Renderer;
+import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.model.common.di.annotations.ViewService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.bazaar.Bid;
@@ -62,20 +63,36 @@ public class ControlRevealProvider implements EMFFormsRevealProvider {
 	}
 
 	/**
-	 * Create a terminal reveal step to focus into the specific setting control in a
-	 * container {@code element}.
+	 * Create a terminal reveal step to focus into the specific setting {@code control}
+	 * in a that presents a {@code feature} or an {@code object}.
 	 *
-	 * @param renderer the renderer of the control to reveal
+	 * @param control the control to reveal
 	 * @param object the object to reveal
 	 * @param feature the feature of the domain {@code object} to reveal
+	 * @param context the view-model context in which the {@code control} is rendered
 	 * @return the specific control reveal step
 	 */
 	@Create
-	public RevealStep reveal(@Renderer AbstractSWTRenderer<?> renderer, EObject object,
-		EStructuralFeature feature) {
+	public RevealStep reveal(VControl control, EObject object,
+		EStructuralFeature feature, ViewModelContext context) {
 
-		return RevealStep.reveal(renderer.getVElement(), object, feature,
-			() -> Display.getDefault().asyncExec(renderer::scrollToReveal));
+		return RevealStep.reveal(control, object, feature,
+			// Scroll to reveal the control in the future, when it has been
+			// rendered by the previous reveal step (bug 551066)
+			() -> Display.getDefault().asyncExec(() -> scrollToReveal(control, context)));
+	}
+
+	/**
+	 * Scroll to reveal the rendered {@code control}.
+	 *
+	 * @param control a control rendered in some {@code context}
+	 * @param context the context in which the {@code control} is rendered
+	 */
+	private void scrollToReveal(VControl control, ViewModelContext context) {
+		final AbstractRenderer<?> renderer = AbstractRenderer.getRenderer(control, context);
+		if (renderer instanceof AbstractSWTRenderer<?>) {
+			((AbstractSWTRenderer<?>) renderer).scrollToReveal();
+		}
 	}
 
 }

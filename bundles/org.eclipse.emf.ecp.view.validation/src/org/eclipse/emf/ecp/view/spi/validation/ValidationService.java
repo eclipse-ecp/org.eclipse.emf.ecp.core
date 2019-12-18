@@ -10,11 +10,13 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Christian W. Damus - bug 548761
+ * Christian W. Damus - bugs 548761, 552127
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.validation;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
@@ -85,11 +87,34 @@ public interface ValidationService extends GlobalViewModelService {
 	void deregisterValidationListener(ViewValidationListener listener);
 
 	/**
+	 * Validate the {@code objects} provided by an iterable.
+	 *
+	 * @param objects the iterable from which to obtain objects to validate
+	 *
+	 * @since 1.23
+	 */
+	default void validate(Iterable<? extends EObject> objects) {
+		if (objects instanceof Collection<?>) {
+			// This should be safe because a correct implementation must never modify the collection
+			@SuppressWarnings("unchecked")
+			final Collection<EObject> collection = (Collection<EObject>) objects;
+			validate(collection);
+		} else {
+			// Create a new collection
+			final Collection<EObject> collection = StreamSupport.stream(objects.spliterator(), false)
+				.collect(Collectors.toList());
+			validate(collection);
+		}
+	}
+
+	/**
 	 * Validates all given eObjects.
 	 *
 	 * @param eObjects the eObjects to validate
+	 *
+	 * @see {@link #validate(Iterable)} for an alternative that is more convenient when validating
+	 *      content trees covered by EMF {@code TreeIterator}s
 	 */
-	// TODO this should be refactored to use an iterator rather than a collection
 	void validate(Collection<EObject> eObjects);
 
 	/**

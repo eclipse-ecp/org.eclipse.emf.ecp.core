@@ -34,6 +34,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -106,15 +107,28 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 		initializing = true;
 
 		try {
+			if (input == null) {
+				return;
+			}
 			this.input = input;
 			validationChangeListener = new ValidationChangeListener(input);
 			TreeIterator<Object> allContents;
+			final Set<EObject> externalReferences = new LinkedHashSet<EObject>();
 			if (ResourceSet.class.isInstance(input)) {
-				allContents = EcoreUtil.getAllContents(ResourceSet.class.cast(input), false);
+				final ResourceSet resourceSet = ResourceSet.class.cast(input);
+				allContents = EcoreUtil.getAllContents(resourceSet, false);
+				final Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(resourceSet);
+				externalReferences.addAll(map.keySet());
 			} else if (Resource.class.isInstance(input)) {
-				allContents = EcoreUtil.getAllContents(Resource.class.cast(input), false);
+				final Resource resource = Resource.class.cast(input);
+				allContents = EcoreUtil.getAllContents(resource, false);
+				final Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(resource);
+				externalReferences.addAll(map.keySet());
 			} else if (EObject.class.isInstance(input)) {
-				allContents = EcoreUtil.getAllContents(Collections.singleton(EObject.class.cast(input)), false);
+				final Set<EObject> set = Collections.singleton(EObject.class.cast(input));
+				allContents = EcoreUtil.getAllContents(set, false);
+				final Map<EObject, Collection<Setting>> map = EcoreUtil.ExternalCrossReferencer.find(set);
+				externalReferences.addAll(map.keySet());
 			} else {
 				return;
 			}
@@ -126,6 +140,7 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 				}
 				updateCacheWithoutRefresh(EObject.class.cast(next), this);
 			}
+			externalReferences.forEach(e -> updateCacheWithoutRefresh(e, this));
 		} finally {
 			initializing = wasInitializing;
 		}

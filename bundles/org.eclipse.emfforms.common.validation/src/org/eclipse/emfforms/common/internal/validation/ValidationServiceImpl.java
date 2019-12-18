@@ -283,6 +283,7 @@ public class ValidationServiceImpl implements ValidationService {
 		validators.remove(validator);
 	}
 
+	@Deprecated
 	@Override
 	public void registerValidationFilter(ValidationFilter filter) {
 		if (filter instanceof ObjectFilter) {
@@ -296,6 +297,7 @@ public class ValidationServiceImpl implements ValidationService {
 		}
 	}
 
+	@Deprecated
 	@Override
 	public void unregisterValidationFilter(ValidationFilter filter) {
 		getObjectFilters().remove(filter);

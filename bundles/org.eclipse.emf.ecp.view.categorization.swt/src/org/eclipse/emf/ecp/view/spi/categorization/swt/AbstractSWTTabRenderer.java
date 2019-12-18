@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Christian W. Damus - bug 548592
+ * Christian W. Damus - bugs 548592, 552852
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
@@ -200,6 +200,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			.createEmptyGridDescription());
 		for (final SWTGridCell gridCell : gridDescription.getGrid()) {
 			final Control render = renderer.render(gridCell, composite);
+			renderer.finalizeRendering(composite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
 				.applyTo(render);
 			if (useScrolledContent) {

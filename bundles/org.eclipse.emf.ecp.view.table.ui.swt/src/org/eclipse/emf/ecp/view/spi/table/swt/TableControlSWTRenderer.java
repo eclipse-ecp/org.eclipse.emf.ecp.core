@@ -11,7 +11,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592, 552385
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -62,6 +62,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecp.edit.spi.ConditionalDeleteService;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -145,6 +146,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationUiService;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.CellLabelProviderFactory;
 import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
@@ -632,6 +634,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					EStructuralFeature eStructuralFeature) {
 					deleteRowUserConfirmDialog(deletionList, eObject, eStructuralFeature, getAddButton(),
 						getRemoveButton());
+				}
+
+				@Override
+				public boolean canExecute() {
+					return super.canExecute() && ConditionalDeleteService.getDeleteService(getViewModelContext())
+						.canDelete(getActionContext().getViewer().getStructuredSelection().toList());
 				}
 			};
 
@@ -2347,7 +2355,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return;
 			}
 
-			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+			validationIcon.setImage(getValidationIcon());
 			showValidationSummaryTooltip(setting.get(), showValidationSummaryTooltip);
 
 			if (updates != null) {
@@ -2789,31 +2797,24 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return attributeMaps[0].get(object);
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
-		 */
 		@Override
 		public Color getForeground(Object element) {
 			return table.getForeground();
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
-		 */
 		@Override
 		public Color getBackground(Object element) {
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
+			final SWTValidationUiService validationUiService = getViewModelContext()
+				.getService(SWTValidationUiService.class);
 			if (vDiagnostic == null) {
-				return getValidationBackgroundColor(Diagnostic.OK);
+				return validationUiService.getValidationBackgroundColor(Diagnostic.OK_INSTANCE, vTableControl,
+					getViewModelContext());
 			}
 			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);
-			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK
-				: diagnostic.get(0)
-					.getSeverity());
+			final Diagnostic iconDiagnostic = diagnostic.size() == 0 ? Diagnostic.OK_INSTANCE : diagnostic.get(0);
+			return validationUiService.getValidationBackgroundColor(iconDiagnostic, vTableControl,
+				getViewModelContext());
 		}
 
 		/**
@@ -3138,16 +3139,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		@Override
 		public void update(ViewerCell cell) {
-			Integer mostSevere = Diagnostic.OK;
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			if (vDiagnostic == null) {
 				return;
 			}
 			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) cell.getElement());
+			Diagnostic cellDiagnostic;
 			if (diagnostics.size() != 0) {
-				mostSevere = diagnostics.get(0).getSeverity();
+				cellDiagnostic = diagnostics.get(0);
+			} else {
+				// If there is no diagnostic, we assume everything is ok
+				cellDiagnostic = Diagnostic.OK_INSTANCE;
 			}
-			cell.setImage(getValidationIcon(mostSevere));
+			final Image validationIcon = getViewModelContext().getService(SWTValidationUiService.class)
+				.getValidationIcon(cellDiagnostic, getVElement(), getViewModelContext());
+			cell.setImage(validationIcon);
 		}
 
 		@Override

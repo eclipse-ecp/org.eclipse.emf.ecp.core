@@ -15,7 +15,6 @@
 package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -27,6 +26,7 @@ import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.ui.SWTValidationUiService;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -43,8 +43,10 @@ import org.osgi.framework.Bundle;
  */
 public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl> {
 
+	private final SWTValidationUiService validationUiService;
+
 	/**
-	 * Default Constructor.
+	 * Legacy Constructor.
 	 *
 	 * @param vElement the view element to be rendered
 	 * @param viewContext The view model context
@@ -53,7 +55,22 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	 */
 	public CustomControlSWTRenderer(final VCustomControl vElement, final ViewModelContext viewContext,
 		ReportService reportService) {
+		this(vElement, viewContext, reportService, viewContext.getService(SWTValidationUiService.class));
+	}
+
+	/**
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param validationUiService the {@link SWTValidationUiService} to use
+	 * @since 1.23
+	 */
+	public CustomControlSWTRenderer(final VCustomControl vElement, final ViewModelContext viewContext,
+		ReportService reportService, SWTValidationUiService validationUiService) {
 		super(vElement, viewContext, reportService);
+		this.validationUiService = validationUiService;
 	}
 
 	private ECPAbstractCustomControlSWT swtCustomControl;
@@ -261,7 +278,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 				final VDiagnostic diag = getVElement().getDiagnostic();
 
 				if (diag != null && validationIcon != null && !validationIcon.isDisposed()) {
-					validationIcon.setImage(getValidationIcon(diag.getHighestSeverity()));
+					validationIcon.setImage(getValidationIcon());
 					validationIcon.setToolTipText(diag.getMessage());
 				}
 				if (swtCustomControl != null) {
@@ -271,7 +288,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 		});
 	}
 
-	private Image getValidationIcon(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationIcon(severity, getVElement(), getViewModelContext());
+	private Image getValidationIcon() {
+		return validationUiService.getValidationIcon(getVElement(), getViewModelContext());
 	}
 }

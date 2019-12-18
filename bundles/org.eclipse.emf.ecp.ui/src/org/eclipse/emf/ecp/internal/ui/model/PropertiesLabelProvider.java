@@ -21,15 +21,19 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * A {@link LabelProvider} for properties.
+ * 
  * @author Eike Stepper
  */
 public class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider {
 	private static final Image PROPERTY = Activator.getImage("icons/property_obj.gif"); //$NON-NLS-1$
 
+	/**
+	 * Default constructor.
+	 */
 	public PropertiesLabelProvider() {
 	}
 
-	/** {@inheritDoc} */
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof Map.Entry) {
@@ -41,19 +45,22 @@ public class PropertiesLabelProvider extends LabelProvider implements ITableLabe
 
 			case 1:
 				return entry.getValue();
+			default:
+				return null;
 			}
 		}
 
 		return null;
 	}
 
-	/** {@inheritDoc} */
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (element instanceof Map.Entry) {
 			switch (columnIndex) {
 			case 0:
 				return PROPERTY;
+			default:
+				return null;
 			}
 		}
 
