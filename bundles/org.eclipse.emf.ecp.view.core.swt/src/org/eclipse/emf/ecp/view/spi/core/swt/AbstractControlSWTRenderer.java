@@ -113,7 +113,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param swtValidationHelper The {@link SWTValidationHelper}
-	 * @since 1.6
+	 * @since 1.23
 	 */
 	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
@@ -278,7 +278,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * </p>
 	 *
 	 * @return
-	 * 		{@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
+	 *         {@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
 	 *         {@code false} otherwise.
 	 * @since 1.8
 	 */

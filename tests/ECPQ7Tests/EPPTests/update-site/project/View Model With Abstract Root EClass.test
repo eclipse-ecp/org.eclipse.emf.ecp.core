@@ -54,7 +54,7 @@ get-view "EMF Forms Preview" | get-button "Automatically refresh Preview View" |
 // Check that controls are present and that validation works
 get-view "EMF Forms Preview" | get-label "Name*" | get-property caption | equals "Name*" | verify-true
 get-view "EMF Forms Preview" | get-label "" -after [get-label "Name*"] | get-property "image.path" 
-    | equals "org.eclipse.emf.ecp.edit.swt/icons/validation_error.png" | verify-true
+    | equals "org.eclipse.emfforms.swt.core/icons/validation_error.png" | verify-true
 with [get-view "EMF Forms Preview" | get-editbox -after [get-label "Name*"]] {
     set-text Test
     key-type "TRAVERSE_TAB_NEXT"

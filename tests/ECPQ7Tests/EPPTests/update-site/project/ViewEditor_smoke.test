@@ -299,9 +299,9 @@ get-window -class WizardDialog | get-button Cancel | click
 get-editor "User.view" | get-tree | select View | get-menu -path Control | click
 with [get-editor "User.view" | get-tree] {
     get-item -path "View/Control" | get-property "image.decorations[0].path" 
-        | equals "org.eclipse.emf.ecp.edit.swt/icons/error_decorate.png" | verify-true
+        | equals "org.eclipse.emfforms.swt.core/icons/error_decorate.png" | verify-true
     get-item -path View | get-property "image.decorations[0].path" 
-        | equals "org.eclipse.emf.ecp.edit.swt/icons/error_decorate.png" | verify-true
+        | equals "org.eclipse.emfforms.swt.core/icons/error_decorate.png" | verify-true
 }
 get-editor "User.view" | get-tree | select "View/Control" | get-menu -path Delete | click
 verify-error { get-editor "User.view" | get-tree | get-item -path View | get-property "image.decorations[0].path" -raw}

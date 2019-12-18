@@ -27,6 +27,12 @@
                 <message_argument value="AbstractControlSWTRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="The internalClass SWTValidationHelper was moved" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer"/>
+                <message_argument value="AbstractControlSWTRenderer(VCONTROL, ViewModelContext, ReportService, EMFFormsDatabinding, EMFFormsLabelProvider, VTViewTemplateProvider, SWTValidationHelper)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer"/>
