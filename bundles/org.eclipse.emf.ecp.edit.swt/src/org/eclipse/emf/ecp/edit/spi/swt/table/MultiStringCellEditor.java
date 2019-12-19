@@ -101,36 +101,18 @@ public class MultiStringCellEditor extends StringBasedCellEditor {
 		super(parent, style);
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
-	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
+		super.instantiate(eStructuralFeature, viewModelContext);
 		this.eStructuralFeature = eStructuralFeature;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
-	 */
 	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
@@ -154,34 +136,16 @@ public class MultiStringCellEditor extends StringBasedCellEditor {
 		return string;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
-	 */
 	@Override
 	public int getColumnWidthWeight() {
 		return 50;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
 		return withPreSetValidation(eStructuralFeature, new TargetToModelStrategy());
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 */
 	@Override
 	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy() {
@@ -201,11 +165,6 @@ public class MultiStringCellEditor extends StringBasedCellEditor {
 		return text;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
-	 */
 	@Override
 	public void setEditable(boolean editable) {
 		if (getText() != null) {
@@ -213,21 +172,11 @@ public class MultiStringCellEditor extends StringBasedCellEditor {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
-	 */
 	@Override
 	public Image getImage(Object value) {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
-	 */
 	@Override
 	public int getMinWidth() {
 		return 0;

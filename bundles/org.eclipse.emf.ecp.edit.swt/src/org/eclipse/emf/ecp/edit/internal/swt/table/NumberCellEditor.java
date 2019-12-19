@@ -181,38 +181,20 @@ public class NumberCellEditor extends StringBasedCellEditor {
 		super(parent, style | SWT.RIGHT);
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
-	 */
 	@Override
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
+		super.instantiate(eStructuralFeature, viewModelContext);
 		this.eStructuralFeature = eStructuralFeature;
 		getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_numberical"); //$NON-NLS-1$
 		localeService = viewModelContext.getService(ViewLocaleService.class);
 		localeProvider = viewModelContext.getService(EMFFormsLocaleProvider.class);
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
-	 */
 	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
@@ -241,34 +223,16 @@ public class NumberCellEditor extends StringBasedCellEditor {
 		return Locale.getDefault();
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
-	 */
 	@Override
 	public int getColumnWidthWeight() {
 		return 50;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
 		return withPreSetValidation(eStructuralFeature, new TargetToModelStrategy(databindingContext));
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 */
 	@Override
 	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy() {
@@ -292,11 +256,6 @@ public class NumberCellEditor extends StringBasedCellEditor {
 		return text;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
-	 */
 	@Override
 	public void setEditable(boolean editable) {
 		if (getText() != null) {
@@ -304,21 +263,11 @@ public class NumberCellEditor extends StringBasedCellEditor {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
-	 */
 	@Override
 	public Image getImage(Object value) {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
-	 */
 	@Override
 	public int getMinWidth() {
 		return 0;

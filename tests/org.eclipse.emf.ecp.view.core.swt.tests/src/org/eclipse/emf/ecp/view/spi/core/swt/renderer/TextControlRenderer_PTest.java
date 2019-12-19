@@ -43,6 +43,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
@@ -279,5 +280,26 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		getRenderer().finalizeRendering(getShell());
 		assertFalse(renderControl.isEnabled());
+	}
+
+	@Test
+	public void testProcessorCalled()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, NoLabelFoundException,
+		DatabindingFailedException {
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, "", //$NON-NLS-1$
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Observables.constantObservableValue("antiException")); //$NON-NLS-1$
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable, new ObservingWritableValue(mockedObservable));
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
+
+		final EMFFormsControlProcessorService dummyProcessor = mock(EMFFormsControlProcessorService.class);
+		when(getContext().getService(EMFFormsControlProcessorService.class)).thenReturn(dummyProcessor);
+		when(getContext().hasService(EMFFormsControlProcessorService.class)).thenReturn(Boolean.TRUE);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		Mockito.verify(dummyProcessor).process(renderControl, getvControl(), getContext());
 	}
 }
