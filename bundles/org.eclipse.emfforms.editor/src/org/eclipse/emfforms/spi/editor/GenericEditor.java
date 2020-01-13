@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2020 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,7 +11,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bugs 545460, 548592
+ * Christian W. Damus - bugs 545460, 548592, 559116
  ******************************************************************************/
 
 package org.eclipse.emfforms.spi.editor;
@@ -61,6 +61,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -85,6 +86,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.decorator.validation.ecp.EC
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache.ValidationListener;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.DetailPanelRenderingFinishedCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
@@ -540,7 +542,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				new ECPValidationLabelDecoratorProvider(getNotifierFromEditorInput(editorInput), getDiagnosticCache()));
 		}
 
-		final TreeMasterDetailComposite treeMasterDetail = builder.create();
+		final TreeMasterDetailComposite treeMasterDetail = customizeTree(builder).create();
+		treeMasterDetail.registerDetailPanelRenderingFinishedCallback(
+			DetailPanelRenderingFinishedCallback.adapt((ctx, __) -> handleDetailActivated(ctx)));
 		return treeMasterDetail;
 	}
 
@@ -951,6 +955,34 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				resourceSet.getResources().remove(toRemove);
 			}
 		}
+	}
+
+	/**
+	 * Customize the tree {@code builder}. Subclasses are free to add
+	 * customizations or override default customizations installed by this
+	 * class, but the latter requires care not to break expected editor
+	 * behaviour.
+	 *
+	 * @param builder the tree builder
+	 * @return the {@code builder} for convenience of call chaining, or if
+	 *         absolutely necessary an entirely new builder
+	 *
+	 * @since 1.24
+	 */
+	protected TreeMasterDetailSWTBuilder customizeTree(TreeMasterDetailSWTBuilder builder) {
+		return builder;
+	}
+
+	/**
+	 * React to the rendering or re-activation of a detail context. The default
+	 * implementation does nothing; subclasses may just override it.
+	 *
+	 * @param detailContext the active detail context
+	 *
+	 * @since 1.24
+	 */
+	protected void handleDetailActivated(ViewModelContext detailContext) {
+		// Nothing to do
 	}
 
 	/**

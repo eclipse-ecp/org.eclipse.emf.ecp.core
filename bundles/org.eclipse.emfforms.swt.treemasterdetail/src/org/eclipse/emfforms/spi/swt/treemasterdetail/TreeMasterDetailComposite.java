@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2020 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,7 +11,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bugs 533568, 545460, 527686, 548592
+ * Christian W. Damus - bugs 533568, 545460, 527686, 548592, 559116
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
@@ -300,13 +300,14 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		detailManager.cacheCurrentDetail();
 
 		boolean asyncRendering = false;
+		ViewModelContext context = null;
 		if (selectedObject instanceof EObject) {
 			lastRenderedObject = selectedObject;
 			final EObject eObject = EObject.class.cast(selectedObject);
 
 			if (detailManager.isCached(eObject)) {
 				// It's ready to present (no async needed)
-				detailManager.activate(eObject);
+				context = detailManager.activate(eObject).getViewModelContext();
 
 				updateScrolledComposite();
 			} else {
@@ -323,8 +324,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 					// Even if the TMD composite is not configured as read-only honor the effective read-only
 					// configuration of the loaded detail view
 					treeDetailView.setReadonly(treeDetailView.isEffectivelyReadonly() || customization.isReadOnly());
-					final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
-						treeDetailView, eObject);
+					context = ViewModelContextFactory.INSTANCE.createViewModelContext(treeDetailView, eObject);
 					detailManager.render(context, ECPSWTViewRenderer.INSTANCE::render);
 				} else {
 					// No, everything is fine
@@ -345,7 +345,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		 */
 		if (!asyncRendering) {
 			for (final DetailPanelRenderingFinishedCallback callback : detailPanelRenderingFinishedCallbacks) {
-				callback.renderingFinished(selectedObject);
+				callback.renderingFinished(context, selectedObject);
 			}
 		}
 	}
@@ -720,7 +720,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			}
 			// notify callbacks that the rendering was finished
 			for (final DetailPanelRenderingFinishedCallback callback : detailPanelRenderingFinishedCallbacks) {
-				callback.renderingFinished(eObject);
+				callback.renderingFinished(modelContext, eObject);
 			}
 		}
 	}
