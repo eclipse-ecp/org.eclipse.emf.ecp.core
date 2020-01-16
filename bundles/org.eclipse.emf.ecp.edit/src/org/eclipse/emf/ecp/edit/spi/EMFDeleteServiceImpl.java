@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2020 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
- * Christian W. Damus - bug 552385
+ * Christian W. Damus - bugs 552385, 559267
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi;
 
@@ -21,10 +21,12 @@ import java.util.stream.StreamSupport;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
@@ -123,13 +125,7 @@ public class EMFDeleteServiceImpl implements ConditionalDeleteService {
 		boolean result;
 
 		if (editingDomain != null) {
-			Collection<?> collection;
-			if (objects instanceof Collection<?>) {
-				collection = (Collection<?>) objects;
-			} else {
-				collection = StreamSupport.stream(objects.spliterator(), false).collect(Collectors.toList());
-			}
-
+			final Collection<?> collection = asCollection(objects);
 			final Command deleteCommand = DeleteCommand.create(editingDomain, collection);
 			result = deleteCommand.canExecute();
 		} else {
@@ -143,6 +139,43 @@ public class EMFDeleteServiceImpl implements ConditionalDeleteService {
 					break;
 				}
 			}
+		}
+
+		return result;
+	}
+
+	private static <T> Collection<T> asCollection(Iterable<T> iterable) {
+		Collection<T> result;
+
+		if (iterable instanceof Collection<?>) {
+			result = (Collection<T>) iterable;
+		} else {
+			result = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean canRemove(Object owner, Object feature, Iterable<?> objects) {
+		if (!(feature instanceof EReference)) {
+			return canDelete(objects);
+		}
+
+		final EReference reference = (EReference) feature;
+		if (reference.isContainment()) {
+			return canDelete(objects);
+		}
+
+		boolean result;
+
+		if (editingDomain != null) {
+			final Collection<?> collection = asCollection(objects);
+			final Command removeCommand = RemoveCommand.create(editingDomain, owner, reference, collection);
+			result = removeCommand.canExecute();
+		} else {
+			// No commands? Then there's nothing to say 'no'
+			result = true;
 		}
 
 		return result;

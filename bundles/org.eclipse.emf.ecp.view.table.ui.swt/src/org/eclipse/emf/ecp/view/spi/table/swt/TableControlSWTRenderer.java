@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2020 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -11,7 +11,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
- * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592, 552385
+ * Christian W. Damus - bugs 544116, 544537, 545686, 530314, 547271, 547787, 548592, 552385, 559267
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -638,8 +638,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 				@Override
 				public boolean canExecute() {
+					final Setting setting = getActionContext().getSetting();
 					return super.canExecute() && ConditionalDeleteService.getDeleteService(getViewModelContext())
-						.canDelete(getActionContext().getViewer().getStructuredSelection().toList());
+						.canRemove(setting.getEObject(), setting.getEStructuralFeature(),
+							getActionContext().getViewer().getStructuredSelection().toList());
 				}
 			};
 
