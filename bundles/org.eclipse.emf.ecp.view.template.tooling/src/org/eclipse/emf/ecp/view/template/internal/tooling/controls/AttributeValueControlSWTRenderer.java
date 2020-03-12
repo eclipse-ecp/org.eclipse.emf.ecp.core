@@ -34,7 +34,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -89,38 +89,24 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 			VT_VIEW_TEMPLATEPROVIDER);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
-	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label label = (Label) Composite.class.cast(control).getChildren()[0];
 		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.text().observe(label),
-			getModelValue(), withPreSetValidation(new UpdateValueStrategy()), new UpdateValueStrategy() {
+			getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy<String, String>(UpdateValueStrategy.POLICY_NEVER)),
+			new UpdateValueStrategy<String, String>() {
 
-				/**
-				 * {@inheritDoc}
-				 *
-				 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
-				 */
 				@Override
-				public Object convert(Object value) {
-					return super.convert(value).toString();
+				public String convert(String value) {
+					return value;
 				}
 
 			});
 		return new Binding[] { binding };
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
-	 */
 	@Override
 	protected Control createSWTControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -134,11 +120,6 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING).grab(false, false).applyTo(button);
 
 		button.addSelectionListener(new SelectionAdapter() {
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
@@ -166,11 +147,6 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		return composite;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
-	 */
 	@Override
 	protected String getUnsetText() {
 		return Messages.AttributeValueControlSWTRenderer_UnsetAttributeMessage;

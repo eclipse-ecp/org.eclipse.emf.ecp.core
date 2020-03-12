@@ -42,6 +42,7 @@ Import-Package: javax.inject;version="1.0.0",
  org.eclipse.emfforms.spi.common.report;version="[1.24.0,1.24.1)",
  org.eclipse.emfforms.spi.core.services.databinding.emf;version="[1.24.0,1.24.1)",
  org.eclipse.jface.databinding.swt;version="0.0.0",
+ org.eclipse.jface.databinding.swt.typed;version="0.0.0",
  org.osgi.service.component.annotations;version="1.2.0"
 Automatic-Module-Name: org.eclipse.emf.ecp.view.template.tooling
 Service-Component: OSGI-INF/DmrSelectorSegmentDmrControlSWTRendererService.xml
