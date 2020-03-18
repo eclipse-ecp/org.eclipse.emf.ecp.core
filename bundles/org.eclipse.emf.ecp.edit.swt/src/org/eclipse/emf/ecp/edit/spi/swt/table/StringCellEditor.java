@@ -69,6 +69,7 @@ public class StringCellEditor extends StringBasedCellEditor {
 
 	@Override
 	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
+		super.instantiate(feature, viewModelContext);
 		eStructuralFeature = feature;
 	}
 

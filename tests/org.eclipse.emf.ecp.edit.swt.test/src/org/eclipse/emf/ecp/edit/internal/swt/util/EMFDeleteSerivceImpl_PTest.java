@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2020 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
- * Christian W. Damus - bug 552385
+ * Christian W. Damus - bugs 552385, 559267
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -46,6 +47,7 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Game;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -200,6 +202,60 @@ public class EMFDeleteSerivceImpl_PTest {
 		assertThat("cannot delete a contained object", deleteService.canDelete(player1), is(true));
 
 		assertThat("can delete a root object", deleteService.canDelete(league), is(false));
+	}
+
+	@Test
+	public void canRemoveElement_containment() {
+		assertThat("can delete returns false",
+			deleteService.canRemove(league, BowlingPackage.Literals.LEAGUE__PLAYERS, player1), is(true));
+
+		denyDeletion = player1;
+		assertThat("can delete returns true",
+			deleteService.canRemove(league, BowlingPackage.Literals.LEAGUE__PLAYERS, player1), is(false));
+	}
+
+	@Test
+	public void canRemoveElement_crossReferenced() {
+		assertThat("cannot remove a referenced object",
+			deleteService.canRemove(tournament, BowlingPackage.Literals.TOURNAMENT__PLAYERS, player1), is(true));
+	}
+
+	@Test
+	public void canRemoveElement_notReferenced() {
+		tournament.getPlayers().remove(player3);
+
+		assertThat("cannot remove a referenced object",
+			deleteService.canRemove(tournament, BowlingPackage.Literals.TOURNAMENT__PLAYERS, player3), is(false));
+	}
+
+	@Test
+	public void canRemoveElement_crossReferenced_readOnly() {
+		final Resource readOnly = resource.getResourceSet().createResource(URI.createURI("READ_ONLY"));
+		final League others = BowlingFactory.eINSTANCE.createLeague();
+		others.setName("The Others");
+		others.getPlayers().add(player3);
+		domain.setResourceToReadOnlyMap(new HashMap<>());
+		domain.getResourceToReadOnlyMap().put(readOnly, true);
+
+		assertThat("cannot remove a referenced object",
+			deleteService.canRemove(tournament, BowlingPackage.Literals.TOURNAMENT__PLAYERS, player3), is(true));
+	}
+
+	@Test
+	public void testRemove_noEditingDomain() {
+		// Disconnect everything from the editing domain
+		resource.getContents().clear();
+		resource.getResourceSet().eAdapters().clear();
+		resource.getResourceSet().getResources().clear();
+		resource.unload();
+		resource.eAdapters().clear();
+
+		// Re-initialize to forget the editing domain
+		deleteService.dispose();
+		deleteService.instantiate(context);
+
+		assertThat("cannot remove a referenced object",
+			deleteService.canRemove(tournament, BowlingPackage.Literals.TOURNAMENT__PLAYERS, player1), is(true));
 	}
 
 }

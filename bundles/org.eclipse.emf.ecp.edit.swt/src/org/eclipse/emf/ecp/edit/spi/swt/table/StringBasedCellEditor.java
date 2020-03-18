@@ -16,6 +16,8 @@ package org.eclipse.emf.ecp.edit.spi.swt.table;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.util.PreSetValidationStrategy;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
@@ -58,11 +60,6 @@ public abstract class StringBasedCellEditor extends TextCellEditor implements EC
 		super(parent, style);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.viewers.CellEditor#activate(org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent)
-	 */
 	@Override
 	public void activate(ColumnViewerEditorActivationEvent event) {
 		initialValue = text.getText();
@@ -85,11 +82,6 @@ public abstract class StringBasedCellEditor extends TextCellEditor implements EC
 		super.fireCancelEditor();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.viewers.TextCellEditor#doSetFocus()
-	 */
 	@Override
 	protected void doSetFocus() {
 		super.doSetFocus();
@@ -125,5 +117,12 @@ public abstract class StringBasedCellEditor extends TextCellEditor implements EC
 				.valueOf(character)
 				.toString()
 				.matches("[\\.:,;\\-_#\'+*~!?§$%&/()\\[\\]\\{\\}=\\\\\"]"); //$NON-NLS-1$
+	}
+
+	@Override
+	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
+		if (viewModelContext.hasService(EMFFormsControlProcessorService.class)) {
+			viewModelContext.getService(EMFFormsControlProcessorService.class).process(text, null, viewModelContext);
+		}
 	}
 }

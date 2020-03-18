@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.23.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.24.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.eclipse.emf.ecp.application.e3/icons/eclipse_lg.gif"/>
@@ -68,11 +68,12 @@
    </features>
 
    <configurations>
+      <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.emf.ecp.emfstore.localserver" autoStart="true" startLevel="0" />
-      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="3" />
-      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
-      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <property name="eclipse.buildId" value="${BUILD_NUMBER}" />
    </configurations>
 

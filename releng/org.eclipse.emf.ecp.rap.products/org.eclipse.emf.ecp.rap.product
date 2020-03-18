@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ECP Rap Demo" uid="org.eclipse.emf.ecp.rap.demo" version="1.23.0.qualifier" useFeatures="false" includeLaunchers="false">
+<product name="ECP Rap Demo" uid="org.eclipse.emf.ecp.rap.demo" version="1.24.0.qualifier" useFeatures="false" includeLaunchers="false">
 
    <aboutInfo>
       <image path="icons/eclipse_lg.gif"/>
@@ -160,7 +160,6 @@
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.equinox.servletbridge"/>
       <plugin id="org.eclipse.equinox.transforms.hook" fragment="true"/>
-      <plugin id="org.eclipse.equinox.util"/>
       <plugin id="org.eclipse.equinox.weaving.hook" fragment="true"/>
       <plugin id="org.eclipse.help"/>
       <plugin id="org.eclipse.net4j.util"/>

@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.edit.spi.swt.table;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -24,6 +26,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.model.testData.TestDataFactory;
 import org.eclipse.emf.ecp.edit.internal.model.testData.TestDataPackage;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.junit.After;
@@ -32,6 +36,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.mockito.Mockito;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @RunWith(Parameterized.class)
@@ -71,6 +76,8 @@ public class StringCellEditor_PTest {
 	private final boolean valid;
 	private final Object expectedValue;
 
+	private final ViewModelContext context = Mockito.mock(ViewModelContext.class);
+
 	public StringCellEditor_PTest(EStructuralFeature feature, EObject eObject, Object newValue, Object expectedValue,
 		boolean valid) {
 		this.feature = feature;
@@ -88,7 +95,7 @@ public class StringCellEditor_PTest {
 		model = EMFProperties.value(feature).observe(realm, eObject);
 		final Shell shell = new Shell();
 		editor = new StringCellEditor(shell);
-		editor.instantiate(feature, null);
+		editor.instantiate(feature, context);
 		target = editor.getValueProperty().observe(editor);
 		dbc.bindValue(target, model, editor.getTargetToModelStrategy(dbc), editor.getModelToTargetStrategy(dbc));
 	}
@@ -111,5 +118,14 @@ public class StringCellEditor_PTest {
 		} else {
 			assertNull(model.getValue());
 		}
+	}
+
+	@Test
+	public void testProcessorCalled() {
+		final EMFFormsControlProcessorService dummyProcessor = mock(EMFFormsControlProcessorService.class);
+		when(context.getService(EMFFormsControlProcessorService.class)).thenReturn(dummyProcessor);
+		when(context.hasService(EMFFormsControlProcessorService.class)).thenReturn(Boolean.TRUE);
+		editor.instantiate(feature, context);
+		Mockito.verify(dummyProcessor).process(editor.getControl(), null, context);
 	}
 }

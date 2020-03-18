@@ -8,6 +8,13 @@
                 <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.DummyDomainExpander"/>
             </message_arguments>
         </filter>
+        <filter comment="Since Tag was added later as it was forgot initially" id="1108344834">
+            <message_arguments>
+                <message_argument value="1.22"/>
+                <message_argument value="1.24"/>
+                <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.DummyDomainExpander"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emfforms/swt/internal/reference/table/SelectionTableCompositeStrategyProvider.java" type="org.eclipse.emfforms.swt.internal.reference.table.SelectionTableCompositeStrategyProvider">
         <filter comment="Fixed since tags that were missing" id="1108344834">
@@ -17,12 +24,26 @@
                 <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.SelectionTableCompositeStrategyProvider"/>
             </message_arguments>
         </filter>
+        <filter comment="Since Tag was added later as it was forgot initially" id="1108344834">
+            <message_arguments>
+                <message_argument value="1.22"/>
+                <message_argument value="1.24"/>
+                <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.SelectionTableCompositeStrategyProvider"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emfforms/swt/internal/reference/table/TableSelectionCompositeImpl.java" type="org.eclipse.emfforms.swt.internal.reference.table.TableSelectionCompositeImpl">
         <filter comment="Fixed since tags that were missing" id="1108344834">
             <message_arguments>
                 <message_argument value="1.22"/>
                 <message_argument value="1.23"/>
+                <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.TableSelectionCompositeImpl"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Since Tag was added later as it was forgot initially" id="1108344834">
+            <message_arguments>
+                <message_argument value="1.22"/>
+                <message_argument value="1.24"/>
                 <message_argument value="org.eclipse.emfforms.swt.internal.reference.table.TableSelectionCompositeImpl"/>
             </message_arguments>
         </filter>

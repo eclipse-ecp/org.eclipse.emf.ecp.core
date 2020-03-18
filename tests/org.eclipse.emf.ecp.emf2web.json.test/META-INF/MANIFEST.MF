@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF To Web JSON Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.emf2web.json.test
-Bundle-Version: 1.23.0.qualifier
+Bundle-Version: 1.24.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Fragment-Host: org.eclipse.emf.ecp.emf2web;bundle-version="[1.23.0,1.24.0)"
-Export-Package: org.eclipse.emf.ecp.emf2web.json.controller.xtend;version="1.23.0",
- org.eclipse.emf.ecp.emf2web.json.generator.xtend;version="1.23.0"
+Fragment-Host: org.eclipse.emf.ecp.emf2web;bundle-version="[1.24.0,1.24.1)"
+Export-Package: org.eclipse.emf.ecp.emf2web.json.controller.xtend;version="1.24.0",
+ org.eclipse.emf.ecp.emf2web.json.generator.xtend;version="1.24.0"
 Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
  com.google.gson;bundle-version="[2.2.0,3.0.0)",
- org.eclipse.emf.ecp.emf2web.json;bundle-version="[1.23.0,1.24.0)",
- org.eclipse.emfforms.view.controlgrid.model;bundle-version="[1.23.0,1.24.0)"
+ org.eclipse.emf.ecp.emf2web.json;bundle-version="[1.24.0,1.24.1)",
+ org.eclipse.emfforms.view.controlgrid.model;bundle-version="[1.24.0,1.24.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.emf2web.json.test

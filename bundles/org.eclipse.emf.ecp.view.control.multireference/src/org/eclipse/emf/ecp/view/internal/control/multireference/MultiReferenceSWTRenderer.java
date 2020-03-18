@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2020 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -12,7 +12,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - use data binding services
  * Martin Fleck - bug 487101
- * Christian W. Damus - bugs 527736, 548592, 552385
+ * Christian W. Damus - bugs 527736, 548592, 552385, 559267
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
@@ -138,6 +138,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * The {@link EObject} that contains the elements rendered in this multi reference.
 	 */
 	private Optional<EObject> cachedContainer;
+
+	/**
+	 * The structural feature presented in this multi reference control.
+	 */
+	private Optional<EStructuralFeature> cachedFeature;
 
 	/**
 	 * A user-presentable display name for the reference, used in tool-tips.
@@ -781,8 +786,10 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private void enableDeleteButton(boolean baseEnable, int listSize, int selectionIndex) {
 		if (btnDelete != null && showDeleteButton()) {
 			btnDelete.setEnabled(baseEnable && listSize > 0 && selectionIndex != -1
+				&& getContainer().isPresent() && cachedFeature.isPresent()
 				&& ConditionalDeleteService.getDeleteService(getViewModelContext())
-					.canDelete(tableViewer.getStructuredSelection().toList()));
+					.canRemove(getContainer().get(), cachedFeature.get(),
+						tableViewer.getStructuredSelection().toList()));
 		}
 	}
 
@@ -822,6 +829,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Composite buttonComposite = new Composite(parent, SWT.NONE);
 
 		final EStructuralFeature structuralFeature = getEStructuralFeature();
+		cachedFeature = Optional.ofNullable(structuralFeature);
 
 		int nrButtons = 0;
 

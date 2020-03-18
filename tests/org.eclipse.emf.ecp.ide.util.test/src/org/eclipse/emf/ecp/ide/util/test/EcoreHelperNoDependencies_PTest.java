@@ -119,4 +119,31 @@ public class EcoreHelperNoDependencies_PTest {
 			packageRegistry.containsKey("a.nsuri"));
 	}
 
+	@Test
+	public void testMultipleRegistration() throws IOException {
+		// check initial setup
+		assertFalse("Package is already in the registry!",
+			packageRegistry.containsKey("a.nsuri"));
+
+		// register
+		EcoreHelper.registerEcore(aEcorePath);
+		assertTrue("Package not in the registry!",
+			packageRegistry.containsKey("a.nsuri"));
+
+		// register a second time
+		EcoreHelper.registerEcore(aEcorePath);
+		assertTrue("Package not in the registry!",
+			packageRegistry.containsKey("a.nsuri"));
+
+		// unregister
+		EcoreHelper.unregisterEcore(aEcorePath);
+		assertTrue("Package not in the registry!",
+			packageRegistry.containsKey("a.nsuri"));
+
+		// unregister a second time
+		EcoreHelper.unregisterEcore(aEcorePath);
+		assertFalse("Package is still in the registry!",
+			packageRegistry.containsKey("a.nsuri"));
+	}
+
 }

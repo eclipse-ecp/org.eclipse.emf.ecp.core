@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2020 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,7 +10,7 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
- * Christian W. Damus - bugs 527686, 548592, 549565
+ * Christian W. Damus - bugs 527686, 548592, 549565, 559116
  ******************************************************************************/
 package org.eclipse.emfforms.swt.treemasterdetail.test;
 
@@ -19,6 +19,7 @@ import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withTe
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget;
 import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
@@ -45,6 +46,7 @@ import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.view.spi.common.callback.ViewModelPropertiesUpdateCallback;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
@@ -63,6 +65,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.InitialSelectionProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.DetailPanelRenderingFinishedCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.bindings.keys.IKeyLookup;
 import org.eclipse.jface.bindings.keys.KeyStroke;
@@ -1001,9 +1004,107 @@ public class TreeMasterDetail_PTest {
 		assertThat("Feature not revealed", bot.checkBox().isActive(), is(true));
 	}
 
+	@Test
+	public void detailRenderingCallback() throws InterruptedException {
+		// Set up the test data
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		final Player alice = BowlingFactory.eINSTANCE.createPlayer();
+		final Player bob = BowlingFactory.eINSTANCE.createPlayer();
+		alice.setName(ALICE);
+		bob.setName(BOB);
+		league.getPlayers().add(alice);
+		league.getPlayers().add(bob);
+
+		// Create the test fixture
+		Display.getDefault().syncExec(() -> {
+			composite = TreeMasterDetailSWTFactory
+				.fillDefaults(shell, SWT.NONE, league)
+				.customizeInitialSelection(new InitialSelectionProvider() {
+					@Override
+					public EObject getInitialSelection(Object input) {
+						return alice;
+					}
+				})
+				// Display.timerExec doesn't work in the tests on some platforms
+				.customizeUpdateDelay(0)
+				.create();
+			GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+			shell.open();
+		});
+
+		SWTTestUtil.waitForUIThread();
+
+		// Add a listener
+		final AtomicReference<Object> rendered = new AtomicReference<>();
+		composite.registerDetailPanelRenderingFinishedCallback(rendered::set);
+
+		// Select another object
+		Display.getDefault().syncExec(() -> composite.selectAndReveal(bob));
+
+		SWTTestUtil.waitForUIThread();
+
+		// Wait for the selection change
+		bot.waitUntil(waitForWidget(both(widgetOfType(Text.class)).and(withText(BOB))));
+
+		// Assert that our listener was called
+		assertThat("Rendering call-back not invoked", rendered.get(), is(bob));
+	}
+
+	@Test
+	public void detailRenderingCallback_withContext() throws InterruptedException {
+		// Set up the test data
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		final Player alice = BowlingFactory.eINSTANCE.createPlayer();
+		final Player bob = BowlingFactory.eINSTANCE.createPlayer();
+		alice.setName(ALICE);
+		bob.setName(BOB);
+		league.getPlayers().add(alice);
+		league.getPlayers().add(bob);
+
+		// Create the test fixture
+		Display.getDefault().syncExec(() -> {
+			composite = TreeMasterDetailSWTFactory
+				.fillDefaults(shell, SWT.NONE, league)
+				.customizeInitialSelection(new InitialSelectionProvider() {
+					@Override
+					public EObject getInitialSelection(Object input) {
+						return alice;
+					}
+				})
+				// Display.timerExec doesn't work in the tests on some platforms
+				.customizeUpdateDelay(0)
+				.create();
+			GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+			shell.open();
+		});
+
+		SWTTestUtil.waitForUIThread();
+
+		// Add a listener
+		final AtomicReference<ViewModelContext> detailContext = new AtomicReference<>();
+		final AtomicReference<Object> rendered = new AtomicReference<>();
+		composite
+			.registerDetailPanelRenderingFinishedCallback(DetailPanelRenderingFinishedCallback.adapt((ctx, obj) -> {
+				detailContext.set(ctx);
+				rendered.set(obj);
+			}));
+
+		// Select another object
+		Display.getDefault().syncExec(() -> composite.selectAndReveal(bob));
+
+		SWTTestUtil.waitForUIThread();
+
+		// Wait for the selection change
+		bot.waitUntil(waitForWidget(both(widgetOfType(Text.class)).and(withText(BOB))));
+
+		// Assert that our listener was called
+		assertThat("Rendering call-back not invoked", rendered.get(), is(bob));
+		assertThat("Rendering call-back not invoked for context", detailContext.get(), notNullValue());
+		assertThat("Wrong view model context", detailContext.get().getDomainModel(), is(bob));
+	}
+
 	// TODO test set selection programmatically
 	// TODO test get editing domain
-	// TODO test rendering finished callback
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
