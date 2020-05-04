@@ -9,8 +9,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>1.2.0</tycho-version>
-		<tycho-extras-version>1.2.0</tycho-extras-version>
+		<tycho-version>1.4.0</tycho-version>
+		<tycho-extras-version>1.4.0</tycho-extras-version>
 		<javadoc-version>2.10.3</javadoc-version>
 		<ecp-version>1.25.0</ecp-version>
 		<javadoc-title>EMF Client Platform ${ecp-version} API</javadoc-title>
