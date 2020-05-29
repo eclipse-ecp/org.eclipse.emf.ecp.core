@@ -271,19 +271,33 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 
 	}
 
-	private void handleRemove(EObject oldValue, DiagnosticCache cache) {
+	/**
+	 * Remove the given object from the cache.
+	 *
+	 * @param object the EObject to remove
+	 * @param cache the DiagnosticCache from which the object should be removed
+	 * @since 1.25
+	 */
+	protected void handleRemove(EObject object, DiagnosticCache cache) {
 		final Set<EObject> toRemove = new LinkedHashSet<EObject>();
-		toRemove.add(oldValue);
-		final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(oldValue, false);
+		toRemove.add(object);
+		final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(object, false);
 		while (iterator.hasNext()) {
 			toRemove.add(iterator.next());
 		}
-		for (final EObject object : toRemove) {
-			cache.remove(object);
+		for (final EObject eObject : toRemove) {
+			cache.remove(eObject);
 		}
 	}
 
-	private static Diagnostic getDiagnostic(Object object) {
+	/**
+	 * Validate given object and return the result of the validation.
+	 *
+	 * @param object the object to validate
+	 * @return the validation result
+	 * @since 1.25
+	 */
+	protected static Diagnostic getDiagnostic(Object object) {
 		if (!EObject.class.isInstance(object)) {
 			return Diagnostic.OK_INSTANCE;
 		}
@@ -302,9 +316,16 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 		return diagnostics;
 	}
 
-	private void notifyValidationListeners(final Set<EObject> update, boolean struc) {
+	/**
+	 * Notify the registered validation listeners that a validation occurred.
+	 *
+	 * @param updatedObjects the objects that changed
+	 * @param potentialStructuralChange whether the validation was caused by a structural change
+	 * @since 1.25
+	 */
+	protected void notifyValidationListeners(final Set<EObject> updatedObjects, boolean potentialStructuralChange) {
 		for (final ValidationListener validationListener : validationListeners) {
-			validationListener.revalidationOccurred(update, struc);
+			validationListener.revalidationOccurred(updatedObjects, potentialStructuralChange);
 		}
 	}
 
