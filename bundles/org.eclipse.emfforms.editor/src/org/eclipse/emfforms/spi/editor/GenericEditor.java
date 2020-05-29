@@ -783,6 +783,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			getDiagnosticCache().dispose();
 		}
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+		getSite().getPage().removePartListener(partListener);
 		super.dispose();
 	}
 
