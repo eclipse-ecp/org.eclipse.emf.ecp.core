@@ -33,7 +33,7 @@
 		
 		<target-rcp>ecp</target-rcp>
 		<target-rap>ecpRAP</target-rap>
-		<xtend-version>2.15.0</xtend-version>
+		<xtend-version>2.22.0</xtend-version>
 	</properties>
 
 	<profiles>
