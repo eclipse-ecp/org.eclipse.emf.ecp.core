@@ -20,9 +20,9 @@
 		<jarsigner-version>1.1.0</jarsigner-version>
 		<mav-surefire-version>2.20.1</mav-surefire-version>
 		<junit-version>4.12</junit-version>
-		<mav-checkstyle-version>3.0.0</mav-checkstyle-version>
+		<mav-checkstyle-version>3.1.1</mav-checkstyle-version>
 		<checkstyle-version>8.8</checkstyle-version>
-		<jacoco-version>0.8.0</jacoco-version>
+		<jacoco-version>0.8.5</jacoco-version>
 		
 		<jacoco.percentage.instruction>0.5</jacoco.percentage.instruction>
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
