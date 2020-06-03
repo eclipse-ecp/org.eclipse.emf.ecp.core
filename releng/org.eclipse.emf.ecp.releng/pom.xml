@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
 		<jarsigner-version>1.1.0</jarsigner-version>
-		<mav-surefire-version>2.20.1</mav-surefire-version>
+		<mav-surefire-version>2.22.2</mav-surefire-version>
 		<junit-version>4.12</junit-version>
 		<mav-checkstyle-version>3.1.1</mav-checkstyle-version>
 		<checkstyle-version>8.8</checkstyle-version>
