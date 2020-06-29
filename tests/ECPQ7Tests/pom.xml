@@ -33,8 +33,6 @@
 	</pluginRepositories>
 	<modules>
 		<module>EPPTests</module>
-		<module>NonEPPTests</module>
-		<module>NonEPPNebula</module>
 	</modules>
 	
 	<build>
