@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="ECP RAP with ECP" sequenceNumber="1584549086">
+<target name="ECP RAP with ECP" sequenceNumber="1593418510">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
@@ -14,7 +14,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/4.15"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.16"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.mockito.mockito-core-hamcrest-modified" version="1.9.5"/>
@@ -65,7 +65,7 @@
       <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
       <unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
-      <repository location="http://download.eclipse.org/releases/2020-03"/>
+      <repository location="http://download.eclipse.org/releases/2020-06"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.emfstore.client.ui.rap.feature.feature.group" version="0.0.0"/>
@@ -81,7 +81,7 @@
       <unit id="org.eclipse.emf.ecp.rap.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.ecp.rap.util.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/ecp/releases/releases_target_124"/>
+      <repository location="http://download.eclipse.org/ecp/releases/releases_target_125"/>
     </location>
   </locations>
 </target>
