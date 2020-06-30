@@ -23,7 +23,6 @@
 		</profile>
 	</profiles>
 	<properties>
-		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_19</emfstore-update-site>
 		<aut-path>.</aut-path>
 	</properties>
 	<build>
@@ -69,20 +68,8 @@
 						
 						<injections>
 							<injection>
-								<site>${emfstore-update-site}</site>
-								<features>
-									<feature>org.eclipse.emf.emfstore.server.feature.feature.group</feature>
-									<feature>org.eclipse.emf.emfstore.example.feature.feature.group</feature>
-									<feature>org.eclipse.emf.emfstore.client.feature.feature.group</feature>
-									<feature>org.eclipse.emf.emfstore.common.feature.feature.group</feature>
-									<feature>org.eclipse.emf.emfstore.client.transaction.feature.feature.group</feature>
-									<feature>org.eclipse.emf.emfstore.client.ui.feature.feature.group</feature>
-								</features>
-							</injection>
-							<injection>
 								<site>${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</site>
 								<features>
-									<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
 									<feature>org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group</feature>
 									<feature>org.eclipse.emfforms.view.annotation.feature.feature.group</feature>
 									<feature>org.eclipse.emfforms.datatemplate.ide.feature.feature.group</feature>
@@ -98,8 +85,6 @@
 							<injection>
 								<site>http://download.eclipse.org/releases/${eclipse-name}</site>
 								<features>
-									<feature>org.eclipse.net4j.sdk.feature.group</feature>
-									<feature>org.eclipse.emf.cdo.epp.feature.group</feature>
 									<feature>org.eclipse.equinox.core.feature.feature.group</feature>
 									<feature>org.eclipse.ocl.all.sdk.feature.group</feature>
 									<feature>org.eclipse.emf.feature.group</feature>
