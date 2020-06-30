@@ -13,6 +13,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test.controls;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +47,9 @@ import org.eclipse.emf.emfstore.bowling.Gender;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emf.emfstore.bowling.TournamentType;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotDateTime;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -100,13 +105,17 @@ public class TableControlSWTBot_PTest extends ECPCommonSWTBotTest {
 	 */
 	@Override
 	public void logic() {
+		bot.activeShell().setFocus();
+		bot.waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget(widgetOfType(Button.class)));
 		final SWTBotButton addButton = bot.button(0);
 		addButton.click();
 		addButton.click();
 
+		bot.waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget(widgetOfType(Table.class)));
 		final SWTBotTable table = bot.table();
-
+		table.select(0);
 		table.click(0, 1);
+		bot.waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget(widgetOfType(Text.class)));
 		SWTBotText text = bot.text();
 		text.setFocus();
 		text.setText("Maxl Morlock");

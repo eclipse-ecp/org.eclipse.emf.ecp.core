@@ -26,8 +26,8 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.test.common.spi.GCCollectable;
 import org.eclipse.jface.databinding.swt.DisplayRealm;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -61,7 +61,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 			@Override
 			public Shell run() {
 				final Shell shell = new Shell(display);
-				shell.setLayout(new FillLayout());
+				GridLayoutFactory.fillDefaults().applyTo(shell);
 				return shell;
 			}
 		});
@@ -130,6 +130,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 							composite.setLayoutData(gridData);
 
 							shell.open();
+							shell.pack();
 							return null;
 						} catch (final NoRendererFoundException e) {
 							fail(e.getMessage());
