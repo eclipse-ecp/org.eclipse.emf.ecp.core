@@ -23,6 +23,7 @@
 		</profile>
 	</profiles>
 	<properties>
+		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_19</emfstore-update-site>
 		<aut-path>.</aut-path>
 	</properties>
 	<build>
@@ -67,6 +68,12 @@
 						<explicit>${aut-path}/aut/${eclipse-name}_${eclipse-sr}.tar.gz</explicit>
 						
 						<injections>
+						<injection>
+								<site>${emfstore-update-site}</site>
+								<features>
+									<feature>org.eclipse.emf.emfstore.example.feature.feature.group</feature>
+								</features>
+							</injection>
 							<injection>
 								<site>${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</site>
 								<features>
