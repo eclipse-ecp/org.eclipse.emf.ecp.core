@@ -44,6 +44,11 @@
 						<extraRequirements>
 							<requirement>
 								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.emfforms.runtime.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
 								<id>org.eclipse.emf.ecp.view.dynamictree.feature</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
