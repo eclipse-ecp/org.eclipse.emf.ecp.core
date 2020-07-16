@@ -263,11 +263,31 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 	 *
 	 * @param element the changed element
 	 * @param cache the cache
+	 * @deprecated please use {@link DiagnosticCache#updateCache(Set, DiagnosticCache)} instead
 	 */
+	@Deprecated
 	protected void updateCache(EObject element, DiagnosticCache cache) {
 		final Diagnostic diagnostic = getDiagnostic(element);
 		final Set<EObject> update = cache.update(element, diagnostic);
 		notifyValidationListeners(update, true);
+
+	}
+
+	/**
+	 * Updates the cache and notifies listeners that this was a potential structure change.
+	 *
+	 * @param elements the changed elements
+	 * @param cache the cache
+	 * @since 1.25
+	 */
+	protected void updateCache(Set<EObject> elements, DiagnosticCache cache) {
+		final Set<EObject> updates = new LinkedHashSet<EObject>(elements);
+		for (final EObject element : elements) {
+			final Diagnostic diagnostic = getDiagnostic(element);
+			final Set<EObject> update = cache.update(element, diagnostic);
+			updates.addAll(update);
+		}
+		notifyValidationListeners(updates, true);
 
 	}
 
@@ -288,6 +308,7 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 		for (final EObject eObject : toRemove) {
 			cache.remove(eObject);
 		}
+		notifyValidationListeners(toRemove, true);
 	}
 
 	/**
@@ -334,12 +355,31 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 	 *
 	 * @param element the element
 	 * @param cache the cache
+	 * @deprecated please use {@link DiagnosticCache#updateCacheWithoutRefresh(Set, DiagnosticCache)} instead
 	 */
+	@Deprecated
 	protected void updateCacheWithoutRefresh(EObject element, DiagnosticCache cache) {
 		final Diagnostic diagnostic = getDiagnostic(element);
 		final Set<EObject> update = cache.update(element, diagnostic);
 		notifyValidationListeners(update, false);
 		notifyValidationListeners(Collections.singleton(element), false);
+	}
+
+	/**
+	 * Updates the cache and notifes listeners that this change was not a structure change.
+	 *
+	 * @param elements the elements
+	 * @param cache the cache
+	 * @since 1.25
+	 */
+	protected void updateCacheWithoutRefresh(Set<EObject> elements, DiagnosticCache cache) {
+		final Set<EObject> updates = new LinkedHashSet<EObject>(elements);
+		for (final EObject element : elements) {
+			final Diagnostic diagnostic = getDiagnostic(element);
+			final Set<EObject> update = cache.update(element, diagnostic);
+			updates.addAll(update);
+		}
+		notifyValidationListeners(updates, false);
 	}
 
 	/**
@@ -456,7 +496,8 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 			if (!EObject.class.isInstance(notification.getNotifier())) {
 				return;
 			}
-			updateCacheWithoutRefresh(EObject.class.cast(notification.getNotifier()), DiagnosticCache.this);
+			updateCacheWithoutRefresh(Collections.singleton(EObject.class.cast(notification.getNotifier())),
+				DiagnosticCache.this);
 		}
 
 		void dispose() {
@@ -490,14 +531,18 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 				if (added.isEmpty() || !EObject.class.isInstance(added.get(0))) {
 					break;
 				}
+				final Set<EObject> toValidate = new LinkedHashSet<EObject>();
+				final Set<EObject> addedSet = new LinkedHashSet<EObject>();
 				for (final Object newValue : added) {
 					final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(EObject.class.cast(newValue),
 						false);
 					while (iterator.hasNext()) {
-						updateCacheWithoutRefresh(iterator.next(), DiagnosticCache.this);
+						toValidate.add(iterator.next());
 					}
-					updateCache(EObject.class.cast(newValue), DiagnosticCache.this);
+					addedSet.add(EObject.class.cast(newValue));
 				}
+				updateCacheWithoutRefresh(toValidate, DiagnosticCache.this);
+				updateCache(addedSet, DiagnosticCache.this);
 				break;
 
 			}
@@ -528,11 +573,13 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 			if (!EObject.class.isInstance(newValue)) {
 				return;
 			}
+			final Set<EObject> toValidate = new LinkedHashSet<EObject>();
 			final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(EObject.class.cast(newValue), false);
 			while (iterator.hasNext()) {
-				updateCacheWithoutRefresh(iterator.next(), DiagnosticCache.this);
+				toValidate.add(iterator.next());
 			}
-			updateCache(EObject.class.cast(newValue), DiagnosticCache.this);
+			updateCacheWithoutRefresh(toValidate, DiagnosticCache.this);
+			updateCache(Collections.singleton(EObject.class.cast(newValue)), DiagnosticCache.this);
 		}
 	}
 
