@@ -1055,6 +1055,16 @@ public class GridTable_PTest {
 			return null;
 		}
 
+		@Override
+		public void pause() {
+			// do nothing
+		}
+
+		@Override
+		public void reactivate() {
+			// do nothing
+		}
+
 	}
 
 	private static class PrintStreamWrapper extends PrintStream {
