@@ -254,7 +254,9 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	@Override
 	protected void dispose() {
 		super.dispose();
-		pushValue.dispose();
+		if (pushValue != null) {
+			pushValue.dispose();
+		}
 	}
 
 	/**
