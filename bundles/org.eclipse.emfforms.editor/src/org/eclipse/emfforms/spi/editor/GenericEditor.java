@@ -354,7 +354,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		if (getDiagnosticCache() == null || reloading) {
 			return;
 		}
-		if (markerJob.get() != null) {
+		if (markerJob != null && markerJob.get() != null) {
 			markerJob.get().cancel();
 			markerJob.compareAndSet(markerJob.get(), null);
 		}
