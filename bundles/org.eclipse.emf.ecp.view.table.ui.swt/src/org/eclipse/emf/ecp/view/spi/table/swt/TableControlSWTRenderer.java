@@ -57,6 +57,7 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -128,6 +129,7 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.BundleResolver;
+import org.eclipse.emfforms.spi.common.BundleResolver.NoBundleFoundException;
 import org.eclipse.emfforms.spi.common.BundleResolverFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -227,6 +229,7 @@ import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Widget;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -285,6 +288,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private final BundleResolver bundleResolver = BundleResolverFactory.createBundleResolver();
 	/** DO NOT USE DIRECTLY! Use {@link #getEnumeratorComparator()} instead. */
 	private LocalizedEnumeratorComparator enumeratorComparator;
+
+	private EMFFormsLocalizationService l10n;
+	private String referenceDisplayName;
 
 	/**
 	 * Legacy constructor for backwards compatibility.
@@ -3170,8 +3176,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private String formatTooltipText(EClass eClass, String messageKey) {
-		// final EClass clazz = ((EReference) setting.getEStructuralFeature()).getEReferenceType();
-		final String instanceName = eClass.getInstanceClass() == null ? "" : eClass.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		final String instanceName = getReferenceDisplayName(eClass);
 		return String.format(LocalizationServiceHelper.getString(
 			TableControlSWTRenderer.class, messageKey),
 			instanceName);
@@ -3208,4 +3213,35 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return columnFeatures[propertyIndex - regularColumnsStartIndex];
 	}
 
+	/**
+	 * Obtains a user-presentable name for the reference that I edit, to be used for example
+	 * in button tool-tips.
+	 *
+	 * @return the reference display name
+	 * @since 1.25
+	 */
+	protected String getReferenceDisplayName(EClassifier type) {
+		if (referenceDisplayName == null) {
+			if (l10n == null) {
+				// Maybe the view-model context has one
+				l10n = getViewModelContext().getService(EMFFormsLocalizationService.class);
+			}
+
+			if (type != null && l10n != null) {
+				try {
+					final Bundle editBundle = bundleResolver.getEditBundle(type);
+					referenceDisplayName = l10n.getString(editBundle, String.format("_UI_%s_type", type.getName())); //$NON-NLS-1$
+				} catch (final NoBundleFoundException ex) {
+					referenceDisplayName = type.getName();
+				}
+			}
+
+			if (referenceDisplayName == null) {
+				referenceDisplayName = LocalizationServiceHelper.getString(TableControlSWTRenderer.class,
+					MessageKeys.TableControlSWTRenderer_defaultReferenceDisplayName);
+			}
+		}
+
+		return referenceDisplayName;
+	}
 }
