@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _cFaf8LobEeqmM78lyJn8PQ
 Runtime-Version: 2.5.2.202006292356
-Save-Time: 7/1/20 1:10 AM
+Save-Time: 7/22/20 3:06 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -18,38 +18,37 @@ Entry-Name: .content
 
 get-view "EMF Forms Preview" | get-button "Automatically refresh Preview View" | click
 
-get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/Task.view" 
-| select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/Task.view" | get-menu -path "Open With/View Model Editor" | click
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" 
+| select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" | get-menu -path "Open With/View Model Editor" | click
 
-get-editor "Task.view" | get-tree | select View | get-menu -path "Generate Controls" | click
+get-editor "User.view" | get-tree | select View | get-menu -path "Generate Controls" | click
 with [get-window -class WizardDialog] {
     with [get-table] {
-        get-item -path "name : EString" | check
-        select "name : EString" | get-item -path "done : EBoolean" | check
-        select "done : EBoolean" | get-item -path "dueDate : EDate" | check
-        select "dueDate : EDate"
+        get-item -path "lastName : EString" | check
+        select "lastName : EString" | get-item -path "active : EBoolean" | check
+        select "active : EBoolean"
     }
     get-button Finish | click
 }
-with [get-editor "Task.view"] {
-    get-tree | select "View/Control name"
+with [get-editor "User.view"] {
+    get-tree | select "View/Control lastName"
     get-button -after [get-label Readonly] | check
 }
-with [get-editor "Task.view"] {
-    get-tree | select "View/Control done"
+with [get-editor "User.view"] {
+    get-tree | select "View/Control active"
     get-button -after [get-label Readonly] | check
 }
-get-view "EMF Forms Preview" | get-button -after [get-label Done] | get-property enablement | equals false | verify-true
-get-editor "Task.view" | get-button -after [get-label Readonly] | uncheck
-with [get-editor "Task.view"] {
-    get-tree | select "View/Control name"
+get-view "EMF Forms Preview" | get-button -after [get-label Active] | get-property enablement | equals false | verify-true
+get-editor "User.view" | get-button -after [get-label Readonly] | uncheck
+with [get-editor "User.view"] {
+    get-tree | select "View/Control lastName"
     get-button -after [get-label Readonly] | uncheck
 }
 with [get-view "EMF Forms Preview"] {
-    with [get-editbox -after [get-label Name]] {
+    with [get-editbox -after [get-label "Last Name*"]] {
         get-property enablement | equals true | verify-true
         get-property backgroundColor | equals "#FF0000" | verify-true
     }
-    get-button -after [get-label Done] | get-property enablement | equals true | verify-true
+    get-button -after [get-label Active] | get-property enablement | equals true | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
