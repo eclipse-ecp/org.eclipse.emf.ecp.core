@@ -6,15 +6,16 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _YFwVIEobEeiHp8RnhxiMOg
-Runtime-Version: 2.2.0.201706152316
-Save-Time: 4/27/18 4:31 PM
+Runtime-Version: 2.5.2.202006292356
+Save-Time: 7/23/20 10:53 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "barView/Bar.view" | double-click
+get-view "Project Explorer" | get-tree | select "barView/Bar.view" | get-menu 
+    -path "Open With/View Model Editor" | click
 get-window "Perform migration to the latest view model version?" | get-button Yes | click
 get-window "Migrate view models from workspace" | get-button Yes | click
 get-window "Migrate view models from workspace" | get-table | select "Foo.view \\[fooView\\/Foo.view\\]"
