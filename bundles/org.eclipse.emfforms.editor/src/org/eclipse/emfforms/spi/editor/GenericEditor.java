@@ -354,9 +354,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		if (getDiagnosticCache() == null || reloading) {
 			return;
 		}
-		if (markerJob != null && markerJob.get() != null) {
-			markerJob.get().cancel();
-			markerJob.compareAndSet(markerJob.get(), null);
+		final Job oldJob = markerJob.get();
+		if (oldJob != null) {
+			oldJob.cancel();
+			markerJob.compareAndSet(oldJob, null);
 		}
 
 		final Job job = Job.create(Messages.GenericEditor_ValidationMarkersJobName, monitor -> {
