@@ -38,6 +38,26 @@ public class ConcurrentLinkedSetQueue<E> extends ConcurrentLinkedQueue<E> {
 
 	private final Set<Object> concurrentSet = Collections.newSetFromMap(new ConcurrentHashMap<Object, Boolean>());
 
+	@Override
+	public void clear() {
+		super.clear();
+		concurrentSet.clear();
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		final boolean result = super.removeAll(c);
+		concurrentSet.removeAll(c);
+		return result;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		final boolean result = super.retainAll(c);
+		concurrentSet.retainAll(c);
+		return result;
+	}
+
 	/**
 	 * Adds the object to the tail of this queue, if not already contained.
 	 *
