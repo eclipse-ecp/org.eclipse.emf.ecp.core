@@ -491,6 +491,9 @@
                <iterate
                      ifEmpty="false"
                      operator="or">
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.util.ECPContainer">
+                  </instanceof>
                   <test
                         property="org.eclipse.emf.ecp.core.container.canDelete"
                         value="true">
