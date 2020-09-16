@@ -56,11 +56,6 @@ public class PreSetValidationStrategy extends EMFUpdateValueStrategy {
 		strategy = delegate;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#validateBeforeSet(java.lang.Object)
-	 */
 	@Override
 	public IStatus validateBeforeSet(Object value) {
 		final BundleContext bundleContext = FrameworkUtil
@@ -105,81 +100,45 @@ public class PreSetValidationStrategy extends EMFUpdateValueStrategy {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
-	 */
 	@Override
 	public Object convert(Object value) {
 		return strategy.convert(value);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#getUpdatePolicy()
-	 */
 	@Override
 	public int getUpdatePolicy() {
 		return strategy.getUpdatePolicy();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setAfterConvertValidator(org.eclipse.core.databinding.validation.IValidator)
-	 */
 	@Override
 	public UpdateValueStrategy setAfterConvertValidator(IValidator validator) {
+		super.setAfterConvertValidator(validator);
 		return strategy.setAfterConvertValidator(validator);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setBeforeSetValidator(org.eclipse.core.databinding.validation.IValidator)
-	 */
 	@Override
 	public UpdateValueStrategy setBeforeSetValidator(IValidator validator) {
+		super.setBeforeSetValidator(validator);
 		return strategy.setBeforeSetValidator(validator);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setAfterGetValidator(org.eclipse.core.databinding.validation.IValidator)
-	 */
 	@Override
 	public UpdateValueStrategy setAfterGetValidator(IValidator validator) {
+		super.setAfterGetValidator(validator);
 		return strategy.setAfterGetValidator(validator);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setConverter(org.eclipse.core.databinding.conversion.IConverter)
-	 */
 	@Override
 	public UpdateValueStrategy setConverter(IConverter converter) {
+		super.setConverter(converter);
 		return strategy.setConverter(converter);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#validateAfterConvert(java.lang.Object)
-	 */
 	@Override
 	public IStatus validateAfterConvert(Object value) {
 		return strategy.validateAfterConvert(value);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.databinding.UpdateValueStrategy#validateAfterGet(java.lang.Object)
-	 */
 	@Override
 	public IStatus validateAfterGet(Object value) {
 		return strategy.validateAfterGet(value);

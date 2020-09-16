@@ -8,11 +8,11 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<rcptt-runner-version>2.5.1-SNAPSHOT</rcptt-runner-version>
-		<rcptt-maven-version>2.5.1-SNAPSHOT</rcptt-maven-version>
+		<rcptt-runner-version>2.5.2-SNAPSHOT</rcptt-runner-version>
+		<rcptt-maven-version>2.5.2-SNAPSHOT</rcptt-maven-version>
 		<build_job>ecp-develop-full</build_job>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
-		<jacoco-version>0.7.9</jacoco-version>
+		<jacoco-version>0.8.5</jacoco-version>
 	</properties> 
 
 	<pluginRepositories>
@@ -33,8 +33,6 @@
 	</pluginRepositories>
 	<modules>
 		<module>EPPTests</module>
-		<module>NonEPPTests</module>
-		<module>NonEPPNebula</module>
 	</modules>
 	
 	<build>

@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature id="org.eclipse.emf.ecp.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
-   </feature>
-   <feature id="org.eclipse.emf.ecp.cdo.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
-   </feature>
-   <feature id="org.eclipse.emf.ecp.emfstore.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
-   </feature>
-   <feature id="org.eclipse.emf.ecp.workspace.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
-   </feature>
-   <feature id="org.eclipse.emf.ecp.e3.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
-   </feature>
-   <feature id="org.eclipse.emf.ecp.sdk.feature" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.sdk"/>
-   </feature>
    <feature id="org.eclipse.emf.ecp.view.custom.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
@@ -75,17 +57,11 @@
    <feature id="org.eclipse.emf.ecp.view.treemasterdetail.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
-   </feature>
    <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
    <feature id="org.eclipse.emf.ecp.emfforms.sdk.feature" version="0.0.0">
       <category name="org.eclipse.emf.ecp.sdk"/>
-   </feature>
-   <feature id="org.eclipse.emf.ecp.demo.e3.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
    </feature>
    <feature id="org.eclipse.emf.ecp.view.model.controls.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
@@ -152,9 +128,6 @@
    </feature>
    <feature id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
-   </feature>
-   <feature id="org.eclipse.emf.ecp.sdk.e4.feature" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.category"/>
    </feature>
    <feature id="org.eclipse.emfforms.swt.control.multiattribute.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>

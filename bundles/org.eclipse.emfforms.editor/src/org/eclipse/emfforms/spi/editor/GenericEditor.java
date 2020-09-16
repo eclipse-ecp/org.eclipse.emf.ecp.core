@@ -351,8 +351,13 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	}
 
 	private synchronized void initMarkers() {
-		if (getDiagnosticCache() == null || reloading || markerJob.get() != null) {
+		if (getDiagnosticCache() == null || reloading) {
 			return;
+		}
+		final Job oldJob = markerJob.get();
+		if (oldJob != null) {
+			oldJob.cancel();
+			markerJob.compareAndSet(oldJob, null);
 		}
 
 		final Job job = Job.create(Messages.GenericEditor_ValidationMarkersJobName, monitor -> {
@@ -365,10 +370,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				markerJob.compareAndSet(Job.getJobManager().currentJob(), null);
 			}
 		});
-		job.setPriority(Job.SHORT);
+		job.setPriority(Job.LONG);
 
 		if (markerJob.compareAndSet(null, job)) {
-			job.schedule();
+			job.schedule(500);
 		}
 	}
 
@@ -405,8 +410,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		if (!file.isPresent()) {
 			return;
 		}
-		file.get().deleteMarkers("org.eclipse.core.resources.problemmarker", false, //$NON-NLS-1$
-			IResource.DEPTH_ZERO);
+		markerHelper.deleteMarkers(file.get());
 	}
 
 	/**
@@ -783,6 +787,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			getDiagnosticCache().dispose();
 		}
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+		getSite().getPage().removePartListener(partListener);
 		super.dispose();
 	}
 

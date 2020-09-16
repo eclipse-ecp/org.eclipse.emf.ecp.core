@@ -9,18 +9,18 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>1.2.0</tycho-version>
-		<tycho-extras-version>1.2.0</tycho-extras-version>
+		<tycho-version>1.4.0</tycho-version>
+		<tycho-extras-version>1.4.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
 		<javadoc-title>EMFForms Spreadsheet 1.0.0 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
 		<jarsigner-version>1.1.0</jarsigner-version>
-		<mav-surefire-version>2.20.1</mav-surefire-version>
+		<mav-surefire-version>2.22.2</mav-surefire-version>
 		<junit-version>4.12</junit-version>
 		<checkstyle-version>8.5</checkstyle-version>
-		<jacoco-version>0.8.0</jacoco-version>
+		<jacoco-version>0.8.5</jacoco-version>
 		
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>

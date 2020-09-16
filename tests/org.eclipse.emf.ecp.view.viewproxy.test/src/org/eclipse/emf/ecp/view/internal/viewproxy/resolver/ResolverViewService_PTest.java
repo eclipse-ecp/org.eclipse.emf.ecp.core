@@ -96,131 +96,63 @@ public class ResolverViewService_PTest {
 
 		private final Map<String, Object> context = new LinkedHashMap<String, Object>();
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
-		 */
 		@Override
 		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
-		 */
 		@Override
 		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
-		 */
 		@Override
 		public VElement getViewModel() {
 			return view;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
-		 */
 		@Override
 		public EObject getDomainModel() {
 			return domain;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
-		 */
 		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
-		 */
 		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#dispose()
-		 */
 		@Override
 		public void dispose() {
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
-		 */
 		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
 			return false;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
-		 */
 		@Override
 		public <T> T getService(Class<T> serviceType) {
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
-		 * @deprecated
-		 */
 		@Deprecated
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
-		 * @deprecated
-		 */
 		@Deprecated
 		@Override
 		public Set<VElement> getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting setting) {
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
-		 */
 		@Override
 		public Object getContextValue(String key) {
 			return context.get(key);
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
-		 *      java.lang.Object)
-		 */
 		@Override
 		public void putContextValue(String key, Object value) {
 			context.put(key, value);
@@ -230,127 +162,74 @@ public class ResolverViewService_PTest {
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
-
 			return null;
 		}
 
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelServiceProvider viewModelServiceProvider) {
-
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDisposeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener)
-		 */
 		@Override
 		public void registerDisposeListener(ViewModelContextDisposeListener listener) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addContextUser(java.lang.Object)
-		 */
 		@Override
 		public void addContextUser(Object user) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeContextUser(java.lang.Object)
-		 */
 		@Override
 		public void removeContextUser(Object user) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
-		 */
 		@Override
 		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
-		 */
 		@Override
 		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentContext()
-		 */
 		@Override
 		public ViewModelContext getParentContext() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#changeDomainModel(org.eclipse.emf.ecore.EObject)
-		 */
 		@Override
 		public void changeDomainModel(EObject newDomainModel) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentVElement()
-		 */
 		@Override
 		public VElement getParentVElement() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
-		 */
 		@Override
 		public void registerRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
-		 */
 		@Override
 		public void unregisterRootDomainModelChangeListener(
 			RootDomainModelChangeListener rootDomainModelChangeListener) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
+		@Override
+		public void pause() {
+			// do nothing
+		}
+
+		@Override
+		public void reactivate() {
+			// do nothing
+		}
 	}
 }

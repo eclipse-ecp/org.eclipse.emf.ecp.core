@@ -168,6 +168,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private final VElement parentVElement;
 
+	private boolean pause = false;
+
 	/**
 	 * Instantiates a new view model context impl.
 	 *
@@ -735,10 +737,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		public void notifyChanged(Notification notification) {
 			super.notifyChanged(notification);
 			// do not notify while being disposed
-			if (isDisposing) {
-				return;
-			}
-			if (isDisposed) {
+			if (isDisposing || isDisposed || pause) {
 				return;
 			}
 			if (notification.isTouch()) {
@@ -754,7 +753,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		protected void addAdapter(Notifier notifier) {
 			super.addAdapter(notifier);
 			// do not notify while being disposed
-			if (isDisposing || isDisposed) {
+			if (isDisposing || isDisposed || pause) {
 				return;
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListeners) {
@@ -768,7 +767,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		protected void removeAdapter(Notifier notifier) {
 			super.removeAdapter(notifier);
 			// do not notify while being disposed
-			if (isDisposing) {
+			if (isDisposing || isDisposed || pause) {
 				return;
 			}
 			if (VElement.class.isInstance(notifier)) {
@@ -834,7 +833,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			super.notifyChanged(notification);
 
 			// do not notify while being disposed
-			if (isDisposing) {
+			if (isDisposing || isDisposed || pause) {
 				return;
 			}
 
@@ -848,7 +847,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		protected void addAdapter(Notifier notifier) {
 			super.addAdapter(notifier);
 			// do not notify while being disposed
-			if (isDisposing) {
+			if (isDisposing || isDisposed || pause) {
 				return;
 			}
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListeners) {
@@ -862,7 +861,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		protected void removeAdapter(Notifier notifier) {
 			super.removeAdapter(notifier);
 			// do not notify while being disposed
-			if (isDisposing) {
+			if (isDisposing || isDisposed || pause) {
 				return;
 			}
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListeners) {
@@ -1326,5 +1325,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 		public Iterator<T> iterator() {
 			return listeners.iterator();
 		}
+	}
+
+	@Override
+	public void pause() {
+		pause = true;
+	}
+
+	@Override
+	public void reactivate() {
+		pause = false;
 	}
 }

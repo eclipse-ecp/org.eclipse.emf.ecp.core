@@ -18,13 +18,17 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
@@ -122,7 +126,13 @@ public class ViewModelListener implements ModelChangeListener {
 				} else if (control.getDiagnostic() != null) {
 					final List<Diagnostic> diagnostics = control.getDiagnostic()
 						.getDiagnostic(notification.getNotifier(), notification.getStructuralFeature());
-					control.getDiagnostic().getDiagnostics().removeAll(diagnostics);
+
+					final EList<Object> newDiagnostics = new BasicEList<Object>(
+						control.getDiagnostic().getDiagnostics());
+					newDiagnostics.removeAll(diagnostics);
+					final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+					vDiagnostic.getDiagnostics().addAll(newDiagnostics);
+					control.setDiagnostic(vDiagnostic);
 				}
 
 				// re-resolve DMR

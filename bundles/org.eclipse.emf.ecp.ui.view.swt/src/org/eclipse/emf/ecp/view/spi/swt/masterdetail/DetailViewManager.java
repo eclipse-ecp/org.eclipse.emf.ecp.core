@@ -208,6 +208,7 @@ public class DetailViewManager implements DetailViewCache {
 		}
 
 		final ViewModelContext context = cached.getViewModelContext();
+		context.reactivate();
 		if (context.getDomainModel() != eObject) {
 			context.changeDomainModel(eObject);
 		}
@@ -640,6 +641,7 @@ public class DetailViewManager implements DetailViewCache {
 	public boolean cacheView(ECPSWTView ecpView) {
 		final Control control = ecpView.getSWTControl();
 
+		ecpView.getViewModelContext().pause();
 		final boolean result = cache.cacheView(ecpView);
 
 		// Track it if it was successfully cached

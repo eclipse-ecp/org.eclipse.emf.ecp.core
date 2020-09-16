@@ -1,0 +1,67 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ
+Element-Name: Controls_smoke
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _k980oLogEeqmM78lyJn8PQ
+Runtime-Version: 2.5.2.202006292356
+Save-Time: 7/1/20 1:08 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// preparation
+
+get-view "EMF Forms Preview" | get-button "Automatically refresh Preview View" | click
+
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" 
+| select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" | get-menu -path "Open With/View Model Editor" | click
+
+get-editor "User.view" | get-tree | select View | get-menu -path "Generate Controls" | click
+
+with [get-window -class WizardDialog] {
+    get-button "Select All" | click
+    get-button Finish | click
+}
+with [get-view "EMF Forms Preview"] {
+    with [get-editbox -after [get-label "First Name"]] {
+        get-property className | equals "org.eclipse.swt.widgets.Text" | verify-true
+        get-property "getMessage()" | equals "First Name" | verify-true
+    }
+    with [get-editbox -after [get-label "Last Name*"]] {
+        get-property className | equals "org.eclipse.swt.widgets.Text" | verify-true
+        get-property "getMessage()" | equals "Last Name" | verify-true
+    }
+    with [get-combo -after [get-label Gender]] {
+        get-property className | equals "org.eclipse.swt.custom.CCombo" | verify-true
+        get-property selection | equals Male | verify-true
+        get-property "values[0]" | equals Male | verify-true
+        get-property "values[1]" | equals Female | verify-true
+    }
+    with [get-button -after [get-label Active]] {
+        get-property className | equals "org.eclipse.swt.widgets.Button" | verify-true
+        get-property kind | equals Check | verify-true
+        get-property "getSelection()" | equals false | verify-true
+    }
+    with [get-control Any -after [get-label "Time Of Registration"] -index 1] {
+        get-property className | equals "org.eclipse.swt.widgets.Composite" | verify-true
+        get-property "getChildren().Control[0].getChildren().Control[1].getClassName()" 
+            | equals "org.eclipse.swt.widgets.Label" | verify-true
+        get-property "getChildren().Control[0].getChildren().Control[1].getText()" 
+            | equals "No date set! Click button to set date." | verify-true
+        get-property "getChildren().Control[1].getClassName()" | equals "org.eclipse.swt.widgets.Button" | verify-true
+    }
+    with [get-editbox -after [get-label Weight]] {
+        get-property className | equals "org.eclipse.swt.widgets.Text" | verify-true
+        get-property "getText()" | equals 0 | verify-true
+    }
+}
+get-editor "User.view" | get-tree | get-item -path View | get-property childCount | equals 11 | verify-true
+// 3 per 'normal' control and 1 for multicontrol
+get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 10 
+    | get-property "getChildren().length" | equals 31 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

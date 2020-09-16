@@ -244,4 +244,23 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	 * @since 1.5
 	 */
 	void removeContextUser(Object user);
+
+	/**
+	 * Pauses the Context by not reacting to any notifications anymore.
+	 *
+	 * @since 1.25
+	 */
+	void pause();
+
+	/**
+	 * Reactive the Context by reacting to notifications again.
+	 * Please be aware that reactiving the ViewModelContext will not
+	 * rereport the notifications that were ignored during pause.
+	 * In order to update the state after reactivation you
+	 * should call {@link #changeDomainModel(EObject)} or
+	 * trigger an event that fires a notification.
+	 *
+	 * @since 1.25
+	 */
+	void reactivate();
 }

@@ -114,6 +114,9 @@ public abstract class AbstractCachedTree<T> {
 			// parent.getClass())
 			updateParentNode(parent, eObject, nodes.get(eObject).getDisplayValue());
 			eObject = parent;
+			if (nodes.get(eObject) == null) {
+				break;
+			}
 			parent = parent.eContainer();
 			affectedElements.add(eObject);
 		}

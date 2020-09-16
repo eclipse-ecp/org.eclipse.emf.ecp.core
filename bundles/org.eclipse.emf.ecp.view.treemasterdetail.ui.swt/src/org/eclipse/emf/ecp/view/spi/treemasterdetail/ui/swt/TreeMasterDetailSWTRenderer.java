@@ -1200,8 +1200,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 				}
 			}
-			final ImageDescriptor overlay = SWTValidationHelper.INSTANCE
-				.getValidationOverlayDescriptor(highestSeverity);
+			final ImageDescriptor overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(highestSeverity,
+				getVElement(), getViewModelContext());
 			if (overlay == null) {
 				return image;
 			}

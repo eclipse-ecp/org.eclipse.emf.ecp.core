@@ -42,7 +42,9 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -459,7 +461,11 @@ public class ValidationServiceImpl implements ValidationService, IncrementalVali
 					diagnosticsToRemove.add(diagnostic);
 				}
 			}
-			vControl.getDiagnostic().getDiagnostics().removeAll(diagnosticsToRemove);
+			final EList<Object> diagnostics = new BasicEList<Object>(vControl.getDiagnostic().getDiagnostics());
+			diagnostics.removeAll(diagnosticsToRemove);
+			final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+			vDiagnostic.getDiagnostics().addAll(diagnostics);
+			vControl.setDiagnostic(vDiagnostic);
 		}
 	}
 

@@ -1038,7 +1038,9 @@ public class ViewEditorPart extends EditorPart implements
 							Display.getDefault().asyncExec(new Runnable() {
 								@Override
 								public void run() {
-									page.closeEditor(instance, false);
+									if (page != null) {
+										page.closeEditor(instance, false);
+									}
 								}
 							});
 							return false;
