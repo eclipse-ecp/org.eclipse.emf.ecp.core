@@ -2,28 +2,28 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Core
 Bundle-SymbolicName: org.eclipse.emfforms.swt.core
-Bundle-Version: 1.25.0.qualifier
+Bundle-Version: 1.26.0.qualifier
 Bundle-Activator: org.eclipse.emfforms.internal.swt.core.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.swt.core;version="1.25.0";x-internal:=true,
- org.eclipse.emfforms.internal.swt.core.ui;version="1.25.0";x-internal:=true,
- org.eclipse.emfforms.spi.swt.core;version="1.25.0",
- org.eclipse.emfforms.spi.swt.core.data;version="1.25.0",
- org.eclipse.emfforms.spi.swt.core.layout;version="1.25.0",
- org.eclipse.emfforms.spi.swt.core.ui;version="1.25.0",
- org.eclipse.emfforms.spi.swt.core.util;version="1.25.0",
- org.eclipse.emfforms.swt.core;version="1.25.0"
-Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.25.0,1.25.1)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.25.0,1.25.1)",
- org.eclipse.emf.ecp.view.model.common;bundle-version="[1.25.0,1.25.1)",
- org.eclipse.emf.ecp.ui.view;bundle-version="[1.25.0,1.25.1)",
+Export-Package: org.eclipse.emfforms.internal.swt.core;version="1.26.0";x-internal:=true,
+ org.eclipse.emfforms.internal.swt.core.ui;version="1.26.0";x-internal:=true,
+ org.eclipse.emfforms.spi.swt.core;version="1.26.0",
+ org.eclipse.emfforms.spi.swt.core.data;version="1.26.0",
+ org.eclipse.emfforms.spi.swt.core.layout;version="1.26.0",
+ org.eclipse.emfforms.spi.swt.core.ui;version="1.26.0",
+ org.eclipse.emfforms.spi.swt.core.util;version="1.26.0",
+ org.eclipse.emfforms.swt.core;version="1.26.0"
+Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.26.0,1.26.1)",
+ org.eclipse.emf.ecp.view.context;bundle-version="[1.26.0,1.26.1)",
+ org.eclipse.emf.ecp.view.model.common;bundle-version="[1.26.0,1.26.1)",
+ org.eclipse.emf.ecp.ui.view;bundle-version="[1.26.0,1.26.1)",
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.view.util.swt;bundle-version="[1.25.0,1.25.1)",
- org.eclipse.emf.ecp.view.template.model;bundle-version="[1.25.0,1.25.1)"
-Import-Package: org.eclipse.emf.ecp.view.model.common;version="[1.25.0,1.25.1)",
- org.eclipse.emf.ecp.view.model.common.di.annotations;version="[1.25.0,1.25.1)",
- org.eclipse.emfforms.bazaar;version="[1.25.0,1.25.1)",
- org.eclipse.emfforms.spi.common.report;version="[1.25.0,1.25.1)",
+ org.eclipse.emf.ecp.view.util.swt;bundle-version="[1.26.0,1.26.1)",
+ org.eclipse.emf.ecp.view.template.model;bundle-version="[1.26.0,1.26.1)"
+Import-Package: org.eclipse.emf.ecp.view.model.common;version="[1.26.0,1.26.1)",
+ org.eclipse.emf.ecp.view.model.common.di.annotations;version="[1.26.0,1.26.1)",
+ org.eclipse.emfforms.bazaar;version="[1.26.0,1.26.1)",
+ org.eclipse.emfforms.spi.common.report;version="[1.26.0,1.26.1)",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.jface.resource;version="0.0.0",
  org.eclipse.jface.viewers;version="0.0.0",
