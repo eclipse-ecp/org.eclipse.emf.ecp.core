@@ -24,7 +24,7 @@ location "http://download.eclipse.org/emfstore/releases_19" {
 	org.eclipse.emf.emfstore.server.feature.feature.group lazy
 }
 
-location "http://build.eclipse.org/rt/rap/base-platforms/3.1/extra-dependencies/" {
+location "https://download.eclipse.org/rt/rap/base-platforms/3.14/extra-dependencies/" {
 	org.mockito.mockito-core-hamcrest-modified [1.9.5,1.9.5]
 }
 
