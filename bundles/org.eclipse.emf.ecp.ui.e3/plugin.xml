@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   
-<extension
+
+   <extension
+         name=""
          point="org.eclipse.ui.views">
       <view
             category="org.eclipse.emf.ecp.ui"
@@ -31,6 +32,7 @@
       </category>
    </extension>
    <extension
+         name=""
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="true"
@@ -119,7 +121,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                  variable="activeMenuSelection">
+                     variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">
@@ -148,7 +150,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                  variable="activeMenuSelection">
+                     variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">
@@ -178,28 +180,28 @@
                   checkEnabled="false">
                <with
                      variable="activeMenuSelection">
-                     <and>
-                        <count
-                              value="1">
-                        </count>
-                        <iterate
-                              ifEmpty="false"
-                              operator="and">
-                           <test
-                                 args="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
-                                 property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                                 value="true">
-                           </test>
-                           <or>
-                              <instanceof
-                                    value="org.eclipse.emf.ecore.resource.Resource">
-                              </instanceof>
-                              <instanceof
-                                    value="org.eclipse.emf.ecp.core.ECPProject">
-                              </instanceof>
-                           </or>
-                        </iterate>
-                     </and>
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <test
+                              args="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.emf.ecore.resource.Resource">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.emf.ecp.core.ECPProject">
+                           </instanceof>
+                        </or>
+                     </iterate>
+                  </and>
                </with>
             </visibleWhen>
          </command>
@@ -282,25 +284,25 @@
                icon="icons/database_go.png"
                label="Export"
                style="push">
-               <visibleWhen
+            <visibleWhen
                   checkEnabled="false">
-                  <and>
-                     <iterate>
-                        <and>
-                           <instanceof
-                                 value="org.eclipse.emf.ecore.EObject">
-                           </instanceof>
-                           <test
-                                 args="org.eclipse.emf.ecp.ui.workbench.export"
-                                 property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                                 value="true">
-                           </test>
-                        </and>
-                     </iterate>
-                     <count
-                           value="1">
-                     </count>
-                  </and>
+               <and>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecore.EObject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.workbench.export"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </and>
+                  </iterate>
+                  <count
+                        value="1">
+                  </count>
+               </and>
             </visibleWhen>
          </command>
          <separator
@@ -361,7 +363,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                  variable="activeMenuSelection">
+                     variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">
@@ -395,6 +397,7 @@
       </menuContribution>
    </extension>
    <extension
+         name=""
          point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
@@ -404,27 +407,6 @@
             id="org.eclipse.emf.ecp.ui.project.filterModelElements"
             name="Filter Modelelements">
       </command>
-      <!--
-      <command
-            defaultHandler="org.eclipse.emf.ecp.ui.commands.CreateContainmentHandler"
-            description="This generic command is used by dynamic commands to create containment MEs"
-            id="org.eclipse.emf.ecp.navigator.createContaiment"
-            name="New Containment ME">
-         <commandParameter
-               id="org.eclipse.emf.ecp.navigator.eClassParameter"
-               name="eClassParameter"
-               optional="true"
-               typeId="org.eclipse.emf.ecp.navigator.eClassType">
-         </commandParameter>
-         <commandParameter
-               id="org.eclipse.emf.ecp.navigator.eReferenceParameter"
-               name="eReferenceParameter"
-               optional="true"
-               typeId="org.eclipse.emf.ecp.navigator.eReferenceType">
-         </commandParameter>
-  
-      </command>
-      -->
       <command
             id="org.eclipse.emf.ecp.ui.closable"
             name="Close/Open">
@@ -481,6 +463,7 @@
       </command>
    </extension>
    <extension
+         name=""
          point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.emf.ecp.ui.commands.DeleteHandler"
@@ -523,99 +506,89 @@
                <equals
                      value="true">
                </equals>
-            </with></enabledWhen>
+            </with>
+         </enabledWhen>
       </handler>
-      
-      
-      
-      
-      
-      
       <handler
             class="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
             commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
          <activeWhen>
-             <with
+            <with
                   variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <instanceof
-                              value="org.eclipse.emf.ecp.core.ECPProject">
-                        </instanceof>
-                     </iterate>
-                  </and>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                  </iterate>
+               </and>
             </with>
          </activeWhen>
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-	                    <instanceof
-	                          value="org.eclipse.emf.ecp.core.ECPProject">
-	                    </instanceof>
-                        <test
-                              property="org.eclipse.emf.ecp.core.project.open"
-                              value="true">
-                        </test>
-                     </iterate>
-                  </and>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.open"
+                           value="true">
+                     </test>
+                  </iterate>
+               </and>
             </with>
-         </enabledWhen> 
+         </enabledWhen>
       </handler>
-      
-       <handler
+      <handler
             class="org.eclipse.emf.ecp.ui.commands.NewModelElementOnResourceWizardHandler"
             commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
          <activeWhen>
-         	<with
+            <with
                   variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <instanceof
-                              value="org.eclipse.emf.ecore.resource.Resource">
-                        </instanceof>
-                     </iterate>
-                  </and>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecore.resource.Resource">
+                     </instanceof>
+                  </iterate>
+               </and>
             </with>
          </activeWhen>
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <instanceof
-                              value="org.eclipse.emf.ecore.resource.Resource">
-                        </instanceof>
-                     </iterate>
-                  </and>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecore.resource.Resource">
+                     </instanceof>
+                  </iterate>
+               </and>
             </with>
-         </enabledWhen> 
+         </enabledWhen>
       </handler>
-      
-      
-      
-      
       <handler
             class="org.eclipse.emf.ecp.ui.commands.DeleteModelElementHandler"
             commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement">
@@ -641,9 +614,9 @@
                   <iterate
                         ifEmpty="false"
                         operator="and">
-	                 <instanceof
-	                       value="org.eclipse.emf.ecp.core.ECPProject">
-	                 </instanceof>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
                      <test
                            property="org.eclipse.emf.ecp.core.project.open"
                            value="true">
@@ -677,6 +650,7 @@
       </handler>
    </extension>
    <extension
+         name=""
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
             class="org.eclipse.emf.ecp.ui.tester.CanAddRepositoriesTester"
@@ -687,6 +661,7 @@
       </propertyTester>
    </extension>
    <extension
+         name=""
          point="org.eclipse.core.expressions.definitions">
       <definition
             id="org.eclipse.emf.ecp.ui.definition.projectClosed">
@@ -765,4 +740,5 @@
          </with>
       </definition>
    </extension>
+
 </plugin>

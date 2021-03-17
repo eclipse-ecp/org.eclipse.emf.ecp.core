@@ -86,6 +86,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 	 */
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		super.rootDomainModelChanged();
 		disposeBindings();
 		bindings = createBindings(viewer);
 	}

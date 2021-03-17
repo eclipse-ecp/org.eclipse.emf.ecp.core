@@ -28,6 +28,7 @@ public interface MessageKeys {
 	String TableControl_MoveUp = "TableControl_MoveUp"; //$NON-NLS-1$
 	String TableControl_MoveDown = "TableControl_MoveDown"; //$NON-NLS-1$
 	String TableControl_Duplicate = "TableControl_Duplicate"; //$NON-NLS-1$
+	String TableControl_DetailEdit = "TableControl_DetailEdit"; //$NON-NLS-1$
 	/**
 	 * Default display name for a reference, in case the model's edit support is not available.
 	 *

@@ -30,6 +30,7 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -82,10 +83,14 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	@Override
 	protected Control createSWTControl(final Composite parent) {
 		final Button check = new Button(parent, SWT.CHECK);
-		check.setBackground(parent.getBackground());
 		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_boolean"); //$NON-NLS-1$
 
 		return check;
+	}
+
+	@Override
+	protected void setValidationColor(Control control, Color validationColor) {
+		/* no op */
 	}
 
 	/**

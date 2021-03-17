@@ -3175,7 +3175,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private String formatTooltipText(EClass eClass, String messageKey) {
+	/**
+	 * Localize the message.
+	 *
+	 * @param eClass The EClass of the table setting.
+	 * @param messageKey key of the string
+	 * @return tooltip.
+	 * @since 1.26
+	 */
+	protected String formatTooltipText(EClass eClass, String messageKey) {
 		final String instanceName = getReferenceDisplayName(eClass);
 		return String.format(LocalizationServiceHelper.getString(
 			TableControlSWTRenderer.class, messageKey),
