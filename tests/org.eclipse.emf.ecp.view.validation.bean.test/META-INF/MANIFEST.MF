@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.validation.bean.test;singleton:=true
-Bundle-Version: 1.26.0.qualifier
+Bundle-Version: 1.27.0.qualifier
 Bundle-ClassPath: .,
  lib/commons-beanutils-1.9.2.jar,
  lib/commons-lang3-3.10.jar,
@@ -11,14 +11,14 @@ Bundle-ClassPath: .,
  lib/jaxb-impl.jar,
  lib/org.apache.bval.bundle-0.5.jar
 Bundle-Vendor: %providerName
-Fragment-Host: org.eclipse.emf.ecp.view.validation.bean.default;bundle-version="[1.26.0,1.26.1)"
+Fragment-Host: org.eclipse.emf.ecp.view.validation.bean.default;bundle-version="[1.27.0,1.28.0)"
 Bundle-Localization: plugin
-Export-Package: car;version="1.26.0";x-internal:=true,
- car.impl;version="1.26.0";x-internal:=true,
- car.util;version="1.26.0";x-internal:=true,
- org.eclipse.emf.ecp.view.validation.bean.test;version="1.26.0";x-internal:=true
+Export-Package: car;version="1.27.0";x-internal:=true,
+ car.impl;version="1.27.0";x-internal:=true,
+ car.util;version="1.27.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.validation.bean.test;version="1.27.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.emf.ecp.view.validation.bean.test
-Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[1.26.0,1.26.1)"
+Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[1.27.0,1.28.0)"

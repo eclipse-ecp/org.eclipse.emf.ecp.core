@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms Index Segment IDE Tooling
 Bundle-SymbolicName: org.eclipse.emfforms.ide.view.indexsegment;singleton:=true
-Bundle-Version: 1.26.0.qualifier
+Bundle-Version: 1.27.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.ide.view.indexsegment;version="1.26.0";x-internal:=true
-Require-Bundle: org.eclipse.emf.ecp.ui.view.editor.controls;bundle-version="[1.26.0,1.26.1)",
- org.eclipse.emfforms.view.indexsegment.model;bundle-version="[1.26.0,1.26.1)"
+Export-Package: org.eclipse.emfforms.internal.ide.view.indexsegment;version="1.27.0";x-internal:=true
+Require-Bundle: org.eclipse.emf.ecp.ui.view.editor.controls;bundle-version="[1.27.0,1.28.0)",
+ org.eclipse.emfforms.view.indexsegment.model;bundle-version="[1.27.0,1.28.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/IndexSegmentIdeDescriptor.xml
 Bundle-ActivationPolicy: lazy

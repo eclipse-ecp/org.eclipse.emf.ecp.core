@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.emf.ecp.common.ui German NLS Support
 Bundle-SymbolicName: org.eclipse.emf.ecp.common.ui.nl_de
-Bundle-Version: 1.26.0.qualifier
+Bundle-Version: 1.27.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Fragment-Host: org.eclipse.emf.ecp.common.ui;bundle-version="[1.26.0,1.26.1)"
+Fragment-Host: org.eclipse.emf.ecp.common.ui;bundle-version="[1.27.0,1.28.0)"
 Bundle-Localization: OSGI-INF/l10n/bundle
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.common.ui.nl_de
