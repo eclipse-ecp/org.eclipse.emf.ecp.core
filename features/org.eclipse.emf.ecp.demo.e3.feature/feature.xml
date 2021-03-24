@@ -47,7 +47,6 @@
 
    <requires>
       <import plugin="org.eclipse.equinox.event"/>
-      <import plugin="org.eclipse.equinox.ds"/>
    </requires>
 
    <plugin

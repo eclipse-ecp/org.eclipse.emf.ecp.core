@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2021 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -16,29 +16,30 @@ package org.eclipse.emfforms.internal.sdk.integration.test;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.felix.scr.Component;
-import org.apache.felix.scr.ScrService;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 
-@SuppressWarnings("deprecation")
 public class NoImmediateServices_PTest {
 
 	@Test
 	public void test() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(ScrService.class).getBundleContext();
-		final ServiceReference<ScrService> serviceReference = bundleContext.getServiceReference(ScrService.class);
-		final ScrService service = bundleContext.getService(serviceReference);
-		final Component[] components = service.getComponents();
+		final BundleContext bundleContext = FrameworkUtil.getBundle(NoImmediateServices_PTest.class).getBundleContext();
+		final ServiceReference<ServiceComponentRuntime> serviceReference = bundleContext
+			.getServiceReference(ServiceComponentRuntime.class);
+		final ServiceComponentRuntime service = bundleContext.getService(serviceReference);
+		final Collection<ComponentDescriptionDTO> components = service.getComponentDescriptionDTOs();
 		final List<String> immediateComponents = new ArrayList<String>();
-		for (final Component component : components) {
-			if (component.isImmediate() && component.getClassName().contains("emf")) { //$NON-NLS-1$
-				immediateComponents.add(component.getClassName());
+		for (final ComponentDescriptionDTO component : components) {
+			if (component.immediate && component.implementationClass.contains("emf")) { //$NON-NLS-1$
+				immediateComponents.add(component.implementationClass);
 			}
 		}
 		bundleContext.ungetService(serviceReference);

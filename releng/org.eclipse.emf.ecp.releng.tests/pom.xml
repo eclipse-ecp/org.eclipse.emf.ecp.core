@@ -308,12 +308,6 @@
 					</includes>
 					<testFailureIgnore>true</testFailureIgnore>
 					<failIfNoTests>false</failIfNoTests>
-					<dependencies>
-				      <dependency>
-				        <type>p2-installable-unit</type>
-				        <artifactId>org.eclipse.equinox.ds</artifactId>
-				      </dependency>
-				    </dependencies>
 				</configuration>
 			</plugin>
 			
