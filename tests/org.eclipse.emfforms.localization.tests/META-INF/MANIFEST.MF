@@ -7,7 +7,6 @@ Fragment-Host: org.eclipse.emfforms.localization;bundle-version="[1.26.0,1.26.2)
 Export-Package: org.eclipse.emfforms.internal.localization.tests;version="1.26.1";x-internal:=true,
  org.eclipse.emfforms.spi.localization;version="1.26.1"
 Require-Bundle: org.junit;bundle-version="4.11.0",
- org.mockito.mockito-core-hamcrest-modified;bundle-version="1.9.5",
- org.eclipse.equinox.ds;bundle-version="[1.4.0,2.0.0)"
+ org.mockito.mockito-core-hamcrest-modified;bundle-version="1.9.5"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emfforms.localization.tests
