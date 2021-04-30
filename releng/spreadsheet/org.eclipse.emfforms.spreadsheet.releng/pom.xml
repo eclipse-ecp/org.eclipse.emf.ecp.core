@@ -16,7 +16,7 @@
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
-		<jarsigner-version>1.1.0</jarsigner-version>
+		<jarsigner-version>1.3.1</jarsigner-version>
 		<mav-surefire-version>2.22.2</mav-surefire-version>
 		<junit-version>4.12</junit-version>
 		<checkstyle-version>8.5</checkstyle-version>
