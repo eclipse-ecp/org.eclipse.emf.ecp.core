@@ -46,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Provider of a selection composite strategy that builds a selection table viewer
  * from a {@linkplain VTableControl table control model}.
- * 
- * @since 1.22
+ *
+ * @since 1.27
  */
 @Component(name = "selectionTableCompositeStrategyProvider")
 public class SelectionTableCompositeStrategyProvider implements SelectionCompositeStrategy.Provider {
