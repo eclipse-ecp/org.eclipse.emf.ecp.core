@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="ECP RCP" sequenceNumber="1620988272">
+<target name="ECP RCP" sequenceNumber="1626697745">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
@@ -14,7 +14,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/eclipse/updates/4.20-I-builds/"/>
+      <repository location="https://download.eclipse.org/eclipse/updates/4.21-I-builds/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
@@ -75,7 +75,7 @@
       <unit id="org.eclipse.rap.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.rap.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.rap.sdk.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2021-06"/>
+      <repository location="http://download.eclipse.org/releases/2021-09"/>
     </location>
   </locations>
 </target>
