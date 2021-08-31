@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2019 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2021 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -574,6 +574,10 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			if (stackLayout.topControl != linkComposite) {
 				stackLayout.topControl = linkComposite;
 				mainComposite.layout();
+				// At least on Windows, the hyperlink size needs to be recalculated asynchronously after its value has
+				// updated. Otherwise, the hyperlink has a size of 0 when the control is initially rendered without a
+				// value.
+				Display.getDefault().asyncExec(() -> linkComposite.layout());
 			}
 
 			modelElementChangeListener = new ECPModelElementChangeListener(value) {
