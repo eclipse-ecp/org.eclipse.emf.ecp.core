@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2022 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  * jfaltermeier - initial API and implementation
+ * lkoehler - Override basicCreate to create non-dynamic EObjects
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.edapt;
 
@@ -19,7 +20,11 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 /**
@@ -121,6 +126,21 @@ public class DynamicEcoreFactory extends EFactoryImpl {
 	}
 
 	// END COMPLEX CODE
+
+	@Override
+	protected EObject basicCreate(EClass eClass) {
+		if (eClass.getInstanceClassName() == "java.util.Map$Entry") { //$NON-NLS-1$
+			return super.basicCreate(eClass);
+		}
+		// Create real objects instead of dynamic EObjects (like EFactory) because references to meta objects (e.g.
+		// EStructuralFeatures) can break the migration when they are dynamic EObjects.
+		final EObject eObject = EcoreFactory.eINSTANCE.create(eClass);
+		// Explicitly set the EClass because it is not set by default. When it is not set, .eClass() calls on the
+		// EObject fall back to the EClass in the registered Ecore EPackage. However, the migration might not use the
+		// registered EPackage. Thus, the EClass is set here.
+		BasicEObjectImpl.class.cast(eObject).eSetClass(eClass);
+		return eObject;
+	}
 
 	private Boolean booleanValueOf(String initialValue) {
 		if ("true".equalsIgnoreCase(initialValue)) { //$NON-NLS-1$
