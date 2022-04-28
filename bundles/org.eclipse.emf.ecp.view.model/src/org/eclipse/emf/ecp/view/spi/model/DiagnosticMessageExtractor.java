@@ -15,9 +15,9 @@ package org.eclipse.emf.ecp.view.spi.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.StringJoiner;
 
 import org.eclipse.emf.common.util.Diagnostic;
 
@@ -45,18 +45,19 @@ public final class DiagnosticMessageExtractor {
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
 			return ""; //$NON-NLS-1$
 		}
-		if (diagnostic.getChildren() != null && diagnostic.getChildren().size() == 0) {
+		if (diagnostic.getChildren() != null && diagnostic.getChildren().isEmpty()) {
 			return diagnostic.getMessage();
 		}
-		final StringBuilder sb = new StringBuilder();
+		final StringJoiner sb = new StringJoiner("\n"); //$NON-NLS-1$
 		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			if (sb.length() > 0) {
-				sb.append("\n"); //$NON-NLS-1$
-			}
-			sb.append(childDiagnostic.getMessage());
+			sb.add(childDiagnostic.getMessage());
 		}
 		return sb.toString();
 	}
+
+	private static final Comparator<Diagnostic> HIGEST_SEVERITY_FIRST = Comparator //
+		.comparingInt(Diagnostic::getSeverity).reversed() // highest first
+		.thenComparing(Diagnostic::getMessage);
 
 	/**
 	 * Extract the message to display from a collection of {@link Diagnostic Diagnostics}. If the severity of the
@@ -67,27 +68,13 @@ public final class DiagnosticMessageExtractor {
 	 */
 	public static String getMessage(Collection<Diagnostic> diagnostics) {
 		final List<Diagnostic> diagnosticList = new ArrayList<>(diagnostics);
-		Collections.sort(diagnosticList, new Comparator<Diagnostic>() {
+		diagnosticList.sort(HIGEST_SEVERITY_FIRST);
 
-			@Override
-			public int compare(Diagnostic o1, Diagnostic o2) {
-				if (o1.getSeverity() != o2.getSeverity()) {
-					// highest first
-					return o2.getSeverity() - o1.getSeverity();
-				}
-				return o1.getMessage().compareTo(o2.getMessage());
-			}
-		});
-
-		final StringBuilder sb = new StringBuilder();
+		final StringJoiner sb = new StringJoiner("\n"); //$NON-NLS-1$
 		for (final Diagnostic diagnostic : diagnosticList) {
-			if (diagnostic.getSeverity() == Diagnostic.OK) {
-				continue;
+			if (diagnostic.getSeverity() != Diagnostic.OK) {
+				sb.add(getMessage(diagnostic));
 			}
-			if (sb.length() > 0) {
-				sb.append("\n"); //$NON-NLS-1$
-			}
-			sb.append(getMessage(diagnostic));
 		}
 		return sb.toString();
 	}
