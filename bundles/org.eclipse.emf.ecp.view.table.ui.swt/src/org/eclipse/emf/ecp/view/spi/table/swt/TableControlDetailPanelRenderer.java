@@ -152,7 +152,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 *
 	 * @param parent the parent composite in which to present details
 	 */
-	void createDetailManager(Composite parent) {
+	protected void createDetailManager(Composite parent) {
 		detailManager = new DetailViewManager(parent, __ -> getVElement().getDetailView());
 		detailManager.setCache(DetailViewCache.createCache(getViewModelContext()));
 		detailManager.layoutDetailParent(parent);
