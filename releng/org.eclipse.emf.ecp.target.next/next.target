@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="ECP RCP" sequenceNumber="1626697746">
+<target name="ECP RCP" sequenceNumber="1656665160">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
@@ -14,7 +14,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/eclipse/updates/4.21-I-builds/"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.25-I-builds/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
@@ -35,8 +35,10 @@
       <unit id="com.google.gson.source" version="2.2.4.v201311231704"/>
       <unit id="javax.validation" version="1.0.0.GA_v201205091237"/>
       <unit id="javax.validation.source" version="1.0.0.GA_v201205091237"/>
+      <unit id="javax.xml" version="1.3.4.v201005080400"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.apache.log4j.source" version="1.2.15.v201012070815"/>
+      <unit id="org.apache.commons.codec" version="1.14.0.v20200818-1422"/>
       <unit id="org.h2" version="1.3.168.v201212121212"/>
       <unit id="org.h2.source" version="1.3.168.v201212121212"/>
       <unit id="org.hamcrest.core" version="1.3.0.v20180420-1519"/>
@@ -44,7 +46,9 @@
       <unit id="org.hamcrest.library.source" version="1.3.0.v20180524-2246"/>
       <unit id="org.objenesis" version="1.0.0.v201505121915"/>
       <unit id="org.objenesis.source" version="1.0.0.v201505121915"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository/"/>
+      <unit id="org.sat4j.pb" version="2.3.5.v201404071733"/>
+      <unit id="org.sat4j.core" version="2.3.5.v201308161310"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="0.0.0"/>
@@ -67,7 +71,6 @@
       <unit id="org.eclipse.net4j.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.ocl.all.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
       <unit id="com.google.guava" version="30.1.0.v20210127-2300"/>
@@ -75,7 +78,7 @@
       <unit id="org.eclipse.rap.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.rap.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.rap.sdk.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2021-09"/>
+      <repository location="http://download.eclipse.org/releases/2022-09"/>
     </location>
   </locations>
 </target>

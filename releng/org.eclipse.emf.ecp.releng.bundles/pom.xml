@@ -426,20 +426,7 @@
 			<id>build-server</id>
 			<build>
 				<plugins>
-					<!-- 3.a -->
-					<plugin>
-						<groupId>org.eclipse.tycho.extras</groupId>
-						<artifactId>tycho-pack200a-plugin</artifactId>
-						<version>${tycho-version}</version>
-						<executions>
-							<execution>
-								<id>pack200-normalize</id>
-								<goals>
-									<goal>normalize</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+					<!-- 3. -->
 					<plugin>
 						<groupId>org.eclipse.cbi.maven.plugins</groupId>
 						<artifactId>eclipse-jarsigner-plugin</artifactId>
@@ -455,20 +442,6 @@
 						<configuration>
 							<excludeInnerJars>true</excludeInnerJars>
 						</configuration>
-					</plugin>
-					<!-- 3.b -->
-					<plugin>
-						<groupId>org.eclipse.tycho.extras</groupId>
-						<artifactId>tycho-pack200b-plugin</artifactId>
-						<version>${tycho-version}</version>
-						<executions>
-							<execution>
-								<id>pack200-pack</id>
-								<goals>
-									<goal>pack</goal>
-								</goals>
-							</execution>
-						</executions>
 					</plugin>
 					<!-- 4. -->
 					<plugin>

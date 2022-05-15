@@ -34,7 +34,7 @@
 		<target-rcp>ecp</target-rcp>
 		<target-rap>ecpRAP</target-rap>
 		<target-next>next</target-next>
-		<xtend-version>2.22.0</xtend-version>
+		<xtend-version>2.26.0</xtend-version>
 	</properties>
 
 	<profiles>
@@ -77,7 +77,6 @@
 							<resolver>p2</resolver>
 							<pomDependencies>consider</pomDependencies>
 							<allowConflictingDependencies>true</allowConflictingDependencies>
-							<includePackedArtifacts>true</includePackedArtifacts>
 							<environments>
 								<environment>
 									<os>win32</os>
@@ -171,7 +170,6 @@
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
 					<allowConflictingDependencies>true</allowConflictingDependencies>
-					<includePackedArtifacts>true</includePackedArtifacts>
 					<environments>
 						<environment>
 							<os>win32</os>
@@ -188,25 +186,6 @@
 							<ws>cocoa</ws>
 							<arch>x86_64</arch>
 						</environment>
-						<!--  Beginning with 2018-12 this environment is removed -->
-						<!-- 
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-					 	-->
-						<!--  Beginning with mars this environment is removed -->
-						<!--environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86</arch>
-						</environment-->
 					</environments>
 					<target>
 						<artifact>
