@@ -44,7 +44,7 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R201902261604
 	org.objenesis.source [1.0.0.v201505121915,1.0.0.v201505121915]
 }
 
-location "http://download.eclipse.org/edapt/releases/14x" {
+location "http://download.eclipse.org/edapt/releases/15x" {
 	org.eclipse.emf.edapt.runtime.feature.feature.group lazy
 	org.eclipse.emf.edapt.runtime.feature.source.feature.group lazy
 }

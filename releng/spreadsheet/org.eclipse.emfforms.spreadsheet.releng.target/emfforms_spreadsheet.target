@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="emfforms_spreadsheet" sequenceNumber="1626697710">
+<target name="emfforms_spreadsheet" sequenceNumber="1653379035">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
@@ -32,7 +32,7 @@
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.edapt.runtime.feature.source.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/edapt/releases/14x"/>
+      <repository location="http://download.eclipse.org/edapt/releases/15x"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.nebula.widgets.grid.feature.feature.group" version="0.0.0"/>
