@@ -551,6 +551,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final ViewModelContextDisposeListener listener : disposeListeners) {
 			listener.contextDisposed(this);
 		}
+		disposeListeners.clear();
+		
 		innerDispose();
 		viewModelContentAdapter.dispose();
 		if (domainModelContentAdapter != null) {
