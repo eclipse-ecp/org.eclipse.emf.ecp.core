@@ -19,8 +19,8 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -70,7 +70,7 @@ public class EEnumControl extends SingleControl {
 
 	@Override
 	public Binding bindValue() {
-		final IObservableValue target = ViewersObservables.observeSingleSelection(combo);
+		final IObservableValue target = ViewerProperties.singleSelection().observe(combo);
 		final Binding bindValue = getDataBindingContext().bindValue(target, getModelValue());
 		getDataBindingContext().bindValue(WidgetProperties.tooltipText().observe(combo.getControl()), getModelValue());
 		return bindValue;

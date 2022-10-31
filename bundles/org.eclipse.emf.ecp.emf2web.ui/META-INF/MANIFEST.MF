@@ -22,6 +22,7 @@ Require-Bundle: org.eclipse.emf.ecp.emf2web;bundle-version="[1.27.0,1.28.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emf.ecp.emf2web.ui
 Import-Package: org.eclipse.jface.databinding.swt;version="0.0.0",
+ org.eclipse.jface.databinding.swt.typed;version="0.0.0",
  org.eclipse.jface.databinding.wizard;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"

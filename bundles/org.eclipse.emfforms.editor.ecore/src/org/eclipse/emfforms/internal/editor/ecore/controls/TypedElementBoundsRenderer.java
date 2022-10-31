@@ -45,7 +45,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -215,14 +215,16 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 		final EObject domainObject = getViewModelContext().getDomainModel();
 		final DataBindingContext dbc = getDataBindingContext();
 
-		final ISWTObservableValue lowerBoundSelectionTargetValue = WidgetProperties.selection().observe(lowerBound);
+		final ISWTObservableValue lowerBoundSelectionTargetValue = WidgetProperties.spinnerSelection()
+			.observe(lowerBound);
 		final IObservableValue lowerBoundModelValue = EMFEditObservables.observeValue(getEditingDomain(domainObject),
 			domainObject, EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 		dbc.bindValue(lowerBoundSelectionTargetValue, lowerBoundModelValue);
 
 		final IObservableValue upperBoundModelValue = EMFEditObservables.observeValue(getEditingDomain(domainObject),
 			domainObject, EcorePackage.eINSTANCE.getETypedElement_UpperBound());
-		final ISWTObservableValue upperBoundSelectionTargetValue = WidgetProperties.selection().observe(upperBound);
+		final ISWTObservableValue upperBoundSelectionTargetValue = WidgetProperties.spinnerSelection()
+			.observe(upperBound);
 		dbc.bindValue(upperBoundSelectionTargetValue, upperBoundModelValue);
 
 		bindUpperAndLowerBounds(dbc, lowerBoundModelValue, upperBoundModelValue);
@@ -242,7 +244,7 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 			});
 
 		/* The unbounded checkbox is selected, when the upperBound value is -1 (and vice versa) */
-		final ISWTObservableValue unboundedSelectionTargetValue = WidgetProperties.selection().observe(unbounded);
+		final ISWTObservableValue unboundedSelectionTargetValue = WidgetProperties.buttonSelection().observe(unbounded);
 		dbc.bindValue(unboundedSelectionTargetValue, upperBoundModelValue,
 			new UpdateValueStrategy() {
 				@Override

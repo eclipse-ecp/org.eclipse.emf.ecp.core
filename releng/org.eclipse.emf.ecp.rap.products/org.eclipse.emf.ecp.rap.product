@@ -33,7 +33,7 @@
       <plugin id="com.ibm.icu"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
-      <plugin id="javax.servlet"/>
+      <plugin id="javax.servlet.jsp-api"/>
       <plugin id="javax.xml"/>
       <plugin id="org.apache.batik.constants"/>
       <plugin id="org.apache.batik.css"/>

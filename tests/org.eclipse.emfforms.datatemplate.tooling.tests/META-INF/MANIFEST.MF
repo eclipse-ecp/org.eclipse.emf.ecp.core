@@ -13,4 +13,3 @@ Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.emfforms.datatemplate.tooling.tests
-Import-Package: org.objenesis;version="1.0.0"

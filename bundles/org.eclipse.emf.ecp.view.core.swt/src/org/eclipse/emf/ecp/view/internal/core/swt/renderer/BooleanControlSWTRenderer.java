@@ -28,7 +28,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
@@ -75,7 +75,8 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
-		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.selection().observe(control),
+		final Binding binding = getDataBindingContext().bindValue(
+			WidgetProperties.buttonSelection().observe((Button) control),
 			getModelValue(), withPreSetValidation(new UpdateValueStrategy()), null);
 		return new Binding[] { binding };
 	}

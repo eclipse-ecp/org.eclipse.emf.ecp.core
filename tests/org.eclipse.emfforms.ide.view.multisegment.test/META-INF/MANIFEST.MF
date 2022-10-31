@@ -7,7 +7,6 @@ Fragment-Host: org.eclipse.emfforms.ide.view.multisegment;bundle-version="[1.27.
 Export-Package: org.eclipse.emfforms.ide.view.multisegment.test;version="1.27.0";x-internal:=true,
  org.eclipse.emfforms.internal.view.multisegment.tooling;version="1.27.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
- org.objenesis;bundle-version="[1.0.0,2.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
  org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.27.0,1.28.0)",
  org.eclipse.swtbot.swt.finder;bundle-version="[4.0.0,5.0.0)",

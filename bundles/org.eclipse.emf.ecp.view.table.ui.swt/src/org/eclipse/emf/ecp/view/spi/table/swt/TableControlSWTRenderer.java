@@ -172,7 +172,7 @@ import org.eclipse.emfforms.spi.swt.table.action.TableActionBar;
 import org.eclipse.emfforms.spi.swt.table.action.ViewerActionContext;
 import org.eclipse.emfforms.view.spi.multisegment.model.MultiSegmentUtil;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -398,7 +398,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return renderTableControl(gridCell, parent);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected Control createLabel(final Composite parent) {
 		final VDomainModelReference dmrToCheck = getDMRToMultiReference();

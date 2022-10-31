@@ -631,12 +631,11 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final CellEditor cellEditor = createCellEditor(tempInstance, attribute, tableViewer.getTable());
 
-		@SuppressWarnings("deprecation")
-		final IObservableValue textObservableValue = org.eclipse.jface.databinding.swt.SWTObservables
-			.observeText(column.getColumn());
-		@SuppressWarnings("deprecation")
-		final IObservableValue tooltipObservableValue = org.eclipse.jface.databinding.swt.SWTObservables
-			.observeTooltipText(column.getColumn());
+		final IObservableValue textObservableValue = org.eclipse.jface.databinding.swt.typed.WidgetProperties.text()
+			.observe(column.getColumn());
+		final IObservableValue tooltipObservableValue = org.eclipse.jface.databinding.swt.typed.WidgetProperties
+			.tooltipText()
+			.observe(column.getColumn());
 		try {
 			viewModelDBC.bindValue(textObservableValue, labelService
 				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel()));
@@ -1042,12 +1041,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			return getDataBindingContext().bindValue(target, model);
 		}
 
-		@SuppressWarnings("deprecation")
 		protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return ((ECPCellEditor) cellEditor).getValueProperty().observe(cellEditor);
 			}
-			return org.eclipse.jface.databinding.swt.SWTObservables.observeText(cellEditor.getControl(), SWT.FocusOut);
+			return org.eclipse.jface.databinding.swt.typed.WidgetProperties.text(SWT.FocusOut)
+				.observe(cellEditor.getControl());
 		}
 
 		@Override

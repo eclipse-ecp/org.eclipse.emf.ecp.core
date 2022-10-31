@@ -17,7 +17,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
@@ -59,7 +59,7 @@ public class BooleanControl extends SingleControl {
 
 	@Override
 	public Binding bindValue() {
-		final IObservableValue targetValue = SWTObservables.observeSelection(check);
+		final IObservableValue targetValue = WidgetProperties.buttonSelection().observe(check);
 		return getDataBindingContext().bindValue(targetValue, getModelValue());
 	}
 

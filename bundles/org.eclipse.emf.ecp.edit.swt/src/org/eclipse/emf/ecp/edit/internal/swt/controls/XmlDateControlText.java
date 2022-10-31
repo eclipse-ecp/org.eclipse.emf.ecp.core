@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -106,7 +106,7 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	@Override
 	public Binding bindValue() {
-		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
+		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(getText());
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy();
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
@@ -133,7 +133,7 @@ public class XmlDateControlText extends AbstractTextControl {
 			}
 			calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-			final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
+			final IObservableValue dateObserver = WidgetProperties.dateTimeSelection().observe(calendar);
 			final Binding binding = getDataBindingContext().bindValue(dateObserver, getModelValue(),
 				new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
 			binding.updateModelToTarget();

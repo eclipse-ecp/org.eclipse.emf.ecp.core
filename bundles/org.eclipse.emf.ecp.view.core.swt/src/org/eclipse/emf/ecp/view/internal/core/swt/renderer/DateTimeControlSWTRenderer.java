@@ -52,7 +52,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -152,8 +152,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
-		final ISWTObservableValue dateObserver = WidgetProperties.selection().observe(dateWidget);
-		final ISWTObservableValue timeObserver = WidgetProperties.selection().observe(timeWidget);
+		final ISWTObservableValue dateObserver = WidgetProperties.dateTimeSelection().observe(dateWidget);
+		final ISWTObservableValue timeObserver = WidgetProperties.dateTimeSelection().observe(timeWidget);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
 		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(),
 			withPreSetValidation(new UpdateValueStrategy()),
@@ -431,7 +431,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			dialog = new Shell(btn.getShell(), SWT.NONE);
 			dialog.setLayout(new GridLayout(1, false));
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
-			final IObservableValue calendarObserver = WidgetProperties.selection().observe(calendar);
+			final IObservableValue calendarObserver = WidgetProperties.dateTimeSelection().observe(calendar);
 			final UpdateValueStrategy modelToTarget = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
 
 			final Binding binding = getDataBindingContext().bindValue(calendarObserver, modelValue, modelToTarget,

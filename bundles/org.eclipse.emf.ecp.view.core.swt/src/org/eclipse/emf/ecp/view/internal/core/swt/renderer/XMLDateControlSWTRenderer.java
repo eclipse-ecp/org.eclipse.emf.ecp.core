@@ -55,7 +55,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -155,7 +155,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			}
 			calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-			final IObservableValue dateObserver = WidgetProperties.selection().observe(calendar);
+			final IObservableValue dateObserver = WidgetProperties.dateTimeSelection().observe(calendar);
 			final Binding binding = getDataBindingContext().bindValue(dateObserver, modelValue,
 				new DateTargetToModelUpdateStrategy(eStructuralFeature, text),
 				new DateModelToTargetUpdateStrategy(false, true));

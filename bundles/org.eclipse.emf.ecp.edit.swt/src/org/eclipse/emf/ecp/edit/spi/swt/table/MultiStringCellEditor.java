@@ -22,7 +22,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -101,7 +101,7 @@ public class MultiStringCellEditor extends StringBasedCellEditor {
 		super(parent, style);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
