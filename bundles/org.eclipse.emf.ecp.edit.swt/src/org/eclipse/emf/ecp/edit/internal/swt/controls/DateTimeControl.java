@@ -18,7 +18,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -86,8 +86,8 @@ public class DateTimeControl extends SingleControl {
 
 	@Override
 	public Binding bindValue() {
-		final IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
-		final IObservableValue timeObserver = SWTObservables.observeSelection(timeWidget);
+		final IObservableValue dateObserver = WidgetProperties.dateTimeSelection().observe(dateWidget);
+		final IObservableValue timeObserver = WidgetProperties.dateTimeSelection().observe(timeWidget);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
 		final Binding binding = getDataBindingContext().bindValue(target, getModelValue());
 		return binding;

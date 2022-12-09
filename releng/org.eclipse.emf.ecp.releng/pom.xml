@@ -5,19 +5,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.26.0-SNAPSHOT</version>
+	<version>1.27.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>1.4.0</tycho-version>
-		<tycho-extras-version>1.4.0</tycho-extras-version>
+		<tycho-version>2.7.3</tycho-version>
+		<tycho-extras-version>2.7.3</tycho-extras-version>
 		<javadoc-version>2.10.3</javadoc-version>
-		<ecp-version>1.26.0</ecp-version>
+		<ecp-version>1.27.0</ecp-version>
 		<javadoc-title>EMF Client Platform ${ecp-version} API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
-		<jarsigner-version>1.1.0</jarsigner-version>
+		<jarsigner-version>1.3.1</jarsigner-version>
 		<mav-surefire-version>2.22.2</mav-surefire-version>
 		<junit-version>4.12</junit-version>
 		<mav-checkstyle-version>3.1.1</mav-checkstyle-version>
@@ -33,7 +33,8 @@
 		
 		<target-rcp>ecp</target-rcp>
 		<target-rap>ecpRAP</target-rap>
-		<xtend-version>2.22.0</xtend-version>
+		<target-next>next</target-next>
+		<xtend-version>2.26.0</xtend-version>
 	</properties>
 
 	<profiles>
@@ -56,6 +57,54 @@
 					<name>build-server</name>
 				</property>
 			</activation>
+		</profile>
+		
+		<!-- Profile for building against next target -->
+		<profile>
+			<id>target-next</id>
+			<activation>
+				<property>
+					<name>target-next</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<resolver>p2</resolver>
+							<pomDependencies>consider</pomDependencies>
+							<allowConflictingDependencies>true</allowConflictingDependencies>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+							<target>
+								<artifact>
+									<groupId>org.eclipse.emf.ecp</groupId>
+									<artifactId>${target-next}</artifactId>
+									<version>${ecp-version}-SNAPSHOT</version>
+								</artifact>
+							</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 
@@ -80,6 +129,7 @@
 		
 		<module>../../releng/org.eclipse.emf.ecp.target.rcp</module>
 		<module>../../releng/org.eclipse.emf.ecp.target.rap</module>
+		<module>../../releng/org.eclipse.emf.ecp.target.next</module>
 		<module>../../releng/org.eclipse.emf.ecp.repository</module>
 		<module>../../releng/org.eclipse.emf.ecp.repository.target</module>
 		<module>../../releng/org.eclipse.emf.ecp.products</module>
@@ -120,7 +170,6 @@
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
 					<allowConflictingDependencies>true</allowConflictingDependencies>
-					<includePackedArtifacts>true</includePackedArtifacts>
 					<environments>
 						<environment>
 							<os>win32</os>
@@ -137,25 +186,6 @@
 							<ws>cocoa</ws>
 							<arch>x86_64</arch>
 						</environment>
-						<!--  Beginning with 2018-12 this environment is removed -->
-						<!-- 
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-					 	-->
-						<!--  Beginning with mars this environment is removed -->
-						<!--environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86</arch>
-						</environment-->
 					</environments>
 					<target>
 						<artifact>
@@ -300,4 +330,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	
 </project>

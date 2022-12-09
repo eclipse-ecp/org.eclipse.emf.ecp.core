@@ -17,7 +17,7 @@ import java.io.File;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.beans.typed.PojoProperties;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -32,7 +32,7 @@ import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
@@ -194,7 +194,7 @@ public class SelectLocationPage extends WizardPage {
 	 * Indicates if this page was already shown to the user.
 	 *
 	 * @return
-	 * 		{@code true} if this page was already shown to the user, {@code false} if this page was never shown to
+	 *         {@code true} if this page was already shown to the user, {@code false} if this page was never shown to
 	 *         the user.
 	 */
 	public boolean wasAlreadyVisible() {
@@ -389,7 +389,8 @@ public class SelectLocationPage extends WizardPage {
 			null);
 
 		if (generationInfo.getWrapper() != null) {
-			final IObservableValue observeSelectionBtnWrapObserveWidget = WidgetProperties.selection().observe(btnWrap);
+			final IObservableValue observeSelectionBtnWrapObserveWidget = WidgetProperties.buttonSelection()
+				.observe(btnWrap);
 			final IObservableValue wrapGenerationInfoObserveValue = PojoProperties.value("wrap") //$NON-NLS-1$
 				.observe(generationInfo);
 			bindingContext.bindValue(observeSelectionBtnWrapObserveWidget, wrapGenerationInfoObserveValue, null, null);

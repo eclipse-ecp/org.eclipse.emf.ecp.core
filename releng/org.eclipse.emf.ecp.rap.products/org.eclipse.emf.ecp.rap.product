@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ECP Rap Demo" uid="org.eclipse.emf.ecp.rap.demo" version="1.26.0.qualifier" useFeatures="false" includeLaunchers="false">
+<product name="ECP Rap Demo" uid="org.eclipse.emf.ecp.rap.demo" version="1.27.0.qualifier" useFeatures="false" includeLaunchers="false">
 
    <aboutInfo>
       <image path="icons/eclipse_lg.gif"/>
@@ -33,7 +33,7 @@
       <plugin id="com.ibm.icu"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
-      <plugin id="javax.servlet"/>
+      <plugin id="javax.servlet.jsp-api"/>
       <plugin id="javax.xml"/>
       <plugin id="org.apache.batik.constants"/>
       <plugin id="org.apache.batik.css"/>
@@ -151,7 +151,6 @@
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.console"/>
-      <plugin id="org.eclipse.equinox.ds"/>
       <plugin id="org.eclipse.equinox.http.registry"/>
       <plugin id="org.eclipse.equinox.http.servlet"/>
       <plugin id="org.eclipse.equinox.http.servletbridge"/>
@@ -186,7 +185,6 @@
    <configurations>
       <plugin id="org.eclipse.emf.ecp.rap" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
-      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.http.servletbridge" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.osgi.services" autoStart="true" startLevel="1" />

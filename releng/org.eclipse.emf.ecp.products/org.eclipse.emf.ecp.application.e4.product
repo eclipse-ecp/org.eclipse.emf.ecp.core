@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="org.eclipse.emf.ecp.e4.application" uid="org.eclipse.emf.ecp.application.e4.demo" id="org.eclipse.emf.ecp.application.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.26.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="org.eclipse.emf.ecp.e4.application" uid="org.eclipse.emf.ecp.application.e4.demo" id="org.eclipse.emf.ecp.application.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.27.0.qualifier" useFeatures="false" includeLaunchers="true">
 
 
    <configIni use="default">
@@ -35,7 +35,6 @@
       <plugin id="javax.xml"/>
       <plugin id="org.apache.batik.css"/>
       <plugin id="org.apache.batik.util"/>
-      <plugin id="org.apache.batik.util.gui"/>
       <plugin id="org.apache.commons.codec"/>
       <plugin id="org.apache.commons.jxpath"/>
       <plugin id="org.apache.commons.logging"/>
@@ -141,7 +140,6 @@
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.concurrent"/>
-      <plugin id="org.eclipse.equinox.ds"/>
       <plugin id="org.eclipse.equinox.event"/>
       <plugin id="org.eclipse.equinox.preferences"/>
       <plugin id="org.eclipse.equinox.registry"/>

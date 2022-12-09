@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.26.0-SNAPSHOT</version>
+		<version>1.27.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<artifactId>org.eclipse.emfforms.core.services.databinding.integrationtest</artifactId>
@@ -32,11 +32,6 @@
 						<extraRequirements>
 							<requirement>
 								<type>p2-installable-unit</type>
-								<id>org.eclipse.equinox.ds</id>
-								<versionRange>0.0.0</versionRange>
-							</requirement>
-							<requirement>
-								<type>p2-installable-unit</type>
 								<id>org.eclipse.emfforms.core.services.emf</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
@@ -52,5 +47,5 @@
 		</plugins>
 	</build>
 	<groupId>org.eclipse.emf.ecp</groupId>
-	<version>1.26.0-SNAPSHOT</version>
+	<version>1.27.0-SNAPSHOT</version>
 </project>

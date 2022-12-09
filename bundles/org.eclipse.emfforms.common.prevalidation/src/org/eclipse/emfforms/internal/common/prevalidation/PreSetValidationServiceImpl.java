@@ -18,7 +18,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -60,8 +59,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	private static final String MULTI_LITERAL_SEP = "|"; //$NON-NLS-1$
 	private static final String ESCAPED_MULTI_LITERAL_SEP = "\\|"; //$NON-NLS-1$
 
-	private Map<ENamedElement, Set<IFeatureConstraint>> constraints = //
-		new LinkedHashMap<ENamedElement, Set<IFeatureConstraint>>();
+	private Map<ENamedElement, Set<IFeatureConstraint>> constraints = new LinkedHashMap<>();
 
 	@Override
 	public Diagnostic validate(final EStructuralFeature eStructuralFeature, Object value) {
@@ -70,19 +68,14 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 
 	@Override
 	public Diagnostic validate(final EStructuralFeature eStructuralFeature, Object value, Map<Object, Object> context) {
-		return validate(
-			new PreSetValidator() {
-				@Override
-				public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics,
-					Map<Object, Object> context) {
-					EValidator validator = EValidator.Registry.INSTANCE
-						.getEValidator(eStructuralFeature.getEType().getEPackage());
-					if (validator == null) {
-						validator = new EObjectValidator();
-					}
-					return validator.validate(eDataType, value, diagnostics, context);
-				}
-			},
+		return validate((eDataType, innerValue, diagnostics, innerContext) -> {
+			EValidator validator = EValidator.Registry.INSTANCE
+				.getEValidator(eStructuralFeature.getEType().getEPackage());
+			if (validator == null) {
+				validator = new EObjectValidator();
+			}
+			return validator.validate(eDataType, innerValue, diagnostics, innerContext);
+		},
 			eStructuralFeature,
 			value,
 			context);
@@ -98,7 +91,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	public Diagnostic validateLoose(EStructuralFeature eStructuralFeature, Object value) {
 		final EClassifier eType = eStructuralFeature.getEType();
 
-		if (!EDataType.class.isInstance(eType) || EDataType.class.cast(eType).getEPackage() == EcorePackage.eINSTANCE) {
+		if (!(eType instanceof EDataType) || ((EDataType) eType).getEPackage() == EcorePackage.eINSTANCE) {
 			return new BasicDiagnostic();
 		}
 
@@ -116,9 +109,9 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 
 		BasicDiagnostic diagnostics = new BasicDiagnostic();
 
-		if (eType instanceof EDataType && EDataType.class.cast(eType).getEPackage() != EcorePackage.eINSTANCE) {
+		if (eType instanceof EDataType && ((EDataType) eType).getEPackage() != EcorePackage.eINSTANCE) {
 
-			final EDataType eDataType = EDataType.class.cast(eType);
+			final EDataType eDataType = (EDataType) eType;
 			diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eDataType, value);
 
 			boolean skipValidator = false;
@@ -197,22 +190,16 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 
 		for (final IFeatureConstraint constraint : constraints) {
 			final Diagnostic result = constraint.validate(eStructuralFeature, value, context);
-			if (result.getSeverity() == Diagnostic.OK) {
-				continue;
+			if (result.getSeverity() != Diagnostic.OK) {
+				diagnostics.add(result);
 			}
-			diagnostics.add(result);
 		}
 
 	}
 
 	@Override
 	public void addConstraintValidator(ENamedElement element, IFeatureConstraint constraint) {
-
-		if (!constraints.containsKey(element)) {
-			constraints.put(element, new LinkedHashSet<IFeatureConstraint>());
-		}
-		constraints.get(element).add(constraint);
-
+		constraints.computeIfAbsent(element, e -> new LinkedHashSet<>()).add(constraint);
 	}
 
 	/**
@@ -222,7 +209,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	 */
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		constraints = new LinkedHashMap<ENamedElement, Set<IFeatureConstraint>>();
+		constraints = new LinkedHashMap<>();
 	}
 
 	/**
@@ -254,18 +241,9 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 			final Optional<String> loosePattern = findLooseConstraint(eDataType, LOOSE_PATTERN_KEY);
 
 			if (loosePattern.isPresent()) {
-				return super.validatePattern(eDataType, value, new PatternMatcher[][] {
-					{
-						new PatternMatcher() {
-							@Override
-							public boolean matches(String value) {
-								final Pattern pattern = Pattern.compile(loosePattern.get());
-								final Matcher matcher = pattern.matcher(value);
-								return matcher.matches();
-							}
-						}
-					}
-				}, diagnostics, context);
+				return super.validatePattern(eDataType, value, new PatternMatcher[][] { {
+					v -> Pattern.matches(loosePattern.get(), v)
+				} }, diagnostics, context);
 			}
 
 			return super.validatePattern(eDataType, value, patterns, diagnostics, context);

@@ -55,7 +55,7 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emfforms.spi.core.services.reveal.EMFFormsRevealService;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.DetailPanelRenderingFinishedCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -196,8 +196,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		detailManager.layoutDetailParent(detailParent);
 
 		/* enable optional delayed update mechanism */
-		IObservableValue<?> treeViewerSelectionObservable = ViewersObservables
-			.observeSingleSelection(treeViewer);
+		IObservableValue<?> treeViewerSelectionObservable = ViewerProperties.singleSelection().observe(treeViewer);
 		if (renderDelay > 0) {
 			treeViewerSelectionObservable = new DelayedObservableValue<>(renderDelay,
 				treeViewerSelectionObservable);

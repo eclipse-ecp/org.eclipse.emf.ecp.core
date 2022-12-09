@@ -55,7 +55,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -1119,7 +1119,7 @@ public class TableControl extends SWTControl {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return ((ECPCellEditor) cellEditor).getValueProperty().observe(cellEditor);
 			}
-			return SWTObservables.observeText(cellEditor.getControl(), SWT.FocusOut);
+			return WidgetProperties.text(SWT.FocusOut).observe(cellEditor.getControl());
 		}
 
 		@Override

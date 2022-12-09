@@ -124,7 +124,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 
 		if (diagnostic instanceof Diagnostic) {
 			final Diagnostic d = (Diagnostic) diagnostic;
-			if (!d.getData().isEmpty()) {
+			if (d.getData() != null && !d.getData().isEmpty()) {
 				final Object first = d.getData().get(0);
 				if (first instanceof EObject) {
 					result = (EObject) first;

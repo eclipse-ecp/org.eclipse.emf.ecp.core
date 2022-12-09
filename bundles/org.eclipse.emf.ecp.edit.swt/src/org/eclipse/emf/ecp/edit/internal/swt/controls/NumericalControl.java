@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -90,7 +90,7 @@ public class NumericalControl extends AbstractTextControl {
 	@Override
 	public Binding bindValue() {
 		// TODO: FocusOut doesn't seem to fire in case the same invalid text is entered twice
-		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
+		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(getText());
 		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy();
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), targetToModelStrategy,

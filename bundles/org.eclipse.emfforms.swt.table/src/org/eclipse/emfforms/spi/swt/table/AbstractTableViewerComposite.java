@@ -26,7 +26,7 @@ import org.eclipse.emfforms.internal.swt.table.action.KeyBindingManager;
 import org.eclipse.emfforms.spi.swt.table.action.ActionBar;
 import org.eclipse.emfforms.spi.swt.table.action.ActionBarProvider;
 import org.eclipse.emfforms.spi.swt.table.action.ActionConfiguration;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.ColumnPixelData;

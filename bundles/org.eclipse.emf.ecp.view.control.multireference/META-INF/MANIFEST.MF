@@ -2,34 +2,35 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Multireference
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.control.multireference;singleton:=true
-Bundle-Version: 1.26.0.qualifier
+Bundle-Version: 1.27.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.internal.control.multireference;version="1.26.0";x-friends:="org.eclipse.emfforms.ide.view.multisegment,org.eclipse.emf.ecp.ui.view.editor.controls"
+Export-Package: org.eclipse.emf.ecp.view.internal.control.multireference;version="1.27.0";x-friends:="org.eclipse.emfforms.ide.view.multisegment,org.eclipse.emf.ecp.ui.view.editor.controls"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.core.databinding;bundle-version="[1.4.1,2.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.8.0,3.0.0)",
- org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.26.0,1.26.1)",
- org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.26.0,1.26.1)",
- org.eclipse.emf.ecp.view.template.model;bundle-version="[1.26.0,1.26.1)",
- org.eclipse.emf.ecp.edit.swt;bundle-version="[1.26.0,1.26.1)",
- org.eclipse.emf.ecp.view.util.swt;bundle-version="[1.26.0,1.26.1)",
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.27.0,1.28.0)",
+ org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.27.0,1.28.0)",
+ org.eclipse.emf.ecp.view.template.model;bundle-version="[1.27.0,1.28.0)",
+ org.eclipse.emf.ecp.edit.swt;bundle-version="[1.27.0,1.28.0)",
+ org.eclipse.emf.ecp.view.util.swt;bundle-version="[1.27.0,1.28.0)",
  org.eclipse.core.databinding.property;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.emfforms.localization;bundle-version="[1.26.0,1.26.1)",
- org.eclipse.emfforms.core.services;bundle-version="[1.26.0,1.26.1)",
+ org.eclipse.emfforms.localization;bundle-version="[1.27.0,1.28.0)",
+ org.eclipse.emfforms.core.services;bundle-version="[1.27.0,1.28.0)",
  org.eclipse.emf.databinding;bundle-version="[1.3.0,2.0.0)",
- org.eclipse.emfforms.swt.core.di;bundle-version="[1.26.0,1.26.1)",
- org.eclipse.emfforms.view.annotation.model;bundle-version="[1.26.0,1.26.1)"
+ org.eclipse.emfforms.swt.core.di;bundle-version="[1.27.0,1.28.0)",
+ org.eclipse.emfforms.view.annotation.model;bundle-version="[1.27.0,1.28.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/multiReferenceRendererService.xml,OSGI-INF/LinkOnlyMultiReferenceRendererService.xml,OSGI-INF/multiReferenceRevealProvider.xml
 Bundle-ActivationPolicy: lazy
 Import-Package: javax.inject;version="1.0.0",
- org.eclipse.emf.ecp.view.model.common.di.annotations;version="[1.26.0,1.26.1)",
+ org.eclipse.emf.ecp.view.model.common.di.annotations;version="[1.27.0,1.28.0)",
  org.eclipse.emf.edit.ui.provider;version="0.0.0",
- org.eclipse.emfforms.bazaar;version="[1.26.0,1.26.1)",
- org.eclipse.emfforms.internal.core.services.label;version="[1.26.0,1.26.1)",
- org.eclipse.emfforms.spi.common.report;version="[1.26.0,1.26.1)",
- org.eclipse.emfforms.spi.swt.core;version="[1.26.0,1.26.1)",
+ org.eclipse.emfforms.bazaar;version="[1.27.0,1.28.0)",
+ org.eclipse.emfforms.internal.core.services.label;version="[1.27.0,1.28.0)",
+ org.eclipse.emfforms.spi.common.report;version="[1.27.0,1.28.0)",
+ org.eclipse.emfforms.spi.swt.core;version="[1.27.0,1.28.0)",
  org.eclipse.jface.databinding.swt;version="0.0.0",
+ org.eclipse.jface.databinding.swt.typed;version="0.0.0",
  org.eclipse.jface.databinding.viewers;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.jface.viewers;version="0.0.0",

@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.target.feature"
       label="ECP Target Feature"
-      version="1.26.0.qualifier"
+      version="1.27.0.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.26.0.qualifier">
+      license-feature-version="1.27.0.qualifier">
 
    <description>
       The target platform feature for the EMF Client Platform, for developer use only.
@@ -70,13 +70,6 @@
 
    <plugin
          id="org.eclipse.equinox.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.ds"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -538,13 +531,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.batik.util.gui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.e4.ui.widgets"
          download-size="0"
          install-size="0"
@@ -796,16 +782,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.core.net.linux.x86_64"
-         os="linux"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.net.win32.x86_64"
          os="win32"
          arch="x86_64"
@@ -845,20 +821,6 @@
 
    <plugin
          id="org.eclipse.equinox.p2.director"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.sat4j.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.sat4j.pb"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -927,6 +889,27 @@
 
    <plugin
          id="org.eclipse.net4j.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.progress"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.sat4j.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.sat4j.pb"
          download-size="0"
          install-size="0"
          version="0.0.0"

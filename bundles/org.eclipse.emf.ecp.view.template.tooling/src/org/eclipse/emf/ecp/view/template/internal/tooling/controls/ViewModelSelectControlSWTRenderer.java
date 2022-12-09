@@ -48,7 +48,6 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
 
 	/**
