@@ -27,7 +27,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -36,6 +38,7 @@ public class EcoreHelperCyclicDependencies_PTest {
 	private static String dEcorePath = "/TestEcoreHelperProjectResources/D.ecore";
 	private static String eEcorePath = "/TestEcoreHelperProjectResources/E.ecore";
 	private static String fEcorePath = "/TestEcoreHelperProjectResources/F.ecore";
+	private static Shell SHELL;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@BeforeClass
@@ -49,7 +52,16 @@ public class EcoreHelperCyclicDependencies_PTest {
 		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister
 		if (!project.exists()) {
+			SHELL = new Shell();
 			installResourcesProject();
+		}
+	}
+
+	@AfterClass
+	public static void cleanupAfterClass() throws Exception {
+		if (SHELL != null) {
+			SHELL.dispose();
+			SHELL = null;
 		}
 	}
 

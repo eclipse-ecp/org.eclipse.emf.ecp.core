@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.swt.widgets.Shell;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -52,6 +53,8 @@ import org.junit.Test;
  */
 @SuppressWarnings("restriction")
 public class IDEViewModelRegistry_PTest {
+
+	private static Shell SHELL;
 
 	/**
 	 * @throws java.lang.Exception
@@ -67,7 +70,16 @@ public class IDEViewModelRegistry_PTest {
 		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister
 		if (!project.exists()) {
+			SHELL = new Shell();
 			installResourcesProject();
+		}
+	}
+
+	@AfterClass
+	public static void cleanupAfterClass() throws Exception {
+		if (SHELL != null) {
+			SHELL.dispose();
+			SHELL = null;
 		}
 	}
 

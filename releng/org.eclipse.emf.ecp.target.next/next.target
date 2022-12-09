@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="ECP RCP" sequenceNumber="1667215291">
+<target name="ECP RCP" sequenceNumber="1685444500">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
@@ -17,7 +17,7 @@
       <unit id="org.eclipse.e4.ui.progress" version="0.0.0"/>
       <unit id="org.sat4j.core" version="0.0.0"/>
       <unit id="org.sat4j.pb" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/eclipse/updates/4.26-I-builds/"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.28-I-builds/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
@@ -46,7 +46,19 @@
       <unit id="org.hamcrest.core" version="1.3.0.v20180420-1519"/>
       <unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
       <unit id="org.hamcrest.library.source" version="1.3.0.v20180524-2246"/>
+      <unit id="com.sun.jna" version="0.0.0"/>
+      <unit id="com.sun.jna.source" version="0.0.0"/>
+      <unit id="com.sun.jna.platform" version="0.0.0"/>
+      <unit id="com.sun.jna.platform.source" version="0.0.0"/>
+      <unit id="org.apache.commons.io" version="0.0.0"/>
+      <unit id="org.apache.commons.io.source" version="0.0.0"/>
+      <unit id="org.slf4j.api" version="0.0.0"/>
+      <unit id="org.slf4j.api.source" version="0.0.0"/>
       <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository/"/>
+    </location>
+    <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
+      <unit id="org.apache.commons.jxpath" version="0.0.0"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="0.0.0"/>
@@ -71,12 +83,12 @@
       <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
-      <unit id="com.google.guava" version="30.1.0.v20210127-2300"/>
+      <unit id="com.google.guava" version="30.1.0.v20221112-0806"/>
       <unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.rap.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.rap.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.rap.sdk.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2022-12"/>
+      <repository location="http://download.eclipse.org/releases/2023-06"/>
     </location>
   </locations>
 </target>

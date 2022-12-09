@@ -5,7 +5,7 @@ with source configurePhase
 include "../../org.eclipse.emf.ecp.target.rcp/ecp.tpd"
 
 location "https://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository/" {
-	org.apache.commons.codec lazy
+	org.apache.commons.codec
 	org.apache.poi lazy
 	org.apache.poi.source lazy
 }

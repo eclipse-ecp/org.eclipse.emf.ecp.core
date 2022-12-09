@@ -10,7 +10,7 @@ location "http://download.eclipse.org/technology/swtbot/releases/latest/" {
 	org.eclipse.swtbot.feature.group lazy
 }
 
-location "http://download.eclipse.org/eclipse/updates/4.26-I-builds/" {
+location "http://download.eclipse.org/eclipse/updates/4.28-I-builds/" {
 	org.eclipse.equinox.sdk.feature.group lazy
 	org.eclipse.platform.ide lazy
 	org.eclipse.e4.ui.progress lazy
@@ -45,6 +45,18 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202208302134
 	org.hamcrest.core [1.3.0,1.4.0)
 	org.hamcrest.library [1.3.0,1.4.0)
 	org.hamcrest.library.source [1.3.0,1.4.0)
+	com.sun.jna lazy
+	com.sun.jna.source lazy
+	com.sun.jna.platform lazy
+	com.sun.jna.platform.source lazy
+	org.apache.commons.io lazy
+	org.apache.commons.io.source lazy
+	org.slf4j.api lazy
+	org.slf4j.api.source lazy
+}
+
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository" {
+	org.apache.commons.jxpath lazy
 }
 
 location "http://download.eclipse.org/edapt/releases/15x" {
@@ -56,7 +68,7 @@ location "http://download.eclipse.org/nebula/releases/latest" {
 	org.eclipse.nebula.widgets.grid.feature.feature.group lazy
 }
 
-location "http://download.eclipse.org/releases/2022-12" {
+location "http://download.eclipse.org/releases/2023-06" {
 	org.eclipse.emf.cdo.sdk.feature.group lazy
 	org.eclipse.emf.sdk.feature.group lazy
 	org.eclipse.emf.transaction.sdk.feature.group lazy
