@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="ECP RCP" sequenceNumber="1685444500">
+<target name="ECP RCP" sequenceNumber="1685623988">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
@@ -54,6 +54,10 @@
       <unit id="org.apache.commons.io.source" version="0.0.0"/>
       <unit id="org.slf4j.api" version="0.0.0"/>
       <unit id="org.slf4j.api.source" version="0.0.0"/>
+      <unit id="javax.annotation" version="0.0.0"/>
+      <unit id="javax.annotation.source" version="0.0.0"/>
+      <unit id="javax.inject" version="0.0.0"/>
+      <unit id="javax.inject.source" version="0.0.0"/>
       <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">

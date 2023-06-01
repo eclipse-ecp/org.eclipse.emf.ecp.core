@@ -15,7 +15,7 @@
 	<packaging>pom</packaging>
 	
 	<properties>
-		<baseTestArgLine></baseTestArgLine>
+		<baseTestArgLine>--add-opens java.base/java.lang=ALL-UNNAMED</baseTestArgLine>
 	</properties>
 	
 	<profiles>

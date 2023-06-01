@@ -53,6 +53,10 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202208302134
 	org.apache.commons.io.source lazy
 	org.slf4j.api lazy
 	org.slf4j.api.source lazy
+	javax.annotation lazy
+	javax.annotation.source lazy
+	javax.inject lazy
+	javax.inject.source lazy
 }
 
 location "https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository" {

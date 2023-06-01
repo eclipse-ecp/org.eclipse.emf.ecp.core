@@ -12,7 +12,7 @@
 		<rcptt-maven-version>2.5.2</rcptt-maven-version>
 		<build_job>ecp-develop-full</build_job>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
-		<jacoco-version>0.8.5</jacoco-version>
+		<jacoco-version>0.8.10</jacoco-version>
 	</properties> 
 
 	<pluginRepositories>

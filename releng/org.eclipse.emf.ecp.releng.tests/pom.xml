@@ -16,7 +16,7 @@
 	
 	
 	<properties>
-		<baseTestArgLine></baseTestArgLine>
+		<baseTestArgLine>--add-opens java.base/java.lang=ALL-UNNAMED</baseTestArgLine>
 	</properties>
 	
 	<profiles>
@@ -28,7 +28,7 @@
 				</os>
 			</activation>
 			<properties>
-				<baseTestArgLine>-XstartOnFirstThread</baseTestArgLine>
+				<baseTestArgLine>--add-opens java.base/java.lang=ALL-UNNAMED -XstartOnFirstThread</baseTestArgLine>
 			</properties>
 		</profile>
 		<profile>

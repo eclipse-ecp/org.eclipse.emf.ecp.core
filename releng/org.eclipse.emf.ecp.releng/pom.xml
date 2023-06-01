@@ -22,7 +22,7 @@
 		<junit-version>4.12</junit-version>
 		<mav-checkstyle-version>3.1.1</mav-checkstyle-version>
 		<checkstyle-version>8.8</checkstyle-version>
-		<jacoco-version>0.8.5</jacoco-version>
+		<jacoco-version>0.8.10</jacoco-version>
 		
 		<jacoco.percentage.instruction>0.5</jacoco.percentage.instruction>
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
